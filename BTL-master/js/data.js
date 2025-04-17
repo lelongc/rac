@@ -1,11 +1,11 @@
 let data = [
     {
         img: './Images/lọ hoa5/lothuytinh.jpg',
-        title: 'Lọ thuỷ tinh',
+        title: 'Tủ Đồ Đựng Giày',
     },
     {
         img: './Images/lọ hoa5/lothuytinhtrangtri.jpg',
-        title: 'Lọ thuỷ tinh trang trí',
+        title: 'Tủ Đồ Kiểu Tân Cổ Điển',
     },
     {
         img: './Images/trang trí để bàn6/hoamattroi.jpg',
@@ -29,7 +29,7 @@ let data = [
     },
     {
         img: './Images/đồng hồ2/donghotreotuongphihanhgia.jpg',
-        title: 'Đồng hồ treo tường phi hành gia',
+        title: 'Kệ Tivi Góc',
     },
     {
         img: './Images/đèn trang trí1/Den-ban-trang-triLL.jpg',
@@ -41,23 +41,23 @@ let data = [
     },
     {
         img: './Images/đồng hồ2/donghotreotuong.jpg',
-        title: 'Đồng hồ treo tường',
+        title: 'Kệ Tivi Treo Tường',
     },
     {
         img: './Images/đồng hồ2/DongHoQuaLac.jpg',
-        title: 'Đồng hồ quả lắc',
+        title: 'Kệ Tivi Tủ Ngăn Kéo',
     },
     {
         img: './Images/đồng hồ2/donghotoigianbacau.jpg',
-        title: 'Đồng hồ tối giản bắc âu',
+        title: 'Kệ Tivi Dưới Đất',
     },
     {
         img: './Images/đồng hồ2/DongHoTRangTri.jpg',
-        title: 'Đồng hồ trang trí',
+        title: 'Kệ Tivi Mặt Kính',
     },
     {
         img: './Images/đồng hồ2/donghotreotuongqualacconchim.jpg',
-        title: 'Đồng hồ treo tường quả lắc con chim',
+        title: 'Kệ Tivi Treo Tường  con chim',
     },
     {
         img: './Images/đèn trang trí1/Banana Lightning.jpg',
@@ -65,11 +65,11 @@ let data = [
     },
     {
         img: './Images/đồng hồ2/DonghotoigianbacAuqualac.jpg',
-        title: 'Đồng hồ tối giản băc âu quả lắc',
+        title: 'Kệ Tivi Từ Gỗ Tự Nhiên',
     },
     {
         img: './Images/đồng hồ2/donghotreotuong2.jpg',
-        title: 'Đồng hồ treo tường',
+        title: 'Kệ Tivi Treo Tường',
     },
     {
         img: './Images/đèn trang trí1/DenTrangTriMatTrang.jpg',
@@ -97,24 +97,24 @@ let data = [
     },
 
     {
-        img: './Images/gương trang trí3/guong1.jpg',
-        title: 'Gương trang trí',
+        img: './Images/guongk/guongk.jpg',
+        title: 'guong',
     },
     {
-        img: './Images/gương trang trí3/guongtrangtri1.jpg',
-        title: 'Gương trang trí',
+        img: './Images/guongk/guongktrangtri1.jpg',
+        title: 'guong',
     },
     {
-        img: './Images/gương trang trí3/guongtrangtri2.jpg',
-        title: 'Gương trang trí',
+        img: './Images/guongk/guongktrangtri2.jpg',
+        title: 'guong',
     },
     {
-        img: './Images/gương trang trí3/guongtrangtri3.jpg',
-        title: 'Gương trang trí',
+        img: './Images/guongk/guongktrangtri3.jpg',
+        title: 'guong',
     },
     {
-        img: './Images/gương trang trí3/guongtrangtri4.jpg',
-        title: 'Gương trang trí',
+        img: './Images/guongk/guongktrangtri4.jpg',
+        title: 'guong',
     },
     {
         img: './Images/khác4/bantranho2.jpg',
@@ -122,23 +122,23 @@ let data = [
     },
     {
         img: './Images/đồng hồ2/donghochimcong.jpg',
-        title: 'Đồng hồ chim công',
+        title: 'Kệ Tivi Chân Kim Loại',
     },
     {
         img: './Images/đồng hồ2/donghotrangtri3.jpg',
-        title: 'Đồng hồ trang trí',
+        title: 'Kệ Tivi Mặt Kính',
     },
     {
         img: './Images/đồng hồ2/DHTT1.jpg',
-        title: 'Đồng hồ treo tường',
+        title: 'Kệ Tivi Treo Tường',
     },
     {
         img: './Images/đồng hồ2/DHTT2.jpg',
-        title: 'Đồng hồ treo tường 2',
+        title: 'Kệ Tivi Hòa Hợp Với Tường',
     },
     {
         img: './Images/đồng hồ2/DHTT3.jpg',
-        title: 'Đồng hồ treo tường 3',
+        title: 'Kệ Tivi Với Kệ Bên',
     },
     {
         img: './Images/khác4/boghesophabingo.jpg',
@@ -153,11 +153,11 @@ let data = [
         title: 'Kệ Console Versace',
     },
     {
-        img: './Images/gương trang trí3/guongtrangtri5.jpg',
-        title: 'Gương trang trí',
+        img: './Images/guongk/guongktrangtri5.jpg',
+        title: 'guong',
     },
     {
-        img: './Images/gương trang trí3/guongvienda.jpg',
+        img: './Images/guongk/guongkvienda.jpg',
         title: 'Gương viền đá',
     },
     {
@@ -170,15 +170,15 @@ let data = [
     },
     {
         img: './Images/lọ hoa5/boHoalanvang.jpg',
-        title: 'Bó hoa lan vàng',
+        title: 'Tủ Đồ Mặt Kính Cường Lực',
     },
     {
         img: './Images/lọ hoa5/bolohoala.jpg',
-        title: 'Bộ lọ hoa lá',
+        title: 'Tủ Đồ Vách Ngăn',
     },
     {
         img: './Images/lọ hoa5/bolohoatrangtri.jpg',
-        title: 'Bộ lọ hoa trang trí',
+        title: 'Tủ Đồ Thông Minh',
     },
     {
         img: './Images/khác4/keconsole.jpg',
@@ -190,16 +190,13 @@ let data = [
     },
     {
         img: './Images/lọ hoa5/bolohoaxanh.jpg',
-        title: 'Bộ lọ hoa xanh',
+        title: 'Tủ Đồ Cao Cấp',
     },
     {
         img: './Images/lọ hoa5/canhhongtrangtri.jpg',
-        title: 'Cánh hồng trang trí',
+        title: 'Tủ Đồ Gỗ Sồi',
     },
-    {
-        img: './Images/lọ hoa5/hoaluatrangtri.jpg',
-        title: 'Hoa lụa trang trí',
-    },
+    
     {
         img: './Images/treo tường7/Tranh-Su-TuLDT115lingdecor1-300x300.jpg',
         title: 'Tranh Sư Tử',
@@ -220,18 +217,7 @@ let data = [
         img: './Images/tượng đỡ khay trang trí8/Con-Soc-trai-timLDB275lingdecor1-300x300.jpg',
         title: 'Con sóc trái tim',
     },
-    {
-        img: './Images/lọ hoa5/lohoacaocap.jpg',
-        title: 'Lọ hoa cao cấp',
-    },
-    {
-        img: './Images/lọ hoa5/lohoatrangtri.jpg',
-        title: 'Lọ hoa trang trí',
-    },
-    {
-        img: './Images/lọ hoa5/lohoatrangtri1.jpg',
-        title: 'Lọ hoa trang trí',
-    },
+
     {
         img: './Images/trang trí để bàn6/trangtrideban.jpg',
         title: 'Trang trí để bàn',
@@ -239,10 +225,6 @@ let data = [
     {
         img: './Images/trang trí để bàn6/vongtronduquay.jpg',
         title: 'Vòng tròn đu quay',
-    },
-    {
-        img: './Images/lọ hoa5/lohoatrangtri3.jpg',
-        title: 'Lọ hoa trang trí',
     },
     {
         img: './Images/trang trí để bàn6/phihanhgiadokhayden.jpg',

@@ -28,10 +28,10 @@
 }
 *
 {
-   --background-color: rgb(18, 27, 46); /* Dark navy blue for a sleek, modern background */
-   --primary-color: rgb(44, 62, 80); /* Darker blue-gray for primary buttons or highlights */
-   --main-color: rgb(36, 85, 138); /* Charcoal gray for a subtle yet contrasting main color */
-   --text-color: rgb(240, 240, 240); /* Light gray text for a soft contrast against the dark background */
+   --background-color: rgba(215, 218, 216, 0.678); 
+   --primary-color: rgb(30, 41, 51); /* Darker blue-gray for primary buttons or highlights */
+   --main-color: rgb(131, 145, 165); /* Charcoal gray for a subtle yet contrasting main color */
+   --text-color: rgba(2, 2, 2, 0.404); 
    
 
    padding: 0;
