@@ -1,244 +1,275 @@
-import data from './data.js';
+import data from "./data.js";
+function toggleImageIntroduction(show) {
+  const imageIntro = $("#image-introduction");
+  if (show) {
+    imageIntro.show(); // Hiển thị phần ảnh giới thiệu
+  } else {
+    imageIntro.hide(); // Ẩn phần ảnh giới thiệu
+  }
+}
 
+$(".home-btn").click(function () {
+  switchPage("#home-content", listPage);
+  gotoTop();
+  changeHeader();
+  toggleImageIntroduction(true); // Hiển thị ảnh giới thiệu khi ở trang chủ
+});
+
+$(".member-btn, .introduce-btn, .products-btn").click(function () {
+  toggleImageIntroduction(false); // Ẩn ảnh giới thiệu khi ở trang khác
+});
 $(document).ready(function () {
-    $('.navbar-nav .nav-item').click(function () {
-        $.each($('.navbar-nav .nav-item'), function (i, e) {
-            $(e).removeClass('active');
-        });
-        $(this).addClass('active');
+  $(".navbar-nav .nav-item").click(function () {
+    $.each($(".navbar-nav .nav-item"), function (i, e) {
+      $(e).removeClass("active");
     });
-    $('.nav-pills .nav-item').click(function () {
-        $.each($('.nav-pills .nav-item'), function (i, e) {
-            $(e).removeClass('active');
-        });
-        $(this).addClass('active');
+    $(this).addClass("active");
+  });
+  $(".nav-pills .nav-item").click(function () {
+    $.each($(".nav-pills .nav-item"), function (i, e) {
+      $(e).removeClass("active");
     });
-  
-    function goTo(element) {
-        $('html, body').animate(
-            {
-                scrollTop: $(element).offset().top,
-            },
-            'slow'
-        );
-    }
-    function gotoTop() {
-        $('html, body').animate({ scrollTop: 0 }, 'slow');
-    }
-    function switchPage(currPage, pages) {
-        $.each(pages, function (index, page) {
-            $(page).hide();
-        });
-        $(currPage).show();
-    }
+    $(this).addClass("active");
+  });
 
-    let listPage = ['#members', '#home-content', '#detail-page', '#introduce','#payment'];
-    $('.home-btn').click(function () {
-        switchPage('#home-content', listPage);
-        gotoTop();
-        changeHeader();
-    });
-    $('.member-btn').click(function () {
-        switchPage('#members', listPage);
-        gotoTop();
-        changeHeader();
-    });
-    $('.introduce-btn').click(function () {
-        switchPage('#introduce', listPage);
-        gotoTop();
-        changeHeader();
-    });
-    $('.products-btn').click(function () {
-        switchPage('#home-content', listPage);
-        goTo('#products');
-        changeHeader();
+  function goTo(element) {
+    $("html, body").animate(
+      {
+        scrollTop: $(element).offset().top,
+      },
+      "slow"
+    );
+  }
+  function gotoTop() {
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+  }
+  function switchPage(currPage, pages) {
+    // Ẩn tất cả các phần
+    $.each(pages, function (index, page) {
+      $(page).hide();
     });
 
-    // SEARCH
-    $('.search-btn').click(function (event) {
-        $('#search-modal').modal('show');
-    });
+    // Hiển thị phần hiện tại
+    $(currPage).show();
 
-    // FORM
-    $('#regist-form, .sigin-up-submit').hide();
+    // Lưu trạng thái vào lịch sử trình duyệt
+    history.pushState({ page: currPage }, "", currPage);
+  }
 
-    $('.tabLogin-btn').click(function () {
-        $('#regist-form, .sigin-up-submit').hide();
-      
-        $('.login-submit, #login-form').show();
-    });
+  let listPage = [
+    "#members",
+    "#home-content",
+    "#detail-page",
+    "#introduce",
+    "#payment",
+    "#image-introduction", // Thêm phần ảnh giới thiệu vào danh sách
+  ];
+  $(".home-btn").click(function () {
+    switchPage("#home-content", listPage);
+    gotoTop();
+    changeHeader();
+  });
+  $(".member-btn").click(function () {
+    switchPage("#members", listPage);
+    gotoTop();
+    changeHeader();
+  });
+  $(".introduce-btn").click(function () {
+    switchPage("#introduce", listPage);
+    gotoTop();
+    changeHeader();
+  });
+  $(".products-btn").click(function () {
+    switchPage("#home-content", listPage);
+    goTo("#products");
+    changeHeader();
+  });
 
-    $('.tabRegist-btn').click(function () {
-        $('#login-form, .login-submit').hide();
+  // SEARCH
+  $(".search-btn").click(function (event) {
+    $("#search-modal").modal("show");
+  });
 
-        $('#regist-form, .sigin-up-submit').show();
-    });
+  // FORM
+  $("#regist-form, .sigin-up-submit").hide();
 
-    // CHECK VALIDATE FORM
-    function checkLoginName() {
-        let name = $('#regist-name').val();
-        let checkNameText = $('#text-regist-name');
+  $(".tabLogin-btn").click(function () {
+    $("#regist-form, .sigin-up-submit").hide();
 
-        if (!name) {
-            checkNameText.html('Vui lòng chọn tên đăng nhập!');
-            return false;
-        }
-        let regexName = /^(?![0-9])[a-zA-Z0-9]{3,}$/;
-        if (!regexName.test(name)) {
-            checkNameText.html('Tên đăng nhập không hợp lệ, vui lòng nhập lại');
-            return false;
-        } else {
-            checkNameText.html('');
-            return true;
-        }
+    $(".login-submit, #login-form").show();
+  });
+
+  $(".tabRegist-btn").click(function () {
+    $("#login-form, .login-submit").hide();
+
+    $("#regist-form, .sigin-up-submit").show();
+  });
+
+  // CHECK VALIDATE FORM
+  function checkLoginName() {
+    let name = $("#regist-name").val();
+    let checkNameText = $("#text-regist-name");
+
+    if (!name) {
+      checkNameText.html("Vui lòng chọn tên đăng nhập!");
+      return false;
     }
-
-    function checkPassword() {
-        let password = $('#regist-password').val();
-        let checkPassText = $('#text-regist-pass');
-        let strongPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/;
-        if (strongPass.test(password)) {
-            checkPassText
-                .html('Mật khẩu mạnh')
-                .addClass('text-success')
-                .removeClass('text-danger');
-            return true;
-        } else {
-            checkPassText
-                .html(
-                    'Mật khẩu yếu, ít nhất 1 chữ thường, 1 chữ hoa, 1 chữ sốt và 8 kí tự trở lên'
-                )
-                .addClass('text-danger')
-                .removeClass('text-success');
-        }
+    let regexName = /^(?![0-9])[a-zA-Z0-9]{3,}$/;
+    if (!regexName.test(name)) {
+      checkNameText.html("Tên đăng nhập không hợp lệ, vui lòng nhập lại");
+      return false;
+    } else {
+      checkNameText.html("");
+      return true;
     }
+  }
 
-    function checkReliable() {
-        let reliablePass = $('#password-reliable').val();
-        let password = $('#regist-password').val();
-        if (reliablePass != password) {
-            $('#text-regist-reliable').html(
-                'Mật khẩu không trùng khớp, vui lòng nhập lại'
-            );
-            return false;
-        } else {
-            $('#text-regist-reliable').html('');
-            return true;
-        }
+  function checkPassword() {
+    let password = $("#regist-password").val();
+    let checkPassText = $("#text-regist-pass");
+    let strongPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/;
+    if (strongPass.test(password)) {
+      checkPassText
+        .html("Mật khẩu mạnh")
+        .addClass("text-success")
+        .removeClass("text-danger");
+      return true;
+    } else {
+      checkPassText
+        .html(
+          "Mật khẩu yếu, ít nhất 1 chữ thường, 1 chữ hoa, 1 chữ sốt và 8 kí tự trở lên"
+        )
+        .addClass("text-danger")
+        .removeClass("text-success");
     }
+  }
 
-    function checkName() {
-        let name = $('#name').val();
-        let regexName = /^([A-Z][a-z]*)(\s[A-Z][a-z]*)+$/;
-        if (!regexName.test(name)) {
-            $('#checkName').html('Họ tên không phù hợp!');
-            return false;
-        } else {
-            $('#checkName').html('');
-            return true;
-        }
+  function checkReliable() {
+    let reliablePass = $("#password-reliable").val();
+    let password = $("#regist-password").val();
+    if (reliablePass != password) {
+      $("#text-regist-reliable").html(
+        "Mật khẩu không trùng khớp, vui lòng nhập lại"
+      );
+      return false;
+    } else {
+      $("#text-regist-reliable").html("");
+      return true;
     }
+  }
 
-    function checkAge() {
-        let birthdate = new Date($('#birthdate').val());
-        if (birthdate.getDate() == NaN) {
-            $('#checkBirthdate').html('vui lòng chọn ngày tháng năm sinh!');
-            return false;
-        } else {
-            $('#checkBirthdate').html('');
-            return true;
-        }
+  function checkName() {
+    let name = $("#name").val();
+    let regexName = /^([A-Z][a-z]*)(\s[A-Z][a-z]*)+$/;
+    if (!regexName.test(name)) {
+      $("#checkName").html("Họ tên không phù hợp!");
+      return false;
+    } else {
+      $("#checkName").html("");
+      return true;
     }
+  }
 
-    function checkEmail() {
-        let email = $('#email').val();
-        let regexMail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!regexMail.test(email)) {
-            $('#checkEmail').html('Email không hợp lệ');
-            return false;
-        } else {
-            $('#checkEmail').html('');
-            return true;
-        }
+  function checkAge() {
+    let birthdate = new Date($("#birthdate").val());
+    if (birthdate.getDate() == NaN) {
+      $("#checkBirthdate").html("vui lòng chọn ngày tháng năm sinh!");
+      return false;
+    } else {
+      $("#checkBirthdate").html("");
+      return true;
     }
+  }
 
-    function checkPhone() {
-        let phone = $('#phone').val();
-        let regexPhone = /^[0-9]{10}$/;
-        if (!regexPhone.test(phone)) {
-            $('#checkPhone').html('Số điện thoại không hợp lệ');
-            return false;
-        } else {
-            $('#checkPhone').html('');
-            return true;
-        }
+  function checkEmail() {
+    let email = $("#email").val();
+    let regexMail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regexMail.test(email)) {
+      $("#checkEmail").html("Email không hợp lệ");
+      return false;
+    } else {
+      $("#checkEmail").html("");
+      return true;
     }
+  }
 
-    function checkAdrress() {
-        let address = $('#address').val();
-        let regexAdres = /^[a-zA-Z0-9\s,'-]*$/;
-        if (!regexAdres.test(address)) {
-            $('#checkAddress').html('Địa chỉ không hợp lệ');
-            return false;
-        } else {
-            $('#checkAddress').html('');
-            return true;
-        }
+  function checkPhone() {
+    let phone = $("#phone").val();
+    let regexPhone = /^[0-9]{10}$/;
+    if (!regexPhone.test(phone)) {
+      $("#checkPhone").html("Số điện thoại không hợp lệ");
+      return false;
+    } else {
+      $("#checkPhone").html("");
+      return true;
     }
+  }
 
-    function checkAgree() {
-        let isAgree = $('#agree:checked').val();
-        if (isAgree) {
-            return true;
-        } else return false;
+  function checkAdrress() {
+    let address = $("#address").val();
+    let regexAdres = /^[a-zA-Z0-9\s,'-]*$/;
+    if (!regexAdres.test(address)) {
+      $("#checkAddress").html("Địa chỉ không hợp lệ");
+      return false;
+    } else {
+      $("#checkAddress").html("");
+      return true;
     }
+  }
 
-    //KIỂM TRA VÀ IN THÔNG TIN NGƯỜI ĐĂNG KÍ
+  function checkAgree() {
+    let isAgree = $("#agree:checked").val();
+    if (isAgree) {
+      return true;
+    } else return false;
+  }
 
-    $('.login-btn').click(function () {
-        $('#loginModal').modal();
-        setInterval(() => {
-            const signUpBtn = $('.sigin-up-submit');
-    
-            if (
-                checkLoginName() &&
-                checkPassword() &&
-                checkReliable() &&
-                checkName() &&
-                checkAge() &&
-                checkEmail() &&
-                checkPhone() &&
-                checkAdrress() &&
-                checkAgree()
-            ) {
-                signUpBtn.prop('disabled', false);
-                signUpBtn.css('pointer-events','auto');
-            } else {
-                signUpBtn.prop('disabled', true);
-                signUpBtn.css('pointer-events','none');
-            }
-        }, 1000);
-    });
+  //KIỂM TRA VÀ IN THÔNG TIN NGƯỜI ĐĂNG KÍ
 
-    let stt = 3;
-    $('.sigin-up-submit').click(function () {
-        $('#loginModal').modal('hide');
-        let username = $('#regist-name').val();
-        let password = $('#regist-password').val();
-        let name = $('#name').val();
-        let email = $('#email').val();
-        let phone = $('#phone').val();
-        let address = $('#address').val();
+  $(".login-btn").click(function () {
+    $("#loginModal").modal();
+    setInterval(() => {
+      const signUpBtn = $(".sigin-up-submit");
 
-        let user = {
-            username: username,
-            password: password,
-            name: name
-        }
+      if (
+        checkLoginName() &&
+        checkPassword() &&
+        checkReliable() &&
+        checkName() &&
+        checkAge() &&
+        checkEmail() &&
+        checkPhone() &&
+        checkAdrress() &&
+        checkAgree()
+      ) {
+        signUpBtn.prop("disabled", false);
+        signUpBtn.css("pointer-events", "auto");
+      } else {
+        signUpBtn.prop("disabled", true);
+        signUpBtn.css("pointer-events", "none");
+      }
+    }, 1000);
+  });
 
-        localStorage.setItem('user', JSON.stringify(user));
+  let stt = 3;
+  $(".sigin-up-submit").click(function () {
+    $("#loginModal").modal("hide");
+    let username = $("#regist-name").val();
+    let password = $("#regist-password").val();
+    let name = $("#name").val();
+    let email = $("#email").val();
+    let phone = $("#phone").val();
+    let address = $("#address").val();
 
-        let html = `
+    let user = {
+      username: username,
+      password: password,
+      name: name,
+    };
+
+    localStorage.setItem("user", JSON.stringify(user));
+
+    let html = `
             <tr>
             <th scope="row">${stt}</th>
             <td>${name}</td>
@@ -248,70 +279,68 @@ $(document).ready(function () {
             </tr>
         `;
 
-        $('#print-info').append(html);
-        ++stt;
+    $("#print-info").append(html);
+    ++stt;
 
-        switchPage('#members',listPage);
-        gotoTop();
-        changeHeader();
-    });
+    switchPage("#members", listPage);
+    gotoTop();
+    changeHeader();
+  });
 
- 
-
-    // THAY ĐỔI HEADER
-    function changeHeader() {
-        if (window.scrollY >= 200) {
-            $('.navbar').css('height', '50px');
-            $('.navbar').css('background-color', 'rgba(63,114,175,0.9)');
-            $('.navbar-brand').css({
-                opacity: '0',
-                display: 'none',
-            });
-            $('.navbar-nav').removeClass('ml-auto');
-            $('.navbar-nav').css('margin', '0 auto');
-        } else {
-            $('.navbar').css('height', '96');
-            $('.navbar').css('background-color', 'rgb(63, 114, 175)');
-            $('.navbar-brand').css({
-                opacity: '1',
-                display: 'block',
-            });
-            $('.navbar-nav').css('margin-right', '0');
-        }
+  // THAY ĐỔI HEADER
+  function changeHeader() {
+    if (window.scrollY >= 200) {
+      $(".navbar").css("height", "50px");
+      $(".navbar").css("background-color", "rgba(63,114,175,0.9)");
+      $(".navbar-brand").css({
+        opacity: "0",
+        display: "none",
+      });
+      $(".navbar-nav").removeClass("ml-auto");
+      $(".navbar-nav").css("margin", "0 auto");
+    } else {
+      $(".navbar").css("height", "96");
+      $(".navbar").css("background-color", "rgb(63, 114, 175)");
+      $(".navbar-brand").css({
+        opacity: "1",
+        display: "block",
+      });
+      $(".navbar-nav").css("margin-right", "0");
     }
-    window.addEventListener('scroll', changeHeader);
+  }
+  window.addEventListener("scroll", changeHeader);
 
-    // XỬ LÝ TRANG SẢN PHẨM
-    let productsPerPage = 20;
-    var totalPage = Math.ceil(data.length / productsPerPage);
-    var currentPage = 1;
+  // XỬ LÝ TRANG SẢN PHẨM
+  let productsPerPage = 20;
+  var totalPage = Math.ceil(data.length / productsPerPage);
+  var currentPage = 1;
 
-    // HÀM TÍNH SỐ TRANG
-    function calcTotalPage(currenData) {
-        return Math.ceil(currenData.length / productsPerPage);
-    }
-    // HÀM RENDER SẢN PHẨM
-    function renderProductsHTML(data) {
-        let res = data.map(
-            (product) =>
-                `
+  // HÀM TÍNH SỐ TRANG
+  function calcTotalPage(currenData) {
+    return Math.ceil(currenData.length / productsPerPage);
+  }
+  // HÀM RENDER SẢN PHẨM
+  function renderProductsHTML(data) {
+    let res = data.map(
+      (product) =>
+        `
          <div class="m-3 product-item" id="${product.id}" value="${
-                    product.type
-                }">
+          product.type
+        }">
             <div class="card product-card">
                <div class="discount-tag" style="display: ${
-                   product.display
+                 product.display
                };">-${product.intDiscount()}%</div>
                <div class="img-product-zoom">
                   <img src="${
-                      product.img
+                    product.img
                   }" alt="" class="card-img-top product-img">
                </div>
                <div class="card-body">
                   <div class="card-title">${product.title}</div>
                   <div class="text-center no-wrap"> 
                      <span class="pre-discount line-through mr-5" style="display: ${
-                         product.display
+                       product.display
                      };">${product.preDiscountInner}</span>
                      <span class="after-discount text-main">${product.afterDiscountInner()}</span>
                   </div>
@@ -319,160 +348,169 @@ $(document).ready(function () {
             </div>
          </div>
         `
-        );
+    );
 
-        $('#all-product-list').html(res);
-    }
+    $("#all-product-list").html(res);
+  }
 
-    //HÀM LỌC SẢN PHẨM
-    function filterProductByType(products, type) {
-        if (type == 'all') return products;
-        return products.filter((product) => product.type == type);
-    }
+  //HÀM LỌC SẢN PHẨM
+  function filterProductByType(products, type) {
+    if (type == "all") return products;
+    return products.filter((product) => product.type == type);
+  }
 
-    function filterProductByPrice(data, min, max) {
-        if (isNaN(min)) min = 0;
-        if (isNaN(max)) max = 40000000;
-        return data.filter(
-            (product) =>
-                product.afterDiscount() >= min && product.afterDiscount() <= max
-        );
-    }
+  function filterProductByPrice(data, min, max) {
+    if (isNaN(min)) min = 0;
+    if (isNaN(max)) max = 40000000;
+    return data.filter(
+      (product) =>
+        product.afterDiscount() >= min && product.afterDiscount() <= max
+    );
+  }
 
-    // HÀM SẮP XẾP SẢN PHẨM
-    function sortProductsByPrice(products, ascending = true) {
-        function quicksort(arr, left, right) {
-            if (left >= right) {
-                return;
-            }
+  // HÀM SẮP XẾP SẢN PHẨM
+  function sortProductsByPrice(products, ascending = true) {
+    function quicksort(arr, left, right) {
+      if (left >= right) {
+        return;
+      }
 
-            let pivot = arr[Math.floor((left + right) / 2)].afterDiscount();
-            let i = left;
-            let j = right;
+      let pivot = arr[Math.floor((left + right) / 2)].afterDiscount();
+      let i = left;
+      let j = right;
 
-            while (i <= j) {
-                while (arr[i].afterDiscount() < pivot) {
-                    i++;
-                }
-                while (arr[j].afterDiscount() > pivot) {
-                    j--;
-                }
-                if (i <= j) {
-                    [arr[i], arr[j]] = [arr[j], arr[i]];
-                    i++;
-                    j--;
-                }
-            }
-
-            quicksort(arr, left, j);
-            quicksort(arr, i, right);
+      while (i <= j) {
+        while (arr[i].afterDiscount() < pivot) {
+          i++;
         }
-
-        let arr = [...products];
-        quicksort(arr, 0, arr.length - 1);
-
-        if (!ascending) {
-            arr.reverse();
+        while (arr[j].afterDiscount() > pivot) {
+          j--;
         }
+        if (i <= j) {
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+          i++;
+          j--;
+        }
+      }
 
-        return arr;
+      quicksort(arr, left, j);
+      quicksort(arr, i, right);
     }
 
-    // HÀM RENDER SẢN PHẨM CHO TRANG HIỆN TẠI
-    function renderProductsPage(products, page) {
-        let startIndex = (page - 1) * productsPerPage;
-        let endIndex = startIndex + productsPerPage;
+    let arr = [...products];
+    quicksort(arr, 0, arr.length - 1);
 
-        let productsToRender = products.slice(startIndex, endIndex);
+    if (!ascending) {
+      arr.reverse();
+    }
 
-        renderProductsHTML(productsToRender);
-        addEventChooseItem(productsToRender);
+    return arr;
+  }
+
+  // HÀM RENDER SẢN PHẨM CHO TRANG HIỆN TẠI
+  function renderProductsPage(products, page) {
+    let startIndex = (page - 1) * productsPerPage;
+    let endIndex = startIndex + productsPerPage;
+
+    let productsToRender = products.slice(startIndex, endIndex);
+
+    renderProductsHTML(productsToRender);
+    addEventChooseItem(productsToRender);
+  }
+  // THÊM SỰ KIỆN CLICK CHO PAGINATION MỚI
+  function addEventChoosePage() {
+    $(".page-item").click(function () {
+      let currentPageItem = $(this);
+      let value = parseInt(currentPageItem.prop("value"));
+      if (!isNaN(value)) {
+        currentPage = value;
+        $(".page-item").removeClass("active");
+        currentPageItem.addClass("active");
+        renderProductsPage(currenData, currentPage);
+      }
+    });
+  }
+
+  window.addEventListener("popstate", function (event) {
+    if (event.state && event.state.page) {
+      // Ẩn tất cả các phần
+      $.each(listPage, function (index, page) {
+        $(page).hide();
+      });
+
+      // Hiển thị phần được lưu trong lịch sử
+      $(event.state.page).show();
     }
-    // THÊM SỰ KIỆN CLICK CHO PAGINATION MỚI
-    function addEventChoosePage() {
-        $('.page-item').click(function () {
-            let currentPageItem = $(this);
-            let value = parseInt(currentPageItem.prop('value'));
-            if (!isNaN(value)) {
-                currentPage = value;
-                $('.page-item').removeClass('active');
-                currentPageItem.addClass('active');
-                renderProductsPage(currenData, currentPage);
-            }
-        });
-    }
-    // HÀM TẠO PAGINATION THEO TỔNG SỐ SẢN PHẨM HIỆN TẠI
-    function renderListPage(totalPage) {
-        let listPage = [];
-        listPage.push(
-            '<li class="page-item active" value="1"><a href="#products" class="page-link bg-primary text-txtcolor text-md">1</a></li>'
-        );
-        for (let i = 2; i <= totalPage; i++) {
-            let newBtn = `
+  });
+  // HÀM TẠO PAGINATION THEO TỔNG SỐ SẢN PHẨM HIỆN TẠI
+  function renderListPage(totalPage) {
+    let listPage = [];
+    listPage.push(
+      '<li class="page-item active" value="1"><a href="#products" class="page-link bg-primary text-txtcolor text-md">1</a></li>'
+    );
+    for (let i = 2; i <= totalPage; i++) {
+      let newBtn = `
                 <li class="page-item" value="${i}"><a href="#products" class="page-link bg-primary text-txtcolor text-md">${i}</a></li>
                 `;
-            listPage.push(newBtn);
-        }
-
-        $('.pagination').html(listPage);
-        addEventChoosePage();
+      listPage.push(newBtn);
     }
 
-    //THỰC HIỆN LOAD LẦN ĐẦU
+    $(".pagination").html(listPage);
+    addEventChoosePage();
+  }
+
+  //THỰC HIỆN LOAD LẦN ĐẦU
+  renderListPage(totalPage);
+  renderProductsPage(data, currentPage);
+
+  let currenData = data;
+  $(".fillter").click(function () {
+    currenData = filterProductByType(data, this.id);
+    totalPage = calcTotalPage(currenData);
     renderListPage(totalPage);
-    renderProductsPage(data, currentPage);
+    renderProductsPage(currenData, 1);
+    sortProduct(currenData);
+  });
 
-    let currenData = data;
-    $('.fillter').click(function () {
-        currenData = filterProductByType(data, this.id);
-        totalPage = calcTotalPage(currenData);
-        renderListPage(totalPage);
-        renderProductsPage(currenData, 1);
-        sortProduct(currenData);
+  $("#fillByPriceBtn").click(function () {
+    let temp = currenData;
+    let minPrice = parseInt($("#minPrice").val());
+    let maxPrice = parseInt($("#maxPrice").val());
+    currenData = filterProductByPrice(currenData, minPrice, maxPrice);
+    totalPage = calcTotalPage(currenData);
+    renderListPage(totalPage);
+    renderProductsPage(currenData, 1);
+    sortProduct(currenData);
+    currenData = temp;
+  });
+
+  function sortProduct(currenData) {
+    $("#sortPrdBtn").click(function () {
+      let optionSort = parseInt($("#sort-product").val());
+
+      switch (optionSort) {
+        case 0:
+          currenData = sortProductsByPrice(currenData);
+          renderListPage(totalPage);
+          currentPage = 1;
+          renderProductsPage(currenData, currentPage);
+          sortProduct(currenData);
+          break;
+        case 1:
+          currenData = sortProductsByPrice(currenData, false);
+          renderListPage(totalPage);
+          currentPage = 1;
+          renderProductsPage(currenData, currentPage);
+          sortProduct(currenData);
+          break;
+      }
     });
+  }
 
-    $('#fillByPriceBtn').click(function () {
-        let temp = currenData;
-        let minPrice = parseInt($('#minPrice').val());
-        let maxPrice = parseInt($('#maxPrice').val());
-        currenData = filterProductByPrice(currenData, minPrice, maxPrice);
-        totalPage = calcTotalPage(currenData);
-        renderListPage(totalPage);
-        renderProductsPage(currenData, 1);
-        sortProduct(currenData);
-        currenData = temp;
-    });
-
-    function sortProduct(currenData) {
-
-        $('#sortPrdBtn').click(function () {
-            let optionSort = parseInt($('#sort-product').val());
-    
-            switch (optionSort) {
-                case 0:
-                    currenData = sortProductsByPrice(currenData);
-                    renderListPage(totalPage);
-                    currentPage = 1;
-                    renderProductsPage(currenData, currentPage);
-                    sortProduct(currenData);
-                    break;
-                case 1:
-                    currenData = sortProductsByPrice(currenData, false);
-                    renderListPage(totalPage);
-                    currentPage = 1;
-                    renderProductsPage(currenData, currentPage);
-                    sortProduct(currenData);
-                    break;
-            }
-        });
-    }
-
-
-    // RENDER CHI TIẾT SẢN PHẨM
-    let listItemPay = [];
-    function renderDetailItem(item) {
-
-        let pageItem = `
+  // RENDER CHI TIẾT SẢN PHẨM
+  let listItemPay = [];
+  function renderDetailItem(item) {
+    let pageItem = `
         <div class="btn d-flex align-items-center ml-5 back-btn">
             <i class="ti-arrow-left text-md"></i>
             <span class="text-md ml-3">Trở lại</span>
@@ -481,7 +519,7 @@ $(document).ready(function () {
             <div class="row">
                 <div class="col-lg-6 col-md-5 col-sm-12 px-4">
                     <img src="${
-                        item.img
+                      item.img
                     }" class="img-fluid detail-img"  style="object-fit: cover; width: 100%;" alt="">
               
                 </div>
@@ -532,193 +570,187 @@ $(document).ready(function () {
      </div>
         `;
 
-        $('#detail-page').html(pageItem);
+    $("#detail-page").html(pageItem);
 
-  
+    $(".desc-quantity").click(function () {
+      changQuantity(false);
+    });
+    $(".asc-quantity").click(function () {
+      changQuantity(true);
+    });
 
-        $('.desc-quantity').click(function() {
-            changQuantity(false);
-        })
-        $('.asc-quantity').click(function() {
-            changQuantity(true);
-        })
-        
-        $('.back-btn').click(function () {
-            switchPage('#home-content', listPage);
-            goTo('#products');
-        });
-               
-        $('button.add-to-cart').click(function() {
+    $(".back-btn").click(function () {
+      switchPage("#home-content", listPage); // Quay lại trang chủ
+      goTo("#products"); // Cuộn đến phần sản phẩm
+    });
 
-            let quantity = parseInt($('.detail-quantity').val());
-            addtoCart(item,quantity);
-            item.hasInCart = true;
+    $("button.add-to-cart").click(function () {
+      let quantity = parseInt($(".detail-quantity").val());
+      addtoCart(item, quantity);
+      item.hasInCart = true;
+    });
 
-        })
-
-        $('.buy-btn').click(function() {
-            let quantity = parseInt($('.detail-quantity').val());
-            $('#list-pay').html(`
+    $(".buy-btn").click(function () {
+      let quantity = parseInt($(".detail-quantity").val());
+      $("#list-pay").html(`
                 <tr>
                     <td>${item.title}</td>
                     <td>${item.afterDiscountInner()}</td>
                     <td>${quantity}</td>
                 </tr>
             `);
-            let sumToPay = (item.afterDiscount() * quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-            $('.sumToPay').html(sumToPay + " đ");
-            switchPage('#payment',listPage);
-            gotoTop();
-        })
+      let sumToPay = (item.afterDiscount() * quantity)
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      $(".sumToPay").html(sumToPay + " đ");
+      switchPage("#payment", listPage);
+      gotoTop();
+    });
+  }
 
-    }
-
-    function addtoCart(productItem, quantity) {
-        if(!productItem.hasInCart) {
-            let html = `
+  function addtoCart(productItem, quantity) {
+    if (!productItem.hasInCart) {
+      let html = `
             <div class="dropdown-item cart-item item-${productItem.id} rounded">
-                <img height="65" class="rounded" src="${productItem.img}" alt="">
+                <img height="65" class="rounded" src="${
+                  productItem.img
+                }" alt="">
     
                 <div class="cart-item-title">
                     <h4 class="float-left mb-1">${productItem.title}</h4><br>
-                    <span class="d-block float-left">Phân loại: ${productItem.typeVN}</span>
+                    <span class="d-block float-left">Phân loại: ${
+                      productItem.typeVN
+                    }</span>
                 </div>
     
                 <div class="cart-item-pay ml-auto">
                     <span class="text-main">${productItem.afterDiscountInner()}</span>
                     <span>x</span>
-                    <span class="item-quantity-${productItem.id}">${quantity}</span>
+                    <span class="item-quantity-${
+                      productItem.id
+                    }">${quantity}</span>
                     <br>
-                    <button class="btn border-0 text-main delete-item-${productItem.id}">Xoá</button>
+                    <button class="btn border-0 text-main delete-item-${
+                      productItem.id
+                    }">Xoá</button>
                 </div>
             </div>
-            `
-            $('.inner-cart').append(html);
-            $('.dropdown-item.figure').hide();
-            let numitemInCart = parseInt($('.num-item-in-cart').text());
-            ++numitemInCart;
-            $('.num-item-in-cart').html(numitemInCart);
-            listItemPay.push([productItem,quantity]);
-            deleteItemCartHandle(productItem);
+            `;
+      $(".inner-cart").append(html);
+      $(".dropdown-item.figure").hide();
+      let numitemInCart = parseInt($(".num-item-in-cart").text());
+      ++numitemInCart;
+      $(".num-item-in-cart").html(numitemInCart);
+      listItemPay.push([productItem, quantity]);
+      deleteItemCartHandle(productItem);
+    } else {
+      let currQuantity = parseInt($(`.item-quantity-${productItem.id}`).text());
+      currQuantity += quantity;
+      $(`.item-quantity-${productItem.id}`).html(currQuantity);
 
-        } else {
-
-            let currQuantity = parseInt($(`.item-quantity-${productItem.id}`).text());
-            currQuantity += quantity;
-            $(`.item-quantity-${productItem.id}`).html(currQuantity);
-
-            let pointer = listItemPay.filter(item => {
-
-               return item[0].id == productItem.id;
-            });
-            console.log(pointer);
-            let index = listItemPay.indexOf(pointer[0]);
-            listItemPay[index][1] = currQuantity;
-        }
-        
+      let pointer = listItemPay.filter((item) => {
+        return item[0].id == productItem.id;
+      });
+      console.log(pointer);
+      let index = listItemPay.indexOf(pointer[0]);
+      listItemPay[index][1] = currQuantity;
     }
-    function deleteItemCartHandle(productItem) {
-        $(`.delete-item-${productItem.id}`).click(function(e) {
-            e.preventDefault();
-            $(`.item-${productItem.id}`).remove();
-            let numitemInCart = parseInt($('.num-item-in-cart').text());
-            --numitemInCart;
-            if(numitemInCart === 0) {
-                $('.dropdown-item.figure').show();
-            }
-            $(`.num-item-in-cart`).html(numitemInCart);
-            productItem.hasInCart = false;
-            listItemPay = listItemPay.filter(item => item[0].id !== productItem.id);
-        })
-    }
-    function createListPay(listItemPay) {
-        let html = [];
-        for(let i = 0; i < listItemPay.length; ++i) {
-
-            html.push(
-                `
+  }
+  function deleteItemCartHandle(productItem) {
+    $(`.delete-item-${productItem.id}`).click(function (e) {
+      e.preventDefault();
+      $(`.item-${productItem.id}`).remove();
+      let numitemInCart = parseInt($(".num-item-in-cart").text());
+      --numitemInCart;
+      if (numitemInCart === 0) {
+        $(".dropdown-item.figure").show();
+      }
+      $(`.num-item-in-cart`).html(numitemInCart);
+      productItem.hasInCart = false;
+      listItemPay = listItemPay.filter((item) => item[0].id !== productItem.id);
+    });
+  }
+  function createListPay(listItemPay) {
+    let html = [];
+    for (let i = 0; i < listItemPay.length; ++i) {
+      html.push(
+        `
                     <tr>
                         <td>${listItemPay[i][0].title}</td>
                         <td>${listItemPay[i][0].afterDiscountInner()}</td>
                         <td>${listItemPay[i][1]}</td>
                      </tr>
                 `
-            ) 
-        }
-        $('#list-pay').html(html.join(''));
+      );
     }
-    $('.pay-btn').click(function(e) {
-        e.preventDefault();
-        let sum = 0;
-        createListPay(listItemPay);
-        switchPage('#payment',listPage);
-        for(let i = 0; i < listItemPay.length; ++i) {
-            sum += listItemPay[i][0].afterDiscount() * listItemPay[i][1];
-            console.log(sum);
-        }
-
-        let sumToPay = sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        $('.sumToPay').html(sumToPay + " đ");
-
-        gotoTop();
-        
-    })
-
-
-    function changQuantity(asc = true) {
-        let quantity = parseInt($('.detail-quantity').val());
-        if(asc == false) {
-            if(quantity == 1) {
-                return;
-            } else {
-                --quantity;
-                $('.detail-quantity').val(quantity);
-            }
-        } else {
-            ++quantity;
-            $('.detail-quantity').val(quantity);
-        }
-    }
-    function addEventChooseItem(Items) {
-        $('.product-item').click(function () {
-            let itemIdTargeting = parseInt($(this).prop('id'));
-            let itemTargeting = Items.filter(
-                (item) => item.id == itemIdTargeting
-            );
-            switchPage('#detail-page', listPage);
-            renderDetailItem(itemTargeting[0]);
-            gotoTop();
-        });
+    $("#list-pay").html(html.join(""));
+  }
+  $(".pay-btn").click(function (e) {
+    e.preventDefault();
+    let sum = 0;
+    createListPay(listItemPay);
+    switchPage("#payment", listPage);
+    for (let i = 0; i < listItemPay.length; ++i) {
+      sum += listItemPay[i][0].afterDiscount() * listItemPay[i][1];
+      console.log(sum);
     }
 
-    // XỬ LÝ ĐĂNG NHẬP
-    $('.log-out-btn').click(function () { 
-        $('.dropdown.avt').hide();
-        $('.nav-item.login').show();
-    })
+    let sumToPay = sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    $(".sumToPay").html(sumToPay + " đ");
 
-    $('.login-submit').click(function() {
-        let user = JSON.parse(localStorage.getItem('user'));
-        let usernameLogin = $('#login-input').val();
-        let passwordLogin = $('#login-input-password').val();
+    gotoTop();
+  });
 
-        if (usernameLogin == user.username && passwordLogin == user.password) {
+  function changQuantity(asc = true) {
+    let quantity = parseInt($(".detail-quantity").val());
+    if (asc == false) {
+      if (quantity == 1) {
+        return;
+      } else {
+        --quantity;
+        $(".detail-quantity").val(quantity);
+      }
+    } else {
+      ++quantity;
+      $(".detail-quantity").val(quantity);
+    }
+  }
+  function addEventChooseItem(Items) {
+    $(".product-item").click(function () {
+      let itemIdTargeting = parseInt($(this).prop("id"));
+      let itemTargeting = Items.filter((item) => item.id == itemIdTargeting);
 
-            $('#loginModal').modal('hide');
-            $('.user-name').html(user.name);
-            $('.nav-item.login').hide();
-            $('.nav-item.avt').show();
+      // Ẩn các phần khác và hiển thị chi tiết sản phẩm
+      switchPage("#detail-page", listPage);
+      renderDetailItem(itemTargeting[0]);
+      gotoTop(); // Cuộn lên đầu trang
+    });
+  }
 
-        } else if (usernameLogin == user.username && passwordLogin != user.password) {
+  // XỬ LÝ ĐĂNG NHẬP
+  $(".log-out-btn").click(function () {
+    $(".dropdown.avt").hide();
+    $(".nav-item.login").show();
+  });
 
-            $('.info-login-password').html('Mật khẩu không chính xác');
-            $('.info-login-input').html('');
+  $(".login-submit").click(function () {
+    let user = JSON.parse(localStorage.getItem("user"));
+    let usernameLogin = $("#login-input").val();
+    let passwordLogin = $("#login-input-password").val();
 
-        } else if (usernameLogin != user.username || !user.username) {
-
-            $('.info-login-input').html('Tài khoản không tồn tại');
-
-        }
-    })
-
+    if (usernameLogin == user.username && passwordLogin == user.password) {
+      $("#loginModal").modal("hide");
+      $(".user-name").html(user.name);
+      $(".nav-item.login").hide();
+      $(".nav-item.avt").show();
+    } else if (
+      usernameLogin == user.username &&
+      passwordLogin != user.password
+    ) {
+      $(".info-login-password").html("Mật khẩu không chính xác");
+      $(".info-login-input").html("");
+    } else if (usernameLogin != user.username || !user.username) {
+      $(".info-login-input").html("Tài khoản không tồn tại");
+    }
+  });
 });

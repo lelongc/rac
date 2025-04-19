@@ -29,7 +29,7 @@
 *
 {
    --background-color: rgba(215, 218, 216, 0.678); 
-   --primary-color: rgb(30, 41, 51); /* Darker blue-gray for primary buttons or highlights */
+   --primary-color: rgb(255, 255, 255); /* Darker blue-gray for primary buttons or highlights */
    --main-color: rgb(131, 145, 165); /* Charcoal gray for a subtle yet contrasting main color */
    --text-color: rgba(2, 2, 2, 0.404); 
    
@@ -183,12 +183,12 @@ hr.text-bg {
    font-size: 1.8rem;
    font-weight: 900;
 }
-.cart {
+/* .cart {
    position: fixed;
    right: 0;
    top: 140px;
    z-index: 10000;
-}
+} */
 .cart .dropdown-menu {
    right: 105%!important;
    top: 0;
