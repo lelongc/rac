@@ -752,4 +752,32 @@ $(document).ready(function () {
       $(".info-login-input").html("Tài khoản không tồn tại");
     }
   });
+
+  // HÀM TÌM KIẾM SẢN PHẨM
+  function searchProducts(data, searchTerm) {
+    return data.filter((product) =>
+      product.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }
+
+  // THÊM SỰ KIỆN CHO FORM TÌM KIẾM
+  $("#form-search").submit(function (event) {
+    event.preventDefault();
+    const searchTerm = $(this).find("input[type='search']").val().trim();
+    if (searchTerm) {
+      currenData = searchProducts(data, searchTerm); // Cập nhật currenData với kết quả tìm kiếm
+      totalPage = calcTotalPage(currenData); // Tính lại số trang
+      renderListPage(totalPage); // Cập nhật pagination
+      renderProductsPage(currenData, 1); // Hiển thị kết quả tìm kiếm
+      switchPage("#home-content", listPage); // Chuyển đến trang sản phẩm
+      goTo("#products"); // Cuộn đến phần sản phẩm
+    } else {
+      currenData = data; // Nếu không có từ khóa, hiển thị tất cả sản phẩm
+      totalPage = calcTotalPage(currenData);
+      renderListPage(totalPage);
+      renderProductsPage(currenData, 1);
+      switchPage("#home-content", listPage); // Chuyển đến trang sản phẩm
+      goTo("#products"); // Cuộn đến phần sản phẩm
+    }
+  });
 });
