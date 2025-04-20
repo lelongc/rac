@@ -27,7 +27,7 @@
     <!-- Navbar/Header -->
     <nav class="navbar navbar-expand-lg sticky-top">
       <div class="container-fluid px-xl-5 px-lg-0 py-2">
-        <a href="index.html" class="navbar-brand mx-auto">
+        <a href="index.html" class="navbar-brand">
           <i class="fas fa-couch" style="font-size: 70px; color: #c0cecebd"></i>
           <!-- Sofa icon -->
           <span
@@ -57,7 +57,7 @@
         </button>
 
         <div
-          class="collapse navbar-collapse justify-content-center"
+          class="collapse navbar-collapse"
           id="navResponsive"
         >
           <ul class="navbar-nav">
@@ -724,23 +724,24 @@
       </div>
     </div>
 <!-- IMAGE INTRODUCTION -->
-<div id="image-introduction" class="container-fluid my-5 bg-light py-5 rounded shadow-sm">
-  <div class="row">
-    <div class="col-12 text-center">
-      <h1 class="display-4 text-main font-weight-bold">
+<div id="image-introduction" class="container-fluid my-5 py-5 rounded shadow-sm" style="background: linear-gradient(to right, #6a11cb, #2575fc); color: white;">
+  <div class="row align-items-center">
+    <div class="col-md-6 text-center text-md-left">
+      <h1 class="display-4 font-weight-bold">
         Chào mừng đến với HomeStyle
       </h1>
-      <p class="text-md mt-3 text-secondary">
+      <p class="text-md mt-3">
         Khám phá những sản phẩm nội thất chất lượng cao, thiết kế tinh tế và
         giá cả hợp lý.
       </p>
+      <a href="#products" class="btn btn-light btn-lg mt-4 px-5 py-3" style="font-size: 1.5rem; font-weight: bold;">Khám phá ngay</a>
     </div>
-    <div class="col-12 text-center mt-4">
+    <div class="col-md-6 text-center">
       <img
         src="./Images/home-intro.jpg"
         alt="Giới thiệu cửa hàng"
-        class="rounded shadow-lg"
-        style="max-width: 90%; height: auto; border: 5px solid #c0cecebd"
+        class="rounded shadow-lg slide-in-right"
+        style="max-width: 90%; height: auto; border: 5px solid white;"
       />
     </div>
   </div>
@@ -782,6 +783,58 @@
           <div class="line-separate"></div>
         </div>
         <div class="row mt-5">
+          <!-- DANH SÁCH TẤT CẢ SẢN PHẨM -->
+          <div class="col-xl-10 col-lg-12 mr-auto mt-lg-3">
+            <div class="row">
+              <div class="input-group mx-auto mb-3 w-25 p-2">
+                <select class="custom-select" id="sort-product">
+                  <option selected value="0">Giá tăng dần</option>
+                  <option value="1">Giá giảm dần</option>
+                </select>
+                <div class="input-group-append" id="sortPrdBtn">
+                  <label class="input-group-text" for="sort-product"
+                    >Sắp xếp</label
+                  >
+                </div>
+              </div>
+              <ul class="pagination justify-content-center mx-auto"></ul>
+            </div>
+
+            <div
+              class="row d-flex justify-content-start align-items-start"
+              id="all-product-list"
+            >
+              <!-- <div class="m-3 product-item">
+                  <div class="card product-card">
+                     <div class="discount-tag">-50%</div>
+                     <div class="img-product-zoom">
+                        <img src="./Images/guongk/guongktrangtri1.jpg" alt="" class="card-img-top product-img">
+                     </div>
+                     <div class="card-body">
+                        <div class="card-title">guong</div>
+                        <div class="text-center">
+                           <span class="pre-discount line-through mr-5">3.990.000</span>
+                           <span class="after-discount text-main ml-5">3.199.000</span>
+                        </div>
+                     </div>
+                  </div>
+               </div> -->
+            </div>
+
+            <!-- PAGINATION -->
+            <nav aria-label="Page navigation" class="row mt-5">
+              <ul class="pagination justify-content-center mx-auto">
+                <li class="page-item active" value="1">
+                  <a
+                    href="#products"
+                    class="page-link bg-primary text-txtcolor text-md"
+                    >1</a
+                  >
+                </li>
+              </ul>
+            </nav>
+          </div>
+
           <!-- SIDEBAR -->
           <div class="col-xl-2 col-lg-12 all-product-sidebar">
             <div
@@ -881,58 +934,6 @@
                 Xác nhận
               </button>
             </div>
-          </div>
-
-          <!-- DANH SÁCH TẤT CẢ SẢN PHẨM -->
-          <div class="col-xl-10 col-lg-12 ml-auto mt-lg-3">
-            <div class="row">
-              <div class="input-group mx-auto mb-3 w-25 p-2">
-                <select class="custom-select" id="sort-product">
-                  <option selected value="0">Giá tăng dần</option>
-                  <option value="1">Giá giảm dần</option>
-                </select>
-                <div class="input-group-append" id="sortPrdBtn">
-                  <label class="input-group-text" for="sort-product"
-                    >Sắp xếp</label
-                  >
-                </div>
-              </div>
-              <ul class="pagination justify-content-center mx-auto"></ul>
-            </div>
-
-            <div
-              class="row d-flex justify-content-start align-items-start"
-              id="all-product-list"
-            >
-              <!-- <div class="m-3 product-item">
-                  <div class="card product-card">
-                     <div class="discount-tag">-50%</div>
-                     <div class="img-product-zoom">
-                        <img src="./Images/guongk/guongktrangtri1.jpg" alt="" class="card-img-top product-img">
-                     </div>
-                     <div class="card-body">
-                        <div class="card-title">guong</div>
-                        <div class="text-center">
-                           <span class="pre-discount line-through mr-5">3.990.000</span>
-                           <span class="after-discount text-main ml-5">3.199.000</span>
-                        </div>
-                     </div>
-                  </div>
-               </div> -->
-            </div>
-
-            <!-- PAGINATION -->
-            <nav aria-label="Page navigation" class="row mt-5">
-              <ul class="pagination justify-content-center mx-auto">
-                <li class="page-item active" value="1">
-                  <a
-                    href="#products"
-                    class="page-link bg-primary text-txtcolor text-md"
-                    >1</a
-                  >
-                </li>
-              </ul>
-            </nav>
           </div>
         </div>
       </div>

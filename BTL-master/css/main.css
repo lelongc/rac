@@ -310,9 +310,12 @@ h1.allprd {
 }
 .navbar-nav {
    margin-left: auto !important;
+   margin-right: 0 !important;
    transition: all .3s linear;
 }
-
+.navbar-collapse {
+   justify-content: flex-end !important;
+}
 .page-item {
    height: 50px;
    width: 50px;
@@ -331,6 +334,7 @@ h1.allprd {
    position: sticky;
    top: 60px;
    height: fit-content;
+   float: right;
 }
 .text-md {
    font-size: 19px !important;
@@ -787,4 +791,242 @@ a {
 
 .table tbody tr:nth-child(even) {
    background-color: rgb(219, 226, 239);
+}
+
+#image-introduction h1 {
+  font-size: 3.5rem;
+  font-family: 'opensan', sans-serif;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+#image-introduction p {
+  font-size: 1.8rem;
+  line-height: 1.6;
+}
+
+#image-introduction .btn {
+  transition: all 0.3s ease-in-out;
+}
+
+#image-introduction .btn:hover {
+  background-color: #2575fc;
+  color: white;
+  transform: scale(1.05);
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.slide-in-right {
+  animation: slideInRight 1s ease-in-out;
+}
+
+/* Update color variables for a modern gradient-based theme */
+:root {
+  --background-color: #f3f4f6; /* Light gray for background */
+  --primary-color: #ffffff; /* White for primary elements */
+  --main-color: #6a11cb; /* Gradient start color */
+  --secondary-color: #2575fc; /* Gradient end color */
+  --text-color: #333333; /* Dark gray for text */
+  --accent-color: #ff6f61; /* Accent color for highlights */
+}
+
+/* Apply gradient to buttons and headers */
+.btn.bg-main {
+  background: linear-gradient(to right, var(--main-color), var(--secondary-color));
+  color: var(--primary-color);
+  border: none;
+}
+
+.btn.bg-main:hover {
+  background: linear-gradient(to left, var(--main-color), var(--secondary-color));
+  color: var(--primary-color);
+}
+
+.navbar {
+  background: linear-gradient(to right, var(--main-color), var(--secondary-color)) !important;
+  color: var(--primary-color);
+}
+
+.navbar-brand {
+  color: var(--primary-color);
+}
+
+.navbar-nav .nav-link {
+  color: var(--primary-color) !important;
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--accent-color) !important;
+}
+
+.footer-rule {
+  background: linear-gradient(to right, var(--main-color), var(--secondary-color));
+  color: var(--primary-color);
+}
+
+.table thead {
+  background: linear-gradient(to right, var(--main-color), var(--secondary-color));
+  color: var(--primary-color);
+}
+
+.page-link {
+  background: var(--primary-color);
+  color: var(--main-color);
+  border: 1px solid var(--main-color);
+}
+
+.page-item.active .page-link {
+  background: var(--main-color);
+  color: var(--primary-color);
+}
+
+/* Update text and background colors */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--main-color);
+}
+
+a {
+  color: var(--main-color);
+}
+
+a:hover {
+  color: var(--secondary-color);
+}
+
+/* Update card styles */
+.card {
+  border: 1px solid var(--main-color);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Update modal styles */
+.modal-content {
+  background: var(--primary-color);
+  border: 1px solid var(--main-color);
+}
+
+.modal-header {
+  background: linear-gradient(to right, var(--main-color), var(--secondary-color));
+  color: var(--primary-color);
+}
+
+/* Update dropdown menu colors */
+.dropdown-menu {
+  background: linear-gradient(to right, var(--main-color), var(--secondary-color));
+  color: var(--primary-color);
+}
+
+.dropdown-item {
+  background: transparent;
+  color: var(--primary-color);
+}
+
+.dropdown-item:hover {
+  background: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+/* Update search input and button */
+.search-input {
+  background: var(--primary-color);
+  color: var(--text-color) !important;
+  border: 1px solid var(--main-color);
+}
+
+.search-btn {
+  background: linear-gradient(to right, var(--main-color), var(--secondary-color));
+  color: var(--primary-color) !important;
+}
+
+.search-btn:hover {
+  background: var(--secondary-color);
+  color: var (--primary-color) !important;
+}
+
+/* Update modal footer buttons */
+.modal-footer .btn {
+  background: linear-gradient(to right, var(--main-color), var(--secondary-color));
+  color: var(--primary-color);
+  border: none;
+}
+
+.modal-footer .btn:hover {
+  background: linear-gradient(to left, var(--main-color), var(--secondary-color));
+  color: var(--primary-color);
+}
+
+/* Update pagination active state */
+.page-item.active .page-link {
+  background: linear-gradient(to right, var(--main-color), var(--secondary-color));
+  color: var(--primary-color);
+}
+
+/* Update table row hover effect */
+.table tbody tr:hover {
+  background: rgba(106, 17, 203, 0.1); /* Light highlight for rows */
+}
+
+/* Update cart button */
+.shopping-cart-btn {
+  background: linear-gradient(to right, var(--main-color), var(--secondary-color));
+  color: var(--primary-color);
+}
+
+.shopping-cart-btn:hover {
+  background: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+/* Update cart dropdown items */
+.cart-item {
+  background: var(--primary-color);
+  color: var(--text-color);
+  border: 1px solid var(--main-color);
+}
+
+.cart-item .btn {
+  color: var(--main-color);
+}
+
+.cart-item .btn:hover {
+  color: var(--secondary-color);
+}
+
+/* Update footer links */
+.footer-rule a {
+  color: var(--primary-color);
+}
+
+.footer-rule a:hover {
+  color: var(--accent-color);
+}
+
+/* Update form inputs */
+.form-control {
+  border: 1px solid var(--main-color);
+  color: var(--text-color);
+}
+
+.form-control:focus {
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 5px var(--secondary-color);
 }
