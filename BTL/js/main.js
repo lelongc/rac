@@ -520,55 +520,54 @@ $(document).ready(function () {
                 <div class="col-lg-6 col-md-5 col-sm-12 px-4">
                     <img src="${
                       item.img
-                    }" class="img-fluid detail-img"  style="object-fit: cover; width: 100%;" alt="">
-              
+                    }" class="img-fluid detail-img" style="object-fit: cover; width: 100%;" alt="">
                 </div>
-           <div class="col-lg-6 col-md-7 col-sm-12 pl-4">
-  
-              <h1 class="detail-title">${item.title}</h1>
-              <div class="detail-price">${item.afterDiscountInner()}</div>
-  
-              <div class="detail-discount mt-3">
-                 <div class="text-md">Khuyến mãi áp dụng: </div>
-                 <div class="text-md ml-5 text-main">${item.intDiscount()}%</div>
-              </div>
-  
-              <div class="detail-cart mt-5">
-                 <button class="btn desc-quantity"><i class="ti-minus"></i></button>
-                 <input value="1" type="text" name="" id="" class="text-md ml-0 detail-quantity">
-                 <button class="btn ml-0 asc-quantity"><i class="ti-plus"></i></button>
-                 <button class="btn text-uppercase ml-5 add-to-cart">Thêm vào giỏ hàng</button>
-              </div>   
-  
-              <div class="detail-buy mt-5">
-                 <button class="btn buy-btn">
-                    <span class="text-big">Mua ngay</span>
-                    <span class="text-sm">Gọi điện và xác nhận giao hàng tận nơi</span>
-                 </button>
-              </div>
-  
-              <div class="detail-share mt-5">
-                 <span class="text-md text-txtcolor text-uppercase">Chia sẻ: </span>
-                 <a href="#"><img class="ml-3" height="30" src="./Images/social/facebook-icon.png" alt=""></a>
-                 <a href="#"><img class="ml-3" height="34" src="./Images/social/logo-instagram-5.jpg" alt=""></a>
-              </div>
-  
-              <div class="detail-support mt-3">
-                 <span class="text-big">Bạn cần hỗ trợ</span>
-                 <a href="#" class="sp-mess ml-5 mt-4">
-                    <img src="./Images/social/877514_media_512x512.png" height="33" alt="">
-                    <span class="text-md ml-3">Liên hệ qua facebook</span>
-                 </a>
-                 <a href="#" class="sp-zalo ml-5 mt-4">
-                    <img src="./Images/social/download.png"height="33" alt="">
-                    <span class="text-md ml-3">Liên hệ qua Zalo</span>
-                 </a>
-              </div>
-  
-           </div>
+                <div class="col-lg-6 col-md-7 col-sm-12 pl-4">
+                    <h1 class="detail-title">${item.title}</h1>
+                    <div class="detail-price">${item.afterDiscountInner()}</div>
+                    <div class="detail-discount mt-3">
+                        <div class="text-md">Khuyến mãi áp dụng: </div>
+                        <div class="text-md ml-5 text-main">${item.intDiscount()}%</div>
+                    </div>
+                    <div class="detail-description mt-4">
+                        <h3 class="text-md">Mô tả sản phẩm:</h3>
+                        <p class="text-md">${
+                          item.description ||
+                          "Không có mô tả chi tiết cho sản phẩm này."
+                        }</p>
+                    </div>
+                    <div class="detail-cart mt-5">
+                        <button class="btn desc-quantity"><i class="ti-minus"></i></button>
+                        <input value="1" type="text" name="" id="" class="text-md ml-0 detail-quantity">
+                        <button class="btn ml-0 asc-quantity"><i class="ti-plus"></i></button>
+                        <button class="btn text-uppercase ml-5 add-to-cart">Thêm vào giỏ hàng</button>
+                    </div>
+                    <div class="detail-buy mt-5">
+                        <button class="btn buy-btn">
+                            <span class="text-big">Mua ngay</span>
+                            <span class="text-sm">Gọi điện và xác nhận giao hàng tận nơi</span>
+                        </button>
+                    </div>
+                    <div class="detail-share mt-5">
+                        <span class="text-md text-txtcolor text-uppercase">Chia sẻ: </span>
+                        <a href="#"><img class="ml-3" height="30" src="./Images/social/facebook-icon.png" alt=""></a>
+                        <a href="#"><img class="ml-3" height="34" src="./Images/social/logo-instagram-5.jpg" alt=""></a>
+                    </div>
+                    <div class="detail-support mt-3">
+                        <span class="text-big">Bạn cần hỗ trợ</span>
+                        <a href="#" class="sp-mess ml-5 mt-4">
+                            <img src="./Images/social/877514_media_512x512.png" height="33" alt="">
+                            <span class="text-md ml-3">Liên hệ qua facebook</span>
+                        </a>
+                        <a href="#" class="sp-zalo ml-5 mt-4">
+                            <img src="./Images/social/download.png" height="33" alt="">
+                            <span class="text-md ml-3">Liên hệ qua Zalo</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-     </div>
-        `;
+    `;
 
     $("#detail-page").html(pageItem);
 
