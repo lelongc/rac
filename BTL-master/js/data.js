@@ -97,26 +97,6 @@ let data = [
   },
 
   {
-    img: "./Images/guongk/guongk.jpg",
-    title: "guong",
-  },
-  {
-    img: "./Images/guongk/guongktrangtri1.jpg",
-    title: "guong",
-  },
-  {
-    img: "./Images/guongk/guongktrangtri2.jpg",
-    title: "guong",
-  },
-  {
-    img: "./Images/guongk/guongktrangtri3.jpg",
-    title: "guong",
-  },
-  {
-    img: "./Images/guongk/guongktrangtri4.jpg",
-    title: "guong",
-  },
-  {
     img: "./Images/khác4/bantranho2.jpg",
     title: "Bàn trà nhỏ",
   },
@@ -152,14 +132,8 @@ let data = [
     img: "./Images/khác4/keconsoleversace.jpg",
     title: "Kệ Console Versace",
   },
-  {
-    img: "./Images/guongk/guongktrangtri5.jpg",
-    title: "guong",
-  },
-  {
-    img: "./Images/guongk/guongkvienda.jpg",
-    title: "Gương viền đá",
-  },
+
+  
   {
     img: "./Images/khác4/bantradammay.jpg",
     title: "Bàn trà đám mây",
