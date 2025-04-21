@@ -109,11 +109,14 @@ $(document).ready(function () {
   function checkLoginName() {
     let name = $("#regist-name").val();
     let checkNameText = $("#text-regist-name");
-
+  
+    // Kiểm tra trường trống
     if (!name) {
       checkNameText.html("Vui lòng chọn tên đăng nhập!");
       return false;
     }
+  
+    // Kiểm tra tên hợp lệ
     let regexName = /^(?![0-9])[a-zA-Z0-9]{3,}$/;
     if (!regexName.test(name)) {
       checkNameText.html("Tên đăng nhập không hợp lệ, vui lòng nhập lại");
@@ -123,10 +126,20 @@ $(document).ready(function () {
       return true;
     }
   }
+  
 
   function checkPassword() {
     let password = $("#regist-password").val();
     let checkPassText = $("#text-regist-pass");
+  
+    // Kiểm tra trường trống
+    if (!password) {
+      checkPassText.html("Vui lòng nhập mật khẩu!");
+      checkPassText.removeClass("text-success").addClass("text-danger");
+      return false;
+    }
+  
+    // Kiểm tra mật khẩu mạnh
     let strongPass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/;
     if (strongPass.test(password)) {
       checkPassText
@@ -136,30 +149,45 @@ $(document).ready(function () {
       return true;
     } else {
       checkPassText
-        .html(
-          "Mật khẩu yếu, ít nhất 1 chữ thường, 1 chữ hoa, 1 chữ sốt và 8 kí tự trở lên"
-        )
+        .html("Mật khẩu yếu, ít nhất 1 chữ thường, 1 chữ hoa, 1 chữ số và 8 kí tự trở lên")
         .addClass("text-danger")
         .removeClass("text-success");
+      return false;
     }
   }
+  
 
   function checkReliable() {
     let reliablePass = $("#password-reliable").val();
     let password = $("#regist-password").val();
+  
+    // Kiểm tra trường trống
+    if (!reliablePass) {
+      $("#text-regist-reliable").html("Vui lòng xác nhận mật khẩu!");
+      return false;
+    }
+  
+    // Kiểm tra mật khẩu trùng khớp
     if (reliablePass != password) {
-      $("#text-regist-reliable").html(
-        "Mật khẩu không trùng khớp, vui lòng nhập lại"
-      );
+      $("#text-regist-reliable").html("Mật khẩu không trùng khớp, vui lòng nhập lại");
       return false;
     } else {
       $("#text-regist-reliable").html("");
       return true;
     }
   }
+  
 
   function checkName() {
     let name = $("#name").val();
+  
+    // Kiểm tra trường trống
+    if (!name) {
+      $("#checkName").html("Vui lòng nhập họ tên!");
+      return false;
+    }
+  
+    // Kiểm tra định dạng họ tên (chữ hoa đầu mỗi từ)
     let regexName = /^([A-Z][a-z]*)(\s[A-Z][a-z]*)+$/;
     if (!regexName.test(name)) {
       $("#checkName").html("Họ tên không phù hợp!");
@@ -169,20 +197,37 @@ $(document).ready(function () {
       return true;
     }
   }
+  
 
   function checkAge() {
     let birthdate = new Date($("#birthdate").val());
-    if (birthdate.getDate() == NaN) {
-      $("#checkBirthdate").html("vui lòng chọn ngày tháng năm sinh!");
+  
+    // Kiểm tra trường trống
+    if (!$("#birthdate").val()) {
+      $("#checkBirthdate").html("Vui lòng chọn ngày tháng năm sinh!");
+      return false;
+    }
+  
+    // Kiểm tra ngày sinh hợp lệ
+    if (birthdate.getDate() === NaN) {
+      $("#checkBirthdate").html("Ngày sinh không hợp lệ!");
       return false;
     } else {
       $("#checkBirthdate").html("");
       return true;
     }
   }
-
+  
   function checkEmail() {
     let email = $("#email").val();
+  
+    // Kiểm tra trường trống
+    if (!email) {
+      $("#checkEmail").html("Vui lòng nhập email!");
+      return false;
+    }
+  
+    // Kiểm tra định dạng email
     let regexMail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!regexMail.test(email)) {
       $("#checkEmail").html("Email không hợp lệ");
@@ -192,9 +237,18 @@ $(document).ready(function () {
       return true;
     }
   }
+  
 
   function checkPhone() {
     let phone = $("#phone").val();
+  
+    // Kiểm tra trường trống
+    if (!phone) {
+      $("#checkPhone").html("Vui lòng nhập số điện thoại!");
+      return false;
+    }
+  
+    // Kiểm tra định dạng số điện thoại (10 số)
     let regexPhone = /^[0-9]{10}$/;
     if (!regexPhone.test(phone)) {
       $("#checkPhone").html("Số điện thoại không hợp lệ");
@@ -204,18 +258,27 @@ $(document).ready(function () {
       return true;
     }
   }
+  
 
   function checkAdrress() {
-    let address = $("#address").val();
-    let regexAdres = /^[a-zA-Z0-9\s,'-]*$/;
+    let address = $("#address").val(); // Lấy giá trị nhập vào
+    let regexAdres = /^[a-zA-Z0-9\s,'-]*$/; // Biểu thức chính quy cho địa chỉ
+  
     if (!regexAdres.test(address)) {
-      $("#checkAddress").html("Địa chỉ không hợp lệ");
+      // Nếu không hợp lệ
+      $("#checkAdress").html("Địa chỉ không hợp lệ");
       return false;
     } else {
-      $("#checkAddress").html("");
+      // Nếu hợp lệ
+      $("#checkAdress").html(""); // Xóa thông báo lỗi
       return true;
     }
   }
+  
+  // Gắn sự kiện khi người dùng nhập liệu
+$("#address").on("input", checkAdrress);
+  
+
 
   function checkAgree() {
     let isAgree = $("#agree:checked").val();
