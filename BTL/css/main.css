@@ -154,7 +154,7 @@ hr.text-bg {
 }
 .search {
    position: absolute; /* Keep search fixed relative to the navbar */
-   top: 50%; /* Center vertically within the navbar */
+   top: 40%; /* Center vertically within the navbar */
    right: 15px; /* Align to the right edge of the navbar */
    transform: translateY(-50%); /* Adjust for vertical centering */
    display: flex;
