@@ -95,7 +95,7 @@ hr.text-bg {
    color: var(--background-color);
 }
 .navbar {
-   position: relative; /* Ensure navbar is the reference point */
+   /* position: relative; Ensure navbar is the reference point */
    background-color: var(--main-color) !important;
    opacity: 1;
    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
@@ -858,6 +858,7 @@ a {
 .table tbody tr:nth-child(even) {
    background-color: rgb(219, 226, 239);
 }
+
 
 #image-introduction h1 {
   font-size: 3.5rem;

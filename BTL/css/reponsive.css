@@ -73,7 +73,7 @@
 @media (max-width: 768px) {
    /* --- ĐỊNH DẠNG LƯỚI SẢN PHẨM (1 CỘT) --- */
    #all-product-list {
-      grid-template-columns: 1fr; /* **1 cột duy nhất** */
+      grid-template-columns: 2fr; /* **1 cột duy nhất** */
       gap: 20px; /* Có thể tăng gap dọc */
    }
 

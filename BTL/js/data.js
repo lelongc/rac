@@ -373,19 +373,25 @@ let typeListVN = [
   "Giá đỡ",
 ];
 
+// Lấy độ dài của mảng data
 let length = data.length;
 for (let i = 0; i < length; ++i) {
+  // Gán id cho từng sản phẩm bằng chỉ số i
   data[i].id = i;
 
+  // Tạo giá trị discount ngẫu nhiên từ 0-0.4 (0-40%)
   data[i].discount = Math.floor(Math.random() * 5) / 10;
 
-  data[i].preDiscount = Math.floor(Math.random() * (40000000 + 1)) + 1000000;
+  // Tạo giá gốc ngẫu nhiên từ 100,000 đến 4,100,000 VND
+  data[i].preDiscount = Math.floor(Math.random() * (4000000 + 1)) + 100000;
+  // Format giá gốc theo định dạng tiền tệ VND
   data[i].preDiscountInner = new Intl.NumberFormat("de-DE", {
     style: "currency",
     currency: "VND",
   }).format(data[i].preDiscount);
 
   let preDiscount = data[i].preDiscount;
+  // Hàm tính và format giá sau khi giảm giá
   data[i].afterDiscountInner = function () {
     let a = Math.floor(preDiscount - preDiscount * data[i].discount);
     let res = new Intl.NumberFormat("de-DE", {
@@ -395,23 +401,29 @@ for (let i = 0; i < length; ++i) {
     return res;
   };
 
+  // Hàm tính giá sau khi giảm giá (không format)
   data[i].afterDiscount = function () {
     return Math.floor(preDiscount - preDiscount * data[i].discount);
   };
 
+  // Hàm chuyển discount từ dạng thập phân sang phần trăm
   data[i].intDiscount = function () {
     return data[i].discount * 100;
   };
 
+  // Ẩn sản phẩm nếu không có giảm giá
   if (data[i].discount == 0) data[i].display = "none !important";
 
+  // Xác định loại sản phẩm dựa trên đường dẫn ảnh
   for (let j = 0; j < reg.length; ++j) {
     if (reg[j].test(data[i].img)) {
       data[i].type = typeList[j];
       data[i].typeVN = typeListVN[j];
     }
   }
+  // Khởi tạo trạng thái chưa có trong giỏ hàng
   data[i].hasInCart = false;
 }
 
+// Xuất mảng data đã được xử lý
 export default data;
