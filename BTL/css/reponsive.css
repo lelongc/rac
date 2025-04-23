@@ -5,46 +5,88 @@
    .intro-product {
       width: 100% !important;
    }
-   .all-product-sidebar {
-      position: static;
+
+   /* --- PHẦN XẾP SIDEBAR LÊN TRÊN --- */
+   #home-content .row { /* <<<< ----- **QUAN TRỌNG**: Đảm bảo selector này đúng */
+      display: flex;
+      flex-direction: column; /* Xếp dọc: sidebar trên, content dưới */
    }
+
+   .all-product-sidebar {
+      width: 100%;       /* Chiếm toàn bộ chiều rộng */
+      order: -1;          /* Sidebar lên đầu */
+      margin-bottom: 30px; /* Tăng khoảng cách dưới sidebar */
+      position: relative; /* Reset position nếu cần */
+      flex: 0 0 100%;    /* Đảm bảo chiếm đủ không gian flex */
+      max-width: 100%;
+   }
+
+   /* Khối chứa #all-product-list chiếm toàn bộ chiều rộng */
+   #home-content .row > div:not(.all-product-sidebar) { /* <<<< ----- **QUAN TRỌNG**: Đảm bảo selector này đúng */
+       width: 100%;
+       order: 0;           /* Nằm sau sidebar */
+       flex: 0 0 100%;    /* Đảm bảo chiếm đủ không gian flex */
+       max-width: 100%;
+       padding-left: 0; /* Bỏ padding trái khi xếp dọc */
+   }
+   /* --- KẾT THÚC PHẦN XẾP SIDEBAR --- */
+
+
+   /* --- ĐỊNH DẠNG LƯỚI SẢN PHẨM (3 CỘT) --- */
    #all-product-list {
+      display: grid; /* Đảm bảo là grid */
+      grid-template-columns: repeat(3, 1fr); /* **3 cột bằng nhau** */
+      gap: 15px; /* Giảm khoảng cách một chút */
       height: fit-content;
-   }  
+   }
+
+   /* Reset margin của product-item nếu cần */
+   .product-item {
+       margin: 0 !important; /* Bỏ margin auto */
+       width: 100%; /* Để grid quản lý */
+   }
 }
 
 @media (max-width: 992px) {
-   .product-item {
-      margin: 10px auto !important;
+   /* --- ĐỊNH DẠNG LƯỚI SẢN PHẨM (2 CỘT) --- */
+   #all-product-list {
+      grid-template-columns: repeat(2, 1fr); /* **2 cột bằng nhau** */
+      gap: 15px; /* Giữ hoặc giảm gap */
    }
-   .navbar-collapse {
-      width: 100%;
-   }
-   .navbar-nav {
-      background-color: var(--main-color)!important;
-   }
-   .navbar-brand {
-      margin: 0 20px;
-   }
-   .navbar-toggler {
-      margin-left: auto;
-      margin-right: 20px;
-   }
-   .navbar{
-      padding: 0!important;
-   }
-   .navbar-collapse {
-      width: 100%!important;
-   }
-   .dropdown-menu {
-      top: 110%!important;
-      right: 100%!important;
-      bottom: auto;
 
+   /* Bỏ quy tắc margin cũ của product-item nếu còn */
+   .product-item {
+      /* margin: 10px auto !important; */ /* Xóa hoặc comment dòng này */
+      margin: 0 !important; /* Đảm bảo không có margin ngang auto */
    }
+
+   /* Các quy tắc khác cho navbar, dropdown giữ nguyên */
+   .navbar-collapse { width: 100%; }
+   .navbar-nav { background-color: var(--main-color)!important; }
+   .navbar-brand { margin: 0 20px; }
+   .navbar-toggler { margin-left: auto; margin-right: 20px; }
+   .navbar{ padding: 0!important; }
+   .navbar-collapse { width: 100%!important; }
+   .dropdown-menu { top: 110%!important; right: 100%!important; bottom: auto; }
 }
+
 @media (max-width: 768px) {
+   /* --- ĐỊNH DẠNG LƯỚI SẢN PHẨM (1 CỘT) --- */
+   #all-product-list {
+      grid-template-columns: 1fr; /* **1 cột duy nhất** */
+      gap: 20px; /* Có thể tăng gap dọc */
+   }
+
+   /* Có thể thêm margin dưới cho item để tách biệt rõ hơn */
+    .product-item {
+       margin: 0 auto 20px auto !important; /* Căn giữa và thêm margin dưới */
+    }
+
+
+   /* Đảm bảo sidebar không bị ẩn */
+   /*
    .content1 {
       display: none;
    }
+   */
 }

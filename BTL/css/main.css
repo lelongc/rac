@@ -358,6 +358,7 @@ h1.allprd {
    padding: 15px;
 }
 
+
 .all-product-sidebar .list-group-item {
    background: transparent;
    color: var(--primary-color); /* Ensure text color contrasts with background */
