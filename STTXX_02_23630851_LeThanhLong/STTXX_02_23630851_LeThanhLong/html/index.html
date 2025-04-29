@@ -22,6 +22,19 @@
         #header {
             overflow: hidden;
         }
+        
+        #footer {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        #footer p {
+            margin: 5px 0;
+            color: white;
+        }
     </style>
 </head>
 
@@ -29,7 +42,7 @@
     <!-- Main container -->
     <div class="container" style="border: 1px solid black;">
         <!-- Header with banner -->
-        <div id="header" style="width: 100%;">
+        <div id="header" >
             <div class="row" style="width: 100%;">
                 <img src="../image/website.png" alt="Banner" style="width: 100%; height: auto; display: block;">
             </div>
@@ -214,6 +227,20 @@
                     <div class="modal-footer d-flex justify-content-end">
                         <button type="button" class="btn btn-success btn-sm mr-2" onclick="DangKy()">Đăng kí</button>
                         <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Hủy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer with student information -->
+        <div id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h5 class="text-white">Thông tin sinh viên</h5>
+                        <p>Họ tên: Lê Thanh Long</p>
+                        <p>Mã sinh viên: 23630851</p>
+                        <p>Mã lớp: DHKTPM18A</p>
                     </div>
                 </div>
             </div>

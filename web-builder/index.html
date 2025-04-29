@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Builder - Bootstrap & jQuery</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="css/builder-style.css">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">Web Builder - Bootstrap & jQuery</a>
+        <div>
+            <button id="preview-btn" class="btn btn-light btn-sm mr-2">
+                <i class="fas fa-eye"></i> Preview
+            </button>
+            <button id="export-btn" class="btn btn-success btn-sm">
+                <i class="fas fa-download"></i> Export Code
+            </button>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row mt-3">
+            <!-- Components Panel -->
+            <div class="col-md-3 col-lg-2">
+                <div class="card mb-3">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="mb-0">Components</h5>
+                    </div>
+                    <div class="card-body p-2">
+                        <div class="list-group components-list">
+                            <div class="list-group-item list-group-item-action component-item" draggable="true" data-type="banner">
+                                <i class="fas fa-image mr-2"></i> Banner
+                            </div>
+                            <div class="list-group-item list-group-item-action component-item" draggable="true" data-type="navbar">
+                                <i class="fas fa-bars mr-2"></i> Navigation Bar
+                            </div>
+                            <div class="list-group-item list-group-item-action component-item" draggable="true" data-type="table">
+                                <i class="fas fa-table mr-2"></i> Table
+                            </div>
+                            <div class="list-group-item list-group-item-action component-item" draggable="true" data-type="text-field">
+                                <i class="fas fa-font mr-2"></i> Text Field
+                            </div>
+                            <div class="list-group-item list-group-item-action component-item" draggable="true" data-type="email-field">
+                                <i class="fas fa-envelope mr-2"></i> Email Field
+                            </div>
+                            <div class="list-group-item list-group-item-action component-item" draggable="true" data-type="date-field">
+                                <i class="fas fa-calendar mr-2"></i> Date Field
+                            </div>
+                            <div class="list-group-item list-group-item-action component-item" draggable="true" data-type="select">
+                                <i class="fas fa-caret-square-down mr-2"></i> Select Dropdown
+                            </div>
+                            <div class="list-group-item list-group-item-action component-item" draggable="true" data-type="radio-group">
+                                <i class="fas fa-dot-circle mr-2"></i> Radio Group
+                            </div>
+                            <div class="list-group-item list-group-item-action component-item" draggable="true" data-type="checkbox-group">
+                                <i class="fas fa-check-square mr-2"></i> Checkbox Group
+                            </div>
+                            <div class="list-group-item list-group-item-action component-item" draggable="true" data-type="modal">
+                                <i class="fas fa-window-restore mr-2"></i> Modal Form
+                            </div>
+                            <div class="list-group-item list-group-item-action component-item" draggable="true" data-type="button">
+                                <i class="fas fa-square mr-2"></i> Button
+                            </div>
+                            <div class="list-group-item list-group-item-action component-item" draggable="true" data-type="footer">
+                                <i class="fas fa-shoe-prints mr-2"></i> Footer
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">Page Settings</h5>
+                    </div>
+                    <div class="card-body p-2">
+                        <div class="form-group">
+                            <label for="page-title">Page Title:</label>
+                            <input type="text" class="form-control form-control-sm" id="page-title" value="My Bootstrap Page">
+                        </div>
+                        <div class="form-group">
+                            <label for="page-language">Language:</label>
+                            <select class="form-control form-control-sm" id="page-language">
+                                <option value="en">English</option>
+                                <option value="vi" selected>Vietnamese</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canvas Panel -->
+            <div class="col-md-6 col-lg-7">
+                <div class="card canvas-wrapper">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Canvas</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="canvas" class="canvas">
+                            <div class="drop-placeholder">
+                                <i class="fas fa-arrow-down"></i>
+                                <p>Drag components here</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Properties Panel -->
+            <div class="col-md-3 col-lg-3">
+                <div class="card mb-3">
+                    <div class="card-header bg-dark text-white">
+                        <h5 class="mb-0">Properties</h5>
+                    </div>
+                    <div class="card-body p-2">
+                        <div id="properties-panel">
+                            <p class="text-center text-muted">
+                                Select a component to edit its properties
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preview Modal -->
+    <div class="modal fade" id="preview-modal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Preview</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-0">
+                    <iframe id="preview-frame" style="width: 100%; height: 600px; border: 0;"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Code Modal -->
+    <div class="modal fade" id="export-modal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Export Code</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-tabs" id="exportTabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#html-tab">HTML</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#js-tab">JavaScript</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#css-tab">CSS</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content mt-3">
+                        <div class="tab-pane fade show active" id="html-tab">
+                            <div class="d-flex justify-content-between mb-2">
+                                <h6>HTML Code</h6>
+                                <button class="btn btn-sm btn-primary copy-btn" data-target="html-code">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                            <pre class="code-block"><code id="html-code" class="html"></code></pre>
+                        </div>
+                        <div class="tab-pane fade" id="js-tab">
+                            <div class="d-flex justify-content-between mb-2">
+                                <h6>JavaScript Code</h6>
+                                <button class="btn btn-sm btn-primary copy-btn" data-target="js-code">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                            <pre class="code-block"><code id="js-code" class="javascript"></code></pre>
+                        </div>
+                        <div class="tab-pane fade" id="css-tab">
+                            <div class="d-flex justify-content-between mb-2">
+                                <h6>CSS Code</h6>
+                                <button class="btn btn-sm btn-primary copy-btn" data-target="css-code">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                            <pre class="code-block"><code id="css-code" class="css"></code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script src="js/builder.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/properties.js"></script>
+    <script src="js/code-generator.js"></script>
+</body>
+</html>
