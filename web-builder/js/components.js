@@ -294,7 +294,8 @@ function createModalComponent(id) {
             <div class="p-3 bg-light border" style="position: relative;">
                 <div style="text-align: center; margin-bottom: 10px;">
                     <i class="fas fa-window-restore mr-2"></i> 
-                    <span class="modal-preview-title">Form Modal (Xem trong mã xuất)</span>
+                    <span class="modal-preview-title">Modal Form Configuration</span>
+                    <div class="small text-muted">Modal will appear when button is clicked</div>
                 </div>
                 <div class="modal-preview-fields" style="font-size: 12px; color: #666;">
                     <div>- Họ và tên (Text)</div>

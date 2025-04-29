@@ -390,6 +390,9 @@ function getModalProperties(component) {
     const modalTitle = component.find('.modal-preview-title').text() || 'Form Modal';
     
     return `
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i> Modal form will only appear when triggered by a button. It won't be visible in the canvas area.
+        </div>
         <div class="property-group">
             <label for="modal-id">ID Modal:</label>
             <input type="text" class="form-control form-control-sm" id="modal-id" value="myModal">

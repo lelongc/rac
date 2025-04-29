@@ -9,7 +9,6 @@
 function generateHTMLCode(isPreview = false) {
     const pageTitle = $('#page-title').val();
     const language = $('#page-language').val();
-    const hasModal = $('#canvas .canvas-component[data-type="modal"]').length > 0;
     
     // Clone canvas content for modification
     const canvasContent = $('#canvas').clone();
@@ -18,6 +17,10 @@ function generateHTMLCode(isPreview = false) {
     canvasContent.find('.component-actions').remove();
     canvasContent.find('.canvas-component').removeClass('canvas-component selected');
     canvasContent.find('.drop-placeholder').remove();
+    
+    // Remove modal components from the main canvas - we'll add them separately
+    const modalComponents = canvasContent.find('[data-type="modal"]');
+    modalComponents.remove();
     
     // Begin HTML document
     let html = `<!DOCTYPE html>
@@ -44,6 +47,19 @@ function generateHTMLCode(isPreview = false) {
         #header {
             overflow: hidden;
         }
+        
+        #footer {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        #footer p {
+            margin: 5px 0;
+            color: white;
+        }
     </style>
 </head>
 
@@ -54,8 +70,10 @@ function generateHTMLCode(isPreview = false) {
     // Add contents from canvas
     html += canvasContent.html();
     
-    // If there's a modal component referenced but not in the canvas,
-    // generate the modal code
+    // Get modal components from the builder
+    const hasModal = $('#canvas .canvas-component[data-type="modal"]').length > 0;
+    
+    // Generate modal HTML but outside the main container
     if (hasModal) {
         html += generateModalHTML();
     }

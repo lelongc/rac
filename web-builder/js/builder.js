@@ -10,6 +10,7 @@ $(document).ready(function() {
     initComponentSelection();
     initPreview();
     initExport();
+    updateModalPreviewCard();
 });
 
 /**
@@ -117,6 +118,9 @@ function addComponentToCanvas(componentType) {
     // Add component to canvas
     $('#canvas').append(component);
     
+    // Update modal preview card visibility
+    updateModalPreviewCard();
+    
     // Select the newly added component
     selectComponent($('#' + componentId));
 }
@@ -197,6 +201,9 @@ function initComponentSelection() {
         // Remove the component
         component.remove();
         
+        // Update modal preview card visibility
+        updateModalPreviewCard();
+        
         // Add placeholder if canvas is now empty
         if ($('#canvas .canvas-component').length === 0) {
             $('#canvas').html(`
@@ -264,6 +271,49 @@ function initPreview() {
         generatePreview();
         $('#preview-modal').modal('show');
     });
+    
+    // Modal preview functionality
+    $('#preview-modal-btn').on('click', function() {
+        const modalComponent = $('#canvas .canvas-component[data-type="modal"]');
+        
+        if (modalComponent.length) {
+            // Get modal ID
+            const modalId = modalComponent.data('modal-id') || $('#modal-id').val() || 'myModal';
+            
+            // Find preview frame and get its document
+            const previewFrame = document.getElementById('preview-frame');
+            if (previewFrame && previewFrame.contentWindow) {
+                const frameDocument = previewFrame.contentWindow.document;
+                // Try to find and show the modal
+                try {
+                    frameDocument.getElementById(modalId).classList.add('show');
+                    frameDocument.getElementById(modalId).style.display = 'block';
+                    frameDocument.body.classList.add('modal-open');
+                    frameDocument.body.insertAdjacentHTML('beforeend', '<div class="modal-backdrop fade show"></div>');
+                } catch (e) {
+                    alert('Modal not found in preview. Make sure you have a modal component added.');
+                    console.error(e);
+                }
+            } else {
+                alert('Please generate a preview first by clicking the Preview button.');
+            }
+        } else {
+            alert('No modal component found. Please add a modal component to the canvas.');
+        }
+    });
+}
+
+/**
+ * Show or hide the modal preview card based on whether a modal exists in the canvas
+ */
+function updateModalPreviewCard() {
+    const hasModal = $('#canvas .canvas-component[data-type="modal"]').length > 0;
+    
+    if (hasModal) {
+        $('#modal-preview-card').show();
+    } else {
+        $('#modal-preview-card').hide();
+    }
 }
 
 /**
