@@ -210,6 +210,16 @@ function initComponentSelection() {
         updateComponentOrder();
         e.stopPropagation();
     });
+
+    // Modal edit button handler
+    $(document).on('click', '.edit-modal-btn', function(e) {
+        e.stopPropagation();
+        const component = $(this).closest('.canvas-component');
+        selectComponent(component);
+        
+        // Open a modal to edit fields if needed
+        // This is already handled by showing the properties panel
+    });
 }
 
 /**

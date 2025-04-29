@@ -93,6 +93,13 @@ function getNavbarProperties(component) {
     const bgClass = component.find('nav').attr('class').match(/bg-\w+/) ? 
                    component.find('nav').attr('class').match(/bg-\w+/)[0].replace('bg-', '') : 'light';
     
+    const registerText = component.find('.nav-register-btn a').text();
+    const registerBtn = component.find('.nav-register-btn a');
+    const modalId = registerBtn.attr('href') ? registerBtn.attr('href').replace('#', '') : 'myModal';
+    const btnColor = registerBtn.hasClass('btn-danger') ? 'danger' : 
+                     registerBtn.hasClass('btn-primary') ? 'primary' : 
+                     registerBtn.hasClass('btn-success') ? 'success' : 'danger';
+    
     return `
         <div class="property-group">
             <label for="navbar-brand">Tên thương hiệu:</label>
@@ -112,9 +119,27 @@ function getNavbarProperties(component) {
             <textarea class="form-control form-control-sm" id="navbar-items" rows="4">${navItems.join('\n')}</textarea>
             <small class="form-text text-muted">Mỗi mục trên một dòng</small>
         </div>
+        <hr>
+        <h6>Nút đăng ký</h6>
         <div class="property-group">
-            <label for="navbar-register-text">Nút đăng ký:</label>
-            <input type="text" class="form-control form-control-sm" id="navbar-register-text" value="${component.find('.navbar-nav li:last-child a').text()}">
+            <label for="navbar-register-text">Nội dung nút:</label>
+            <input type="text" class="form-control form-control-sm" id="navbar-register-text" value="${registerText}">
+        </div>
+        <div class="property-group">
+            <label for="navbar-register-color">Màu nút:</label>
+            <select class="form-control form-control-sm" id="navbar-register-color">
+                <option value="primary" ${btnColor === 'primary' ? 'selected' : ''}>Xanh dương</option>
+                <option value="success" ${btnColor === 'success' ? 'selected' : ''}>Xanh lá</option>
+                <option value="danger" ${btnColor === 'danger' ? 'selected' : ''}>Đỏ</option>
+                <option value="warning" ${btnColor === 'warning' ? 'selected' : ''}>Cam</option>
+                <option value="info" ${btnColor === 'info' ? 'selected' : ''}>Xanh nhạt</option>
+                <option value="dark" ${btnColor === 'dark' ? 'selected' : ''}>Đen</option>
+            </select>
+        </div>
+        <div class="property-group">
+            <label for="navbar-modal-id">ID của modal cần mở:</label>
+            <input type="text" class="form-control form-control-sm" id="navbar-modal-id" value="${modalId}">
+            <small class="form-text text-muted">Phải trùng với ID của modal form</small>
         </div>
     `;
 }
@@ -362,37 +387,71 @@ function getCheckboxGroupProperties(component) {
  * Get properties for modal component
  */
 function getModalProperties(component) {
+    const modalTitle = component.find('.modal-preview-title').text() || 'Form Modal';
+    
     return `
+        <div class="property-group">
+            <label for="modal-id">ID Modal:</label>
+            <input type="text" class="form-control form-control-sm" id="modal-id" value="myModal">
+            <small class="form-text text-muted">Phải trùng với ID nút mở modal</small>
+        </div>
         <div class="property-group">
             <label for="modal-title">Tiêu đề modal:</label>
             <input type="text" class="form-control form-control-sm" id="modal-title" value="THÔNG TIN ĐĂNG KÍ">
         </div>
         <div class="property-group">
-            <label for="modal-id">ID modal:</label>
-            <input type="text" class="form-control form-control-sm" id="modal-id" value="myModal">
+            <label for="modal-size">Kích thước modal:</label>
+            <select class="form-control form-control-sm" id="modal-size">
+                <option value="modal-sm">Nhỏ</option>
+                <option value="">Mặc định</option>
+                <option value="modal-lg" selected>Lớn</option>
+                <option value="modal-xl">Rất lớn</option>
+            </select>
         </div>
         <div class="property-group">
-            <label for="modal-submit">Nút gửi:</label>
-            <input type="text" class="form-control form-control-sm" id="modal-submit" value="Đăng kí">
+            <label>Trường dữ liệu:</label>
+            <div class="modal-fields-list">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="modal-field-name" checked>
+                    <label class="custom-control-label" for="modal-field-name">Họ và tên</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="modal-field-phone" checked>
+                    <label class="custom-control-label" for="modal-field-phone">Số điện thoại</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="modal-field-dob" checked>
+                    <label class="custom-control-label" for="modal-field-dob">Ngày sinh</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="modal-field-email" checked>
+                    <label class="custom-control-label" for="modal-field-email">Email</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="modal-field-course" checked>
+                    <label class="custom-control-label" for="modal-field-course">Khóa học</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="modal-field-duration" checked>
+                    <label class="custom-control-label" for="modal-field-duration">Thời gian học</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="modal-field-method" checked>
+                    <label class="custom-control-label" for="modal-field-method">Hình thức học</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="modal-field-skills" checked>
+                    <label class="custom-control-label" for="modal-field-skills">Kỹ năng cần luyện</label>
+                </div>
+            </div>
         </div>
         <div class="property-group">
-            <label for="modal-cancel">Nút hủy:</label>
-            <input type="text" class="form-control form-control-sm" id="modal-cancel" value="Hủy">
+            <label for="modal-submit-text">Nút gửi:</label>
+            <input type="text" class="form-control form-control-sm" id="modal-submit-text" value="Đăng kí">
         </div>
         <div class="property-group">
-            <p class="mb-1">Kích thước modal:</p>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="modal-size" id="modal-size-sm" value="modal-sm">
-                <label class="form-check-label" for="modal-size-sm">Nhỏ</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="modal-size" id="modal-size-default" value="">
-                <label class="form-check-label" for="modal-size-default">Mặc định</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="modal-size" id="modal-size-lg" value="modal-lg" checked>
-                <label class="form-check-label" for="modal-size-lg">Lớn</label>
-            </div>
+            <label for="modal-cancel-text">Nút hủy:</label>
+            <input type="text" class="form-control form-control-sm" id="modal-cancel-text" value="Hủy">
         </div>
     `;
 }
@@ -579,7 +638,17 @@ function initNavbarHandlers(component) {
     });
     
     $('#navbar-register-text').on('change', function() {
-        component.find('.navbar-nav li:last-child a').text($(this).val());
+        component.find('.nav-register-btn a').text($(this).val());
+    });
+    
+    $('#navbar-register-color').on('change', function() {
+        const btn = component.find('.nav-register-btn a');
+        btn.removeClass('btn-primary btn-success btn-danger btn-warning btn-info btn-dark')
+           .addClass('btn-' + $(this).val());
+    });
+    
+    $('#navbar-modal-id').on('change', function() {
+        component.find('.nav-register-btn a').attr('href', '#' + $(this).val());
     });
 }
 
@@ -804,8 +873,85 @@ function initCheckboxGroupHandlers(component) {
  * Modal property handlers
  */
 function initModalHandlers(component) {
-    // Modal properties are mainly used at code generation time
-    // Since the modal preview is just a placeholder
+    $('#modal-id').on('change', function() {
+        // This will be used when generating the final HTML
+        component.data('modal-id', $(this).val());
+    });
+    
+    $('#modal-title').on('change', function() {
+        component.data('modal-title', $(this).val());
+        // Update the preview title
+        const currentTitle = component.find('.modal-preview-title').text();
+        if (currentTitle.includes('Form Modal')) {
+            component.find('.modal-preview-title').text('Form Modal: ' + $(this).val());
+        }
+    });
+    
+    $('#modal-size').on('change', function() {
+        component.data('modal-size', $(this).val());
+    });
+    
+    // Modal fields checkboxes
+    $('.modal-fields-list input[type="checkbox"]').on('change', function() {
+        updateModalFieldsList(component);
+    });
+    
+    $('#modal-submit-text, #modal-cancel-text').on('change', function() {
+        component.data($(this).attr('id').replace('modal-', ''), $(this).val());
+    });
+    
+    // Edit button in the modal preview
+    component.find('.edit-modal-btn').on('click', function(e) {
+        e.preventDefault();
+        // This is already handled by the component selection functionality
+        // Just make sure this component is selected
+        selectComponent(component);
+    });
+}
+
+/**
+ * Update the fields list in modal preview
+ */
+function updateModalFieldsList(component) {
+    const fieldsList = component.find('.modal-preview-fields');
+    fieldsList.empty();
+    
+    if ($('#modal-field-name').is(':checked')) {
+        fieldsList.append('<div>- Họ và tên (Text)</div>');
+    }
+    if ($('#modal-field-phone').is(':checked')) {
+        fieldsList.append('<div>- Số điện thoại (Text)</div>');
+    }
+    if ($('#modal-field-dob').is(':checked')) {
+        fieldsList.append('<div>- Ngày sinh (Date)</div>');
+    }
+    if ($('#modal-field-email').is(':checked')) {
+        fieldsList.append('<div>- Email (Email)</div>');
+    }
+    if ($('#modal-field-course').is(':checked')) {
+        fieldsList.append('<div>- Khóa học (Select)</div>');
+    }
+    if ($('#modal-field-duration').is(':checked')) {
+        fieldsList.append('<div>- Thời gian học (Text, readonly)</div>');
+    }
+    if ($('#modal-field-method').is(':checked')) {
+        fieldsList.append('<div>- Hình thức học (Radio)</div>');
+    }
+    if ($('#modal-field-skills').is(':checked')) {
+        fieldsList.append('<div>- Kỹ năng cần luyện (Checkbox)</div>');
+    }
+    
+    // Save the fields configuration to the component data
+    component.data('fields', {
+        name: $('#modal-field-name').is(':checked'),
+        phone: $('#modal-field-phone').is(':checked'),
+        dob: $('#modal-field-dob').is(':checked'),
+        email: $('#modal-field-email').is(':checked'),
+        course: $('#modal-field-course').is(':checked'),
+        duration: $('#modal-field-duration').is(':checked'),
+        method: $('#modal-field-method').is(':checked'),
+        skills: $('#modal-field-skills').is(':checked')
+    });
 }
 
 /**

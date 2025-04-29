@@ -79,13 +79,35 @@ function generateHTMLCode(isPreview = false) {
  * Generate a modal HTML based on modal settings
  */
 function generateModalHTML() {
-    const modalId = $('#modal-id').val() || 'myModal';
-    const modalTitle = $('#modal-title').val() || 'THÔNG TIN ĐĂNG KÍ';
-    const modalSubmit = $('#modal-submit').val() || 'Đăng kí';
-    const modalCancel = $('#modal-cancel').val() || 'Hủy';
-    const modalSize = $('input[name="modal-size"]:checked').val() || 'modal-lg';
+    // Get the modal component
+    const modalComponent = $('#canvas .canvas-component[data-type="modal"]');
     
-    return `
+    // If there's no modal component, return empty string
+    if (!modalComponent.length) {
+        return '';
+    }
+    
+    // Get modal settings
+    const modalId = modalComponent.data('modal-id') || $('#modal-id').val() || 'myModal';
+    const modalTitle = modalComponent.data('modal-title') || $('#modal-title').val() || 'THÔNG TIN ĐĂNG KÍ';
+    const modalSubmit = modalComponent.data('submit-text') || $('#modal-submit-text').val() || 'Đăng kí';
+    const modalCancel = modalComponent.data('cancel-text') || $('#modal-cancel-text').val() || 'Hủy';
+    const modalSize = modalComponent.data('modal-size') || $('#modal-size').val() || 'modal-lg';
+    
+    // Get the fields to show
+    const fields = modalComponent.data('fields') || {
+        name: true,
+        phone: true,
+        dob: true,
+        email: true,
+        course: true,
+        duration: true,
+        method: true,
+        skills: true
+    };
+    
+    // Build modal HTML
+    let modalHtml = `
         <!-- Registration modal -->
         <div class="modal fade" id="${modalId}">
             <div class="modal-dialog ${modalSize}">
@@ -98,7 +120,11 @@ function generateModalHTML() {
 
                     <!-- Modal body with registration form -->
                     <div class="modal-body">
-                        <div class="form-group">
+                        <div class="form-group">`;
+    
+    // Add fields based on configuration
+    if (fields.name) {
+        modalHtml += `
                             <!-- Full name -->
                             <div class="row mt-2">
                                 <div class="col-3 text-right">
@@ -108,8 +134,11 @@ function generateModalHTML() {
                                     <input type="text" id="txtName" class="form-control">
                                     <span id="erName" class="text-danger small mt-1 d-block"></span>
                                 </div>
-                            </div>
-
+                            </div>`;
+    }
+    
+    if (fields.phone) {
+        modalHtml += `
                             <!-- Phone number -->
                             <div class="row mt-2">
                                 <div class="col-3 text-right">
@@ -119,8 +148,11 @@ function generateModalHTML() {
                                     <input type="text" id="txtSDT" class="form-control">
                                     <span id="erSDT" class="text-danger small mt-1 d-block"></span>
                                 </div>
-                            </div>
-
+                            </div>`;
+    }
+    
+    if (fields.dob) {
+        modalHtml += `
                             <!-- Date of birth -->
                             <div class="row mt-2">
                                 <div class="col-3 text-right">
@@ -130,8 +162,11 @@ function generateModalHTML() {
                                     <input type="date" id="txtNgaysinh" class="form-control">
                                     <span id="erNgaysinh" class="text-danger small mt-1 d-block"></span>
                                 </div>
-                            </div>
-
+                            </div>`;
+    }
+    
+    if (fields.email) {
+        modalHtml += `
                             <!-- Email -->
                             <div class="row mt-2">
                                 <div class="col-3 text-right">
@@ -141,8 +176,11 @@ function generateModalHTML() {
                                     <input type="email" id="txtEmail" class="form-control" placeholder="your.email@example.com">
                                     <span id="erEmail" class="text-danger small mt-1 d-block"></span>
                                 </div>
-                            </div>
-
+                            </div>`;
+    }
+    
+    if (fields.course) {
+        modalHtml += `
                             <!-- Course selection -->
                             <div class="row mt-2">
                                 <div class="col-3 text-right">
@@ -155,8 +193,11 @@ function generateModalHTML() {
                                         <option value="12" data-name="Luyện thi IELTS">Luyện thi IELTS</option>
                                     </select>
                                 </div>
-                            </div>
-
+                            </div>`;
+    }
+    
+    if (fields.duration) {
+        modalHtml += `
                             <!-- Study duration -->
                             <div class="row mt-2">
                                 <div class="col-3 text-right">
@@ -165,8 +206,11 @@ function generateModalHTML() {
                                 <div class="col-9">
                                     <input type="text" id="txtThoiGianHoc" class="form-control" readonly>
                                 </div>
-                            </div>
-
+                            </div>`;
+    }
+    
+    if (fields.method) {
+        modalHtml += `
                             <!-- Study method -->
                             <div class="row mt-2">
                                 <div class="col-3 text-right">
@@ -183,8 +227,11 @@ function generateModalHTML() {
                                     </div>
                                     <span id="erHinhthuc" class="text-danger small mt-1 d-block"></span>
                                 </div>
-                            </div>
-
+                            </div>`;
+    }
+    
+    if (fields.skills) {
+        modalHtml += `
                             <!-- Skills needed -->
                             <div class="row mt-2">
                                 <div class="col-3 text-right">
@@ -205,7 +252,11 @@ function generateModalHTML() {
                                     </div>
                                     <span id="erSkills" class="text-danger small mt-1 d-block"></span>
                                 </div>
-                            </div>
+                            </div>`;
+    }
+    
+    // Close the modal HTML
+    modalHtml += `
                         </div>
                     </div>
 
@@ -218,16 +269,35 @@ function generateModalHTML() {
             </div>
         </div>
     `;
+    
+    return modalHtml;
 }
 
 /**
  * Generate JavaScript code for the page
+ * Updates needed for custom modal fields
  */
 function generateJSCode() {
-    return `/**
+    // Get the modal component to check which fields exist
+    const modalComponent = $('#canvas .canvas-component[data-type="modal"]');
+    const fields = modalComponent.length ? modalComponent.data('fields') : {
+        name: true,
+        phone: true,
+        dob: true,
+        email: true,
+        course: true,
+        duration: true,
+        method: true,
+        skills: true
+    };
+    
+    let jsCode = `/**
  * Validate the name field
  * Requirements: Not empty, each word must start with uppercase (e.g., Le Van An)
- */
+ */`;
+    
+    if (fields && fields.name) {
+        jsCode += `
 function checkName() {
     var name = $("#txtName").val();
     
@@ -247,7 +317,11 @@ function checkName() {
     
     $("#erName").text("");
     return true;
-}
+}`;
+    }
+    
+    if (fields && fields.dob) {
+        jsCode += `
 
 /**
  * Validate the date of birth field
@@ -268,7 +342,11 @@ function checkDateOfBirth() {
         $("#erNgaysinh").text("");
         return true;
     }
-}
+}`;
+    }
+    
+    if (fields && fields.phone) {
+        jsCode += `
 
 /**
  * Validate the phone number field
@@ -292,7 +370,11 @@ function checkPhoneNum() {
     
     $("#erSDT").text("");
     return true;
-}
+}`;
+    }
+    
+    if (fields && fields.email) {
+        jsCode += `
 
 /**
  * Validate the email field
@@ -310,7 +392,11 @@ function checkEmail() {
     
     $("#erEmail").text("");
     return true;
-}
+}`;
+    }
+    
+    if (fields && fields.method) {
+        jsCode += `
 
 /**
  * Validate the study method selection
@@ -324,7 +410,11 @@ function checkStudyMethod() {
     }
     $("#erHinhthuc").text("");
     return true;
-}
+}`;
+    }
+    
+    if (fields && fields.skills) {
+        jsCode += `
 
 /**
  * Validate the skills selection
@@ -340,7 +430,11 @@ function checkSkills() {
     }
     $("#erSkills").text("");
     return true;
-}
+}`;
+    }
+    
+    if (fields && fields.duration && fields.course) {
+        jsCode += `
 
 /**
  * Update the study duration field based on selected course
@@ -351,7 +445,10 @@ function updateThoiGianHoc() {
     
     // Update the thời gian học textbox
     $("#txtThoiGianHoc").val(duration + " tháng");
-}
+}`;
+    }
+    
+    jsCode += `
 
 /**
  * Format date from yyyy-mm-dd to dd/mm/yyyy
@@ -370,85 +467,184 @@ function formatDate(dateString) {
  * Validates all fields before proceeding
  */
 function DangKy() {
+    // Check all validations and store results`;
+
+    // Add validation checks for the enabled fields
+    const validationChecks = [];
+    if (fields && fields.name) validationChecks.push('var nameValid = checkName();');
+    if (fields && fields.dob) validationChecks.push('var dobValid = checkDateOfBirth();');
+    if (fields && fields.phone) validationChecks.push('var phoneValid = checkPhoneNum();');
+    if (fields && fields.email) validationChecks.push('var emailValid = checkEmail();');
+    if (fields && fields.method) validationChecks.push('var methodValid = checkStudyMethod();');
+    if (fields && fields.skills) validationChecks.push('var skillsValid = checkSkills();');
+
+    if (validationChecks.length > 0) {
+        jsCode += `
     // Check all validations and store results
-    var nameValid = checkName();
-    var dobValid = checkDateOfBirth();
-    var phoneValid = checkPhoneNum();
-    var emailValid = checkEmail();
-    var methodValid = checkStudyMethod();
-    var skillsValid = checkSkills();
+    ${validationChecks.join('\n    ')}
     
     // Only proceed if all validations pass
-    if (!nameValid || !dobValid || !phoneValid || !emailValid || !methodValid || !skillsValid) {
+    if (${validationChecks.map(check => check.split(' = ')[0]).join(' || ').replace(/var /g, '!').replace(/;/g, '')}) {
         return; // Stop if any validation fails
+    }`;
     }
 
-    // Gather form data
-    var name = $('#txtName').val();
-    var sdt = $('#txtSDT').val();
-    var ngaysinh = $('#txtNgaysinh').val();
-    var email = $('#txtEmail').val();
-    var khoahocText = $('#slKhoahoc option:selected').text();
-    var hinhthuc = $('input[name="hinhthuc"]:checked').val();
+    jsCode += `
+
+    // Gather form data`;
+
+    // Add data collection for the enabled fields
+    if (fields && fields.name) jsCode += `
+    var name = $('#txtName').val();`;
+    if (fields && fields.phone) jsCode += `
+    var sdt = $('#txtSDT').val();`;
+    if (fields && fields.dob) jsCode += `
+    var ngaysinh = $('#txtNgaysinh').val();`;
+    if (fields && fields.email) jsCode += `
+    var email = $('#txtEmail').val();`;
+    if (fields && fields.course) jsCode += `
+    var khoahocText = $('#slKhoahoc option:selected').text();`;
+    if (fields && fields.method) jsCode += `
+    var hinhthuc = $('input[name="hinhthuc"]:checked').val();`;
+    
+    // Skills collection
+    if (fields && fields.skills) {
+        jsCode += `
     
     // Collect selected skills
     var skills = [];
     if ($('#chkListening').is(':checked')) skills.push($('#chkListening').val());
     if ($('#chkReading').is(':checked')) skills.push($('#chkReading').val());
     if ($('#chkWriting').is(':checked')) skills.push($('#chkWriting').val());
-    var skillsString = skills.join(', '); 
+    var skillsString = skills.join(', ');`;
+    }
+
+    // Format date if needed
+    if (fields && fields.dob) {
+        jsCode += `
     
     // Format the date for display
-    var formattedDate = formatDate(ngaysinh);
+    var formattedDate = formatDate(ngaysinh);`;
+    }
+    
+    // Build the table row
+    jsCode += `
     
     // Add new row to the table
     var rowCount = $('#memberList tbody tr').length + 1; 
     var newRow = \`<tr>
-                    <td>\${rowCount}</td>
-                    <td>\${name}</td>
-                    <td>\${formattedDate}</td>
-                    <td>\${sdt}</td>
-                    <td>\${email}</td>
-                    <td>\${khoahocText}</td>
-                    <td>\${hinhthuc}</td>
-                    <td>\${skillsString}</td>
+                    <td>\${rowCount}</td>`;
+    
+    if (fields && fields.name) jsCode += `
+                    <td>\${name}</td>`;
+    if (fields && fields.dob) jsCode += `
+                    <td>\${formattedDate}</td>`;
+    if (fields && fields.phone) jsCode += `
+                    <td>\${sdt}</td>`;
+    if (fields && fields.email) jsCode += `
+                    <td>\${email}</td>`;
+    if (fields && fields.course) jsCode += `
+                    <td>\${khoahocText}</td>`;
+    if (fields && fields.method) jsCode += `
+                    <td>\${hinhthuc}</td>`;
+    if (fields && fields.skills) jsCode += `
+                    <td>\${skillsString}</td>`;
+    
+    jsCode += `
                   </tr>\`;
     $('#memberList tbody').append(newRow);
     
     // Hide the modal
     $('#myModal').modal('hide');
     
-    // Reset form
-    $('#myModal input[type="text"], #myModal input[type="email"], #myModal input[type="date"]').val('');
-    $('#myModal input[type="checkbox"]').prop('checked', false);
-    $('#radioCenter').prop('checked', true);
-    $('#slKhoahoc').val('3');
-    updateThoiGianHoc(); // Update thời gian học after resetting the form
+    // Reset form`;
+    
+    // Reset specific fields
+    const resetFields = [];
+    if (fields && (fields.name || fields.phone || fields.email)) {
+        resetFields.push(`$('#myModal input[type="text"], #myModal input[type="email"], #myModal input[type="date"]').val('');`);
+    }
+    if (fields && fields.skills) {
+        resetFields.push(`$('#myModal input[type="checkbox"]').prop('checked', false);`);
+    }
+    if (fields && fields.method) {
+        resetFields.push(`$('#radioCenter').prop('checked', true);`);
+    }
+    if (fields && fields.course) {
+        resetFields.push(`$('#slKhoahoc').val('3');`);
+    }
+    if (fields && fields.duration && fields.course) {
+        resetFields.push(`updateThoiGianHoc(); // Update thời gian học after resetting the form`);
+    }
+    
+    if (resetFields.length > 0) {
+        jsCode += `
+    ${resetFields.join('\n    ')}`;
+    }
+    
+    // Clear error messages for the enabled fields
+    const errorFields = [];
+    if (fields && fields.name) errorFields.push('erName');
+    if (fields && fields.dob) errorFields.push('erNgaysinh');
+    if (fields && fields.phone) errorFields.push('erSDT');
+    if (fields && fields.email) errorFields.push('erEmail');
+    if (fields && fields.method) errorFields.push('erHinhthuc');
+    if (fields && fields.skills) errorFields.push('erSkills');
+    
+    if (errorFields.length > 0) {
+        jsCode += `
     
     // Clear error messages
-    $('#erName, #erNgaysinh, #erSDT, #erEmail, #erHinhthuc, #erSkills').text('');
+    $('#${errorFields.join(', #')}').text('');`;
+    }
+    
+    jsCode += `
 }
 
 // Initialize when the document is ready
-$(document).ready(function() {
+$(document).ready(function() {`;
+
+    // Add event handlers for enabled fields
+    const eventHandlers = [];
+    if (fields && fields.name) eventHandlers.push(`$("#txtName").blur(checkName);`);
+    if (fields && fields.dob) eventHandlers.push(`$("#txtNgaysinh").blur(checkDateOfBirth);`);
+    if (fields && fields.phone) eventHandlers.push(`$("#txtSDT").blur(checkPhoneNum);`);
+    if (fields && fields.email) eventHandlers.push(`$("#txtEmail").blur(checkEmail);`);
+    
+    if (eventHandlers.length > 0) {
+        jsCode += `
     // Add real-time validation
-    $("#txtName").blur(checkName);
-    $("#txtNgaysinh").blur(checkDateOfBirth);
-    $("#txtSDT").blur(checkPhoneNum);
-    $("#txtEmail").blur(checkEmail);
+    ${eventHandlers.join('\n    ')}`;
+    }
+    
+    if (fields && fields.skills) {
+        jsCode += `
     
     // For checkboxes, validate whenever any checkbox is clicked
-    $("#chkListening, #chkReading, #chkWriting").click(checkSkills);
+    $("#chkListening, #chkReading, #chkWriting").click(checkSkills);`;
+    }
+    
+    if (fields && fields.method) {
+        jsCode += `
     
     // For radios, validate whenever any radio button is clicked
-    $("input[name='hinhthuc']").click(checkStudyMethod);
+    $("input[name='hinhthuc']").click(checkStudyMethod);`;
+    }
+    
+    if (fields && fields.duration && fields.course) {
+        jsCode += `
     
     // Set initial value for thời gian học based on default selected course
     updateThoiGianHoc();
     
     // Update thời gian học when course selection changes
-    $("#slKhoahoc").change(updateThoiGianHoc);
+    $("#slKhoahoc").change(updateThoiGianHoc);`;
+    }
+    
+    jsCode += `
 });`;
+
+    return jsCode;
 }
 
 /**

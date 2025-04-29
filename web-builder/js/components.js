@@ -52,7 +52,7 @@ function createNavbarComponent(id) {
                         <li class="nav-item">
                             <a class="nav-link" href="#">Khóa học</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item nav-register-btn">
                             <a class="nav-link btn btn-danger text-white btn-sm" href="#myModal" data-toggle="modal">Đăng ký</a>
                         </li>
                     </ul>
@@ -291,8 +291,24 @@ function createModalComponent(id) {
                 <button type="button" class="duplicate-btn" title="Duplicate"><i class="fas fa-copy"></i></button>
                 <button type="button" class="delete-btn" title="Delete"><i class="fas fa-trash"></i></button>
             </div>
-            <div class="p-3 bg-light border text-center">
-                <i class="fas fa-window-restore mr-2"></i> Form Modal (Xem trong mã xuất)
+            <div class="p-3 bg-light border" style="position: relative;">
+                <div style="text-align: center; margin-bottom: 10px;">
+                    <i class="fas fa-window-restore mr-2"></i> 
+                    <span class="modal-preview-title">Form Modal (Xem trong mã xuất)</span>
+                </div>
+                <div class="modal-preview-fields" style="font-size: 12px; color: #666;">
+                    <div>- Họ và tên (Text)</div>
+                    <div>- Số điện thoại (Text)</div>
+                    <div>- Ngày sinh (Date)</div>
+                    <div>- Email (Email)</div>
+                    <div>- Khóa học (Select)</div>
+                    <div>- Thời gian học (Text, readonly)</div>
+                    <div>- Hình thức học (Radio)</div>
+                    <div>- Kỹ năng cần luyện (Checkbox)</div>
+                </div>
+                <button class="btn btn-sm btn-primary mt-2 edit-modal-btn" style="position: absolute; right: 10px; bottom: 10px;">
+                    <i class="fas fa-edit"></i> Chỉnh sửa
+                </button>
             </div>
         </div>
     `);
