@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Viewer</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        .form-container {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        #submittedData {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-12">
+                <h1 id="formTitle" class="text-center">Loading Form...</h1>
+                <hr>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-12">
+                <div id="formContainer" class="form-container">
+                    <p>Loading form fields...</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-12" id="submittedData">
+                <h3>Submitted Data</h3>
+                <div class="table-responsive">
+                    <table id="dataTable" class="table table-bordered">
+                        <thead>
+                            <tr id="tableHeaders">
+                                <th>#</th>
+                                <!-- Headers will be added dynamically -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data rows will be added here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4 mb-4">
+            <div class="col-12">
+                <a href="form-generator.html" class="btn btn-primary">Back to Form Generator</a>
+                <button id="clearDataBtn" class="btn btn-warning ml-2">Clear Data</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/form-viewer.js"></script>
+</body>
+</html>
