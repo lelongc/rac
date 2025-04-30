@@ -6,8 +6,14 @@
 let currentModalComponent = null;
 let currentFieldIndex = null;
 let fieldsTemp = [];
-const fieldEditorModal = $("#field-editor-modal");
-const newFieldModal = $("#new-field-modal");
+
+// Update modal initialization and show/hide
+const fieldEditorModal = new bootstrap.Modal(
+  document.getElementById("field-editor-modal")
+);
+const newFieldModal = new bootstrap.Modal(
+  document.getElementById("new-field-modal")
+);
 
 /**
  * Initialize the field editor
@@ -36,13 +42,13 @@ function initFieldEditor() {
       refreshFieldList();
 
       // Show the field editor modal
-      fieldEditorModal.modal("show");
+      fieldEditorModal.show();
     }
   });
 
   // Handle add new field button
   $("#add-new-field-btn").on("click", function () {
-    newFieldModal.modal("show");
+    newFieldModal.show();
   });
 
   // Handle add field button in the new field modal
@@ -65,7 +71,7 @@ function initFieldEditor() {
     refreshFieldList();
 
     // Close the new field modal
-    newFieldModal.modal("hide");
+    newFieldModal.hide();
 
     // Reset new field form
     $("#new-field-label").val("");
@@ -136,15 +142,20 @@ function initFieldEditor() {
 
   // Handle save changes
   $("#save-fields-btn").on("click", function () {
-    // Save to component data
     if (currentModalComponent) {
+      // Save to component data
       currentModalComponent.data("fields", fieldsTemp);
 
-      // Update the modal preview
+      // Update the preview
       updateModalPreviewFields(currentModalComponent);
 
-      // Close modal
-      fieldEditorModal.modal("hide");
+      // Close the modal
+      fieldEditorModal.hide();
+
+      // Clear temp data
+      fieldsTemp = [];
+      currentModalComponent = null;
+      currentFieldIndex = null;
     }
   });
 }
@@ -426,16 +437,16 @@ function selectField(index) {
           <h6>Kiểm tra hợp lệ (Validation)</h6>
           
           <div class="form-group">
-            <label for="field-regex">Biểu thức chính quy (Regex):</label>
-            <input type="text" class="form-control" id="field-regex" value="${
+            <label for="field-validation-regex">Biểu thức chính quy (Regex):</label>
+            <input type="text" class="form-control" id="field-validation-regex" value="${
               field.validation?.regex || ""
             }">
             <small class="form-text text-muted">Để trống nếu không cần kiểm tra bằng regex</small>
           </div>
           
           <div class="form-group">
-            <label for="field-error-message">Thông báo lỗi:</label>
-            <input type="text" class="form-control" id="field-error-message" value="${
+            <label for="field-validation-message">Thông báo lỗi:</label>
+            <input type="text" class="form-control" id="field-validation-message" value="${
               field.validation?.message || ""
             }">
           </div>
@@ -505,8 +516,8 @@ function selectField(index) {
       case "radio-group":
         propertiesHtml += `
           <div class="form-group">
-            <label for="field-name">Name attribute:</label>
-            <input type="text" class="form-control" id="field-name" value="${field.name}">
+            <label for="radio-group-name">Name attribute:</label>
+            <input type="text" class="form-control" id="radio-group-name" value="${field.name}">
             <small class="form-text text-muted">Thuộc tính name để nhóm các radio buttons</small>
           </div>
           
@@ -730,86 +741,61 @@ function updateFieldFromForm(field) {
     case "text-field":
     case "email-field":
       field.placeholder = $("#field-placeholder").val();
-
-      // Validation properties
-      if (!field.validation) field.validation = {};
-      field.validation.regex = $("#field-regex").val();
-      field.validation.message = $("#field-error-message").val();
-      field.validation.function = $("#field-validation-function").val();
+      if ($("#field-validation-regex").val()) {
+        field.validation = {
+          regex: $("#field-validation-regex").val(),
+          message: $("#field-validation-message").val(),
+          function: field.validation
+            ? field.validation.function
+            : `check${capitalizeFirstLetter(field.id.substring(3))}`,
+        };
+      }
       break;
 
     case "date-field":
-      // Validation
-      if (!field.validation) field.validation = {};
-      field.validation.function = $("#field-validation-function").val();
+      field.validation = {
+        function: "checkDateOfBirth",
+      };
       break;
 
     case "select":
-      // Options
       field.options = [];
-      $("#select-options .option-row").each(function () {
-        const value = $(this).find(".option-value").val();
-        const text = $(this).find(".option-text").val();
-
-        if (value && text) {
-          field.options.push({
-            value: value,
-            text: text,
-          });
-        }
+      $("#select-options-list .option-item").each(function () {
+        field.options.push({
+          value: $(this).find(".option-value").val(),
+          text: $(this).find(".option-text").val(),
+        });
       });
       break;
 
     case "radio-group":
-      field.name = $("#field-name").val();
-
-      // Options
       field.options = [];
-      $("#radio-options .option-row").each(function () {
-        const value = $(this).find(".option-value").val();
-        const text = $(this).find(".option-text").val();
-        const checked = $(this).find(".option-checked").is(":checked");
-        const id = `radio_${new Date().getTime()}_${field.options.length}`;
-
-        if (value && text) {
-          field.options.push({
-            id: id,
-            value: value,
-            text: text,
-            checked: checked,
-          });
-        }
+      field.name = $("#radio-group-name").val();
+      $("#radio-options-list .option-item").each(function () {
+        field.options.push({
+          id: $(this).find(".option-id").val(),
+          value: $(this).find(".option-value").val(),
+          text: $(this).find(".option-text").val(),
+          checked: $(this).find(".option-checked").is(":checked"),
+        });
       });
-
-      // Validation
-      if (!field.validation) field.validation = {};
-      field.validation.function = $("#field-validation-function").val();
+      field.validation = {
+        function: "checkStudyMethod",
+      };
       break;
 
     case "checkbox-group":
-      // Options
       field.options = [];
-      $("#checkbox-options .option-row").each(function () {
-        const value = $(this).find(".option-value").val();
-        const text = $(this).find(".option-text").val();
-        const id = `chk_${new Date().getTime()}_${field.options.length}`;
-
-        if (value && text) {
-          field.options.push({
-            id: id,
-            value: value,
-            text: text,
-          });
-        }
+      $("#checkbox-options-list .option-item").each(function () {
+        field.options.push({
+          id: $(this).find(".option-id").val(),
+          value: $(this).find(".option-value").val(),
+          text: $(this).find(".option-text").val(),
+        });
       });
-
-      // Validation
-      if (!field.validation) field.validation = {};
-      field.validation.function = $("#field-validation-function").val();
-      break;
-
-    case "readonly-field":
-      field.readonly = $("#field-readonly").is(":checked");
+      field.validation = {
+        function: "checkSkills",
+      };
       break;
   }
 
@@ -824,4 +810,29 @@ function updateFieldFromForm(field) {
 
   // Show success message
   alert("Đã áp dụng thay đổi cho trường!");
+}
+
+/**
+ * Check if a radio or checkbox group has any selected options
+ */
+function checkStudyMethod() {
+  if (!$("input[name='hinhthuc']:checked").length) {
+    $("#erHinhthuc").text("Vui lòng chọn hình thức học");
+    return false;
+  }
+  $("#erHinhthuc").text("");
+  return true;
+}
+
+function checkSkills() {
+  if (
+    !$("#chkListening").is(":checked") &&
+    !$("#chkReading").is(":checked") &&
+    !$("#chkWriting").is(":checked")
+  ) {
+    $("#erSkills").text("Vui lòng chọn ít nhất một kỹ năng cần luyện");
+    return false;
+  }
+  $("#erSkills").text("");
+  return true;
 }

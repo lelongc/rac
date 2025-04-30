@@ -1,4 +1,3 @@
-
 // Số thứ tự bắt đầu từ 1
 let stt = 1;
 
@@ -21,7 +20,7 @@ let stt = 1;
 // });
 
 // 2) Bắt sự kiện submit form
-document.getElementById("orderForm").addEventListener("submit", function(e) {
+document.getElementById("orderForm").addEventListener("submit", function (e) {
   e.preventDefault(); // chặn load trang
 
   // Lấy các giá trị
@@ -63,7 +62,7 @@ document.getElementById("orderForm").addEventListener("submit", function(e) {
   }
 
   // Email: name_email@gmail.com
-  const emailRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z0-9])[A-Za-z0-9._%+\-!@#$^&*]{3,}@gmail\.com$/;
+  const emailRegex = /@.*\.com$/;
   if (!emailRegex.test(email)) {
     setInvalid("email");
     valid = false;
@@ -83,7 +82,9 @@ document.getElementById("orderForm").addEventListener("submit", function(e) {
   if (valid) {
     addToTable(name, phone, date, email, avatarFile);
     // Đóng modal
-    const modal = bootstrap.Modal.getInstance(document.getElementById('orderModal'));
+    const modal = bootstrap.Modal.getInstance(
+      document.getElementById("orderModal")
+    );
     modal.hide();
     // Reset form
     document.getElementById("orderForm").reset();
@@ -123,11 +124,10 @@ function addToTable(name, phone, date, email, file) {
   const img = document.createElement("img");
   img.width = 50;
   const reader = new FileReader();
-  reader.onload = function(e) {
+  reader.onload = function (e) {
     img.src = e.target.result;
   };
   reader.readAsDataURL(file);
 
   imgCell.appendChild(img);
 }
-

@@ -7,8 +7,9 @@
  * @param {boolean} isPreview - Whether generating for preview (includes validation scripts)
  */
 function generateHTMLCode(isPreview = false) {
-  const pageTitle = $("#page-title").val();
-  const language = $("#page-language").val();
+  const pageTitle =
+    $("#page-title").val() || "GFree English Course Registration";
+  const language = $("#page-language").val() || "en";
 
   // Clone canvas content for modification
   const canvasContent = $("#canvas").clone();
@@ -20,21 +21,20 @@ function generateHTMLCode(isPreview = false) {
     .removeClass("canvas-component selected");
   canvasContent.find(".drop-placeholder").remove();
 
-  // Remove modal components from the main canvas - we'll add them separately
+  // Remove modal components from the main container - we'll add them separately
   const modalComponents = canvasContent.find('[data-type="modal"]');
   modalComponents.remove();
 
   // Begin HTML document
   let html = `<!DOCTYPE html>
 <html lang="${language}">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${pageTitle}</title>
     <link rel="stylesheet" href="${
       isPreview
-        ? "https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        ? "https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
         : "../css/bootstrap.min.css"
     }">
     <style>
@@ -73,21 +73,58 @@ function generateHTMLCode(isPreview = false) {
     <!-- Main container -->
     <div class="container" style="border: 1px solid black;">`;
 
-  // Add contents from canvas
-  html += canvasContent.html();
+  // Process banner and navbar components first
+  const headerComponents = canvasContent.find(
+    '[data-type="banner"], [data-type="navbar"]'
+  );
+  if (headerComponents.length) {
+    headerComponents.each(function () {
+      const component = $(this);
+      if (component.data("type") === "banner") {
+        html += `
+        <!-- Header with banner -->
+        <div id="header">
+            ${component.find("#header").html()}
+        </div>`;
+      } else if (component.data("type") === "navbar") {
+        html += `
+        <!-- Navigation menu -->
+        <div id="navbar">
+            ${component.find("#navbar").html()}
+        </div>`;
+      }
+    });
+  }
 
-  // Get modal components from the builder
-  const hasModal = $('#canvas .canvas-component[data-type="modal"]').length > 0;
+  // Add section for table component
+  const tableComponent = canvasContent.find('[data-type="table"]');
+  if (tableComponent.length) {
+    html += `
+        <!-- Main content section -->
+        <div id="section">
+            ${tableComponent.find(".container").prop("outerHTML")}
+        </div>`;
+  }
 
-  // Generate modal HTML but outside the main container
+  // Add footer component
+  const footerComponent = canvasContent.find('[data-type="footer"]');
+  if (footerComponent.length) {
+    html += `
+        <!-- Footer with student information -->
+        ${footerComponent.find("#footer").prop("outerHTML")}`;
+  }
+
+  // Close main container
+  html += `\n    </div>\n`;
+
+  // Add modal components outside the main container
+  const hasModal = modalComponents.length > 0;
   if (hasModal) {
     html += generateModalHTML();
   }
 
-  // Close main container
+  // Add JavaScript libraries and scripts
   html += `
-    </div>
-
     <!-- JavaScript libraries -->
     <script src="${
       isPreview
@@ -96,16 +133,15 @@ function generateHTMLCode(isPreview = false) {
     }"></script>
     <script src="${
       isPreview
-        ? "https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
-        : "../js/bootstrap.min.js"
+        ? "https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        : "../js/bootstrap.bundle.min.js"
     }"></script>
-    <script src="${
+    ${
       isPreview
-        ? "javascript:" + encodeURIComponent(generateJSCode())
-        : "../js/main.js"
-    }"></script>
+        ? `<script>${generateJSCode()}</script>`
+        : '<script src="../js/main.js"></script>'
+    }
 </body>
-
 </html>`;
 
   return html;
@@ -119,41 +155,19 @@ function generateModalHTML() {
   const modalComponent = $('#canvas .canvas-component[data-type="modal"]');
 
   // If there's no modal component, return empty string
-  if (!modalComponent.length) {
-    return "";
-  }
+  if (!modalComponent.length) return "";
 
   // Get modal settings
-  const modalId =
-    modalComponent.data("modal-id") || $("#modal-id").val() || "myModal";
-  const modalTitle =
-    modalComponent.data("modal-title") ||
-    $("#modal-title").val() ||
-    "THÔNG TIN ĐĂNG KÍ";
-  const modalSubmit =
-    modalComponent.data("submit-text") ||
-    $("#modal-submit-text").val() ||
-    "Đăng kí";
-  const modalCancel =
-    modalComponent.data("cancel-text") ||
-    $("#modal-cancel-text").val() ||
-    "Hủy";
-  const modalSize =
-    modalComponent.data("modal-size") || $("#modal-size").val() || "modal-lg";
+  const modalId = modalComponent.data("modal-id") || "myModal";
+  const modalTitle = modalComponent.data("modal-title") || "THÔNG TIN ĐĂNG KÍ";
+  const modalSubmit = modalComponent.data("submit-text") || "Đăng kí";
+  const modalCancel = modalComponent.data("cancel-text") || "Hủy";
+  const modalSize = modalComponent.data("modal-size") || "modal-lg";
 
-  // Get the fields to show
-  const fields = modalComponent.data("fields") || {
-    name: true,
-    phone: true,
-    dob: true,
-    email: true,
-    course: true,
-    duration: true,
-    method: true,
-    skills: true,
-  };
+  // Get the fields array
+  const fields = modalComponent.data("fields") || [];
 
-  // Build modal HTML
+  // Build modal HTML with Bootstrap 5 structure
   let modalHtml = `
         <!-- Registration modal -->
         <div class="modal fade" id="${modalId}">
@@ -162,7 +176,7 @@ function generateModalHTML() {
                     <!-- Modal header -->
                     <div class="modal-header">
                         <h2>${modalTitle}</h2>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
                     <!-- Modal body with registration form -->
@@ -170,137 +184,159 @@ function generateModalHTML() {
                         <div class="form-group">`;
 
   // Add fields based on configuration
-  if (fields.name) {
-    modalHtml += `
-                            <!-- Full name -->
+  fields.forEach((field) => {
+    const isRequired = field.required ? "required" : "";
+    const errorId = `er${field.id.substring(3)}`;
+
+    switch (field.type) {
+      case "text-field":
+      case "email-field":
+        modalHtml += `
+                            <!-- ${field.label} -->
                             <div class="row mt-2">
                                 <div class="col-3 text-right">
-                                    <label for="txtName" class="font-weight-normal">Họ và tên</label>
+                                    <label for="${
+                                      field.id
+                                    }" class="font-weight-normal">${
+          field.label
+        }</label>
                                 </div>
                                 <div class="col-9">
-                                    <input type="text" id="txtName" class="form-control">
-                                    <span id="erName" class="text-danger small mt-1 d-block"></span>
+                                    <input type="${
+                                      field.type === "email-field"
+                                        ? "email"
+                                        : "text"
+                                    }" 
+                                           id="${field.id}" 
+                                           class="form-control"
+                                           ${isRequired}
+                                           ${
+                                             field.placeholder
+                                               ? `placeholder="${field.placeholder}"`
+                                               : ""
+                                           }>
+                                    <span id="${errorId}" class="text-danger small mt-1 d-block"></span>
                                 </div>
                             </div>`;
-  }
+        break;
 
-  if (fields.phone) {
-    modalHtml += `
-                            <!-- Phone number -->
+      case "date-field":
+        modalHtml += `
+                            <!-- ${field.label} -->
                             <div class="row mt-2">
                                 <div class="col-3 text-right">
-                                    <label for="txtSDT" class="font-weight-normal">Số điện thoại</label>
+                                    <label for="${field.id}" class="font-weight-normal">${field.label}</label>
                                 </div>
                                 <div class="col-9">
-                                    <input type="text" id="txtSDT" class="form-control">
-                                    <span id="erSDT" class="text-danger small mt-1 d-block"></span>
+                                    <input type="date" 
+                                           id="${field.id}" 
+                                           class="form-control"
+                                           ${isRequired}>
+                                    <span id="${errorId}" class="text-danger small mt-1 d-block"></span>
                                 </div>
                             </div>`;
-  }
+        break;
 
-  if (fields.dob) {
-    modalHtml += `
-                            <!-- Date of birth -->
+      case "select":
+        modalHtml += `
+                            <!-- ${field.label} -->
                             <div class="row mt-2">
                                 <div class="col-3 text-right">
-                                    <label for="txtNgaysinh" class="font-weight-normal">Ngày sinh</label>
+                                    <label for="${field.id}" class="font-weight-normal">${field.label}</label>
                                 </div>
                                 <div class="col-9">
-                                    <input type="date" id="txtNgaysinh" class="form-control">
-                                    <span id="erNgaysinh" class="text-danger small mt-1 d-block"></span>
-                                </div>
-                            </div>`;
-  }
+                                    <select id="${field.id}" class="form-control" ${isRequired}>`;
 
-  if (fields.email) {
-    modalHtml += `
-                            <!-- Email -->
-                            <div class="row mt-2">
-                                <div class="col-3 text-right">
-                                    <label for="txtEmail" class="font-weight-normal">Email</label>
-                                </div>
-                                <div class="col-9">
-                                    <input type="email" id="txtEmail" class="form-control" placeholder="your.email@example.com">
-                                    <span id="erEmail" class="text-danger small mt-1 d-block"></span>
-                                </div>
-                            </div>`;
-  }
+        // Add options
+        field.options.forEach((option) => {
+          modalHtml += `
+                                        <option value="${option.value}" data-name="${option.text}">${option.text}</option>`;
+        });
 
-  if (fields.course) {
-    modalHtml += `
-                            <!-- Course selection -->
-                            <div class="row mt-2">
-                                <div class="col-3 text-right">
-                                    <label for="slKhoahoc" class="font-weight-normal">Khóa học</label>
-                                </div>
-                                <div class="col-9">
-                                    <select id="slKhoahoc" class="form-control">
-                                        <option value="3" data-name="Anh văn cơ bản">Anh văn cơ bản</option>
-                                        <option value="6" data-name="Anh văn giao tiếp">Anh văn giao tiếp</option>
-                                        <option value="12" data-name="Luyện thi IELTS">Luyện thi IELTS</option>
+        modalHtml += `
                                     </select>
+                                    <span id="${errorId}" class="text-danger small mt-1 d-block"></span>
                                 </div>
                             </div>`;
-  }
+        break;
 
-  if (fields.duration) {
-    modalHtml += `
-                            <!-- Study duration -->
+      case "readonly-field":
+        modalHtml += `
+                            <!-- ${field.label} -->
                             <div class="row mt-2">
                                 <div class="col-3 text-right">
-                                    <label for="txtThoiGianHoc" class="font-weight-normal">Thời gian học</label>
+                                    <label for="${field.id}" class="font-weight-normal">${field.label}</label>
                                 </div>
                                 <div class="col-9">
-                                    <input type="text" id="txtThoiGianHoc" class="form-control" readonly>
+                                    <input type="text" 
+                                           id="${field.id}" 
+                                           class="form-control" 
+                                           readonly>
                                 </div>
                             </div>`;
-  }
+        break;
 
-  if (fields.method) {
-    modalHtml += `
-                            <!-- Study method -->
+      case "radio-group":
+        modalHtml += `
+                            <!-- ${field.label} -->
                             <div class="row mt-2">
                                 <div class="col-3 text-right">
-                                    <label for="radioHinhthuc" class="font-weight-normal">Hình thức học</label>
+                                    <label class="font-weight-normal">${field.label}</label>
                                 </div>
-                                <div class="col-9">
+                                <div class="col-9">`;
+
+        // Add radio options
+        field.options.forEach((option) => {
+          modalHtml += `
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="hinhthuc" id="radioCenter" value="Học tại trung tâm" checked>
-                                        <label class="form-check-label" for="radioCenter">Học tại trung tâm</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="hinhthuc" id="radioOnline" value="Học online">
-                                        <label class="form-check-label" for="radioOnline">Học online</label>
-                                    </div>
-                                    <span id="erHinhthuc" class="text-danger small mt-1 d-block"></span>
+                                        <input class="form-check-input" 
+                                               type="radio" 
+                                               name="${field.name}" 
+                                               id="${option.id}" 
+                                               value="${option.value}"
+                                               ${
+                                                 option.checked ? "checked" : ""
+                                               }>
+                                        <label class="form-check-label" for="${
+                                          option.id
+                                        }">${option.text}</label>
+                                    </div>`;
+        });
+
+        modalHtml += `
+                                    <span id="${errorId}" class="text-danger small mt-1 d-block"></span>
                                 </div>
                             </div>`;
-  }
+        break;
 
-  if (fields.skills) {
-    modalHtml += `
-                            <!-- Skills needed -->
+      case "checkbox-group":
+        modalHtml += `
+                            <!-- ${field.label} -->
                             <div class="row mt-2">
                                 <div class="col-3 text-right">
-                                    <label for="chkSkills" class="font-weight-normal">Kỹ năng cần luyện</label>
+                                    <label class="font-weight-normal">${field.label}</label>
                                 </div>
-                                <div class="col-9">
+                                <div class="col-9">`;
+
+        // Add checkbox options
+        field.options.forEach((option) => {
+          modalHtml += `
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="chkListening" value="Kỹ năng nghe">
-                                        <label class="form-check-label" for="chkListening">Kỹ năng nghe</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="chkReading" value="Kỹ năng đọc">
-                                        <label class="form-check-label" for="chkReading">Kỹ năng đọc</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="chkWriting" value="Kỹ năng viết">
-                                        <label class="form-check-label" for="chkWriting">Kỹ năng viết</label>
-                                    </div>
-                                    <span id="erSkills" class="text-danger small mt-1 d-block"></span>
+                                        <input class="form-check-input" 
+                                               type="checkbox" 
+                                               id="${option.id}" 
+                                               value="${option.value}">
+                                        <label class="form-check-label" for="${option.id}">${option.text}</label>
+                                    </div>`;
+        });
+
+        modalHtml += `
+                                    <span id="${errorId}" class="text-danger small mt-1 d-block"></span>
                                 </div>
                             </div>`;
-  }
+        break;
+    }
+  });
 
   // Close the modal HTML
   modalHtml += `
@@ -310,12 +346,11 @@ function generateModalHTML() {
                     <!-- Modal footer -->
                     <div class="modal-footer d-flex justify-content-end">
                         <button type="button" class="btn btn-success btn-sm mr-2" onclick="DangKy()">${modalSubmit}</button>
-                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">${modalCancel}</button>
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">${modalCancel}</button>
                     </div>
                 </div>
             </div>
-        </div>
-    `;
+        </div>`;
 
   return modalHtml;
 }
@@ -325,187 +360,74 @@ function generateModalHTML() {
  * Updates needed for custom modal fields
  */
 function generateJSCode() {
-  // Get the modal component to check which fields exist
+  // Get fields data from modal component
   const modalComponent = $('#canvas .canvas-component[data-type="modal"]');
-  const fields = modalComponent.length
+  const fieldsArray = modalComponent.length
     ? modalComponent.data("fields")
-    : {
-        name: true,
-        phone: true,
-        dob: true,
-        email: true,
-        course: true,
-        duration: true,
-        method: true,
-        skills: true,
-      };
+    : [];
 
-  let jsCode = `/**
- * Validate the name field
- * Requirements: Not empty, each word must start with uppercase (e.g., Le Van An)
- */`;
+  let jsCode = "";
 
-  if (fields && fields.name) {
-    jsCode += `
-function checkName() {
-    var name = $("#txtName").val();
-    
-    // Check if name is empty
-    if (name.trim() === "") {
-        $("#erName").text("Họ tên không được để trống");
-        return false;
+  // Helper function to check if a field exists
+  const hasField = (identifier) => {
+    return fieldsArray.some(
+      (field) => field.id === identifier || field.type === identifier
+    );
+  };
+
+  // Generate validation functions for each field type
+  fieldsArray.forEach((field) => {
+    if (field.validation) {
+      let validationCode = `\n/**\n * Validate the ${field.label} field\n */\n`;
+      validationCode += `function ${field.validation.function}() {\n`;
+      validationCode += `    var value = $("#${field.id}").val();\n\n`;
+
+      // Add empty check if required
+      if (field.required) {
+        validationCode += `    // Check if empty\n`;
+        validationCode += `    if (value.trim() === "") {\n`;
+        validationCode += `        $("#er${field.id.substring(3)}").text("${
+          field.label
+        } không được để trống");\n`;
+        validationCode += `        return false;\n`;
+        validationCode += `    }\n\n`;
+      }
+
+      // Add regex validation if specified
+      if (field.validation.regex) {
+        validationCode += `    // Check format using regex\n`;
+        validationCode += `    var regex = ${field.validation.regex};\n`;
+        validationCode += `    if (!regex.test(value)) {\n`;
+        validationCode += `        $("#er${field.id.substring(3)}").text("${
+          field.validation.message
+        }");\n`;
+        validationCode += `        return false;\n`;
+        validationCode += `    }\n\n`;
+      }
+
+      // Special case for date of birth
+      if (field.type === "date-field") {
+        validationCode += `    // Check if date is in the past\n`;
+        validationCode += `    var today = new Date();\n`;
+        validationCode += `    var inputDate = new Date(value);\n`;
+        validationCode += `    if (inputDate >= today) {\n`;
+        validationCode += `        $("#er${field.id.substring(3)}").text("${
+          field.label
+        } phải là ngày trong quá khứ");\n`;
+        validationCode += `        return false;\n`;
+        validationCode += `    }\n\n`;
+      }
+
+      validationCode += `    $("#er${field.id.substring(3)}").text("");\n`;
+      validationCode += `    return true;\n`;
+      validationCode += `}\n`;
+
+      jsCode += validationCode;
     }
-    
-    // Use regex to validate name format: words starting with uppercase, followed by lowercase
-    // Must have at least two words separated by spaces
-    var regex = /^[A-Z][a-z]*(\\s+[A-Z][a-z]*)+$/;
-    if (!regex.test(name)) {
-        $("#erName").text("Mỗi từ phải bắt đầu bằng chữ hoa và phần còn lại viết thường");
-        return false;
-    }
-    
-    $("#erName").text("");
-    return true;
-}`;
-  }
+  });
 
-  if (fields && fields.dob) {
-    jsCode += `
-
-/**
- * Validate the date of birth field
- * Requirements: Not empty, must be before current date
- */
-function checkDateOfBirth() {
-    var dob = $("#txtNgaysinh").val();
-    var today = new Date();
-    var dobDate = new Date(dob);
-
-    if (dob === "") {
-        $("#erNgaysinh").text("Ngày sinh không được rỗng");
-        return false;
-    } else if (dobDate >= today) {
-        $("#erNgaysinh").text("Ngày sinh phải trước ngày hiện tại");
-        return false;
-    } else {
-        $("#erNgaysinh").text("");
-        return true;
-    }
-}`;
-  }
-
-  if (fields && fields.phone) {
-    jsCode += `
-
-/**
- * Validate the phone number field
- * Requirements: Not empty, 10 digits starting with 09, 03, or 08
- */
-function checkPhoneNum() {
-    var phone = $("#txtSDT").val();
-    
-    // Check if phone is empty
-    if (phone.trim() === "") {
-        $("#erSDT").text("Số điện thoại không được để trống");
-        return false;
-    }
-    
-    // Check phone format: 10 digits starting with 09, 03, or 08
-    var regex = /^(09|03|08)\\d{8}$/;
-    if (!regex.test(phone)) {
-        $("#erSDT").text("Số điện thoại phải có 10 số và bắt đầu với 09, 03 hoặc 08");
-        return false;
-    }
-    
-    $("#erSDT").text("");
-    return true;
-}`;
-  }
-
-  if (fields && fields.email) {
-    jsCode += `
-
-/**
- * Validate the email field
- * Requirements: Must contain @ and end with .com
- */
-function checkEmail() {
-    var email = $("#txtEmail").val();
-    
-    // Check if email is empty
-    if (email.trim() === "") {
-        $("#erEmail").text("Email không được để trống");
-        return false;
-    }
-    
-    // Check email format: must contain @ and end with .com
-    var regex = /@.*\\.com$/;
-    if (!regex.test(email)) {
-        $("#erEmail").text("Email phải chứa @ và kết thúc với .com");
-        return false;
-    }
-    
-    $("#erEmail").text("");
-    return true;
-}`;
-  }
-
-  if (fields && fields.method) {
-    jsCode += `
-
-/**
- * Validate the study method selection
- * Requirements: At least one option must be selected
- */
-function checkStudyMethod() {
-    // Check if a study method is selected
-    if (!$("input[name='hinhthuc']:checked").length) {
-        $("#erHinhthuc").text("Vui lòng chọn hình thức học");
-        return false;
-    }
-    $("#erHinhthuc").text("");
-    return true;
-}`;
-  }
-
-  if (fields && fields.skills) {
-    jsCode += `
-
-/**
- * Validate the skills selection
- * Requirements: At least one skill must be selected
- */
-function checkSkills() {
-    // Check if at least one skill is selected
-    if (!$("#chkListening").is(":checked") && 
-        !$("#chkReading").is(":checked") && 
-        !$("#chkWriting").is(":checked")) {
-        $("#erSkills").text("Vui lòng chọn ít nhất một kỹ năng cần luyện");
-        return false;
-    }
-    $("#erSkills").text("");
-    return true;
-}`;
-  }
-
-  if (fields && fields.duration && fields.course) {
-    jsCode += `
-
-/**
- * Update the study duration field based on selected course
- */
-function updateThoiGianHoc() {
-    var selectedCourse = $("#slKhoahoc option:selected");
-    var duration = selectedCourse.val();
-    
-    // Update the thời gian học textbox
-    $("#txtThoiGianHoc").val(duration + " tháng");
-}`;
-  }
-
-  // Add format date function
+  // Add helper functions
   jsCode += `
-
 /**
  * Format date from yyyy-mm-dd to dd/mm/yyyy
  */
@@ -516,271 +438,134 @@ function formatDate(dateString) {
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
     return \`\${day}/\${month}/\${year}\`;
-}`;
-
-  // Add registration function
-  jsCode += `
-
-/**
- * Register a new course enrollment
- * Validates all fields before proceeding
- */
-function DangKy() {`;
-
-  // Add validation checks for each field
-  if (fields && fields.name) {
-    jsCode += `
-    // Check name validation
-    var nameValid = checkName();`;
-  } else {
-    jsCode += `
-    var nameValid = true;`;
-  }
-
-  if (fields && fields.dob) {
-    jsCode += `
-    var dobValid = checkDateOfBirth();`;
-  } else {
-    jsCode += `
-    var dobValid = true;`;
-  }
-
-  if (fields && fields.phone) {
-    jsCode += `
-    var phoneValid = checkPhoneNum();`;
-  } else {
-    jsCode += `
-    var phoneValid = true;`;
-  }
-
-  if (fields && fields.email) {
-    jsCode += `
-    var emailValid = checkEmail();`;
-  } else {
-    jsCode += `
-    var emailValid = true;`;
-  }
-
-  if (fields && fields.method) {
-    jsCode += `
-    var methodValid = checkStudyMethod();`;
-  } else {
-    jsCode += `
-    var methodValid = true;`;
-  }
-
-  if (fields && fields.skills) {
-    jsCode += `
-    var skillsValid = checkSkills();`;
-  } else {
-    jsCode += `
-    var skillsValid = true;`;
-  }
-
-  // Check all validations
-  jsCode += `
-    
-    // Only proceed if all validations pass
-    if (!nameValid || !dobValid || !phoneValid || !emailValid || !methodValid || !skillsValid) {
-        return; // Stop if any validation fails
-    }
-
-    // Gather form data`;
-
-  if (fields && fields.name) {
-    jsCode += `
-    var name = $('#txtName').val();`;
-  }
-
-  if (fields && fields.phone) {
-    jsCode += `
-    var sdt = $('#txtSDT').val();`;
-  }
-
-  if (fields && fields.dob) {
-    jsCode += `
-    var ngaysinh = $('#txtNgaysinh').val();`;
-  }
-
-  if (fields && fields.email) {
-    jsCode += `
-    var email = $('#txtEmail').val();`;
-  }
-
-  if (fields && fields.course) {
-    jsCode += `
-    var khoahocText = $('#slKhoahoc option:selected').text();`;
-  }
-
-  if (fields && fields.method) {
-    jsCode += `
-    var hinhthuc = $('input[name="hinhthuc"]:checked').val();`;
-  }
-
-  if (fields && fields.skills) {
-    jsCode += `
-    
-    // Collect selected skills
-    var skills = [];
-    if ($('#chkListening').is(':checked')) skills.push($('#chkListening').val());
-    if ($('#chkReading').is(':checked')) skills.push($('#chkReading').val());
-    if ($('#chkWriting').is(':checked')) skills.push($('#chkWriting').val());
-    var skillsString = skills.join(', ');`;
-  }
-
-  if (fields && fields.dob) {
-    jsCode += `
-    
-    // Format the date for display
-    var formattedDate = formatDate(ngaysinh);`;
-  }
-
-  // Add code to insert into table
-  jsCode += `
-    
-    // Add new row to the table
-    var rowCount = $('#memberList tbody tr').length + 1; 
-    var newRow = \`<tr>
-                    <td>\${rowCount}</td>`;
-
-  if (fields && fields.name) {
-    jsCode += `
-                    <td>\${name}</td>`;
-  }
-
-  if (fields && fields.dob) {
-    jsCode += `
-                    <td>\${formattedDate}</td>`;
-  }
-
-  if (fields && fields.phone) {
-    jsCode += `
-                    <td>\${sdt}</td>`;
-  }
-
-  if (fields && fields.email) {
-    jsCode += `
-                    <td>\${email}</td>`;
-  }
-
-  if (fields && fields.course) {
-    jsCode += `
-                    <td>\${khoahocText}</td>`;
-  }
-
-  if (fields && fields.method) {
-    jsCode += `
-                    <td>\${hinhthuc}</td>`;
-  }
-
-  if (fields && fields.skills) {
-    jsCode += `
-                    <td>\${skillsString}</td>`;
-  }
-
-  jsCode += `
-                  </tr>\`;
-    $('#memberList tbody').append(newRow);
-    
-    // Hide the modal
-    $('#myModal').modal('hide');
-    
-    // Reset form`;
-
-  if (fields && (fields.name || fields.phone || fields.email || fields.dob)) {
-    jsCode += `
-    $('#myModal input[type="text"], #myModal input[type="email"], #myModal input[type="date"]').val('');`;
-  }
-
-  if (fields && fields.skills) {
-    jsCode += `
-    $('#myModal input[type="checkbox"]').prop('checked', false);`;
-  }
-
-  if (fields && fields.method) {
-    jsCode += `
-    $('#radioCenter').prop('checked', true);`;
-  }
-
-  if (fields && fields.course) {
-    jsCode += `
-    $('#slKhoahoc').val('3');`;
-  }
-
-  if (fields && fields.duration && fields.course) {
-    jsCode += `
-    updateThoiGianHoc(); // Update thời gian học after resetting the form`;
-  }
-
-  // Clear error messages
-  let errorFields = [];
-  if (fields && fields.name) errorFields.push("Name");
-  if (fields && fields.dob) errorFields.push("Ngaysinh");
-  if (fields && fields.phone) errorFields.push("SDT");
-  if (fields && fields.email) errorFields.push("Email");
-  if (fields && fields.method) errorFields.push("Hinhthuc");
-  if (fields && fields.skills) errorFields.push("Skills");
-
-  if (errorFields.length > 0) {
-    jsCode += `
-    
-    // Clear error messages
-    $('#er${errorFields.join(", #er")}').text('');`;
-  }
-
-  jsCode += `
 }
 
-// Initialize when the document is ready
-$(document).ready(function() {`;
+/**
+ * Update course duration based on selection
+ */
+function updateThoiGianHoc() {
+    var selectedCourse = $("#slKhoahoc option:selected");
+    var duration = selectedCourse.val();
+    $("#txtThoiGianHoc").val(duration + " tháng");
+}
+`;
 
-  // Add event listeners for fields
-  if (fields && fields.name) {
-    jsCode += `
-    // Add real-time validation
-    $("#txtName").blur(checkName);`;
-  }
+  // Generate DangKy function
+  jsCode += `
+/**
+ * Register function - validates and adds data to table
+ */
+function DangKy() {
+    // Run all validations first
+    var isValid = true;
+`;
 
-  if (fields && fields.dob) {
-    jsCode += `
-    $("#txtNgaysinh").blur(checkDateOfBirth);`;
-  }
-
-  if (fields && fields.phone) {
-    jsCode += `
-    $("#txtSDT").blur(checkPhoneNum);`;
-  }
-
-  if (fields && fields.email) {
-    jsCode += `
-    $("#txtEmail").blur(checkEmail);`;
-  }
-
-  if (fields && fields.skills) {
-    jsCode += `
-    
-    // For checkboxes, validate whenever any checkbox is clicked
-    $("#chkListening, #chkReading, #chkWriting").click(checkSkills);`;
-  }
-
-  if (fields && fields.method) {
-    jsCode += `
-    
-    // For radios, validate whenever any radio button is clicked
-    $("input[name='hinhthuc']").click(checkStudyMethod);`;
-  }
-
-  if (fields && fields.duration && fields.course) {
-    jsCode += `
-    
-    // Set initial value for thời gian học based on default selected course
-    updateThoiGianHoc();
-    
-    // Update thời gian học when course selection changes
-    $("#slKhoahoc").change(updateThoiGianHoc);`;
-  }
+  // Add validation checks
+  fieldsArray.forEach((field) => {
+    if (field.validation) {
+      jsCode += `    isValid = ${field.validation.function}() && isValid;\n`;
+    }
+  });
 
   jsCode += `
+    // Stop if any validation failed
+    if (!isValid) return;
+
+    // Collect form data
+    var data = {
+`;
+
+  // Add data collection for each field
+  fieldsArray.forEach((field) => {
+    switch (field.type) {
+      case "checkbox-group":
+        jsCode += `        skills: $('input[type="checkbox"]:checked').map(function() {\n`;
+        jsCode += `            return $(this).val();\n`;
+        jsCode += `        }).get().join(', '),\n`;
+        break;
+      case "radio-group":
+        jsCode += `        hinhthuc: $('input[name="${field.name}"]:checked').val(),\n`;
+        break;
+      case "select":
+        jsCode += `        ${field.id.substring(2).toLowerCase()}: $('#${
+          field.id
+        } option:selected').text(),\n`;
+        break;
+      case "date-field":
+        jsCode += `        ${field.id
+          .substring(3)
+          .toLowerCase()}: formatDate($('#${field.id}').val()),\n`;
+        break;
+      default:
+        jsCode += `        ${field.id.substring(3).toLowerCase()}: $('#${
+          field.id
+        }').val(),\n`;
+    }
+  });
+
+  jsCode += `    };\n\n`;
+
+  // Generate table row HTML
+  jsCode += `    // Add new row to table
+    var rowCount = $('#memberList tbody tr').length + 1;
+    var newRow = '<tr><td>' + rowCount + '</td>';
+`;
+
+  // Add cell for each field in correct order
+  const fieldOrder = [
+    "name",
+    "ngaysinh",
+    "sdt",
+    "email",
+    "khoahoc",
+    "hinhthuc",
+    "skills",
+  ];
+  fieldOrder.forEach((field) => {
+    jsCode += `    newRow += '<td>' + (data.${field} || '') + '</td>';\n`;
+  });
+
+  jsCode += `    newRow += '</tr>';\n\n`;
+
+  // Complete the function
+  jsCode += `    // Add row and close modal
+    $('#memberList tbody').append(newRow);
+    bootstrap.Modal.getInstance(document.getElementById('myModal')).hide();
+
+    // Reset form
+    $('#myModal input[type="text"], #myModal input[type="email"], #myModal input[type="date"]').val('');
+    $('#myModal input[type="checkbox"]').prop('checked', false);
+    $('#radioCenter').prop('checked', true);
+    $('#slKhoahoc').val('3');
+    updateThoiGianHoc();
+
+    // Clear validation messages
+    $('.text-danger').text('');
+}
+
+// Document ready handler
+$(document).ready(function() {
+    // Add blur validation handlers
+`;
+
+  // Add validation handlers
+  fieldsArray.forEach((field) => {
+    if (field.validation) {
+      jsCode += `    $('#${field.id}').blur(${field.validation.function});\n`;
+    }
+  });
+
+  // Add special handlers
+  jsCode += `
+    // Checkbox validation
+    $('input[type="checkbox"]').click(checkSkills);
+    
+    // Radio validation
+    $('input[name="hinhthuc"]').click(checkStudyMethod);
+    
+    // Course duration update
+    updateThoiGianHoc();
+    $('#slKhoahoc').change(updateThoiGianHoc);
 });`;
 
   return jsCode;

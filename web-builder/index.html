@@ -4,177 +4,154 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Web Builder - Bootstrap & jQuery</title>
+    <!-- Bootstrap 5.3.5 CSS -->
     <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
     />
+    <!-- Font Awesome -->
     <link
-      rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
     />
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="css/builder-style.css" />
   </head>
   <body>
+    <!-- Navbar -->
     <nav class="navbar navbar-dark bg-primary">
-      <a class="navbar-brand" href="#">Web Builder - Bootstrap & jQuery</a>
-      <div>
-        <button id="preview-btn" class="btn btn-light btn-sm mr-2">
-          <i class="fas fa-eye"></i> Preview
-        </button>
-        <button id="export-btn" class="btn btn-success btn-sm">
-          <i class="fas fa-download"></i> Export Code
-        </button>
+      <div class="container">
+        <span class="navbar-brand">Web Builder</span>
       </div>
     </nav>
 
-    <div class="container-fluid">
-      <div class="row mt-3">
-        <!-- Components Panel -->
-        <div class="col-md-3 col-lg-2">
-          <div class="card mb-3">
-            <div class="card-header bg-secondary text-white">
-              <i class="fas fa-th-large mr-2"></i> Form Components
+    <!-- Main container -->
+    <div class="container-fluid mt-4">
+      <div class="row">
+        <!-- Components panel -->
+        <div class="col-md-3">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">Components</h5>
             </div>
-            <div class="card-body p-2">
+            <div class="card-body">
               <div class="components-list">
+                <!-- Header components -->
+                <h6 class="text-muted small">Header</h6>
+                <div class="component-item" draggable="true" data-type="banner">
+                  <i class="fas fa-image mr-2"></i> Banner
+                </div>
+                <div class="component-item" draggable="true" data-type="navbar">
+                  <i class="fas fa-bars mr-2"></i> Navigation
+                </div>
+
+                <!-- Form components -->
+                <h6 class="text-muted small mt-3">Form Elements</h6>
                 <div
                   class="component-item"
                   draggable="true"
                   data-type="text-field"
                 >
-                  <i class="fas fa-keyboard mr-2"></i> Text Field
+                  <i class="fas fa-font mr-2"></i> Text Field
                 </div>
                 <div
                   class="component-item"
                   draggable="true"
                   data-type="email-field"
                 >
-                  <i class="fas fa-at mr-2"></i> Email Field
+                  <i class="fas fa-envelope mr-2"></i> Email Field
                 </div>
                 <div
                   class="component-item"
                   draggable="true"
                   data-type="date-field"
                 >
-                  <i class="far fa-calendar-alt mr-2"></i> Date Field
+                  <i class="fas fa-calendar mr-2"></i> Date Field
                 </div>
                 <div class="component-item" draggable="true" data-type="select">
-                  <i class="fas fa-caret-down mr-2"></i> Select Dropdown
+                  <i class="fas fa-caret-square-down mr-2"></i> Dropdown
                 </div>
                 <div
                   class="component-item"
                   draggable="true"
                   data-type="radio-group"
                 >
-                  <i class="far fa-dot-circle mr-2"></i> Radio Group
+                  <i class="fas fa-dot-circle mr-2"></i> Radio Group
                 </div>
                 <div
                   class="component-item"
                   draggable="true"
                   data-type="checkbox-group"
                 >
-                  <i class="far fa-check-square mr-2"></i> Checkbox Group
+                  <i class="fas fa-check-square mr-2"></i> Checkbox Group
                 </div>
-                <div class="component-item" draggable="true" data-type="button">
-                  <i class="fas fa-mouse-pointer mr-2"></i> Button
+
+                <!-- Layout components -->
+                <h6 class="text-muted small mt-3">Layout</h6>
+                <div class="component-item" draggable="true" data-type="table">
+                  <i class="fas fa-table mr-2"></i> Table
                 </div>
                 <div class="component-item" draggable="true" data-type="modal">
                   <i class="fas fa-window-restore mr-2"></i> Modal Form
                 </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-header bg-info text-white">
-              <i class="fas fa-layer-group mr-2"></i> Layout Components
-            </div>
-            <div class="card-body p-2">
-              <div class="components-list">
-                <div class="component-item" draggable="true" data-type="banner">
-                  <i class="fas fa-image mr-2"></i> Banner
-                </div>
-                <div class="component-item" draggable="true" data-type="navbar">
-                  <i class="fas fa-bars mr-2"></i> Navigation Bar
-                </div>
-                <div class="component-item" draggable="true" data-type="table">
-                  <i class="fas fa-table mr-2"></i> Table
+                <div class="component-item" draggable="true" data-type="button">
+                  <i class="fas fa-square mr-2"></i> Button
                 </div>
                 <div class="component-item" draggable="true" data-type="footer">
-                  <i class="fas fa-shoe-prints mr-2"></i> Footer
+                  <i class="fas fa-minus mr-2"></i> Footer
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Canvas Panel -->
-        <div class="col-md-6 col-lg-7">
-          <div class="card canvas-wrapper">
-            <div class="card-header bg-primary text-white">
-              <i class="fas fa-desktop mr-2"></i> Canvas
+          <!-- Preview card -->
+          <div class="card mt-3" id="modal-preview-card" style="display: none">
+            <div class="card-header">
+              <h5 class="mb-0">Preview Tools</h5>
             </div>
-            <div class="card-body p-0">
-              <div id="canvas" class="canvas">
-                <div class="drop-placeholder">
-                  <i class="fas fa-arrow-down"></i>
-                  <p>Kéo các thành phần vào đây</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Properties Panel -->
-        <div class="col-md-3 col-lg-3">
-          <div class="card mb-3">
-            <div class="card-header bg-dark text-white">
-              <i class="fas fa-cogs mr-2"></i> Properties
-            </div>
-            <div class="card-body p-2">
-              <div id="properties-panel">
-                <p class="text-center text-muted">
-                  Chọn một thành phần để chỉnh sửa thuộc tính
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Modal Preview Section -->
-          <div class="card mb-3" id="modal-preview-card" style="display: none">
-            <div class="card-header bg-warning text-dark">
-              <i class="fas fa-external-link-alt mr-2"></i> Modal Preview
-            </div>
-            <div class="card-body text-center">
-              <p class="small">Xem trước modal form đã tạo</p>
-              <button id="preview-modal-btn" class="btn btn-warning btn-sm">
-                <i class="fas fa-window-restore mr-1"></i> Show Modal Preview
+            <div class="card-body">
+              <button class="btn btn-primary btn-block" id="preview-modal-btn">
+                <i class="fas fa-eye"></i> Show Modal Preview
               </button>
             </div>
           </div>
+        </div>
 
-          <!-- Page Settings -->
-          <div class="card mb-3">
-            <div class="card-header bg-secondary text-white">
-              <i class="fas fa-sliders-h mr-2"></i> Page Settings
+        <!-- Canvas -->
+        <div class="col-md-6">
+          <div class="card canvas-wrapper">
+            <div
+              class="card-header d-flex justify-content-between align-items-center"
+            >
+              <h5 class="mb-0">Canvas</h5>
+              <div>
+                <button class="btn btn-primary btn-sm" id="preview-btn">
+                  <i class="fas fa-eye"></i> Preview
+                </button>
+                <button class="btn btn-success btn-sm" id="export-btn">
+                  <i class="fas fa-download"></i> Export
+                </button>
+              </div>
             </div>
-            <div class="card-body p-2">
-              <div class="form-group">
-                <label for="page-title">Tiêu đề trang:</label>
-                <input
-                  type="text"
-                  class="form-control form-control-sm"
-                  id="page-title"
-                  value="Trang của tôi"
-                />
+            <div id="canvas" class="canvas">
+              <div class="drop-placeholder">
+                <i class="fas fa-arrow-down"></i>
+                <p>Drag components here</p>
               </div>
-              <div class="form-group">
-                <label for="page-language">Ngôn ngữ:</label>
-                <select class="form-control form-control-sm" id="page-language">
-                  <option value="vi">Tiếng Việt</option>
-                  <option value="en">Tiếng Anh</option>
-                </select>
-              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Properties panel -->
+        <div class="col-md-3">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">Properties</h5>
+            </div>
+            <div class="card-body" id="properties-panel">
+              <p class="text-center text-muted">
+                Select a component to edit its properties
+              </p>
             </div>
           </div>
         </div>
@@ -186,15 +163,13 @@
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Xem trước trang web</h5>
+            <h5 class="modal-title">Preview</h5>
             <button
               type="button"
-              class="close"
-              data-dismiss="modal"
+              class="btn-close"
+              data-bs-dismiss="modal"
               aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
+            ></button>
           </div>
           <div class="modal-body p-0">
             <iframe
@@ -206,106 +181,71 @@
       </div>
     </div>
 
-    <!-- Export Code Modal -->
+    <!-- Export Modal -->
     <div class="modal fade" id="export-modal" tabindex="-1">
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Xuất mã nguồn</h5>
+            <h5 class="modal-title">Export Code</h5>
             <button
               type="button"
-              class="close"
-              data-dismiss="modal"
+              class="btn-close"
+              data-bs-dismiss="modal"
               aria-label="Close"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
+            ></button>
           </div>
           <div class="modal-body">
-            <ul class="nav nav-tabs" id="codeTab" role="tablist">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
               <li class="nav-item">
-                <a
-                  class="nav-link active"
-                  id="html-tab"
-                  data-toggle="tab"
-                  href="#html-pane"
-                  role="tab"
+                <a class="nav-link active" data-bs-toggle="tab" href="#html-tab"
                   >HTML</a
                 >
               </li>
               <li class="nav-item">
-                <a
-                  class="nav-link"
-                  id="js-tab"
-                  data-toggle="tab"
-                  href="#js-pane"
-                  role="tab"
+                <a class="nav-link" data-bs-toggle="tab" href="#js-tab"
                   >JavaScript</a
                 >
               </li>
               <li class="nav-item">
-                <a
-                  class="nav-link"
-                  id="css-tab"
-                  data-toggle="tab"
-                  href="#css-pane"
-                  role="tab"
-                  >CSS</a
-                >
+                <a class="nav-link" data-bs-toggle="tab" href="#css-tab">CSS</a>
               </li>
             </ul>
-            <div class="tab-content mt-2" id="codeTabContent">
-              <div
-                class="tab-pane fade show active"
-                id="html-pane"
-                role="tabpanel"
-              >
-                <div
-                  class="d-flex justify-content-between align-items-center mb-2"
-                >
-                  <h6 class="m-0">HTML Code</h6>
+
+            <!-- Tab panes -->
+            <div class="tab-content mt-3">
+              <div class="tab-pane active" id="html-tab">
+                <div class="d-flex justify-content-end mb-2">
                   <button
-                    class="btn btn-sm btn-primary copy-btn"
+                    class="btn btn-primary btn-sm copy-btn"
                     data-target="html-code"
                   >
-                    <i class="far fa-copy mr-1"></i> Copy HTML
+                    <i class="fas fa-copy"></i> Copy HTML
                   </button>
                 </div>
-                <pre
-                  class="border p-3 bg-light"
-                ><code id="html-code"></code></pre>
+                <pre class="code-block" id="html-code"></pre>
               </div>
-              <div class="tab-pane fade" id="js-pane" role="tabpanel">
-                <div
-                  class="d-flex justify-content-between align-items-center mb-2"
-                >
-                  <h6 class="m-0">JavaScript Code</h6>
+              <div class="tab-pane" id="js-tab">
+                <div class="d-flex justify-content-end mb-2">
                   <button
-                    class="btn btn-sm btn-primary copy-btn"
+                    class="btn btn-primary btn-sm copy-btn"
                     data-target="js-code"
                   >
-                    <i class="far fa-copy mr-1"></i> Copy JavaScript
+                    <i class="fas fa-copy"></i> Copy JavaScript
                   </button>
                 </div>
-                <pre
-                  class="border p-3 bg-light"
-                ><code id="js-code"></code></pre>
+                <pre class="code-block" id="js-code"></pre>
               </div>
-              <div class="tab-pane fade" id="css-pane" role="tabpanel">
-                <div
-                  class="d-flex justify-content-between align-items-center mb-2"
-                >
-                  <h6 class="m-0">CSS Code</h6>
+              <div class="tab-pane" id="css-tab">
+                <div class="d-flex justify-content-end mb-2">
                   <button
-                    class="btn btn-sm btn-primary copy-btn"
+                    class="btn btn-primary btn-sm copy-btn"
                     data-target="css-code"
                   >
-                    <i class="far fa-copy mr-1"></i> Copy CSS
+                    <i class="fas fa-copy"></i> Copy CSS
                   </button>
                 </div>
-                <pre
-                  class="border p-3 bg-light"
-                ><code id="css-code"></code></pre>
+                <pre class="code-block" id="css-code"></pre>
               </div>
             </div>
           </div>
@@ -439,13 +379,16 @@
       </div>
     </div>
 
+    <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-    <script src="js/builder.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
     <script src="js/components.js"></script>
+    <script src="js/field-editor.js"></script>
     <script src="js/properties.js"></script>
     <script src="js/code-generator.js"></script>
-    <script src="js/field-editor.js"></script>
+    <script src="js/builder.js"></script>
   </body>
 </html>

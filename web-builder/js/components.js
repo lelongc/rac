@@ -53,7 +53,7 @@ function createNavbarComponent(id) {
                             <a class="nav-link" href="#">Khóa học</a>
                         </li>
                         <li class="nav-item nav-register-btn">
-                            <a class="nav-link btn btn-danger text-white btn-sm" href="#myModal" data-toggle="modal">Đăng ký</a>
+                            <a class="nav-link btn btn-danger text-white btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">Đăng ký</a>
                         </li>
                     </ul>
                 </nav>

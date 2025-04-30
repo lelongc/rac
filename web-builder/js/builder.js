@@ -273,10 +273,36 @@ function initPreview() {
     $("#preview-modal").modal("show");
   });
 
-  // Modal preview functionality
+  // Modal preview functionality (Button on the main page - outside preview)
+  // This button might be confusing if the user expects to click the button *inside* the preview.
+  // Let's disable the manual triggering from here and rely on the button inside the iframe.
   $("#preview-modal-btn").on("click", function () {
     const modalComponent = $('#canvas .canvas-component[data-type="modal"]');
+    const previewFrame = document.getElementById("preview-frame");
 
+    if (!modalComponent.length) {
+      alert(
+        "No modal component found. Please add a modal component to the canvas."
+      );
+      return;
+    }
+    if (
+      !previewFrame ||
+      !previewFrame.contentWindow ||
+      !previewFrame.contentWindow.document.readyState === "complete"
+    ) {
+      alert(
+        "Preview not fully loaded. Please click the 'Preview' button first and wait for it to load."
+      );
+      return;
+    }
+
+    // Instead of manually showing, instruct the user or rely on the button inside the preview.
+    alert(
+      "Click the 'Đăng ký' button inside the preview window to open the modal."
+    );
+
+    /* // --- Comment out manual triggering ---
     if (modalComponent.length) {
       // Get modal ID
       const modalId =
@@ -286,20 +312,21 @@ function initPreview() {
       const previewFrame = document.getElementById("preview-frame");
       if (previewFrame && previewFrame.contentWindow) {
         const frameDocument = previewFrame.contentWindow.document;
-        // Try to find and show the modal
+        const frameWindow = previewFrame.contentWindow;
+        // Try to find and show the modal using Bootstrap's JS within the iframe
         try {
-          frameDocument.getElementById(modalId).classList.add("show");
-          frameDocument.getElementById(modalId).style.display = "block";
-          frameDocument.body.classList.add("modal-open");
-          frameDocument.body.insertAdjacentHTML(
-            "beforeend",
-            '<div class="modal-backdrop fade show"></div>'
-          );
+           const modalElement = frameDocument.getElementById(modalId);
+           if (modalElement && typeof frameWindow.bootstrap.Modal === 'function') {
+             const modalInstance = frameWindow.bootstrap.Modal.getInstance(modalElement) || new frameWindow.bootstrap.Modal(modalElement);
+             modalInstance.show();
+           } else {
+             throw new Error('Modal element or Bootstrap Modal function not found in iframe.');
+           }
         } catch (e) {
           alert(
-            "Modal not found in preview. Make sure you have a modal component added."
+            "Could not open modal in preview. Make sure Bootstrap JS is loaded correctly and the modal exists."
           );
-          console.error(e);
+          console.error('Error opening modal in preview:', e);
         }
       } else {
         alert(
@@ -311,6 +338,7 @@ function initPreview() {
         "No modal component found. Please add a modal component to the canvas."
       );
     }
+    */ // --- End of commented out section ---
   });
 }
 
@@ -332,64 +360,62 @@ function updateModalPreviewCard() {
  */
 function generatePreview() {
   const previewFrame = document.getElementById("preview-frame");
+  // Pass true to generateHTMLCode to indicate it's for preview
   const htmlCode = generateHTMLCode(true);
 
-  // Clear the iframe's content
-  previewFrame.srcdoc = "";
+  // Use srcdoc to set content, which provides a cleaner execution context
+  previewFrame.srcdoc = htmlCode;
 
-  // Access the iframe document
-  const frameDoc =
-    previewFrame.contentDocument ||
-    (previewFrame.contentWindow && previewFrame.contentWindow.document);
+  // Add event listener for when iframe is loaded
+  previewFrame.onload = function () {
+    // Check if there's a modal component in the builder canvas
+    const modalComponent = $('#canvas .canvas-component[data-type="modal"]');
+    if (modalComponent.length) {
+      const modalId =
+        modalComponent.data("modal-id") || $("#modal-id").val() || "myModal";
 
-  if (frameDoc) {
-    // Write HTML directly to the iframe document
-    frameDoc.open();
-    frameDoc.write(htmlCode);
-    frameDoc.close();
+      const frameWindow = previewFrame.contentWindow;
+      const frameDocument = frameWindow.document;
 
-    // Add event listener for when iframe is loaded
-    previewFrame.onload = function () {
-      // Check if there's a modal component
-      const modalComponent = $('#canvas .canvas-component[data-type="modal"]');
-      if (modalComponent.length) {
-        const modalId =
-          modalComponent.data("modal-id") || $("#modal-id").val() || "myModal";
-
-        // Get the course selection from the iframe
-        const frameWindow = previewFrame.contentWindow;
-
-        // Initialize thời gian học if it exists
-        try {
-          if (typeof frameWindow.updateThoiGianHoc === "function") {
-            frameWindow.updateThoiGianHoc();
-          }
-        } catch (e) {
-          console.error("Error initializing updateThoiGianHoc:", e);
-        }
-
-        // Add event listener for the modal button in the iframe
-        try {
-          const navRegisterBtn = frameWindow.document.querySelector(
-            ".nav-register-btn a"
-          );
-          if (navRegisterBtn) {
-            navRegisterBtn.onclick = function (e) {
-              e.preventDefault();
-              const modal = new frameWindow.bootstrap.Modal(
-                frameWindow.document.getElementById(modalId)
-              );
-              modal.show();
-            };
-          }
-        } catch (e) {
-          console.error("Error setting up modal button:", e);
-        }
+      // Initialize modal trigger button
+      const registerButton = frameDocument.querySelector(".nav-register-btn a");
+      if (registerButton) {
+        // Update to Bootstrap 5 data attributes
+        registerButton.setAttribute("data-bs-toggle", "modal");
+        registerButton.setAttribute("data-bs-target", "#myModal");
       }
-    };
-  } else {
-    alert("Could not access iframe document for preview.");
-  }
+
+      // Initialize the modal
+      const modalElement = frameDocument.getElementById("myModal");
+      if (modalElement) {
+        const modal = new frameWindow.bootstrap.Modal(modalElement);
+        modalElement.addEventListener("shown.bs.modal", function () {
+          // Initialize form event handlers after modal is shown
+          const courseSelect = frameDocument.getElementById("slKhoahoc");
+          if (courseSelect) {
+            courseSelect.addEventListener("change", function () {
+              const duration = this.value;
+              frameDocument.getElementById("txtThoiGianHoc").value =
+                duration + " tháng";
+            });
+            // Set initial value
+            frameDocument.getElementById("txtThoiGianHoc").value =
+              courseSelect.value + " tháng";
+          }
+        });
+      }
+    } else {
+      console.log(
+        "No modal component found on canvas, skipping modal setup in preview."
+      );
+    }
+  };
+
+  // Handle potential errors during iframe loading
+  previewFrame.onerror = function () {
+    console.error("Error loading preview iframe content.");
+    alert("Error loading preview. Please check the console for details.");
+  };
 }
 
 /**
