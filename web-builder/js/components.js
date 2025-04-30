@@ -6,7 +6,7 @@
  * Create banner component
  */
 function createBannerComponent(id) {
-    return $(`
+  return $(`
         <div id="${id}" class="canvas-component" data-type="banner">
             <div class="component-actions">
                 <button type="button" class="drag-handle" title="Drag to move"><i class="fas fa-arrows-alt"></i></button>
@@ -28,7 +28,7 @@ function createBannerComponent(id) {
  * Create navbar component
  */
 function createNavbarComponent(id) {
-    return $(`
+  return $(`
         <div id="${id}" class="canvas-component" data-type="navbar">
             <div class="component-actions">
                 <button type="button" class="drag-handle" title="Drag to move"><i class="fas fa-arrows-alt"></i></button>
@@ -66,7 +66,7 @@ function createNavbarComponent(id) {
  * Create table component
  */
 function createTableComponent(id) {
-    return $(`
+  return $(`
         <div id="${id}" class="canvas-component" data-type="table">
             <div class="component-actions">
                 <button type="button" class="drag-handle" title="Drag to move"><i class="fas fa-arrows-alt"></i></button>
@@ -105,7 +105,7 @@ function createTableComponent(id) {
  * Create text field component
  */
 function createTextFieldComponent(id) {
-    return $(`
+  return $(`
         <div id="${id}" class="canvas-component" data-type="text-field">
             <div class="component-actions">
                 <button type="button" class="drag-handle" title="Drag to move"><i class="fas fa-arrows-alt"></i></button>
@@ -131,7 +131,7 @@ function createTextFieldComponent(id) {
  * Create email field component
  */
 function createEmailFieldComponent(id) {
-    return $(`
+  return $(`
         <div id="${id}" class="canvas-component" data-type="email-field">
             <div class="component-actions">
                 <button type="button" class="drag-handle" title="Drag to move"><i class="fas fa-arrows-alt"></i></button>
@@ -157,7 +157,7 @@ function createEmailFieldComponent(id) {
  * Create date field component
  */
 function createDateFieldComponent(id) {
-    return $(`
+  return $(`
         <div id="${id}" class="canvas-component" data-type="date-field">
             <div class="component-actions">
                 <button type="button" class="drag-handle" title="Drag to move"><i class="fas fa-arrows-alt"></i></button>
@@ -183,7 +183,7 @@ function createDateFieldComponent(id) {
  * Create select dropdown component
  */
 function createSelectComponent(id) {
-    return $(`
+  return $(`
         <div id="${id}" class="canvas-component" data-type="select">
             <div class="component-actions">
                 <button type="button" class="drag-handle" title="Drag to move"><i class="fas fa-arrows-alt"></i></button>
@@ -212,7 +212,7 @@ function createSelectComponent(id) {
  * Create radio group component
  */
 function createRadioGroupComponent(id) {
-    return $(`
+  return $(`
         <div id="${id}" class="canvas-component" data-type="radio-group">
             <div class="component-actions">
                 <button type="button" class="drag-handle" title="Drag to move"><i class="fas fa-arrows-alt"></i></button>
@@ -245,7 +245,7 @@ function createRadioGroupComponent(id) {
  * Create checkbox group component
  */
 function createCheckboxGroupComponent(id) {
-    return $(`
+  return $(`
         <div id="${id}" class="canvas-component" data-type="checkbox-group">
             <div class="component-actions">
                 <button type="button" class="drag-handle" title="Drag to move"><i class="fas fa-arrows-alt"></i></button>
@@ -282,7 +282,7 @@ function createCheckboxGroupComponent(id) {
  * Create modal component
  */
 function createModalComponent(id) {
-    return $(`
+  return $(`
         <div id="${id}" class="canvas-component" data-type="modal">
             <div class="component-actions">
                 <button type="button" class="drag-handle" title="Drag to move"><i class="fas fa-arrows-alt"></i></button>
@@ -319,7 +319,7 @@ function createModalComponent(id) {
  * Create button component
  */
 function createButtonComponent(id) {
-    return $(`
+  return $(`
         <div id="${id}" class="canvas-component" data-type="button">
             <div class="component-actions">
                 <button type="button" class="drag-handle" title="Drag to move"><i class="fas fa-arrows-alt"></i></button>
@@ -344,7 +344,7 @@ function createButtonComponent(id) {
  * Create footer component
  */
 function createFooterComponent(id) {
-    return $(`
+  return $(`
         <div id="${id}" class="canvas-component" data-type="footer">
             <div class="component-actions">
                 <button type="button" class="drag-handle" title="Drag to move"><i class="fas fa-arrows-alt"></i></button>
