@@ -282,37 +282,200 @@ function createCheckboxGroupComponent(id) {
  * Create modal component
  */
 function createModalComponent(id) {
-  return $(`
-        <div id="${id}" class="canvas-component" data-type="modal">
-            <div class="component-actions">
-                <button type="button" class="drag-handle" title="Drag to move"><i class="fas fa-arrows-alt"></i></button>
-                <button type="button" class="move-up-btn" title="Move up"><i class="fas fa-arrow-up"></i></button>
-                <button type="button" class="move-down-btn" title="Move down"><i class="fas fa-arrow-down"></i></button>
-                <button type="button" class="duplicate-btn" title="Duplicate"><i class="fas fa-copy"></i></button>
-                <button type="button" class="delete-btn" title="Delete"><i class="fas fa-trash"></i></button>
-            </div>
-            <div class="p-3 bg-light border" style="position: relative;">
-                <div style="text-align: center; margin-bottom: 10px;">
-                    <i class="fas fa-window-restore mr-2"></i> 
-                    <span class="modal-preview-title">Modal Form Configuration</span>
-                    <div class="small text-muted">Modal will appear when button is clicked</div>
-                </div>
-                <div class="modal-preview-fields" style="font-size: 12px; color: #666;">
-                    <div>- Họ và tên (Text)</div>
-                    <div>- Số điện thoại (Text)</div>
-                    <div>- Ngày sinh (Date)</div>
-                    <div>- Email (Email)</div>
-                    <div>- Khóa học (Select)</div>
-                    <div>- Thời gian học (Text, readonly)</div>
-                    <div>- Hình thức học (Radio)</div>
-                    <div>- Kỹ năng cần luyện (Checkbox)</div>
-                </div>
-                <button class="btn btn-sm btn-primary mt-2 edit-modal-btn" style="position: absolute; right: 10px; bottom: 10px;">
-                    <i class="fas fa-edit"></i> Chỉnh sửa
-                </button>
-            </div>
-        </div>
-    `);
+  const defaultFields = [
+    {
+      type: "text-field",
+      label: "Họ và tên",
+      id: "txtName",
+      required: true,
+      placeholder: "",
+      validation: {
+        regex: "^[A-Z][a-z]*(\\s+[A-Z][a-z]*)+$",
+        message: "Mỗi từ phải bắt đầu bằng chữ hoa và phần còn lại viết thường",
+        function: "checkName",
+      },
+    },
+    {
+      type: "text-field",
+      label: "Số điện thoại",
+      id: "txtSDT",
+      required: true,
+      placeholder: "",
+      validation: {
+        regex: "^(09|03|08)\\d{8}$",
+        message: "Số điện thoại phải có 10 số và bắt đầu với 09, 03 hoặc 08",
+        function: "checkPhoneNum",
+      },
+    },
+    {
+      type: "date-field",
+      label: "Ngày sinh",
+      id: "txtNgaysinh",
+      required: true,
+      validation: {
+        function: "checkDateOfBirth",
+      },
+    },
+    {
+      type: "email-field",
+      label: "Email",
+      id: "txtEmail",
+      required: true,
+      placeholder: "your.email@example.com",
+      validation: {
+        regex: "@.*\\.com$",
+        message: "Email phải chứa @ và kết thúc với .com",
+        function: "checkEmail",
+      },
+    },
+    {
+      type: "select",
+      label: "Khóa học",
+      id: "slKhoahoc",
+      required: true,
+      options: [
+        { value: "3", text: "Anh văn cơ bản" },
+        { value: "6", text: "Anh văn giao tiếp" },
+        { value: "12", text: "Luyện thi IELTS" },
+      ],
+    },
+    {
+      type: "readonly-field",
+      label: "Thời gian học",
+      id: "txtThoiGianHoc",
+      required: false,
+      readonly: true,
+    },
+    {
+      type: "radio-group",
+      label: "Hình thức học",
+      name: "hinhthuc",
+      required: true,
+      options: [
+        {
+          id: "radioCenter",
+          value: "Học tại trung tâm",
+          text: "Học tại trung tâm",
+          checked: true,
+        },
+        { id: "radioOnline", value: "Học online", text: "Học online" },
+      ],
+      validation: {
+        function: "checkStudyMethod",
+      },
+    },
+    {
+      type: "checkbox-group",
+      label: "Kỹ năng cần luyện",
+      id: "chkSkills",
+      required: true,
+      options: [
+        { id: "chkListening", value: "Kỹ năng nghe", text: "Kỹ năng nghe" },
+        { id: "chkReading", value: "Kỹ năng đọc", text: "Kỹ năng đọc" },
+        { id: "chkWriting", value: "Kỹ năng viết", text: "Kỹ năng viết" },
+      ],
+      validation: {
+        function: "checkSkills",
+      },
+    },
+  ];
+
+  // Create the modal component
+  const component = $(`
+    <div id="${id}" class="canvas-component" data-type="modal">
+      <div class="component-actions">
+          <button type="button" class="drag-handle" title="Drag to move"><i class="fas fa-arrows-alt"></i></button>
+          <button type="button" class="move-up-btn" title="Move up"><i class="fas fa-arrow-up"></i></button>
+          <button type="button" class="move-down-btn" title="Move down"><i class="fas fa-arrow-down"></i></button>
+          <button type="button" class="duplicate-btn" title="Duplicate"><i class="fas fa-copy"></i></button>
+          <button type="button" class="delete-btn" title="Delete"><i class="fas fa-trash"></i></button>
+      </div>
+      <div class="p-3 bg-light border" style="position: relative;">
+          <div style="text-align: center; margin-bottom: 10px;">
+              <i class="fas fa-window-restore mr-2"></i> 
+              <span class="modal-preview-title">Form Modal: THÔNG TIN ĐĂNG KÍ</span>
+              <div class="small text-muted">Modal sẽ xuất hiện khi người dùng nhấn nút đăng ký</div>
+          </div>
+          <div class="modal-preview-fields" style="font-size: 12px; color: #666;">
+              <!-- Fields will be inserted here dynamically -->
+          </div>
+          <div class="mt-2 d-flex justify-content-between">
+              <button class="btn btn-sm btn-primary edit-modal-btn">
+                  <i class="fas fa-cog"></i> Cài đặt chung
+              </button>
+              <button class="btn btn-sm btn-success edit-modal-fields-btn">
+                  <i class="fas fa-edit"></i> Chỉnh sửa trường
+              </button>
+          </div>
+      </div>
+    </div>
+  `);
+
+  // Store fields data in component's data
+  component.data("fields", defaultFields);
+  component.data("modal-id", "myModal");
+  component.data("modal-title", "THÔNG TIN ĐĂNG KÍ");
+  component.data("modal-size", "modal-lg");
+  component.data("submit-text", "Đăng kí");
+  component.data("cancel-text", "Hủy");
+
+  // Generate preview fields
+  updateModalPreviewFields(component);
+
+  return component;
+}
+
+/**
+ * Helper function to update the modal preview fields
+ */
+function updateModalPreviewFields(component) {
+  const fields = component.data("fields");
+  const previewContainer = component.find(".modal-preview-fields");
+
+  // Clear previous content
+  previewContainer.empty();
+
+  // Add each field to the preview
+  fields.forEach((field) => {
+    let fieldType = "";
+    switch (field.type) {
+      case "text-field":
+        fieldType = "Text";
+        break;
+      case "email-field":
+        fieldType = "Email";
+        break;
+      case "date-field":
+        fieldType = "Date";
+        break;
+      case "select":
+        fieldType = "Select";
+        break;
+      case "radio-group":
+        fieldType = "Radio";
+        break;
+      case "checkbox-group":
+        fieldType = "Checkbox";
+        break;
+      case "readonly-field":
+        fieldType = "Text (readonly)";
+        break;
+      default:
+        fieldType = field.type;
+    }
+
+    let validationInfo = "";
+    if (field.validation && field.validation.regex) {
+      validationInfo = ` <span class="text-info small">[Regex]</span>`;
+    }
+
+    const requiredMark = field.required
+      ? ' <span class="text-danger">*</span>'
+      : "";
+    previewContainer.append(
+      `<div>- ${field.label}${requiredMark} (${fieldType})${validationInfo}</div>`
+    );
+  });
 }
 
 /**

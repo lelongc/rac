@@ -1,217 +1,442 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Web Builder - Bootstrap & jQuery</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="css/builder-style.css">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/builder-style.css" />
+  </head>
+  <body>
     <nav class="navbar navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">Web Builder - Bootstrap & jQuery</a>
-        <div>
-            <button id="preview-btn" class="btn btn-light btn-sm mr-2">
-                <i class="fas fa-eye"></i> Preview
-            </button>
-            <button id="export-btn" class="btn btn-success btn-sm">
-                <i class="fas fa-download"></i> Export Code
-            </button>
-        </div>
+      <a class="navbar-brand" href="#">Web Builder - Bootstrap & jQuery</a>
+      <div>
+        <button id="preview-btn" class="btn btn-light btn-sm mr-2">
+          <i class="fas fa-eye"></i> Preview
+        </button>
+        <button id="export-btn" class="btn btn-success btn-sm">
+          <i class="fas fa-download"></i> Export Code
+        </button>
+      </div>
     </nav>
 
     <div class="container-fluid">
-        <div class="row mt-3">
-            <!-- Components Panel -->
-            <div class="col-md-3 col-lg-2">
-                <div class="card mb-3">
-                    <div class="card-header bg-secondary text-white">
-                        <h5 class="mb-0">Components</h5>
-                    </div>
-                    <div class="card-body p-2">
-                        <div class="list-group components-list">
-                            <div class="list-group-item list-group-item-action component-item" draggable="true" data-type="banner">
-                                <i class="fas fa-image mr-2"></i> Banner
-                            </div>
-                            <div class="list-group-item list-group-item-action component-item" draggable="true" data-type="navbar">
-                                <i class="fas fa-bars mr-2"></i> Navigation Bar
-                            </div>
-                            <div class="list-group-item list-group-item-action component-item" draggable="true" data-type="table">
-                                <i class="fas fa-table mr-2"></i> Table
-                            </div>
-                            <div class="list-group-item list-group-item-action component-item" draggable="true" data-type="text-field">
-                                <i class="fas fa-font mr-2"></i> Text Field
-                            </div>
-                            <div class="list-group-item list-group-item-action component-item" draggable="true" data-type="email-field">
-                                <i class="fas fa-envelope mr-2"></i> Email Field
-                            </div>
-                            <div class="list-group-item list-group-item-action component-item" draggable="true" data-type="date-field">
-                                <i class="fas fa-calendar mr-2"></i> Date Field
-                            </div>
-                            <div class="list-group-item list-group-item-action component-item" draggable="true" data-type="select">
-                                <i class="fas fa-caret-square-down mr-2"></i> Select Dropdown
-                            </div>
-                            <div class="list-group-item list-group-item-action component-item" draggable="true" data-type="radio-group">
-                                <i class="fas fa-dot-circle mr-2"></i> Radio Group
-                            </div>
-                            <div class="list-group-item list-group-item-action component-item" draggable="true" data-type="checkbox-group">
-                                <i class="fas fa-check-square mr-2"></i> Checkbox Group
-                            </div>
-                            <div class="list-group-item list-group-item-action component-item" draggable="true" data-type="modal">
-                                <i class="fas fa-window-restore mr-2"></i> Modal Form
-                            </div>
-                            <div class="list-group-item list-group-item-action component-item" draggable="true" data-type="button">
-                                <i class="fas fa-square mr-2"></i> Button
-                            </div>
-                            <div class="list-group-item list-group-item-action component-item" draggable="true" data-type="footer">
-                                <i class="fas fa-shoe-prints mr-2"></i> Footer
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header bg-info text-white">
-                        <h5 class="mb-0">Page Settings</h5>
-                    </div>
-                    <div class="card-body p-2">
-                        <div class="form-group">
-                            <label for="page-title">Page Title:</label>
-                            <input type="text" class="form-control form-control-sm" id="page-title" value="My Bootstrap Page">
-                        </div>
-                        <div class="form-group">
-                            <label for="page-language">Language:</label>
-                            <select class="form-control form-control-sm" id="page-language">
-                                <option value="en">English</option>
-                                <option value="vi" selected>Vietnamese</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
+      <div class="row mt-3">
+        <!-- Components Panel -->
+        <div class="col-md-3 col-lg-2">
+          <div class="card mb-3">
+            <div class="card-header bg-secondary text-white">
+              <i class="fas fa-th-large mr-2"></i> Form Components
             </div>
-
-            <!-- Canvas Panel -->
-            <div class="col-md-6 col-lg-7">
-                <div class="card canvas-wrapper">
-                    <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0">Canvas</h5>
-                    </div>
-                    <div class="card-body p-0">
-                        <div id="canvas" class="canvas">
-                            <div class="drop-placeholder">
-                                <i class="fas fa-arrow-down"></i>
-                                <p>Drag components here</p>
-                            </div>
-                        </div>
-                    </div>
+            <div class="card-body p-2">
+              <div class="components-list">
+                <div
+                  class="component-item"
+                  draggable="true"
+                  data-type="text-field"
+                >
+                  <i class="fas fa-keyboard mr-2"></i> Text Field
                 </div>
+                <div
+                  class="component-item"
+                  draggable="true"
+                  data-type="email-field"
+                >
+                  <i class="fas fa-at mr-2"></i> Email Field
+                </div>
+                <div
+                  class="component-item"
+                  draggable="true"
+                  data-type="date-field"
+                >
+                  <i class="far fa-calendar-alt mr-2"></i> Date Field
+                </div>
+                <div class="component-item" draggable="true" data-type="select">
+                  <i class="fas fa-caret-down mr-2"></i> Select Dropdown
+                </div>
+                <div
+                  class="component-item"
+                  draggable="true"
+                  data-type="radio-group"
+                >
+                  <i class="far fa-dot-circle mr-2"></i> Radio Group
+                </div>
+                <div
+                  class="component-item"
+                  draggable="true"
+                  data-type="checkbox-group"
+                >
+                  <i class="far fa-check-square mr-2"></i> Checkbox Group
+                </div>
+                <div class="component-item" draggable="true" data-type="button">
+                  <i class="fas fa-mouse-pointer mr-2"></i> Button
+                </div>
+                <div class="component-item" draggable="true" data-type="modal">
+                  <i class="fas fa-window-restore mr-2"></i> Modal Form
+                </div>
+              </div>
             </div>
+          </div>
 
-            <!-- Properties Panel -->
-            <div class="col-md-3 col-lg-3">
-                <div class="card mb-3">
-                    <div class="card-header bg-dark text-white">
-                        <h5 class="mb-0">Properties</h5>
-                    </div>
-                    <div class="card-body p-2">
-                        <div id="properties-panel">
-                            <p class="text-center text-muted">
-                                Select a component to edit its properties
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Modal Preview Section -->
-                <div class="card mb-3" id="modal-preview-card" style="display: none;">
-                    <div class="card-header bg-info text-white">
-                        <h5 class="mb-0">Modal Preview</h5>
-                    </div>
-                    <div class="card-body p-2">
-                        <p class="small text-muted mb-2">
-                            <i class="fas fa-info-circle"></i> Modal will only appear when triggered by a button click
-                        </p>
-                        <button class="btn btn-sm btn-primary" id="preview-modal-btn">
-                            <i class="fas fa-eye"></i> Preview Modal
-                        </button>
-                    </div>
-                </div>
+          <div class="card">
+            <div class="card-header bg-info text-white">
+              <i class="fas fa-layer-group mr-2"></i> Layout Components
             </div>
+            <div class="card-body p-2">
+              <div class="components-list">
+                <div class="component-item" draggable="true" data-type="banner">
+                  <i class="fas fa-image mr-2"></i> Banner
+                </div>
+                <div class="component-item" draggable="true" data-type="navbar">
+                  <i class="fas fa-bars mr-2"></i> Navigation Bar
+                </div>
+                <div class="component-item" draggable="true" data-type="table">
+                  <i class="fas fa-table mr-2"></i> Table
+                </div>
+                <div class="component-item" draggable="true" data-type="footer">
+                  <i class="fas fa-shoe-prints mr-2"></i> Footer
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <!-- Canvas Panel -->
+        <div class="col-md-6 col-lg-7">
+          <div class="card canvas-wrapper">
+            <div class="card-header bg-primary text-white">
+              <i class="fas fa-desktop mr-2"></i> Canvas
+            </div>
+            <div class="card-body p-0">
+              <div id="canvas" class="canvas">
+                <div class="drop-placeholder">
+                  <i class="fas fa-arrow-down"></i>
+                  <p>Kéo các thành phần vào đây</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Properties Panel -->
+        <div class="col-md-3 col-lg-3">
+          <div class="card mb-3">
+            <div class="card-header bg-dark text-white">
+              <i class="fas fa-cogs mr-2"></i> Properties
+            </div>
+            <div class="card-body p-2">
+              <div id="properties-panel">
+                <p class="text-center text-muted">
+                  Chọn một thành phần để chỉnh sửa thuộc tính
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal Preview Section -->
+          <div class="card mb-3" id="modal-preview-card" style="display: none">
+            <div class="card-header bg-warning text-dark">
+              <i class="fas fa-external-link-alt mr-2"></i> Modal Preview
+            </div>
+            <div class="card-body text-center">
+              <p class="small">Xem trước modal form đã tạo</p>
+              <button id="preview-modal-btn" class="btn btn-warning btn-sm">
+                <i class="fas fa-window-restore mr-1"></i> Show Modal Preview
+              </button>
+            </div>
+          </div>
+
+          <!-- Page Settings -->
+          <div class="card mb-3">
+            <div class="card-header bg-secondary text-white">
+              <i class="fas fa-sliders-h mr-2"></i> Page Settings
+            </div>
+            <div class="card-body p-2">
+              <div class="form-group">
+                <label for="page-title">Tiêu đề trang:</label>
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  id="page-title"
+                  value="Trang của tôi"
+                />
+              </div>
+              <div class="form-group">
+                <label for="page-language">Ngôn ngữ:</label>
+                <select class="form-control form-control-sm" id="page-language">
+                  <option value="vi">Tiếng Việt</option>
+                  <option value="en">Tiếng Anh</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Preview Modal -->
     <div class="modal fade" id="preview-modal" tabindex="-1">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Preview</h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span>&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body p-0">
-                    <iframe id="preview-frame" style="width: 100%; height: 600px; border: 0;"></iframe>
-                </div>
-            </div>
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Xem trước trang web</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body p-0">
+            <iframe
+              id="preview-frame"
+              style="width: 100%; height: 600px; border: none"
+            ></iframe>
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- Export Code Modal -->
     <div class="modal fade" id="export-modal" tabindex="-1">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Export Code</h5>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span>&times;</span>
-                    </button>
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Xuất mã nguồn</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <ul class="nav nav-tabs" id="codeTab" role="tablist">
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  id="html-tab"
+                  data-toggle="tab"
+                  href="#html-pane"
+                  role="tab"
+                  >HTML</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="js-tab"
+                  data-toggle="tab"
+                  href="#js-pane"
+                  role="tab"
+                  >JavaScript</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="css-tab"
+                  data-toggle="tab"
+                  href="#css-pane"
+                  role="tab"
+                  >CSS</a
+                >
+              </li>
+            </ul>
+            <div class="tab-content mt-2" id="codeTabContent">
+              <div
+                class="tab-pane fade show active"
+                id="html-pane"
+                role="tabpanel"
+              >
+                <div
+                  class="d-flex justify-content-between align-items-center mb-2"
+                >
+                  <h6 class="m-0">HTML Code</h6>
+                  <button
+                    class="btn btn-sm btn-primary copy-btn"
+                    data-target="html-code"
+                  >
+                    <i class="far fa-copy mr-1"></i> Copy HTML
+                  </button>
                 </div>
-                <div class="modal-body">
-                    <ul class="nav nav-tabs" id="exportTabs">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#html-tab">HTML</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#js-tab">JavaScript</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#css-tab">CSS</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content mt-3">
-                        <div class="tab-pane fade show active" id="html-tab">
-                            <div class="d-flex justify-content-between mb-2">
-                                <h6>HTML Code</h6>
-                                <button class="btn btn-sm btn-primary copy-btn" data-target="html-code">
-                                    <i class="fas fa-copy"></i> Copy
-                                </button>
-                            </div>
-                            <pre class="code-block"><code id="html-code" class="html"></code></pre>
-                        </div>
-                        <div class="tab-pane fade" id="js-tab">
-                            <div class="d-flex justify-content-between mb-2">
-                                <h6>JavaScript Code</h6>
-                                <button class="btn btn-sm btn-primary copy-btn" data-target="js-code">
-                                    <i class="fas fa-copy"></i> Copy
-                                </button>
-                            </div>
-                            <pre class="code-block"><code id="js-code" class="javascript"></code></pre>
-                        </div>
-                        <div class="tab-pane fade" id="css-tab">
-                            <div class="d-flex justify-content-between mb-2">
-                                <h6>CSS Code</h6>
-                                <button class="btn btn-sm btn-primary copy-btn" data-target="css-code">
-                                    <i class="fas fa-copy"></i> Copy
-                                </button>
-                            </div>
-                            <pre class="code-block"><code id="css-code" class="css"></code></pre>
-                        </div>
-                    </div>
+                <pre
+                  class="border p-3 bg-light"
+                ><code id="html-code"></code></pre>
+              </div>
+              <div class="tab-pane fade" id="js-pane" role="tabpanel">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-2"
+                >
+                  <h6 class="m-0">JavaScript Code</h6>
+                  <button
+                    class="btn btn-sm btn-primary copy-btn"
+                    data-target="js-code"
+                  >
+                    <i class="far fa-copy mr-1"></i> Copy JavaScript
+                  </button>
                 </div>
+                <pre
+                  class="border p-3 bg-light"
+                ><code id="js-code"></code></pre>
+              </div>
+              <div class="tab-pane fade" id="css-pane" role="tabpanel">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-2"
+                >
+                  <h6 class="m-0">CSS Code</h6>
+                  <button
+                    class="btn btn-sm btn-primary copy-btn"
+                    data-target="css-code"
+                  >
+                    <i class="far fa-copy mr-1"></i> Copy CSS
+                  </button>
+                </div>
+                <pre
+                  class="border p-3 bg-light"
+                ><code id="css-code"></code></pre>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Field Editor Modal -->
+    <div class="modal fade" id="field-editor-modal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Chỉnh sửa trường form</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <!-- Field List -->
+              <div class="col-md-4">
+                <div class="card">
+                  <div
+                    class="card-header bg-secondary text-white d-flex justify-content-between align-items-center"
+                  >
+                    <span>Danh sách trường</span>
+                    <button id="add-new-field-btn" class="btn btn-sm btn-light">
+                      <i class="fas fa-plus"></i> Thêm mới
+                    </button>
+                  </div>
+                  <div class="card-body p-0">
+                    <ul
+                      id="field-list"
+                      class="list-group list-group-flush field-list"
+                    >
+                      <!-- Fields will be added here dynamically -->
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Field Properties -->
+              <div class="col-md-8">
+                <div class="card">
+                  <div class="card-header bg-secondary text-white">
+                    Thuộc tính trường
+                  </div>
+                  <div class="card-body">
+                    <div id="field-properties-container">
+                      <p class="text-center text-muted">
+                        Chọn một trường từ danh sách để chỉnh sửa
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Đóng
+            </button>
+            <button type="button" class="btn btn-primary" id="save-fields-btn">
+              Lưu thay đổi
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Field Type Modal -->
+    <div class="modal fade" id="new-field-modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Thêm trường mới</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="new-field-type">Chọn loại trường:</label>
+              <select class="form-control" id="new-field-type">
+                <option value="text-field">Text Field</option>
+                <option value="email-field">Email Field</option>
+                <option value="date-field">Date Field</option>
+                <option value="select">Dropdown Select</option>
+                <option value="radio-group">Radio Group</option>
+                <option value="checkbox-group">Checkbox Group</option>
+                <option value="readonly-field">Readonly Field</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="new-field-label">Nhãn trường:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="new-field-label"
+                placeholder="Nhập nhãn trường"
+              />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Hủy
+            </button>
+            <button type="button" class="btn btn-primary" id="add-field-btn">
+              Thêm trường
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -221,5 +446,6 @@
     <script src="js/components.js"></script>
     <script src="js/properties.js"></script>
     <script src="js/code-generator.js"></script>
-</body>
+    <script src="js/field-editor.js"></script>
+  </body>
 </html>

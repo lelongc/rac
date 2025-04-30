@@ -12,10 +12,17 @@ body {
 .component-item {
     cursor: move;
     padding: 8px 12px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    background-color: #fff;
+    border: 1px solid #eee;
+    transition: all 0.2s;
 }
 
 .component-item:hover {
     background-color: #f0f0f0;
+    border-color: #ddd;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 /* Canvas */
@@ -50,7 +57,7 @@ body {
     position: relative;
     border: 2px solid transparent;
     padding: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     transition: all 0.2s;
 }
 
@@ -60,18 +67,20 @@ body {
 
 .canvas-component.selected {
     border-color: #007bff !important;
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.2);
 }
 
 .component-actions {
     position: absolute;
     top: 0;
     right: 0;
-    background-color: rgba(0, 123, 255, 0.7);
+    background-color: rgba(0, 123, 255, 0.8);
     border-radius: 0 0 0 5px;
     padding: 3px 5px;
     opacity: 0;
     transition: opacity 0.2s;
     z-index: 100;
+    display: flex;
 }
 
 .canvas-component:hover .component-actions {
@@ -85,10 +94,12 @@ body {
     cursor: pointer;
     font-size: 12px;
     padding: 2px 5px;
+    margin: 0 2px;
 }
 
 .component-actions button:hover {
     color: #f8f9fa;
+    transform: scale(1.1);
 }
 
 /* Drag effects */
@@ -123,6 +134,22 @@ body {
     margin-bottom: 0;
 }
 
+.property-group label {
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.property-group input,
+.property-group select,
+.property-group textarea {
+    font-size: 14px;
+}
+
+.property-group small {
+    font-size: 12px;
+}
+
 /* Code Export */
 .code-block {
     background-color: #f8f9fa;
@@ -139,9 +166,45 @@ body {
 /* Preview iframe */
 iframe {
     background-color: white;
+    width: 100%;
+    height: 600px;
+    border: none;
 }
 
 /* Make drag handle cursor more intuitive */
 .drag-handle {
     cursor: move;
+}
+
+/* Animation for copy feedback */
+@keyframes copyFeedback {
+    0% { background-color: #28a745; }
+    100% { background-color: #007bff; }
+}
+
+.copy-success {
+    animation: copyFeedback 1s;
+}
+
+/* Modal editing styles */
+.modal-preview-fields {
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+.modal-fields-list .custom-control {
+    margin-bottom: 5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .components-list {
+        max-height: 300px;
+    }
+    
+    #properties-panel {
+        max-height: 300px;
+    }
 }

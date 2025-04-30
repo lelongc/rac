@@ -6,65 +6,67 @@
  * Show properties for the selected component
  */
 function showComponentProperties(component, componentType) {
-    let propertiesHtml = '';
-    
-    // Generate properties panel content based on component type
-    switch(componentType) {
-        case 'banner':
-            propertiesHtml = getBannerProperties(component);
-            break;
-        case 'navbar':
-            propertiesHtml = getNavbarProperties(component);
-            break;
-        case 'table':
-            propertiesHtml = getTableProperties(component);
-            break;
-        case 'text-field':
-            propertiesHtml = getTextFieldProperties(component);
-            break;
-        case 'email-field':
-            propertiesHtml = getEmailFieldProperties(component);
-            break;
-        case 'date-field':
-            propertiesHtml = getDateFieldProperties(component);
-            break;
-        case 'select':
-            propertiesHtml = getSelectProperties(component);
-            break;
-        case 'radio-group':
-            propertiesHtml = getRadioGroupProperties(component);
-            break;
-        case 'checkbox-group':
-            propertiesHtml = getCheckboxGroupProperties(component);
-            break;
-        case 'modal':
-            propertiesHtml = getModalProperties(component);
-            break;
-        case 'button':
-            propertiesHtml = getButtonProperties(component);
-            break;
-        case 'footer':
-            propertiesHtml = getFooterProperties(component);
-            break;
-        default:
-            propertiesHtml = '<p class="text-center text-muted">No properties available</p>';
-    }
-    
-    // Update properties panel
-    $('#properties-panel').html(propertiesHtml);
-    
-    // Initialize property change handlers
-    initPropertyHandlers(component, componentType);
+  let propertiesHtml = "";
+
+  // Generate properties panel content based on component type
+  switch (componentType) {
+    case "banner":
+      propertiesHtml = getBannerProperties(component);
+      break;
+    case "navbar":
+      propertiesHtml = getNavbarProperties(component);
+      break;
+    case "table":
+      propertiesHtml = getTableProperties(component);
+      break;
+    case "text-field":
+      propertiesHtml = getTextFieldProperties(component);
+      break;
+    case "email-field":
+      propertiesHtml = getEmailFieldProperties(component);
+      break;
+    case "date-field":
+      propertiesHtml = getDateFieldProperties(component);
+      break;
+    case "select":
+      propertiesHtml = getSelectProperties(component);
+      break;
+    case "radio-group":
+      propertiesHtml = getRadioGroupProperties(component);
+      break;
+    case "checkbox-group":
+      propertiesHtml = getCheckboxGroupProperties(component);
+      break;
+    case "modal":
+      propertiesHtml = getModalProperties(component);
+      break;
+    case "button":
+      propertiesHtml = getButtonProperties(component);
+      break;
+    case "footer":
+      propertiesHtml = getFooterProperties(component);
+      break;
+    default:
+      propertiesHtml = `<p class="text-center text-muted">No properties available for this component type.</p>`;
+  }
+
+  // Update properties panel
+  $("#properties-panel").html(propertiesHtml);
+
+  // Initialize property change handlers
+  initPropertyHandlers(component, componentType);
 }
 
 /**
  * Get properties for banner component
  */
 function getBannerProperties(component) {
-    const imgSrc = component.find('img').attr('src') || 'https://via.placeholder.com/800x200?text=Banner+Image';
-    const imgAlt = component.find('img').attr('alt') || 'Banner';
-    
-    return `
+  const imgSrc =
+    component.find("img").attr("src") ||
+    "https://via.placeholder.com/800x200?text=Banner+Image";
+  const imgAlt = component.find("img").attr("alt") || "Banner";
+
+  return `
         <div class="property-group">
             <label for="banner-image-url">Đường dẫn hình ảnh:</label>
             <input type="text" class="form-control form-control-sm" id="banner-image-url" value="${imgSrc}">
@@ -84,23 +86,39 @@ function getBannerProperties(component) {
  * Get properties for navbar component
  */
 function getNavbarProperties(component) {
-    const navItems = [];
-    component.find('.navbar-nav li:not(:first-child):not(:last-child) a').each(function() {
-        navItems.push($(this).text());
+  const navItems = [];
+  component
+    .find(".navbar-nav li:not(:first-child):not(:last-child) a")
+    .each(function () {
+      navItems.push($(this).text());
     });
-    
-    const brandName = component.find('.navbar-nav li:first-child a').text();
-    const bgClass = component.find('nav').attr('class').match(/bg-\w+/) ? 
-                   component.find('nav').attr('class').match(/bg-\w+/)[0].replace('bg-', '') : 'light';
-    
-    const registerText = component.find('.nav-register-btn a').text();
-    const registerBtn = component.find('.nav-register-btn a');
-    const modalId = registerBtn.attr('href') ? registerBtn.attr('href').replace('#', '') : 'myModal';
-    const btnColor = registerBtn.hasClass('btn-danger') ? 'danger' : 
-                     registerBtn.hasClass('btn-primary') ? 'primary' : 
-                     registerBtn.hasClass('btn-success') ? 'success' : 'danger';
-    
-    return `
+
+  const brandName = component.find(".navbar-nav li:first-child a").text();
+  const bgClass = component
+    .find("nav")
+    .attr("class")
+    .match(/bg-\w+/)
+    ? component
+        .find("nav")
+        .attr("class")
+        .match(/bg-\w+/)[0]
+        .replace("bg-", "")
+    : "light";
+
+  const registerText = component.find(".nav-register-btn a").text();
+  const registerBtn = component.find(".nav-register-btn a");
+  const modalId = registerBtn.attr("href")
+    ? registerBtn.attr("href").replace("#", "")
+    : "myModal";
+  const btnColor = registerBtn.hasClass("btn-danger")
+    ? "danger"
+    : registerBtn.hasClass("btn-primary")
+    ? "primary"
+    : registerBtn.hasClass("btn-success")
+    ? "success"
+    : "danger";
+
+  return `
         <div class="property-group">
             <label for="navbar-brand">Tên thương hiệu:</label>
             <input type="text" class="form-control form-control-sm" id="navbar-brand" value="${brandName}">
@@ -108,15 +126,25 @@ function getNavbarProperties(component) {
         <div class="property-group">
             <label for="navbar-bg">Màu nền:</label>
             <select class="form-control form-control-sm" id="navbar-bg">
-                <option value="light" ${bgClass === 'light' ? 'selected' : ''}>Sáng</option>
-                <option value="dark" ${bgClass === 'dark' ? 'selected' : ''}>Tối</option>
-                <option value="primary" ${bgClass === 'primary' ? 'selected' : ''}>Chính</option>
-                <option value="secondary" ${bgClass === 'secondary' ? 'selected' : ''}>Phụ</option>
+                <option value="light" ${
+                  bgClass === "light" ? "selected" : ""
+                }>Sáng</option>
+                <option value="dark" ${
+                  bgClass === "dark" ? "selected" : ""
+                }>Tối</option>
+                <option value="primary" ${
+                  bgClass === "primary" ? "selected" : ""
+                }>Chính</option>
+                <option value="secondary" ${
+                  bgClass === "secondary" ? "selected" : ""
+                }>Phụ</option>
             </select>
         </div>
         <div class="property-group">
             <label for="navbar-items">Các mục điều hướng:</label>
-            <textarea class="form-control form-control-sm" id="navbar-items" rows="4">${navItems.join('\n')}</textarea>
+            <textarea class="form-control form-control-sm" id="navbar-items" rows="4">${navItems.join(
+              "\n"
+            )}</textarea>
             <small class="form-text text-muted">Mỗi mục trên một dòng</small>
         </div>
         <hr>
@@ -128,12 +156,24 @@ function getNavbarProperties(component) {
         <div class="property-group">
             <label for="navbar-register-color">Màu nút:</label>
             <select class="form-control form-control-sm" id="navbar-register-color">
-                <option value="primary" ${btnColor === 'primary' ? 'selected' : ''}>Xanh dương</option>
-                <option value="success" ${btnColor === 'success' ? 'selected' : ''}>Xanh lá</option>
-                <option value="danger" ${btnColor === 'danger' ? 'selected' : ''}>Đỏ</option>
-                <option value="warning" ${btnColor === 'warning' ? 'selected' : ''}>Cam</option>
-                <option value="info" ${btnColor === 'info' ? 'selected' : ''}>Xanh nhạt</option>
-                <option value="dark" ${btnColor === 'dark' ? 'selected' : ''}>Đen</option>
+                <option value="primary" ${
+                  btnColor === "primary" ? "selected" : ""
+                }>Xanh dương</option>
+                <option value="success" ${
+                  btnColor === "success" ? "selected" : ""
+                }>Xanh lá</option>
+                <option value="danger" ${
+                  btnColor === "danger" ? "selected" : ""
+                }>Đỏ</option>
+                <option value="warning" ${
+                  btnColor === "warning" ? "selected" : ""
+                }>Cam</option>
+                <option value="info" ${
+                  btnColor === "info" ? "selected" : ""
+                }>Xanh nhạt</option>
+                <option value="dark" ${
+                  btnColor === "dark" ? "selected" : ""
+                }>Đen</option>
             </select>
         </div>
         <div class="property-group">
@@ -148,35 +188,41 @@ function getNavbarProperties(component) {
  * Get properties for table component
  */
 function getTableProperties(component) {
-    const title = component.find('h3').text();
-    const headers = [];
-    component.find('thead th').each(function() {
-        headers.push($(this).text());
-    });
-    
-    const tableClass = component.find('table').attr('class');
-    const isBordered = tableClass.includes('table-bordered');
-    const isStriped = tableClass.includes('table-striped');
-    
-    return `
+  const title = component.find("h3").text();
+  const headers = [];
+  component.find("thead th").each(function () {
+    headers.push($(this).text());
+  });
+
+  const tableClass = component.find("table").attr("class");
+  const isBordered = tableClass.includes("table-bordered");
+  const isStriped = tableClass.includes("table-striped");
+
+  return `
         <div class="property-group">
             <label for="table-title">Tiêu đề bảng:</label>
             <input type="text" class="form-control form-control-sm" id="table-title" value="${title}">
         </div>
         <div class="property-group">
             <label for="table-headers">Các cột:</label>
-            <textarea class="form-control form-control-sm" id="table-headers" rows="4">${headers.join('\n')}</textarea>
+            <textarea class="form-control form-control-sm" id="table-headers" rows="4">${headers.join(
+              "\n"
+            )}</textarea>
             <small class="form-text text-muted">Mỗi cột trên một dòng</small>
         </div>
         <div class="property-group">
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="table-bordered" ${isBordered ? 'checked' : ''}>
+                <input type="checkbox" class="custom-control-input" id="table-bordered" ${
+                  isBordered ? "checked" : ""
+                }>
                 <label class="custom-control-label" for="table-bordered">Bảng có viền</label>
             </div>
         </div>
         <div class="property-group">
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="table-striped" ${isStriped ? 'checked' : ''}>
+                <input type="checkbox" class="custom-control-input" id="table-striped" ${
+                  isStriped ? "checked" : ""
+                }>
                 <label class="custom-control-label" for="table-striped">Hàng sọc</label>
             </div>
         </div>
@@ -187,12 +233,12 @@ function getTableProperties(component) {
  * Get properties for text field component
  */
 function getTextFieldProperties(component) {
-    const label = component.find('label').text();
-    const inputId = component.find('input').attr('id');
-    const placeholder = component.find('input').attr('placeholder') || '';
-    const required = component.find('input').prop('required') || false;
-    
-    return `
+  const label = component.find("label").text();
+  const inputId = component.find("input").attr("id");
+  const placeholder = component.find("input").attr("placeholder") || "";
+  const required = component.find("input").prop("required") || false;
+
+  return `
         <div class="property-group">
             <label for="text-field-label">Nhãn trường:</label>
             <input type="text" class="form-control form-control-sm" id="text-field-label" value="${label}">
@@ -208,7 +254,9 @@ function getTextFieldProperties(component) {
         </div>
         <div class="property-group">
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="text-field-required" ${required ? 'checked' : ''}>
+                <input type="checkbox" class="custom-control-input" id="text-field-required" ${
+                  required ? "checked" : ""
+                }>
                 <label class="custom-control-label" for="text-field-required">Bắt buộc</label>
             </div>
         </div>
@@ -227,12 +275,12 @@ function getTextFieldProperties(component) {
  * Get properties for email field component
  */
 function getEmailFieldProperties(component) {
-    const label = component.find('label').text();
-    const inputId = component.find('input').attr('id');
-    const placeholder = component.find('input').attr('placeholder') || '';
-    const required = component.find('input').prop('required') || false;
-    
-    return `
+  const label = component.find("label").text();
+  const inputId = component.find("input").attr("id");
+  const placeholder = component.find("input").attr("placeholder") || "";
+  const required = component.find("input").prop("required") || false;
+
+  return `
         <div class="property-group">
             <label for="email-field-label">Nhãn Email:</label>
             <input type="text" class="form-control form-control-sm" id="email-field-label" value="${label}">
@@ -247,7 +295,9 @@ function getEmailFieldProperties(component) {
         </div>
         <div class="property-group">
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="email-field-required" ${required ? 'checked' : ''}>
+                <input type="checkbox" class="custom-control-input" id="email-field-required" ${
+                  required ? "checked" : ""
+                }>
                 <label class="custom-control-label" for="email-field-required">Bắt buộc</label>
             </div>
         </div>
@@ -258,11 +308,11 @@ function getEmailFieldProperties(component) {
  * Get properties for date field component
  */
 function getDateFieldProperties(component) {
-    const label = component.find('label').text();
-    const inputId = component.find('input').attr('id');
-    const required = component.find('input').prop('required') || false;
-    
-    return `
+  const label = component.find("label").text();
+  const inputId = component.find("input").attr("id");
+  const required = component.find("input").prop("required") || false;
+
+  return `
         <div class="property-group">
             <label for="date-field-label">Nhãn ngày:</label>
             <input type="text" class="form-control form-control-sm" id="date-field-label" value="${label}">
@@ -273,7 +323,9 @@ function getDateFieldProperties(component) {
         </div>
         <div class="property-group">
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="date-field-required" ${required ? 'checked' : ''}>
+                <input type="checkbox" class="custom-control-input" id="date-field-required" ${
+                  required ? "checked" : ""
+                }>
                 <label class="custom-control-label" for="date-field-required">Bắt buộc</label>
             </div>
         </div>
@@ -290,16 +342,16 @@ function getDateFieldProperties(component) {
  * Get properties for select dropdown component
  */
 function getSelectProperties(component) {
-    const label = component.find('label').text();
-    const selectId = component.find('select').attr('id');
-    
-    // Extract options
-    const options = [];
-    component.find('select option').each(function() {
-        options.push($(this).text());
-    });
-    
-    return `
+  const label = component.find("label").text();
+  const selectId = component.find("select").attr("id");
+
+  // Extract options
+  const options = [];
+  component.find("select option").each(function () {
+    options.push($(this).text());
+  });
+
+  return `
         <div class="property-group">
             <label for="select-field-label">Nhãn dropdown:</label>
             <input type="text" class="form-control form-control-sm" id="select-field-label" value="${label}">
@@ -310,7 +362,9 @@ function getSelectProperties(component) {
         </div>
         <div class="property-group">
             <label for="select-options">Các lựa chọn:</label>
-            <textarea class="form-control form-control-sm" id="select-options" rows="4">${options.join('\n')}</textarea>
+            <textarea class="form-control form-control-sm" id="select-options" rows="4">${options.join(
+              "\n"
+            )}</textarea>
             <small class="form-text text-muted">Mỗi lựa chọn trên một dòng</small>
         </div>
         <div class="property-group">
@@ -326,16 +380,16 @@ function getSelectProperties(component) {
  * Get properties for radio group component
  */
 function getRadioGroupProperties(component) {
-    const label = component.find('label:first').text();
-    const groupName = component.find('input[type="radio"]').attr('name');
-    
-    // Extract options
-    const options = [];
-    component.find('.form-check').each(function() {
-        options.push($(this).find('label').text());
-    });
-    
-    return `
+  const label = component.find("label:first").text();
+  const groupName = component.find('input[type="radio"]').attr("name");
+
+  // Extract options
+  const options = [];
+  component.find(".form-check").each(function () {
+    options.push($(this).find("label").text());
+  });
+
+  return `
         <div class="property-group">
             <label for="radio-group-label">Nhãn nhóm:</label>
             <input type="text" class="form-control form-control-sm" id="radio-group-label" value="${label}">
@@ -346,7 +400,9 @@ function getRadioGroupProperties(component) {
         </div>
         <div class="property-group">
             <label for="radio-options">Các lựa chọn:</label>
-            <textarea class="form-control form-control-sm" id="radio-options" rows="4">${options.join('\n')}</textarea>
+            <textarea class="form-control form-control-sm" id="radio-options" rows="4">${options.join(
+              "\n"
+            )}</textarea>
             <small class="form-text text-muted">Mỗi lựa chọn trên một dòng</small>
         </div>
     `;
@@ -356,22 +412,24 @@ function getRadioGroupProperties(component) {
  * Get properties for checkbox group component
  */
 function getCheckboxGroupProperties(component) {
-    const label = component.find('label:first').text();
-    
-    // Extract options
-    const options = [];
-    component.find('.form-check').each(function() {
-        options.push($(this).find('label').text());
-    });
-    
-    return `
+  const label = component.find("label:first").text();
+
+  // Extract options
+  const options = [];
+  component.find(".form-check").each(function () {
+    options.push($(this).find("label").text());
+  });
+
+  return `
         <div class="property-group">
             <label for="checkbox-group-label">Nhãn nhóm:</label>
             <input type="text" class="form-control form-control-sm" id="checkbox-group-label" value="${label}">
         </div>
         <div class="property-group">
             <label for="checkbox-options">Các lựa chọn:</label>
-            <textarea class="form-control form-control-sm" id="checkbox-options" rows="4">${options.join('\n')}</textarea>
+            <textarea class="form-control form-control-sm" id="checkbox-options" rows="4">${options.join(
+              "\n"
+            )}</textarea>
             <small class="form-text text-muted">Mỗi lựa chọn trên một dòng</small>
         </div>
         <div class="property-group">
@@ -387,9 +445,10 @@ function getCheckboxGroupProperties(component) {
  * Get properties for modal component
  */
 function getModalProperties(component) {
-    const modalTitle = component.find('.modal-preview-title').text() || 'Form Modal';
-    
-    return `
+  const modalTitle =
+    component.find(".modal-preview-title").text() || "Form Modal";
+
+  return `
         <div class="alert alert-info">
             <i class="fas fa-info-circle"></i> Modal form will only appear when triggered by a button. It won't be visible in the canvas area.
         </div>
@@ -463,11 +522,13 @@ function getModalProperties(component) {
  * Get properties for button component
  */
 function getButtonProperties(component) {
-    const buttonText = component.find('button').text();
-    const buttonClass = component.find('button').attr('class');
-    const variant = buttonClass.match(/btn-\w+/) ? buttonClass.match(/btn-\w+/)[0].replace('btn-', '') : 'primary';
-    
-    return `
+  const buttonText = component.find("button").text();
+  const buttonClass = component.find("button").attr("class");
+  const variant = buttonClass.match(/btn-\w+/)
+    ? buttonClass.match(/btn-\w+/)[0].replace("btn-", "")
+    : "primary";
+
+  return `
         <div class="property-group">
             <label for="button-text">Nội dung nút:</label>
             <input type="text" class="form-control form-control-sm" id="button-text" value="${buttonText}">
@@ -475,14 +536,30 @@ function getButtonProperties(component) {
         <div class="property-group">
             <label for="button-variant">Kiểu nút:</label>
             <select class="form-control form-control-sm" id="button-variant">
-                <option value="primary" ${variant === 'primary' ? 'selected' : ''}>Primary</option>
-                <option value="secondary" ${variant === 'secondary' ? 'selected' : ''}>Secondary</option>
-                <option value="success" ${variant === 'success' ? 'selected' : ''}>Success</option>
-                <option value="danger" ${variant === 'danger' ? 'selected' : ''}>Danger</option>
-                <option value="warning" ${variant === 'warning' ? 'selected' : ''}>Warning</option>
-                <option value="info" ${variant === 'info' ? 'selected' : ''}>Info</option>
-                <option value="light" ${variant === 'light' ? 'selected' : ''}>Light</option>
-                <option value="dark" ${variant === 'dark' ? 'selected' : ''}>Dark</option>
+                <option value="primary" ${
+                  variant === "primary" ? "selected" : ""
+                }>Primary</option>
+                <option value="secondary" ${
+                  variant === "secondary" ? "selected" : ""
+                }>Secondary</option>
+                <option value="success" ${
+                  variant === "success" ? "selected" : ""
+                }>Success</option>
+                <option value="danger" ${
+                  variant === "danger" ? "selected" : ""
+                }>Danger</option>
+                <option value="warning" ${
+                  variant === "warning" ? "selected" : ""
+                }>Warning</option>
+                <option value="info" ${
+                  variant === "info" ? "selected" : ""
+                }>Info</option>
+                <option value="light" ${
+                  variant === "light" ? "selected" : ""
+                }>Light</option>
+                <option value="dark" ${
+                  variant === "dark" ? "selected" : ""
+                }>Dark</option>
             </select>
         </div>
         <div class="property-group">
@@ -501,12 +578,22 @@ function getButtonProperties(component) {
  * Get properties for footer component
  */
 function getFooterProperties(component) {
-    const bgColor = component.find('#footer').css('background-color') || '#007bff';
-    const studentName = component.find('p:contains("Họ tên")').text().replace('Họ tên: ', '');
-    const studentId = component.find('p:contains("Mã sinh viên")').text().replace('Mã sinh viên: ', '');
-    const classId = component.find('p:contains("Mã lớp")').text().replace('Mã lớp: ', '');
-    
-    return `
+  const bgColor =
+    component.find("#footer").css("background-color") || "#007bff";
+  const studentName = component
+    .find('p:contains("Họ tên")')
+    .text()
+    .replace("Họ tên: ", "");
+  const studentId = component
+    .find('p:contains("Mã sinh viên")')
+    .text()
+    .replace("Mã sinh viên: ", "");
+  const classId = component
+    .find('p:contains("Mã lớp")')
+    .text()
+    .replace("Mã lớp: ", "");
+
+  return `
         <div class="property-group">
             <label for="footer-bg-color">Màu nền:</label>
             <input type="color" class="form-control form-control-sm" id="footer-bg-color" value="#007bff">
@@ -535,466 +622,486 @@ function getFooterProperties(component) {
  * Initialize property change handlers
  */
 function initPropertyHandlers(component, componentType) {
-    // Set up handlers based on component type
-    switch(componentType) {
-        case 'banner':
-            initBannerHandlers(component);
-            break;
-        case 'navbar':
-            initNavbarHandlers(component);
-            break;
-        case 'table':
-            initTableHandlers(component);
-            break;
-        case 'text-field':
-            initTextFieldHandlers(component);
-            break;
-        case 'email-field':
-            initEmailFieldHandlers(component);
-            break;
-        case 'date-field':
-            initDateFieldHandlers(component);
-            break;
-        case 'select':
-            initSelectHandlers(component);
-            break;
-        case 'radio-group':
-            initRadioGroupHandlers(component);
-            break;
-        case 'checkbox-group':
-            initCheckboxGroupHandlers(component);
-            break;
-        case 'modal':
-            initModalHandlers(component);
-            break;
-        case 'button':
-            initButtonHandlers(component);
-            break;
-        case 'footer':
-            initFooterHandlers(component);
-            break;
-    }
+  // Set up handlers based on component type
+  switch (componentType) {
+    case "banner":
+      initBannerHandlers(component);
+      break;
+    case "navbar":
+      initNavbarHandlers(component);
+      break;
+    case "table":
+      initTableHandlers(component);
+      break;
+    case "text-field":
+      initTextFieldHandlers(component);
+      break;
+    case "email-field":
+      initEmailFieldHandlers(component);
+      break;
+    case "date-field":
+      initDateFieldHandlers(component);
+      break;
+    case "select":
+      initSelectHandlers(component);
+      break;
+    case "radio-group":
+      initRadioGroupHandlers(component);
+      break;
+    case "checkbox-group":
+      initCheckboxGroupHandlers(component);
+      break;
+    case "modal":
+      initModalHandlers(component);
+      break;
+    case "button":
+      initButtonHandlers(component);
+      break;
+    case "footer":
+      initFooterHandlers(component);
+      break;
+  }
 }
 
 /**
  * Banner property handlers
  */
 function initBannerHandlers(component) {
-    $('#banner-image-url').on('change', function() {
-        component.find('img').attr('src', $(this).val());
-    });
-    
-    $('#banner-alt-text').on('change', function() {
-        component.find('img').attr('alt', $(this).val());
-    });
-    
-    $('#banner-height').on('input change', function() {
-        component.find('img').css('height', $(this).val() + 'px');
-    });
+  $("#banner-image-url").on("change", function () {
+    component.find("img").attr("src", $(this).val());
+  });
+
+  $("#banner-alt-text").on("change", function () {
+    component.find("img").attr("alt", $(this).val());
+  });
+
+  $("#banner-height").on("input change", function () {
+    component.find("img").css("height", $(this).val() + "px");
+  });
 }
 
 /**
  * Navbar property handlers
  */
 function initNavbarHandlers(component) {
-    $('#navbar-brand').on('change', function() {
-        component.find('.navbar-nav li:first-child a').text($(this).val());
-    });
-    
-    $('#navbar-bg').on('change', function() {
-        const nav = component.find('nav');
-        nav.removeClass('bg-light bg-dark bg-primary bg-secondary')
-           .addClass('bg-' + $(this).val());
-           
-        // Adjust text color for dark background
-        if ($(this).val() === 'dark') {
-            nav.addClass('navbar-dark');
-        } else {
-            nav.removeClass('navbar-dark');
-        }
-    });
-    
-    $('#navbar-items').on('change', function() {
-        const items = $(this).val().split('\n');
-        const navUl = component.find('.navbar-nav');
-        
-        // Keep first and last items (brand and register button)
-        const firstItem = navUl.find('li:first-child').clone();
-        const lastItem = navUl.find('li:last-child').clone();
-        
-        // Clear nav items
-        navUl.empty();
-        navUl.append(firstItem);
-        
-        // Add new items
-        items.forEach(item => {
-            if (item.trim()) {
-                navUl.append(`
+  $("#navbar-brand").on("change", function () {
+    component.find(".navbar-nav li:first-child a").text($(this).val());
+  });
+
+  $("#navbar-bg").on("change", function () {
+    const nav = component.find("nav");
+    nav
+      .removeClass("bg-light bg-dark bg-primary bg-secondary")
+      .addClass("bg-" + $(this).val());
+
+    // Adjust text color for dark background
+    if ($(this).val() === "dark") {
+      nav.addClass("navbar-dark");
+    } else {
+      nav.removeClass("navbar-dark");
+    }
+  });
+
+  $("#navbar-items").on("change", function () {
+    const items = $(this).val().split("\n");
+    const navUl = component.find(".navbar-nav");
+
+    // Keep first and last items (brand and register button)
+    const firstItem = navUl.find("li:first-child").clone();
+    const lastItem = navUl.find("li:last-child").clone();
+
+    // Clear nav items
+    navUl.empty();
+    navUl.append(firstItem);
+
+    // Add new items
+    items.forEach((item) => {
+      if (item.trim()) {
+        navUl.append(`
                     <li class="nav-item">
                         <a class="nav-link" href="#">${item}</a>
                     </li>
                 `);
-            }
-        });
-        
-        navUl.append(lastItem);
+      }
     });
-    
-    $('#navbar-register-text').on('change', function() {
-        component.find('.nav-register-btn a').text($(this).val());
-    });
-    
-    $('#navbar-register-color').on('change', function() {
-        const btn = component.find('.nav-register-btn a');
-        btn.removeClass('btn-primary btn-success btn-danger btn-warning btn-info btn-dark')
-           .addClass('btn-' + $(this).val());
-    });
-    
-    $('#navbar-modal-id').on('change', function() {
-        component.find('.nav-register-btn a').attr('href', '#' + $(this).val());
-    });
+
+    navUl.append(lastItem);
+  });
+
+  $("#navbar-register-text").on("change", function () {
+    component.find(".nav-register-btn a").text($(this).val());
+  });
+
+  $("#navbar-register-color").on("change", function () {
+    const btn = component.find(".nav-register-btn a");
+    btn
+      .removeClass(
+        "btn-primary btn-success btn-danger btn-warning btn-info btn-dark"
+      )
+      .addClass("btn-" + $(this).val());
+  });
+
+  $("#navbar-modal-id").on("change", function () {
+    component.find(".nav-register-btn a").attr("href", "#" + $(this).val());
+  });
 }
 
 /**
  * Table property handlers
  */
 function initTableHandlers(component) {
-    $('#table-title').on('change', function() {
-        component.find('h3').text($(this).val());
+  $("#table-title").on("change", function () {
+    component.find("h3").text($(this).val());
+  });
+
+  $("#table-headers").on("change", function () {
+    const headers = $(this).val().split("\n");
+    const headerRow = component.find("thead tr");
+    headerRow.empty();
+
+    headers.forEach((header) => {
+      if (header.trim()) {
+        headerRow.append(`<th>${header}</th>`);
+      }
     });
-    
-    $('#table-headers').on('change', function() {
-        const headers = $(this).val().split('\n');
-        const headerRow = component.find('thead tr');
-        headerRow.empty();
-        
-        headers.forEach(header => {
-            if (header.trim()) {
-                headerRow.append(`<th>${header}</th>`);
-            }
-        });
-    });
-    
-    $('#table-bordered').on('change', function() {
-        if ($(this).is(':checked')) {
-            component.find('table').addClass('table-bordered');
-        } else {
-            component.find('table').removeClass('table-bordered');
-        }
-    });
-    
-    $('#table-striped').on('change', function() {
-        if ($(this).is(':checked')) {
-            component.find('table').addClass('table-striped');
-        } else {
-            component.find('table').removeClass('table-striped');
-        }
-    });
+  });
+
+  $("#table-bordered").on("change", function () {
+    if ($(this).is(":checked")) {
+      component.find("table").addClass("table-bordered");
+    } else {
+      component.find("table").removeClass("table-bordered");
+    }
+  });
+
+  $("#table-striped").on("change", function () {
+    if ($(this).is(":checked")) {
+      component.find("table").addClass("table-striped");
+    } else {
+      component.find("table").removeClass("table-striped");
+    }
+  });
 }
 
 /**
  * Text field property handlers
  */
 function initTextFieldHandlers(component) {
-    $('#text-field-label').on('change', function() {
-        component.find('label').text($(this).val());
-    });
-    
-    $('#text-field-id').on('change', function() {
-        const oldId = component.find('input').attr('id');
-        const newId = $(this).val();
-        
-        component.find('input').attr('id', newId);
-        component.find('label').attr('for', newId);
-        component.find('span.text-danger').attr('id', 'er' + newId.substring(3));
-    });
-    
-    $('#text-field-placeholder').on('change', function() {
-        component.find('input').attr('placeholder', $(this).val());
-    });
-    
-    $('#text-field-required').on('change', function() {
-        if ($(this).is(':checked')) {
-            component.find('input').attr('required', 'required');
-        } else {
-            component.find('input').removeAttr('required');
-        }
-    });
+  $("#text-field-label").on("change", function () {
+    component.find("label").text($(this).val());
+  });
+
+  $("#text-field-id").on("change", function () {
+    const oldId = component.find("input").attr("id");
+    const newId = $(this).val();
+
+    component.find("input").attr("id", newId);
+    component.find("label").attr("for", newId);
+    component.find("span.text-danger").attr("id", "er" + newId.substring(3));
+  });
+
+  $("#text-field-placeholder").on("change", function () {
+    component.find("input").attr("placeholder", $(this).val());
+  });
+
+  $("#text-field-required").on("change", function () {
+    if ($(this).is(":checked")) {
+      component.find("input").attr("required", "required");
+    } else {
+      component.find("input").removeAttr("required");
+    }
+  });
 }
 
 /**
  * Email field property handlers
  */
 function initEmailFieldHandlers(component) {
-    $('#email-field-label').on('change', function() {
-        component.find('label').text($(this).val());
-    });
-    
-    $('#email-field-id').on('change', function() {
-        const oldId = component.find('input').attr('id');
-        const newId = $(this).val();
-        
-        component.find('input').attr('id', newId);
-        component.find('label').attr('for', newId);
-        component.find('span.text-danger').attr('id', 'er' + newId.substring(3));
-    });
-    
-    $('#email-field-placeholder').on('change', function() {
-        component.find('input').attr('placeholder', $(this).val());
-    });
-    
-    $('#email-field-required').on('change', function() {
-        if ($(this).is(':checked')) {
-            component.find('input').attr('required', 'required');
-        } else {
-            component.find('input').removeAttr('required');
-        }
-    });
+  $("#email-field-label").on("change", function () {
+    component.find("label").text($(this).val());
+  });
+
+  $("#email-field-id").on("change", function () {
+    const oldId = component.find("input").attr("id");
+    const newId = $(this).val();
+
+    component.find("input").attr("id", newId);
+    component.find("label").attr("for", newId);
+    component.find("span.text-danger").attr("id", "er" + newId.substring(3));
+  });
+
+  $("#email-field-placeholder").on("change", function () {
+    component.find("input").attr("placeholder", $(this).val());
+  });
+
+  $("#email-field-required").on("change", function () {
+    if ($(this).is(":checked")) {
+      component.find("input").attr("required", "required");
+    } else {
+      component.find("input").removeAttr("required");
+    }
+  });
 }
 
 /**
  * Date field property handlers
  */
 function initDateFieldHandlers(component) {
-    $('#date-field-label').on('change', function() {
-        component.find('label').text($(this).val());
-    });
-    
-    $('#date-field-id').on('change', function() {
-        const oldId = component.find('input').attr('id');
-        const newId = $(this).val();
-        
-        component.find('input').attr('id', newId);
-        component.find('label').attr('for', newId);
-        component.find('span.text-danger').attr('id', 'er' + newId.substring(3));
-    });
-    
-    $('#date-field-required').on('change', function() {
-        if ($(this).is(':checked')) {
-            component.find('input').attr('required', 'required');
-        } else {
-            component.find('input').removeAttr('required');
-        }
-    });
+  $("#date-field-label").on("change", function () {
+    component.find("label").text($(this).val());
+  });
+
+  $("#date-field-id").on("change", function () {
+    const oldId = component.find("input").attr("id");
+    const newId = $(this).val();
+
+    component.find("input").attr("id", newId);
+    component.find("label").attr("for", newId);
+    component.find("span.text-danger").attr("id", "er" + newId.substring(3));
+  });
+
+  $("#date-field-required").on("change", function () {
+    if ($(this).is(":checked")) {
+      component.find("input").attr("required", "required");
+    } else {
+      component.find("input").removeAttr("required");
+    }
+  });
 }
 
 /**
  * Select dropdown property handlers
  */
 function initSelectHandlers(component) {
-    $('#select-field-label').on('change', function() {
-        component.find('label').text($(this).val());
+  $("#select-field-label").on("change", function () {
+    component.find("label").text($(this).val());
+  });
+
+  $("#select-field-id").on("change", function () {
+    const newId = $(this).val();
+    component.find("select").attr("id", newId);
+    component.find("label").attr("for", newId);
+  });
+
+  $("#select-options").on("change", function () {
+    const options = $(this).val().split("\n");
+    const select = component.find("select");
+    select.empty();
+
+    options.forEach((option, index) => {
+      if (option.trim()) {
+        // If it's a course with duration, use duration as value
+        const value = $("#select-has-duration").is(":checked")
+          ? (index + 1) * 3
+          : option.toLowerCase().replace(/\s+/g, "-");
+        select.append(
+          `<option value="${value}" data-name="${option.trim()}">${option.trim()}</option>`
+        );
+      }
     });
-    
-    $('#select-field-id').on('change', function() {
-        const newId = $(this).val();
-        component.find('select').attr('id', newId);
-        component.find('label').attr('for', newId);
-    });
-    
-    $('#select-options').on('change', function() {
-        const options = $(this).val().split('\n');
-        const select = component.find('select');
-        select.empty();
-        
-        options.forEach((option, index) => {
-            if (option.trim()) {
-                // If it's a course with duration, use duration as value
-                const value = $('#select-has-duration').is(':checked') ? (index + 1) * 3 : option.toLowerCase().replace(/\s+/g, '-');
-                select.append(`<option value="${value}" data-name="${option.trim()}">${option.trim()}</option>`);
-            }
-        });
-    });
+  });
 }
 
 /**
  * Radio group property handlers
  */
 function initRadioGroupHandlers(component) {
-    $('#radio-group-label').on('change', function() {
-        component.find('label:first').text($(this).val());
-    });
-    
-    $('#radio-group-name').on('change', function() {
-        const newName = $(this).val();
-        component.find('input[type="radio"]').attr('name', newName);
-    });
-    
-    $('#radio-options').on('change', function() {
-        const options = $(this).val().split('\n');
-        const container = component.find('.col-9');
-        const name = component.find('input[type="radio"]').attr('name');
-        container.empty();
-        
-        options.forEach((option, index) => {
-            if (option.trim()) {
-                const id = `radio${index + 1}${component.attr('id')}`;
-                const checked = index === 0 ? 'checked' : '';
-                container.append(`
+  $("#radio-group-label").on("change", function () {
+    component.find("label:first").text($(this).val());
+  });
+
+  $("#radio-group-name").on("change", function () {
+    const newName = $(this).val();
+    component.find('input[type="radio"]').attr("name", newName);
+  });
+
+  $("#radio-options").on("change", function () {
+    const options = $(this).val().split("\n");
+    const container = component.find(".col-9");
+    const name = component.find('input[type="radio"]').attr("name");
+    container.empty();
+
+    options.forEach((option, index) => {
+      if (option.trim()) {
+        const id = `radio${index + 1}${component.attr("id")}`;
+        const checked = index === 0 ? "checked" : "";
+        container.append(`
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="${name}" id="${id}" value="${option.trim()}" ${checked}>
                         <label class="form-check-label" for="${id}">${option.trim()}</label>
                     </div>
                 `);
-            }
-        });
-        
-        container.append(`<span id="erRadio${component.attr('id')}" class="text-danger small mt-1 d-block"></span>`);
+      }
     });
+
+    container.append(
+      `<span id="erRadio${component.attr(
+        "id"
+      )}" class="text-danger small mt-1 d-block"></span>`
+    );
+  });
 }
 
 /**
  * Checkbox group property handlers
  */
 function initCheckboxGroupHandlers(component) {
-    $('#checkbox-group-label').on('change', function() {
-        component.find('label:first').text($(this).val());
-    });
-    
-    $('#checkbox-options').on('change', function() {
-        const options = $(this).val().split('\n');
-        const container = component.find('.col-9');
-        container.empty();
-        
-        options.forEach((option, index) => {
-            if (option.trim()) {
-                const id = `chk${index + 1}${component.attr('id')}`;
-                container.append(`
+  $("#checkbox-group-label").on("change", function () {
+    component.find("label:first").text($(this).val());
+  });
+
+  $("#checkbox-options").on("change", function () {
+    const options = $(this).val().split("\n");
+    const container = component.find(".col-9");
+    container.empty();
+
+    options.forEach((option, index) => {
+      if (option.trim()) {
+        const id = `chk${index + 1}${component.attr("id")}`;
+        container.append(`
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="${id}" value="${option.trim()}">
                         <label class="form-check-label" for="${id}">${option.trim()}</label>
                     </div>
                 `);
-            }
-        });
-        
-        container.append(`<span id="erCheck${component.attr('id')}" class="text-danger small mt-1 d-block"></span>`);
+      }
     });
+
+    container.append(
+      `<span id="erCheck${component.attr(
+        "id"
+      )}" class="text-danger small mt-1 d-block"></span>`
+    );
+  });
 }
 
 /**
  * Modal property handlers
  */
 function initModalHandlers(component) {
-    $('#modal-id').on('change', function() {
-        // This will be used when generating the final HTML
-        component.data('modal-id', $(this).val());
-    });
-    
-    $('#modal-title').on('change', function() {
-        component.data('modal-title', $(this).val());
-        // Update the preview title
-        const currentTitle = component.find('.modal-preview-title').text();
-        if (currentTitle.includes('Form Modal')) {
-            component.find('.modal-preview-title').text('Form Modal: ' + $(this).val());
-        }
-    });
-    
-    $('#modal-size').on('change', function() {
-        component.data('modal-size', $(this).val());
-    });
-    
-    // Modal fields checkboxes
-    $('.modal-fields-list input[type="checkbox"]').on('change', function() {
-        updateModalFieldsList(component);
-    });
-    
-    $('#modal-submit-text, #modal-cancel-text').on('change', function() {
-        component.data($(this).attr('id').replace('modal-', ''), $(this).val());
-    });
-    
-    // Edit button in the modal preview
-    component.find('.edit-modal-btn').on('click', function(e) {
-        e.preventDefault();
-        // This is already handled by the component selection functionality
-        // Just make sure this component is selected
-        selectComponent(component);
-    });
+  $("#modal-id").on("change", function () {
+    // This will be used when generating the final HTML
+    component.data("modal-id", $(this).val());
+  });
+
+  $("#modal-title").on("change", function () {
+    component.data("modal-title", $(this).val());
+    // Update the preview title
+    const currentTitle = component.find(".modal-preview-title").text();
+    if (currentTitle.includes("Form Modal")) {
+      component
+        .find(".modal-preview-title")
+        .text("Form Modal: " + $(this).val());
+    }
+  });
+
+  $("#modal-size").on("change", function () {
+    component.data("modal-size", $(this).val());
+  });
+
+  // Modal fields checkboxes
+  $('.modal-fields-list input[type="checkbox"]').on("change", function () {
+    updateModalFieldsList(component);
+  });
+
+  $("#modal-submit-text, #modal-cancel-text").on("change", function () {
+    component.data($(this).attr("id").replace("modal-", ""), $(this).val());
+  });
+
+  // Edit button in the modal preview
+  component.find(".edit-modal-btn").on("click", function (e) {
+    e.preventDefault();
+    // This is already handled by the component selection functionality
+    // Just make sure this component is selected
+    selectComponent(component);
+  });
 }
 
 /**
  * Update the fields list in modal preview
  */
 function updateModalFieldsList(component) {
-    const fieldsList = component.find('.modal-preview-fields');
-    fieldsList.empty();
-    
-    if ($('#modal-field-name').is(':checked')) {
-        fieldsList.append('<div>- Họ và tên (Text)</div>');
-    }
-    if ($('#modal-field-phone').is(':checked')) {
-        fieldsList.append('<div>- Số điện thoại (Text)</div>');
-    }
-    if ($('#modal-field-dob').is(':checked')) {
-        fieldsList.append('<div>- Ngày sinh (Date)</div>');
-    }
-    if ($('#modal-field-email').is(':checked')) {
-        fieldsList.append('<div>- Email (Email)</div>');
-    }
-    if ($('#modal-field-course').is(':checked')) {
-        fieldsList.append('<div>- Khóa học (Select)</div>');
-    }
-    if ($('#modal-field-duration').is(':checked')) {
-        fieldsList.append('<div>- Thời gian học (Text, readonly)</div>');
-    }
-    if ($('#modal-field-method').is(':checked')) {
-        fieldsList.append('<div>- Hình thức học (Radio)</div>');
-    }
-    if ($('#modal-field-skills').is(':checked')) {
-        fieldsList.append('<div>- Kỹ năng cần luyện (Checkbox)</div>');
-    }
-    
-    // Save the fields configuration to the component data
-    component.data('fields', {
-        name: $('#modal-field-name').is(':checked'),
-        phone: $('#modal-field-phone').is(':checked'),
-        dob: $('#modal-field-dob').is(':checked'),
-        email: $('#modal-field-email').is(':checked'),
-        course: $('#modal-field-course').is(':checked'),
-        duration: $('#modal-field-duration').is(':checked'),
-        method: $('#modal-field-method').is(':checked'),
-        skills: $('#modal-field-skills').is(':checked')
-    });
+  const fieldsList = component.find(".modal-preview-fields");
+  fieldsList.empty();
+
+  if ($("#modal-field-name").is(":checked")) {
+    fieldsList.append("<div>- Họ và tên (Text)</div>");
+  }
+  if ($("#modal-field-phone").is(":checked")) {
+    fieldsList.append("<div>- Số điện thoại (Text)</div>");
+  }
+  if ($("#modal-field-dob").is(":checked")) {
+    fieldsList.append("<div>- Ngày sinh (Date)</div>");
+  }
+  if ($("#modal-field-email").is(":checked")) {
+    fieldsList.append("<div>- Email (Email)</div>");
+  }
+  if ($("#modal-field-course").is(":checked")) {
+    fieldsList.append("<div>- Khóa học (Select)</div>");
+  }
+  if ($("#modal-field-duration").is(":checked")) {
+    fieldsList.append("<div>- Thời gian học (Text, readonly)</div>");
+  }
+  if ($("#modal-field-method").is(":checked")) {
+    fieldsList.append("<div>- Hình thức học (Radio)</div>");
+  }
+  if ($("#modal-field-skills").is(":checked")) {
+    fieldsList.append("<div>- Kỹ năng cần luyện (Checkbox)</div>");
+  }
+
+  // Save the fields configuration to the component data
+  component.data("fields", {
+    name: $("#modal-field-name").is(":checked"),
+    phone: $("#modal-field-phone").is(":checked"),
+    dob: $("#modal-field-dob").is(":checked"),
+    email: $("#modal-field-email").is(":checked"),
+    course: $("#modal-field-course").is(":checked"),
+    duration: $("#modal-field-duration").is(":checked"),
+    method: $("#modal-field-method").is(":checked"),
+    skills: $("#modal-field-skills").is(":checked"),
+  });
 }
 
 /**
  * Button property handlers
  */
 function initButtonHandlers(component) {
-    $('#button-text').on('change', function() {
-        component.find('button').text($(this).val());
+  $("#button-text").on("change", function () {
+    component.find("button").text($(this).val());
+  });
+
+  $("#button-variant").on("change", function () {
+    const btn = component.find("button");
+    btn.removeClass(function (index, className) {
+      return (className.match(/(^|\s)btn-\S+/g) || []).join(" ");
     });
-    
-    $('#button-variant').on('change', function() {
-        const btn = component.find('button');
-        btn.removeClass(function(index, className) {
-            return (className.match(/(^|\s)btn-\S+/g) || []).join(' ');
-        });
-        btn.addClass(`btn-${$(this).val()}`);
-    });
+    btn.addClass(`btn-${$(this).val()}`);
+  });
 }
 
 /**
  * Footer property handlers
  */
 function initFooterHandlers(component) {
-    $('#footer-bg-color').on('change', function() {
-        component.find('#footer').css('background-color', $(this).val());
-    });
-    
-    $('#footer-title').on('change', function() {
-        component.find('h5').text($(this).val());
-    });
-    
-    $('#footer-student-name').on('change', function() {
-        component.find('p:contains("Họ tên")').text('Họ tên: ' + $(this).val());
-    });
-    
-    $('#footer-student-id').on('change', function() {
-        component.find('p:contains("Mã sinh viên")').text('Mã sinh viên: ' + $(this).val());
-    });
-    
-    $('#footer-class-id').on('change', function() {
-        component.find('p:contains("Mã lớp")').text('Mã lớp: ' + $(this).val());
-    });
+  $("#footer-bg-color").on("change", function () {
+    component.find("#footer").css("background-color", $(this).val());
+  });
+
+  $("#footer-title").on("change", function () {
+    component.find("h5").text($(this).val());
+  });
+
+  $("#footer-student-name").on("change", function () {
+    component.find('p:contains("Họ tên")').text("Họ tên: " + $(this).val());
+  });
+
+  $("#footer-student-id").on("change", function () {
+    component
+      .find('p:contains("Mã sinh viên")')
+      .text("Mã sinh viên: " + $(this).val());
+  });
+
+  $("#footer-class-id").on("change", function () {
+    component.find('p:contains("Mã lớp")').text("Mã lớp: " + $(this).val());
+  });
 }
