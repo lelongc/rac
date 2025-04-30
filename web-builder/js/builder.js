@@ -356,65 +356,56 @@ function updateModalPreviewCard() {
 }
 
 /**
- * Generate preview of the current page
+ * Generate a preview of the page
+ * This function now properly initializes Bootstrap 5 modals
  */
 function generatePreview() {
-  const previewFrame = document.getElementById("preview-frame");
-  // Pass true to generateHTMLCode to indicate it's for preview
-  const htmlCode = generateHTMLCode(true);
+  const previewHTML = generateHTMLCode(true);
+  const previewFrame = document.getElementById("preview-iframe");
+  const frameDoc =
+    previewFrame.contentDocument || previewFrame.contentWindow.document;
 
-  // Use srcdoc to set content, which provides a cleaner execution context
-  previewFrame.srcdoc = htmlCode;
+  // Reset iframe content
+  frameDoc.open();
+  frameDoc.write(previewHTML);
+  frameDoc.close();
 
-  // Add event listener for when iframe is loaded
+  // Initialize Bootstrap components in the preview iframe after it loads
   previewFrame.onload = function () {
-    // Check if there's a modal component in the builder canvas
-    const modalComponent = $('#canvas .canvas-component[data-type="modal"]');
-    if (modalComponent.length) {
-      const modalId =
-        modalComponent.data("modal-id") || $("#modal-id").val() || "myModal";
+    const frameDocument = previewFrame.contentWindow.document;
+    const frameWindow = previewFrame.contentWindow;
 
-      const frameWindow = previewFrame.contentWindow;
-      const frameDocument = frameWindow.document;
-
-      // Initialize modal trigger button
-      const registerButton = frameDocument.querySelector(".nav-register-btn a");
-      if (registerButton) {
-        // Update to Bootstrap 5 data attributes
-        registerButton.setAttribute("data-bs-toggle", "modal");
-        registerButton.setAttribute("data-bs-target", "#myModal");
-      }
-
-      // Initialize the modal
-      const modalElement = frameDocument.getElementById("myModal");
-      if (modalElement) {
-        const modal = new frameWindow.bootstrap.Modal(modalElement);
-        modalElement.addEventListener("shown.bs.modal", function () {
-          // Initialize form event handlers after modal is shown
-          const courseSelect = frameDocument.getElementById("slKhoahoc");
-          if (courseSelect) {
-            courseSelect.addEventListener("change", function () {
-              const duration = this.value;
-              frameDocument.getElementById("txtThoiGianHoc").value =
-                duration + " tháng";
-            });
-            // Set initial value
-            frameDocument.getElementById("txtThoiGianHoc").value =
-              courseSelect.value + " tháng";
-          }
-        });
-      }
-    } else {
-      console.log(
-        "No modal component found on canvas, skipping modal setup in preview."
-      );
+    // Initialize modal trigger button
+    const registerButton = frameDocument.querySelector(
+      '.btn[data-bs-toggle="modal"]'
+    );
+    if (registerButton) {
+      // Make sure we have proper Bootstrap 5 data attributes
+      registerButton.setAttribute("data-bs-toggle", "modal");
+      registerButton.setAttribute("data-bs-target", "#myModal");
     }
-  };
 
-  // Handle potential errors during iframe loading
-  previewFrame.onerror = function () {
-    console.error("Error loading preview iframe content.");
-    alert("Error loading preview. Please check the console for details.");
+    // Initialize modals
+    const modalElement = frameDocument.getElementById("myModal");
+    if (modalElement) {
+      const modal = new frameWindow.bootstrap.Modal(modalElement);
+
+      // Add modal event listeners
+      modalElement.addEventListener("shown.bs.modal", function () {
+        // Initialize form event handlers after modal is shown
+        const courseSelect = frameDocument.getElementById("slKhoahoc");
+        if (courseSelect) {
+          courseSelect.addEventListener("change", function () {
+            const duration = this.value;
+            frameDocument.getElementById("txtThoiGianHoc").value =
+              duration + " tháng";
+          });
+          // Set initial value
+          frameDocument.getElementById("txtThoiGianHoc").value =
+            courseSelect.value + " tháng";
+        }
+      });
+    }
   };
 }
 

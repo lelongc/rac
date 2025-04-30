@@ -19,6 +19,17 @@ const newFieldModal = new bootstrap.Modal(
  * Initialize the field editor
  */
 function initFieldEditor() {
+  // Update modal buttons with Bootstrap 5 attributes
+  $('#field-editor-modal button[data-dismiss="modal"]')
+    .attr("data-bs-dismiss", "modal")
+    .removeAttr("data-dismiss");
+  $('#new-field-modal button[data-dismiss="modal"]')
+    .attr("data-bs-dismiss", "modal")
+    .removeAttr("data-dismiss");
+
+  // Update close buttons
+  $(".modal .close").addClass("btn-close").removeClass("close").html("");
+
   // Open field editor when edit fields button is clicked
   $(document).on("click", ".edit-modal-fields-btn", function (e) {
     e.preventDefault();
@@ -42,12 +53,18 @@ function initFieldEditor() {
       refreshFieldList();
 
       // Show the field editor modal
+      var fieldEditorModal = new bootstrap.Modal(
+        document.getElementById("field-editor-modal")
+      );
       fieldEditorModal.show();
     }
   });
 
   // Handle add new field button
   $("#add-new-field-btn").on("click", function () {
+    var newFieldModal = new bootstrap.Modal(
+      document.getElementById("new-field-modal")
+    );
     newFieldModal.show();
   });
 
@@ -71,6 +88,9 @@ function initFieldEditor() {
     refreshFieldList();
 
     // Close the new field modal
+    var newFieldModal = bootstrap.Modal.getInstance(
+      document.getElementById("new-field-modal")
+    );
     newFieldModal.hide();
 
     // Reset new field form

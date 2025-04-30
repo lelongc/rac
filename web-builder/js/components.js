@@ -38,24 +38,26 @@ function createNavbarComponent(id) {
                 <button type="button" class="delete-btn" title="Delete"><i class="fas fa-trash"></i></button>
             </div>
             <div id="navbar">
-                <nav class="navbar navbar-expand-sm bg-light">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">GFree English course</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Trang chủ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Giới thiệu</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Khóa học</a>
-                        </li>
-                        <li class="nav-item nav-register-btn">
-                            <a class="nav-link btn btn-danger text-white btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">Đăng ký</a>
-                        </li>
-                    </ul>
+                <nav class="navbar navbar-expand-sm navbar-light bg-light">
+                    <div class="container-fluid">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">GFree English course</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Trang chủ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Giới thiệu</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Khóa học</a>
+                            </li>
+                            <li class="nav-item">
+                                <button class="btn btn-danger text-white btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">Đăng ký</button>
+                            </li>
+                        </ul>
+                    </div>
                 </nav>
             </div>
         </div>

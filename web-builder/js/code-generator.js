@@ -169,19 +169,19 @@ function generateModalHTML() {
 
   // Build modal HTML with Bootstrap 5 structure
   let modalHtml = `
-        <!-- Registration modal -->
-        <div class="modal fade" id="${modalId}">
-            <div class="modal-dialog ${modalSize}">
-                <div class="modal-content">
-                    <!-- Modal header -->
-                    <div class="modal-header">
-                        <h2>${modalTitle}</h2>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
+    <!-- Registration modal -->
+    <div class="modal fade" id="${modalId}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog ${modalSize}">
+            <div class="modal-content">
+                <!-- Modal header -->
+                <div class="modal-header">
+                    <h2 class="modal-title" id="modalLabel">${modalTitle}</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
 
-                    <!-- Modal body with registration form -->
-                    <div class="modal-body">
-                        <div class="form-group">`;
+                <!-- Modal body with registration form -->
+                <div class="modal-body">
+                    <div class="form-group">`;
 
   // Add fields based on configuration
   fields.forEach((field) => {
@@ -192,172 +192,168 @@ function generateModalHTML() {
       case "text-field":
       case "email-field":
         modalHtml += `
-                            <!-- ${field.label} -->
-                            <div class="row mt-2">
-                                <div class="col-3 text-right">
-                                    <label for="${
-                                      field.id
-                                    }" class="font-weight-normal">${
+                        <!-- ${field.label} -->
+                        <div class="row mt-2">
+                            <div class="col-3 text-end">
+                                <label for="${field.id}" class="fw-normal">${
           field.label
         }</label>
-                                </div>
-                                <div class="col-9">
-                                    <input type="${
-                                      field.type === "email-field"
-                                        ? "email"
-                                        : "text"
-                                    }" 
-                                           id="${field.id}" 
-                                           class="form-control"
-                                           ${isRequired}
-                                           ${
-                                             field.placeholder
-                                               ? `placeholder="${field.placeholder}"`
-                                               : ""
-                                           }>
-                                    <span id="${errorId}" class="text-danger small mt-1 d-block"></span>
-                                </div>
-                            </div>`;
+                            </div>
+                            <div class="col-9">
+                                <input type="${
+                                  field.type === "email-field"
+                                    ? "email"
+                                    : "text"
+                                }" 
+                                       id="${field.id}" 
+                                       class="form-control"
+                                       ${isRequired}
+                                       ${
+                                         field.placeholder
+                                           ? `placeholder="${field.placeholder}"`
+                                           : ""
+                                       }>
+                                <span id="${errorId}" class="text-danger small mt-1 d-block"></span>
+                            </div>
+                        </div>`;
         break;
 
       case "date-field":
         modalHtml += `
-                            <!-- ${field.label} -->
-                            <div class="row mt-2">
-                                <div class="col-3 text-right">
-                                    <label for="${field.id}" class="font-weight-normal">${field.label}</label>
-                                </div>
-                                <div class="col-9">
-                                    <input type="date" 
-                                           id="${field.id}" 
-                                           class="form-control"
-                                           ${isRequired}>
-                                    <span id="${errorId}" class="text-danger small mt-1 d-block"></span>
-                                </div>
-                            </div>`;
+                        <!-- ${field.label} -->
+                        <div class="row mt-2">
+                            <div class="col-3 text-end">
+                                <label for="${field.id}" class="fw-normal">${field.label}</label>
+                            </div>
+                            <div class="col-9">
+                                <input type="date" 
+                                       id="${field.id}" 
+                                       class="form-control"
+                                       ${isRequired}>
+                                <span id="${errorId}" class="text-danger small mt-1 d-block"></span>
+                            </div>
+                        </div>`;
         break;
 
       case "select":
         modalHtml += `
-                            <!-- ${field.label} -->
-                            <div class="row mt-2">
-                                <div class="col-3 text-right">
-                                    <label for="${field.id}" class="font-weight-normal">${field.label}</label>
-                                </div>
-                                <div class="col-9">
-                                    <select id="${field.id}" class="form-control" ${isRequired}>`;
+                        <!-- ${field.label} -->
+                        <div class="row mt-2">
+                            <div class="col-3 text-end">
+                                <label for="${field.id}" class="fw-normal">${field.label}</label>
+                            </div>
+                            <div class="col-9">
+                                <select id="${field.id}" class="form-select" ${isRequired}>`;
 
         // Add options
         field.options.forEach((option) => {
           modalHtml += `
-                                        <option value="${option.value}" data-name="${option.text}">${option.text}</option>`;
+                                    <option value="${option.value}" data-name="${option.text}">${option.text}</option>`;
         });
 
         modalHtml += `
-                                    </select>
-                                    <span id="${errorId}" class="text-danger small mt-1 d-block"></span>
-                                </div>
-                            </div>`;
+                                </select>
+                                <span id="${errorId}" class="text-danger small mt-1 d-block"></span>
+                            </div>
+                        </div>`;
         break;
 
       case "readonly-field":
         modalHtml += `
-                            <!-- ${field.label} -->
-                            <div class="row mt-2">
-                                <div class="col-3 text-right">
-                                    <label for="${field.id}" class="font-weight-normal">${field.label}</label>
-                                </div>
-                                <div class="col-9">
-                                    <input type="text" 
-                                           id="${field.id}" 
-                                           class="form-control" 
-                                           readonly>
-                                </div>
-                            </div>`;
+                        <!-- ${field.label} -->
+                        <div class="row mt-2">
+                            <div class="col-3 text-end">
+                                <label for="${field.id}" class="fw-normal">${field.label}</label>
+                            </div>
+                            <div class="col-9">
+                                <input type="text" 
+                                       id="${field.id}" 
+                                       class="form-control" 
+                                       readonly>
+                            </div>
+                        </div>`;
         break;
 
       case "radio-group":
         modalHtml += `
-                            <!-- ${field.label} -->
-                            <div class="row mt-2">
-                                <div class="col-3 text-right">
-                                    <label class="font-weight-normal">${field.label}</label>
-                                </div>
-                                <div class="col-9">`;
+                        <!-- ${field.label} -->
+                        <div class="row mt-2">
+                            <div class="col-3 text-end">
+                                <label class="fw-normal">${field.label}</label>
+                            </div>
+                            <div class="col-9">`;
 
         // Add radio options
         field.options.forEach((option) => {
           modalHtml += `
-                                    <div class="form-check">
-                                        <input class="form-check-input" 
-                                               type="radio" 
-                                               name="${field.name}" 
-                                               id="${option.id}" 
-                                               value="${option.value}"
-                                               ${
-                                                 option.checked ? "checked" : ""
-                                               }>
-                                        <label class="form-check-label" for="${
-                                          option.id
-                                        }">${option.text}</label>
-                                    </div>`;
+                                <div class="form-check">
+                                    <input class="form-check-input" 
+                                           type="radio" 
+                                           name="${field.name}" 
+                                           id="${option.id}" 
+                                           value="${option.value}"
+                                           ${option.checked ? "checked" : ""}>
+                                    <label class="form-check-label" for="${
+                                      option.id
+                                    }">${option.text}</label>
+                                </div>`;
         });
 
         modalHtml += `
-                                    <span id="${errorId}" class="text-danger small mt-1 d-block"></span>
-                                </div>
-                            </div>`;
+                                <span id="${errorId}" class="text-danger small mt-1 d-block"></span>
+                            </div>
+                        </div>`;
         break;
 
       case "checkbox-group":
         modalHtml += `
-                            <!-- ${field.label} -->
-                            <div class="row mt-2">
-                                <div class="col-3 text-right">
-                                    <label class="font-weight-normal">${field.label}</label>
-                                </div>
-                                <div class="col-9">`;
+                        <!-- ${field.label} -->
+                        <div class="row mt-2">
+                            <div class="col-3 text-end">
+                                <label class="fw-normal">${field.label}</label>
+                            </div>
+                            <div class="col-9">`;
 
         // Add checkbox options
         field.options.forEach((option) => {
           modalHtml += `
-                                    <div class="form-check">
-                                        <input class="form-check-input" 
-                                               type="checkbox" 
-                                               id="${option.id}" 
-                                               value="${option.value}">
-                                        <label class="form-check-label" for="${option.id}">${option.text}</label>
-                                    </div>`;
+                                <div class="form-check">
+                                    <input class="form-check-input" 
+                                           type="checkbox" 
+                                           id="${option.id}" 
+                                           value="${option.value}">
+                                    <label class="form-check-label" for="${option.id}">${option.text}</label>
+                                </div>`;
         });
 
         modalHtml += `
-                                    <span id="${errorId}" class="text-danger small mt-1 d-block"></span>
-                                </div>
-                            </div>`;
+                                <span id="${errorId}" class="text-danger small mt-1 d-block"></span>
+                            </div>
+                        </div>`;
         break;
     }
   });
 
   // Close the modal HTML
   modalHtml += `
-                        </div>
-                    </div>
-
-                    <!-- Modal footer -->
-                    <div class="modal-footer d-flex justify-content-end">
-                        <button type="button" class="btn btn-success btn-sm mr-2" onclick="DangKy()">${modalSubmit}</button>
-                        <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">${modalCancel}</button>
                     </div>
                 </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer d-flex justify-content-end">
+                    <button type="button" class="btn btn-success btn-sm me-2" onclick="DangKy()">${modalSubmit}</button>
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">${modalCancel}</button>
+                </div>
             </div>
-        </div>`;
+        </div>
+    </div>`;
 
   return modalHtml;
 }
 
 /**
  * Generate JavaScript code for the page
- * Updates needed for custom modal fields
+ * Creates all necessary validation functions similar to the sample
  */
 function generateJSCode() {
   // Get fields data from modal component
@@ -366,206 +362,248 @@ function generateJSCode() {
     ? modalComponent.data("fields")
     : [];
 
-  let jsCode = "";
+  // Create standard validation functions from the template
+  let jsCode = `/**
+ * Validate the name field
+ * Requirements: Not empty, each word must start with uppercase (e.g., Le Van An)
+ */
+function checkName() {
+  var name = $("#txtName").val();
 
-  // Helper function to check if a field exists
-  const hasField = (identifier) => {
-    return fieldsArray.some(
-      (field) => field.id === identifier || field.type === identifier
+  // Check if name is empty
+  if (name.trim() === "") {
+    $("#erName").text("Họ tên không được để trống");
+    return false;
+  }
+
+  // Use regex to validate name format: words starting with uppercase, followed by lowercase
+  // Must have at least two words separated by spaces
+  var regex = /^[A-Z][a-z]*(\\s+[A-Z][a-z]*)+$/;
+  if (!regex.test(name)) {
+    $("#erName").text(
+      "Mỗi từ phải bắt đầu bằng chữ hoa và phần còn lại viết thường"
     );
-  };
+    return false;
+  }
 
-  // Generate validation functions for each field type
-  fieldsArray.forEach((field) => {
-    if (field.validation) {
-      let validationCode = `\n/**\n * Validate the ${field.label} field\n */\n`;
-      validationCode += `function ${field.validation.function}() {\n`;
-      validationCode += `    var value = $("#${field.id}").val();\n\n`;
+  $("#erName").text("");
+  return true;
+}
 
-      // Add empty check if required
-      if (field.required) {
-        validationCode += `    // Check if empty\n`;
-        validationCode += `    if (value.trim() === "") {\n`;
-        validationCode += `        $("#er${field.id.substring(3)}").text("${
-          field.label
-        } không được để trống");\n`;
-        validationCode += `        return false;\n`;
-        validationCode += `    }\n\n`;
-      }
+/**
+ * Validate the date of birth field
+ * Requirements: Not empty, must be before current date
+ */
+function checkDateOfBirth() {
+  var dob = $("#txtNgaysinh").val();
+  var today = new Date();
+  var dobDate = new Date(dob);
 
-      // Add regex validation if specified
-      if (field.validation.regex) {
-        validationCode += `    // Check format using regex\n`;
-        validationCode += `    var regex = ${field.validation.regex};\n`;
-        validationCode += `    if (!regex.test(value)) {\n`;
-        validationCode += `        $("#er${field.id.substring(3)}").text("${
-          field.validation.message
-        }");\n`;
-        validationCode += `        return false;\n`;
-        validationCode += `    }\n\n`;
-      }
+  if (dob === "") {
+    $("#erNgaysinh").text("Ngày sinh không được rỗng");
+    return false;
+  } else if (dobDate >= today) {
+    $("#erNgaysinh").text("Ngày sinh phải trước ngày hiện tại");
+    return false;
+  } else {
+    $("#erNgaysinh").text("");
+    return true;
+  }
+}
 
-      // Special case for date of birth
-      if (field.type === "date-field") {
-        validationCode += `    // Check if date is in the past\n`;
-        validationCode += `    var today = new Date();\n`;
-        validationCode += `    var inputDate = new Date(value);\n`;
-        validationCode += `    if (inputDate >= today) {\n`;
-        validationCode += `        $("#er${field.id.substring(3)}").text("${
-          field.label
-        } phải là ngày trong quá khứ");\n`;
-        validationCode += `        return false;\n`;
-        validationCode += `    }\n\n`;
-      }
+/**
+ * Validate the phone number field
+ * Requirements: Not empty, 10 digits starting with 09, 03, or 08
+ */
+function checkPhoneNum() {
+  var phone = $("#txtSDT").val();
 
-      validationCode += `    $("#er${field.id.substring(3)}").text("");\n`;
-      validationCode += `    return true;\n`;
-      validationCode += `}\n`;
+  // Check if phone is empty
+  if (phone.trim() === "") {
+    $("#erSDT").text("Số điện thoại không được để trống");
+    return false;
+  }
 
-      jsCode += validationCode;
-    }
-  });
+  // Check phone format: 10 digits starting with 09, 03, or 08
+  var regex = /^(09|03|08)\\d{8}$/;
+  if (!regex.test(phone)) {
+    $("#erSDT").text(
+      "Số điện thoại phải có 10 số và bắt đầu với 09, 03 hoặc 08"
+    );
+    return false;
+  }
 
-  // Add helper functions
-  jsCode += `
+  $("#erSDT").text("");
+  return true;
+}
+
+/**
+ * Validate the email field
+ * Requirements: Must contain @ and end with .com
+ */
+function checkEmail() {
+  var email = $("#txtEmail").val();
+
+  // Check email format: must contain @ and end with .com
+  var regex = /@.*\\.com$/;
+  if (!regex.test(email)) {
+    $("#erEmail").text("Email phải chứa @ và kết thúc với .com");
+    return false;
+  }
+
+  $("#erEmail").text("");
+  return true;
+}
+
+/**
+ * Validate the study method selection
+ * Requirements: At least one option must be selected
+ */
+function checkStudyMethod() {
+  // Check if a study method is selected
+  if (!$("input[name='hinhthuc']:checked").length) {
+    $("#erHinhthuc").text("Vui lòng chọn hình thức học");
+    return false;
+  }
+  $("#erHinhthuc").text("");
+  return true;
+}
+
+/**
+ * Validate the skills selection
+ * Requirements: At least one skill must be selected
+ */
+function checkSkills() {
+  // Check if at least one skill is selected
+  if (
+    !$("#chkListening").is(":checked") &&
+    !$("#chkReading").is(":checked") &&
+    !$("#chkWriting").is(":checked")
+  ) {
+    $("#erSkills").text("Vui lòng chọn ít nhất một kỹ năng cần luyện");
+    return false;
+  }
+  $("#erSkills").text("");
+  return true;
+}
+
+/**
+ * Update the study duration field based on selected course
+ */
+function updateThoiGianHoc() {
+  var selectedCourse = $("#slKhoahoc option:selected");
+  var duration = selectedCourse.val();
+
+  // Update the thời gian học textbox
+  $("#txtThoiGianHoc").val(duration + " tháng");
+}
+
 /**
  * Format date from yyyy-mm-dd to dd/mm/yyyy
  */
 function formatDate(dateString) {
-    if (!dateString) return '';
-    const date = new Date(dateString);
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear();
-    return \`\${day}/\${month}/\${year}\`;
+  if (!dateString) return "";
+  const date = new Date(dateString);
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const year = date.getFullYear();
+  return \`\${day}/\${month}/\${year}\`;
 }
 
 /**
- * Update course duration based on selection
- */
-function updateThoiGianHoc() {
-    var selectedCourse = $("#slKhoahoc option:selected");
-    var duration = selectedCourse.val();
-    $("#txtThoiGianHoc").val(duration + " tháng");
-}
-`;
-
-  // Generate DangKy function
-  jsCode += `
-/**
- * Register function - validates and adds data to table
+ * Register a new course enrollment
+ * Validates all fields before proceeding
  */
 function DangKy() {
-    // Run all validations first
-    var isValid = true;
-`;
+  // Check all validations and store results
+  var nameValid = checkName();
+  var dobValid = checkDateOfBirth();
+  var phoneValid = checkPhoneNum();
+  var emailValid = checkEmail();
+  var methodValid = checkStudyMethod();
+  var skillsValid = checkSkills();
 
-  // Add validation checks
-  fieldsArray.forEach((field) => {
-    if (field.validation) {
-      jsCode += `    isValid = ${field.validation.function}() && isValid;\n`;
-    }
-  });
+  // Only proceed if all validations pass
+  if (
+    !nameValid ||
+    !dobValid ||
+    !phoneValid ||
+    !emailValid ||
+    !methodValid ||
+    !skillsValid
+  ) {
+    return; // Stop if any validation fails
+  }
 
-  jsCode += `
-    // Stop if any validation failed
-    if (!isValid) return;
+  // Gather form data
+  var name = $("#txtName").val();
+  var sdt = $("#txtSDT").val();
+  var ngaysinh = $("#txtNgaysinh").val();
+  var email = $("#txtEmail").val();
+  var khoahocText = $("#slKhoahoc option:selected").text();
+  var hinhthuc = $('input[name="hinhthuc"]:checked').val();
 
-    // Collect form data
-    var data = {
-`;
+  // Collect selected skills
+  var skills = [];
+  if ($("#chkListening").is(":checked")) skills.push($("#chkListening").val());
+  if ($("#chkReading").is(":checked")) skills.push($("#chkReading").val());
+  if ($("#chkWriting").is(":checked")) skills.push($("#chkWriting").val());
+  var skillsString = skills.join(", ");
 
-  // Add data collection for each field
-  fieldsArray.forEach((field) => {
-    switch (field.type) {
-      case "checkbox-group":
-        jsCode += `        skills: $('input[type="checkbox"]:checked').map(function() {\n`;
-        jsCode += `            return $(this).val();\n`;
-        jsCode += `        }).get().join(', '),\n`;
-        break;
-      case "radio-group":
-        jsCode += `        hinhthuc: $('input[name="${field.name}"]:checked').val(),\n`;
-        break;
-      case "select":
-        jsCode += `        ${field.id.substring(2).toLowerCase()}: $('#${
-          field.id
-        } option:selected').text(),\n`;
-        break;
-      case "date-field":
-        jsCode += `        ${field.id
-          .substring(3)
-          .toLowerCase()}: formatDate($('#${field.id}').val()),\n`;
-        break;
-      default:
-        jsCode += `        ${field.id.substring(3).toLowerCase()}: $('#${
-          field.id
-        }').val(),\n`;
-    }
-  });
+  // Format the date for display
+  var formattedDate = formatDate(ngaysinh);
 
-  jsCode += `    };\n\n`;
+  // Add new row to the table
+  var rowCount = $("#memberList tbody tr").length + 1;
+  var newRow = \`<tr>
+                  <td>\${rowCount}</td>
+                  <td>\${name}</td>
+                  <td>\${formattedDate}</td>
+                  <td>\${sdt}</td>
+                  <td>\${email}</td>
+                  <td>\${khoahocText}</td>
+                  <td>\${hinhthuc}</td>
+                  <td>\${skillsString}</td>
+                </tr>\`;
+  $("#memberList tbody").append(newRow);
 
-  // Generate table row HTML
-  jsCode += `    // Add new row to table
-    var rowCount = $('#memberList tbody tr').length + 1;
-    var newRow = '<tr><td>' + rowCount + '</td>';
-`;
+  // Hide the modal using Bootstrap 5
+  var myModalEl = document.getElementById("myModal");
+  var modal = bootstrap.Modal.getInstance(myModalEl);
+  modal.hide();
 
-  // Add cell for each field in correct order
-  const fieldOrder = [
-    "name",
-    "ngaysinh",
-    "sdt",
-    "email",
-    "khoahoc",
-    "hinhthuc",
-    "skills",
-  ];
-  fieldOrder.forEach((field) => {
-    jsCode += `    newRow += '<td>' + (data.${field} || '') + '</td>';\n`;
-  });
+  // Reset form
+  $(
+    '#myModal input[type="text"], #myModal input[type="email"], #myModal input[type="date"]'
+  ).val("");
+  $('#myModal input[type="checkbox"]').prop("checked", false);
+  $("#radioCenter").prop("checked", true);
+  $("#slKhoahoc").val("3");
+  updateThoiGianHoc(); // Update thời gian học after resetting the form
 
-  jsCode += `    newRow += '</tr>';\n\n`;
-
-  // Complete the function
-  jsCode += `    // Add row and close modal
-    $('#memberList tbody').append(newRow);
-    bootstrap.Modal.getInstance(document.getElementById('myModal')).hide();
-
-    // Reset form
-    $('#myModal input[type="text"], #myModal input[type="email"], #myModal input[type="date"]').val('');
-    $('#myModal input[type="checkbox"]').prop('checked', false);
-    $('#radioCenter').prop('checked', true);
-    $('#slKhoahoc').val('3');
-    updateThoiGianHoc();
-
-    // Clear validation messages
-    $('.text-danger').text('');
+  // Clear error messages
+  $("#erName, #erNgaysinh, #erSDT, #erEmail, #erHinhthuc, #erSkills").text("");
 }
 
-// Document ready handler
-$(document).ready(function() {
-    // Add blur validation handlers
-`;
+// Initialize when the document is ready
+$(function () {
+  // Add real-time validation using .on()
+  $("#txtName").on("blur", checkName);
+  $("#txtNgaysinh").on("blur", checkDateOfBirth);
+  $("#txtSDT").on("blur", checkPhoneNum);
+  $("#txtEmail").on("blur", checkEmail);
 
-  // Add validation handlers
-  fieldsArray.forEach((field) => {
-    if (field.validation) {
-      jsCode += `    $('#${field.id}').blur(${field.validation.function});\n`;
-    }
-  });
+  // For checkboxes, validate whenever any checkbox is clicked using .on()
+  $("#chkListening, #chkReading, #chkWriting").on("click", checkSkills);
 
-  // Add special handlers
-  jsCode += `
-    // Checkbox validation
-    $('input[type="checkbox"]').click(checkSkills);
-    
-    // Radio validation
-    $('input[name="hinhthuc"]').click(checkStudyMethod);
-    
-    // Course duration update
-    updateThoiGianHoc();
-    $('#slKhoahoc').change(updateThoiGianHoc);
+  // For radios, validate whenever any radio button is clicked using .on()
+  $("input[name='hinhthuc']").on("click", checkStudyMethod);
+
+  // Set initial value for thời gian học based on default selected course
+  updateThoiGianHoc();
+
+  // Update thời gian học when course selection changes using .on()
+  $("#slKhoahoc").on("change", updateThoiGianHoc);
 });`;
 
   return jsCode;
