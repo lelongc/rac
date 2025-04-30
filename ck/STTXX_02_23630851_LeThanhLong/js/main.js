@@ -221,22 +221,22 @@ function DangKy() {
 }
 
 // Initialize when the document is ready
-$(document).ready(function () {
-  // Add real-time validation
-  $("#txtName").blur(checkName);
-  $("#txtNgaysinh").blur(checkDateOfBirth);
-  $("#txtSDT").blur(checkPhoneNum);
-  $("#txtEmail").blur(checkEmail);
+$(function () {
+  // Add real-time validation using .on()
+  $("#txtName").on("blur", checkName);
+  $("#txtNgaysinh").on("blur", checkDateOfBirth);
+  $("#txtSDT").on("blur", checkPhoneNum);
+  $("#txtEmail").on("blur", checkEmail);
 
-  // For checkboxes, validate whenever any checkbox is clicked
-  $("#chkListening, #chkReading, #chkWriting").click(checkSkills);
+  // For checkboxes, validate whenever any checkbox is clicked using .on()
+  $("#chkListening, #chkReading, #chkWriting").on("click", checkSkills);
 
-  // For radios, validate whenever any radio button is clicked
-  $("input[name='hinhthuc']").click(checkStudyMethod);
+  // For radios, validate whenever any radio button is clicked using .on()
+  $("input[name='hinhthuc']").on("click", checkStudyMethod);
 
   // Set initial value for thời gian học based on default selected course
   updateThoiGianHoc();
 
-  // Update thời gian học when course selection changes
-  $("#slKhoahoc").change(updateThoiGianHoc);
+  // Update thời gian học when course selection changes using .on()
+  $("#slKhoahoc").on("change", updateThoiGianHoc);
 });
