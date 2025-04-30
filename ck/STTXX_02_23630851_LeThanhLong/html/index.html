@@ -23,7 +23,7 @@
       }
 
       #footer {
-        background-color: #007bff;
+        background-color: #0d6efd; /* Updated to Bootstrap 5 primary color */
         color: white;
         padding: 20px 0;
         margin-top: 20px;
@@ -53,29 +53,32 @@
 
       <!-- Navigation menu -->
       <div id="navbar">
-        <nav class="navbar navbar-expand-sm bg-light">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="#">GFree English course </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="../html/index.html">Trang chủ</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Giới thiệu</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Khóa học</a>
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link btn btn-danger text-white btn-sm"
-                href="#myModal"
-                data-toggle="modal"
-                >Đăng ký</a
-              >
-            </li>
-          </ul>
+        <nav class="navbar navbar-expand-sm navbar-light bg-light">
+          <div class="container-fluid">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#">GFree English course </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../html/index.html">Trang chủ</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Giới thiệu</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Khóa học</a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link btn btn-danger text-white btn-sm"
+                  href="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#myModal"
+                  >Đăng ký</a
+                >
+              </li>
+            </ul>
+          </div>
         </nav>
       </div>
 
@@ -109,15 +112,24 @@
       </div>
 
       <!-- Registration modal -->
-      <div class="modal fade" id="myModal">
+      <div
+        class="modal fade"
+        id="myModal"
+        tabindex="-1"
+        aria-labelledby="modalLabel"
+        aria-hidden="true"
+      >
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <!-- Modal header -->
             <div class="modal-header">
-              <h2>THÔNG TIN ĐĂNG KÍ</h2>
-              <button type="button" class="close" data-dismiss="modal">
-                &times;
-              </button>
+              <h2 class="modal-title" id="modalLabel">THÔNG TIN ĐĂNG KÍ</h2>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
             </div>
 
             <!-- Modal body with registration form -->
@@ -125,10 +137,8 @@
               <div class="form-group">
                 <!-- Full name -->
                 <div class="row mt-2">
-                  <div class="col-3 text-right">
-                    <label for="txtName" class="font-weight-normal"
-                      >Họ và tên</label
-                    >
+                  <div class="col-3 text-end">
+                    <label for="txtName" class="fw-normal">Họ và tên</label>
                   </div>
                   <div class="col-9">
                     <input type="text" id="txtName" class="form-control" />
@@ -141,10 +151,8 @@
 
                 <!-- Phone number -->
                 <div class="row mt-2">
-                  <div class="col-3 text-right">
-                    <label for="txtSDT" class="font-weight-normal"
-                      >Số điện thoại</label
-                    >
+                  <div class="col-3 text-end">
+                    <label for="txtSDT" class="fw-normal">Số điện thoại</label>
                   </div>
                   <div class="col-9">
                     <input type="text" id="txtSDT" class="form-control" />
@@ -157,10 +165,8 @@
 
                 <!-- Date of birth -->
                 <div class="row mt-2">
-                  <div class="col-3 text-right">
-                    <label for="txtNgaysinh" class="font-weight-normal"
-                      >Ngày sinh</label
-                    >
+                  <div class="col-3 text-end">
+                    <label for="txtNgaysinh" class="fw-normal">Ngày sinh</label>
                   </div>
                   <div class="col-9">
                     <input type="date" id="txtNgaysinh" class="form-control" />
@@ -173,10 +179,8 @@
 
                 <!-- Email -->
                 <div class="row mt-2">
-                  <div class="col-3 text-right">
-                    <label for="txtEmail" class="font-weight-normal"
-                      >Email</label
-                    >
+                  <div class="col-3 text-end">
+                    <label for="txtEmail" class="fw-normal">Email</label>
                   </div>
                   <div class="col-9">
                     <input
@@ -194,13 +198,11 @@
 
                 <!-- Course selection -->
                 <div class="row mt-2">
-                  <div class="col-3 text-right">
-                    <label for="slKhoahoc" class="font-weight-normal"
-                      >Khóa học</label
-                    >
+                  <div class="col-3 text-end">
+                    <label for="slKhoahoc" class="fw-normal">Khóa học</label>
                   </div>
                   <div class="col-9">
-                    <select id="slKhoahoc" class="form-control">
+                    <select id="slKhoahoc" class="form-select">
                       <option value="3" data-name="Anh văn cơ bản">
                         Anh văn cơ bản
                       </option>
@@ -216,8 +218,8 @@
 
                 <!-- Study duration -->
                 <div class="row mt-2">
-                  <div class="col-3 text-right">
-                    <label for="txtThoiGianHoc" class="font-weight-normal"
+                  <div class="col-3 text-end">
+                    <label for="txtThoiGianHoc" class="fw-normal"
                       >Thời gian học</label
                     >
                   </div>
@@ -233,8 +235,8 @@
 
                 <!-- Study method -->
                 <div class="row mt-2">
-                  <div class="col-3 text-right">
-                    <label for="radioHinhthuc" class="font-weight-normal"
+                  <div class="col-3 text-end">
+                    <label for="radioHinhthuc" class="fw-normal"
                       >Hình thức học</label
                     >
                   </div>
@@ -273,8 +275,8 @@
 
                 <!-- Skills needed -->
                 <div class="row mt-2">
-                  <div class="col-3 text-right">
-                    <label for="chkSkills" class="font-weight-normal"
+                  <div class="col-3 text-end">
+                    <label for="chkSkills" class="fw-normal"
                       >Kỹ năng cần luyện</label
                     >
                   </div>
@@ -325,7 +327,7 @@
             <div class="modal-footer d-flex justify-content-end">
               <button
                 type="button"
-                class="btn btn-success btn-sm mr-2"
+                class="btn btn-success btn-sm me-2"
                 onclick="DangKy()"
               >
                 Đăng kí
@@ -333,7 +335,7 @@
               <button
                 type="button"
                 class="btn btn-danger btn-sm"
-                data-dismiss="modal"
+                data-bs-dismiss="modal"
               >
                 Hủy
               </button>
@@ -359,7 +361,7 @@
 
     <!-- JavaScript libraries -->
     <script src="../js/jquery-3.7.1.min.js"></script>
-    <script src="../js/bootstrap.bundle.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
     <script src="../js/main.js"></script>
   </body>
 </html>
