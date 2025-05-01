@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advanced Form Builder</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-3">
+        <div class="container">
+          <a class="navbar-brand" href="#">Advanced Form Builder</a>
+          <div class="d-flex">
+            <button class="btn btn-light me-2" id="previewBtn">Preview</button>
+            <button class="btn btn-success me-2" id="exportBtn">
+              Export Code
+            </button>
+            <button class="btn btn-warning" id="saveTemplateBtn">
+              Save Template
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <div class="row">
+        <!-- Components sidebar -->
+        <div class="col-md-3">
+          <div class="card h-100">
+            <div
+              class="card-header d-flex justify-content-between align-items-center"
+            >
+              <h5 class="mb-0">Components</h5>
+              <div class="dropdown">
+                <button
+                  class="btn btn-sm btn-outline-secondary dropdown-toggle"
+                  type="button"
+                  id="templateDropdown"
+                  data-bs-toggle="dropdown"
+                >
+                  Templates
+                </button>
+                <ul class="dropdown-menu" id="templateMenu">
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      data-template="registration-form"
+                      >Registration Form</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      data-template="contact-form"
+                      >Contact Form</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      data-template="product-page"
+                      >Product Page</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <ul class="nav nav-tabs" id="componentTabs" role="tablist">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    id="layout-tab"
+                    data-bs-toggle="tab"
+                    href="#layout"
+                    role="tab"
+                    >Layout</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    id="form-tab"
+                    data-bs-toggle="tab"
+                    href="#form"
+                    role="tab"
+                    >Form</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    id="content-tab"
+                    data-bs-toggle="tab"
+                    href="#content"
+                    role="tab"
+                    >Content</a
+                  >
+                </li>
+              </ul>
+              <div class="tab-content p-2" id="componentTabContent">
+                <!-- Layout Components -->
+                <div
+                  class="tab-pane fade show active"
+                  id="layout"
+                  role="tabpanel"
+                >
+                  <div
+                    class="component-item"
+                    draggable="true"
+                    data-type="container"
+                  >
+                    <i class="bi bi-grid"></i> Container
+                  </div>
+                  <div class="component-item" draggable="true" data-type="row">
+                    <i class="bi bi-layout-three-columns"></i> Row
+                  </div>
+                  <div
+                    class="component-item"
+                    draggable="true"
+                    data-type="column"
+                  >
+                    <i class="bi bi-layout-split"></i> Column
+                  </div>
+                  <div
+                    class="component-item"
+                    draggable="true"
+                    data-type="header"
+                  >
+                    <i class="bi bi-type-h1"></i> Header Banner
+                  </div>
+                  <div
+                    class="component-item"
+                    draggable="true"
+                    data-type="navbar"
+                  >
+                    <i class="bi bi-list"></i> Navigation Bar
+                  </div>
+                  <div
+                    class="component-item"
+                    draggable="true"
+                    data-type="footer"
+                  >
+                    <i class="bi bi-layout-text-window-reverse"></i> Footer
+                  </div>
+                </div>
+
+                <!-- Form Components -->
+                <div class="tab-pane fade" id="form" role="tabpanel">
+                  <div class="component-item" draggable="true" data-type="text">
+                    <i class="bi bi-input-cursor-text"></i> Text Input
+                  </div>
+                  <div
+                    class="component-item"
+                    draggable="true"
+                    data-type="number"
+                  >
+                    <i class="bi bi-123"></i> Number Input
+                  </div>
+                  <div
+                    class="component-item"
+                    draggable="true"
+                    data-type="email"
+                  >
+                    <i class="bi bi-envelope"></i> Email Input
+                  </div>
+                  <div class="component-item" draggable="true" data-type="date">
+                    <i class="bi bi-calendar"></i> Date Input
+                  </div>
+                  <div
+                    class="component-item"
+                    draggable="true"
+                    data-type="select"
+                  >
+                    <i class="bi bi-menu-button"></i> Select Dropdown
+                  </div>
+                  <div
+                    class="component-item"
+                    draggable="true"
+                    data-type="radio"
+                  >
+                    <i class="bi bi-record-circle"></i> Radio Group
+                  </div>
+                  <div
+                    class="component-item"
+                    draggable="true"
+                    data-type="checkbox"
+                  >
+                    <i class="bi bi-check-square"></i> Checkbox Group
+                  </div>
+                  <div class="component-item" draggable="true" data-type="form">
+                    <i class="bi bi-file-earmark-text"></i> Form
+                  </div>
+                  <div
+                    class="component-item"
+                    draggable="true"
+                    data-type="button"
+                  >
+                    <i class="bi bi-play-btn"></i> Button
+                  </div>
+                </div>
+
+                <!-- Content Components -->
+                <div class="tab-pane fade" id="content" role="tabpanel">
+                  <div
+                    class="component-item"
+                    draggable="true"
+                    data-type="heading"
+                  >
+                    <i class="bi bi-type"></i> Heading
+                  </div>
+                  <div
+                    class="component-item"
+                    draggable="true"
+                    data-type="paragraph"
+                  >
+                    <i class="bi bi-paragraph"></i> Paragraph
+                  </div>
+                  <div
+                    class="component-item"
+                    draggable="true"
+                    data-type="image"
+                  >
+                    <i class="bi bi-image"></i> Image
+                  </div>
+                  <div
+                    class="component-item"
+                    draggable="true"
+                    data-type="table"
+                  >
+                    <i class="bi bi-table"></i> Table
+                  </div>
+                  <div class="component-item" draggable="true" data-type="list">
+                    <i class="bi bi-list-ul"></i> List
+                  </div>
+                  <div class="component-item" draggable="true" data-type="card">
+                    <i class="bi bi-card-text"></i> Card
+                  </div>
+                  <div
+                    class="component-item"
+                    draggable="true"
+                    data-type="modal"
+                  >
+                    <i class="bi bi-window"></i> Modal
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Building area -->
+        <div class="col-md-6">
+          <div class="card h-100">
+            <div
+              class="card-header d-flex justify-content-between align-items-center"
+            >
+              <h5 class="mb-0">Design Canvas</h5>
+              <div>
+                <button
+                  class="btn btn-sm btn-outline-secondary me-2"
+                  id="undoBtn"
+                >
+                  <i class="bi bi-arrow-counterclockwise"></i> Undo
+                </button>
+                <button class="btn btn-sm btn-outline-danger" id="clearCanvas">
+                  <i class="bi bi-trash"></i> Clear
+                </button>
+              </div>
+            </div>
+            <div class="card-body p-0">
+              <div id="formCanvas" class="form-canvas">
+                <div class="canvas-placeholder">
+                  <i class="bi bi-arrow-left-circle"></i>
+                  <p>Drag components from the left panel</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Properties panel -->
+        <div class="col-md-3">
+          <div class="card h-100">
+            <div
+              class="card-header d-flex justify-content-between align-items-center"
+            >
+              <h5 class="mb-0">Properties</h5>
+              <div class="form-check form-switch">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="showHTMLSwitch"
+                />
+                <label class="form-check-label" for="showHTMLSwitch"
+                  >HTML</label
+                >
+              </div>
+            </div>
+            <div class="card-body">
+              <div id="propertiesPanel" class="properties-panel">
+                <p class="text-muted text-center placeholder-text">
+                  Select a component to edit its properties
+                </p>
+              </div>
+              <div id="htmlPanel" class="html-panel d-none">
+                <textarea
+                  id="htmlEditor"
+                  class="form-control"
+                  rows="10"
+                ></textarea>
+                <button class="btn btn-primary btn-sm mt-2" id="applyHTML">
+                  Apply Changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preview Modal -->
+    <div class="modal fade" id="previewModal" tabindex="-1">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Preview</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body p-0">
+            <div id="previewFrame" class="preview-frame">
+              <iframe
+                id="previewIframe"
+                style="width: 100%; height: 600px; border: none"
+              ></iframe>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Export Modal -->
+    <div class="modal fade" id="exportModal" tabindex="-1">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Export Code</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <ul class="nav nav-tabs" id="exportTabs">
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  id="html-tab"
+                  data-bs-toggle="tab"
+                  href="#htmlCode"
+                  >HTML</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="css-tab"
+                  data-bs-toggle="tab"
+                  href="#cssCode"
+                  >CSS</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="js-tab"
+                  data-bs-toggle="tab"
+                  href="#jsCode"
+                  >JavaScript</a
+                >
+              </li>
+            </ul>
+            <div class="tab-content mt-2">
+              <div class="tab-pane fade show active" id="htmlCode">
+                <pre><code id="exportHTML" class="language-html"></code></pre>
+              </div>
+              <div class="tab-pane fade" id="cssCode">
+                <pre><code id="exportCSS" class="language-css"></code></pre>
+              </div>
+              <div class="tab-pane fade" id="jsCode">
+                <pre><code id="exportJS" class="language-javascript"></code></pre>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="copyCode">
+              Copy Code
+            </button>
+            <button type="button" class="btn btn-success" id="downloadZip">
+              Download ZIP
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Save Template Modal -->
+    <div class="modal fade" id="saveTemplateModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Save as Template</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="templateName" class="form-label">Template Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="templateName"
+                placeholder="My Template"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="templateDescription" class="form-label"
+                >Description (optional)</label
+              >
+              <textarea
+                class="form-control"
+                id="templateDescription"
+                rows="3"
+              ></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="saveTemplate">
+              Save
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap Icons CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <!-- JavaScript -->
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/jszip.min.js"></script>
+    <script src="../js/builder.js"></script>
+  </body>
+</html>

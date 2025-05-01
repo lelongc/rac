@@ -1,0 +1,70 @@
+.components-panel, .properties-panel {
+    background: #f5f5f5;
+    padding: 15px;
+    height: 100vh;
+    border-right: 1px solid #ddd;
+}
+
+.component-list .component {
+    padding: 10px;
+    margin: 5px 0;
+    background: white;
+    border: 1px solid #ddd;
+    cursor: move;
+    border-radius: 4px;
+}
+
+.form-building-area {
+    min-height: 500px;
+    border: 2px dashed #ccc;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.builder-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.form-element {
+    position: relative;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+}
+
+.form-element:hover {
+    border-color: #007bff;
+}
+
+.element-controls {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    display: none;
+}
+
+.form-element:hover .element-controls {
+    display: block;
+}
+
+.drag-over {
+    border: 2px dashed #007bff;
+}
+
+#propertyEditor {
+    padding: 10px;
+}
+
+.property-group {
+    margin-bottom: 15px;
+}
+
+#exportedCode {
+    white-space: pre-wrap;
+    background: #f8f9fa;
+    padding: 15px;
+}
