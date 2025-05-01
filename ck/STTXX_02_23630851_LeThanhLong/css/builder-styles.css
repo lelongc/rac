@@ -1,0 +1,116 @@
+/* Main layout styles */
+body {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+/* Sidebar styles */
+.builder-sidebar {
+    min-height: calc(100vh - 80px);
+}
+
+/* Component palette styles */
+.draggable-component {
+    cursor: move;
+    background-color: #ffffff;
+    transition: background-color 0.2s;
+    user-select: none;
+}
+
+.draggable-component:hover {
+    background-color: #f0f0f0;
+}
+
+/* Canvas area styles */
+.canvas-container {
+    min-height: calc(100vh - 150px);
+    border: 2px dashed #dee2e6;
+    padding: 20px;
+    background-color: #ffffff;
+    overflow-y: auto;
+    position: relative;
+}
+
+.canvas-container.highlight {
+    border-color: #007bff;
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+/* Component in canvas styles */
+.canvas-component {
+    position: relative;
+    margin-bottom: 15px;
+    border: 1px solid transparent;
+    min-height: 50px;
+}
+
+.canvas-component:hover {
+    border: 1px solid #007bff;
+}
+
+.canvas-component.selected {
+    border: 1px solid #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+/* Component actions that appear on hover */
+.component-actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: none;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #dee2e6;
+    border-radius: 3px;
+    padding: 2px;
+}
+
+.canvas-component:hover .component-actions {
+    display: flex;
+}
+
+/* Properties panel styles */
+.component-properties label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+
+/* Styles for different components in the canvas */
+.canvas-header {
+    background-color: #f8f9fa;
+    padding: 10px;
+}
+
+.canvas-nav {
+    background-color: #e9ecef;
+    padding: 10px;
+}
+
+.canvas-table {
+    padding: 10px;
+}
+
+.canvas-modal {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 10px;
+}
+
+.canvas-footer {
+    background-color: #212529;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .builder-sidebar {
+        min-height: auto;
+    }
+    
+    .canvas-container {
+        min-height: 500px;
+    }
+}
