@@ -125,12 +125,18 @@ class PageModelManager {
     );
 
     // Check if component exists and new position is valid
-    if (
-      currentIndex === -1 ||
-      newPosition < 0 ||
-      newPosition >= this.components.length
-    ) {
+    if (currentIndex === -1) {
+      console.error(`Component ${componentId} not found`);
       return false;
+    }
+
+    // Ensure new position is within bounds
+    const maxIndex = this.components.length - 1;
+    newPosition = Math.max(0, Math.min(newPosition, maxIndex));
+
+    // No need to move if position is the same
+    if (currentIndex === newPosition) {
+      return true;
     }
 
     // Remove from current position

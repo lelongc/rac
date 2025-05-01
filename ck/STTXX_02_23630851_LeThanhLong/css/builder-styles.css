@@ -65,6 +65,54 @@ body {
     padding: 2px;
 }
 
+/* Component actions styling */
+.component-actions {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #dee2e6;
+    border-radius: 3px;
+    padding: 2px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.canvas-component:hover .component-actions,
+.canvas-component.selected .component-actions {
+    opacity: 1;
+}
+
+.component-actions .drag-handle {
+    cursor: grab;
+    padding: 0 3px;
+    display: flex;
+    align-items: center;
+    margin-right: 3px;
+}
+
+.canvas-component.being-dragged {
+    opacity: 0.6;
+    border: 2px dashed #007bff;
+}
+
+/* Drop indicator */
+.drop-indicator {
+    height: 4px;
+    background-color: #007bff;
+    margin: 0;
+    animation: pulse 1s infinite;
+    position: relative;
+    z-index: 10;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
 .canvas-component:hover .component-actions {
     display: flex;
 }

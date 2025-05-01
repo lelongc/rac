@@ -118,6 +118,9 @@ class NavigationComponent extends Component {
       { text: "Web Builder", url: "../html/builder.html" },
     ];
     this.includeRegisterButton = true;
+    this.registerButtonText = "Đăng ký";
+    this.registerButtonClass = "btn-danger"; // Color class: btn-danger, btn-primary, etc.
+    this.registerButtonSize = "btn-sm"; // Size class: btn-sm, btn-lg, etc.
     this.styles.backgroundColor = "#f8f9fa";
   }
 
@@ -133,8 +136,9 @@ class NavigationComponent extends Component {
 
     const registerButton = this.includeRegisterButton
       ? `<li class="nav-item">
-                <button class="btn btn-danger text-white btn-sm" href="#" data-bs-toggle="modal" data-bs-target="#myModal">
-                    Đăng ký
+                <button class="btn ${this.registerButtonClass} ${this.registerButtonSize} text-white" 
+                        data-bs-toggle="modal" data-bs-target="#myModal">
+                    ${this.registerButtonText}
                 </button>
             </li>`
       : "";
@@ -154,30 +158,10 @@ class NavigationComponent extends Component {
   getPropertyControls() {
     return `
             <div class="mb-2">
-                <label class="form-label">Navigation Items</label>
-                <div id="nav-items-container" class="border p-2 rounded mb-2">
-                    ${this.items
-                      .map(
-                        (item, index) => `
-                        <div class="row g-1 mb-1 nav-item-row" data-index="${index}">
-                            <div class="col-5">
-                                <input type="text" class="form-control form-control-sm nav-item-text" 
-                                    value="${item.text}" placeholder="Text">
-                            </div>
-                            <div class="col-5">
-                                <input type="text" class="form-control form-control-sm nav-item-url" 
-                                    value="${item.url}" placeholder="URL">
-                            </div>
-                            <div class="col-2">
-                                <button class="btn btn-sm btn-danger remove-nav-item"><i class="bi bi-x"></i></button>
-                            </div>
-                        </div>
-                    `
-                      )
-                      .join("")}
-                </div>
-                <button id="add-nav-item" class="btn btn-sm btn-outline-primary w-100">+ Add Item</button>
+                <label class="form-label">Navigation Properties</label>
+                <p class="form-text small">Use the Navigation Links section below to manage menu items.</p>
             </div>
+            
             <div class="mb-2 form-check">
                 <input type="checkbox" class="form-check-input" id="include-register-btn" 
                     ${

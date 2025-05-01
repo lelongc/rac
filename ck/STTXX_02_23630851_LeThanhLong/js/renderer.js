@@ -85,6 +85,10 @@
         }
       }
     });
+
+    // Setup canvas as drop target for component reordering
+    canvasContainer.addEventListener("dragover", handleCanvasDragOver);
+    canvasContainer.addEventListener("drop", handleCanvasDrop);
   }
 
   /**
@@ -111,6 +115,9 @@
     components.forEach((component) => {
       const renderedComponent = renderComponent(component);
       canvasContainer.appendChild(renderedComponent);
+
+      // Make component draggable for reordering
+      makeComponentDraggable(renderedComponent);
     });
 
     // Restore selection if applicable
@@ -165,6 +172,7 @@
     const actions = document.createElement("div");
     actions.className = "component-actions";
     actions.innerHTML = `
+            <div class="drag-handle" title="Drag to reorder"><i class="bi bi-grip-vertical"></i></div>
             <button class="btn btn-sm btn-light move-up" title="Move Up"><i class="bi bi-arrow-up"></i></button>
             <button class="btn btn-sm btn-light move-down" title="Move Down"><i class="bi bi-arrow-down"></i></button>
             <button class="btn btn-sm btn-danger delete" title="Delete"><i class="bi bi-trash"></i></button>
@@ -356,8 +364,11 @@
       hidePropertyPanel();
     }
 
-    window.pageModelManager.removeComponent(componentId);
-    notifyModelUpdated();
+    // Ask for confirmation before deleting
+    if (confirm("Are you sure you want to delete this component?")) {
+      window.pageModelManager.removeComponent(componentId);
+      notifyModelUpdated();
+    }
   }
 
   /**
@@ -365,6 +376,161 @@
    */
   function notifyModelUpdated() {
     document.dispatchEvent(new CustomEvent("modelUpdated"));
+  }
+
+  /**
+   * Make a component draggable for reordering within the canvas
+   */
+  function makeComponentDraggable(component) {
+    component.setAttribute("draggable", "true");
+
+    // Use the drag handle for initiating drag if present
+    const dragHandle = component.querySelector(".drag-handle");
+    if (dragHandle) {
+      // Make only the drag handle initiate the dragging
+      component.setAttribute("draggable", "false");
+      dragHandle.setAttribute("draggable", "true");
+
+      dragHandle.addEventListener("dragstart", function (e) {
+        e.stopPropagation();
+        // Set the component ID as drag data
+        e.dataTransfer.setData("componentId", component.id);
+        e.dataTransfer.effectAllowed = "move";
+        component.classList.add("being-dragged");
+
+        // Set the component itself as drag image
+        if (e.dataTransfer.setDragImage) {
+          e.dataTransfer.setDragImage(component, 20, 20);
+        }
+      });
+
+      dragHandle.addEventListener("dragend", function () {
+        component.classList.remove("being-dragged");
+      });
+    } else {
+      // If no drag handle, make the whole component draggable
+      component.addEventListener("dragstart", function (e) {
+        // Set the component ID as drag data
+        e.dataTransfer.setData("componentId", component.id);
+        e.dataTransfer.effectAllowed = "move";
+        component.classList.add("being-dragged");
+      });
+
+      component.addEventListener("dragend", function () {
+        component.classList.remove("being-dragged");
+      });
+    }
+  }
+
+  /**
+   * Handle dragover event on canvas for component reordering
+   */
+  function handleCanvasDragOver(e) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+
+    const draggingElement = document.querySelector(
+      ".canvas-component.being-dragged"
+    );
+    if (!draggingElement) return;
+
+    // Find the component being hovered over
+    const targetComponent = getDropTargetComponent(e.clientY);
+    if (!targetComponent) return;
+
+    // Add drop indicators
+    highlightDropTarget(targetComponent, e.clientY);
+  }
+
+  /**
+   * Get the component that would be the drop target based on mouse position
+   */
+  function getDropTargetComponent(clientY) {
+    const components = Array.from(
+      canvasContainer.querySelectorAll(".canvas-component:not(.being-dragged)")
+    );
+
+    for (const component of components) {
+      const rect = component.getBoundingClientRect();
+      if (clientY >= rect.top && clientY <= rect.bottom) {
+        return component;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Highlight a drop target with indicators above or below
+   */
+  function highlightDropTarget(targetComponent, clientY) {
+    // Remove existing drop indicators
+    document.querySelectorAll(".drop-indicator").forEach((el) => el.remove());
+
+    const rect = targetComponent.getBoundingClientRect();
+    const middleY = rect.top + rect.height / 2;
+
+    // Determine if dropping above or below
+    const dropBefore = clientY < middleY;
+
+    // Create and position indicator
+    const indicator = document.createElement("div");
+    indicator.className = "drop-indicator";
+
+    if (dropBefore) {
+      targetComponent.parentNode.insertBefore(indicator, targetComponent);
+    } else {
+      targetComponent.parentNode.insertBefore(
+        indicator,
+        targetComponent.nextSibling
+      );
+    }
+  }
+
+  /**
+   * Handle drop event on canvas for component reordering
+   */
+  function handleCanvasDrop(e) {
+    e.preventDefault();
+
+    // Remove any drop indicators
+    document.querySelectorAll(".drop-indicator").forEach((el) => el.remove());
+
+    // Get the dragged component ID from drag data
+    const draggedComponentId = e.dataTransfer.getData("componentId");
+    if (!draggedComponentId) return;
+
+    // Find the component being dropped onto
+    const targetComponent = getDropTargetComponent(e.clientY);
+    if (!targetComponent) return;
+
+    const rect = targetComponent.getBoundingClientRect();
+    const middleY = rect.top + rect.height / 2;
+
+    // Determine if dropping above or below
+    const dropBefore = e.clientY < middleY;
+
+    // Get the indices for reordering
+    const components = window.pageModelManager.getComponents();
+    const draggedIndex = components.findIndex(
+      (comp) => comp.id === draggedComponentId
+    );
+    const targetIndex = components.findIndex(
+      (comp) => comp.id === targetComponent.id
+    );
+
+    if (draggedIndex === -1 || targetIndex === -1) return;
+
+    // Calculate the new position
+    let newPosition = dropBefore ? targetIndex : targetIndex + 1;
+    // If moving a component down, we need to adjust for its own removal
+    if (draggedIndex < newPosition) {
+      newPosition -= 1;
+    }
+
+    // Move the component in the data model
+    window.pageModelManager.moveComponent(draggedComponentId, newPosition);
+    notifyModelUpdated();
   }
 
   // Initialize when DOM is fully loaded

@@ -139,6 +139,10 @@
     if (component.type === "modal") {
       setupModalFieldEditor(component);
     }
+    // For navigation component, add links management
+    else if (component.type === "nav") {
+      setupNavigationLinksEditor(component);
+    }
   }
 
   /**
@@ -203,6 +207,8 @@
    * Handle clicks in the specific properties container (for buttons)
    */
   function handleSpecificPropertyClick(e) {
+    if (!state.selectedComponent) return;
+
     // Check for special buttons
     if (e.target.closest("#add-form-field-btn")) {
       openFieldEditor();
@@ -220,6 +226,22 @@
         .closest(".delete-form-field-btn")
         .getAttribute("data-field-id");
       deleteField(fieldId);
+    }
+    // Navigation link management
+    else if (e.target.closest("#add-nav-link-btn")) {
+      addNavigationLink(state.selectedComponent);
+    } else if (e.target.closest(".edit-nav-link-btn")) {
+      const index = parseInt(
+        e.target.closest(".edit-nav-link-btn").getAttribute("data-index"),
+        10
+      );
+      editNavigationLink(state.selectedComponent, index);
+    } else if (e.target.closest(".delete-nav-link-btn")) {
+      const index = parseInt(
+        e.target.closest(".delete-nav-link-btn").getAttribute("data-index"),
+        10
+      );
+      deleteNavigationLink(state.selectedComponent, index);
     }
     // Handle other buttons for different component types as needed
   }
@@ -567,6 +589,380 @@
    */
   function notifyModelUpdated() {
     document.dispatchEvent(new CustomEvent("modelUpdated"));
+  }
+
+  // === Navigation Links Management ===
+
+  /**
+   * Set up the navigation links editor interface
+   */
+  function setupNavigationLinksEditor(component) {
+    if (!component || component.type !== "nav") return;
+
+    // Add the "Manage Navigation Links" section to the specific properties
+    const navLinksContainer = document.createElement("div");
+    navLinksContainer.className = "mt-3";
+    navLinksContainer.innerHTML = `
+      <h6 class="border-bottom pb-2">Navigation Links</h6>
+      
+      <div id="nav-links-list" class="mb-2">
+        ${renderNavigationLinksList(component)}
+      </div>
+      
+      <!-- New link form -->
+      <div class="card mb-2">
+        <div class="card-header py-1 px-2 bg-light">
+          <h6 class="mb-0 small">Add New Link</h6>
+        </div>
+        <div class="card-body p-2">
+          <div class="mb-2">
+            <label for="new-link-text" class="form-label small">Link Text</label>
+            <input type="text" class="form-control form-control-sm" id="new-link-text">
+          </div>
+          <div class="mb-2">
+            <label for="new-link-url" class="form-label small">URL</label>
+            <input type="text" class="form-control form-control-sm" id="new-link-url" placeholder="e.g., #, ../html/index.html">
+          </div>
+          <button id="add-nav-link-btn" class="btn btn-sm btn-primary">
+            <i class="bi bi-plus-circle me-1"></i> Add Link
+          </button>
+        </div>
+      </div>
+      
+      <!-- Register button customization -->
+      <div class="card mb-2">
+        <div class="card-header py-1 px-2 bg-light">
+          <h6 class="mb-0 small">Register Button</h6>
+        </div>
+        <div class="card-body p-2">
+          <div class="mb-2 form-check">
+            <input class="form-check-input" type="checkbox" id="include-register-btn" 
+              ${
+                component.includeRegisterButton ? "checked" : ""
+              } data-property="includeRegisterButton">
+            <label class="form-check-label small" for="include-register-btn">Include "Register" Button</label>
+          </div>
+          
+          <div id="register-button-options" ${
+            !component.includeRegisterButton ? 'style="display:none;"' : ""
+          }>
+            <div class="mb-2">
+              <label for="register-btn-text" class="form-label small">Button Text</label>
+              <input type="text" class="form-control form-control-sm" id="register-btn-text"
+                     value="${
+                       component.registerButtonText || "Đăng ký"
+                     }" data-property="registerButtonText">
+            </div>
+            
+            <div class="mb-2">
+              <label for="register-btn-class" class="form-label small">Button Color</label>
+              <select class="form-select form-select-sm" id="register-btn-class" data-property="registerButtonClass">
+                <option value="btn-primary" ${
+                  component.registerButtonClass === "btn-primary"
+                    ? "selected"
+                    : ""
+                }>Primary (Blue)</option>
+                <option value="btn-secondary" ${
+                  component.registerButtonClass === "btn-secondary"
+                    ? "selected"
+                    : ""
+                }>Secondary (Gray)</option>
+                <option value="btn-success" ${
+                  component.registerButtonClass === "btn-success"
+                    ? "selected"
+                    : ""
+                }>Success (Green)</option>
+                <option value="btn-danger" ${
+                  component.registerButtonClass === "btn-danger"
+                    ? "selected"
+                    : ""
+                }>Danger (Red)</option>
+                <option value="btn-warning" ${
+                  component.registerButtonClass === "btn-warning"
+                    ? "selected"
+                    : ""
+                }>Warning (Yellow)</option>
+                <option value="btn-info" ${
+                  component.registerButtonClass === "btn-info" ? "selected" : ""
+                }>Info (Cyan)</option>
+              </select>
+            </div>
+            
+            <div class="mb-2">
+              <label for="register-btn-size" class="form-label small">Button Size</label>
+              <select class="form-select form-select-sm" id="register-btn-size" data-property="registerButtonSize">
+                <option value="" ${
+                  component.registerButtonSize === "" ? "selected" : ""
+                }>Default</option>
+                <option value="btn-sm" ${
+                  component.registerButtonSize === "btn-sm" ? "selected" : ""
+                }>Small</option>
+                <option value="btn-lg" ${
+                  component.registerButtonSize === "btn-lg" ? "selected" : ""
+                }>Large</option>
+              </select>
+            </div>
+            
+            <div class="mt-2">
+              <span class="small">Preview:</span>
+              <div class="border rounded p-2 mt-1 text-center">
+                <button class="btn ${component.registerButtonClass} ${
+      component.registerButtonSize
+    } preview-register-btn">
+                  ${component.registerButtonText || "Đăng ký"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    elements.specificPropsContainer.appendChild(navLinksContainer);
+
+    // Add event listener for Add Link button
+    const addLinkBtn = navLinksContainer.querySelector("#add-nav-link-btn");
+    addLinkBtn.addEventListener("click", function () {
+      addNavigationLink(component);
+    });
+
+    // Toggle register button options based on checkbox
+    const includeRegisterBtn = navLinksContainer.querySelector(
+      "#include-register-btn"
+    );
+    const registerButtonOptions = navLinksContainer.querySelector(
+      "#register-button-options"
+    );
+
+    includeRegisterBtn.addEventListener("change", function () {
+      registerButtonOptions.style.display = this.checked ? "block" : "none";
+    });
+
+    // Update preview when button properties change
+    const registerBtnText =
+      navLinksContainer.querySelector("#register-btn-text");
+    const registerBtnClass = navLinksContainer.querySelector(
+      "#register-btn-class"
+    );
+    const registerBtnSize =
+      navLinksContainer.querySelector("#register-btn-size");
+    const previewButton = navLinksContainer.querySelector(
+      ".preview-register-btn"
+    );
+
+    const updateButtonPreview = () => {
+      previewButton.textContent = registerBtnText.value;
+
+      // Reset classes and add the new ones
+      previewButton.className = `btn ${registerBtnClass.value} ${registerBtnSize.value}`;
+    };
+
+    registerBtnText.addEventListener("input", updateButtonPreview);
+    registerBtnClass.addEventListener("change", updateButtonPreview);
+    registerBtnSize.addEventListener("change", updateButtonPreview);
+  }
+
+  /**
+   * Render the list of navigation links
+   */
+  function renderNavigationLinksList(component) {
+    if (!component.items || component.items.length === 0) {
+      return '<p class="text-muted small">No navigation links defined</p>';
+    }
+
+    return `
+      <div class="list-group">
+        ${component.items
+          .map(
+            (link, index) => `
+          <div class="list-group-item p-2">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="fw-bold small">${link.text || "Untitled"}</span>
+              <div>
+                <button class="btn btn-sm btn-outline-primary edit-nav-link-btn" 
+                  data-index="${index}" title="Edit">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger delete-nav-link-btn" 
+                  data-index="${index}" title="Delete">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </div>
+            <div class="small text-muted">${link.url || "#"}</div>
+            ${
+              index === 0
+                ? `<div class="small mt-1 bg-light p-1 rounded">
+                <i class="bi bi-info-circle"></i> First item is usually your brand/site name
+               </div>`
+                : ""
+            }
+          </div>
+        `
+          )
+          .join("")}
+      </div>
+    `;
+  }
+
+  /**
+   * Add a new navigation link to the component
+   */
+  function addNavigationLink(component) {
+    // Get values from the form inputs
+    const textInput = document.getElementById("new-link-text");
+    const urlInput = document.getElementById("new-link-url");
+
+    const text = textInput.value.trim();
+    const url = urlInput.value.trim();
+
+    // Basic validation
+    if (!text) {
+      alert("Please enter link text");
+      textInput.focus();
+      return;
+    }
+
+    // Make a copy of current items and add the new link
+    const items = [...(component.items || [])];
+    items.push({ text, url: url || "#" });
+
+    // Update the component in the model
+    window.pageModelManager.updateComponent(component.id, { items });
+
+    // Clear the form
+    textInput.value = "";
+    urlInput.value = "";
+
+    // Update the links list
+    document.getElementById("nav-links-list").innerHTML =
+      renderNavigationLinksList(component);
+
+    // Notify model updated
+    notifyModelUpdated();
+  }
+
+  /**
+   * Edit a navigation link
+   */
+  function editNavigationLink(component, index) {
+    if (!component || !component.items || index >= component.items.length)
+      return;
+
+    const link = component.items[index];
+
+    // Create a simple modal dialog for editing
+    const modalId = "edit-link-modal";
+    let modal = document.getElementById(modalId);
+
+    // Create modal if it doesn't exist
+    if (!modal) {
+      modal = document.createElement("div");
+      modal.id = modalId;
+      modal.className = "modal fade";
+      modal.setAttribute("tabindex", "-1");
+      modal.innerHTML = `
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edit Navigation Link</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="edit-link-text" class="form-label">Link Text</label>
+                <input type="text" class="form-control" id="edit-link-text">
+              </div>
+              <div class="mb-3">
+                <label for="edit-link-url" class="form-label">URL</label>
+                <input type="text" class="form-control" id="edit-link-url">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary" id="save-link-changes-btn">Save Changes</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+
+      // Use Bootstrap's Modal API
+      modal = new bootstrap.Modal(modal);
+    }
+
+    // Set current values
+    document.getElementById("edit-link-text").value = link.text || "";
+    document.getElementById("edit-link-url").value = link.url || "#";
+
+    // Show the modal
+    modal.show();
+
+    // Handle save button click
+    const saveBtn = document.getElementById("save-link-changes-btn");
+
+    // Remove previous event listener if exists
+    const newSaveBtn = saveBtn.cloneNode(true);
+    saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
+
+    // Add new event listener
+    newSaveBtn.addEventListener("click", function () {
+      const text = document.getElementById("edit-link-text").value.trim();
+      const url = document.getElementById("edit-link-url").value.trim();
+
+      if (!text) {
+        alert("Link text cannot be empty");
+        return;
+      }
+
+      // Update the link
+      const items = [...component.items];
+      items[index] = { text, url: url || "#" };
+
+      // Update the component in the model
+      window.pageModelManager.updateComponent(component.id, { items });
+
+      // Update the links list
+      document.getElementById("nav-links-list").innerHTML =
+        renderNavigationLinksList(component);
+
+      // Notify model updated
+      notifyModelUpdated();
+
+      // Hide the modal
+      modal.hide();
+    });
+  }
+
+  /**
+   * Delete a navigation link
+   */
+  function deleteNavigationLink(component, index) {
+    if (!component || !component.items || index >= component.items.length)
+      return;
+
+    // Confirmation
+    if (
+      !confirm(
+        `Are you sure you want to delete the link "${component.items[index].text}"?`
+      )
+    ) {
+      return;
+    }
+
+    // Make a copy of items and remove the link
+    const items = [...component.items];
+    items.splice(index, 1);
+
+    // Update the component in the model
+    window.pageModelManager.updateComponent(component.id, { items });
+
+    // Update the links list
+    document.getElementById("nav-links-list").innerHTML =
+      renderNavigationLinksList(component);
+
+    // Notify model updated
+    notifyModelUpdated();
   }
 
   // Initialize when DOM is fully loaded

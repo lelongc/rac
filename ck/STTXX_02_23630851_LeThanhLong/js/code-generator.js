@@ -103,7 +103,7 @@ const CodeGenerator = (function () {
    * @returns {string} HTML code
    */
   function generateNavHTML(component) {
-    // Generate nav items HTML
+    // Generate nav items HTML from the items array
     const navItems = component.items
       .map(
         (item) =>
@@ -113,11 +113,14 @@ const CodeGenerator = (function () {
       )
       .join("\n");
 
-    // Add register button if needed
+    // Add register button if needed, with customized properties
     const registerButton = component.includeRegisterButton
       ? `            <li class="nav-item">
-                <button class="btn btn-danger text-white btn-sm" href="#" data-bs-toggle="modal" data-bs-target="#myModal">
-                    Đăng ký
+                <button class="btn ${
+                  component.registerButtonClass || "btn-danger"
+                } ${component.registerButtonSize || "btn-sm"} text-white" 
+                        data-bs-toggle="modal" data-bs-target="#myModal">
+                    ${component.registerButtonText || "Đăng ký"}
                 </button>
             </li>`
       : "";

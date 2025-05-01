@@ -229,8 +229,16 @@
     // Remove highlight class
     this.classList.remove("highlight");
 
+    // Check if this is a component reordering (internal drag)
+    const componentId = e.dataTransfer.getData("componentId");
+    if (componentId) {
+      // This is handled by the renderer's component reordering logic
+      return;
+    }
+
     // Get the component type from the drag data
     const componentType = e.dataTransfer.getData("text/plain");
+    if (!componentType) return;
 
     // Determine drop position (for now, just append to the end)
     const position = null; // This will append to the end
