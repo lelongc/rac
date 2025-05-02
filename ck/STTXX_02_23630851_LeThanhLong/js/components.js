@@ -563,95 +563,120 @@ class ImageTableLayoutComponent extends Component {
 
   getPropertyControls() {
     return `
-        <div class="mb-2">
-            <label for="prop-image-url" class="form-label">Image URL</label>
-            <input type="text" class="form-control form-control-sm" id="prop-image-url" 
-                value="${this.image.url}" data-property="image.url">
-        </div>
-        
-        <div class="mb-2">
-            <label for="prop-image-alt" class="form-label">Image Alt Text</label>
-            <input type="text" class="form-control form-control-sm" id="prop-image-alt" 
-                value="${this.image.altText}" data-property="image.altText">
-        </div>
-        
-        <div class="mb-2">
-            <label for="prop-image-width" class="form-label">Image Size</label>
-            <select class="form-select form-select-sm" id="prop-image-width" data-property="image.width">
-                <option value="small" ${
-                  this.image.width === "small" ? "selected" : ""
-                }>Small (50%)</option>
-                <option value="medium" ${
-                  this.image.width === "medium" ? "selected" : ""
-                }>Medium (75%)</option>
-                <option value="large" ${
-                  this.image.width === "large" ? "selected" : ""
-                }>Large (100%)</option>
-                <option value="200" ${
-                  this.image.width === "200" ? "selected" : ""
-                }>Custom: 200px</option>
-                <option value="300" ${
-                  this.image.width === "300" ? "selected" : ""
-                }>Custom: 300px</option>
-            </select>
+        <div class="mb-3">
+            <h6 class="border-bottom pb-2">Image Properties</h6>
+            <div class="mb-2">
+                <label for="prop-image-url" class="form-label">Image URL</label>
+                <input type="text" class="form-control form-control-sm" id="prop-image-url" 
+                    value="${this.image.url}" data-property="image.url">
+            </div>
+            
+            <div class="mb-2">
+                <label for="prop-image-alt" class="form-label">Image Alt Text</label>
+                <input type="text" class="form-control form-control-sm" id="prop-image-alt" 
+                    value="${this.image.altText}" data-property="image.altText">
+            </div>
+            
+            <div class="mb-2">
+                <label for="prop-image-width" class="form-label">Image Size</label>
+                <select class="form-select form-select-sm" id="prop-image-width" data-property="image.width">
+                    <option value="small" ${
+                      this.image.width === "small" ? "selected" : ""
+                    }>Small (50%)</option>
+                    <option value="medium" ${
+                      this.image.width === "medium" ? "selected" : ""
+                    }>Medium (75%)</option>
+                    <option value="large" ${
+                      this.image.width === "large" ? "selected" : ""
+                    }>Large (100%)</option>
+                    <option value="200" ${
+                      this.image.width === "200" ? "selected" : ""
+                    }>Custom: 200px</option>
+                    <option value="300" ${
+                      this.image.width === "300" ? "selected" : ""
+                    }>Custom: 300px</option>
+                </select>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label d-block">Image Position</label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="imagePosition" id="pos-left"
+                        value="left" ${
+                          this.image.position === "left" ? "checked" : ""
+                        } data-property="image.position">
+                    <label class="form-check-label" for="pos-left">Left of Table</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="imagePosition" id="pos-right"
+                        value="right" ${
+                          this.image.position === "right" ? "checked" : ""
+                        } data-property="image.position">
+                    <label class="form-check-label" for="pos-right">Right of Table</label>
+                </div>
+            </div>
         </div>
         
         <div class="mb-3">
-            <label class="form-label d-block">Image Position</label>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="imagePosition" id="pos-left"
-                    value="left" ${
-                      this.image.position === "left" ? "checked" : ""
-                    } data-property="image.position">
-                <label class="form-check-label" for="pos-left">Left of Table</label>
+            <h6 class="border-bottom pb-2">Layout Settings</h6>
+            <div class="mb-2">
+                <label class="form-label">Layout Distribution</label>
+                <select class="form-select form-select-sm" id="prop-column-ratio" data-property="columnRatio">
+                    <option value="4-8" ${
+                      this.columnClasses.imageCol === "col-md-4"
+                        ? "selected"
+                        : ""
+                    }>Image: 1/3, Table: 2/3</option>
+                    <option value="5-7" ${
+                      this.columnClasses.imageCol === "col-md-5"
+                        ? "selected"
+                        : ""
+                    }>Image: 5/12, Table: 7/12</option>
+                    <option value="6-6" ${
+                      this.columnClasses.imageCol === "col-md-6"
+                        ? "selected"
+                        : ""
+                    }>Image: 1/2, Table: 1/2</option>
+                    <option value="7-5" ${
+                      this.columnClasses.imageCol === "col-md-7"
+                        ? "selected"
+                        : ""
+                    }>Image: 7/12, Table: 5/12</option>
+                    <option value="8-4" ${
+                      this.columnClasses.imageCol === "col-md-8"
+                        ? "selected"
+                        : ""
+                    }>Image: 2/3, Table: 1/3</option>
+                </select>
             </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="imagePosition" id="pos-right"
-                    value="right" ${
-                      this.image.position === "right" ? "checked" : ""
-                    } data-property="image.position">
-                <label class="form-check-label" for="pos-right">Right of Table</label>
+        </div>
+        
+        <div class="mb-3">
+            <h6 class="border-bottom pb-2">Table Properties</h6>
+            <div class="mb-2">
+                <label for="prop-table-title" class="form-label">Table Title</label>
+                <input type="text" class="form-control form-control-sm" id="prop-table-title" 
+                    value="${this.table.title}" data-property="table.title">
             </div>
-        </div>
-        
-        <div class="mb-2">
-            <label class="form-label">Layout Distribution</label>
-            <select class="form-select form-select-sm" id="prop-column-ratio" data-property="columnRatio">
-                <option value="4-8" ${
-                  this.columnClasses.imageCol === "col-md-4" ? "selected" : ""
-                }>Image: 1/3, Table: 2/3</option>
-                <option value="5-7" ${
-                  this.columnClasses.imageCol === "col-md-5" ? "selected" : ""
-                }>Image: 5/12, Table: 7/12</option>
-                <option value="6-6" ${
-                  this.columnClasses.imageCol === "col-md-6" ? "selected" : ""
-                }>Image: 1/2, Table: 1/2</option>
-                <option value="7-5" ${
-                  this.columnClasses.imageCol === "col-md-7" ? "selected" : ""
-                }>Image: 7/12, Table: 5/12</option>
-                <option value="8-4" ${
-                  this.columnClasses.imageCol === "col-md-8" ? "selected" : ""
-                }>Image: 2/3, Table: 1/3</option>
-            </select>
-        </div>
-        
-        <div class="mb-2">
-            <label for="prop-table-title" class="form-label">Table Title</label>
-            <input type="text" class="form-control form-control-sm" id="prop-table-title" 
-                value="${this.table.title}" data-property="table.title">
-        </div>
-        
-        <div class="mb-2 form-check">
-            <input class="form-check-input" type="checkbox" id="show-table-border" 
-                ${
-                  this.table.showBorder ? "checked" : ""
-                } data-property="table.showBorder">
-            <label class="form-check-label" for="show-table-border">Show Table Border</label>
-        </div>
-        
-        <div class="mb-2">
-            <label class="form-label">Table Columns</label>
-            <p class="form-text small">Use the Table Columns section below to manage columns.</p>
+            
+            <div class="mb-2">
+                <label for="prop-table-id" class="form-label">Table ID</label>
+                <input type="text" class="form-control form-control-sm" id="prop-table-id" 
+                    value="${this.table.tableId}" data-property="table.tableId">
+            </div>
+            
+            <div class="mb-2 form-check">
+                <input class="form-check-input" type="checkbox" id="show-table-border" 
+                    ${
+                      this.table.showBorder ? "checked" : ""
+                    } data-property="table.showBorder">
+                <label class="form-check-label" for="show-table-border">Show Table Border</label>
+            </div>
+            
+            <div class="mb-2">
+                <label class="form-label">Table Columns</label>
+                <p class="form-text small">Use the Table Columns section below to manage columns.</p>
+            </div>
         </div>
     `;
   }
@@ -807,7 +832,7 @@ class NavTableLayoutComponent extends Component {
   getPropertyControls() {
     return `
         <div class="mb-3">
-            <h6 class="border-bottom pb-2">Navigation Settings</h6>
+            <h6 class="border-bottom pb-2">Navigation Properties</h6>
             <div class="mb-2 form-check">
                 <input type="checkbox" class="form-check-input" id="include-register-btn" 
                     ${
@@ -822,6 +847,63 @@ class NavTableLayoutComponent extends Component {
                     value="${
                       this.navigation.registerButtonText
                     }" data-property="navigation.registerButtonText">
+            </div>
+            
+            <div class="mb-2">
+                <label for="register-btn-class" class="form-label">Button Color</label>
+                <select class="form-select form-select-sm" id="register-btn-class" data-property="navigation.registerButtonClass">
+                    <option value="btn-primary" ${
+                      this.navigation.registerButtonClass === "btn-primary"
+                        ? "selected"
+                        : ""
+                    }>Primary (Blue)</option>
+                    <option value="btn-secondary" ${
+                      this.navigation.registerButtonClass === "btn-secondary"
+                        ? "selected"
+                        : ""
+                    }>Secondary (Gray)</option>
+                    <option value="btn-success" ${
+                      this.navigation.registerButtonClass === "btn-success"
+                        ? "selected"
+                        : ""
+                    }>Success (Green)</option>
+                    <option value="btn-danger" ${
+                      this.navigation.registerButtonClass === "btn-danger"
+                        ? "selected"
+                        : ""
+                    }>Danger (Red)</option>
+                    <option value="btn-warning" ${
+                      this.navigation.registerButtonClass === "btn-warning"
+                        ? "selected"
+                        : ""
+                    }>Warning (Yellow)</option>
+                    <option value="btn-info" ${
+                      this.navigation.registerButtonClass === "btn-info"
+                        ? "selected"
+                        : ""
+                    }>Info (Cyan)</option>
+                </select>
+            </div>
+            
+            <div class="mb-2">
+                <label for="register-btn-size" class="form-label">Button Size</label>
+                <select class="form-select form-select-sm" id="register-btn-size" data-property="navigation.registerButtonSize">
+                    <option value="" ${
+                      this.navigation.registerButtonSize === ""
+                        ? "selected"
+                        : ""
+                    }>Default</option>
+                    <option value="btn-sm" ${
+                      this.navigation.registerButtonSize === "btn-sm"
+                        ? "selected"
+                        : ""
+                    }>Small</option>
+                    <option value="btn-lg" ${
+                      this.navigation.registerButtonSize === "btn-lg"
+                        ? "selected"
+                        : ""
+                    }>Large</option>
+                </select>
             </div>
             
             <div class="mb-3">
@@ -841,16 +923,15 @@ class NavTableLayoutComponent extends Component {
                     <label class="form-check-label" for="nav-right">Right of Table</label>
                 </div>
             </div>
+            
+            <div class="mb-2">
+                <label class="form-label">Navigation Links</label>
+                <p class="form-text small">Use the Navigation Links section below to manage menu items.</p>
+            </div>
         </div>
 
         <div class="mb-3">
-            <h6 class="border-bottom pb-2">Table Settings</h6>
-            <div class="mb-2">
-                <label for="prop-table-title" class="form-label">Table Title</label>
-                <input type="text" class="form-control form-control-sm" id="prop-table-title" 
-                    value="${this.table.title}" data-property="table.title">
-            </div>
-            
+            <h6 class="border-bottom pb-2">Layout Settings</h6>
             <div class="mb-2">
                 <label class="form-label">Layout Distribution</label>
                 <select class="form-select form-select-sm" id="prop-column-ratio" data-property="columnRatio">
@@ -865,7 +946,22 @@ class NavTableLayoutComponent extends Component {
                     }>Nav: 5/12, Table: 7/12</option>
                 </select>
             </div>
+        </div>
 
+        <div class="mb-3">
+            <h6 class="border-bottom pb-2">Table Properties</h6>
+            <div class="mb-2">
+                <label for="prop-table-title" class="form-label">Table Title</label>
+                <input type="text" class="form-control form-control-sm" id="prop-table-title" 
+                    value="${this.table.title}" data-property="table.title">
+            </div>
+            
+            <div class="mb-2">
+                <label for="prop-table-id" class="form-label">Table ID</label>
+                <input type="text" class="form-control form-control-sm" id="prop-table-id" 
+                    value="${this.table.tableId}" data-property="table.tableId">
+            </div>
+            
             <div class="mb-2 form-check">
                 <input class="form-check-input" type="checkbox" id="show-table-border" 
                     ${
@@ -873,10 +969,10 @@ class NavTableLayoutComponent extends Component {
                     } data-property="table.showBorder">
                 <label class="form-check-label" for="show-table-border">Show Table Border</label>
             </div>
-
+            
             <div class="mb-2">
-                <label class="form-label">Menu and Table Content</label>
-                <p class="form-text small">Use the Navigation and Table sections below to manage items and columns.</p>
+                <label class="form-label">Table Columns</label>
+                <p class="form-text small">Use the Table Columns section below to manage columns.</p>
             </div>
         </div>
     `;

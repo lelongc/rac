@@ -352,3 +352,35 @@ body {
 .layout-preview .w-33 { width: 33.33% !important; }
 .layout-preview .w-40 { width: 40% !important; }
 .layout-preview .w-50 { width: 50% !important; }
+
+/* Reset Button Styling */
+.canvas-reset-button {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 2000;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  opacity: 1;
+  transition: transform 0.2s;
+  padding: 8px 15px;
+  font-weight: bold;
+  border: 2px solid #c82333;
+}
+
+.canvas-reset-button:hover {
+  transform: scale(1.05);
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+/* Make sure the canvas container has a minimum height to ensure visibility of the reset button */
+.canvas-container {
+  position: relative;
+  min-height: 200px;
+}
+
+/* Style for the canvas when it's empty */
+.canvas-container {
+  position: relative;
+  min-height: 200px;
+}

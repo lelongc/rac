@@ -23,11 +23,67 @@
       return;
     }
 
+    // Add reset button to the canvas
+    addResetButton();
+
     // Set up event listeners
     setupEventListeners();
 
     // Initial rendering
     render();
+  }
+
+  /**
+   * Add reset button to the canvas container
+   */
+  function addResetButton() {
+    const resetButton = document.createElement("button");
+    resetButton.className = "canvas-reset-button btn btn-danger";
+    resetButton.innerHTML =
+      '<i class="bi bi-trash-fill me-1"></i> Clear Canvas';
+    resetButton.title = "Clear canvas and remove all components";
+
+    resetButton.addEventListener("click", function () {
+      // Ask for confirmation before resetting
+      if (
+        confirm(
+          "Are you sure you want to COMPLETELY CLEAR the canvas? All components will be removed."
+        )
+      ) {
+        // Clear the page model
+        window.pageModelManager.clearModel();
+
+        // Clear localStorage to remove any saved data
+        const STORAGE_KEY = "gfree-builder-model";
+        localStorage.removeItem(STORAGE_KEY);
+
+        // Reset selected component
+        selectedComponentId = null;
+        hidePropertyPanel();
+
+        // Clear canvas container
+        canvasContainer.innerHTML = "";
+
+        // Re-add the dropzone message
+        const message = createDropzoneMessage();
+        canvasContainer.appendChild(message);
+
+        // Make sure to add the reset button back
+        canvasContainer.insertAdjacentElement("afterbegin", resetButton);
+
+        // Force redraw of canvas
+        render();
+
+        // Notify that the model has been updated
+        notifyModelUpdated();
+
+        // Show success message
+        alert("Canvas has been completely cleared!");
+      }
+    });
+
+    // Add to document body to ensure it's always visible regardless of canvas state
+    document.body.appendChild(resetButton);
   }
 
   /**

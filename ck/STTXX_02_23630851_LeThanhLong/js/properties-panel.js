@@ -2033,39 +2033,16 @@
         <div class="d-flex align-items-center ${
           component.image.position === "left" ? "" : "flex-row-reverse"
         }">
-          <div class="${
-            component.columnClasses.imageCol === "col-md-4"
-              ? "w-25"
-              : component.columnClasses.imageCol === "col-md-5"
-              ? "w-50"
-              : component.columnClasses.imageCol === "col-md-6"
-              ? "w-50"
-              : component.columnClasses.imageCol === "col-md-7"
-              ? "w-75"
-              : component.columnClasses.imageCol === "col-md-8"
-              ? "w-75"
-              : "w-50"
-          } 
-                      p-2 text-center bg-light">
+          <div class="${getImageColumnClass(
+            component
+          )} p-2 text-center bg-light">
             <div class="small">Image</div>
             <i class="bi bi-image fs-1"></i>
           </div>
-          <div class="${
-            component.columnClasses.tableCol === "col-md-4"
-              ? "w-25"
-              : component.columnClasses.tableCol === "col-md-5"
-              ? "w-50"
-              : component.columnClasses.tableCol === "col-md-6"
-              ? "w-50"
-              : component.columnClasses.tableCol === "col-md-7"
-              ? "w-75"
-              : component.columnClasses.tableCol === "col-md-8"
-              ? "w-75"
-              : "w-50"
-          } 
-                      p-2 ms-2 bg-light">
+          <div class="${getTableColumnClass(component)} p-2 ms-2 bg-light">
             <div class="small">Table</div>
             <i class="bi bi-table"></i>
+            <div class="small mt-1">${component.table.title}</div>
           </div>
         </div>
       </div>
@@ -2080,6 +2057,672 @@
     addColumnBtn.addEventListener("click", function () {
       addColumnToImageTable(component);
     });
+  }
+
+  // Helper function to get appropriate CSS class for image column width
+  function getImageColumnClass(component) {
+    switch (component.columnClasses.imageCol) {
+      case "col-md-4":
+        return "w-25";
+      case "col-md-5":
+        return "w-40";
+      case "col-md-6":
+        return "w-50";
+      case "col-md-7":
+        return "w-60";
+      case "col-md-8":
+        return "w-75";
+      default:
+        return "w-50";
+    }
+  }
+
+  // Helper function to get appropriate CSS class for table column width
+  function getTableColumnClass(component) {
+    switch (component.columnClasses.tableCol) {
+      case "col-md-4":
+        return "w-25";
+      case "col-md-5":
+        return "w-40";
+      case "col-md-6":
+        return "w-50";
+      case "col-md-7":
+        return "w-60";
+      case "col-md-8":
+        return "w-75";
+      default:
+        return "w-50";
+    }
+  }
+
+  /**
+   * Set up the nav table layout editor interface
+   */
+  function setupNavTableLayoutEditor(component) {
+    if (!component || component.type !== "nav-table-layout") return;
+
+    // Add both navigation links and table columns sections
+    const navTableContainer = document.createElement("div");
+    navTableContainer.className = "mt-3";
+
+    // Navigation Links Section
+    navTableContainer.innerHTML = `
+      <h6 class="border-bottom pb-2">Navigation Links</h6>
+      
+      <div id="nav-links-list" class="mb-2">
+        ${renderNavigationLinksList(component, "navigation.items")}
+      </div>
+      
+      <!-- New link form -->
+      <div class="card mb-2">
+        <div class="card-header py-1 px-2 bg-light">
+          <h6 class="mb-0 small">Add New Link</h6>
+        </div>
+        <div class="card-body p-2">
+          <div class="mb-2">
+            <label for="new-link-text" class="form-label small">Link Text</label>
+            <input type="text" class="form-control form-control-sm" id="new-link-text">
+          </div>
+          <div class="mb-2">
+            <label for="new-link-url" class="form-label small">URL</label>
+            <input type="text" class="form-control form-control-sm" id="new-link-url" placeholder="e.g., #, ../html/index.html">
+          </div>
+          <button id="add-nav-link-btn" class="btn btn-sm btn-primary">
+            <i class="bi bi-plus-circle me-1"></i> Add Link
+          </button>
+        </div>
+      </div>
+      
+      <!-- Register button customization -->
+      <div class="card mb-3">
+        <div class="card-header py-1 px-2 bg-light">
+          <h6 class="mb-0 small">Register Button</h6>
+        </div>
+        <div class="card-body p-2">
+          <div class="mb-2 form-check">
+            <input class="form-check-input" type="checkbox" id="include-register-btn" 
+              ${
+                component.navigation.includeRegisterButton ? "checked" : ""
+              } data-property="navigation.includeRegisterButton">
+            <label class="form-check-label small" for="include-register-btn">Include "Register" Button</label>
+          </div>
+          
+          <div id="register-button-options" ${
+            !component.navigation.includeRegisterButton
+              ? 'style="display:none;"'
+              : ""
+          }>
+            <div class="mb-2">
+              <label for="register-btn-text" class="form-label small">Button Text</label>
+              <input type="text" class="form-control form-control-sm" id="register-btn-text"
+                     value="${
+                       component.navigation.registerButtonText || "Đăng ký"
+                     }" data-property="navigation.registerButtonText">
+            </div>
+            
+            <div class="mb-2">
+              <label for="register-btn-class" class="form-label small">Button Color</label>
+              <select class="form-select form-select-sm" id="register-btn-class" data-property="navigation.registerButtonClass">
+                <option value="btn-primary" ${
+                  component.navigation.registerButtonClass === "btn-primary"
+                    ? "selected"
+                    : ""
+                }>Primary (Blue)</option>
+                <option value="btn-secondary" ${
+                  component.navigation.registerButtonClass === "btn-secondary"
+                    ? "selected"
+                    : ""
+                }>Secondary (Gray)</option>
+                <option value="btn-success" ${
+                  component.navigation.registerButtonClass === "btn-success"
+                    ? "selected"
+                    : ""
+                }>Success (Green)</option>
+                <option value="btn-danger" ${
+                  component.navigation.registerButtonClass === "btn-danger"
+                    ? "selected"
+                    : ""
+                }>Danger (Red)</option>
+                <option value="btn-warning" ${
+                  component.navigation.registerButtonClass === "btn-warning"
+                    ? "selected"
+                    : ""
+                }>Warning (Yellow)</option>
+                <option value="btn-info" ${
+                  component.navigation.registerButtonClass === "btn-info"
+                    ? "selected"
+                    : ""
+                }>Info (Cyan)</option>
+              </select>
+            </div>
+            
+            <div class="mb-2">
+              <label for="register-btn-size" class="form-label small">Button Size</label>
+              <select class="form-select form-select-sm" id="register-btn-size" data-property="navigation.registerButtonSize">
+                <option value="" ${
+                  component.navigation.registerButtonSize === ""
+                    ? "selected"
+                    : ""
+                }>Default</option>
+                <option value="btn-sm" ${
+                  component.navigation.registerButtonSize === "btn-sm"
+                    ? "selected"
+                    : ""
+                }>Small</option>
+                <option value="btn-lg" ${
+                  component.navigation.registerButtonSize === "btn-lg"
+                    ? "selected"
+                    : ""
+                }>Large</option>
+              </select>
+            </div>
+            
+            <div class="mt-2">
+              <span class="small">Preview:</span>
+              <div class="border rounded p-2 mt-1 text-center">
+                <button class="btn ${
+                  component.navigation.registerButtonClass
+                } ${
+      component.navigation.registerButtonSize
+    } preview-register-btn">
+                  ${component.navigation.registerButtonText || "Đăng ký"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Table Columns Section -->
+      <h6 class="border-bottom pb-2 mt-4">Table Columns</h6>
+      
+      <div id="table-columns-list" class="mb-2">
+        ${renderTableColumnsListForLayout(component)}
+      </div>
+      
+      <!-- New column form -->
+      <div class="card mb-2">
+        <div class="card-header py-1 px-2 bg-light">
+          <h6 class="mb-0 small">Add New Column</h6>
+        </div>
+        <div class="card-body p-2">
+          <div class="mb-2">
+            <label for="new-column-text" class="form-label small">Column Header</label>
+            <input type="text" class="form-control form-control-sm" id="new-column-text" placeholder="e.g., Name, Email, Date">
+          </div>
+          <button id="add-table-column-btn" class="btn btn-sm btn-primary">
+            <i class="bi bi-plus-circle me-1"></i> Add Column
+          </button>
+        </div>
+      </div>
+      
+      <!-- Layout preview -->
+      <h6 class="border-bottom pb-2 mt-4">Layout Preview</h6>
+      <div class="layout-preview p-2 border rounded mb-3">
+        <div class="d-flex align-items-start ${
+          component.navigation.position === "left" ? "" : "flex-row-reverse"
+        }">
+          <div class="${getNavColumnClass(component)} p-2 border-end bg-light">
+            <div class="small mb-2">Navigation</div>
+            <div class="small">${component.navigation.items
+              .map((item) => item.text)
+              .slice(0, 3)
+              .join("<br>")}</div>
+            <div class="small mt-2">...</div>
+            ${
+              component.navigation.includeRegisterButton
+                ? `<button class="btn btn-sm ${component.navigation.registerButtonClass} mt-2" style="font-size:0.7rem;">
+                 ${component.navigation.registerButtonText}
+               </button>`
+                : ""
+            }
+          </div>
+          <div class="flex-grow-1 p-2 ms-2 bg-light">
+            <div class="small mb-2">Table: ${component.table.title}</div>
+            <div class="table-responsive">
+              <table class="table table-sm ${
+                component.table.showBorder ? "table-bordered" : ""
+              }" style="font-size:0.7rem">
+                <thead>
+                  <tr>
+                    ${component.table.columns
+                      .slice(0, 3)
+                      .map(
+                        (col) =>
+                          `<th>${
+                            typeof col === "string" ? col : col.headerText
+                          }</th>`
+                      )
+                      .join("")}
+                    ${component.table.columns.length > 3 ? "<th>...</th>" : ""}
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    ${component.table.columns
+                      .slice(0, 3)
+                      .map(() => "<td>Data</td>")
+                      .join("")}
+                    ${component.table.columns.length > 3 ? "<td>...</td>" : ""}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    elements.specificPropsContainer.appendChild(navTableContainer);
+
+    // Add event listener for Add Link button
+    const addLinkBtn = navTableContainer.querySelector("#add-nav-link-btn");
+    addLinkBtn.addEventListener("click", function () {
+      addNavigationLinkToLayout(component);
+    });
+
+    // Add event listener for Add Column button
+    const addColumnBtn = navTableContainer.querySelector(
+      "#add-table-column-btn"
+    );
+    addColumnBtn.addEventListener("click", function () {
+      addColumnToLayout(component);
+    });
+
+    // Add event listener for register button checkbox
+    const registerBtn = navTableContainer.querySelector(
+      "#include-register-btn"
+    );
+    registerBtn.addEventListener("change", function () {
+      const options = navTableContainer.querySelector(
+        "#register-button-options"
+      );
+      if (options) {
+        options.style.display = this.checked ? "" : "none";
+      }
+    });
+
+    // Set up event listeners for existing action buttons
+    setupNavTableLayoutEventListeners(navTableContainer, component);
+  }
+
+  // Helper function to get appropriate CSS class for nav column width
+  function getNavColumnClass(component) {
+    switch (component.columnClasses.navCol) {
+      case "col-md-3":
+        return "w-25";
+      case "col-md-4":
+        return "w-33";
+      case "col-md-5":
+        return "w-40";
+      default:
+        return "w-25";
+    }
+  }
+
+  /**
+   * Set up the image table layout editor interface
+   */
+  function setupImageTableLayoutEditor(component) {
+    if (!component || component.type !== "image-table-layout") return;
+
+    // Add the "Manage Image and Table Columns" section to the specific properties
+    const imageTableContainer = document.createElement("div");
+    imageTableContainer.className = "mt-3";
+    imageTableContainer.innerHTML = `
+      <h6 class="border-bottom pb-2">Table Columns</h6>
+      
+      <div id="table-columns-list" class="mb-2">
+        ${renderTableColumnsListForImageTable(component)}
+      </div>
+      
+      <!-- New column form -->
+      <div class="card mb-2">
+        <div class="card-header py-1 px-2 bg-light">
+          <h6 class="mb-0 small">Add New Column</h6>
+        </div>
+        <div class="card-body p-2">
+          <div class="mb-2">
+            <label for="new-column-text" class="form-label small">Column Header</label>
+            <input type="text" class="form-control form-control-sm" id="new-column-text" placeholder="e.g., Name, Email, Date">
+          </div>
+          <button id="add-table-column-btn" class="btn btn-sm btn-primary">
+            <i class="bi bi-plus-circle me-1"></i> Add Column
+          </button>
+        </div>
+      </div>
+      
+      <!-- Layout preview -->
+      <h6 class="border-bottom pb-2 mt-4">Layout Preview</h6>
+      <div class="layout-preview p-2 border rounded mb-3">
+        <div class="d-flex align-items-center ${
+          component.image.position === "left" ? "" : "flex-row-reverse"
+        }">
+          <div class="${getImageColumnClass(
+            component
+          )} p-2 text-center bg-light">
+            <div class="small">Image</div>
+            <i class="bi bi-image fs-1"></i>
+          </div>
+          <div class="${getTableColumnClass(component)} p-2 ms-2 bg-light">
+            <div class="small">Table</div>
+            <i class="bi bi-table"></i>
+            <div class="small mt-1">${component.table.title}</div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    elements.specificPropsContainer.appendChild(imageTableContainer);
+
+    // Add event listener for Add Column button
+    const addColumnBtn = imageTableContainer.querySelector(
+      "#add-table-column-btn"
+    );
+    addColumnBtn.addEventListener("click", function () {
+      addColumnToImageTable(component);
+    });
+  }
+
+  // Helper function to get appropriate CSS class for image column width
+  function getImageColumnClass(component) {
+    switch (component.columnClasses.imageCol) {
+      case "col-md-4":
+        return "w-25";
+      case "col-md-5":
+        return "w-40";
+      case "col-md-6":
+        return "w-50";
+      case "col-md-7":
+        return "w-60";
+      case "col-md-8":
+        return "w-75";
+      default:
+        return "w-50";
+    }
+  }
+
+  // Helper function to get appropriate CSS class for table column width
+  function getTableColumnClass(component) {
+    switch (component.columnClasses.tableCol) {
+      case "col-md-4":
+        return "w-25";
+      case "col-md-5":
+        return "w-40";
+      case "col-md-6":
+        return "w-50";
+      case "col-md-7":
+        return "w-60";
+      case "col-md-8":
+        return "w-75";
+      default:
+        return "w-50";
+    }
+  }
+
+  /**
+   * Set up the nav table layout editor interface
+   */
+  function setupNavTableLayoutEditor(component) {
+    if (!component || component.type !== "nav-table-layout") return;
+
+    // Add both navigation links and table columns sections
+    const navTableContainer = document.createElement("div");
+    navTableContainer.className = "mt-3";
+
+    // Navigation Links Section
+    navTableContainer.innerHTML = `
+      <h6 class="border-bottom pb-2">Navigation Links</h6>
+      
+      <div id="nav-links-list" class="mb-2">
+        ${renderNavigationLinksList(component, "navigation.items")}
+      </div>
+      
+      <!-- New link form -->
+      <div class="card mb-2">
+        <div class="card-header py-1 px-2 bg-light">
+          <h6 class="mb-0 small">Add New Link</h6>
+        </div>
+        <div class="card-body p-2">
+          <div class="mb-2">
+            <label for="new-link-text" class="form-label small">Link Text</label>
+            <input type="text" class="form-control form-control-sm" id="new-link-text">
+          </div>
+          <div class="mb-2">
+            <label for="new-link-url" class="form-label small">URL</label>
+            <input type="text" class="form-control form-control-sm" id="new-link-url" placeholder="e.g., #, ../html/index.html">
+          </div>
+          <button id="add-nav-link-btn" class="btn btn-sm btn-primary">
+            <i class="bi bi-plus-circle me-1"></i> Add Link
+          </button>
+        </div>
+      </div>
+      
+      <!-- Register button customization -->
+      <div class="card mb-3">
+        <div class="card-header py-1 px-2 bg-light">
+          <h6 class="mb-0 small">Register Button</h6>
+        </div>
+        <div class="card-body p-2">
+          <div class="mb-2 form-check">
+            <input class="form-check-input" type="checkbox" id="include-register-btn" 
+              ${
+                component.navigation.includeRegisterButton ? "checked" : ""
+              } data-property="navigation.includeRegisterButton">
+            <label class="form-check-label small" for="include-register-btn">Include "Register" Button</label>
+          </div>
+          
+          <div id="register-button-options" ${
+            !component.navigation.includeRegisterButton
+              ? 'style="display:none;"'
+              : ""
+          }>
+            <div class="mb-2">
+              <label for="register-btn-text" class="form-label small">Button Text</label>
+              <input type="text" class="form-control form-control-sm" id="register-btn-text"
+                     value="${
+                       component.navigation.registerButtonText || "Đăng ký"
+                     }" data-property="navigation.registerButtonText">
+            </div>
+            
+            <div class="mb-2">
+              <label for="register-btn-class" class="form-label small">Button Color</label>
+              <select class="form-select form-select-sm" id="register-btn-class" data-property="navigation.registerButtonClass">
+                <option value="btn-primary" ${
+                  component.navigation.registerButtonClass === "btn-primary"
+                    ? "selected"
+                    : ""
+                }>Primary (Blue)</option>
+                <option value="btn-secondary" ${
+                  component.navigation.registerButtonClass === "btn-secondary"
+                    ? "selected"
+                    : ""
+                }>Secondary (Gray)</option>
+                <option value="btn-success" ${
+                  component.navigation.registerButtonClass === "btn-success"
+                    ? "selected"
+                    : ""
+                }>Success (Green)</option>
+                <option value="btn-danger" ${
+                  component.navigation.registerButtonClass === "btn-danger"
+                    ? "selected"
+                    : ""
+                }>Danger (Red)</option>
+                <option value="btn-warning" ${
+                  component.navigation.registerButtonClass === "btn-warning"
+                    ? "selected"
+                    : ""
+                }>Warning (Yellow)</option>
+                <option value="btn-info" ${
+                  component.navigation.registerButtonClass === "btn-info"
+                    ? "selected"
+                    : ""
+                }>Info (Cyan)</option>
+              </select>
+            </div>
+            
+            <div class="mb-2">
+              <label for="register-btn-size" class="form-label small">Button Size</label>
+              <select class="form-select form-select-sm" id="register-btn-size" data-property="navigation.registerButtonSize">
+                <option value="" ${
+                  component.navigation.registerButtonSize === ""
+                    ? "selected"
+                    : ""
+                }>Default</option>
+                <option value="btn-sm" ${
+                  component.navigation.registerButtonSize === "btn-sm"
+                    ? "selected"
+                    : ""
+                }>Small</option>
+                <option value="btn-lg" ${
+                  component.navigation.registerButtonSize === "btn-lg"
+                    ? "selected"
+                    : ""
+                }>Large</option>
+              </select>
+            </div>
+            
+            <div class="mt-2">
+              <span class="small">Preview:</span>
+              <div class="border rounded p-2 mt-1 text-center">
+                <button class="btn ${
+                  component.navigation.registerButtonClass
+                } ${
+      component.navigation.registerButtonSize
+    } preview-register-btn">
+                  ${component.navigation.registerButtonText || "Đăng ký"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Table Columns Section -->
+      <h6 class="border-bottom pb-2 mt-4">Table Columns</h6>
+      
+      <div id="table-columns-list" class="mb-2">
+        ${renderTableColumnsListForLayout(component)}
+      </div>
+      
+      <!-- New column form -->
+      <div class="card mb-2">
+        <div class="card-header py-1 px-2 bg-light">
+          <h6 class="mb-0 small">Add New Column</h6>
+        </div>
+        <div class="card-body p-2">
+          <div class="mb-2">
+            <label for="new-column-text" class="form-label small">Column Header</label>
+            <input type="text" class="form-control form-control-sm" id="new-column-text" placeholder="e.g., Name, Email, Date">
+          </div>
+          <button id="add-table-column-btn" class="btn btn-sm btn-primary">
+            <i class="bi bi-plus-circle me-1"></i> Add Column
+          </button>
+        </div>
+      </div>
+      
+      <!-- Layout preview -->
+      <h6 class="border-bottom pb-2 mt-4">Layout Preview</h6>
+      <div class="layout-preview p-2 border rounded mb-3">
+        <div class="d-flex align-items-start ${
+          component.navigation.position === "left" ? "" : "flex-row-reverse"
+        }">
+          <div class="${getNavColumnClass(component)} p-2 border-end bg-light">
+            <div class="small mb-2">Navigation</div>
+            <div class="small">${component.navigation.items
+              .map((item) => item.text)
+              .slice(0, 3)
+              .join("<br>")}</div>
+            <div class="small mt-2">...</div>
+            ${
+              component.navigation.includeRegisterButton
+                ? `<button class="btn btn-sm ${component.navigation.registerButtonClass} mt-2" style="font-size:0.7rem;">
+                 ${component.navigation.registerButtonText}
+               </button>`
+                : ""
+            }
+          </div>
+          <div class="flex-grow-1 p-2 ms-2 bg-light">
+            <div class="small mb-2">Table: ${component.table.title}</div>
+            <div class="table-responsive">
+              <table class="table table-sm ${
+                component.table.showBorder ? "table-bordered" : ""
+              }" style="font-size:0.7rem">
+                <thead>
+                  <tr>
+                    ${component.table.columns
+                      .slice(0, 3)
+                      .map(
+                        (col) =>
+                          `<th>${
+                            typeof col === "string" ? col : col.headerText
+                          }</th>`
+                      )
+                      .join("")}
+                    ${component.table.columns.length > 3 ? "<th>...</th>" : ""}
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    ${component.table.columns
+                      .slice(0, 3)
+                      .map(() => "<td>Data</td>")
+                      .join("")}
+                    ${component.table.columns.length > 3 ? "<td>...</td>" : ""}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    elements.specificPropsContainer.appendChild(navTableContainer);
+
+    // Add event listener for Add Link button
+    const addLinkBtn = navTableContainer.querySelector("#add-nav-link-btn");
+    addLinkBtn.addEventListener("click", function () {
+      addNavigationLinkToLayout(component);
+    });
+
+    // Add event listener for Add Column button
+    const addColumnBtn = navTableContainer.querySelector(
+      "#add-table-column-btn"
+    );
+    addColumnBtn.addEventListener("click", function () {
+      addColumnToLayout(component);
+    });
+
+    // Add event listener for register button checkbox
+    const registerBtn = navTableContainer.querySelector(
+      "#include-register-btn"
+    );
+    registerBtn.addEventListener("change", function () {
+      const options = navTableContainer.querySelector(
+        "#register-button-options"
+      );
+      if (options) {
+        options.style.display = this.checked ? "" : "none";
+      }
+    });
+
+    // Set up event listeners for existing action buttons
+    setupNavTableLayoutEventListeners(navTableContainer, component);
+  }
+
+  // Helper function to get appropriate CSS class for nav column width
+  function getNavColumnClass(component) {
+    switch (component.columnClasses.navCol) {
+      case "col-md-3":
+        return "w-25";
+      case "col-md-4":
+        return "w-33";
+      case "col-md-5":
+        return "w-40";
+      default:
+        return "w-25";
+    }
   }
 
   /**
@@ -2336,9 +2979,109 @@
             <label for="new-link-url" class="form-label small">URL</label>
             <input type="text" class="form-control form-control-sm" id="new-link-url" placeholder="e.g., #, ../html/index.html">
           </div>
-          <button id="add-nav-link-btn" class="btn btn-sm btn-primary" data-target="navigation">
+          <button id="add-nav-link-btn" class="btn btn-sm btn-primary">
             <i class="bi bi-plus-circle me-1"></i> Add Link
           </button>
+        </div>
+      </div>
+      
+      <!-- Register button customization -->
+      <div class="card mb-3">
+        <div class="card-header py-1 px-2 bg-light">
+          <h6 class="mb-0 small">Register Button</h6>
+        </div>
+        <div class="card-body p-2">
+          <div class="mb-2 form-check">
+            <input class="form-check-input" type="checkbox" id="include-register-btn" 
+              ${
+                component.navigation.includeRegisterButton ? "checked" : ""
+              } data-property="navigation.includeRegisterButton">
+            <label class="form-check-label small" for="include-register-btn">Include "Register" Button</label>
+          </div>
+          
+          <div id="register-button-options" ${
+            !component.navigation.includeRegisterButton
+              ? 'style="display:none;"'
+              : ""
+          }>
+            <div class="mb-2">
+              <label for="register-btn-text" class="form-label small">Button Text</label>
+              <input type="text" class="form-control form-control-sm" id="register-btn-text"
+                     value="${
+                       component.navigation.registerButtonText || "Đăng ký"
+                     }" data-property="navigation.registerButtonText">
+            </div>
+            
+            <div class="mb-2">
+              <label for="register-btn-class" class="form-label small">Button Color</label>
+              <select class="form-select form-select-sm" id="register-btn-class" data-property="navigation.registerButtonClass">
+                <option value="btn-primary" ${
+                  component.navigation.registerButtonClass === "btn-primary"
+                    ? "selected"
+                    : ""
+                }>Primary (Blue)</option>
+                <option value="btn-secondary" ${
+                  component.navigation.registerButtonClass === "btn-secondary"
+                    ? "selected"
+                    : ""
+                }>Secondary (Gray)</option>
+                <option value="btn-success" ${
+                  component.navigation.registerButtonClass === "btn-success"
+                    ? "selected"
+                    : ""
+                }>Success (Green)</option>
+                <option value="btn-danger" ${
+                  component.navigation.registerButtonClass === "btn-danger"
+                    ? "selected"
+                    : ""
+                }>Danger (Red)</option>
+                <option value="btn-warning" ${
+                  component.navigation.registerButtonClass === "btn-warning"
+                    ? "selected"
+                    : ""
+                }>Warning (Yellow)</option>
+                <option value="btn-info" ${
+                  component.navigation.registerButtonClass === "btn-info"
+                    ? "selected"
+                    : ""
+                }>Info (Cyan)</option>
+              </select>
+            </div>
+            
+            <div class="mb-2">
+              <label for="register-btn-size" class="form-label small">Button Size</label>
+              <select class="form-select form-select-sm" id="register-btn-size" data-property="navigation.registerButtonSize">
+                <option value="" ${
+                  component.navigation.registerButtonSize === ""
+                    ? "selected"
+                    : ""
+                }>Default</option>
+                <option value="btn-sm" ${
+                  component.navigation.registerButtonSize === "btn-sm"
+                    ? "selected"
+                    : ""
+                }>Small</option>
+                <option value="btn-lg" ${
+                  component.navigation.registerButtonSize === "btn-lg"
+                    ? "selected"
+                    : ""
+                }>Large</option>
+              </select>
+            </div>
+            
+            <div class="mt-2">
+              <span class="small">Preview:</span>
+              <div class="border rounded p-2 mt-1 text-center">
+                <button class="btn ${
+                  component.navigation.registerButtonClass
+                } ${
+      component.navigation.registerButtonSize
+    } preview-register-btn">
+                  ${component.navigation.registerButtonText || "Đăng ký"}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       
@@ -2371,16 +3114,7 @@
         <div class="d-flex align-items-start ${
           component.navigation.position === "left" ? "" : "flex-row-reverse"
         }">
-          <div class="${
-            component.columnClasses.navCol === "col-md-3"
-              ? "w-25"
-              : component.columnClasses.navCol === "col-md-4"
-              ? "w-33"
-              : component.columnClasses.navCol === "col-md-5"
-              ? "w-40"
-              : "w-25"
-          } 
-                    p-2 border-end bg-light">
+          <div class="${getNavColumnClass(component)} p-2 border-end bg-light">
             <div class="small mb-2">Navigation</div>
             <div class="small">${component.navigation.items
               .map((item) => item.text)
@@ -2398,7 +3132,9 @@
           <div class="flex-grow-1 p-2 ms-2 bg-light">
             <div class="small mb-2">Table: ${component.table.title}</div>
             <div class="table-responsive">
-              <table class="table table-sm table-bordered" style="font-size:0.7rem">
+              <table class="table table-sm ${
+                component.table.showBorder ? "table-bordered" : ""
+              }" style="font-size:0.7rem">
                 <thead>
                   <tr>
                     ${component.table.columns
@@ -2445,51 +3181,35 @@
       addColumnToLayout(component);
     });
 
+    // Add event listener for register button checkbox
+    const registerBtn = navTableContainer.querySelector(
+      "#include-register-btn"
+    );
+    registerBtn.addEventListener("change", function () {
+      const options = navTableContainer.querySelector(
+        "#register-button-options"
+      );
+      if (options) {
+        options.style.display = this.checked ? "" : "none";
+      }
+    });
+
     // Set up event listeners for existing action buttons
     setupNavTableLayoutEventListeners(navTableContainer, component);
   }
 
-  /**
-   * Set up event listeners for nav-table layout editor
-   */
-  function setupNavTableLayoutEventListeners(container, component) {
-    // Edit link buttons
-    const editLinkBtns = container.querySelectorAll(".edit-nav-link-btn");
-    editLinkBtns.forEach((btn) => {
-      btn.addEventListener("click", function () {
-        const index = parseInt(this.getAttribute("data-index"));
-        editNavigationLinkInLayout(component, index);
-      });
-    });
-
-    // Delete link buttons
-    const deleteLinkBtns = container.querySelectorAll(".delete-nav-link-btn");
-    deleteLinkBtns.forEach((btn) => {
-      btn.addEventListener("click", function () {
-        const index = parseInt(this.getAttribute("data-index"));
-        deleteNavigationLinkFromLayout(component, index);
-      });
-    });
-
-    // Edit column buttons
-    const editColumnBtns = container.querySelectorAll(".edit-table-column-btn");
-    editColumnBtns.forEach((btn) => {
-      btn.addEventListener("click", function () {
-        const index = parseInt(this.getAttribute("data-index"));
-        editColumnInLayout(component, index);
-      });
-    });
-
-    // Delete column buttons
-    const deleteColumnBtns = container.querySelectorAll(
-      ".delete-table-column-btn"
-    );
-    deleteColumnBtns.forEach((btn) => {
-      btn.addEventListener("click", function () {
-        const index = parseInt(this.getAttribute("data-index"));
-        deleteColumnFromLayout(component, index);
-      });
-    });
+  // Helper function to get appropriate CSS class for nav column width
+  function getNavColumnClass(component) {
+    switch (component.columnClasses.navCol) {
+      case "col-md-3":
+        return "w-25";
+      case "col-md-4":
+        return "w-33";
+      case "col-md-5":
+        return "w-40";
+      default:
+        return "w-25";
+    }
   }
 
   /**
@@ -2935,6 +3655,49 @@
 
     // Notify model updated
     notifyModelUpdated();
+  }
+
+  /**
+   * Set up event listeners for nav-table layout editor
+   */
+  function setupNavTableLayoutEventListeners(container, component) {
+    // Edit link buttons
+    const editLinkBtns = container.querySelectorAll(".edit-nav-link-btn");
+    editLinkBtns.forEach((btn) => {
+      btn.addEventListener("click", function () {
+        const index = parseInt(this.getAttribute("data-index"));
+        editNavigationLinkInLayout(component, index);
+      });
+    });
+
+    // Delete link buttons
+    const deleteLinkBtns = container.querySelectorAll(".delete-nav-link-btn");
+    deleteLinkBtns.forEach((btn) => {
+      btn.addEventListener("click", function () {
+        const index = parseInt(this.getAttribute("data-index"));
+        deleteNavigationLinkFromLayout(component, index);
+      });
+    });
+
+    // Edit column buttons
+    const editColumnBtns = container.querySelectorAll(".edit-table-column-btn");
+    editColumnBtns.forEach((btn) => {
+      btn.addEventListener("click", function () {
+        const index = parseInt(this.getAttribute("data-index"));
+        editColumnInLayout(component, index);
+      });
+    });
+
+    // Delete column buttons
+    const deleteColumnBtns = container.querySelectorAll(
+      ".delete-table-column-btn"
+    );
+    deleteColumnBtns.forEach((btn) => {
+      btn.addEventListener("click", function () {
+        const index = parseInt(this.getAttribute("data-index"));
+        deleteColumnFromLayout(component, index);
+      });
+    });
   }
 
   // Initialize when DOM is fully loaded
