@@ -1310,6 +1310,58 @@
         </div>
       </div>
       
+      <!-- Navigation orientation -->
+      <div class="card mb-2">
+        <div class="card-header py-1 px-2 bg-light">
+          <h6 class="mb-0 small">Navigation Display</h6>
+        </div>
+        <div class="card-body p-2">
+          <div class="mb-2">
+            <label for="nav-orientation" class="form-label small">Orientation</label>
+            <select class="form-select form-select-sm" id="nav-orientation" data-property="orientation">
+              <option value="horizontal" ${
+                component.orientation === "horizontal" || !component.orientation
+                  ? "selected"
+                  : ""
+              }>Horizontal (Default)</option>
+              <option value="vertical" ${
+                component.orientation === "vertical" ? "selected" : ""
+              }>Vertical (Sidebar)</option>
+            </select>
+            <div class="form-text small">Vertical mode works well next to table components.</div>
+          </div>
+          
+          <!-- Preview of orientation -->
+          <div class="mt-2 p-2 border rounded">
+            ${
+              component.orientation === "vertical"
+                ? `<div class="d-flex align-items-center justify-content-center" style="height:110px">
+                <div class="bg-light p-2 rounded" style="width:80px; text-align:center">
+                  <div class="mb-1">Link 1</div>
+                  <div class="mb-1">Link 2</div>
+                  <div class="mb-1">Link 3</div>
+                  <div class="mb-1 btn-sm btn-danger" style="font-size:10px">Button</div>
+                </div>
+                <div style="flex:1; height:100px; background:#eee; margin-left:10px; display:flex; align-items:center; justify-content:center">
+                  Table/Content
+                </div>
+              </div>`
+                : `<div class="d-flex flex-column">
+                <div class="bg-light p-2 rounded d-flex align-items-center justify-content-center">
+                  <span class="me-3">Link 1</span>
+                  <span class="me-3">Link 2</span>
+                  <span class="me-3">Link 3</span>
+                  <span class="btn-sm btn-danger" style="font-size:10px">Button</span>
+                </div>
+                <div style="height:80px; background:#eee; margin-top:10px; display:flex; align-items:center; justify-content:center">
+                  Table/Content
+                </div>
+              </div>`
+            }
+          </div>
+        </div>
+      </div>
+      
       <!-- Register button customization -->
       <div class="card mb-2">
         <div class="card-header py-1 px-2 bg-light">
@@ -1401,46 +1453,44 @@
 
     elements.specificPropsContainer.appendChild(navLinksContainer);
 
-    // Add event listener for Add Link button
-    const addLinkBtn = navLinksContainer.querySelector("#add-nav-link-btn");
-    addLinkBtn.addEventListener("click", function () {
-      addNavigationLink(component);
-    });
-
-    // Toggle register button options based on checkbox
-    const includeRegisterBtn = navLinksContainer.querySelector(
-      "#include-register-btn"
-    );
-    const registerButtonOptions = navLinksContainer.querySelector(
-      "#register-button-options"
-    );
-
-    includeRegisterBtn.addEventListener("change", function () {
-      registerButtonOptions.style.display = this.checked ? "block" : "none";
-    });
-
-    // Update preview when button properties change
-    const registerBtnText =
-      navLinksContainer.querySelector("#register-btn-text");
-    const registerBtnClass = navLinksContainer.querySelector(
-      "#register-btn-class"
-    );
-    const registerBtnSize =
-      navLinksContainer.querySelector("#register-btn-size");
-    const previewButton = navLinksContainer.querySelector(
-      ".preview-register-btn"
-    );
-
-    const updateButtonPreview = () => {
-      previewButton.textContent = registerBtnText.value;
-
-      // Reset classes and add the new ones
-      previewButton.className = `btn ${registerBtnClass.value} ${registerBtnSize.value}`;
-    };
-
-    registerBtnText.addEventListener("input", updateButtonPreview);
-    registerBtnClass.addEventListener("change", updateButtonPreview);
-    registerBtnSize.addEventListener("change", updateButtonPreview);
+    // Add live update for orientation preview
+    const orientationSelect =
+      navLinksContainer.querySelector("#nav-orientation");
+    if (orientationSelect) {
+      orientationSelect.addEventListener("change", function () {
+        const previewContainer =
+          this.closest(".card-body").querySelector(".border.rounded");
+        if (previewContainer) {
+          if (this.value === "vertical") {
+            previewContainer.innerHTML = `
+              <div class="d-flex align-items-center justify-content-center" style="height:110px">
+                <div class="bg-light p-2 rounded" style="width:80px; text-align:center">
+                  <div class="mb-1">Link 1</div>
+                  <div class="mb-1">Link 2</div>
+                  <div class="mb-1">Link 3</div>
+                  <div class="mb-1 btn-sm btn-danger" style="font-size:10px">Button</div>
+                </div>
+                <div style="flex:1; height:100px; background:#eee; margin-left:10px; display:flex; align-items:center; justify-content:center">
+                  Table/Content
+                </div>
+              </div>`;
+          } else {
+            previewContainer.innerHTML = `
+              <div class="d-flex flex-column">
+                <div class="bg-light p-2 rounded d-flex align-items-center justify-content-center">
+                  <span class="me-3">Link 1</span>
+                  <span class="me-3">Link 2</span>
+                  <span class="me-3">Link 3</span>
+                  <span class="btn-sm btn-danger" style="font-size:10px">Button</span>
+                </div>
+                <div style="height:80px; background:#eee; margin-top:10px; display:flex; align-items:center; justify-content:center">
+                  Table/Content
+                </div>
+              </div>`;
+          }
+        }
+      });
+    }
   }
 
   /**
@@ -1567,27 +1617,22 @@
         </div>
       `;
       document.body.appendChild(modal);
-
-      // Use Bootstrap's Modal API
-      modal = new bootstrap.Modal(modal);
     }
 
     // Set current values
     document.getElementById("edit-link-text").value = link.text || "";
     document.getElementById("edit-link-url").value = link.url || "#";
 
-    // Show the modal
-    modal.show();
-
-    // Handle save button click
+    // Handle save button click - fixed to work with persistent modals
     const saveBtn = document.getElementById("save-link-changes-btn");
 
-    // Remove previous event listener if exists
-    const newSaveBtn = saveBtn.cloneNode(true);
-    saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
+    // Clean up previous event listeners to prevent duplicates
+    if (saveBtn._clickHandler) {
+      saveBtn.removeEventListener("click", saveBtn._clickHandler);
+    }
 
-    // Add new event listener
-    newSaveBtn.addEventListener("click", function () {
+    // Create a new handler function
+    saveBtn._clickHandler = function () {
       const text = document.getElementById("edit-link-text").value.trim();
       const url = document.getElementById("edit-link-url").value.trim();
 
@@ -1611,8 +1656,15 @@
       notifyModelUpdated();
 
       // Hide the modal
-      modal.hide();
-    });
+      bootstrap.Modal.getInstance(document.getElementById(modalId)).hide();
+    };
+
+    // Add the new event listener
+    saveBtn.addEventListener("click", saveBtn._clickHandler);
+
+    // Show the modal - make sure we use proper Bootstrap API
+    const bsModal = new bootstrap.Modal(document.getElementById(modalId));
+    bsModal.show();
   }
 
   /**
@@ -1823,26 +1875,21 @@
         </div>
       `;
       document.body.appendChild(modal);
-
-      // Use Bootstrap's Modal API
-      modal = new bootstrap.Modal(modal);
     }
 
     // Set current value
     document.getElementById("edit-column-text").value = currentHeaderText;
 
-    // Show the modal
-    modal.show();
-
-    // Handle save button click
+    // Handle save button click - fixed to work with persistent modals
     const saveBtn = document.getElementById("save-column-changes-btn");
 
-    // Remove previous event listener if exists
-    const newSaveBtn = saveBtn.cloneNode(true);
-    saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
+    // Clean up previous event listeners to prevent duplicates
+    if (saveBtn._clickHandler) {
+      saveBtn.removeEventListener("click", saveBtn._clickHandler);
+    }
 
-    // Add new event listener
-    newSaveBtn.addEventListener("click", function () {
+    // Create a new handler function
+    saveBtn._clickHandler = function () {
       const headerText = document
         .getElementById("edit-column-text")
         .value.trim();
@@ -1872,8 +1919,15 @@
       notifyModelUpdated();
 
       // Hide the modal
-      modal.hide();
-    });
+      bootstrap.Modal.getInstance(document.getElementById(modalId)).hide();
+    };
+
+    // Add the new event listener
+    saveBtn.addEventListener("click", saveBtn._clickHandler);
+
+    // Show the modal - make sure we use proper Bootstrap API
+    const bsModal = new bootstrap.Modal(document.getElementById(modalId));
+    bsModal.show();
   }
 
   /**
@@ -1910,8 +1964,10 @@
 
   // Initialize when DOM is fully loaded
   if (document.readyState === "loading") {
+    // Loading hasn't finished yet
     document.addEventListener("DOMContentLoaded", init);
   } else {
+    // `DOMContentLoaded` has already fired
     init();
   }
-})();
+})(); // End of the IIFE

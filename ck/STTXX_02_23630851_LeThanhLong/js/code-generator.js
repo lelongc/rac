@@ -104,14 +104,19 @@ const CodeGenerator = (function () {
    */
   function generateNavHTML(component) {
     // Generate nav items HTML from the items array
-    const navItems = component.items
-      .map(
-        (item) =>
-          `            <li class="nav-item">
-                <a class="nav-link" href="${item.url}">${item.text}</a>
+    const navItems =
+      component.items && component.items.length > 0
+        ? component.items
+            .map(
+              (item) =>
+                `            <li class="nav-item">
+                <a class="nav-link" href="${item.url || "#"}">${
+                  item.text || "Link"
+                }</a>
             </li>`
-      )
-      .join("\n");
+            )
+            .join("\n")
+        : "";
 
     // Add register button if needed, with customized properties
     const registerButton = component.includeRegisterButton
@@ -119,13 +124,33 @@ const CodeGenerator = (function () {
                 <button class="btn ${
                   component.registerButtonClass || "btn-danger"
                 } ${component.registerButtonSize || "btn-sm"} text-white" 
-                        data-bs-toggle="modal" data-bs-target="#myModal">
+                        data-bs-toggle="modal" data-bs-target="#${
+                          component.modalTarget || "myModal"
+                        }">
                     ${component.registerButtonText || "Đăng ký"}
                 </button>
             </li>`
       : "";
 
-    return `
+    // Check orientation and generate appropriate HTML
+    const isVertical = component.orientation === "vertical";
+
+    if (isVertical) {
+      return `
+    <!-- Navigation menu (Vertical) -->
+    <div id="navbar" class="vertical-nav">
+        <nav class="navbar navbar-expand-sm navbar-light flex-column align-items-start">
+            <div class="container-fluid flex-column align-items-start p-2">
+                <ul class="navbar-nav flex-column w-100">
+${navItems}
+${registerButton}
+                </ul>
+            </div>
+        </nav>
+    </div>
+`;
+    } else {
+      return `
     <!-- Navigation menu -->
     <div id="navbar">
         <nav class="navbar navbar-expand-sm navbar-light bg-light">
@@ -138,6 +163,7 @@ ${registerButton}
         </nav>
     </div>
 `;
+    }
   }
 
   /**

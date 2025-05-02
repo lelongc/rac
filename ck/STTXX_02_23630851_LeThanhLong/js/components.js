@@ -121,6 +121,7 @@ class NavigationComponent extends Component {
     this.registerButtonText = "Đăng ký";
     this.registerButtonClass = "btn-danger"; // Color class: btn-danger, btn-primary, etc.
     this.registerButtonSize = "btn-sm"; // Size class: btn-sm, btn-lg, etc.
+    this.orientation = "horizontal"; // New property: horizontal or vertical
     this.styles.backgroundColor = "#f8f9fa";
   }
 
@@ -143,7 +144,20 @@ class NavigationComponent extends Component {
             </li>`
       : "";
 
-    return `
+    // Different template based on orientation
+    if (this.orientation === "vertical") {
+      return `
+            <nav class="navbar navbar-expand-sm navbar-light flex-column align-items-start">
+                <div class="container-fluid flex-column align-items-start p-2">
+                    <ul class="navbar-nav flex-column w-100">
+                        ${navItems}
+                        ${registerButton}
+                    </ul>
+                </div>
+            </nav>
+        `;
+    } else {
+      return `
             <nav class="navbar navbar-expand-sm navbar-light">
                 <div class="container-fluid">
                     <ul class="navbar-nav">
@@ -153,6 +167,7 @@ class NavigationComponent extends Component {
                 </div>
             </nav>
         `;
+    }
   }
 
   getPropertyControls() {
@@ -168,6 +183,19 @@ class NavigationComponent extends Component {
                       this.includeRegisterButton ? "checked" : ""
                     } data-property="includeRegisterButton">
                 <label class="form-check-label" for="include-register-btn">Include Register Button</label>
+            </div>
+            
+            <div class="mb-3">
+                <label for="nav-orientation" class="form-label">Navigation Orientation</label>
+                <select class="form-select form-select-sm" id="nav-orientation" data-property="orientation">
+                    <option value="horizontal" ${
+                      this.orientation === "horizontal" ? "selected" : ""
+                    }>Horizontal (Default)</option>
+                    <option value="vertical" ${
+                      this.orientation === "vertical" ? "selected" : ""
+                    }>Vertical (Sidebar)</option>
+                </select>
+                <div class="form-text small mt-1">Vertical orientation is useful for sidebar navigation next to content.</div>
             </div>
         `;
   }
