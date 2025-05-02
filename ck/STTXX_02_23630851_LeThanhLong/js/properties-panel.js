@@ -143,6 +143,10 @@
     else if (component.type === "nav") {
       setupNavigationLinksEditor(component);
     }
+    // For table component, add columns management
+    else if (component.type === "table") {
+      setupTableColumnsEditor(component);
+    }
   }
 
   /**
@@ -242,6 +246,22 @@
         10
       );
       deleteNavigationLink(state.selectedComponent, index);
+    }
+    // Table column management
+    else if (e.target.closest("#add-table-column-btn")) {
+      addTableColumn(state.selectedComponent);
+    } else if (e.target.closest(".edit-column-btn")) {
+      const index = parseInt(
+        e.target.closest(".edit-column-btn").getAttribute("data-index"),
+        10
+      );
+      editTableColumn(state.selectedComponent, index);
+    } else if (e.target.closest(".delete-column-btn")) {
+      const index = parseInt(
+        e.target.closest(".delete-column-btn").getAttribute("data-index"),
+        10
+      );
+      deleteTableColumn(state.selectedComponent, index);
     }
     // Handle other buttons for different component types as needed
   }
@@ -409,82 +429,316 @@
     const fieldEditor = document.getElementById("field-editor");
     if (!fieldEditor) return;
 
+    // Initialize default values if missing
+    field.labelPosition = field.labelPosition || "left";
+    field.required = field.required !== undefined ? field.required : false;
+    field.placeholder = field.placeholder || "";
+    field.validation = field.validation || {};
+    field.options = field.options || [];
+    field.optionsLayout = field.optionsLayout || "vertical";
+
     fieldEditor.style.display = "block";
     fieldEditor.innerHTML = `
-            <h6 class="mb-2">${field.id ? "Edit Field" : "Add New Field"}</h6>
-            
+      <div class="border-bottom pb-2 mb-3 d-flex justify-content-between align-items-center">
+        <h6 class="mb-0">${field.id ? "Edit Field" : "Add New Field"}</h6>
+        <div>
+          <button id="field-help-btn" class="btn btn-sm btn-outline-secondary me-2" title="Help">
+            <i class="bi bi-question-circle"></i>
+          </button>
+          <button id="field-preview-btn" class="btn btn-sm btn-outline-primary" title="Preview">
+            <i class="bi bi-eye"></i> Preview
+          </button>
+        </div>
+      </div>
+      
+      <ul class="nav nav-tabs mb-3" id="fieldEditorTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="basic-tab" data-bs-toggle="tab" data-bs-target="#basic-pane" 
+            type="button" role="tab" aria-controls="basic-pane" aria-selected="true">Basic</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="validation-tab" data-bs-toggle="tab" data-bs-target="#validation-pane" 
+            type="button" role="tab" aria-controls="validation-pane" aria-selected="false">Validation</button>
+        </li>
+        <li class="nav-item" id="options-tab-item" style="${
+          ["select", "radio", "checkbox"].includes(field.type)
+            ? ""
+            : "display: none;"
+        }">
+          <button class="nav-link" id="options-tab" data-bs-toggle="tab" data-bs-target="#options-pane" 
+            type="button" role="tab" aria-controls="options-pane" aria-selected="false">Options</button>
+        </li>
+      </ul>
+      
+      <div class="tab-content" id="fieldEditorTabContent">
+        <!-- Basic Properties Tab -->
+        <div class="tab-pane fade show active" id="basic-pane" role="tabpanel" aria-labelledby="basic-tab">
+          <div class="mb-2">
+            <label for="field-label" class="form-label small">Label Text</label>
+            <input type="text" class="form-control form-control-sm" id="field-label" 
+                value="${field.label || ""}" data-field-prop="label">
+          </div>
+          
+          <div class="mb-2">
+            <label for="field-id" class="form-label small">Field ID</label>
+            <input type="text" class="form-control form-control-sm" id="field-id" 
+                value="${field.id || ""}" data-field-prop="id">
+            <div class="form-text small">Use descriptive IDs like "txtFullName" or "slGender"</div>
+          </div>
+          
+          <div class="mb-2">
+            <label for="field-type" class="form-label small">Field Type</label>
+            <select class="form-select form-select-sm" id="field-type" data-field-prop="type">
+              <option value="text" ${
+                field.type === "text" ? "selected" : ""
+              }>Text</option>
+              <option value="email" ${
+                field.type === "email" ? "selected" : ""
+              }>Email</option>
+              <option value="number" ${
+                field.type === "number" ? "selected" : ""
+              }>Number</option>
+              <option value="date" ${
+                field.type === "date" ? "selected" : ""
+              }>Date</option>
+              <option value="password" ${
+                field.type === "password" ? "selected" : ""
+              }>Password</option>
+              <option value="textarea" ${
+                field.type === "textarea" ? "selected" : ""
+              }>Text Area</option>
+              <option value="select" ${
+                field.type === "select" ? "selected" : ""
+              }>Select Dropdown</option>
+              <option value="checkbox" ${
+                field.type === "checkbox" ? "selected" : ""
+              }>Checkbox Group</option>
+              <option value="radio" ${
+                field.type === "radio" ? "selected" : ""
+              }>Radio Group</option>
+            </select>
+          </div>
+          
+          <div class="mb-2" id="placeholder-container" ${
+            ["select", "checkbox", "radio"].includes(field.type)
+              ? 'style="display:none;"'
+              : ""
+          }>
+            <label for="field-placeholder" class="form-label small">Placeholder</label>
+            <input type="text" class="form-control form-control-sm" id="field-placeholder" 
+                value="${
+                  field.placeholder || ""
+                }" data-field-prop="placeholder">
+          </div>
+          
+          <div class="mb-2">
+            <label for="field-label-position" class="form-label small">Label Position</label>
+            <select class="form-select form-select-sm" id="field-label-position" data-field-prop="labelPosition">
+              <option value="left" ${
+                field.labelPosition === "left" ? "selected" : ""
+              }>Left of field</option>
+              <option value="above" ${
+                field.labelPosition === "above" ? "selected" : ""
+              }>Above field</option>
+            </select>
+          </div>
+          
+          <div class="mb-2 form-check">
+            <input type="checkbox" class="form-check-input" id="field-required" 
+                ${field.required ? "checked" : ""} data-field-prop="required">
+            <label class="form-check-label small" for="field-required">Required Field</label>
+          </div>
+        </div>
+        
+        <!-- Validation Tab -->
+        <div class="tab-pane fade" id="validation-pane" role="tabpanel" aria-labelledby="validation-tab">
+          <div class="mb-2 form-check">
+            <input type="checkbox" class="form-check-input" id="field-enable-validation" 
+                ${
+                  field.validation.enabled ? "checked" : ""
+                } data-validation-prop="enabled">
+            <label class="form-check-label small" for="field-enable-validation">Enable Validation</label>
+          </div>
+          
+          <div id="validation-options" ${
+            !field.validation.enabled ? 'style="display:none;"' : ""
+          }>
             <div class="mb-2">
-                <label for="field-label" class="form-label small">Label</label>
-                <input type="text" class="form-control form-control-sm" id="field-label" 
-                    value="${field.label || ""}" data-field-prop="label">
+              <label for="validation-regex" class="form-label small">Validation Pattern (Regex)</label>
+              <input type="text" class="form-control form-control-sm" id="validation-regex" 
+                  value="${
+                    field.validation.regex || ""
+                  }" data-validation-prop="regex">
+              <div class="form-text small">Example: ^[A-Z][a-z]* for capitalized words</div>
             </div>
             
             <div class="mb-2">
-                <label for="field-id" class="form-label small">ID</label>
-                <input type="text" class="form-control form-control-sm" id="field-id" 
-                    value="${field.id || ""}" data-field-prop="id">
+              <label for="validation-error-message" class="form-label small">Error Message</label>
+              <input type="text" class="form-control form-control-sm" id="validation-error-message" 
+                  value="${
+                    field.validation.errorMessage || ""
+                  }" data-validation-prop="errorMessage">
             </div>
             
             <div class="mb-2">
-                <label for="field-type" class="form-label small">Field Type</label>
-                <select class="form-select form-select-sm" id="field-type" data-field-prop="type">
-                    <option value="text" ${
-                      field.type === "text" ? "selected" : ""
-                    }>Text</option>
-                    <option value="email" ${
-                      field.type === "email" ? "selected" : ""
-                    }>Email</option>
-                    <option value="number" ${
-                      field.type === "number" ? "selected" : ""
-                    }>Number</option>
-                    <option value="date" ${
-                      field.type === "date" ? "selected" : ""
-                    }>Date</option>
-                    <option value="select" ${
-                      field.type === "select" ? "selected" : ""
-                    }>Select/Dropdown</option>
-                    <option value="checkbox" ${
-                      field.type === "checkbox" ? "selected" : ""
-                    }>Checkbox</option>
-                    <option value="radio" ${
-                      field.type === "radio" ? "selected" : ""
-                    }>Radio</option>
-                </select>
+              <label class="form-label small mb-2">Validation Presets</label>
+              <div class="d-flex flex-wrap gap-1">
+                <button class="btn btn-sm btn-outline-secondary validation-preset" 
+                  data-regex="^[A-Z][a-z]*(\s+[A-Z][a-z]*)+$" 
+                  data-message="Each word must start with uppercase letter">
+                  Name Format
+                </button>
+                <button class="btn btn-sm btn-outline-secondary validation-preset" 
+                  data-regex="^(09|03|08)\d{8}$" 
+                  data-message="Phone must have 10 digits and start with 09, 03 or 08">
+                  VN Phone
+                </button>
+                <button class="btn btn-sm btn-outline-secondary validation-preset" 
+                  data-regex="^\S+@\S+\.\S{2,}$" 
+                  data-message="Please enter a valid email address">
+                  Email
+                </button>
+                <button class="btn btn-sm btn-outline-secondary validation-preset" 
+                  data-regex="^\d+$" 
+                  data-message="Please enter only numbers">
+                  Numbers Only
+                </button>
+              </div>
             </div>
             
-            <div class="mb-2">
-                <label for="field-placeholder" class="form-label small">Placeholder</label>
-                <input type="text" class="form-control form-control-sm" id="field-placeholder" 
+            <div class="row g-2 mb-2" id="number-range-container" style="${
+              field.type === "number" ? "" : "display:none;"
+            }">
+              <div class="col-6">
+                <label for="validation-min-value" class="form-label small">Min Value</label>
+                <input type="number" class="form-control form-control-sm" id="validation-min-value" 
                     value="${
-                      field.placeholder || ""
-                    }" data-field-prop="placeholder">
+                      field.validation.minValue || ""
+                    }" data-validation-prop="minValue">
+              </div>
+              <div class="col-6">
+                <label for="validation-max-value" class="form-label small">Max Value</label>
+                <input type="number" class="form-control form-control-sm" id="validation-max-value" 
+                    value="${
+                      field.validation.maxValue || ""
+                    }" data-validation-prop="maxValue">
+              </div>
             </div>
             
-            <div class="mb-2 form-check">
-                <input type="checkbox" class="form-check-input" id="field-required" 
-                    ${
-                      field.required ? "checked" : ""
-                    } data-field-prop="required">
-                <label class="form-check-label small" for="field-required">Required Field</label>
+            <div class="row g-2 mb-2" id="text-length-container" style="${
+              ["text", "email", "password", "textarea"].includes(field.type)
+                ? ""
+                : "display:none;"
+            }">
+              <div class="col-6">
+                <label for="validation-min-length" class="form-label small">Min Length</label>
+                <input type="number" class="form-control form-control-sm" id="validation-min-length" 
+                    value="${
+                      field.validation.minLength || ""
+                    }" data-validation-prop="minLength">
+              </div>
+              <div class="col-6">
+                <label for="validation-max-length" class="form-label small">Max Length</label>
+                <input type="number" class="form-control form-control-sm" id="validation-max-length" 
+                    value="${
+                      field.validation.maxLength || ""
+                    }" data-validation-prop="maxLength">
+              </div>
             </div>
+          </div>
+        </div>
+        
+        <!-- Options Tab (for select, radio, checkbox) -->
+        <div class="tab-pane fade" id="options-pane" role="tabpanel" aria-labelledby="options-tab">
+          <div class="mb-2">
+            <label class="form-label small d-flex justify-content-between align-items-center">
+              Options List
+              <button id="add-option-btn" class="btn btn-sm btn-primary">
+                <i class="bi bi-plus-circle"></i> Add Option
+              </button>
+            </label>
             
-            <div class="mb-2 form-check">
-                <input type="checkbox" class="form-check-input" id="field-validation" 
-                    ${
-                      field.validation ? "checked" : ""
-                    } data-field-prop="validation">
-                <label class="form-check-label small" for="field-validation">Enable Validation</label>
+            <div id="options-container" class="border rounded p-2 mb-2">
+              ${renderFieldOptions(field)}
             </div>
-            
-            <div class="d-flex justify-content-end mt-3">
-                <button id="cancel-field-editor-btn" class="btn btn-sm btn-outline-secondary me-2">Cancel</button>
-                <button id="save-form-field-btn" class="btn btn-sm btn-primary">Save Field</button>
-            </div>
-        `;
+          </div>
+          
+          <div class="mb-2" id="options-layout-container" style="${
+            ["radio", "checkbox"].includes(field.type) ? "" : "display:none;"
+          }">
+            <label for="options-layout" class="form-label small">Options Layout</label>
+            <select class="form-select form-select-sm" id="options-layout" data-field-prop="optionsLayout">
+              <option value="vertical" ${
+                field.optionsLayout === "vertical" ? "selected" : ""
+              }>Vertical (Stacked)</option>
+              <option value="horizontal" ${
+                field.optionsLayout === "horizontal" ? "selected" : ""
+              }>Horizontal (Inline)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Preview Area -->
+      <div id="field-preview-area" class="mt-3 p-2 border rounded" style="display:none;">
+        <h6 class="border-bottom pb-2 mb-2">Field Preview</h6>
+        <div id="field-preview-content"></div>
+      </div>
+      
+      <div class="d-flex justify-content-end mt-3">
+        <button id="cancel-field-editor-btn" class="btn btn-sm btn-outline-secondary me-2">Cancel</button>
+        <button id="save-form-field-btn" class="btn btn-sm btn-primary">Save Field</button>
+      </div>
+    `;
 
     // Add event listeners for the field editor inputs
-    const inputs = fieldEditor.querySelectorAll("[data-field-prop]");
-    inputs.forEach((input) => {
+    setupFieldEditorEventListeners(fieldEditor, field);
+  }
+
+  /**
+   * Render the options list for select, radio, checkbox fields
+   */
+  function renderFieldOptions(field) {
+    if (
+      !field.options ||
+      !Array.isArray(field.options) ||
+      field.options.length === 0
+    ) {
+      return `<p class="text-muted mb-0 small">No options defined. Click "Add Option" to add some.</p>`;
+    }
+
+    return `
+      <div class="options-list">
+        ${field.options
+          .map(
+            (option, index) => `
+          <div class="option-item d-flex align-items-center mb-1" data-index="${index}">
+            <div class="flex-grow-1 me-1">
+              <div class="input-group input-group-sm">
+                <input type="text" class="form-control option-text" placeholder="Display Text" 
+                  value="${option.text || ""}" aria-label="Option text">
+                <input type="text" class="form-control option-value" placeholder="Value" 
+                  value="${option.value || ""}" aria-label="Option value">
+                <button class="btn btn-outline-danger delete-option-btn" type="button">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `
+          )
+          .join("")}
+      </div>
+    `;
+  }
+
+  /**
+   * Setup event listeners for the field editor
+   */
+  function setupFieldEditorEventListeners(fieldEditor, field) {
+    // Basic input change listeners
+    const basicInputs = fieldEditor.querySelectorAll("[data-field-prop]");
+    basicInputs.forEach((input) => {
       input.addEventListener("change", function () {
         const prop = this.getAttribute("data-field-prop");
         let value;
@@ -495,11 +749,438 @@
           value = this.value;
         }
 
-        if (state.currentEditingField) {
-          state.currentEditingField[prop] = value;
+        if (field) {
+          field[prop] = value;
+
+          // Special handling for type changes
+          if (prop === "type") {
+            // Show/hide placeholder field based on type
+            const placeholderContainer = document.getElementById(
+              "placeholder-container"
+            );
+            placeholderContainer.style.display = [
+              "select",
+              "checkbox",
+              "radio",
+            ].includes(value)
+              ? "none"
+              : "";
+
+            // Show/hide options tab based on type
+            const optionsTabItem = document.getElementById("options-tab-item");
+            optionsTabItem.style.display = [
+              "select",
+              "radio",
+              "checkbox",
+            ].includes(value)
+              ? ""
+              : "none";
+
+            // Show/hide validation fields based on type
+            updateValidationFieldsVisibility(value);
+
+            // Show/hide options layout based on type
+            const optionsLayoutContainer = document.getElementById(
+              "options-layout-container"
+            );
+            if (optionsLayoutContainer) {
+              optionsLayoutContainer.style.display = [
+                "radio",
+                "checkbox",
+              ].includes(value)
+                ? ""
+                : "none";
+            }
+
+            // Initialize options array if switching to a type that needs options
+            if (
+              ["select", "radio", "checkbox"].includes(value) &&
+              (!field.options || !Array.isArray(field.options))
+            ) {
+              field.options = [];
+            }
+          }
+
+          // Update preview if shown
+          const previewArea = document.getElementById("field-preview-area");
+          if (previewArea && previewArea.style.display !== "none") {
+            updateFieldPreview(field);
+          }
         }
       });
     });
+
+    // Validation inputs
+    const validationInputs = fieldEditor.querySelectorAll(
+      "[data-validation-prop]"
+    );
+    validationInputs.forEach((input) => {
+      input.addEventListener("change", function () {
+        const prop = this.getAttribute("data-validation-prop");
+        let value;
+
+        if (this.type === "checkbox") {
+          value = this.checked;
+        } else {
+          value = this.value;
+        }
+
+        if (field) {
+          // Initialize validation object if it doesn't exist
+          if (!field.validation) {
+            field.validation = {};
+          }
+
+          field.validation[prop] = value;
+
+          // Special handling for 'enabled' property
+          if (prop === "enabled") {
+            const validationOptions =
+              document.getElementById("validation-options");
+            validationOptions.style.display = value ? "" : "none";
+          }
+
+          // Update preview if shown
+          const previewArea = document.getElementById("field-preview-area");
+          if (previewArea && previewArea.style.display !== "none") {
+            updateFieldPreview(field);
+          }
+        }
+      });
+    });
+
+    // Validation preset buttons
+    const presetButtons = fieldEditor.querySelectorAll(".validation-preset");
+    presetButtons.forEach((button) => {
+      button.addEventListener("click", function () {
+        const regex = this.getAttribute("data-regex");
+        const message = this.getAttribute("data-message");
+
+        if (field && field.validation) {
+          document.getElementById("validation-regex").value = regex;
+          document.getElementById("validation-error-message").value = message;
+
+          field.validation.regex = regex;
+          field.validation.errorMessage = message;
+        }
+      });
+    });
+
+    // Toggle validation options visibility
+    const enableValidationCheckbox = document.getElementById(
+      "field-enable-validation"
+    );
+    enableValidationCheckbox.addEventListener("change", function () {
+      const validationOptions = document.getElementById("validation-options");
+      validationOptions.style.display = this.checked ? "" : "none";
+    });
+
+    // Field type specific visibility updates
+    updateValidationFieldsVisibility(field.type);
+
+    // Toggle field preview
+    const previewButton = document.getElementById("field-preview-btn");
+    previewButton.addEventListener("click", function () {
+      const previewArea = document.getElementById("field-preview-area");
+      const isVisible = previewArea.style.display !== "none";
+
+      previewArea.style.display = isVisible ? "none" : "";
+      this.innerHTML = isVisible
+        ? '<i class="bi bi-eye"></i> Preview'
+        : '<i class="bi bi-eye-slash"></i> Hide Preview';
+
+      if (!isVisible) {
+        updateFieldPreview(field);
+      }
+    });
+
+    // Add new option button
+    const addOptionBtn = document.getElementById("add-option-btn");
+    if (addOptionBtn) {
+      addOptionBtn.addEventListener("click", function () {
+        if (!field.options) {
+          field.options = [];
+        }
+
+        field.options.push({
+          text: "New Option",
+          value: `option${field.options.length + 1}`,
+        });
+
+        // Redraw options list
+        document.getElementById("options-container").innerHTML =
+          renderFieldOptions(field);
+
+        // Setup option item event listeners again
+        setupOptionsEventListeners(field);
+      });
+    }
+
+    // Setup option item event listeners
+    setupOptionsEventListeners(field);
+
+    // Help button
+    const helpBtn = document.getElementById("field-help-btn");
+    helpBtn.addEventListener("click", function () {
+      showFieldEditorHelp();
+    });
+  }
+
+  /**
+   * Setup event listeners for option items
+   */
+  function setupOptionsEventListeners(field) {
+    // Get all delete option buttons
+    const deleteOptionBtns = document.querySelectorAll(".delete-option-btn");
+    deleteOptionBtns.forEach((button) => {
+      button.addEventListener("click", function () {
+        const optionItem = this.closest(".option-item");
+        const index = parseInt(optionItem.getAttribute("data-index"), 10);
+
+        if (field.options && index >= 0 && index < field.options.length) {
+          field.options.splice(index, 1);
+
+          // Redraw options list
+          document.getElementById("options-container").innerHTML =
+            renderFieldOptions(field);
+
+          // Setup option item event listeners again
+          setupOptionsEventListeners(field);
+        }
+      });
+    });
+
+    // Get all option text and value inputs
+    const optionInputs = document.querySelectorAll(
+      ".option-text, .option-value"
+    );
+    optionInputs.forEach((input) => {
+      input.addEventListener("change", function () {
+        const optionItem = this.closest(".option-item");
+        const index = parseInt(optionItem.getAttribute("data-index"), 10);
+        const isText = this.classList.contains("option-text");
+
+        if (field.options && index >= 0 && index < field.options.length) {
+          const prop = isText ? "text" : "value";
+          field.options[index][prop] = this.value;
+        }
+      });
+    });
+  }
+
+  /**
+   * Update validation fields visibility based on field type
+   */
+  function updateValidationFieldsVisibility(fieldType) {
+    const numberRangeContainer = document.getElementById(
+      "number-range-container"
+    );
+    const textLengthContainer = document.getElementById(
+      "text-length-container"
+    );
+
+    if (numberRangeContainer) {
+      numberRangeContainer.style.display = fieldType === "number" ? "" : "none";
+    }
+
+    if (textLengthContainer) {
+      textLengthContainer.style.display = [
+        "text",
+        "email",
+        "password",
+        "textarea",
+      ].includes(fieldType)
+        ? ""
+        : "none";
+    }
+  }
+
+  /**
+   * Update the field preview area with current field settings
+   */
+  function updateFieldPreview(field) {
+    const previewContent = document.getElementById("field-preview-content");
+    if (!previewContent || !field) return;
+
+    let html = "";
+    const labelHtml = `<label for="preview-${field.id}" class="form-label">${
+      field.label || "Field Label"
+    }</label>`;
+
+    // Create different layouts based on labelPosition
+    const isLeftLabel = field.labelPosition === "left";
+
+    if (isLeftLabel) {
+      html += '<div class="row mb-2">';
+      html += '<div class="col-4 text-end">' + labelHtml + "</div>";
+      html += '<div class="col-8">';
+    } else {
+      html += '<div class="mb-2">';
+      html += labelHtml;
+    }
+
+    // Create input based on type
+    switch (field.type) {
+      case "text":
+      case "email":
+      case "number":
+      case "date":
+      case "password":
+        html += `<input type="${field.type}" class="form-control" id="preview-${
+          field.id
+        }" 
+                 placeholder="${field.placeholder || ""}" ${
+          field.required ? "required" : ""
+        }>`;
+        break;
+
+      case "textarea":
+        html += `<textarea class="form-control" id="preview-${field.id}" 
+                 placeholder="${field.placeholder || ""}" ${
+          field.required ? "required" : ""
+        }></textarea>`;
+        break;
+
+      case "select":
+        html += `<select class="form-select" id="preview-${field.id}" ${
+          field.required ? "required" : ""
+        }>`;
+        if (field.options && field.options.length) {
+          field.options.forEach((option) => {
+            html += `<option value="${option.value || ""}">${
+              option.text || ""
+            }</option>`;
+          });
+        } else {
+          html += "<option>No options defined</option>";
+        }
+        html += "</select>";
+        break;
+
+      case "radio":
+        if (field.options && field.options.length) {
+          const isInline = field.optionsLayout === "horizontal";
+
+          field.options.forEach((option, index) => {
+            html += `<div class="form-check ${
+              isInline ? "form-check-inline" : ""
+            }">
+                      <input class="form-check-input" type="radio" name="preview-${
+                        field.id
+                      }" 
+                       id="preview-${field.id}-${index}" value="${
+              option.value || ""
+            }" ${index === 0 ? "checked" : ""}>
+                      <label class="form-check-label" for="preview-${
+                        field.id
+                      }-${index}">${option.text || ""}</label>
+                     </div>`;
+          });
+        } else {
+          html += '<p class="text-muted">No radio options defined</p>';
+        }
+        break;
+
+      case "checkbox":
+        if (field.options && field.options.length) {
+          const isInline = field.optionsLayout === "horizontal";
+
+          field.options.forEach((option, index) => {
+            html += `<div class="form-check ${
+              isInline ? "form-check-inline" : ""
+            }">
+                      <input class="form-check-input" type="checkbox" 
+                       id="preview-${field.id}-${index}" value="${
+              option.value || ""
+            }">
+                      <label class="form-check-label" for="preview-${
+                        field.id
+                      }-${index}">${option.text || ""}</label>
+                     </div>`;
+          });
+        } else {
+          html += '<p class="text-muted">No checkbox options defined</p>';
+        }
+        break;
+    }
+
+    // Add error message element if validation is enabled
+    if (field.validation && field.validation.enabled) {
+      html += `<div class="invalid-feedback" id="preview-error-${field.id}">
+                ${field.validation.errorMessage || "Please enter a valid value"}
+              </div>`;
+    }
+
+    // Close column divs
+    if (isLeftLabel) {
+      html += "</div></div>";
+    } else {
+      html += "</div>";
+    }
+
+    previewContent.innerHTML = html;
+  }
+
+  /**
+   * Show help information for the field editor
+   */
+  function showFieldEditorHelp() {
+    // Create a modal if it doesn't exist
+    const modalId = "field-editor-help-modal";
+    let modal = document.getElementById(modalId);
+
+    if (!modal) {
+      modal = document.createElement("div");
+      modal.id = modalId;
+      modal.className = "modal fade";
+      modal.setAttribute("tabindex", "-1");
+      modal.innerHTML = `
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Form Field Editor Help</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <h6>Basic Properties</h6>
+              <ul>
+                <li><strong>Label Text:</strong> The text shown next to the field</li>
+                <li><strong>Field ID:</strong> Unique identifier for the field (used in HTML and JavaScript)</li>
+                <li><strong>Field Type:</strong> The type of input element</li>
+                <li><strong>Placeholder:</strong> Text shown inside the field when empty</li>
+                <li><strong>Label Position:</strong> Where the label appears relative to the field</li>
+                <li><strong>Required:</strong> Whether the field must be filled out</li>
+              </ul>
+              
+              <h6>Validation</h6>
+              <ul>
+                <li><strong>Regex Pattern:</strong> A regular expression pattern to validate the input</li>
+                <li><strong>Error Message:</strong> Text shown when validation fails</li>
+                <li><strong>Min/Max Value:</strong> For number fields, the allowed range</li>
+                <li><strong>Min/Max Length:</strong> For text fields, the allowed length range</li>
+              </ul>
+              
+              <h6>Options (for Select, Radio, Checkbox)</h6>
+              <ul>
+                <li><strong>Text:</strong> The display text shown to the user</li>
+                <li><strong>Value:</strong> The actual value stored when submitted</li>
+                <li><strong>Options Layout:</strong> For radio/checkbox, vertical (stacked) or horizontal (inline)</li>
+              </ul>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+
+      // Initialize Bootstrap modal
+      modal = new bootstrap.Modal(modal);
+    }
+
+    // Show the modal
+    modal.show();
   }
 
   /**
@@ -960,6 +1641,268 @@
     // Update the links list
     document.getElementById("nav-links-list").innerHTML =
       renderNavigationLinksList(component);
+
+    // Notify model updated
+    notifyModelUpdated();
+  }
+
+  // === Table Columns Management ===
+
+  /**
+   * Set up the table columns editor interface
+   */
+  function setupTableColumnsEditor(component) {
+    if (!component || component.type !== "table") return;
+
+    // Add the "Manage Table Columns" section to the specific properties
+    const tableColumnsContainer = document.createElement("div");
+    tableColumnsContainer.className = "mt-3";
+    tableColumnsContainer.innerHTML = `
+      <h6 class="border-bottom pb-2">Table Columns</h6>
+      
+      <div id="table-columns-list" class="mb-2">
+        ${renderTableColumnsList(component)}
+      </div>
+      
+      <!-- New column form -->
+      <div class="card mb-2">
+        <div class="card-header py-1 px-2 bg-light">
+          <h6 class="mb-0 small">Add New Column</h6>
+        </div>
+        <div class="card-body p-2">
+          <div class="mb-2">
+            <label for="new-column-text" class="form-label small">Column Header</label>
+            <input type="text" class="form-control form-control-sm" id="new-column-text" placeholder="e.g., Name, Email, Date">
+          </div>
+          <button id="add-table-column-btn" class="btn btn-sm btn-primary">
+            <i class="bi bi-plus-circle me-1"></i> Add Column
+          </button>
+        </div>
+      </div>
+      
+      <div class="mb-2">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="show-table-border" 
+              ${
+                component.showBorder ? "checked" : ""
+              } data-property="showBorder">
+          <label class="form-check-label small" for="show-table-border">Show Table Border</label>
+        </div>
+      </div>
+    `;
+
+    elements.specificPropsContainer.appendChild(tableColumnsContainer);
+
+    // Add event listener for Add Column button
+    const addColumnBtn = tableColumnsContainer.querySelector(
+      "#add-table-column-btn"
+    );
+    addColumnBtn.addEventListener("click", function () {
+      addTableColumn(component);
+    });
+  }
+
+  /**
+   * Render the list of table columns
+   */
+  function renderTableColumnsList(component) {
+    if (!component.columns || component.columns.length === 0) {
+      return '<p class="text-muted small">No table columns defined</p>';
+    }
+
+    return `
+      <div class="list-group">
+        ${component.columns
+          .map((column, index) => {
+            // Handle both string columns and object columns
+            const headerText =
+              typeof column === "string"
+                ? column
+                : column.headerText || "Untitled";
+
+            return `
+            <div class="list-group-item p-2">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold small">${headerText}</span>
+                <div>
+                  <button class="btn btn-sm btn-outline-primary edit-column-btn" 
+                    data-index="${index}" title="Edit">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button class="btn btn-sm btn-outline-danger delete-column-btn" 
+                    data-index="${index}" title="Delete">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+          })
+          .join("")}
+      </div>
+    `;
+  }
+
+  /**
+   * Add a new table column to the component
+   */
+  function addTableColumn(component) {
+    // Get value from the form input
+    const textInput = document.getElementById("new-column-text");
+    const headerText = textInput.value.trim();
+
+    // Basic validation
+    if (!headerText) {
+      alert("Please enter column header text");
+      textInput.focus();
+      return;
+    }
+
+    // Convert existing columns to objects if they're strings
+    let columns = [...(component.columns || [])].map((col) =>
+      typeof col === "string" ? { headerText: col } : col
+    );
+
+    // Add the new column
+    columns.push({ headerText });
+
+    // Update the component in the model
+    window.pageModelManager.updateComponent(component.id, { columns });
+
+    // Clear the form
+    textInput.value = "";
+
+    // Update the columns list
+    document.getElementById("table-columns-list").innerHTML =
+      renderTableColumnsList(component);
+
+    // Notify model updated
+    notifyModelUpdated();
+  }
+
+  /**
+   * Edit a table column
+   */
+  function editTableColumn(component, index) {
+    if (!component || !component.columns || index >= component.columns.length)
+      return;
+
+    // Get the column (handle both string and object formats)
+    const column = component.columns[index];
+    const currentHeaderText =
+      typeof column === "string" ? column : column.headerText || "";
+
+    // Create a simple modal dialog for editing
+    const modalId = "edit-column-modal";
+    let modal = document.getElementById(modalId);
+
+    // Create modal if it doesn't exist
+    if (!modal) {
+      modal = document.createElement("div");
+      modal.id = modalId;
+      modal.className = "modal fade";
+      modal.setAttribute("tabindex", "-1");
+      modal.innerHTML = `
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edit Table Column</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="edit-column-text" class="form-label">Column Header</label>
+                <input type="text" class="form-control" id="edit-column-text">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary" id="save-column-changes-btn">Save Changes</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+
+      // Use Bootstrap's Modal API
+      modal = new bootstrap.Modal(modal);
+    }
+
+    // Set current value
+    document.getElementById("edit-column-text").value = currentHeaderText;
+
+    // Show the modal
+    modal.show();
+
+    // Handle save button click
+    const saveBtn = document.getElementById("save-column-changes-btn");
+
+    // Remove previous event listener if exists
+    const newSaveBtn = saveBtn.cloneNode(true);
+    saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
+
+    // Add new event listener
+    newSaveBtn.addEventListener("click", function () {
+      const headerText = document
+        .getElementById("edit-column-text")
+        .value.trim();
+
+      if (!headerText) {
+        alert("Column header cannot be empty");
+        return;
+      }
+
+      // Convert columns to objects if needed and update the column
+      let columns = [...component.columns].map((col, i) => {
+        if (i === index) {
+          return { headerText };
+        } else {
+          return typeof col === "string" ? { headerText: col } : col;
+        }
+      });
+
+      // Update the component in the model
+      window.pageModelManager.updateComponent(component.id, { columns });
+
+      // Update the columns list
+      document.getElementById("table-columns-list").innerHTML =
+        renderTableColumnsList(component);
+
+      // Notify model updated
+      notifyModelUpdated();
+
+      // Hide the modal
+      modal.hide();
+    });
+  }
+
+  /**
+   * Delete a table column
+   */
+  function deleteTableColumn(component, index) {
+    if (!component || !component.columns || index >= component.columns.length)
+      return;
+
+    const column = component.columns[index];
+    const headerText = typeof column === "string" ? column : column.headerText;
+
+    // Confirmation
+    if (
+      !confirm(`Are you sure you want to delete the column "${headerText}"?`)
+    ) {
+      return;
+    }
+
+    // Remove the column
+    const columns = [...component.columns];
+    columns.splice(index, 1);
+
+    // Update the component in the model
+    window.pageModelManager.updateComponent(component.id, { columns });
+
+    // Update the columns list
+    document.getElementById("table-columns-list").innerHTML =
+      renderTableColumnsList(component);
 
     // Notify model updated
     notifyModelUpdated();

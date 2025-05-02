@@ -162,3 +162,29 @@ body {
         min-height: 500px;
     }
 }
+
+/* Fullscreen canvas mode */
+.fullscreen-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1050;
+    background-color: white;
+    overflow: auto;
+    padding: 20px;
+}
+
+.fullscreen-canvas .card-header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.fullscreen-canvas .card-body {
+    height: calc(100vh - 60px);
+    overflow: auto;
+}

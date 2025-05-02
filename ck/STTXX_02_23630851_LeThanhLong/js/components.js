@@ -183,22 +183,27 @@ class TableComponent extends Component {
     super("table", "Table");
     this.title = "Danh sách đăng kí khóa học";
     this.columns = [
-      "STT",
-      "Họ và tên",
-      "Ngày sinh",
-      "Số điện thoại",
-      "Email",
-      "Khóa học",
-      "Hình thức học",
-      "Kỹ năng cần luyện",
+      { headerText: "STT" },
+      { headerText: "Họ và tên" },
+      { headerText: "Ngày sinh" },
+      { headerText: "Số điện thoại" },
+      { headerText: "Email" },
+      { headerText: "Khóa học" },
+      { headerText: "Hình thức học" },
+      { headerText: "Kỹ năng cần luyện" },
     ];
     this.showBorder = true;
     this.tableId = "memberList";
   }
 
   getTemplate() {
+    // Generate header cells from column objects
     const headerCells = this.columns
-      .map((column) => `<th>${column}</th>`)
+      .map((column) => {
+        const headerText =
+          typeof column === "string" ? column : column.headerText || "";
+        return `<th>${headerText}</th>`;
+      })
       .join("");
 
     return `
@@ -236,31 +241,7 @@ class TableComponent extends Component {
             </div>
             <div class="mb-2">
                 <label class="form-label">Columns</label>
-                <div id="columns-container" class="border p-2 rounded mb-2">
-                    ${this.columns
-                      .map(
-                        (column, index) => `
-                        <div class="row g-1 mb-1 column-row" data-index="${index}">
-                            <div class="col-10">
-                                <input type="text" class="form-control form-control-sm column-name" 
-                                    value="${column}">
-                            </div>
-                            <div class="col-2">
-                                <button class="btn btn-sm btn-danger remove-column"><i class="bi bi-x"></i></button>
-                            </div>
-                        </div>
-                    `
-                      )
-                      .join("")}
-                </div>
-                <button id="add-column" class="btn btn-sm btn-outline-primary w-100">+ Add Column</button>
-            </div>
-            <div class="mb-2 form-check">
-                <input type="checkbox" class="form-check-input" id="show-border" 
-                    ${
-                      this.showBorder ? "checked" : ""
-                    } data-property="showBorder">
-                <label class="form-check-label" for="show-border">Show Border</label>
+                <p class="form-text small">Use the Table Columns section below to manage columns.</p>
             </div>
         `;
   }

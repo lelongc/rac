@@ -146,9 +146,12 @@ ${registerButton}
    * @returns {string} HTML code
    */
   function generateTableHTML(component) {
-    // Generate table header columns
+    // Generate table header columns from the columns array
     const tableHeaders = component.columns
-      .map((col) => `                <th>${col}</th>`)
+      .map((col) => {
+        const headerText = typeof col === "string" ? col : col.headerText || "";
+        return `                <th>${headerText}</th>`;
+      })
       .join("\n");
 
     return `
@@ -261,28 +264,51 @@ ${formFieldsHTML}
    */
   function generateInputFieldHTML(field) {
     const readonly = field.readonly ? " readonly" : "";
+    const required = field.required ? " required" : "";
     const placeholder = field.placeholder
       ? ` placeholder="${field.placeholder}"`
       : "";
+    const isLeftLabel = field.labelPosition !== "above";
 
-    return `
-                        <!-- ${field.label} -->
-                        <div class="row mt-2">
-                            <div class="col-3 text-end">
-                                <label for="${field.id}" class="fw-normal">${
-      field.label
-    }</label>
-                            </div>
-                            <div class="col-9">
-                                <input type="${field.type}" id="${
-      field.id
-    }" class="form-control"${readonly}${placeholder}>
-                                <span id="er${field.id.replace(
-                                  "txt",
-                                  ""
-                                )}" class="text-danger small mt-1 d-block"></span>
-                            </div>
-                        </div>`;
+    let html = "";
+
+    if (isLeftLabel) {
+      html += `
+        <!-- ${field.label} -->
+        <div class="row mt-2">
+            <div class="col-3 text-end">
+                <label for="${field.id}" class="fw-normal">${field.label}</label>
+            </div>
+            <div class="col-9">`;
+    } else {
+      html += `
+        <!-- ${field.label} -->
+        <div class="mb-3">
+            <label for="${field.id}" class="fw-normal">${field.label}</label>`;
+    }
+
+    if (field.type === "textarea") {
+      html += `
+                <textarea id="${field.id}" class="form-control"${readonly}${required}${placeholder}></textarea>`;
+    } else {
+      html += `
+                <input type="${field.type}" id="${field.id}" class="form-control"${readonly}${required}${placeholder}>`;
+    }
+
+    html += `
+                <span id="er${field.id.replace(
+                  "txt",
+                  ""
+                )}" class="text-danger small mt-1 d-block"></span>`;
+
+    html += isLeftLabel
+      ? `
+            </div>
+        </div>`
+      : `
+        </div>`;
+
+    return html;
   }
 
   /**
@@ -846,6 +872,132 @@ function updateThoiGianHoc() {
 }
 
 `;
+  }
+
+  /**
+   * Generate JavaScript validation function for a field
+   * @param {Object} field - Field configuration
+   * @returns {string} JavaScript function code
+   */
+  function generateFieldValidationFunction(field) {
+    if (!field || !field.validation || !field.validation.enabled) return "";
+
+    let validationCode = "";
+    const fnName = `check${field.id.replace("txt", "")}`;
+
+    validationCode += `/**
+ * Validate the ${field.label} field
+ * Requirements: ${field.required ? "Not empty" : "Optional"}${
+      field.validation.regex ? ", matches pattern" : ""
+    }
+ */
+function ${fnName}() {
+  var value = $("#${field.id}").val();
+  
+`;
+
+    // Check required
+    if (field.required) {
+      validationCode += `  // Check if field is empty
+  if (value.trim() === "") {
+    $("#er${field.id.replace("txt", "")}").text("${
+        field.label
+      } không được để trống");
+    return false;
+  }
+  
+`;
+    }
+
+    // Add regex validation if specified
+    if (field.validation.regex) {
+      validationCode += `  // Check format using regex
+  var regex = /${field.validation.regex}/;
+  if (!regex.test(value)) {
+    $("#er${field.id.replace("txt", "")}").text("${
+        field.validation.errorMessage
+      }");
+    return false;
+  }
+  
+`;
+    }
+
+    // Add min/max value validation for number fields
+    if (field.type === "number") {
+      if (
+        field.validation.minValue !== undefined &&
+        field.validation.minValue !== ""
+      ) {
+        validationCode += `  // Check minimum value
+  if (parseFloat(value) < ${field.validation.minValue}) {
+    $("#er${field.id.replace("txt", "")}").text("${
+          field.label
+        } phải lớn hơn hoặc bằng ${field.validation.minValue}");
+    return false;
+  }
+  
+`;
+      }
+
+      if (
+        field.validation.maxValue !== undefined &&
+        field.validation.maxValue !== ""
+      ) {
+        validationCode += `  // Check maximum value
+  if (parseFloat(value) > ${field.validation.maxValue}) {
+    $("#er${field.id.replace("txt", "")}").text("${
+          field.label
+        } phải nhỏ hơn hoặc bằng ${field.validation.maxValue}");
+    return false;
+  }
+  
+`;
+      }
+    }
+
+    // Add min/max length validation for text fields
+    if (["text", "email", "password", "textarea"].includes(field.type)) {
+      if (
+        field.validation.minLength !== undefined &&
+        field.validation.minLength !== ""
+      ) {
+        validationCode += `  // Check minimum length
+  if (value.length < ${field.validation.minLength}) {
+    $("#er${field.id.replace("txt", "")}").text("${
+          field.label
+        } phải có ít nhất ${field.validation.minLength} ký tự");
+    return false;
+  }
+  
+`;
+      }
+
+      if (
+        field.validation.maxLength !== undefined &&
+        field.validation.maxLength !== ""
+      ) {
+        validationCode += `  // Check maximum length
+  if (value.length > ${field.validation.maxLength}) {
+    $("#er${field.id.replace("txt", "")}").text("${
+          field.label
+        } không được vượt quá ${field.validation.maxLength} ký tự");
+    return false;
+  }
+  
+`;
+      }
+    }
+
+    // Final success case
+    validationCode += `  // Validation passed
+  $("#er${field.id.replace("txt", "")}").text("");
+  return true;
+}
+
+`;
+
+    return validationCode;
   }
 
   /**
