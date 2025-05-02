@@ -470,6 +470,443 @@ class FooterComponent extends Component {
   }
 }
 
+// Image Table Layout Component
+class ImageTableLayoutComponent extends Component {
+  constructor() {
+    super("image-table-layout", "Image + Table Layout");
+    this.image = {
+      url: "../image/english-class.jpg",
+      altText: "English Class",
+      width: "medium", // small, medium, large or pixel value
+      position: "left", // left or right of table
+    };
+    this.table = {
+      title: "Course Information",
+      columns: [
+        { headerText: "STT" },
+        { headerText: "Họ và tên" },
+        { headerText: "Ngày sinh" },
+        { headerText: "Số điện thoại" },
+        { headerText: "Email" },
+        { headerText: "Khóa học" },
+      ],
+      showBorder: true,
+      tableId: "imageTableData",
+    };
+    this.columnClasses = {
+      imageCol: "col-md-4",
+      tableCol: "col-md-8",
+    };
+  }
+
+  getTemplate() {
+    // Generate columns in proper order based on image position
+    const imageColumnHtml = `
+        <div class="${this.columnClasses.imageCol} text-center">
+            <img src="${this.image.url}" alt="${this.image.altText}" 
+                 class="img-fluid rounded ${
+                   this.image.width === "small"
+                     ? "w-50"
+                     : this.image.width === "medium"
+                     ? "w-75"
+                     : this.image.width === "large"
+                     ? "w-100"
+                     : ""
+                 }" 
+                 ${
+                   this.image.width &&
+                   !["small", "medium", "large"].includes(this.image.width)
+                     ? `style="width:${this.image.width}px"`
+                     : ""
+                 }>
+        </div>`;
+
+    // Generate header cells from column objects - match the TableComponent format
+    const headerCells = this.table.columns
+      .map((column) => {
+        const headerText =
+          typeof column === "string" ? column : column.headerText || "";
+        return `<th>${headerText}</th>`;
+      })
+      .join("");
+
+    const tableColumnHtml = `
+        <div class="${this.columnClasses.tableCol}">
+            <h3>${this.table.title}</h3>
+            <table class="table ${
+              this.table.showBorder ? "table-bordered" : ""
+            }" id="${this.table.tableId}">
+                <thead class="bg-light">
+                    <tr>
+                        ${headerCells}
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Table data will be inserted here -->
+                </tbody>
+            </table>
+        </div>`;
+
+    // Arrange columns based on image position
+    return `
+        <div class="container">
+            <div class="row align-items-center">
+                ${
+                  this.image.position === "left"
+                    ? imageColumnHtml + tableColumnHtml
+                    : tableColumnHtml + imageColumnHtml
+                }
+            </div>
+        </div>
+    `;
+  }
+
+  getPropertyControls() {
+    return `
+        <div class="mb-2">
+            <label for="prop-image-url" class="form-label">Image URL</label>
+            <input type="text" class="form-control form-control-sm" id="prop-image-url" 
+                value="${this.image.url}" data-property="image.url">
+        </div>
+        
+        <div class="mb-2">
+            <label for="prop-image-alt" class="form-label">Image Alt Text</label>
+            <input type="text" class="form-control form-control-sm" id="prop-image-alt" 
+                value="${this.image.altText}" data-property="image.altText">
+        </div>
+        
+        <div class="mb-2">
+            <label for="prop-image-width" class="form-label">Image Size</label>
+            <select class="form-select form-select-sm" id="prop-image-width" data-property="image.width">
+                <option value="small" ${
+                  this.image.width === "small" ? "selected" : ""
+                }>Small (50%)</option>
+                <option value="medium" ${
+                  this.image.width === "medium" ? "selected" : ""
+                }>Medium (75%)</option>
+                <option value="large" ${
+                  this.image.width === "large" ? "selected" : ""
+                }>Large (100%)</option>
+                <option value="200" ${
+                  this.image.width === "200" ? "selected" : ""
+                }>Custom: 200px</option>
+                <option value="300" ${
+                  this.image.width === "300" ? "selected" : ""
+                }>Custom: 300px</option>
+            </select>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label d-block">Image Position</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="imagePosition" id="pos-left"
+                    value="left" ${
+                      this.image.position === "left" ? "checked" : ""
+                    } data-property="image.position">
+                <label class="form-check-label" for="pos-left">Left of Table</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="imagePosition" id="pos-right"
+                    value="right" ${
+                      this.image.position === "right" ? "checked" : ""
+                    } data-property="image.position">
+                <label class="form-check-label" for="pos-right">Right of Table</label>
+            </div>
+        </div>
+        
+        <div class="mb-2">
+            <label class="form-label">Layout Distribution</label>
+            <select class="form-select form-select-sm" id="prop-column-ratio" data-property="columnRatio">
+                <option value="4-8" ${
+                  this.columnClasses.imageCol === "col-md-4" ? "selected" : ""
+                }>Image: 1/3, Table: 2/3</option>
+                <option value="5-7" ${
+                  this.columnClasses.imageCol === "col-md-5" ? "selected" : ""
+                }>Image: 5/12, Table: 7/12</option>
+                <option value="6-6" ${
+                  this.columnClasses.imageCol === "col-md-6" ? "selected" : ""
+                }>Image: 1/2, Table: 1/2</option>
+                <option value="7-5" ${
+                  this.columnClasses.imageCol === "col-md-7" ? "selected" : ""
+                }>Image: 7/12, Table: 5/12</option>
+                <option value="8-4" ${
+                  this.columnClasses.imageCol === "col-md-8" ? "selected" : ""
+                }>Image: 2/3, Table: 1/3</option>
+            </select>
+        </div>
+        
+        <div class="mb-2">
+            <label for="prop-table-title" class="form-label">Table Title</label>
+            <input type="text" class="form-control form-control-sm" id="prop-table-title" 
+                value="${this.table.title}" data-property="table.title">
+        </div>
+        
+        <div class="mb-2 form-check">
+            <input class="form-check-input" type="checkbox" id="show-table-border" 
+                ${
+                  this.table.showBorder ? "checked" : ""
+                } data-property="table.showBorder">
+            <label class="form-check-label" for="show-table-border">Show Table Border</label>
+        </div>
+        
+        <div class="mb-2">
+            <label class="form-label">Table Columns</label>
+            <p class="form-text small">Use the Table Columns section below to manage columns.</p>
+        </div>
+    `;
+  }
+
+  // Handle special property updates that impact multiple sub-properties
+  updateProperty(property, value) {
+    if (property === "columnRatio") {
+      // Special case for column ratio which affects both column classes
+      switch (value) {
+        case "4-8":
+          this.columnClasses.imageCol = "col-md-4";
+          this.columnClasses.tableCol = "col-md-8";
+          break;
+        case "5-7":
+          this.columnClasses.imageCol = "col-md-5";
+          this.columnClasses.tableCol = "col-md-7";
+          break;
+        case "6-6":
+          this.columnClasses.imageCol = "col-md-6";
+          this.columnClasses.tableCol = "col-md-6";
+          break;
+        case "7-5":
+          this.columnClasses.imageCol = "col-md-7";
+          this.columnClasses.tableCol = "col-md-5";
+          break;
+        case "8-4":
+          this.columnClasses.imageCol = "col-md-8";
+          this.columnClasses.tableCol = "col-md-4";
+          break;
+      }
+    } else {
+      // For all other properties, use the default implementation
+      super.updateProperty(property, value);
+    }
+  }
+}
+
+// NEW COMPONENT: Nav + Table Layout Component
+class NavTableLayoutComponent extends Component {
+  constructor() {
+    super("nav-table-layout", "Nav + Table Layout");
+    this.navigation = {
+      items: [
+        { text: "GFree English", url: "#" },
+        { text: "Trang chủ", url: "../html/index.html" },
+        { text: "Giới thiệu", url: "#" },
+        { text: "Khóa học", url: "#" },
+        { text: "Web Builder", url: "../html/builder.html" },
+      ],
+      includeRegisterButton: true,
+      registerButtonText: "Đăng ký",
+      registerButtonClass: "btn-danger",
+      registerButtonSize: "btn-sm",
+      position: "left", // left or right of table
+    };
+    this.table = {
+      title: "Danh sách đăng kí khóa học",
+      columns: [
+        { headerText: "STT" },
+        { headerText: "Họ và tên" },
+        { headerText: "Ngày sinh" },
+        { headerText: "Số điện thoại" },
+        { headerText: "Email" },
+        { headerText: "Khóa học" },
+      ],
+      showBorder: true,
+      tableId: "navTableData",
+    };
+    this.columnClasses = {
+      navCol: "col-md-3",
+      tableCol: "col-md-9",
+    };
+  }
+
+  getTemplate() {
+    // Generate nav items HTML from the items array
+    const navItems = this.navigation.items
+      .map(
+        (item) => `
+          <li class="nav-item">
+              <a class="nav-link" href="${item.url || "#"}">${
+          item.text || "Link"
+        }</a>
+          </li>`
+      )
+      .join("\n");
+
+    // Add register button if enabled
+    const registerButton = this.navigation.includeRegisterButton
+      ? `
+          <li class="nav-item mt-2">
+              <button class="btn ${this.navigation.registerButtonClass} ${this.navigation.registerButtonSize} text-white" 
+                      data-bs-toggle="modal" data-bs-target="#myModal">
+                  ${this.navigation.registerButtonText}
+              </button>
+          </li>`
+      : "";
+
+    // Create vertical navigation column
+    const navColumnHtml = `
+        <div class="${this.columnClasses.navCol}">
+            <nav class="navbar navbar-expand-sm navbar-light flex-column align-items-start">
+                <div class="container-fluid flex-column align-items-start p-2">
+                    <ul class="navbar-nav flex-column w-100">
+                        ${navItems}
+                        ${registerButton}
+                    </ul>
+                </div>
+            </nav>
+        </div>`;
+
+    // Generate header cells from column objects
+    const headerCells = this.table.columns
+      .map((column) => {
+        const headerText =
+          typeof column === "string" ? column : column.headerText || "";
+        return `<th>${headerText}</th>`;
+      })
+      .join("");
+
+    // Create table column
+    const tableColumnHtml = `
+        <div class="${this.columnClasses.tableCol}">
+            <h3>${this.table.title}</h3>
+            <table class="table ${
+              this.table.showBorder ? "table-bordered" : ""
+            }" id="${this.table.tableId}">
+                <thead class="bg-light">
+                    <tr>
+                        ${headerCells}
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Table data will be inserted here -->
+                </tbody>
+            </table>
+        </div>`;
+
+    // Arrange columns based on navigation position
+    return `
+        <div class="container">
+            <div class="row">
+                ${
+                  this.navigation.position === "left"
+                    ? navColumnHtml + tableColumnHtml
+                    : tableColumnHtml + navColumnHtml
+                }
+            </div>
+        </div>
+    `;
+  }
+
+  getPropertyControls() {
+    return `
+        <div class="mb-3">
+            <h6 class="border-bottom pb-2">Navigation Settings</h6>
+            <div class="mb-2 form-check">
+                <input type="checkbox" class="form-check-input" id="include-register-btn" 
+                    ${
+                      this.navigation.includeRegisterButton ? "checked" : ""
+                    } data-property="navigation.includeRegisterButton">
+                <label class="form-check-label" for="include-register-btn">Include Register Button</label>
+            </div>
+            
+            <div class="mb-2">
+                <label for="register-btn-text" class="form-label">Button Text</label>
+                <input type="text" class="form-control form-control-sm" id="register-btn-text" 
+                    value="${
+                      this.navigation.registerButtonText
+                    }" data-property="navigation.registerButtonText">
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label d-block">Navigation Position</label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="navPosition" id="nav-left"
+                        value="left" ${
+                          this.navigation.position === "left" ? "checked" : ""
+                        } data-property="navigation.position">
+                    <label class="form-check-label" for="nav-left">Left of Table</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="navPosition" id="nav-right"
+                        value="right" ${
+                          this.navigation.position === "right" ? "checked" : ""
+                        } data-property="navigation.position">
+                    <label class="form-check-label" for="nav-right">Right of Table</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <h6 class="border-bottom pb-2">Table Settings</h6>
+            <div class="mb-2">
+                <label for="prop-table-title" class="form-label">Table Title</label>
+                <input type="text" class="form-control form-control-sm" id="prop-table-title" 
+                    value="${this.table.title}" data-property="table.title">
+            </div>
+            
+            <div class="mb-2">
+                <label class="form-label">Layout Distribution</label>
+                <select class="form-select form-select-sm" id="prop-column-ratio" data-property="columnRatio">
+                    <option value="3-9" ${
+                      this.columnClasses.navCol === "col-md-3" ? "selected" : ""
+                    }>Nav: 1/4, Table: 3/4</option>
+                    <option value="4-8" ${
+                      this.columnClasses.navCol === "col-md-4" ? "selected" : ""
+                    }>Nav: 1/3, Table: 2/3</option>
+                    <option value="5-7" ${
+                      this.columnClasses.navCol === "col-md-5" ? "selected" : ""
+                    }>Nav: 5/12, Table: 7/12</option>
+                </select>
+            </div>
+
+            <div class="mb-2 form-check">
+                <input class="form-check-input" type="checkbox" id="show-table-border" 
+                    ${
+                      this.table.showBorder ? "checked" : ""
+                    } data-property="table.showBorder">
+                <label class="form-check-label" for="show-table-border">Show Table Border</label>
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label">Menu and Table Content</label>
+                <p class="form-text small">Use the Navigation and Table sections below to manage items and columns.</p>
+            </div>
+        </div>
+    `;
+  }
+
+  // Handle special property updates that impact multiple sub-properties
+  updateProperty(property, value) {
+    if (property === "columnRatio") {
+      // Special case for column ratio which affects both column classes
+      switch (value) {
+        case "3-9":
+          this.columnClasses.navCol = "col-md-3";
+          this.columnClasses.tableCol = "col-md-9";
+          break;
+        case "4-8":
+          this.columnClasses.navCol = "col-md-4";
+          this.columnClasses.tableCol = "col-md-8";
+          break;
+        case "5-7":
+          this.columnClasses.navCol = "col-md-5";
+          this.columnClasses.tableCol = "col-md-7";
+          break;
+      }
+    } else {
+      // For all other properties, use the default implementation
+      super.updateProperty(property, value);
+    }
+  }
+}
+
 // Component Factory - creates components by type
 class ComponentFactory {
   static createComponent(type) {
@@ -484,6 +921,10 @@ class ComponentFactory {
         return new ModalComponent();
       case "footer":
         return new FooterComponent();
+      case "image-table-layout":
+        return new ImageTableLayoutComponent();
+      case "nav-table-layout":
+        return new NavTableLayoutComponent();
       default:
         throw new Error(`Unknown component type: ${type}`);
     }
@@ -494,6 +935,16 @@ class ComponentFactory {
       { type: "header", name: "Header", icon: "bi-image" },
       { type: "nav", name: "Navigation", icon: "bi-menu-button-wide" },
       { type: "table", name: "Table", icon: "bi-table" },
+      {
+        type: "image-table-layout",
+        name: "Image+Table Layout",
+        icon: "bi-layout-split",
+      },
+      {
+        type: "nav-table-layout",
+        name: "Nav+Table Layout",
+        icon: "bi-layout-sidebar",
+      },
       { type: "modal", name: "Modal Registration", icon: "bi-window" },
       { type: "footer", name: "Footer", icon: "bi-layout-text-window-reverse" },
     ];
@@ -508,5 +959,7 @@ window.ComponentLibrary = {
   TableComponent,
   ModalComponent,
   FooterComponent,
+  ImageTableLayoutComponent,
+  NavTableLayoutComponent,
   ComponentFactory,
 };

@@ -147,6 +147,14 @@
     else if (component.type === "table") {
       setupTableColumnsEditor(component);
     }
+    // For image-table layout, add columns management for table part
+    else if (component.type === "image-table-layout") {
+      setupImageTableLayoutEditor(component);
+    }
+    // For nav-table layout, add columns management for table part and links for nav
+    else if (component.type === "nav-table-layout") {
+      setupNavTableLayoutEditor(component);
+    }
   }
 
   /**
@@ -262,6 +270,31 @@
         10
       );
       deleteTableColumn(state.selectedComponent, index);
+    }
+    // Image+Table column management
+    else if (
+      e.target.closest("#add-table-column-btn") &&
+      state.selectedComponent.type === "image-table-layout"
+    ) {
+      addColumnToImageTable(state.selectedComponent);
+    } else if (
+      e.target.closest(".edit-column-btn") &&
+      state.selectedComponent.type === "image-table-layout"
+    ) {
+      const index = parseInt(
+        e.target.closest(".edit-column-btn").getAttribute("data-index"),
+        10
+      );
+      editColumnInImageTable(state.selectedComponent, index);
+    } else if (
+      e.target.closest(".delete-column-btn") &&
+      state.selectedComponent.type === "image-table-layout"
+    ) {
+      const index = parseInt(
+        e.target.closest(".delete-column-btn").getAttribute("data-index"),
+        10
+      );
+      deleteColumnFromImageTable(state.selectedComponent, index);
     }
     // Handle other buttons for different component types as needed
   }
@@ -1957,6 +1990,948 @@
     // Update the columns list
     document.getElementById("table-columns-list").innerHTML =
       renderTableColumnsList(component);
+
+    // Notify model updated
+    notifyModelUpdated();
+  }
+
+  /**
+   * Set up the image table layout editor interface
+   */
+  function setupImageTableLayoutEditor(component) {
+    if (!component || component.type !== "image-table-layout") return;
+
+    // Add the "Manage Image and Table Columns" section to the specific properties
+    const imageTableContainer = document.createElement("div");
+    imageTableContainer.className = "mt-3";
+    imageTableContainer.innerHTML = `
+      <h6 class="border-bottom pb-2">Table Columns</h6>
+      
+      <div id="table-columns-list" class="mb-2">
+        ${renderTableColumnsListForImageTable(component)}
+      </div>
+      
+      <!-- New column form -->
+      <div class="card mb-2">
+        <div class="card-header py-1 px-2 bg-light">
+          <h6 class="mb-0 small">Add New Column</h6>
+        </div>
+        <div class="card-body p-2">
+          <div class="mb-2">
+            <label for="new-column-text" class="form-label small">Column Header</label>
+            <input type="text" class="form-control form-control-sm" id="new-column-text" placeholder="e.g., Name, Email, Date">
+          </div>
+          <button id="add-table-column-btn" class="btn btn-sm btn-primary">
+            <i class="bi bi-plus-circle me-1"></i> Add Column
+          </button>
+        </div>
+      </div>
+      
+      <!-- Layout preview -->
+      <h6 class="border-bottom pb-2 mt-4">Layout Preview</h6>
+      <div class="layout-preview p-2 border rounded mb-3">
+        <div class="d-flex align-items-center ${
+          component.image.position === "left" ? "" : "flex-row-reverse"
+        }">
+          <div class="${
+            component.columnClasses.imageCol === "col-md-4"
+              ? "w-25"
+              : component.columnClasses.imageCol === "col-md-5"
+              ? "w-50"
+              : component.columnClasses.imageCol === "col-md-6"
+              ? "w-50"
+              : component.columnClasses.imageCol === "col-md-7"
+              ? "w-75"
+              : component.columnClasses.imageCol === "col-md-8"
+              ? "w-75"
+              : "w-50"
+          } 
+                      p-2 text-center bg-light">
+            <div class="small">Image</div>
+            <i class="bi bi-image fs-1"></i>
+          </div>
+          <div class="${
+            component.columnClasses.tableCol === "col-md-4"
+              ? "w-25"
+              : component.columnClasses.tableCol === "col-md-5"
+              ? "w-50"
+              : component.columnClasses.tableCol === "col-md-6"
+              ? "w-50"
+              : component.columnClasses.tableCol === "col-md-7"
+              ? "w-75"
+              : component.columnClasses.tableCol === "col-md-8"
+              ? "w-75"
+              : "w-50"
+          } 
+                      p-2 ms-2 bg-light">
+            <div class="small">Table</div>
+            <i class="bi bi-table"></i>
+          </div>
+        </div>
+      </div>
+    `;
+
+    elements.specificPropsContainer.appendChild(imageTableContainer);
+
+    // Add event listener for Add Column button
+    const addColumnBtn = imageTableContainer.querySelector(
+      "#add-table-column-btn"
+    );
+    addColumnBtn.addEventListener("click", function () {
+      addColumnToImageTable(component);
+    });
+  }
+
+  /**
+   * Render the list of table columns for image-table layout
+   */
+  function renderTableColumnsListForImageTable(component) {
+    if (!component.table.columns || component.table.columns.length === 0) {
+      return '<p class="text-muted small">No table columns defined</p>';
+    }
+
+    return `
+      <div class="list-group">
+        ${component.table.columns
+          .map((column, index) => {
+            // Handle both string columns and object columns
+            const headerText =
+              typeof column === "string"
+                ? column
+                : column.headerText || "Untitled";
+
+            return `
+            <div class="list-group-item p-2">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold small">${headerText}</span>
+                <div>
+                  <button class="btn btn-sm btn-outline-primary edit-column-btn" 
+                    data-index="${index}" title="Edit">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button class="btn btn-sm btn-outline-danger delete-column-btn" 
+                    data-index="${index}" title="Delete">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+          })
+          .join("")}
+      </div>
+    `;
+  }
+
+  /**
+   * Add a new table column to the image-table component
+   */
+  function addColumnToImageTable(component) {
+    // Get value from the form input
+    const textInput = document.getElementById("new-column-text");
+    const headerText = textInput.value.trim();
+
+    // Basic validation
+    if (!headerText) {
+      alert("Please enter column header text");
+      textInput.focus();
+      return;
+    }
+
+    // Convert existing columns to objects if they're strings
+    let columns = [...component.table.columns].map((col) =>
+      typeof col === "string" ? { headerText: col } : col
+    );
+
+    // Add the new column
+    columns.push({ headerText });
+
+    // Update the component in the model
+    window.pageModelManager.updateComponent(component.id, {
+      table: { ...component.table, columns },
+    });
+
+    // Clear the form
+    textInput.value = "";
+
+    // Update the columns list
+    document.getElementById("table-columns-list").innerHTML =
+      renderTableColumnsListForImageTable(component);
+
+    // Notify model updated
+    notifyModelUpdated();
+  }
+
+  /**
+   * Edit a column in the image-table component
+   */
+  function editColumnInImageTable(component, index) {
+    if (
+      !component ||
+      !component.table.columns ||
+      index >= component.table.columns.length
+    )
+      return;
+
+    // Get the column (handle both string and object formats)
+    const column = component.table.columns[index];
+    const currentHeaderText =
+      typeof column === "string" ? column : column.headerText || "";
+
+    // Create a simple modal dialog for editing
+    const modalId = "edit-column-modal";
+    let modal = document.getElementById(modalId);
+
+    // Create modal if it doesn't exist
+    if (!modal) {
+      modal = document.createElement("div");
+      modal.id = modalId;
+      modal.className = "modal fade";
+      modal.setAttribute("tabindex", "-1");
+      modal.innerHTML = `
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edit Table Column</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="edit-column-text" class="form-label">Column Header</label>
+                <input type="text" class="form-control" id="edit-column-text">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary" id="save-column-changes-btn">Save Changes</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+
+    // Set current value
+    document.getElementById("edit-column-text").value = currentHeaderText;
+
+    // Handle save button click - fixed to work with persistent modals
+    const saveBtn = document.getElementById("save-column-changes-btn");
+
+    // Clean up previous event listeners to prevent duplicates
+    if (saveBtn._clickHandler) {
+      saveBtn.removeEventListener("click", saveBtn._clickHandler);
+    }
+
+    // Create a new handler function
+    saveBtn._clickHandler = function () {
+      const headerText = document
+        .getElementById("edit-column-text")
+        .value.trim();
+
+      if (!headerText) {
+        alert("Column header cannot be empty");
+        return;
+      }
+
+      // Convert columns to objects if needed and update the column
+      let columns = [...component.table.columns].map((col, i) => {
+        if (i === index) {
+          return { headerText };
+        } else {
+          return typeof col === "string" ? { headerText: col } : col;
+        }
+      });
+
+      // Update the component in the model
+      window.pageModelManager.updateComponent(component.id, {
+        table: { ...component.table, columns },
+      });
+
+      // Update the columns list
+      document.getElementById("table-columns-list").innerHTML =
+        renderTableColumnsListForImageTable(component);
+
+      // Notify model updated
+      notifyModelUpdated();
+
+      // Hide the modal
+      bootstrap.Modal.getInstance(document.getElementById(modalId)).hide();
+    };
+
+    // Add the new event listener
+    saveBtn.addEventListener("click", saveBtn._clickHandler);
+
+    // Show the modal - make sure we use proper Bootstrap API
+    const bsModal = new bootstrap.Modal(document.getElementById(modalId));
+    bsModal.show();
+  }
+
+  /**
+   * Delete a column from the image-table component
+   */
+  function deleteColumnFromImageTable(component, index) {
+    if (
+      !component ||
+      !component.table.columns ||
+      index >= component.table.columns.length
+    )
+      return;
+
+    const column = component.table.columns[index];
+    const headerText = typeof column === "string" ? column : column.headerText;
+
+    // Confirmation
+    if (
+      !confirm(`Are you sure you want to delete the column "${headerText}"?`)
+    ) {
+      return;
+    }
+
+    // Remove the column
+    const columns = [...component.table.columns];
+    columns.splice(index, 1);
+
+    // Update the component in the model
+    window.pageModelManager.updateComponent(component.id, {
+      table: { ...component.table, columns },
+    });
+
+    // Update the columns list
+    document.getElementById("table-columns-list").innerHTML =
+      renderTableColumnsListForImageTable(component);
+
+    // Notify model updated
+    notifyModelUpdated();
+  }
+
+  /**
+   * Set up the nav table layout editor interface
+   */
+  function setupNavTableLayoutEditor(component) {
+    if (!component || component.type !== "nav-table-layout") return;
+
+    // Add both navigation links and table columns sections
+    const navTableContainer = document.createElement("div");
+    navTableContainer.className = "mt-3";
+
+    // Navigation Links Section
+    navTableContainer.innerHTML = `
+      <h6 class="border-bottom pb-2">Navigation Links</h6>
+      
+      <div id="nav-links-list" class="mb-2">
+        ${renderNavigationLinksList(component, "navigation.items")}
+      </div>
+      
+      <!-- New link form -->
+      <div class="card mb-2">
+        <div class="card-header py-1 px-2 bg-light">
+          <h6 class="mb-0 small">Add New Link</h6>
+        </div>
+        <div class="card-body p-2">
+          <div class="mb-2">
+            <label for="new-link-text" class="form-label small">Link Text</label>
+            <input type="text" class="form-control form-control-sm" id="new-link-text">
+          </div>
+          <div class="mb-2">
+            <label for="new-link-url" class="form-label small">URL</label>
+            <input type="text" class="form-control form-control-sm" id="new-link-url" placeholder="e.g., #, ../html/index.html">
+          </div>
+          <button id="add-nav-link-btn" class="btn btn-sm btn-primary" data-target="navigation">
+            <i class="bi bi-plus-circle me-1"></i> Add Link
+          </button>
+        </div>
+      </div>
+      
+      <!-- Table Columns Section -->
+      <h6 class="border-bottom pb-2 mt-4">Table Columns</h6>
+      
+      <div id="table-columns-list" class="mb-2">
+        ${renderTableColumnsListForLayout(component)}
+      </div>
+      
+      <!-- New column form -->
+      <div class="card mb-2">
+        <div class="card-header py-1 px-2 bg-light">
+          <h6 class="mb-0 small">Add New Column</h6>
+        </div>
+        <div class="card-body p-2">
+          <div class="mb-2">
+            <label for="new-column-text" class="form-label small">Column Header</label>
+            <input type="text" class="form-control form-control-sm" id="new-column-text" placeholder="e.g., Name, Email, Date">
+          </div>
+          <button id="add-table-column-btn" class="btn btn-sm btn-primary">
+            <i class="bi bi-plus-circle me-1"></i> Add Column
+          </button>
+        </div>
+      </div>
+      
+      <!-- Layout preview -->
+      <h6 class="border-bottom pb-2 mt-4">Layout Preview</h6>
+      <div class="layout-preview p-2 border rounded mb-3">
+        <div class="d-flex align-items-start ${
+          component.navigation.position === "left" ? "" : "flex-row-reverse"
+        }">
+          <div class="${
+            component.columnClasses.navCol === "col-md-3"
+              ? "w-25"
+              : component.columnClasses.navCol === "col-md-4"
+              ? "w-33"
+              : component.columnClasses.navCol === "col-md-5"
+              ? "w-40"
+              : "w-25"
+          } 
+                    p-2 border-end bg-light">
+            <div class="small mb-2">Navigation</div>
+            <div class="small">${component.navigation.items
+              .map((item) => item.text)
+              .slice(0, 3)
+              .join("<br>")}</div>
+            <div class="small mt-2">...</div>
+            ${
+              component.navigation.includeRegisterButton
+                ? `<button class="btn btn-sm ${component.navigation.registerButtonClass} mt-2" style="font-size:0.7rem;">
+                 ${component.navigation.registerButtonText}
+               </button>`
+                : ""
+            }
+          </div>
+          <div class="flex-grow-1 p-2 ms-2 bg-light">
+            <div class="small mb-2">Table: ${component.table.title}</div>
+            <div class="table-responsive">
+              <table class="table table-sm table-bordered" style="font-size:0.7rem">
+                <thead>
+                  <tr>
+                    ${component.table.columns
+                      .slice(0, 3)
+                      .map(
+                        (col) =>
+                          `<th>${
+                            typeof col === "string" ? col : col.headerText
+                          }</th>`
+                      )
+                      .join("")}
+                    ${component.table.columns.length > 3 ? "<th>...</th>" : ""}
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    ${component.table.columns
+                      .slice(0, 3)
+                      .map(() => "<td>Data</td>")
+                      .join("")}
+                    ${component.table.columns.length > 3 ? "<td>...</td>" : ""}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    elements.specificPropsContainer.appendChild(navTableContainer);
+
+    // Add event listener for Add Link button
+    const addLinkBtn = navTableContainer.querySelector("#add-nav-link-btn");
+    addLinkBtn.addEventListener("click", function () {
+      addNavigationLinkToLayout(component);
+    });
+
+    // Add event listener for Add Column button
+    const addColumnBtn = navTableContainer.querySelector(
+      "#add-table-column-btn"
+    );
+    addColumnBtn.addEventListener("click", function () {
+      addColumnToLayout(component);
+    });
+
+    // Set up event listeners for existing action buttons
+    setupNavTableLayoutEventListeners(navTableContainer, component);
+  }
+
+  /**
+   * Set up event listeners for nav-table layout editor
+   */
+  function setupNavTableLayoutEventListeners(container, component) {
+    // Edit link buttons
+    const editLinkBtns = container.querySelectorAll(".edit-nav-link-btn");
+    editLinkBtns.forEach((btn) => {
+      btn.addEventListener("click", function () {
+        const index = parseInt(this.getAttribute("data-index"));
+        editNavigationLinkInLayout(component, index);
+      });
+    });
+
+    // Delete link buttons
+    const deleteLinkBtns = container.querySelectorAll(".delete-nav-link-btn");
+    deleteLinkBtns.forEach((btn) => {
+      btn.addEventListener("click", function () {
+        const index = parseInt(this.getAttribute("data-index"));
+        deleteNavigationLinkFromLayout(component, index);
+      });
+    });
+
+    // Edit column buttons
+    const editColumnBtns = container.querySelectorAll(".edit-table-column-btn");
+    editColumnBtns.forEach((btn) => {
+      btn.addEventListener("click", function () {
+        const index = parseInt(this.getAttribute("data-index"));
+        editColumnInLayout(component, index);
+      });
+    });
+
+    // Delete column buttons
+    const deleteColumnBtns = container.querySelectorAll(
+      ".delete-table-column-btn"
+    );
+    deleteColumnBtns.forEach((btn) => {
+      btn.addEventListener("click", function () {
+        const index = parseInt(this.getAttribute("data-index"));
+        deleteColumnFromLayout(component, index);
+      });
+    });
+  }
+
+  /**
+   * Render the navigation links list for layout components
+   */
+  function renderNavigationLinksList(component, propertyPath = "items") {
+    // Extract items from the property path
+    const pathParts = propertyPath.split(".");
+    let items;
+
+    if (pathParts.length === 1) {
+      items = component[pathParts[0]];
+    } else if (pathParts.length === 2) {
+      items = component[pathParts[0]][pathParts[1]];
+    }
+
+    if (!items || items.length === 0) {
+      return '<p class="text-muted small">No navigation links defined</p>';
+    }
+
+    return `
+      <div class="list-group">
+        ${items
+          .map(
+            (link, index) => `
+          <div class="list-group-item p-2">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="fw-bold small">${link.text || "Untitled"}</span>
+              <div>
+                <button class="btn btn-sm btn-outline-primary edit-nav-link-btn" 
+                  data-index="${index}" title="Edit">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger delete-nav-link-btn" 
+                  data-index="${index}" title="Delete">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </div>
+            <div class="small text-muted">${link.url || "#"}</div>
+          </div>
+        `
+          )
+          .join("")}
+      </div>
+    `;
+  }
+
+  /**
+   * Render the table columns list for layout components
+   */
+  function renderTableColumnsListForLayout(component) {
+    if (!component.table.columns || component.table.columns.length === 0) {
+      return '<p class="text-muted small">No table columns defined</p>';
+    }
+
+    return `
+      <div class="list-group">
+        ${component.table.columns
+          .map((column, index) => {
+            const headerText =
+              typeof column === "string"
+                ? column
+                : column.headerText || "Untitled";
+
+            return `
+            <div class="list-group-item p-2">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold small">${headerText}</span>
+                <div>
+                  <button class="btn btn-sm btn-outline-primary edit-table-column-btn" 
+                    data-index="${index}" title="Edit">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button class="btn btn-sm btn-outline-danger delete-table-column-btn" 
+                    data-index="${index}" title="Delete">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+          })
+          .join("")}
+      </div>
+    `;
+  }
+
+  /**
+   * Add a navigation link to a layout component
+   */
+  function addNavigationLinkToLayout(component) {
+    // Get values from the form inputs
+    const textInput = document.getElementById("new-link-text");
+    const urlInput = document.getElementById("new-link-url");
+
+    const text = textInput.value.trim();
+    const url = urlInput.value.trim() || "#";
+
+    // Basic validation
+    if (!text) {
+      alert("Link text cannot be empty");
+      return;
+    }
+
+    // Make a copy of current items and add the new link
+    const items = [...(component.navigation.items || [])];
+    items.push({ text, url });
+
+    // Update the component in the model
+    window.pageModelManager.updateComponent(component.id, {
+      navigation: { ...component.navigation, items },
+    });
+
+    // Clear the form
+    textInput.value = "";
+    urlInput.value = "";
+
+    // Update the links list
+    document.getElementById("nav-links-list").innerHTML =
+      renderNavigationLinksList(component, "navigation.items");
+
+    // Notify model updated
+    notifyModelUpdated();
+  }
+
+  /**
+   * Edit a navigation link in a layout component
+   */
+  function editNavigationLinkInLayout(component, index) {
+    if (
+      !component ||
+      !component.navigation.items ||
+      index >= component.navigation.items.length
+    )
+      return;
+
+    const link = component.navigation.items[index];
+
+    // Create a simple modal dialog for editing
+    const modalId = "edit-link-modal";
+    let modal = document.getElementById(modalId);
+
+    // Create modal if it doesn't exist
+    if (!modal) {
+      modal = document.createElement("div");
+      modal.id = modalId;
+      modal.className = "modal fade";
+      modal.setAttribute("tabindex", "-1");
+      modal.innerHTML = `
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edit Navigation Link</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="edit-link-text" class="form-label">Link Text</label>
+                <input type="text" class="form-control" id="edit-link-text">
+              </div>
+              <div class="mb-3">
+                <label for="edit-link-url" class="form-label">URL</label>
+                <input type="text" class="form-control" id="edit-link-url">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary" id="save-link-changes-btn">Save Changes</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+
+    // Set current values
+    document.getElementById("edit-link-text").value = link.text || "";
+    document.getElementById("edit-link-url").value = link.url || "#";
+
+    // Handle save button click - fixed to work with persistent modals
+    const saveBtn = document.getElementById("save-link-changes-btn");
+
+    // Clean up previous event listeners to prevent duplicates
+    if (saveBtn._clickHandler) {
+      saveBtn.removeEventListener("click", saveBtn._clickHandler);
+    }
+
+    // Create a new handler function
+    saveBtn._clickHandler = function () {
+      const text = document.getElementById("edit-link-text").value.trim();
+      const url = document.getElementById("edit-link-url").value.trim() || "#";
+
+      if (!text) {
+        alert("Link text cannot be empty");
+        return;
+      }
+
+      // Make a copy and update the link
+      const items = [...component.navigation.items];
+      items[index] = { text, url };
+
+      // Update the component in the model
+      window.pageModelManager.updateComponent(component.id, {
+        navigation: { ...component.navigation, items },
+      });
+
+      // Update the links list
+      document.getElementById("nav-links-list").innerHTML =
+        renderNavigationLinksList(component, "navigation.items");
+
+      // Notify model updated
+      notifyModelUpdated();
+
+      // Hide the modal
+      const bsModal = bootstrap.Modal.getInstance(
+        document.getElementById(modalId)
+      );
+      bsModal.hide();
+    };
+
+    // Add the new event listener
+    saveBtn.addEventListener("click", saveBtn._clickHandler);
+
+    // Show the modal
+    const bsModal = new bootstrap.Modal(document.getElementById(modalId));
+    bsModal.show();
+  }
+
+  /**
+   * Delete a navigation link from a layout component
+   */
+  function deleteNavigationLinkFromLayout(component, index) {
+    if (
+      !component ||
+      !component.navigation.items ||
+      index >= component.navigation.items.length
+    )
+      return;
+
+    // Confirmation
+    if (
+      !confirm(
+        `Are you sure you want to delete the link "${component.navigation.items[index].text}"?`
+      )
+    ) {
+      return;
+    }
+
+    // Make a copy of items and remove the link
+    const items = [...component.navigation.items];
+    items.splice(index, 1);
+
+    // Update the component in the model
+    window.pageModelManager.updateComponent(component.id, {
+      navigation: { ...component.navigation, items },
+    });
+
+    // Update the links list
+    document.getElementById("nav-links-list").innerHTML =
+      renderNavigationLinksList(component, "navigation.items");
+
+    // Notify model updated
+    notifyModelUpdated();
+  }
+
+  /**
+   * Add a table column to a layout component
+   */
+  function addColumnToLayout(component) {
+    // Get value from the form input
+    const textInput = document.getElementById("new-column-text");
+    const headerText = textInput.value.trim();
+
+    // Basic validation
+    if (!headerText) {
+      alert("Column header cannot be empty");
+      textInput.focus();
+      return;
+    }
+
+    // Convert existing columns to objects if they're strings
+    let columns = [...(component.table.columns || [])].map((col) =>
+      typeof col === "string" ? { headerText: col } : col
+    );
+
+    // Add the new column
+    columns.push({ headerText });
+
+    // Update the component in the model
+    window.pageModelManager.updateComponent(component.id, {
+      table: { ...component.table, columns },
+    });
+
+    // Clear the form
+    textInput.value = "";
+
+    // Update the columns list
+    document.getElementById("table-columns-list").innerHTML =
+      renderTableColumnsListForLayout(component);
+
+    // Notify model updated
+    notifyModelUpdated();
+  }
+
+  /**
+   * Edit a table column in a layout component
+   */
+  function editColumnInLayout(component, index) {
+    if (
+      !component ||
+      !component.table.columns ||
+      index >= component.table.columns.length
+    )
+      return;
+
+    // Get the column (handle both string and object formats)
+    const column = component.table.columns[index];
+    const currentHeaderText =
+      typeof column === "string" ? column : column.headerText || "";
+
+    // Create a simple modal dialog for editing
+    const modalId = "edit-column-modal";
+    let modal = document.getElementById(modalId);
+
+    // Create modal if it doesn't exist
+    if (!modal) {
+      modal = document.createElement("div");
+      modal.id = modalId;
+      modal.className = "modal fade";
+      modal.setAttribute("tabindex", "-1");
+      modal.innerHTML = `
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edit Table Column</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="edit-column-text" class="form-label">Column Header</label>
+                <input type="text" class="form-control" id="edit-column-text">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary" id="save-column-changes-btn">Save Changes</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+
+    // Set current value
+    document.getElementById("edit-column-text").value = currentHeaderText;
+
+    // Handle save button click
+    const saveBtn = document.getElementById("save-column-changes-btn");
+
+    // Clean up previous event listeners to prevent duplicates
+    if (saveBtn._clickHandler) {
+      saveBtn.removeEventListener("click", saveBtn._clickHandler);
+    }
+
+    // Create a new handler function
+    saveBtn._clickHandler = function () {
+      const headerText = document
+        .getElementById("edit-column-text")
+        .value.trim();
+
+      if (!headerText) {
+        alert("Column header cannot be empty");
+        return;
+      }
+
+      // Convert columns to objects if needed and update the column
+      let columns = [...component.table.columns].map((col, i) => {
+        if (i === index) {
+          return { headerText };
+        } else {
+          return typeof col === "string" ? { headerText: col } : col;
+        }
+      });
+
+      // Update the component in the model
+      window.pageModelManager.updateComponent(component.id, {
+        table: { ...component.table, columns },
+      });
+
+      // Update the columns list
+      document.getElementById("table-columns-list").innerHTML =
+        renderTableColumnsListForLayout(component);
+
+      // Notify model updated
+      notifyModelUpdated();
+
+      // Hide the modal
+      bootstrap.Modal.getInstance(document.getElementById(modalId)).hide();
+    };
+
+    // Add the new event listener
+    saveBtn.addEventListener("click", saveBtn._clickHandler);
+
+    // Show the modal
+    const bsModal = new bootstrap.Modal(document.getElementById(modalId));
+    bsModal.show();
+  }
+
+  /**
+   * Delete a table column from a layout component
+   */
+  function deleteColumnFromLayout(component, index) {
+    if (
+      !component ||
+      !component.table.columns ||
+      index >= component.table.columns.length
+    )
+      return;
+
+    const column = component.table.columns[index];
+    const headerText = typeof column === "string" ? column : column.headerText;
+
+    // Confirmation
+    if (
+      !confirm(`Are you sure you want to delete the column "${headerText}"?`)
+    ) {
+      return;
+    }
+
+    // Remove the column
+    const columns = [...component.table.columns];
+    columns.splice(index, 1);
+
+    // Update the component in the model
+    window.pageModelManager.updateComponent(component.id, {
+      table: { ...component.table, columns },
+    });
+
+    // Update the columns list
+    document.getElementById("table-columns-list").innerHTML =
+      renderTableColumnsListForLayout(component);
 
     // Notify model updated
     notifyModelUpdated();

@@ -26,20 +26,20 @@
           <div class="container-fluid">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link" href="#">Free English course</a>
+                <a class="nav-link" href="#">GFree English course</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="../html/index.html">Trang chủ</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Giới thiệu</a>
+                <a class="nav-link" href="#">Giới thiêuf</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Khóa học</a>
+                <a class="nav-link" href="#">Khóa họcf</a>
               </li>
               <li class="nav-item">
                 <button
-                  class="btn btn-primary btn-sm text-white"
+                  class="btn btn-danger btn-sm text-white"
                   data-bs-toggle="modal"
                   data-bs-target="#myModal"
                 >
@@ -51,34 +51,34 @@
         </nav>
       </div>
 
-      <!-- Main content section -->
-      <div id="section">
-        <div class="container">
-          <!-- Table title -->
-          <div class="row my-3">
-            <h3>Danh sách đăng kí khóa học</h3>
+      <!-- Image and Table Layout -->
+      <section class="container py-4">
+        <div class="row align-items-center">
+          <div class="col-md-4">
+            <img
+              src="../image/website.png"
+              alt="English Class"
+              class="img-fluid rounded"
+              style="width: 300px"
+            />
           </div>
-
-          <!-- Registration table -->
-          <table class="table table-bordered" id="memberList">
-            <thead class="bg-light">
-              <tr>
-                <th>STT</th>
-                <th>Họ và tên</th>
-                <th>Ngày sinh</th>
-                <th>Số điện thoại</th>
-                <th>Email</th>
-                <th>Khóa học</th>
-                <th>Hình thức học</th>
-                <th>Kỹ năng cần luyện</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Registration data will be inserted here -->
-            </tbody>
-          </table>
+          <div class="col-md-8">
+            <h5>Course Information</h5>
+            <table class="table table-bordered">
+              <thead class="bg-light">
+                <tr>
+                  <th>Course</th>
+                  <th>Duration</th>
+                  <th>Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Data rows would be populated dynamically -->
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      </section>
 
       <!-- Footer with student information -->
       <div id="footer">
@@ -118,63 +118,6 @@
             <!-- Modal body with registration form -->
             <div class="modal-body">
               <div class="form-group">
-                <!-- Họ và tên -->
-                <div class="row mt-2">
-                  <div class="col-3 text-end">
-                    <label for="txtName" class="fw-normal">Họ và tên</label>
-                  </div>
-                  <div class="col-9">
-                    <input type="text" id="txtName" class="form-control" />
-                    <span
-                      id="erName"
-                      class="text-danger small mt-1 d-block"
-                    ></span>
-                  </div>
-                </div>
-                <!-- Số điện thoại -->
-                <div class="row mt-2">
-                  <div class="col-3 text-end">
-                    <label for="txtSDT" class="fw-normal">Số điện thoại</label>
-                  </div>
-                  <div class="col-9">
-                    <input type="text" id="txtSDT" class="form-control" />
-                    <span
-                      id="erSDT"
-                      class="text-danger small mt-1 d-block"
-                    ></span>
-                  </div>
-                </div>
-                <!-- Ngày sinh -->
-                <div class="row mt-2">
-                  <div class="col-3 text-end">
-                    <label for="txtNgaysinh" class="fw-normal">Ngày sinh</label>
-                  </div>
-                  <div class="col-9">
-                    <input type="date" id="txtNgaysinh" class="form-control" />
-                    <span
-                      id="erNgaysinh"
-                      class="text-danger small mt-1 d-block"
-                    ></span>
-                  </div>
-                </div>
-                <!-- Email -->
-                <div class="row mt-2">
-                  <div class="col-3 text-end">
-                    <label for="txtEmail" class="fw-normal">Email</label>
-                  </div>
-                  <div class="col-9">
-                    <input
-                      type="email"
-                      id="txtEmail"
-                      class="form-control"
-                      placeholder="your.email@example.com"
-                    />
-                    <span
-                      id="erEmail"
-                      class="text-danger small mt-1 d-block"
-                    ></span>
-                  </div>
-                </div>
                 <!-- Khóa học -->
                 <div class="row mt-2">
                   <div class="col-3 text-end">
@@ -213,6 +156,22 @@
                       class="text-danger small mt-1 d-block"
                     ></span>
                   </div>
+                </div>
+                <!-- giá  -->
+                <div class="mb-3">
+                  <label for="field_1746179739037" class="fw-normal"
+                    >giá
+                  </label>
+                  <input
+                    type="number"
+                    id="field_1746179739037"
+                    class="form-control"
+                    placeholder="gia"
+                  />
+                  <span
+                    id="erfield_1746179739037"
+                    class="text-danger small mt-1 d-block"
+                  ></span>
                 </div>
                 <!-- Hình thức học -->
                 <div class="row mt-2">

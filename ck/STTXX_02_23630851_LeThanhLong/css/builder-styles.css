@@ -11,37 +11,55 @@ body {
 
 /* Component palette styles */
 .draggable-component {
-    cursor: move;
-    background-color: #ffffff;
-    transition: background-color 0.2s;
+    cursor: grab;
     user-select: none;
+    transition: background-color 0.2s;
+    position: relative;
+    z-index: 5;
+    padding: 8px 15px;
 }
 
 .draggable-component:hover {
-    background-color: #f0f0f0;
+    background-color: #e9ecef;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.draggable-component.dragging {
+    background-color: #cfe2ff;
+    border: 1px dashed #0d6efd;
+    opacity: 0.7;
+    cursor: grabbing;
+    transform: scale(0.95);
 }
 
 /* Canvas area styles */
 .canvas-container {
-    min-height: calc(100vh - 150px);
-    border: 2px dashed #dee2e6;
-    padding: 20px;
-    background-color: #ffffff;
-    overflow-y: auto;
+    min-height: 300px;
     position: relative;
+    border: 2px dashed #dee2e6;
+    border-radius: 4px;
+    padding: 15px;
+    transition: all 0.3s ease;
+    background-color: #ffffff;
 }
 
 .canvas-container.highlight {
-    border-color: #007bff;
-    background-color: rgba(0, 123, 255, 0.05);
+    background-color: rgba(13, 110, 253, 0.05);
+    border: 2px dashed #0d6efd;
+    box-shadow: inset 0 0 20px rgba(13, 110, 253, 0.1);
+}
+
+/* Ensure all interactions are properly caught */
+.canvas-container, .draggable-component {
+    touch-action: none;
 }
 
 /* Component in canvas styles */
 .canvas-component {
     position: relative;
     margin-bottom: 15px;
-    border: 1px solid transparent;
-    min-height: 50px;
+    transition: outline 0.2s;
 }
 
 .canvas-component:hover {
@@ -56,18 +74,6 @@ body {
 /* Component actions that appear on hover */
 .component-actions {
     position: absolute;
-    top: 0;
-    right: 0;
-    display: none;
-    background-color: rgba(255, 255, 255, 0.9);
-    border: 1px solid #dee2e6;
-    border-radius: 3px;
-    padding: 2px;
-}
-
-/* Component actions styling */
-.component-actions {
-    position: absolute;
     top: 5px;
     right: 5px;
     display: flex;
@@ -77,6 +83,9 @@ body {
     padding: 2px;
     opacity: 0;
     transition: opacity 0.2s ease;
+    gap: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    z-index: 100;
 }
 
 .canvas-component:hover .component-actions,
@@ -166,6 +175,26 @@ body {
     margin-bottom: 0.5rem;
 }
 
+/* Image-Table Layout component */
+.canvas-component.canvas-image-table-layout .row {
+  min-height: 200px;
+}
+
+.canvas-component.canvas-image-table-layout img {
+  max-height: 300px;
+  object-fit: contain;
+}
+
+.canvas-component.canvas-image-table-layout table {
+  width: 100%;
+}
+
+/* Layout preview in properties panel */
+.layout-preview .bi-image,
+.layout-preview .bi-table {
+  color: #6c757d;
+}
+
 /* Responsive adjustments */
 @media (max-width: 992px) {
     .builder-sidebar {
@@ -202,3 +231,124 @@ body {
     height: calc(100vh - 60px);
     overflow: auto;
 }
+
+/* Component action buttons */
+.component-actions {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    gap: 5px;
+    opacity: 0.3;
+    transition: opacity 0.2s ease;
+    z-index: 100;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 4px;
+    padding: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.canvas-component:hover .component-actions {
+    opacity: 1;
+}
+
+.component-actions .btn {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.8rem;
+}
+
+.component-actions .btn:hover {
+    transform: scale(1.1);
+}
+
+/* Selected component styling */
+.canvas-component.selected {
+    outline: 2px solid #007bff;
+    position: relative;
+}
+
+.canvas-component.selected::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px dashed #007bff;
+    pointer-events: none;
+}
+
+/* Dropzone message */
+.dropzone-message {
+    color: #6c757d;
+    text-align: center;
+    padding: 30px;
+    animation: pulse 2s infinite;
+}
+
+.dropzone-message i {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    display: block;
+}
+
+/* Drag and drop styles */
+.drag-ghost {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 14px;
+}
+
+/* Fix for pointer events during dragging */
+.canvas-container * {
+  pointer-events: auto;
+}
+
+/* Examples section */
+.example-preview {
+  border-radius: 4px;
+  overflow: hidden;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.example-preview:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Nav-Table Layout component */
+.canvas-component.canvas-nav-table-layout {
+  position: relative;
+}
+
+.canvas-component.canvas-nav-table-layout .container {
+  width: 100%;
+}
+
+.canvas-component.canvas-nav-table-layout .navbar.flex-column {
+  min-height: 300px;
+  border-right: 1px solid #dee2e6;
+}
+
+.canvas-component.canvas-nav-table-layout .navbar.flex-column .navbar-nav {
+  width: 100%;
+}
+
+.canvas-component.canvas-nav-table-layout .navbar.flex-column .nav-item {
+  margin-bottom: 0.5rem;
+}
+
+.canvas-component.canvas-nav-table-layout h3 {
+  margin-bottom: 1rem;
+}
+
+.canvas-component.canvas-nav-table-layout table {
+  width: 100%;
+}
+
+/* Layout preview control sizes */
+.layout-preview .w-25 { width: 25% !important; }
+.layout-preview .w-33 { width: 33.33% !important; }
+.layout-preview .w-40 { width: 40% !important; }
+.layout-preview .w-50 { width: 50% !important; }

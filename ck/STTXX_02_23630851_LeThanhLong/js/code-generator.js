@@ -49,23 +49,7 @@ const CodeGenerator = (function () {
 
     // Generate HTML for each component
     components.forEach((component) => {
-      switch (component.type) {
-        case "header":
-          html += generateHeaderHTML(component);
-          break;
-        case "nav":
-          html += generateNavHTML(component);
-          break;
-        case "table":
-          html += generateTableHTML(component);
-          break;
-        case "modal":
-          html += generateModalHTML(component);
-          break;
-        case "footer":
-          html += generateFooterHTML(component);
-          break;
-      }
+      html += generateComponentHTML(component);
     });
 
     // Close main container
@@ -79,6 +63,33 @@ const CodeGenerator = (function () {
 </html>`;
 
     return html;
+  }
+
+  /**
+   * Generate HTML based on component type
+   * @param {Object} component - Component to generate HTML for
+   * @returns {string} HTML code
+   */
+  function generateComponentHTML(component) {
+    switch (component.type) {
+      case "header":
+        return generateHeaderHTML(component);
+      case "nav":
+        return generateNavHTML(component);
+      case "table":
+        return generateTableHTML(component);
+      case "modal":
+        return generateModalHTML(component);
+      case "footer":
+        return generateFooterHTML(component);
+      case "image-table-layout":
+        return generateImageTableLayoutHTML(component);
+      case "nav-table-layout":
+        return generateNavTableLayoutHTML(component);
+      default:
+        console.log("Unknown component type:", component.type);
+        return "";
+    }
   }
 
   /**
@@ -468,6 +479,161 @@ ${optionsHTML}
             </div>
         </div>
     </div>
+`;
+  }
+
+  /**
+   * Generate HTML for image-table-layout component
+   * @param {Object} component - Image table layout component
+   * @returns {string} HTML code
+   */
+  function generateImageTableLayoutHTML(component) {
+    // Generate image column HTML
+    const imageHtml = `
+        <div class="${component.columnClasses.imageCol}">
+            <img src="${component.image.url}" alt="${component.image.altText}" 
+                class="img-fluid rounded ${
+                  component.image.width === "small"
+                    ? "w-50"
+                    : component.image.width === "medium"
+                    ? "w-75"
+                    : component.image.width === "large"
+                    ? "w-100"
+                    : ""
+                }" 
+                ${
+                  component.image.width &&
+                  !["small", "medium", "large"].includes(component.image.width)
+                    ? `style="width:${component.image.width}px"`
+                    : ""
+                }>
+        </div>`;
+
+    // Convert columns to objects for consistency if needed
+    const normalizedColumns = (component.table.columns || []).map((col) =>
+      typeof col === "string" ? { headerText: col } : col
+    );
+
+    // Generate table header columns from the columns array
+    const tableHeaders = normalizedColumns
+      .map((col) => {
+        const headerText = col.headerText || "Untitled";
+        return `                <th>${headerText}</th>`;
+      })
+      .join("\n");
+
+    // Generate table column HTML
+    const tableHtml = `
+        <div class="${component.columnClasses.tableCol}">
+            <h5>${component.table.title || "Table"}</h5>
+            <table class="table ${
+              component.table.showBorder ? "table-bordered" : ""
+            }">
+                <thead class="bg-light">
+                    <tr>
+${tableHeaders}
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data rows would be populated dynamically -->
+                </tbody>
+            </table>
+        </div>`;
+
+    // Arrange columns based on image position
+    return `
+    <!-- Image and Table Layout -->
+    <section class="container py-4">
+        <div class="row align-items-center">
+${
+  component.image.position === "left"
+    ? imageHtml + tableHtml
+    : tableHtml + imageHtml
+}
+        </div>
+    </section>
+`;
+  }
+
+  /**
+   * Generate HTML for nav-table-layout component
+   * @param {Object} component - Nav-table layout component
+   * @returns {string} HTML code
+   */
+  function generateNavTableLayoutHTML(component) {
+    // Generate navigation items
+    const navItems = component.navigation.items
+      .map((item) => {
+        return `            <li class="nav-item">
+                <a class="nav-link" href="${item.url || "#"}">${
+          item.text || "Link"
+        }</a>
+            </li>`;
+      })
+      .join("\n");
+
+    // Add register button if configured
+    const registerButton = component.navigation.includeRegisterButton
+      ? `            <li class="nav-item mt-2">
+                <button class="btn ${component.navigation.registerButtonClass} ${component.navigation.registerButtonSize} text-white" 
+                        data-bs-toggle="modal" data-bs-target="#myModal">
+                    ${component.navigation.registerButtonText}
+                </button>
+            </li>`
+      : "";
+
+    // Generate navigation column
+    const navColumnHtml = `
+        <div class="${component.columnClasses.navCol}">
+            <nav class="navbar navbar-expand-sm navbar-light flex-column align-items-start">
+                <div class="container-fluid flex-column align-items-start p-2">
+                    <ul class="navbar-nav flex-column w-100">
+${navItems}
+${registerButton}
+                    </ul>
+                </div>
+            </nav>
+        </div>`;
+
+    // Generate table header columns
+    const tableHeaders = component.table.columns
+      .map((col) => {
+        const headerText =
+          typeof col === "string" ? col : col.headerText || "Untitled";
+        return `                <th>${headerText}</th>`;
+      })
+      .join("\n");
+
+    // Generate table column
+    const tableColumnHtml = `
+        <div class="${component.columnClasses.tableCol}">
+            <h3>${component.table.title}</h3>
+            <table class="table ${
+              component.table.showBorder ? "table-bordered" : ""
+            }" id="${component.table.tableId}">
+                <thead class="bg-light">
+                    <tr>
+${tableHeaders}
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Table data will be inserted here -->
+                </tbody>
+            </table>
+        </div>`;
+
+    // Arrange columns based on navigation position
+    return `
+    <!-- Navigation and Table Layout -->
+    <section class="container py-4">
+        <div class="row">
+${
+  component.navigation.position === "left"
+    ? navColumnHtml + tableColumnHtml
+    : tableColumnHtml + navColumnHtml
+}
+        </div>
+    </section>
 `;
   }
 

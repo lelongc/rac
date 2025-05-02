@@ -1,7 +1,6 @@
 /**
  * Drag and Drop Logic for GFree English Course Web Builder
  * Enables dragging components from palette to canvas
- * Interacts with the PageModelManager to update the data model
  */
 
 // Wrap all functionality in an IIFE to avoid polluting global scope
@@ -14,25 +13,41 @@
 
   // Initialize all drag and drop functionality
   function init() {
-    setupDraggableComponents();
+    console.log("Initializing drag and drop functionality");
+    // Force re-initialization even if already setup
+    setupDraggableComponents(true);
     setupDropZone();
     setupComponentSelection();
-    setupEventListeners();
+    setupExamplePreview();
   }
 
   /**
    * Make components in the palette draggable
    */
-  function setupDraggableComponents() {
+  function setupDraggableComponents(force = false) {
     const draggables = document.querySelectorAll(".draggable-component");
+    console.log(`Found ${draggables.length} draggable components to setup`);
 
     draggables.forEach((draggable) => {
+      // Skip if already initialized and not forcing
+      if (!force && draggable.hasAttribute("data-draggable-initialized"))
+        return;
+
+      // Mark as initialized
+      draggable.setAttribute("data-draggable-initialized", "true");
+
       // Make the element draggable
       draggable.setAttribute("draggable", "true");
+
+      // Clean up any existing event listeners
+      draggable.removeEventListener("dragstart", handleDragStart);
+      draggable.removeEventListener("dragend", handleDragEnd);
 
       // Add event listeners for drag start
       draggable.addEventListener("dragstart", handleDragStart);
       draggable.addEventListener("dragend", handleDragEnd);
+
+      console.log(`Set up draggable: ${draggable.textContent.trim()}`);
     });
   }
 
@@ -41,12 +56,24 @@
    */
   function setupDropZone() {
     const dropZone = document.querySelector(".canvas-container");
+    if (!dropZone) {
+      console.error("Canvas container not found");
+      return;
+    }
+
+    // Clean up existing listeners to prevent duplicates
+    dropZone.removeEventListener("dragover", handleDragOver);
+    dropZone.removeEventListener("dragenter", handleDragEnter);
+    dropZone.removeEventListener("dragleave", handleDragLeave);
+    dropZone.removeEventListener("drop", handleDrop);
 
     // Add event listeners for drop events
     dropZone.addEventListener("dragover", handleDragOver);
     dropZone.addEventListener("dragenter", handleDragEnter);
     dropZone.addEventListener("dragleave", handleDragLeave);
     dropZone.addEventListener("drop", handleDrop);
+
+    console.log("Drop zone configured successfully");
   }
 
   /**
@@ -54,99 +81,271 @@
    */
   function setupComponentSelection() {
     const canvas = document.querySelector(".canvas-container");
+    if (!canvas) return;
 
-    // Use event delegation to handle clicks on components
-    canvas.addEventListener("click", function (e) {
-      // Check if we clicked on a component or one of its children
-      const component = e.target.closest(".canvas-component");
+    // Clean up existing listener
+    canvas.removeEventListener("click", handleCanvasComponentClick);
 
-      if (component) {
-        // Deselect any previously selected component
-        const previouslySelected = canvas.querySelector(
-          ".canvas-component.selected"
-        );
-        if (previouslySelected) {
-          previouslySelected.classList.remove("selected");
-        }
+    // Add new listener using named function for potential future cleanup
+    canvas.addEventListener("click", handleCanvasComponentClick);
 
-        // Select this component
-        component.classList.add("selected");
-        state.selectedComponent = component.id;
-
-        // Show component properties in the right panel
-        showComponentProperties(component.id);
-
-        // Prevent the click from bubbling up to the canvas
-        e.stopPropagation();
-      } else {
-        // Clicked on canvas but not on a component - deselect all
-        deselectAllComponents();
-      }
-    });
+    // Add component interaction buttons event handling
+    document.addEventListener("click", handleComponentButtons);
   }
 
   /**
-   * Add additional event listeners for component interaction
+   * Handle clicks on components in the canvas
    */
-  function setupEventListeners() {
-    // Listen for property changes
-    document
-      .getElementById("properties-panel")
-      .addEventListener("change", handlePropertyChange);
+  function handleCanvasComponentClick(e) {
+    // Check if we clicked on a component or one of its children
+    const component = e.target.closest(".canvas-component");
 
-    // Listen for page model updates
-    document.addEventListener("modelUpdated", renderCanvas);
+    // Skip if clicked on action buttons
+    if (e.target.closest(".component-actions")) return;
 
-    // Listen for component deletion
-    document.addEventListener("click", function (e) {
-      if (e.target.closest(".delete")) {
-        const component = e.target.closest(".canvas-component");
-        if (component) {
+    if (component) {
+      // Deselect any previously selected component
+      const previouslySelected = document.querySelector(
+        ".canvas-component.selected"
+      );
+      if (previouslySelected) {
+        previouslySelected.classList.remove("selected");
+      }
+
+      // Select this component
+      component.classList.add("selected");
+      state.selectedComponent = component.id;
+
+      // Show component properties in the right panel
+      showComponentProperties(component.id);
+
+      // Prevent the click from bubbling up to the canvas
+      e.stopPropagation();
+    } else {
+      // Clicked on canvas but not on a component - deselect all
+      deselectAllComponents();
+    }
+  }
+
+  /**
+   * Handle clicks on component action buttons
+   */
+  function handleComponentButtons(e) {
+    // Handle move up button
+    if (e.target.closest(".move-up")) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const component = e.target.closest(".canvas-component");
+      if (component) {
+        moveComponent(component.id, "up");
+      }
+    }
+    // Handle move down button
+    else if (e.target.closest(".move-down")) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const component = e.target.closest(".canvas-component");
+      if (component) {
+        moveComponent(component.id, "down");
+      }
+    }
+    // Handle delete button
+    else if (e.target.closest(".delete")) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const component = e.target.closest(".canvas-component");
+      if (component) {
+        if (confirm("Are you sure you want to delete this component?")) {
           deleteComponent(component.id);
         }
       }
-    });
+    }
+  }
 
-    // Listen for component movement
-    document.addEventListener("click", function (e) {
-      const moveUpBtn = e.target.closest(".move-up");
-      const moveDownBtn = e.target.closest(".move-down");
+  /**
+   * Move a component up or down
+   */
+  function moveComponent(componentId, direction) {
+    const components = window.pageModelManager.getComponents();
+    const index = components.findIndex((comp) => comp.id === componentId);
 
-      if (moveUpBtn || moveDownBtn) {
-        const component = e.target.closest(".canvas-component");
-        if (component) {
-          const componentId = component.id;
-          const currentIndex = window.pageModelManager
-            .getComponents()
-            .findIndex((comp) => comp.id === componentId);
+    // Skip if not found
+    if (index === -1) return;
 
-          if (moveUpBtn && currentIndex > 0) {
-            window.pageModelManager.moveComponent(
-              componentId,
-              currentIndex - 1
-            );
-            notifyModelUpdated();
-          } else if (
-            moveDownBtn &&
-            currentIndex < window.pageModelManager.getComponents().length - 1
-          ) {
-            window.pageModelManager.moveComponent(
-              componentId,
-              currentIndex + 1
-            );
-            notifyModelUpdated();
-          }
-        }
+    let newIndex = index;
+    if (direction === "up" && index > 0) {
+      newIndex = index - 1;
+    } else if (direction === "down" && index < components.length - 1) {
+      newIndex = index + 1;
+    } else {
+      return; // No change needed
+    }
+
+    // Move the component
+    window.pageModelManager.moveComponent(componentId, newIndex);
+
+    // Notify about the model update
+    notifyModelUpdated();
+
+    console.log(
+      `Moved component ${componentId} ${direction} to position ${newIndex}`
+    );
+  }
+
+  /**
+   * Delete a component from the model
+   */
+  function deleteComponent(componentId) {
+    window.pageModelManager.removeComponent(componentId);
+
+    // If this was the selected component, deselect it
+    if (state.selectedComponent === componentId) {
+      state.selectedComponent = null;
+
+      // Hide properties panel
+      document.querySelector(".no-selection-message").style.display = "block";
+      document.querySelector(".component-properties").style.display = "none";
+    }
+
+    notifyModelUpdated();
+    console.log(`Deleted component ${componentId}`);
+  }
+
+  /**
+   * Set up example preview buttons
+   */
+  function setupExamplePreview() {
+    // Add example template preview button
+    const componentPalette = document.getElementById("component-palette");
+    if (componentPalette) {
+      // Add example website preview section
+      const examplesCard = document.createElement("div");
+      examplesCard.className = "card mt-3";
+      examplesCard.innerHTML = `
+        <div class="card-header bg-success text-white">
+          <h5 class="mb-0">Example Templates</h5>
+        </div>
+        <div class="card-body">
+          <div class="d-grid gap-2">
+            <button class="btn btn-outline-primary" id="example-course-website">
+              <i class="bi bi-file-earmark-code me-2"></i>English Course Site
+            </button>
+            <button class="btn btn-outline-primary" id="example-flower-website">
+              <i class="bi bi-file-earmark-code me-2"></i>Flower Shop Site
+            </button>
+          </div>
+        </div>
+      `;
+
+      // Add after instructions card
+      const instructionsCard =
+        componentPalette.querySelector(".card:nth-child(2)");
+      if (instructionsCard) {
+        instructionsCard.after(examplesCard);
+      } else {
+        componentPalette.appendChild(examplesCard);
       }
-    });
 
-    // Setup save and preview functionality
-    document
-      .querySelector("button:has(.bi-save)")
-      .addEventListener("click", saveWebsite);
-    document
-      .querySelector("button:has(.bi-play-fill)")
-      .addEventListener("click", previewWebsite);
+      // Add event listeners
+      document
+        .getElementById("example-course-website")
+        ?.addEventListener("click", loadEnglishCourseTemplate);
+      document
+        .getElementById("example-flower-website")
+        ?.addEventListener("click", loadFlowerShopTemplate);
+    }
+  }
+
+  /**
+   * Load English Course website template
+   */
+  function loadEnglishCourseTemplate() {
+    if (
+      !confirm(
+        "This will replace your current design with the English Course template. Continue?"
+      )
+    )
+      return;
+
+    // Clear current components
+    window.pageModelManager.clearComponents();
+
+    // Add components for English course site template
+    const header = window.pageModelManager.addComponent("header");
+    header.logoUrl = "../image/website.png";
+
+    const nav = window.pageModelManager.addComponent("nav");
+    nav.orientation = "vertical";
+    nav.items = [
+      { text: "GFree English", url: "#" },
+      { text: "Trang chủ", url: "#home" },
+      { text: "Giới thiệu", url: "#about" },
+      { text: "Khóa học", url: "#courses" },
+      { text: "Web Builder", url: "../html/builder.html" },
+    ];
+
+    const tableComponent = window.pageModelManager.addComponent("table");
+    tableComponent.title = "Danh sách đăng kí khóa học";
+
+    const modalComponent = window.pageModelManager.addComponent("modal");
+
+    const footer = window.pageModelManager.addComponent("footer");
+
+    notifyModelUpdated();
+    window.WebBuilder.showToast("English Course template loaded", "success");
+  }
+
+  /**
+   * Load Flower Shop website template
+   */
+  function loadFlowerShopTemplate() {
+    if (
+      !confirm(
+        "This will replace your current design with the Flower Shop template. Continue?"
+      )
+    )
+      return;
+
+    // Clear current components
+    window.pageModelManager.clearComponents();
+
+    // Add components for flower shop template
+    const header = window.pageModelManager.addComponent("header");
+    header.logoUrl = "../image/1.jpg";
+
+    const nav = window.pageModelManager.addComponent("nav");
+    nav.items = [
+      { text: "Trang chủ", url: "#" },
+      { text: "Sản phẩm", url: "#products" },
+      { text: "Tin tức", url: "#news" },
+      { text: "Liên hệ", url: "#contact" },
+    ];
+    nav.registerButtonText = "Đặt mua hoa";
+
+    // Add image-table layout
+    const imageTable =
+      window.pageModelManager.addComponent("image-table-layout");
+    imageTable.image.url = "../image/3.jpg";
+    imageTable.table.title = "Danh Sách Thông Tin Đặt Hàng Nhanh";
+    imageTable.table.columns = [
+      { headerText: "STT" },
+      { headerText: "Họ và tên" },
+      { headerText: "Số điện thoại" },
+      { headerText: "Ngày đặt" },
+      { headerText: "Email" },
+      { headerText: "Ảnh đại diện" },
+    ];
+
+    const modalComponent = window.pageModelManager.addComponent("modal");
+    modalComponent.title = "Thông Tin Đặt Hàng";
+
+    const footer = window.pageModelManager.addComponent("footer");
+
+    notifyModelUpdated();
+    window.WebBuilder.showToast("Flower Shop template loaded", "success");
   }
 
   // --- Drag Event Handlers ---
@@ -155,32 +354,36 @@
    * Handle the start of a drag operation
    */
   function handleDragStart(e) {
+    console.log("Drag start");
     // Store the component type being dragged
     const componentType = this.getAttribute("data-component");
     state.draggedComponentType = componentType;
 
-    // Set the drag effect and data
-    e.dataTransfer.effectAllowed = "copy";
+    // Set drag data - IMPORTANT: This must be set for Firefox to work properly
     e.dataTransfer.setData("text/plain", componentType);
+    e.dataTransfer.effectAllowed = "copy";
 
-    // Add dragging class for visual feedback
+    // Add visual feedback
     this.classList.add("dragging");
+    document.body.style.cursor = "grabbing";
   }
 
   /**
    * Handle the end of a drag operation
    */
   function handleDragEnd(e) {
+    console.log("Drag end");
     // Remove the dragging class
     this.classList.remove("dragging");
     state.draggedComponentType = null;
+    document.body.style.cursor = "";
   }
 
   /**
    * Handle drag over event (required to allow dropping)
    */
   function handleDragOver(e) {
-    // Prevent default to allow drop
+    // This is essential to allow dropping
     e.preventDefault();
     e.dataTransfer.dropEffect = "copy";
   }
@@ -189,10 +392,10 @@
    * Handle drag enter event for visual feedback
    */
   function handleDragEnter(e) {
-    // Add a class to highlight the drop zone
+    e.preventDefault();
     this.classList.add("highlight");
 
-    // Hide the initial message when a component is being dragged over
+    // Hide the initial message when dragging over
     const dropzoneMessage = this.querySelector(".dropzone-message");
     if (dropzoneMessage) {
       dropzoneMessage.style.display = "none";
@@ -203,9 +406,16 @@
    * Handle drag leave event to remove visual feedback
    */
   function handleDragLeave(e) {
-    // Only remove highlight if we're actually leaving the drop zone
-    // and not just entering a child element
-    if (!this.contains(e.relatedTarget)) {
+    // Only remove highlight if we're actually leaving the dropzone,
+    // not just entering a child element
+    const rect = this.getBoundingClientRect();
+    const isStillInside =
+      e.clientX >= rect.left &&
+      e.clientX <= rect.right &&
+      e.clientY >= rect.top &&
+      e.clientY <= rect.bottom;
+
+    if (!isStillInside) {
       this.classList.remove("highlight");
 
       // Show the message again if there are no components
@@ -223,52 +433,61 @@
    * Handle drop event to add a new component to the canvas
    */
   function handleDrop(e) {
-    // Prevent the default action
     e.preventDefault();
+    e.stopPropagation();
+    console.log("Drop event handled");
 
     // Remove highlight class
     this.classList.remove("highlight");
 
-    // Check if this is a component reordering (internal drag)
-    const componentId = e.dataTransfer.getData("componentId");
-    if (componentId) {
-      // This is handled by the renderer's component reordering logic
-      return;
-    }
+    try {
+      // Get component type from data transfer
+      const componentType = e.dataTransfer.getData("text/plain");
 
-    // Get the component type from the drag data
-    const componentType = e.dataTransfer.getData("text/plain");
-    if (!componentType) return;
-
-    // Determine drop position (for now, just append to the end)
-    const position = null; // This will append to the end
-
-    // Add the component to the model
-    const newComponent = window.pageModelManager.addComponent(
-      componentType,
-      position
-    );
-
-    // Notify about the model update
-    notifyModelUpdated();
-
-    // Select the newly added component
-    setTimeout(() => {
-      const componentElement = document.getElementById(newComponent.id);
-      if (componentElement) {
-        componentElement.click();
+      if (!componentType) {
+        console.error("No component type found in drop data");
+        alert(
+          "Error: Drag and drop failed. Please try again or reload the page."
+        );
+        return;
       }
-    }, 0);
+
+      console.log("Adding component:", componentType);
+
+      // Add the component to the model
+      const newComponent = window.pageModelManager.addComponent(componentType);
+
+      // Notify about model update
+      notifyModelUpdated();
+
+      // Select the newly added component
+      setTimeout(() => selectNewComponent(newComponent.id), 100);
+    } catch (error) {
+      console.error("Error in drop handler:", error);
+      alert("An error occurred while adding the component.");
+    }
   }
 
-  // --- Component Management Functions ---
-
   /**
-   * Delete a component from the model
+   * Select a newly added component
    */
-  function deleteComponent(componentId) {
-    window.pageModelManager.removeComponent(componentId);
-    notifyModelUpdated();
+  function selectNewComponent(componentId) {
+    const element = document.getElementById(componentId);
+    if (element) {
+      // Deselect any previously selected components
+      const selected = document.querySelector(".canvas-component.selected");
+      if (selected) selected.classList.remove("selected");
+
+      // Select the new component
+      element.classList.add("selected");
+      state.selectedComponent = componentId;
+
+      // Show properties
+      showComponentProperties(componentId);
+
+      // Scroll component into view
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
   }
 
   /**
@@ -290,102 +509,11 @@
    * Show component properties in the right panel
    */
   function showComponentProperties(componentId) {
-    const component = window.pageModelManager.getComponentById(componentId);
-
-    if (!component) {
-      return;
-    }
-
-    // Update the properties form
-    document.querySelector(".no-selection-message").style.display = "none";
-    const propertiesPanel = document.querySelector(".component-properties");
-    propertiesPanel.style.display = "block";
-
-    // Set general properties
-    document.getElementById("prop-id").value = component.id;
-    document.getElementById("prop-class").value = component.classes.join(" ");
-    document.getElementById("prop-color").value = component.styles.color;
-    document.getElementById("prop-bg-color").value =
-      component.styles.backgroundColor;
-
-    // Set component-specific properties
-    const specificPropsContainer = document.getElementById(
-      "specific-props-container"
+    document.dispatchEvent(
+      new CustomEvent("componentSelected", {
+        detail: { componentId },
+      })
     );
-    specificPropsContainer.innerHTML = component.getPropertyControls();
-  }
-
-  /**
-   * Handle property change in the properties panel
-   */
-  function handlePropertyChange(e) {
-    const input = e.target;
-    const property = input.getAttribute("data-property");
-
-    if (!property || !state.selectedComponent) {
-      return;
-    }
-
-    let value;
-    if (input.type === "checkbox") {
-      value = input.checked;
-    } else {
-      value = input.value;
-    }
-
-    const componentId = state.selectedComponent;
-    window.pageModelManager.updateComponent(componentId, { [property]: value });
-
-    notifyModelUpdated();
-  }
-
-  // --- Rendering Functions ---
-
-  /**
-   * Render the canvas based on the current model
-   */
-  function renderCanvas() {
-    const canvas = document.querySelector(".canvas-container");
-    const components = window.pageModelManager.getComponents();
-
-    // Clear existing content but keep the dropzone message
-    const dropzoneMessage = canvas.querySelector(".dropzone-message");
-    canvas.innerHTML = "";
-
-    // If we have no components, show the message
-    if (components.length === 0) {
-      canvas.appendChild(dropzoneMessage || createDropzoneMessage());
-      return;
-    }
-
-    // Render each component
-    components.forEach((component) => {
-      const componentElement = component.render();
-      canvas.appendChild(componentElement);
-    });
-
-    // Re-select the previously selected component if it still exists
-    if (state.selectedComponent) {
-      const selectedElement = document.getElementById(state.selectedComponent);
-      if (selectedElement) {
-        selectedElement.classList.add("selected");
-      } else {
-        state.selectedComponent = null;
-      }
-    }
-  }
-
-  /**
-   * Create the dropzone message element
-   */
-  function createDropzoneMessage() {
-    const message = document.createElement("div");
-    message.className = "dropzone-message text-center text-muted py-5";
-    message.innerHTML = `
-            <i class="bi bi-arrow-left-square fs-1"></i>
-            <p class="mt-3">Drag and drop components from the left panel to start building your page</p>
-        `;
-    return message;
   }
 
   /**
@@ -395,64 +523,33 @@
     document.dispatchEvent(new CustomEvent("modelUpdated"));
   }
 
-  /**
-   * Save the current website
-   */
-  function saveWebsite() {
-    const modelJson = window.pageModelManager.saveModel(true);
-    localStorage.setItem("gfree-builder-model", modelJson);
-    alert("Website saved successfully!");
-  }
-
-  /**
-   * Preview the current website
-   */
-  function previewWebsite() {
-    // For now, just open a new window and render the components
-    const previewWindow = window.open("", "_blank");
-
-    const components = window.pageModelManager.getComponents();
-
-    previewWindow.document.write(`
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Preview - GFree English Course</title>
-                <link rel="stylesheet" href="../css/bootstrap.min.css">
-            </head>
-            <body>
-                <div class="container">
-                    ${components
-                      .map((comp) => comp.render().outerHTML)
-                      .join("")}
-                </div>
-                <script src="../js/bootstrap.bundle.min.js"></script>
-            </body>
-            </html>
-        `);
-  }
-
-  /**
-   * Load the saved model when available
-   */
-  function loadSavedModel() {
-    const savedModel = localStorage.getItem("gfree-builder-model");
-    if (savedModel) {
-      window.pageModelManager.loadModel(savedModel);
-      notifyModelUpdated();
-    }
-  }
-
   // Initialize when DOM is fully loaded
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => {
-      init();
-      loadSavedModel();
-    });
-  } else {
+  function domReady() {
     init();
-    loadSavedModel();
+
+    // Check if draggable components were set up
+    setTimeout(() => {
+      const draggables = document.querySelectorAll(
+        ".draggable-component[data-draggable-initialized]"
+      );
+      if (draggables.length === 0) {
+        console.warn("No draggable components initialized. Trying again...");
+        init();
+      }
+    }, 500);
   }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", domReady);
+  } else {
+    domReady();
+  }
+
+  // Expose public API
+  window.DragDropManager = {
+    init,
+    setupDraggableComponents,
+    loadEnglishCourseTemplate,
+    loadFlowerShopTemplate,
+  };
 })();

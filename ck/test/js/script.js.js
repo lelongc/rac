@@ -3,98 +3,6 @@
  */
 
 /**
- * Validate the name field
- * Requirements: Not empty, each word must start with uppercase (e.g., Le Van An)
- */
-function checkName() {
-  var name = $("#txtName").val();
-
-  // Check if name is empty
-  if (name.trim() === "") {
-    $("#erName").text("Họ tên không được để trống");
-    return false;
-  }
-
-  // Use regex to validate name format: words starting with uppercase, followed by lowercase
-  // Must have at least two words separated by spaces
-  var regex = /^[A-Z][a-z]*(s+[A-Z][a-z]*)+$/;
-  if (!regex.test(name)) {
-    $("#erName").text(
-      "Mỗi từ phải bắt đầu bằng chữ hoa và phần còn lại viết thường"
-    );
-    return false;
-  }
-
-  $("#erName").text("");
-  return true;
-}
-
-/**
- * Validate the date of birth field
- * Requirements: Not empty, must be before current date
- */
-function checkDateOfBirth() {
-  var dob = $("#txtNgaysinh").val();
-  var today = new Date();
-  var dobDate = new Date(dob);
-
-  if (dob === "") {
-    $("#erNgaysinh").text("Ngày sinh không được rỗng");
-    return false;
-  } else if (dobDate >= today) {
-    $("#erNgaysinh").text("Ngày sinh phải trước ngày hiện tại");
-    return false;
-  } else {
-    $("#erNgaysinh").text("");
-    return true;
-  }
-}
-
-/**
- * Validate the phone number field
- * Requirements: Not empty, 10 digits starting with 09, 03, or 08
- */
-function checkPhoneNum() {
-  var phone = $("#txtSDT").val();
-
-  // Check if phone is empty
-  if (phone.trim() === "") {
-    $("#erSDT").text("Số điện thoại không được để trống");
-    return false;
-  }
-
-  // Check phone format: 10 digits starting with 09, 03, or 08
-  var regex = /^(09|03|08)\d{8}$/;
-  if (!regex.test(phone)) {
-    $("#erSDT").text(
-      "Số điện thoại phải có 10 số và bắt đầu với 09, 03 hoặc 08"
-    );
-    return false;
-  }
-
-  $("#erSDT").text("");
-  return true;
-}
-
-/**
- * Validate the email field
- * Requirements: Must contain @ and end with .com
- */
-function checkEmail() {
-  var email = $("#txtEmail").val();
-
-  // Check email format: must contain @ and end with .com
-  var regex = /@.*\.com$/;
-  if (!regex.test(email)) {
-    $("#erEmail").text("Email phải chứa @ và kết thúc với .com");
-    return false;
-  }
-
-  $("#erEmail").text("");
-  return true;
-}
-
-/**
  * Validate the study method selection
  * Requirements: At least one option must be selected
  */
@@ -234,10 +142,6 @@ function DangKy() {
 
 // Initialize when the document is ready
 $(function () {
-  $("#txtName").on("blur", checkName);
-  $("#txtNgaysinh").on("blur", checkDateOfBirth);
-  $("#txtSDT").on("blur", checkPhoneNum);
-  $("#txtEmail").on("blur", checkEmail);
   $("input[name='hinhthuc']").on("click", checkStudyMethod);
   $("#chkListening, #chkReading, #chkWriting").on("click", checkSkills);
   // Set initial value for thời gian học based on default selected course

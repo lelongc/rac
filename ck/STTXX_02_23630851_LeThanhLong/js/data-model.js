@@ -20,6 +20,26 @@ class PageModelManager {
   }
 
   /**
+   * Add a component to the page model
+   * @param {string} componentType - The type of component to add
+   * @returns {Object} The created component
+   */
+  addComponent(componentType) {
+    try {
+      console.log("Creating component of type:", componentType);
+      const component = ComponentFactory.createComponent(componentType);
+      console.log("Component created:", component);
+
+      // Add the component to the components array
+      this.components.push(component);
+      return component;
+    } catch (error) {
+      console.error("Error creating component:", error);
+      throw error;
+    }
+  }
+
+  /**
    * Add a new component to the model
    * @param {string} componentType - Type of component to add (header, nav, table, etc.)
    * @param {number} position - Position to insert the component (0-based index)
@@ -47,24 +67,16 @@ class PageModelManager {
   }
 
   /**
-   * Remove a component from the model by its ID
+   * Remove a component from the page model
    * @param {string} componentId - ID of the component to remove
-   * @returns {boolean} - True if component was found and removed
+   * @returns {boolean} Success flag
    */
   removeComponent(componentId) {
     const initialLength = this.components.length;
-    this.components = this.components.filter(
-      (component) => component.id !== componentId
-    );
+    this.components = this.components.filter((comp) => comp.id !== componentId);
 
-    // Check if a component was actually removed
-    const wasRemoved = initialLength > this.components.length;
-
-    if (wasRemoved) {
-      this.updateMetadata();
-    }
-
-    return wasRemoved;
+    // Return true if a component was actually removed
+    return initialLength > this.components.length;
   }
 
   /**
@@ -113,39 +125,36 @@ class PageModelManager {
   }
 
   /**
-   * Move a component to a new position
-   * @param {string} componentId - ID of component to move
-   * @param {number} newPosition - New position index
-   * @returns {boolean} - True if move was successful
+   * Move a component to a new position in the components array
+   * @param {string} componentId - ID of the component to move
+   * @param {number} newIndex - New position index for the component
    */
-  moveComponent(componentId, newPosition) {
+  moveComponent(componentId, newIndex) {
+    if (newIndex < 0 || newIndex >= this.components.length) {
+      console.error("Invalid new index for component movement:", newIndex);
+      return false;
+    }
+
     // Find the component's current index
     const currentIndex = this.components.findIndex(
       (comp) => comp.id === componentId
     );
-
-    // Check if component exists and new position is valid
     if (currentIndex === -1) {
-      console.error(`Component ${componentId} not found`);
+      console.error("Component not found for movement:", componentId);
       return false;
     }
 
-    // Ensure new position is within bounds
-    const maxIndex = this.components.length - 1;
-    newPosition = Math.max(0, Math.min(newPosition, maxIndex));
-
-    // No need to move if position is the same
-    if (currentIndex === newPosition) {
+    // Don't do anything if it's already at the target position
+    if (currentIndex === newIndex) {
       return true;
     }
 
-    // Remove from current position
+    // Remove the component from its current position
     const [component] = this.components.splice(currentIndex, 1);
 
-    // Insert at new position
-    this.components.splice(newPosition, 0, component);
+    // Insert it at the new position
+    this.components.splice(newIndex, 0, component);
 
-    this.updateMetadata();
     return true;
   }
 

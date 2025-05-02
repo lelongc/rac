@@ -93,8 +93,21 @@ const WebBuilder = (function () {
       return;
     }
 
+    console.log("App.js: Initializing drag-drop");
+
     // Initialize drag-drop with the canvas
-    DragDropManager.init(elements.canvas);
+    window.DragDropManager.init();
+
+    // Ensure that draggable components are set up after DOM updates
+    const observer = new MutationObserver(function (mutations) {
+      window.DragDropManager.setupDraggableComponents();
+    });
+
+    // Watch for changes to the component palette
+    const componentPalette = document.getElementById("component-palette");
+    if (componentPalette) {
+      observer.observe(componentPalette, { childList: true, subtree: true });
+    }
   }
 
   /**
@@ -118,8 +131,99 @@ const WebBuilder = (function () {
     // Listen for canvas clicks (for component selection)
     elements.canvas.addEventListener("click", handleCanvasClick);
 
+    // Listen for component action buttons (delete, move up/down)
+    elements.canvas.addEventListener("click", handleComponentActions);
+
     // Listen for keyboard events (like delete)
     document.addEventListener("keydown", handleKeyDown);
+  }
+
+  /**
+   * Handle component action buttons (delete, move up/down)
+   */
+  function handleComponentActions(e) {
+    // Check if we clicked on a delete button
+    const deleteBtn = e.target.closest(".delete");
+    if (deleteBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      // Get the component element
+      const componentElement = deleteBtn.closest(".canvas-component");
+      if (componentElement) {
+        // Confirm deletion
+        if (confirm("Are you sure you want to delete this component?")) {
+          const componentId = componentElement.id;
+          // Remove from model
+          window.pageModelManager.removeComponent(componentId);
+
+          // If this was the selected component, clear selection
+          if (state.selectedComponentId === componentId) {
+            state.selectedComponentId = null;
+          }
+
+          // Notify about model update
+          document.dispatchEvent(new CustomEvent("modelUpdated"));
+        }
+      }
+      return;
+    }
+
+    // Check if we clicked on move up button
+    const moveUpBtn = e.target.closest(".move-up");
+    if (moveUpBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const componentElement = moveUpBtn.closest(".canvas-component");
+      if (componentElement) {
+        const componentId = componentElement.id;
+
+        // Get current index
+        const components = window.pageModelManager.getComponents();
+        const currentIndex = components.findIndex(
+          (comp) => comp.id === componentId
+        );
+
+        // Only move if not already at the top
+        if (currentIndex > 0) {
+          // Move component up in the model
+          window.pageModelManager.moveComponent(componentId, currentIndex - 1);
+
+          // Notify about model update
+          document.dispatchEvent(new CustomEvent("modelUpdated"));
+        }
+      }
+      return;
+    }
+
+    // Check if we clicked on move down button
+    const moveDownBtn = e.target.closest(".move-down");
+    if (moveDownBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const componentElement = moveDownBtn.closest(".canvas-component");
+      if (componentElement) {
+        const componentId = componentElement.id;
+
+        // Get current index and total component count
+        const components = window.pageModelManager.getComponents();
+        const currentIndex = components.findIndex(
+          (comp) => comp.id === componentId
+        );
+
+        // Only move if not already at the bottom
+        if (currentIndex < components.length - 1 && currentIndex !== -1) {
+          // Move component down in the model
+          window.pageModelManager.moveComponent(componentId, currentIndex + 1);
+
+          // Notify about model update
+          document.dispatchEvent(new CustomEvent("modelUpdated"));
+        }
+      }
+      return;
+    }
   }
 
   /**
