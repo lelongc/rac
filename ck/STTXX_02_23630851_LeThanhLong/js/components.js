@@ -355,69 +355,202 @@ class ModalComponent extends Component {
   }
 
   getTemplate() {
-    // This is simplified - the real modal would be much more complex
+    // Generate form fields HTML with validation
+    const formFieldsHtml = this.formFields
+      .map((field) => {
+        // Create validation data JSON
+        const validationData = field.validation
+          ? JSON.stringify({
+              required: field.required || false,
+              regex: field.validation.regex || null,
+              errorMessage:
+                field.validation.errorMessage || "Giá trị không hợp lệ",
+              minLength: field.validation.minLength || null,
+              maxLength: field.validation.maxLength || null,
+            })
+          : "";
+
+        // Return appropriate field HTML based on type
+        switch (field.type) {
+          case "select":
+            return `
+            <div class="mb-3 form-group${field.required ? " required" : ""}">
+              <label for="${field.id}" class="form-label">${field.label}${
+              field.required ? " *" : ""
+            }</label>
+              <select class="form-select" id="${
+                field.id
+              }" data-validation='${validationData}' ${
+              field.required ? "required" : ""
+            }>
+                ${field.options
+                  .map(
+                    (option) =>
+                      `<option value="${option.value}" ${
+                        option["data-name"]
+                          ? `data-name="${option["data-name"]}"`
+                          : ""
+                      }>${option.text}</option>`
+                  )
+                  .join("")}
+              </select>
+              <div class="invalid-feedback" id="${
+                field.id
+              }-error">Vui lòng chọn ${field.label.toLowerCase()}.</div>
+            </div>
+          `;
+          case "textarea":
+            return `
+            <div class="mb-3 form-group${field.required ? " required" : ""}">
+              <label for="${field.id}" class="form-label">${field.label}${
+              field.required ? " *" : ""
+            }</label>
+              <textarea class="form-control" id="${
+                field.id
+              }" data-validation='${validationData}' 
+                placeholder="${field.placeholder || ""}" ${
+              field.readonly ? "readonly" : ""
+            } ${field.required ? "required" : ""}></textarea>
+              <div class="invalid-feedback" id="${
+                field.id
+              }-error">Vui lòng nhập ${field.label.toLowerCase()}.</div>
+            </div>
+          `;
+          default: // text, email, date, etc.
+            return `
+            <div class="mb-3 form-group${field.required ? " required" : ""}">
+              <label for="${field.id}" class="form-label">${field.label}${
+              field.required ? " *" : ""
+            }</label>
+              <input type="${field.type}" class="form-control" id="${
+              field.id
+            }" data-validation='${validationData}' 
+                placeholder="${field.placeholder || ""}" ${
+              field.readonly ? "readonly" : ""
+            } ${field.required ? "required" : ""}>
+              <div class="invalid-feedback" id="${
+                field.id
+              }-error">Vui lòng nhập ${field.label.toLowerCase()} hợp lệ.</div>
+            </div>
+          `;
+        }
+      })
+      .join("");
+
+    // Generate radio groups HTML
+    const radioGroupsHtml = this.radioGroups
+      ? this.radioGroups
+          .map((group) => {
+            const validationData = group.validation
+              ? JSON.stringify({
+                  required: group.validation || false,
+                  errorMessage: "Vui lòng chọn một tùy chọn",
+                })
+              : "";
+
+            return `
+        <div class="mb-3 form-group${group.validation ? " required" : ""}">
+          <label class="form-label">${group.label}${
+              group.validation ? " *" : ""
+            }</label>
+          <div id="${group.id}" data-validation='${validationData}'>
+            ${group.options
+              .map(
+                (option) => `
+              <div class="form-check">
+                <input class="form-check-input" type="radio" 
+                  name="${group.name}" id="${option.id}" 
+                  value="${option.value}" ${option.checked ? "checked" : ""}>
+                <label class="form-check-label" for="${option.id}">
+                  ${option.label}
+                </label>
+              </div>
+            `
+              )
+              .join("")}
+          </div>
+          <div class="invalid-feedback" id="${
+            group.name
+          }-error">Vui lòng chọn ${group.label.toLowerCase()}.</div>
+        </div>
+      `;
+          })
+          .join("")
+      : "";
+
+    // Generate checkbox groups HTML
+    const checkboxGroupsHtml = this.checkboxGroups
+      ? this.checkboxGroups
+          .map((group) => {
+            const validationData = group.validation
+              ? JSON.stringify({
+                  required: group.validation || false,
+                  errorMessage: "Vui lòng chọn ít nhất một tùy chọn",
+                })
+              : "";
+
+            return `
+        <div class="mb-3 form-group${group.validation ? " required" : ""}">
+          <label class="form-label">${group.label}${
+              group.validation ? " *" : ""
+            }</label>
+          <div id="${group.id}" data-validation='${validationData}'>
+            ${group.options
+              .map(
+                (option) => `
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" 
+                  name="chkSkills" id="${option.id}" 
+                  value="${option.value}">
+                <label class="form-check-label" for="${option.id}">
+                  ${option.label}
+                </label>
+              </div>
+            `
+              )
+              .join("")}
+          </div>
+          <div class="invalid-feedback" id="chkSkills-error">Vui lòng chọn ít nhất một ${group.label.toLowerCase()}.</div>
+        </div>
+      `;
+          })
+          .join("")
+      : "";
+
+    // Return complete modal HTML
     return `
-            <div class="modal fade" id="${this.modalId}" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <!-- Modal header -->
-                        <div class="modal-header">
-                            <h2 class="modal-title" id="modalLabel">${this.title}</h2>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-
-                        <!-- Modal body with registration form -->
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <!-- Form fields will be generated here in real implementation -->
-                                <div class="text-center text-muted">
-                                    [Modal Registration Form with ${this.formFields.length} fields]
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Modal footer -->
-                        <div class="modal-footer d-flex justify-content-end">
-                            <button type="button" class="btn btn-success btn-sm me-2" onclick="DangKy()">
-                                ${this.registerBtnText}
-                            </button>
-                            <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">
-                                ${this.cancelBtnText}
-                            </button>
-                        </div>
-                    </div>
+      <div class="modal fade" id="${
+        this.modalId
+      }" tabindex="-1" aria-labelledby="${
+      this.modalId
+    }Label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="${this.modalId}Label">${
+      this.title
+    }</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="registrationForm" data-target-table="memberList">
+                ${formFieldsHtml}
+                ${radioGroupsHtml}
+                ${checkboxGroupsHtml}
+                <div class="d-grid gap-2">
+                  <button type="submit" class="btn btn-primary">${
+                    this.registerBtnText || "Đăng ký"
+                  }</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">${
+                    this.cancelBtnText || "Hủy"
+                  }</button>
                 </div>
+              </form>
             </div>
-        `;
-  }
-
-  getPropertyControls() {
-    return `
-            <div class="mb-2">
-                <label for="prop-modal-title" class="form-label">Modal Title</label>
-                <input type="text" class="form-control form-control-sm" id="prop-modal-title" 
-                       value="${this.title}" data-property="title">
-            </div>
-            <div class="mb-2">
-                <label for="prop-modal-id" class="form-label">Modal ID</label>
-                <input type="text" class="form-control form-control-sm" id="prop-modal-id" 
-                       value="${this.modalId}" data-property="modalId">
-            </div>
-            <div class="mb-2">
-                <label for="prop-register-btn" class="form-label">Register Button Text</label>
-                <input type="text" class="form-control form-control-sm" id="prop-register-btn" 
-                       value="${this.registerBtnText}" data-property="registerBtnText">
-            </div>
-            <div class="mb-2">
-                <label for="prop-cancel-btn" class="form-label">Cancel Button Text</label>
-                <input type="text" class="form-control form-control-sm" id="prop-cancel-btn" 
-                       value="${this.cancelBtnText}" data-property="cancelBtnText">
-            </div>
-            <div class="mb-2">
-                <label class="form-label">Form Fields</label>
-                <div class="form-text mb-2 small">Form field editing available in advanced mode</div>
-            </div>
-        `;
+          </div>
+        </div>
+      </div>
+    `;
   }
 }
 

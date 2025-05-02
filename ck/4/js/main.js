@@ -21,6 +21,7 @@ function checkName() {
     return false;
   }
 
+  // Clear error message if validation passes
   $("#erName").text("");
   return true;
 }
