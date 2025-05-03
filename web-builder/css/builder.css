@@ -1,0 +1,85 @@
+.min-height-300 {
+    min-height: 300px;
+}
+
+/* Field editor styles */
+.form-field {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-field:hover {
+    background-color: #f8f9fa;
+}
+
+.form-field.selected {
+    border: 2px solid #0d6efd;
+    background-color: #e7f1ff;
+}
+
+/* Preview section */
+#previewTable {
+    min-width: 100%;
+}
+
+/* Option item styles for radio/checkbox creator */
+.option-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    padding: 5px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}
+
+.option-item .btn-remove-option {
+    margin-left: 10px;
+}
+
+/* Code preview style */
+pre {
+    white-space: pre-wrap;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Custom styles for color inputs */
+.form-control-color {
+    width: 50px;
+    padding: 0.25rem;
+}
+
+/* Draggable field style */
+.dragging {
+    opacity: 0.5;
+    border: 2px dashed #0d6efd;
+}
+
+/* Template selection styles */
+.template-card {
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin-bottom: 20px;
+}
+
+.template-card:hover {
+    transform: translateY(-5px);
+}
+
+.template-card .card {
+    height: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.template-card .card-img-top {
+    height: 180px;
+    object-fit: cover;
+}
+
+.template-card.selected .card {
+    border: 3px solid #0d6efd;
+}
