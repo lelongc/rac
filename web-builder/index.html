@@ -391,6 +391,9 @@
                 <button class="btn btn-light btn-sm" id="moveFieldDown">
                   ↓
                 </button>
+                <button class="btn btn-warning btn-sm" id="editField">
+                  Sửa trường
+                </button>
                 <button class="btn btn-danger btn-sm" id="removeField">
                   Xóa trường
                 </button>
@@ -408,7 +411,25 @@
                   </button>
                 </div>
                 <div class="col-md-6">
-                  <h6>Bảng hiển thị</h6>
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-2"
+                  >
+                    <h6>Bảng hiển thị</h6>
+                    <div>
+                      <button
+                        class="btn btn-success btn-sm"
+                        id="addTableColumn"
+                      >
+                        Thêm cột
+                      </button>
+                      <button
+                        class="btn btn-danger btn-sm"
+                        id="removeTableColumn"
+                      >
+                        Xóa cột
+                      </button>
+                    </div>
+                  </div>
                   <div class="table-responsive">
                     <table class="table table-bordered" id="previewTable">
                       <thead>
@@ -625,6 +646,253 @@
                 Tải xuống tất cả (ZIP)
               </button>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Field Modal -->
+    <div
+      class="modal fade"
+      id="editFieldModal"
+      tabindex="-1"
+      aria-labelledby="editFieldModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editFieldModalLabel">Sửa trường</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="editFieldForm">
+              <div class="mb-3">
+                <label for="editFieldLabel" class="form-label"
+                  >Nhãn trường</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="editFieldLabel"
+                  required
+                />
+              </div>
+
+              <div class="mb-3">
+                <label for="editFieldName" class="form-label">ID trường</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="editFieldName"
+                  required
+                />
+              </div>
+
+              <div class="mb-3">
+                <label for="editFieldPlaceholder" class="form-label"
+                  >Placeholder</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="editFieldPlaceholder"
+                />
+              </div>
+
+              <div class="mb-3">
+                <label for="editValidationRegex" class="form-label"
+                  >Biểu thức regex kiểm tra</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="editValidationRegex"
+                />
+              </div>
+
+              <div class="mb-3">
+                <label for="editErrorMessage" class="form-label"
+                  >Thông báo lỗi</label
+                >
+                <input type="text" class="form-control" id="editErrorMessage" />
+              </div>
+
+              <div class="mb-3 form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  id="editRequiredField"
+                />
+                <label class="form-check-label" for="editRequiredField"
+                  >Bắt buộc</label
+                >
+              </div>
+
+              <div id="editOptionsContainer" class="mb-3 d-none">
+                <label class="form-label">Tùy chọn</label>
+                <div class="input-group mb-2">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="editOptionValue"
+                    placeholder="Giá trị"
+                  />
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="editOptionLabel"
+                    placeholder="Nhãn hiển thị"
+                  />
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    id="addEditOption"
+                  >
+                    +
+                  </button>
+                </div>
+                <div id="editOptionsList"></div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Đóng
+            </button>
+            <button type="button" class="btn btn-primary" id="saveFieldChanges">
+              Lưu thay đổi
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Table Column Modal -->
+    <div
+      class="modal fade"
+      id="addColumnModal"
+      tabindex="-1"
+      aria-labelledby="addColumnModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addColumnModalLabel">Thêm cột mới</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="addColumnForm">
+              <div class="mb-3">
+                <label for="columnTitle" class="form-label">Tiêu đề cột</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="columnTitle"
+                  required
+                />
+              </div>
+
+              <div class="mb-3">
+                <label for="columnDataSource" class="form-label"
+                  >Nguồn dữ liệu</label
+                >
+                <select class="form-select" id="columnDataSource">
+                  <option value="none">-- Chọn trường --</option>
+                  <!-- Form fields will be added here -->
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="columnCustomFormat" class="form-label"
+                  >Định dạng hiển thị (tùy chọn)</label
+                >
+                <select class="form-select" id="columnCustomFormat">
+                  <option value="none">Không định dạng</option>
+                  <option value="date">Định dạng ngày (DD/MM/YYYY)</option>
+                  <option value="list">Dạng danh sách</option>
+                  <option value="custom">Tùy chỉnh</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Đóng
+            </button>
+            <button type="button" class="btn btn-primary" id="saveNewColumn">
+              Thêm cột
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Remove Table Column Modal -->
+    <div
+      class="modal fade"
+      id="removeColumnModal"
+      tabindex="-1"
+      aria-labelledby="removeColumnModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="removeColumnModalLabel">Xóa cột</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="removeColumnForm">
+              <div class="mb-3">
+                <label for="columnToRemove" class="form-label"
+                  >Chọn cột cần xóa</label
+                >
+                <select class="form-select" id="columnToRemove" required>
+                  <!-- Columns will be added here -->
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Đóng
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              id="confirmRemoveColumn"
+            >
+              Xóa cột
+            </button>
           </div>
         </div>
       </div>

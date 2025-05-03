@@ -6,6 +6,7 @@
 // Store all form fields
 let formFields = [];
 let selectedFieldIndex = -1;
+let tableColumns = []; // To store custom table columns
 let commonRegexPatterns = {
   name: "^[A-Z][a-z]*(s+[A-Z][a-z]*)+$", // Mỗi từ bắt đầu bằng chữ hoa
   phone: "^(09|03|08)\\d{8}$", // 10 số bắt đầu với 09, 03, 08
@@ -82,11 +83,25 @@ $(document).ready(function () {
   $("#moveFieldDown").on("click", moveFieldDown);
   $("#removeField").on("click", removeSelectedField);
 
+  // Handle field editing
+  $("#editField").on("click", openEditFieldModal);
+  $("#saveFieldChanges").on("click", saveFieldChanges);
+  $("#addEditOption").on("click", addEditOption);
+  $("#editOptionsList").on("click", ".btn-remove-option", function () {
+    $(this).parent().remove();
+  });
+
   // Handle submit button addition
   $("#addSubmitButton").on("click", addSubmitButton);
 
   // Apply visual changes
   $("#applyChanges").on("click", applyStyleChanges);
+
+  // Handle table column management
+  $("#addTableColumn").on("click", openAddColumnModal);
+  $("#saveNewColumn").on("click", saveNewColumn);
+  $("#removeTableColumn").on("click", openRemoveColumnModal);
+  $("#confirmRemoveColumn").on("click", removeTableColumn);
 
   // Generate and show code
   $("#generateCode").on("click", generateAndShowCode);
@@ -134,10 +149,14 @@ function loadTemplate(templateName) {
     $(".template-card").removeClass("selected");
     $(`.template-card[data-template="${templateName}"]`).addClass("selected");
 
-    // Update table headers if provided
+    // Set custom table columns if provided
     if (template.tableHeaders && template.tableHeaders.length > 0) {
-      // Store the headers for later use
-      window.customTableHeaders = template.tableHeaders;
+      tableColumns = template.tableHeaders.slice(1).map((header) => {
+        return {
+          title: header,
+          dataSource: "custom",
+        };
+      });
     }
 
     // Show the builder interface
@@ -169,6 +188,7 @@ function populateRegexPatterns() {
 
   // Link the input to the datalist
   $("#validationRegex").attr("list", "regexPatterns");
+  $("#editValidationRegex").attr("list", "regexPatterns");
 }
 
 // Add a new field to the form builder
@@ -232,6 +252,205 @@ function addFieldToBuilder() {
   $("#fieldType").val("text");
 
   // Generate code
+  generateCode();
+}
+
+// Open edit field modal
+function openEditFieldModal() {
+  if (selectedFieldIndex < 0) {
+    alert("Vui lòng chọn một trường để sửa.");
+    return;
+  }
+
+  const field = formFields[selectedFieldIndex];
+
+  // Populate the edit form with current field values
+  $("#editFieldLabel").val(field.label);
+  $("#editFieldName").val(field.name);
+  $("#editFieldPlaceholder").val(field.placeholder || "");
+  $("#editValidationRegex").val(field.regex || "");
+  $("#editErrorMessage").val(field.errorMessage || "");
+  $("#editRequiredField").prop("checked", field.required);
+
+  // Handle options for radio/checkbox
+  $("#editOptionsList").empty();
+  if (field.type === "radio" || field.type === "checkbox") {
+    $("#editOptionsContainer").removeClass("d-none");
+
+    // Add existing options
+    if (field.options && field.options.length > 0) {
+      field.options.forEach((option) => {
+        const optionItem = $(`
+                    <div class="option-item">
+                        <span class="me-2">${option.label} (${option.value})</span>
+                        <button type="button" class="btn btn-sm btn-outline-danger btn-remove-option">✕</button>
+                    </div>
+                `);
+        $("#editOptionsList").append(optionItem);
+      });
+    }
+  } else {
+    $("#editOptionsContainer").addClass("d-none");
+  }
+
+  // Show the modal
+  const editFieldModal = new bootstrap.Modal(
+    document.getElementById("editFieldModal")
+  );
+  editFieldModal.show();
+}
+
+// Add option in edit modal
+function addEditOption() {
+  const optionValue = $("#editOptionValue").val().trim();
+  const optionLabel = $("#editOptionLabel").val().trim();
+
+  if (optionValue && optionLabel) {
+    const optionItem = $(`
+            <div class="option-item">
+                <span class="me-2">${optionLabel} (${optionValue})</span>
+                <button type="button" class="btn btn-sm btn-outline-danger btn-remove-option">✕</button>
+            </div>
+        `);
+
+    $("#editOptionsList").append(optionItem);
+    $("#editOptionValue, #editOptionLabel").val("");
+  }
+}
+
+// Save field changes
+function saveFieldChanges() {
+  if (selectedFieldIndex < 0) return;
+
+  const field = formFields[selectedFieldIndex];
+
+  // Update field properties
+  field.label = $("#editFieldLabel").val().trim();
+  field.name = $("#editFieldName").val().trim();
+  field.placeholder = $("#editFieldPlaceholder").val().trim();
+  field.regex = $("#editValidationRegex").val().trim();
+  field.errorMessage =
+    $("#editErrorMessage").val().trim() || "Dữ liệu không hợp lệ!";
+  field.required = $("#editRequiredField").prop("checked");
+
+  // Update options if it's a radio/checkbox
+  if (field.type === "radio" || field.type === "checkbox") {
+    field.options = [];
+    $("#editOptionsList .option-item").each(function () {
+      const text = $(this).find("span").text();
+      const value = text.match(/\((.*?)\)$/)[1];
+      const label = text.replace(/ \((.*?)\)$/, "");
+      field.options.push({ value, label });
+    });
+  }
+
+  // Close the modal
+  bootstrap.Modal.getInstance(document.getElementById("editFieldModal")).hide();
+
+  // Refresh the form builder
+  refreshFormBuilder();
+}
+
+// Open add column modal
+function openAddColumnModal() {
+  // Clear previous entries
+  $("#columnTitle").val("");
+
+  // Populate data source dropdown with current form fields
+  const dataSourceSelect = $("#columnDataSource");
+  dataSourceSelect.empty();
+  dataSourceSelect.append('<option value="none">-- Chọn trường --</option>');
+
+  formFields.forEach((field, index) => {
+    dataSourceSelect.append(`<option value="${index}">${field.label}</option>`);
+  });
+
+  // Show the modal
+  const addColumnModal = new bootstrap.Modal(
+    document.getElementById("addColumnModal")
+  );
+  addColumnModal.show();
+}
+
+// Save new column
+function saveNewColumn() {
+  const columnTitle = $("#columnTitle").val().trim();
+  const dataSourceIndex = $("#columnDataSource").val();
+  const customFormat = $("#columnCustomFormat").val();
+
+  if (!columnTitle) {
+    alert("Vui lòng nhập tiêu đề cho cột.");
+    return;
+  }
+
+  // Create new column definition
+  const newColumn = {
+    title: columnTitle,
+    dataSource:
+      dataSourceIndex === "none" ? "custom" : parseInt(dataSourceIndex),
+    format: customFormat,
+  };
+
+  // Add to columns array
+  tableColumns.push(newColumn);
+
+  // Close modal
+  bootstrap.Modal.getInstance(document.getElementById("addColumnModal")).hide();
+
+  // Update table headers
+  updateTableHeaders();
+
+  // Generate updated code
+  generateCode();
+}
+
+// Open remove column modal
+function openRemoveColumnModal() {
+  if (tableColumns.length === 0) {
+    alert("Không còn cột nào để xóa.");
+    return;
+  }
+
+  // Populate column select dropdown
+  const columnSelect = $("#columnToRemove");
+  columnSelect.empty();
+
+  tableColumns.forEach((column, index) => {
+    columnSelect.append(`<option value="${index}">${column.title}</option>`);
+  });
+
+  // Show the modal
+  const removeColumnModal = new bootstrap.Modal(
+    document.getElementById("removeColumnModal")
+  );
+  removeColumnModal.show();
+}
+
+// Remove a table column
+function removeTableColumn() {
+  const columnIndex = parseInt($("#columnToRemove").val());
+
+  if (
+    isNaN(columnIndex) ||
+    columnIndex < 0 ||
+    columnIndex >= tableColumns.length
+  ) {
+    alert("Vui lòng chọn cột cần xóa.");
+    return;
+  }
+
+  // Remove the column
+  tableColumns.splice(columnIndex, 1);
+
+  // Close modal
+  bootstrap.Modal.getInstance(
+    document.getElementById("removeColumnModal")
+  ).hide();
+
+  // Update table headers
+  updateTableHeaders();
+
+  // Generate updated code
   generateCode();
 }
 
@@ -310,18 +529,16 @@ function renderFormField(field, index) {
   $("#formBuilder").append(fieldHTML);
 }
 
-// Update table headers based on form fields
+// Update table headers based on form fields or custom columns
 function updateTableHeaders() {
   // Start with STT header
   $("#tableHeader").empty().append("<th>STT</th>");
 
-  // Use custom headers if provided, otherwise generate from form fields
-  if (window.customTableHeaders && window.customTableHeaders.length > 0) {
-    // Skip the first entry if it's "STT" since we already added it
-    const startIndex = window.customTableHeaders[0] === "STT" ? 1 : 0;
-    for (let i = startIndex; i < window.customTableHeaders.length; i++) {
-      $("#tableHeader").append(`<th>${window.customTableHeaders[i]}</th>`);
-    }
+  // Use custom columns if defined, otherwise use form fields
+  if (tableColumns.length > 0) {
+    tableColumns.forEach((column) => {
+      $("#tableHeader").append(`<th>${column.title}</th>`);
+    });
   } else {
     formFields.forEach((field) => {
       $("#tableHeader").append(`<th>${field.label}</th>`);
@@ -444,7 +661,7 @@ function generateCode() {
   $("#jsCode").text(jsCode);
 }
 
-// Generate the HTML code
+// Generate the HTML code with inline CSS and embedded JavaScript
 function generateHTML(config) {
   let formFieldsHTML = "";
   formFields.forEach((field) => {
@@ -458,14 +675,34 @@ function generateHTML(config) {
         </div>
     </div>`;
 
+  // Create table header columns
+  let tableHeadersHTML = "<th>STT</th>";
+  if (tableColumns.length > 0) {
+    tableColumns.forEach((column) => {
+      tableHeadersHTML += `<th>${column.title}</th>`;
+    });
+  } else {
+    formFields.forEach((field) => {
+      tableHeadersHTML += `<th>${field.label}</th>`;
+    });
+  }
+
+  // Generate CSS
+  const cssStyles = generateCSS(config);
+
+  // Generate JavaScript
+  const jsCode = generateJavaScript();
+
   return `<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${config.websiteTitle}</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+${cssStyles}
+    </style>
 </head>
 <body>
     <div class="container" id="main-container">
@@ -494,10 +731,7 @@ function generateHTML(config) {
                     <table class="table table-bordered" id="dataTable">
                         <thead>
                             <tr>
-                                <th>STT</th>
-                                ${formFields
-                                  .map((field) => `<th>${field.label}</th>`)
-                                  .join("")}
+                                ${tableHeadersHTML}
                             </tr>
                         </thead>
                         <tbody>
@@ -514,9 +748,11 @@ function generateHTML(config) {
         </footer>
     </div>
 
-    <script src="js/jquery-3.7.1.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+${jsCode}
+    </script>
 </body>
 </html>`;
 }
@@ -542,6 +778,25 @@ function generateFieldHTML(field) {
                placeholder="${field.placeholder}" ${
       field.required ? "required" : ""
     }>
+        <div class="invalid-feedback">${field.errorMessage}</div>`;
+  } else if (field.type === "file") {
+    html += `
+        <input type="${field.type}" class="form-control" id="${
+      field.name
+    }" name="${field.name}" 
+               accept="image/*" ${field.required ? "required" : ""}>
+        <div class="invalid-feedback">${field.errorMessage}</div>`;
+  } else if (field.type === "select") {
+    html += `
+        <select class="form-select" id="${field.name}" name="${field.name}" ${
+      field.required ? "required" : ""
+    }>`;
+    field.options.forEach((option) => {
+      html += `
+            <option value="${option.value}">${option.label}</option>`;
+    });
+    html += `
+        </select>
         <div class="invalid-feedback">${field.errorMessage}</div>`;
   } else if (field.type === "radio") {
     field.options.forEach((option) => {
@@ -599,6 +854,10 @@ function generateCSS(config) {
     margin-bottom: 20px;
 }
 
+#header h1 {
+    color: ${config.headerTextColor};
+}
+
 #content {
     padding: 0 20px;
 }
@@ -609,6 +868,11 @@ function generateCSS(config) {
     text-align: center;
     padding: 15px 0;
     margin-top: 20px;
+}
+
+#footer p {
+    color: ${config.footerTextColor};
+    margin: 0;
 }
 
 .text-danger {
@@ -682,9 +946,40 @@ ${fieldValidators}
             $(".is-invalid").removeClass("is-invalid");
         }
     });
+
+    // Initialize any file input preview functionality
+    $("input[type='file']").on("change", function() {
+        if (this.files && this.files[0]) {
+            const reader = new FileReader();
+            const previewId = this.id + "Preview";
+            
+            // Check if preview element exists, if not create it
+            if ($("#" + previewId).length === 0) {
+                $(this).after('<img id="' + previewId + '" src="" class="mt-2 img-thumbnail" style="max-width: 200px; display: none;">');
+            }
+            
+            reader.onload = function(e) {
+                $("#" + previewId).attr('src', e.target.result).show();
+            };
+            
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
 });
 
 ${validationFunctions}
+
+/**
+ * Helper function for date formatting
+ */
+function formatDate(dateString) {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
+    return \`\${day}/\${month}/\${year}\`;
+}
 
 /**
  * Add data from form to the table
@@ -736,6 +1031,65 @@ function ${functionName}() {
     return true;
 }
 `;
+  } else if (field.type === "file") {
+    return `
+/**
+ * Validate the ${field.label} field
+ */
+function ${functionName}() {
+    var fileInput = $("#${field.name}")[0];
+    
+    // Check if file is required and selected
+    if (${field.required} && fileInput.files.length === 0) {
+        $("#${field.name}").addClass("is-invalid");
+        return false;
+    }
+    
+    $("#${field.name}").removeClass("is-invalid");
+    return true;
+}
+`;
+  } else if (field.type === "date") {
+    // Special validation for date
+    return `
+/**
+ * Validate the ${field.label} field
+ */
+function ${functionName}() {
+    var value = $("#${field.name}").val();
+    
+    // Check if value is empty and field is required
+    if (${field.required} && value.trim() === "") {
+        $("#${field.name}").addClass("is-invalid");
+        return false;
+    }
+    
+    // Validate date if needed
+    if (value.trim() !== "") {
+        var dateValue = new Date(value);
+        var today = new Date();
+        
+        ${
+          field.validateFunction
+            ? `
+        // Custom date validation function
+        if (!${field.validateFunction}()) {
+            $("#${field.name}").addClass("is-invalid");
+            return false;
+        }`
+            : `
+        // Default date validation (just check if it's a valid date)
+        if (isNaN(dateValue.getTime())) {
+            $("#${field.name}").addClass("is-invalid");
+            return false;
+        }`
+        }
+    }
+    
+    $("#${field.name}").removeClass("is-invalid");
+    return true;
+}
+`;
   } else {
     return `
 /**
@@ -751,7 +1105,7 @@ function ${functionName}() {
     }
     
     // Check against regex pattern if not empty
-    if (value.trim() !== "") {
+    if (value.trim() !== "" && "${field.regex}") {
         var regex = /${field.regex}/;
         if (!regex.test(value)) {
             $("#${field.name}").addClass("is-invalid");
@@ -780,6 +1134,10 @@ function generateValidationListeners() {
         listeners += `    $("input[name='${
           field.name
         }[]']").on("change", check${capitalizeFirstLetter(field.name)});\n`;
+      } else if (field.type === "file") {
+        listeners += `    $("#${
+          field.name
+        }").on("change", check${capitalizeFirstLetter(field.name)});\n`;
       } else {
         listeners += `    $("#${
           field.name
@@ -813,6 +1171,13 @@ function generateFormDataCollection() {
       collection += `    $("input[name='${field.name}[]']:checked").each(function() {\n`;
       collection += `        ${field.name}.push($(this).val());\n`;
       collection += `    });\n`;
+    } else if (field.type === "file") {
+      collection += `    let ${field.name} = "";\n`;
+      collection += `    if ($("#${field.name}")[0].files.length > 0) {\n`;
+      collection += `        ${field.name} = $("#${
+        field.name + "Preview"
+      }").attr("src");\n`;
+      collection += `    }\n`;
     } else {
       collection += `    const ${field.name} = $("#${field.name}").val();\n`;
     }
@@ -825,15 +1190,39 @@ function generateFormDataCollection() {
 function generateTableCells() {
   let cells = "";
 
-  formFields.forEach((field) => {
-    if (field.type === "checkbox") {
-      cells += `        <td>\${${field.name}.join(", ")}</td>\n`;
-    } else if (field.type === "date") {
-      cells += `        <td>\${formatDate(${field.name})}</td>\n`;
-    } else {
-      cells += `        <td>\${${field.name}}</td>\n`;
-    }
-  });
+  // Use custom columns if defined, otherwise use form fields
+  if (tableColumns.length > 0) {
+    tableColumns.forEach((column) => {
+      if (column.dataSource === "custom") {
+        cells += `        <td>--</td>\n`; // Placeholder for custom columns
+      } else {
+        const field = formFields[column.dataSource];
+        if (!field) {
+          cells += `        <td>--</td>\n`;
+        } else if (field.type === "checkbox") {
+          cells += `        <td>\${${field.name}.join(", ")}</td>\n`;
+        } else if (field.type === "date" || column.format === "date") {
+          cells += `        <td>\${formatDate(${field.name})}</td>\n`;
+        } else if (field.type === "file") {
+          cells += `        <td><img src="\${${field.name}}" width="50" height="50" /></td>\n`;
+        } else {
+          cells += `        <td>\${${field.name}}</td>\n`;
+        }
+      }
+    });
+  } else {
+    formFields.forEach((field) => {
+      if (field.type === "checkbox") {
+        cells += `        <td>\${${field.name}.join(", ")}</td>\n`;
+      } else if (field.type === "date") {
+        cells += `        <td>\${formatDate(${field.name})}</td>\n`;
+      } else if (field.type === "file") {
+        cells += `        <td><img src="\${${field.name}}" width="50" height="50" /></td>\n`;
+      } else {
+        cells += `        <td>\${${field.name}}</td>\n`;
+      }
+    });
+  }
 
   return cells;
 }
@@ -857,14 +1246,13 @@ function generateAndShowCode() {
     footerText: "MSSV: 23630851 | Họ tên: Lê Thành Long",
   };
 
-  const htmlCode = generateHTML(config);
-  const cssCode = generateCSS(config);
-  const jsCode = generateJavaScript();
+  // Create single HTML file with embedded CSS and JS
+  const completeHtml = generateHTML(config);
 
   // Display in the export modal
-  $("#exportHtmlCode").text(htmlCode);
-  $("#exportCssCode").text(cssCode);
-  $("#exportJsCode").text(jsCode);
+  $("#exportHtmlCode").text(completeHtml);
+  $("#exportCssCode").text("");
+  $("#exportJsCode").text("");
 
   // Show the modal
   new bootstrap.Modal(document.getElementById("exportModal")).show();
@@ -883,94 +1271,8 @@ function previewWebsite() {
     footerText: "MSSV: 23630851 | Họ tên: Lê Thành Long",
   };
 
-  const htmlCode = generateHTML(config);
-  const cssCode = generateCSS(config);
-  const jsCode = generateJavaScript();
-
-  // Create a full HTML document with inline CSS and JS
-  const previewDoc = `
-    <!DOCTYPE html>
-    <html lang="vi">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>${config.websiteTitle} - Preview</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-        <style>
-            ${cssCode}
-        </style>
-    </head>
-    <body>
-        <div class="container" id="main-container">
-            <!-- Header -->
-            <header id="header">
-                <h1>${config.websiteTitle}</h1>
-            </header>
-            
-            <!-- Main content -->
-            <div class="row" id="content">
-                <div class="col-md-6">
-                    <!-- Form -->
-                    <div id="form-container">
-                        <h3>Đăng ký thông tin</h3>
-                        <form id="registrationForm">
-                            ${formFields
-                              .map((field) => generateFieldHTML(field))
-                              .join("")}
-                            <div class="row mt-3">
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-primary">Gửi</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                
-                <div class="col-md-6">
-                    <!-- Table -->
-                    <div id="table-container">
-                        <h3>Danh sách đăng ký</h3>
-                        <table class="table table-bordered" id="dataTable">
-                            <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    ${formFields
-                                      .map((field) => `<th>${field.label}</th>`)
-                                      .join("")}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Data will be added here -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Footer -->
-            <footer id="footer">
-                <p>${config.footerText}</p>
-            </footer>
-        </div>
-
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-        <script>
-            ${jsCode}
-            
-            // Helper function for date formatting
-            function formatDate(dateString) {
-                if (!dateString) return "";
-                const date = new Date(dateString);
-                const day = date.getDate().toString().padStart(2, "0");
-                const month = (date.getMonth() + 1).toString().padStart(2, "0");
-                const year = date.getFullYear();
-                return \`\${day}/\${month}/\${year}\`;
-            }
-        </script>
-    </body>
-    </html>
-    `;
+  // Use the same HTML with embedded CSS and JS for preview
+  const previewDoc = generateHTML(config);
 
   // Set the preview iframe content
   const iframe = document.getElementById("previewFrame");
@@ -980,7 +1282,7 @@ function previewWebsite() {
   new bootstrap.Modal(document.getElementById("previewModal")).show();
 }
 
-// Download code as ZIP
+// Download code as ZIP - Now simplified to just generate a single HTML file
 $("#downloadZip").on("click", function () {
   const config = window.webConfig || {
     websiteTitle: "Website Builder",
@@ -993,26 +1295,12 @@ $("#downloadZip").on("click", function () {
     footerText: "MSSV: 23630851 | Họ tên: Lê Thành Long",
   };
 
-  const htmlCode = generateHTML(config);
-  const cssCode = generateCSS(config);
-  const jsCode = generateJavaScript();
+  // Create the single HTML file with everything embedded
+  const completeHtml = generateHTML(config);
 
-  // Create a new JSZip instance
-  const zip = new JSZip();
+  // Create a new Blob with the HTML content
+  const blob = new Blob([completeHtml], { type: "text/html;charset=utf-8" });
 
-  // Add files to the ZIP
-  zip.file("index.html", htmlCode);
-
-  // Add CSS folder and file
-  const cssFolder = zip.folder("css");
-  cssFolder.file("style.css", cssCode);
-
-  // Add JS folder and file
-  const jsFolder = zip.folder("js");
-  jsFolder.file("script.js", jsCode);
-
-  // Generate and download ZIP
-  zip.generateAsync({ type: "blob" }).then(function (content) {
-    saveAs(content, "website.zip");
-  });
+  // Use FileSaver.js to save the file
+  saveAs(blob, "complete-website.html");
 });
