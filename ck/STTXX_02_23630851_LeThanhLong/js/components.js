@@ -122,6 +122,7 @@ class NavigationComponent extends Component {
     this.registerButtonClass = "btn-danger"; // Color class: btn-danger, btn-primary, etc.
     this.registerButtonSize = "btn-sm"; // Size class: btn-sm, btn-lg, etc.
     this.orientation = "horizontal"; // New property: horizontal or vertical
+    this.modalTarget = "myModal"; // ID of the modal to open when clicking register button
     this.styles.backgroundColor = "#f8f9fa";
   }
 
@@ -138,7 +139,7 @@ class NavigationComponent extends Component {
     const registerButton = this.includeRegisterButton
       ? `<li class="nav-item">
                 <button class="btn ${this.registerButtonClass} ${this.registerButtonSize} text-white" 
-                        data-bs-toggle="modal" data-bs-target="#myModal">
+                        data-bs-toggle="modal" data-bs-target="#${this.modalTarget}">
                     ${this.registerButtonText}
                 </button>
             </li>`
@@ -183,6 +184,13 @@ class NavigationComponent extends Component {
                       this.includeRegisterButton ? "checked" : ""
                     } data-property="includeRegisterButton">
                 <label class="form-check-label" for="include-register-btn">Include Register Button</label>
+            </div>
+            
+            <div class="mb-2">
+                <label for="modal-target" class="form-label">Modal Target ID</label>
+                <input type="text" class="form-control form-control-sm" id="modal-target" 
+                       value="${this.modalTarget}" data-property="modalTarget">
+                <div class="form-text small">ID of the modal to open (without # prefix)</div>
             </div>
             
             <div class="mb-3">
@@ -286,20 +294,40 @@ class ModalComponent extends Component {
     this.title = "THÔNG TIN ĐĂNG KÍ";
     this.modalId = "myModal";
     this.formFields = [
-      { type: "text", label: "Họ và tên", id: "txtName", validation: true },
-      { type: "text", label: "Số điện thoại", id: "txtSDT", validation: true },
-      { type: "date", label: "Ngày sinh", id: "txtNgaysinh", validation: true },
+      {
+        type: "text",
+        label: "Họ và tên",
+        id: "txtName",
+        validation: true,
+        required: true,
+      },
+      {
+        type: "date",
+        label: "Ngày sinh",
+        id: "txtNgaysinh",
+        validation: true,
+        required: true,
+      },
+      {
+        type: "text",
+        label: "Số điện thoại",
+        id: "txtSDT",
+        validation: true,
+        required: true,
+      },
       {
         type: "email",
         label: "Email",
         id: "txtEmail",
         placeholder: "your.email@example.com",
         validation: true,
+        required: true,
       },
       {
         type: "select",
         label: "Khóa học",
         id: "slKhoahoc",
+        required: true,
         options: [
           { value: "3", text: "Anh văn cơ bản", "data-name": "Anh văn cơ bản" },
           {
@@ -352,6 +380,7 @@ class ModalComponent extends Component {
     ];
     this.registerBtnText = "Đăng kí";
     this.cancelBtnText = "Hủy";
+    this.tableTarget = "memberList"; // Target table ID for form submission
   }
 
   getTemplate() {
@@ -533,7 +562,9 @@ class ModalComponent extends Component {
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form id="registrationForm" data-target-table="memberList">
+              <form id="registrationForm" data-target-table="${
+                this.tableTarget
+              }">
                 ${formFieldsHtml}
                 ${radioGroupsHtml}
                 ${checkboxGroupsHtml}
@@ -549,6 +580,45 @@ class ModalComponent extends Component {
             </div>
           </div>
         </div>
+      </div>
+    `;
+  }
+
+  getPropertyControls() {
+    return `
+      <div class="mb-3">
+        <label for="prop-modal-title" class="form-label">Modal Title</label>
+        <input type="text" class="form-control form-control-sm" id="prop-modal-title" 
+               value="${this.title}" data-property="title">
+      </div>
+      <div class="mb-3">
+        <label for="prop-modal-id" class="form-label">Modal ID</label>
+        <input type="text" class="form-control form-control-sm" id="prop-modal-id" 
+               value="${this.modalId}" data-property="modalId">
+        <div class="form-text small">Must match the Modal Target ID in Navigation components</div>
+      </div>
+      <div class="mb-3">
+        <label for="prop-table-target" class="form-label">Target Table ID</label>
+        <input type="text" class="form-control form-control-sm" id="prop-table-target" 
+               value="${this.tableTarget}" data-property="tableTarget">
+        <div class="form-text small">Table ID where form data will be displayed</div>
+      </div>
+      <div class="mb-3">
+        <label for="prop-register-btn" class="form-label">Register Button Text</label>
+        <input type="text" class="form-control form-control-sm" id="prop-register-btn" 
+               value="${this.registerBtnText}" data-property="registerBtnText">
+      </div>
+      <div class="mb-3">
+        <label for="prop-cancel-btn" class="form-label">Cancel Button Text</label>
+        <input type="text" class="form-control form-control-sm" id="prop-cancel-btn" 
+               value="${this.cancelBtnText}" data-property="cancelBtnText">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Form Fields</label>
+        <p class="form-text small">Use the Form Fields section below to manage form inputs.</p>
+        <button id="add-form-field-btn" class="btn btn-sm btn-outline-primary w-100">
+          <i class="bi bi-plus-circle me-1"></i> Add/Edit Form Fields
+        </button>
       </div>
     `;
   }
@@ -622,6 +692,8 @@ class ImageTableLayoutComponent extends Component {
         { headerText: "Số điện thoại" },
         { headerText: "Email" },
         { headerText: "Khóa học" },
+        { headerText: "Hình thức học" },
+        { headerText: "Kỹ năng cần luyện" },
       ],
       showBorder: true,
       tableId: "imageTableData",
@@ -863,6 +935,7 @@ class NavTableLayoutComponent extends Component {
       registerButtonText: "Đăng ký",
       registerButtonClass: "btn-danger",
       registerButtonSize: "btn-sm",
+      modalTarget: "myModal", // Adding modal target ID
       position: "left", // left or right of table
     };
     this.table = {
@@ -874,6 +947,8 @@ class NavTableLayoutComponent extends Component {
         { headerText: "Số điện thoại" },
         { headerText: "Email" },
         { headerText: "Khóa học" },
+        { headerText: "Hình thức học" },
+        { headerText: "Kỹ năng cần luyện" },
       ],
       showBorder: true,
       tableId: "navTableData",
@@ -901,8 +976,12 @@ class NavTableLayoutComponent extends Component {
     const registerButton = this.navigation.includeRegisterButton
       ? `
           <li class="nav-item mt-2">
-              <button class="btn ${this.navigation.registerButtonClass} ${this.navigation.registerButtonSize} text-white" 
-                      data-bs-toggle="modal" data-bs-target="#myModal">
+              <button class="btn ${this.navigation.registerButtonClass} ${
+          this.navigation.registerButtonSize
+        } text-white" 
+                      data-bs-toggle="modal" data-bs-target="#${
+                        this.navigation.modalTarget || "myModal"
+                      }">
                   ${this.navigation.registerButtonText}
               </button>
           </li>`
@@ -980,6 +1059,15 @@ class NavTableLayoutComponent extends Component {
                     value="${
                       this.navigation.registerButtonText
                     }" data-property="navigation.registerButtonText">
+            </div>
+            
+            <div class="mb-2">
+                <label for="modal-target-id" class="form-label">Modal Target ID</label>
+                <input type="text" class="form-control form-control-sm" id="modal-target-id" 
+                    value="${
+                      this.navigation.modalTarget || "myModal"
+                    }" data-property="navigation.modalTarget">
+                <div class="form-text small">ID of the modal to open (without # prefix)</div>
             </div>
             
             <div class="mb-2">

@@ -281,7 +281,9 @@ ${formFieldsHTML}
 
                 <!-- Modal footer -->
                 <div class="modal-footer d-flex justify-content-end">
-                    <button type="button" class="btn btn-success btn-sm me-2" onclick="DangKy()">
+                    <button type="button" class="btn btn-success btn-sm me-2" onclick="DangKy('${
+                      component.tableTarget || "memberList"
+                    }')">
                         ${component.registerBtnText || "Đăng kí"}
                     </button>
                     <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal">
@@ -798,8 +800,9 @@ function formatDate(dateString) {
 /**
  * Register a new course enrollment
  * Validates all fields before proceeding
+ * @param {string} tableId - The ID of the table to add data to
  */
-function DangKy() {
+function DangKy(tableId = "memberList") {
   // Check all validations and store results
   var nameValid = true, dobValid = true, phoneValid = true, 
       emailValid = true, methodValid = true, skillsValid = true;
@@ -835,8 +838,8 @@ function DangKy() {
   // Format the date for display
   var formattedDate = formatDate(ngaysinh);
 
-  // Add new row to the table
-  var rowCount = $("#memberList tbody tr").length + 1;
+  // Add new row to the specified table
+  var rowCount = $("#" + tableId + " tbody tr").length + 1;
   var newRow = \`<tr>
                   <td>\${rowCount}</td>
                   <td>\${name}</td>
@@ -847,7 +850,7 @@ function DangKy() {
                   <td>\${hinhthuc}</td>
                   <td>\${skillsString}</td>
                 </tr>\`;
-  $("#memberList tbody").append(newRow);
+  $("#" + tableId + " tbody").append(newRow);
 
   // Hide the modal using Bootstrap 5
   var myModalEl = document.getElementById("myModal");

@@ -232,12 +232,20 @@
       const fieldId = e.target
         .closest(".edit-form-field-btn")
         .getAttribute("data-field-id");
-      editField(fieldId);
+      const fieldType =
+        e.target
+          .closest(".edit-form-field-btn")
+          .getAttribute("data-field-type") || "regular";
+      editField(fieldId, fieldType);
     } else if (e.target.closest(".delete-form-field-btn")) {
       const fieldId = e.target
         .closest(".delete-form-field-btn")
         .getAttribute("data-field-id");
-      deleteField(fieldId);
+      const fieldType =
+        e.target
+          .closest(".delete-form-field-btn")
+          .getAttribute("data-field-type") || "regular";
+      deleteField(fieldId, fieldType);
     }
     // Navigation link management
     else if (e.target.closest("#add-nav-link-btn")) {
@@ -366,43 +374,105 @@
    * Render the list of form fields for the modal component
    */
   function renderFormFieldsList(component) {
-    if (!component.formFields || component.formFields.length === 0) {
-      return '<p class="text-muted small">No form fields defined</p>';
+    let fieldsHtml = "";
+
+    // Regular form fields
+    if (component.formFields && component.formFields.length > 0) {
+      fieldsHtml += component.formFields
+        .map(
+          (field) => `
+        <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-2">
+            <div>
+                <span class="fw-bold">${field.label || "Untitled"}</span>
+                <br>
+                <small class="text-muted">${field.type || "text"} ${
+            field.id ? " - #" + field.id : ""
+          }</small>
+            </div>
+            <div>
+                <button class="btn btn-sm btn-outline-primary edit-form-field-btn" data-field-id="${
+                  field.id
+                }" data-field-type="regular">
+                    <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger delete-form-field-btn" data-field-id="${
+                  field.id
+                }" data-field-type="regular">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+        </div>
+      `
+        )
+        .join("");
     }
 
-    return `
-            <div class="list-group">
-                ${component.formFields
-                  .map(
-                    (field) => `
-                    <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-2">
-                        <div>
-                            <span class="fw-bold">${
-                              field.label || "Untitled"
-                            }</span>
-                            <br>
-                            <small class="text-muted">${field.type || "text"} ${
-                      field.id ? " - #" + field.id : ""
-                    }</small>
-                        </div>
-                        <div>
-                            <button class="btn btn-sm btn-outline-primary edit-form-field-btn" data-field-id="${
-                              field.id
-                            }">
-                                <i class="bi bi-pencil"></i>
-                            </button>
-                            <button class="btn btn-sm btn-outline-danger delete-form-field-btn" data-field-id="${
-                              field.id
-                            }">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                `
-                  )
-                  .join("")}
+    // Radio groups
+    if (component.radioGroups && component.radioGroups.length > 0) {
+      fieldsHtml += component.radioGroups
+        .map(
+          (group) => `
+        <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-2">
+            <div>
+                <span class="fw-bold">${group.label || "Untitled"}</span>
+                <br>
+                <small class="text-muted">Radio Group - ${
+                  group.options.length
+                } options - #${group.id}</small>
             </div>
-        `;
+            <div>
+                <button class="btn btn-sm btn-outline-primary edit-form-field-btn" data-field-id="${
+                  group.id
+                }" data-field-type="radio">
+                    <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger delete-form-field-btn" data-field-id="${
+                  group.id
+                }" data-field-type="radio">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+        </div>
+      `
+        )
+        .join("");
+    }
+
+    // Checkbox groups
+    if (component.checkboxGroups && component.checkboxGroups.length > 0) {
+      fieldsHtml += component.checkboxGroups
+        .map(
+          (group) => `
+        <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-2">
+            <div>
+                <span class="fw-bold">${group.label || "Untitled"}</span>
+                <br>
+                <small class="text-muted">Checkbox Group - ${
+                  group.options.length
+                } options - #${group.id}</small>
+            </div>
+            <div>
+                <button class="btn btn-sm btn-outline-primary edit-form-field-btn" data-field-id="${
+                  group.id
+                }" data-field-type="checkbox">
+                    <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger delete-form-field-btn" data-field-id="${
+                  group.id
+                }" data-field-type="checkbox">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+        </div>
+      `
+        )
+        .join("");
+    }
+
+    return (
+      fieldsHtml ||
+      '<div class="text-muted p-3 small">No form fields added yet. Click the "Add New Field" button below to add fields.</div>'
+    );
   }
 
   /**
@@ -430,22 +500,49 @@
   /**
    * Edit an existing form field
    */
-  function editField(fieldId) {
+  function editField(fieldId, fieldType = "regular") {
     if (!state.selectedComponent || state.selectedComponent.type !== "modal")
       return;
 
-    // Find the field in the component's formFields
-    const field = state.selectedComponent.formFields.find(
-      (f) => f.id === fieldId
-    );
+    const component = state.selectedComponent;
+    let field;
 
-    if (!field) {
-      console.error(`Field with id ${fieldId} not found`);
-      return;
+    // Find the field or group based on its type
+    switch (fieldType) {
+      case "radio":
+        field = component.radioGroups?.find((g) => g.id === fieldId);
+        if (field) {
+          // Create a field object compatible with our editor
+          state.currentEditingField = {
+            ...field,
+            isGroup: true,
+            groupType: "radio",
+          };
+        }
+        break;
+
+      case "checkbox":
+        field = component.checkboxGroups?.find((g) => g.id === fieldId);
+        if (field) {
+          // Create a field object compatible with our editor
+          state.currentEditingField = {
+            ...field,
+            isGroup: true,
+            groupType: "checkbox",
+          };
+        }
+        break;
+
+      default: // regular form field
+        field = component.formFields?.find((f) => f.id === fieldId);
+        if (field) {
+          // Regular fields don't need special handling
+          state.currentEditingField = { ...field };
+        }
+        break;
     }
 
-    // Set the current editing field
-    state.currentEditingField = { ...field }; // Clone to avoid direct modification
+    if (!state.currentEditingField) return;
 
     // Show the field editor
     renderFieldEditor();
@@ -469,6 +566,8 @@
     field.validation = field.validation || {};
     field.options = field.options || [];
     field.optionsLayout = field.optionsLayout || "vertical";
+    field.isGroup = field.isGroup || false;
+    field.groupType = field.groupType || "";
 
     fieldEditor.style.display = "block";
     fieldEditor.innerHTML = `
@@ -484,238 +583,172 @@
         </div>
       </div>
       
-      <ul class="nav nav-tabs mb-3" id="fieldEditorTabs" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button class="nav-link active" id="basic-tab" data-bs-toggle="tab" data-bs-target="#basic-pane" 
-            type="button" role="tab" aria-controls="basic-pane" aria-selected="true">Basic</button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="validation-tab" data-bs-toggle="tab" data-bs-target="#validation-pane" 
-            type="button" role="tab" aria-controls="validation-pane" aria-selected="false">Validation</button>
-        </li>
-        <li class="nav-item" id="options-tab-item" style="${
-          ["select", "radio", "checkbox"].includes(field.type)
-            ? ""
-            : "display: none;"
-        }">
-          <button class="nav-link" id="options-tab" data-bs-toggle="tab" data-bs-target="#options-pane" 
-            type="button" role="tab" aria-controls="options-pane" aria-selected="false">Options</button>
-        </li>
-      </ul>
-      
-      <div class="tab-content" id="fieldEditorTabContent">
-        <!-- Basic Properties Tab -->
-        <div class="tab-pane fade show active" id="basic-pane" role="tabpanel" aria-labelledby="basic-tab">
-          <div class="mb-2">
-            <label for="field-label" class="form-label small">Label Text</label>
-            <input type="text" class="form-control form-control-sm" id="field-label" 
-                value="${field.label || ""}" data-field-prop="label">
+      <div class="mb-2">
+        <label for="field-type-container" class="form-label">Field Type</label>
+        <div class="d-flex" id="field-type-container">
+          <div class="form-check me-3">
+            <input class="form-check-input" type="radio" name="fieldTypeGroup" id="regular-field" 
+              ${!field.isGroup ? "checked" : ""} value="regular">
+            <label class="form-check-label" for="regular-field">Regular Field</label>
           </div>
-          
-          <div class="mb-2">
-            <label for="field-id" class="form-label small">Field ID</label>
-            <input type="text" class="form-control form-control-sm" id="field-id" 
-                value="${field.id || ""}" data-field-prop="id">
-            <div class="form-text small">Use descriptive IDs like "txtFullName" or "slGender"</div>
+          <div class="form-check me-3">
+            <input class="form-check-input" type="radio" name="fieldTypeGroup" id="radio-group" 
+              ${
+                field.isGroup && field.groupType === "radio" ? "checked" : ""
+              } value="radio">
+            <label class="form-check-label" for="radio-group">Radio Group</label>
           </div>
-          
-          <div class="mb-2">
-            <label for="field-type" class="form-label small">Field Type</label>
-            <select class="form-select form-select-sm" id="field-type" data-field-prop="type">
-              <option value="text" ${
-                field.type === "text" ? "selected" : ""
-              }>Text</option>
-              <option value="email" ${
-                field.type === "email" ? "selected" : ""
-              }>Email</option>
-              <option value="number" ${
-                field.type === "number" ? "selected" : ""
-              }>Number</option>
-              <option value="date" ${
-                field.type === "date" ? "selected" : ""
-              }>Date</option>
-              <option value="password" ${
-                field.type === "password" ? "selected" : ""
-              }>Password</option>
-              <option value="textarea" ${
-                field.type === "textarea" ? "selected" : ""
-              }>Text Area</option>
-              <option value="select" ${
-                field.type === "select" ? "selected" : ""
-              }>Select Dropdown</option>
-              <option value="checkbox" ${
-                field.type === "checkbox" ? "selected" : ""
-              }>Checkbox Group</option>
-              <option value="radio" ${
-                field.type === "radio" ? "selected" : ""
-              }>Radio Group</option>
-            </select>
-          </div>
-          
-          <div class="mb-2" id="placeholder-container" ${
-            ["select", "checkbox", "radio"].includes(field.type)
-              ? 'style="display:none;"'
-              : ""
-          }>
-            <label for="field-placeholder" class="form-label small">Placeholder</label>
-            <input type="text" class="form-control form-control-sm" id="field-placeholder" 
-                value="${
-                  field.placeholder || ""
-                }" data-field-prop="placeholder">
-          </div>
-          
-          <div class="mb-2">
-            <label for="field-label-position" class="form-label small">Label Position</label>
-            <select class="form-select form-select-sm" id="field-label-position" data-field-prop="labelPosition">
-              <option value="left" ${
-                field.labelPosition === "left" ? "selected" : ""
-              }>Left of field</option>
-              <option value="above" ${
-                field.labelPosition === "above" ? "selected" : ""
-              }>Above field</option>
-            </select>
-          </div>
-          
-          <div class="mb-2 form-check">
-            <input type="checkbox" class="form-check-input" id="field-required" 
-                ${field.required ? "checked" : ""} data-field-prop="required">
-            <label class="form-check-label small" for="field-required">Required Field</label>
-          </div>
-        </div>
-        
-        <!-- Validation Tab -->
-        <div class="tab-pane fade" id="validation-pane" role="tabpanel" aria-labelledby="validation-tab">
-          <div class="mb-2 form-check">
-            <input type="checkbox" class="form-check-input" id="field-enable-validation" 
-                ${
-                  field.validation.enabled ? "checked" : ""
-                } data-validation-prop="enabled">
-            <label class="form-check-label small" for="field-enable-validation">Enable Validation</label>
-          </div>
-          
-          <div id="validation-options" ${
-            !field.validation.enabled ? 'style="display:none;"' : ""
-          }>
-            <div class="mb-2">
-              <label for="validation-regex" class="form-label small">Validation Pattern (Regex)</label>
-              <input type="text" class="form-control form-control-sm" id="validation-regex" 
-                  value="${
-                    field.validation.regex || ""
-                  }" data-validation-prop="regex">
-              <div class="form-text small">Example: ^[A-Z][a-z]* for capitalized words</div>
-            </div>
-            
-            <div class="mb-2">
-              <label for="validation-error-message" class="form-label small">Error Message</label>
-              <input type="text" class="form-control form-control-sm" id="validation-error-message" 
-                  value="${
-                    field.validation.errorMessage || ""
-                  }" data-validation-prop="errorMessage">
-            </div>
-            
-            <div class="mb-2">
-              <label class="form-label small mb-2">Validation Presets</label>
-              <div class="d-flex flex-wrap gap-1">
-                <button class="btn btn-sm btn-outline-secondary validation-preset" 
-                  data-regex="^[A-Z][a-z]*(\s+[A-Z][a-z]*)+$" 
-                  data-message="Each word must start with uppercase letter">
-                  Name Format
-                </button>
-                <button class="btn btn-sm btn-outline-secondary validation-preset" 
-                  data-regex="^(09|03|08)\d{8}$" 
-                  data-message="Phone must have 10 digits and start with 09, 03 or 08">
-                  VN Phone
-                </button>
-                <button class="btn btn-sm btn-outline-secondary validation-preset" 
-                  data-regex="^\S+@\S+\.\S{2,}$" 
-                  data-message="Please enter a valid email address">
-                  Email
-                </button>
-                <button class="btn btn-sm btn-outline-secondary validation-preset" 
-                  data-regex="^\d+$" 
-                  data-message="Please enter only numbers">
-                  Numbers Only
-                </button>
-              </div>
-            </div>
-            
-            <div class="row g-2 mb-2" id="number-range-container" style="${
-              field.type === "number" ? "" : "display:none;"
-            }">
-              <div class="col-6">
-                <label for="validation-min-value" class="form-label small">Min Value</label>
-                <input type="number" class="form-control form-control-sm" id="validation-min-value" 
-                    value="${
-                      field.validation.minValue || ""
-                    }" data-validation-prop="minValue">
-              </div>
-              <div class="col-6">
-                <label for="validation-max-value" class="form-label small">Max Value</label>
-                <input type="number" class="form-control form-control-sm" id="validation-max-value" 
-                    value="${
-                      field.validation.maxValue || ""
-                    }" data-validation-prop="maxValue">
-              </div>
-            </div>
-            
-            <div class="row g-2 mb-2" id="text-length-container" style="${
-              ["text", "email", "password", "textarea"].includes(field.type)
-                ? ""
-                : "display:none;"
-            }">
-              <div class="col-6">
-                <label for="validation-min-length" class="form-label small">Min Length</label>
-                <input type="number" class="form-control form-control-sm" id="validation-min-length" 
-                    value="${
-                      field.validation.minLength || ""
-                    }" data-validation-prop="minLength">
-              </div>
-              <div class="col-6">
-                <label for="validation-max-length" class="form-label small">Max Length</label>
-                <input type="number" class="form-control form-control-sm" id="validation-max-length" 
-                    value="${
-                      field.validation.maxLength || ""
-                    }" data-validation-prop="maxLength">
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Options Tab (for select, radio, checkbox) -->
-        <div class="tab-pane fade" id="options-pane" role="tabpanel" aria-labelledby="options-tab">
-          <div class="mb-2">
-            <label class="form-label small d-flex justify-content-between align-items-center">
-              Options List
-              <button id="add-option-btn" class="btn btn-sm btn-primary">
-                <i class="bi bi-plus-circle"></i> Add Option
-              </button>
-            </label>
-            
-            <div id="options-container" class="border rounded p-2 mb-2">
-              ${renderFieldOptions(field)}
-            </div>
-          </div>
-          
-          <div class="mb-2" id="options-layout-container" style="${
-            ["radio", "checkbox"].includes(field.type) ? "" : "display:none;"
-          }">
-            <label for="options-layout" class="form-label small">Options Layout</label>
-            <select class="form-select form-select-sm" id="options-layout" data-field-prop="optionsLayout">
-              <option value="vertical" ${
-                field.optionsLayout === "vertical" ? "selected" : ""
-              }>Vertical (Stacked)</option>
-              <option value="horizontal" ${
-                field.optionsLayout === "horizontal" ? "selected" : ""
-              }>Horizontal (Inline)</option>
-            </select>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="fieldTypeGroup" id="checkbox-group" 
+              ${
+                field.isGroup && field.groupType === "checkbox" ? "checked" : ""
+              } value="checkbox">
+            <label class="form-check-label" for="checkbox-group">Checkbox Group</label>
           </div>
         </div>
       </div>
       
-      <!-- Preview Area -->
-      <div id="field-preview-area" class="mt-3 p-2 border rounded" style="display:none;">
-        <h6 class="border-bottom pb-2 mb-2">Field Preview</h6>
-        <div id="field-preview-content"></div>
+      <!-- Regular field controls -->
+      <div id="regular-field-controls" style="${
+        field.isGroup ? "display:none;" : ""
+      }">
+        <div class="mb-2">
+          <label for="field-type" class="form-label">Input Type</label>
+          <select class="form-select form-select-sm" id="field-type" data-field-prop="type">
+            <option value="text" ${
+              field.type === "text" ? "selected" : ""
+            }>Text</option>
+            <option value="email" ${
+              field.type === "email" ? "selected" : ""
+            }>Email</option>
+            <option value="number" ${
+              field.type === "number" ? "selected" : ""
+            }>Number</option>
+            <option value="date" ${
+              field.type === "date" ? "selected" : ""
+            }>Date</option>
+            <option value="password" ${
+              field.type === "password" ? "selected" : ""
+            }>Password</option>
+            <option value="textarea" ${
+              field.type === "textarea" ? "selected" : ""
+            }>Text Area</option>
+            <option value="select" ${
+              field.type === "select" ? "selected" : ""
+            }>Select Dropdown</option>
+          </select>
+        </div>
+        
+        <div class="mb-2">
+          <label for="field-label" class="form-label">Label Text</label>
+          <input type="text" class="form-control form-control-sm" id="field-label" 
+              value="${field.label || ""}" data-field-prop="label">
+        </div>
+        
+        <div class="mb-2">
+          <label for="field-id" class="form-label">Field ID</label>
+          <input type="text" class="form-control form-control-sm" id="field-id" 
+              value="${field.id || ""}" data-field-prop="id">
+          <div class="form-text small">Use descriptive IDs like "txtFullName" or "slGender"</div>
+        </div>
+        
+        <div class="mb-2" id="placeholder-container" ${
+          ["select"].includes(field.type) ? 'style="display:none;"' : ""
+        }>
+          <label for="field-placeholder" class="form-label">Placeholder</label>
+          <input type="text" class="form-control form-control-sm" id="field-placeholder" 
+              value="${field.placeholder || ""}" data-field-prop="placeholder">
+        </div>
+        
+        <div class="mb-2">
+          <label for="field-label-position" class="form-label">Label Position</label>
+          <select class="form-select form-select-sm" id="field-label-position" data-field-prop="labelPosition">
+            <option value="left" ${
+              field.labelPosition === "left" ? "selected" : ""
+            }>Left of field</option>
+            <option value="above" ${
+              field.labelPosition === "above" ? "selected" : ""
+            }>Above field</option>
+          </select>
+        </div>
+        
+        <div class="mb-2 form-check">
+          <input type="checkbox" class="form-check-input" id="field-required" 
+              ${field.required ? "checked" : ""} data-field-prop="required">
+          <label class="form-check-label" for="field-required">Required Field</label>
+        </div>
+
+        <!-- Options section for select dropdown -->
+        <div id="select-options-container" style="${
+          field.type === "select" ? "" : "display:none;"
+        }">
+          <hr>
+          <h6>Dropdown Options</h6>
+          <div id="options-list">
+            ${renderFieldOptions(field)}
+          </div>
+          <button class="btn btn-sm btn-outline-primary w-100 mt-2" id="add-option-btn">
+            <i class="bi bi-plus-circle"></i> Add Option
+          </button>
+        </div>
+      </div>
+      
+      <!-- Group fields controls (radio/checkbox) -->
+      <div id="group-field-controls" style="${
+        !field.isGroup ? "display:none;" : ""
+      }">
+        <div class="mb-2">
+          <label for="group-label" class="form-label">Group Label</label>
+          <input type="text" class="form-control form-control-sm" id="group-label" 
+              value="${field.label || ""}" data-field-prop="label">
+        </div>
+        
+        <div class="mb-2">
+          <label for="group-id" class="form-label">Group ID</label>
+          <input type="text" class="form-control form-control-sm" id="group-id" 
+              value="${field.id || ""}" data-field-prop="id">
+          <div class="form-text small">Use descriptive IDs like "radioHinhthuc" or "chkSkills"</div>
+        </div>
+        
+        <div id="group-name-container" style="${
+          field.groupType === "radio" ? "" : "display:none;"
+        }">
+          <div class="mb-2">
+            <label for="group-name" class="form-label">Radio Group Name</label>
+            <input type="text" class="form-control form-control-sm" id="group-name" 
+                value="${field.name || "radioGroup"}" data-field-prop="name">
+            <div class="form-text small">Common name for all radio buttons in this group</div>
+          </div>
+        </div>
+        
+        <div class="mb-2 form-check">
+          <input type="checkbox" class="form-check-input" id="group-required" 
+              ${field.required ? "checked" : ""} data-field-prop="required">
+          <label class="form-check-label" for="group-required">Required Group</label>
+        </div>
+        
+        <div class="mb-2">
+          <label for="options-layout" class="form-label">Options Layout</label>
+          <select class="form-select form-select-sm" id="options-layout" data-field-prop="optionsLayout">
+            <option value="vertical" ${
+              field.optionsLayout === "vertical" ? "selected" : ""
+            }>Vertical (Stacked)</option>
+            <option value="horizontal" ${
+              field.optionsLayout === "horizontal" ? "selected" : ""
+            }>Horizontal (Inline)</option>
+          </select>
+        </div>
+        
+        <hr>
+        <h6>Group Options</h6>
+        
+        <div id="group-options-list">
+          ${renderGroupOptions(field)}
+        </div>
+        
+        <button class="btn btn-sm btn-outline-primary w-100 mt-2" id="add-group-option-btn">
+          <i class="bi bi-plus-circle"></i> Add Option
+        </button>
       </div>
       
       <div class="d-flex justify-content-end mt-3">
@@ -726,6 +759,46 @@
 
     // Add event listeners for the field editor inputs
     setupFieldEditorEventListeners(fieldEditor, field);
+  }
+
+  /**
+   * Render options for radio/checkbox groups
+   */
+  function renderGroupOptions(field) {
+    if (!field.options || !field.options.length) {
+      return `<div class="text-muted small">No options added yet. Add some options below.</div>`;
+    }
+
+    return `
+      <div class="options-list">
+        ${field.options
+          .map(
+            (option, index) => `
+          <div class="option-item d-flex align-items-center mb-1" data-index="${index}">
+            <div class="flex-grow-1 me-1">
+              <div class="input-group input-group-sm mb-1">
+                <span class="input-group-text">ID</span>
+                <input type="text" class="form-control option-id" placeholder="ID" 
+                  value="${option.id || ""}" aria-label="Option ID">
+              </div>
+              <div class="input-group input-group-sm">
+                <span class="input-group-text">Label</span>
+                <input type="text" class="form-control option-label" placeholder="Label" 
+                  value="${option.label || ""}" aria-label="Option label">
+                <span class="input-group-text">Value</span>
+                <input type="text" class="form-control option-value" placeholder="Value" 
+                  value="${option.value || ""}" aria-label="Option value">
+                <button class="btn btn-outline-danger delete-option-btn" type="button">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `
+          )
+          .join("")}
+      </div>
+    `;
   }
 
   /**
@@ -769,194 +842,183 @@
    * Setup event listeners for the field editor
    */
   function setupFieldEditorEventListeners(fieldEditor, field) {
-    // Basic input change listeners
-    const basicInputs = fieldEditor.querySelectorAll("[data-field-prop]");
-    basicInputs.forEach((input) => {
-      input.addEventListener("change", function () {
-        const prop = this.getAttribute("data-field-prop");
-        let value;
+    // Radio buttons for field type group
+    const fieldTypeRadios = fieldEditor.querySelectorAll(
+      'input[name="fieldTypeGroup"]'
+    );
+    fieldTypeRadios.forEach((radio) => {
+      radio.addEventListener("change", function () {
+        const regularControls = document.getElementById(
+          "regular-field-controls"
+        );
+        const groupControls = document.getElementById("group-field-controls");
+        const groupNameContainer = document.getElementById(
+          "group-name-container"
+        );
 
-        if (this.type === "checkbox") {
-          value = this.checked;
-        } else {
-          value = this.value;
-        }
+        field.isGroup = this.value === "radio" || this.value === "checkbox";
+        field.groupType = this.value === "regular" ? "" : this.value;
 
-        if (field) {
-          field[prop] = value;
+        // Show/hide appropriate controls
+        if (field.isGroup) {
+          regularControls.style.display = "none";
+          groupControls.style.display = "block";
 
-          // Special handling for type changes
-          if (prop === "type") {
-            // Show/hide placeholder field based on type
-            const placeholderContainer = document.getElementById(
-              "placeholder-container"
-            );
-            placeholderContainer.style.display = [
-              "select",
-              "checkbox",
-              "radio",
-            ].includes(value)
-              ? "none"
-              : "";
+          // Show group name field only for radio buttons
+          if (groupNameContainer) {
+            groupNameContainer.style.display =
+              this.value === "radio" ? "block" : "none";
+          }
 
-            // Show/hide options tab based on type
-            const optionsTabItem = document.getElementById("options-tab-item");
-            optionsTabItem.style.display = [
-              "select",
-              "radio",
-              "checkbox",
-            ].includes(value)
-              ? ""
-              : "none";
+          // Initialize default values for the group
+          if (this.value === "radio" && !field.name) {
+            field.name = "radioGroup";
+          }
 
-            // Show/hide validation fields based on type
-            updateValidationFieldsVisibility(value);
+          if (!field.options || !field.options.length) {
+            field.options = [
+              {
+                id: `${this.value}Option1`,
+                label: "Option 1",
+                value: "option1",
+              },
+            ];
 
-            // Show/hide options layout based on type
-            const optionsLayoutContainer = document.getElementById(
-              "options-layout-container"
-            );
-            if (optionsLayoutContainer) {
-              optionsLayoutContainer.style.display = [
-                "radio",
-                "checkbox",
-              ].includes(value)
-                ? ""
-                : "none";
-            }
-
-            // Initialize options array if switching to a type that needs options
-            if (
-              ["select", "radio", "checkbox"].includes(value) &&
-              (!field.options || !Array.isArray(field.options))
-            ) {
-              field.options = [];
+            // Update the options UI
+            const groupOptionsList =
+              document.getElementById("group-options-list");
+            if (groupOptionsList) {
+              groupOptionsList.innerHTML = renderGroupOptions(field);
+              setupOptionsEventListeners(field);
             }
           }
-
-          // Update preview if shown
-          const previewArea = document.getElementById("field-preview-area");
-          if (previewArea && previewArea.style.display !== "none") {
-            updateFieldPreview(field);
-          }
-        }
-      });
-    });
-
-    // Validation inputs
-    const validationInputs = fieldEditor.querySelectorAll(
-      "[data-validation-prop]"
-    );
-    validationInputs.forEach((input) => {
-      input.addEventListener("change", function () {
-        const prop = this.getAttribute("data-validation-prop");
-        let value;
-
-        if (this.type === "checkbox") {
-          value = this.checked;
         } else {
-          value = this.value;
-        }
-
-        if (field) {
-          // Initialize validation object if it doesn't exist
-          if (!field.validation) {
-            field.validation = {};
-          }
-
-          field.validation[prop] = value;
-
-          // Special handling for 'enabled' property
-          if (prop === "enabled") {
-            const validationOptions =
-              document.getElementById("validation-options");
-            validationOptions.style.display = value ? "" : "none";
-          }
-
-          // Update preview if shown
-          const previewArea = document.getElementById("field-preview-area");
-          if (previewArea && previewArea.style.display !== "none") {
-            updateFieldPreview(field);
-          }
+          regularControls.style.display = "block";
+          groupControls.style.display = "none";
         }
       });
     });
 
-    // Validation preset buttons
-    const presetButtons = fieldEditor.querySelectorAll(".validation-preset");
-    presetButtons.forEach((button) => {
-      button.addEventListener("click", function () {
-        const regex = this.getAttribute("data-regex");
-        const message = this.getAttribute("data-message");
-
-        if (field && field.validation) {
-          document.getElementById("validation-regex").value = regex;
-          document.getElementById("validation-error-message").value = message;
-
-          field.validation.regex = regex;
-          field.validation.errorMessage = message;
-        }
-      });
-    });
-
-    // Toggle validation options visibility
-    const enableValidationCheckbox = document.getElementById(
-      "field-enable-validation"
+    // Add button for group options
+    const addGroupOptionBtn = fieldEditor.querySelector(
+      "#add-group-option-btn"
     );
-    enableValidationCheckbox.addEventListener("change", function () {
-      const validationOptions = document.getElementById("validation-options");
-      validationOptions.style.display = this.checked ? "" : "none";
-    });
+    if (addGroupOptionBtn) {
+      addGroupOptionBtn.addEventListener("click", function () {
+        if (!field.options) field.options = [];
 
-    // Field type specific visibility updates
-    updateValidationFieldsVisibility(field.type);
-
-    // Toggle field preview
-    const previewButton = document.getElementById("field-preview-btn");
-    previewButton.addEventListener("click", function () {
-      const previewArea = document.getElementById("field-preview-area");
-      const isVisible = previewArea.style.display !== "none";
-
-      previewArea.style.display = isVisible ? "none" : "";
-      this.innerHTML = isVisible
-        ? '<i class="bi bi-eye"></i> Preview'
-        : '<i class="bi bi-eye-slash"></i> Hide Preview';
-
-      if (!isVisible) {
-        updateFieldPreview(field);
-      }
-    });
-
-    // Add new option button
-    const addOptionBtn = document.getElementById("add-option-btn");
-    if (addOptionBtn) {
-      addOptionBtn.addEventListener("click", function () {
-        if (!field.options) {
-          field.options = [];
-        }
+        const newOptionId =
+          field.groupType === "radio"
+            ? `radio${field.options.length + 1}`
+            : `chk${field.options.length + 1}`;
 
         field.options.push({
-          text: "New Option",
+          id: newOptionId,
+          label: `Option ${field.options.length + 1}`,
           value: `option${field.options.length + 1}`,
         });
 
-        // Redraw options list
-        document.getElementById("options-container").innerHTML =
-          renderFieldOptions(field);
+        // Update UI
+        const groupOptionsList = document.getElementById("group-options-list");
+        groupOptionsList.innerHTML = renderGroupOptions(field);
 
-        // Setup option item event listeners again
+        // Setup listeners for the new option
         setupOptionsEventListeners(field);
       });
     }
 
-    // Setup option item event listeners
-    setupOptionsEventListeners(field);
+    // Basic input change listeners
+    const basicInputs = fieldEditor.querySelectorAll("[data-field-prop]");
+    basicInputs.forEach((input) => {
+      input.addEventListener("change", function () {
+        const property = this.getAttribute("data-field-prop");
+        let value;
 
-    // Help button
-    const helpBtn = document.getElementById("field-help-btn");
-    helpBtn.addEventListener("click", function () {
-      showFieldEditorHelp();
+        if (this.type === "checkbox") {
+          value = this.checked;
+        } else {
+          value = this.value;
+        }
+
+        field[property] = value;
+      });
     });
+
+    // Field type change listener (for regular fields)
+    const fieldTypeSelect = fieldEditor.querySelector("#field-type");
+    if (fieldTypeSelect) {
+      fieldTypeSelect.addEventListener("change", function () {
+        const placeholderContainer = document.getElementById(
+          "placeholder-container"
+        );
+        const selectOptionsContainer = document.getElementById(
+          "select-options-container"
+        );
+
+        field.type = this.value;
+
+        // Toggle placeholder visibility
+        if (placeholderContainer) {
+          placeholderContainer.style.display =
+            this.value === "select" ? "none" : "block";
+        }
+
+        // Toggle options list visibility for select fields
+        if (selectOptionsContainer) {
+          selectOptionsContainer.style.display =
+            this.value === "select" ? "block" : "none";
+
+          // Initialize options for select if needed
+          if (
+            this.value === "select" &&
+            (!field.options || !field.options.length)
+          ) {
+            field.options = [{ text: "Option 1", value: "option1" }];
+            const optionsList = document.getElementById("options-list");
+            if (optionsList) {
+              optionsList.innerHTML = renderFieldOptions(field);
+              setupOptionsEventListeners(field);
+            }
+          }
+        }
+      });
+    }
+
+    // Add option button (for select fields)
+    const addOptionBtn = fieldEditor.querySelector("#add-option-btn");
+    if (addOptionBtn) {
+      addOptionBtn.addEventListener("click", function () {
+        if (!field.options) field.options = [];
+        field.options.push({
+          text: `Option ${field.options.length + 1}`,
+          value: `option${field.options.length + 1}`,
+        });
+
+        // Update UI
+        const optionsList = document.getElementById("options-list");
+        optionsList.innerHTML = renderFieldOptions(field);
+        setupOptionsEventListeners(field);
+      });
+    }
+
+    // Cancel button
+    const cancelBtn = fieldEditor.querySelector("#cancel-field-editor-btn");
+    if (cancelBtn) {
+      cancelBtn.addEventListener("click", function () {
+        closeFieldEditor();
+      });
+    }
+
+    // Save button
+    const saveBtn = fieldEditor.querySelector("#save-form-field-btn");
+    if (saveBtn) {
+      saveBtn.addEventListener("click", function () {
+        saveCurrentField();
+      });
+    }
+
+    // Setup initial option listeners
+    setupOptionsEventListeners(field);
   }
 
   /**
@@ -1002,221 +1064,6 @@
   }
 
   /**
-   * Update validation fields visibility based on field type
-   */
-  function updateValidationFieldsVisibility(fieldType) {
-    const numberRangeContainer = document.getElementById(
-      "number-range-container"
-    );
-    const textLengthContainer = document.getElementById(
-      "text-length-container"
-    );
-
-    if (numberRangeContainer) {
-      numberRangeContainer.style.display = fieldType === "number" ? "" : "none";
-    }
-
-    if (textLengthContainer) {
-      textLengthContainer.style.display = [
-        "text",
-        "email",
-        "password",
-        "textarea",
-      ].includes(fieldType)
-        ? ""
-        : "none";
-    }
-  }
-
-  /**
-   * Update the field preview area with current field settings
-   */
-  function updateFieldPreview(field) {
-    const previewContent = document.getElementById("field-preview-content");
-    if (!previewContent || !field) return;
-
-    let html = "";
-    const labelHtml = `<label for="preview-${field.id}" class="form-label">${
-      field.label || "Field Label"
-    }</label>`;
-
-    // Create different layouts based on labelPosition
-    const isLeftLabel = field.labelPosition === "left";
-
-    if (isLeftLabel) {
-      html += '<div class="row mb-2">';
-      html += '<div class="col-4 text-end">' + labelHtml + "</div>";
-      html += '<div class="col-8">';
-    } else {
-      html += '<div class="mb-2">';
-      html += labelHtml;
-    }
-
-    // Create input based on type
-    switch (field.type) {
-      case "text":
-      case "email":
-      case "number":
-      case "date":
-      case "password":
-        html += `<input type="${field.type}" class="form-control" id="preview-${
-          field.id
-        }" 
-                 placeholder="${field.placeholder || ""}" ${
-          field.required ? "required" : ""
-        }>`;
-        break;
-
-      case "textarea":
-        html += `<textarea class="form-control" id="preview-${field.id}" 
-                 placeholder="${field.placeholder || ""}" ${
-          field.required ? "required" : ""
-        }></textarea>`;
-        break;
-
-      case "select":
-        html += `<select class="form-select" id="preview-${field.id}" ${
-          field.required ? "required" : ""
-        }>`;
-        if (field.options && field.options.length) {
-          field.options.forEach((option) => {
-            html += `<option value="${option.value || ""}">${
-              option.text || ""
-            }</option>`;
-          });
-        } else {
-          html += "<option>No options defined</option>";
-        }
-        html += "</select>";
-        break;
-
-      case "radio":
-        if (field.options && field.options.length) {
-          const isInline = field.optionsLayout === "horizontal";
-
-          field.options.forEach((option, index) => {
-            html += `<div class="form-check ${
-              isInline ? "form-check-inline" : ""
-            }">
-                      <input class="form-check-input" type="radio" name="preview-${
-                        field.id
-                      }" 
-                       id="preview-${field.id}-${index}" value="${
-              option.value || ""
-            }" ${index === 0 ? "checked" : ""}>
-                      <label class="form-check-label" for="preview-${
-                        field.id
-                      }-${index}">${option.text || ""}</label>
-                     </div>`;
-          });
-        } else {
-          html += '<p class="text-muted">No radio options defined</p>';
-        }
-        break;
-
-      case "checkbox":
-        if (field.options && field.options.length) {
-          const isInline = field.optionsLayout === "horizontal";
-
-          field.options.forEach((option, index) => {
-            html += `<div class="form-check ${
-              isInline ? "form-check-inline" : ""
-            }">
-                      <input class="form-check-input" type="checkbox" 
-                       id="preview-${field.id}-${index}" value="${
-              option.value || ""
-            }">
-                      <label class="form-check-label" for="preview-${
-                        field.id
-                      }-${index}">${option.text || ""}</label>
-                     </div>`;
-          });
-        } else {
-          html += '<p class="text-muted">No checkbox options defined</p>';
-        }
-        break;
-    }
-
-    // Add error message element if validation is enabled
-    if (field.validation && field.validation.enabled) {
-      html += `<div class="invalid-feedback" id="preview-error-${field.id}">
-                ${field.validation.errorMessage || "Please enter a valid value"}
-              </div>`;
-    }
-
-    // Close column divs
-    if (isLeftLabel) {
-      html += "</div></div>";
-    } else {
-      html += "</div>";
-    }
-
-    previewContent.innerHTML = html;
-  }
-
-  /**
-   * Show help information for the field editor
-   */
-  function showFieldEditorHelp() {
-    // Create a modal if it doesn't exist
-    const modalId = "field-editor-help-modal";
-    let modal = document.getElementById(modalId);
-
-    if (!modal) {
-      modal = document.createElement("div");
-      modal.id = modalId;
-      modal.className = "modal fade";
-      modal.setAttribute("tabindex", "-1");
-      modal.innerHTML = `
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Form Field Editor Help</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <h6>Basic Properties</h6>
-              <ul>
-                <li><strong>Label Text:</strong> The text shown next to the field</li>
-                <li><strong>Field ID:</strong> Unique identifier for the field (used in HTML and JavaScript)</li>
-                <li><strong>Field Type:</strong> The type of input element</li>
-                <li><strong>Placeholder:</strong> Text shown inside the field when empty</li>
-                <li><strong>Label Position:</strong> Where the label appears relative to the field</li>
-                <li><strong>Required:</strong> Whether the field must be filled out</li>
-              </ul>
-              
-              <h6>Validation</h6>
-              <ul>
-                <li><strong>Regex Pattern:</strong> A regular expression pattern to validate the input</li>
-                <li><strong>Error Message:</strong> Text shown when validation fails</li>
-                <li><strong>Min/Max Value:</strong> For number fields, the allowed range</li>
-                <li><strong>Min/Max Length:</strong> For text fields, the allowed length range</li>
-              </ul>
-              
-              <h6>Options (for Select, Radio, Checkbox)</h6>
-              <ul>
-                <li><strong>Text:</strong> The display text shown to the user</li>
-                <li><strong>Value:</strong> The actual value stored when submitted</li>
-                <li><strong>Options Layout:</strong> For radio/checkbox, vertical (stacked) or horizontal (inline)</li>
-              </ul>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-      `;
-      document.body.appendChild(modal);
-
-      // Initialize Bootstrap modal
-      modal = new bootstrap.Modal(modal);
-    }
-
-    // Show the modal
-    modal.show();
-  }
-
-  /**
    * Save the current field being edited
    */
   function saveCurrentField() {
@@ -1225,63 +1072,136 @@
     const component = state.selectedComponent;
     const field = state.currentEditingField;
 
-    // Initialize formFields array if it doesn't exist
-    if (!component.formFields) {
-      component.formFields = [];
-    }
+    // Handle different field types (regular field vs. radio group vs. checkbox group)
+    if (field.isGroup) {
+      // For group fields (radio/checkbox)
+      if (field.groupType === "radio") {
+        // Check if we're editing an existing radio group
+        const existingGroupIndex = component.radioGroups
+          ? component.radioGroups.findIndex((group) => group.id === field.id)
+          : -1;
 
-    // Check if this is an edit of an existing field
-    const existingFieldIndex = component.formFields.findIndex(
-      (f) => f.id === field.id
-    );
+        const radioGroup = {
+          name: field.name || "hinhthuc",
+          label: field.label || "Group Label",
+          id: field.id,
+          validation: true,
+          optionsLayout: field.optionsLayout || "vertical",
+          options: field.options.map((option) => ({
+            id: option.id || `radio${Date.now()}`,
+            value: option.value || "",
+            label: option.label || option.value || "",
+            checked: option.checked || false,
+          })),
+        };
 
-    if (existingFieldIndex >= 0) {
-      // Update existing field
-      component.formFields[existingFieldIndex] = { ...field };
+        if (existingGroupIndex >= 0) {
+          // Update existing group
+          component.radioGroups[existingGroupIndex] = radioGroup;
+        } else {
+          // Add new radio group
+          if (!component.radioGroups) component.radioGroups = [];
+          component.radioGroups.push(radioGroup);
+        }
+      } else if (field.groupType === "checkbox") {
+        // Check if we're editing an existing checkbox group
+        const existingGroupIndex = component.checkboxGroups
+          ? component.checkboxGroups.findIndex((group) => group.id === field.id)
+          : -1;
+
+        const checkboxGroup = {
+          label: field.label || "Group Label",
+          id: field.id,
+          validation: true,
+          optionsLayout: field.optionsLayout || "vertical",
+          options: field.options.map((option) => ({
+            id: option.id || `chk${Date.now()}`,
+            value: option.value || "",
+            label: option.label || option.value || "",
+            checked: option.checked || false,
+          })),
+        };
+
+        if (existingGroupIndex >= 0) {
+          // Update existing group
+          component.checkboxGroups[existingGroupIndex] = checkboxGroup;
+        } else {
+          // Add new checkbox group
+          if (!component.checkboxGroups) component.checkboxGroups = [];
+          component.checkboxGroups.push(checkboxGroup);
+        }
+      }
     } else {
-      // Add new field
-      component.formFields.push({ ...field });
-    }
+      // For regular form fields (text, email, select, etc.)
+      if (!component.formFields) component.formFields = [];
 
-    // Update the component in the model
-    window.pageModelManager.updateComponent(component.id, {
-      formFields: component.formFields,
-    });
+      // Check if this field exists
+      const existingFieldIndex = component.formFields.findIndex(
+        (f) => f.id === field.id
+      );
+
+      if (existingFieldIndex >= 0) {
+        // Update existing field
+        component.formFields[existingFieldIndex] = { ...field };
+      } else {
+        // Add new field
+        component.formFields.push({ ...field });
+      }
+    }
 
     // Close the field editor
     closeFieldEditor();
 
     // Update the fields list
-    document.getElementById("form-fields-list").innerHTML =
-      renderFormFieldsList(component);
+    const formFieldsList = document.getElementById("form-fields-list");
+    if (formFieldsList) {
+      formFieldsList.innerHTML = renderFormFieldsList(component);
+    }
 
-    // Notify model updated
+    // Notify that the model has been updated
     notifyModelUpdated();
   }
 
   /**
    * Delete a form field
    */
-  function deleteField(fieldId) {
-    if (!state.selectedComponent || !fieldId) return;
+  function deleteField(fieldId, fieldType = "regular") {
+    if (!state.selectedComponent) return;
 
     const component = state.selectedComponent;
 
-    if (!component.formFields) return;
+    // Delete the field based on its type
+    switch (fieldType) {
+      case "radio":
+        if (component.radioGroups) {
+          component.radioGroups = component.radioGroups.filter(
+            (g) => g.id !== fieldId
+          );
+        }
+        break;
 
-    // Filter out the field to delete
-    component.formFields = component.formFields.filter((f) => f.id !== fieldId);
+      case "checkbox":
+        if (component.checkboxGroups) {
+          component.checkboxGroups = component.checkboxGroups.filter(
+            (g) => g.id !== fieldId
+          );
+        }
+        break;
 
-    // Update the component in the model
-    window.pageModelManager.updateComponent(component.id, {
-      formFields: component.formFields,
-    });
+      default: // regular form field
+        if (component.formFields) {
+          component.formFields = component.formFields.filter(
+            (f) => f.id !== fieldId
+          );
+        }
+        break;
+    }
 
-    // Update the fields list
+    // Update the form fields list
     document.getElementById("form-fields-list").innerHTML =
       renderFormFieldsList(component);
 
-    // Notify model updated
+    // Notify about model update
     notifyModelUpdated();
   }
 
@@ -1993,371 +1913,6 @@
 
     // Notify model updated
     notifyModelUpdated();
-  }
-
-  /**
-   * Set up the image table layout editor interface
-   */
-  function setupImageTableLayoutEditor(component) {
-    if (!component || component.type !== "image-table-layout") return;
-
-    // Add the "Manage Image and Table Columns" section to the specific properties
-    const imageTableContainer = document.createElement("div");
-    imageTableContainer.className = "mt-3";
-    imageTableContainer.innerHTML = `
-      <h6 class="border-bottom pb-2">Table Columns</h6>
-      
-      <div id="table-columns-list" class="mb-2">
-        ${renderTableColumnsListForImageTable(component)}
-      </div>
-      
-      <!-- New column form -->
-      <div class="card mb-2">
-        <div class="card-header py-1 px-2 bg-light">
-          <h6 class="mb-0 small">Add New Column</h6>
-        </div>
-        <div class="card-body p-2">
-          <div class="mb-2">
-            <label for="new-column-text" class="form-label small">Column Header</label>
-            <input type="text" class="form-control form-control-sm" id="new-column-text" placeholder="e.g., Name, Email, Date">
-          </div>
-          <button id="add-table-column-btn" class="btn btn-sm btn-primary">
-            <i class="bi bi-plus-circle me-1"></i> Add Column
-          </button>
-        </div>
-      </div>
-      
-      <!-- Layout preview -->
-      <h6 class="border-bottom pb-2 mt-4">Layout Preview</h6>
-      <div class="layout-preview p-2 border rounded mb-3">
-        <div class="d-flex align-items-center ${
-          component.image.position === "left" ? "" : "flex-row-reverse"
-        }">
-          <div class="${getImageColumnClass(
-            component
-          )} p-2 text-center bg-light">
-            <div class="small">Image</div>
-            <i class="bi bi-image fs-1"></i>
-          </div>
-          <div class="${getTableColumnClass(component)} p-2 ms-2 bg-light">
-            <div class="small">Table</div>
-            <i class="bi bi-table"></i>
-            <div class="small mt-1">${component.table.title}</div>
-          </div>
-        </div>
-      </div>
-    `;
-
-    elements.specificPropsContainer.appendChild(imageTableContainer);
-
-    // Add event listener for Add Column button
-    const addColumnBtn = imageTableContainer.querySelector(
-      "#add-table-column-btn"
-    );
-    addColumnBtn.addEventListener("click", function () {
-      addColumnToImageTable(component);
-    });
-  }
-
-  // Helper function to get appropriate CSS class for image column width
-  function getImageColumnClass(component) {
-    switch (component.columnClasses.imageCol) {
-      case "col-md-4":
-        return "w-25";
-      case "col-md-5":
-        return "w-40";
-      case "col-md-6":
-        return "w-50";
-      case "col-md-7":
-        return "w-60";
-      case "col-md-8":
-        return "w-75";
-      default:
-        return "w-50";
-    }
-  }
-
-  // Helper function to get appropriate CSS class for table column width
-  function getTableColumnClass(component) {
-    switch (component.columnClasses.tableCol) {
-      case "col-md-4":
-        return "w-25";
-      case "col-md-5":
-        return "w-40";
-      case "col-md-6":
-        return "w-50";
-      case "col-md-7":
-        return "w-60";
-      case "col-md-8":
-        return "w-75";
-      default:
-        return "w-50";
-    }
-  }
-
-  /**
-   * Set up the nav table layout editor interface
-   */
-  function setupNavTableLayoutEditor(component) {
-    if (!component || component.type !== "nav-table-layout") return;
-
-    // Add both navigation links and table columns sections
-    const navTableContainer = document.createElement("div");
-    navTableContainer.className = "mt-3";
-
-    // Navigation Links Section
-    navTableContainer.innerHTML = `
-      <h6 class="border-bottom pb-2">Navigation Links</h6>
-      
-      <div id="nav-links-list" class="mb-2">
-        ${renderNavigationLinksList(component, "navigation.items")}
-      </div>
-      
-      <!-- New link form -->
-      <div class="card mb-2">
-        <div class="card-header py-1 px-2 bg-light">
-          <h6 class="mb-0 small">Add New Link</h6>
-        </div>
-        <div class="card-body p-2">
-          <div class="mb-2">
-            <label for="new-link-text" class="form-label small">Link Text</label>
-            <input type="text" class="form-control form-control-sm" id="new-link-text">
-          </div>
-          <div class="mb-2">
-            <label for="new-link-url" class="form-label small">URL</label>
-            <input type="text" class="form-control form-control-sm" id="new-link-url" placeholder="e.g., #, ../html/index.html">
-          </div>
-          <button id="add-nav-link-btn" class="btn btn-sm btn-primary">
-            <i class="bi bi-plus-circle me-1"></i> Add Link
-          </button>
-        </div>
-      </div>
-      
-      <!-- Register button customization -->
-      <div class="card mb-3">
-        <div class="card-header py-1 px-2 bg-light">
-          <h6 class="mb-0 small">Register Button</h6>
-        </div>
-        <div class="card-body p-2">
-          <div class="mb-2 form-check">
-            <input class="form-check-input" type="checkbox" id="include-register-btn" 
-              ${
-                component.navigation.includeRegisterButton ? "checked" : ""
-              } data-property="navigation.includeRegisterButton">
-            <label class="form-check-label small" for="include-register-btn">Include "Register" Button</label>
-          </div>
-          
-          <div id="register-button-options" ${
-            !component.navigation.includeRegisterButton
-              ? 'style="display:none;"'
-              : ""
-          }>
-            <div class="mb-2">
-              <label for="register-btn-text" class="form-label small">Button Text</label>
-              <input type="text" class="form-control form-control-sm" id="register-btn-text"
-                     value="${
-                       component.navigation.registerButtonText || "Đăng ký"
-                     }" data-property="navigation.registerButtonText">
-            </div>
-            
-            <div class="mb-2">
-              <label for="register-btn-class" class="form-label small">Button Color</label>
-              <select class="form-select form-select-sm" id="register-btn-class" data-property="navigation.registerButtonClass">
-                <option value="btn-primary" ${
-                  component.navigation.registerButtonClass === "btn-primary"
-                    ? "selected"
-                    : ""
-                }>Primary (Blue)</option>
-                <option value="btn-secondary" ${
-                  component.navigation.registerButtonClass === "btn-secondary"
-                    ? "selected"
-                    : ""
-                }>Secondary (Gray)</option>
-                <option value="btn-success" ${
-                  component.navigation.registerButtonClass === "btn-success"
-                    ? "selected"
-                    : ""
-                }>Success (Green)</option>
-                <option value="btn-danger" ${
-                  component.navigation.registerButtonClass === "btn-danger"
-                    ? "selected"
-                    : ""
-                }>Danger (Red)</option>
-                <option value="btn-warning" ${
-                  component.navigation.registerButtonClass === "btn-warning"
-                    ? "selected"
-                    : ""
-                }>Warning (Yellow)</option>
-                <option value="btn-info" ${
-                  component.navigation.registerButtonClass === "btn-info"
-                    ? "selected"
-                    : ""
-                }>Info (Cyan)</option>
-              </select>
-            </div>
-            
-            <div class="mb-2">
-              <label for="register-btn-size" class="form-label small">Button Size</label>
-              <select class="form-select form-select-sm" id="register-btn-size" data-property="navigation.registerButtonSize">
-                <option value="" ${
-                  component.navigation.registerButtonSize === ""
-                    ? "selected"
-                    : ""
-                }>Default</option>
-                <option value="btn-sm" ${
-                  component.navigation.registerButtonSize === "btn-sm"
-                    ? "selected"
-                    : ""
-                }>Small</option>
-                <option value="btn-lg" ${
-                  component.navigation.registerButtonSize === "btn-lg"
-                    ? "selected"
-                    : ""
-                }>Large</option>
-              </select>
-            </div>
-            
-            <div class="mt-2">
-              <span class="small">Preview:</span>
-              <div class="border rounded p-2 mt-1 text-center">
-                <button class="btn ${
-                  component.navigation.registerButtonClass
-                } ${
-      component.navigation.registerButtonSize
-    } preview-register-btn">
-                  ${component.navigation.registerButtonText || "Đăng ký"}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Table Columns Section -->
-      <h6 class="border-bottom pb-2 mt-4">Table Columns</h6>
-      
-      <div id="table-columns-list" class="mb-2">
-        ${renderTableColumnsListForLayout(component)}
-      </div>
-      
-      <!-- New column form -->
-      <div class="card mb-2">
-        <div class="card-header py-1 px-2 bg-light">
-          <h6 class="mb-0 small">Add New Column</h6>
-        </div>
-        <div class="card-body p-2">
-          <div class="mb-2">
-            <label for="new-column-text" class="form-label small">Column Header</label>
-            <input type="text" class="form-control form-control-sm" id="new-column-text" placeholder="e.g., Name, Email, Date">
-          </div>
-          <button id="add-table-column-btn" class="btn btn-sm btn-primary">
-            <i class="bi bi-plus-circle me-1"></i> Add Column
-          </button>
-        </div>
-      </div>
-      
-      <!-- Layout preview -->
-      <h6 class="border-bottom pb-2 mt-4">Layout Preview</h6>
-      <div class="layout-preview p-2 border rounded mb-3">
-        <div class="d-flex align-items-start ${
-          component.navigation.position === "left" ? "" : "flex-row-reverse"
-        }">
-          <div class="${getNavColumnClass(component)} p-2 border-end bg-light">
-            <div class="small mb-2">Navigation</div>
-            <div class="small">${component.navigation.items
-              .map((item) => item.text)
-              .slice(0, 3)
-              .join("<br>")}</div>
-            <div class="small mt-2">...</div>
-            ${
-              component.navigation.includeRegisterButton
-                ? `<button class="btn btn-sm ${component.navigation.registerButtonClass} mt-2" style="font-size:0.7rem;">
-                 ${component.navigation.registerButtonText}
-               </button>`
-                : ""
-            }
-          </div>
-          <div class="flex-grow-1 p-2 ms-2 bg-light">
-            <div class="small mb-2">Table: ${component.table.title}</div>
-            <div class="table-responsive">
-              <table class="table table-sm ${
-                component.table.showBorder ? "table-bordered" : ""
-              }" style="font-size:0.7rem">
-                <thead>
-                  <tr>
-                    ${component.table.columns
-                      .slice(0, 3)
-                      .map(
-                        (col) =>
-                          `<th>${
-                            typeof col === "string" ? col : col.headerText
-                          }</th>`
-                      )
-                      .join("")}
-                    ${component.table.columns.length > 3 ? "<th>...</th>" : ""}
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    ${component.table.columns
-                      .slice(0, 3)
-                      .map(() => "<td>Data</td>")
-                      .join("")}
-                    ${component.table.columns.length > 3 ? "<td>...</td>" : ""}
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-
-    elements.specificPropsContainer.appendChild(navTableContainer);
-
-    // Add event listener for Add Link button
-    const addLinkBtn = navTableContainer.querySelector("#add-nav-link-btn");
-    addLinkBtn.addEventListener("click", function () {
-      addNavigationLinkToLayout(component);
-    });
-
-    // Add event listener for Add Column button
-    const addColumnBtn = navTableContainer.querySelector(
-      "#add-table-column-btn"
-    );
-    addColumnBtn.addEventListener("click", function () {
-      addColumnToLayout(component);
-    });
-
-    // Add event listener for register button checkbox
-    const registerBtn = navTableContainer.querySelector(
-      "#include-register-btn"
-    );
-    registerBtn.addEventListener("change", function () {
-      const options = navTableContainer.querySelector(
-        "#register-button-options"
-      );
-      if (options) {
-        options.style.display = this.checked ? "" : "none";
-      }
-    });
-
-    // Set up event listeners for existing action buttons
-    setupNavTableLayoutEventListeners(navTableContainer, component);
-  }
-
-  // Helper function to get appropriate CSS class for nav column width
-  function getNavColumnClass(component) {
-    switch (component.columnClasses.navCol) {
-      case "col-md-3":
-        return "w-25";
-      case "col-md-4":
-        return "w-33";
-      case "col-md-5":
-        return "w-40";
-      default:
-        return "w-25";
-    }
   }
 
   /**
