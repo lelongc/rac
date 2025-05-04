@@ -1681,10 +1681,11 @@
 
               case "select":
                 fieldHtml += `
-                                <select class="form-select" id="preview_${
+                                <select class="form-select" id="${
                                   field.id
-                                }" name="${field.name}" 
-                                    ${field.required ? "required" : ""}>
+                                }" name="${field.name}"${
+                  field.required ? " required" : ""
+                }>
                                     <option value="" ${
                                       !field.required ? "selected" : ""
                                     }>Choose...</option>
@@ -2165,108 +2166,202 @@
 
           // Form submission handler
           jqueryJs += `  // Form validation and submission handler\n`;
-          jqueryJs += `  $('#generatedForm').on('submit', function(event) {\n`;
-          jqueryJs += `    event.preventDefault();\n`;
-          jqueryJs += `    event.stopPropagation();\n`;
-          jqueryJs += `    \n`;
-          jqueryJs += `    // Reset validation states\n`;
-          jqueryJs += `    $(this).find('.is-invalid').removeClass('is-invalid');\n`;
-          jqueryJs += `    \n`;
-          jqueryJs += `    let isValid = true;\n\n`;
+          jqueryJs += `  $("#generatedForm").on("submit", function(event) {\n`;
+          jqueryJs += `    // *** PREVENT DEFAULT SUBMISSION FIRST ***\n`;
+          jqueryJs += `    event.preventDefault();\n\n`;
 
-          // Add validation for each field
+          jqueryJs += `    // --- Your validation logic here ---\n`;
+          jqueryJs += `    let isValid = true; // Assume valid initially\n`;
+
+          // Declare variables for each field that needs validation
+          formFields.forEach((field) => {
+            if (field.required || field.validation?.pattern) {
+              jqueryJs += `    const ${field.name}Input = $("#${field.name}");\n`;
+
+              // Add pattern declarations for fields with validation patterns
+              if (field.validation?.pattern) {
+                jqueryJs += `    const ${field.name}Pattern = /${field.validation.pattern}/; // Pattern from HTML\n`;
+              }
+            }
+          });
+          jqueryJs += `\n`;
+
+          // Reset previous validation states
+          jqueryJs += `    // Reset previous validation states\n`;
+          jqueryJs += `    $(".form-control").removeClass("is-invalid is-valid");\n`;
+          jqueryJs += `    $(".invalid-feedback").hide(); // Hide feedback initially\n\n`;
+
+          // Add validation for each field that needs it
           formFields.forEach((field) => {
             if (
               field.required ||
-              (field.validation && field.validation.pattern) ||
+              field.validation?.pattern ||
               (field.type === "date" && field.dateValidation)
             ) {
-              jqueryJs += `    // Validate ${field.label}\n`;
+              jqueryJs += `    // Validate ${field.label} (${field.name})\n`;
 
+              // Build validation logic based on field type
               switch (field.type) {
                 case "text":
                 case "email":
                 case "number":
                 case "tel":
-                case "date":
+                  // Required check
                   if (field.required) {
-                    jqueryJs += `    if ($('#${field.name}').val().trim() === '') {\n`;
-                    jqueryJs += `      $('#${field.name}').addClass('is-invalid');\n`;
+                    jqueryJs += `    if (${field.name}Input.val().trim() === "") {\n`;
+                    jqueryJs += `      ${field.name}Input.addClass("is-invalid");\n`;
+                    jqueryJs += `      ${
+                      field.name
+                    }Input.siblings(".invalid-feedback").text("Vui lòng nhập ${field.label.toLowerCase()}").show();\n`;
                     jqueryJs += `      isValid = false;\n`;
-                    jqueryJs += `    }\n`;
+                    jqueryJs += `    } else `;
                   }
 
-                  if (field.validation && field.validation.pattern) {
-                    jqueryJs += `    if ($('#${field.name}').val().trim() !== '' && !/${field.validation.pattern}/.test($('#${field.name}').val().trim())) {\n`;
-                    jqueryJs += `      $('#${field.name}').addClass('is-invalid');\n`;
+                  // Pattern check
+                  if (field.validation?.pattern) {
+                    jqueryJs += field.required
+                      ? ``
+                      : `    if (${field.name}Input.val().trim() !== "") {\n      `;
+                    jqueryJs += `if (!${field.name}Pattern.test(${field.name}Input.val().trim())) {\n`;
+                    jqueryJs += `      ${field.name}Input.addClass("is-invalid");\n`;
+                    jqueryJs += `      ${field.name}Input.siblings(".invalid-feedback").text("`;
+                    jqueryJs +=
+                      field.validation.message ||
+                      `Vui lòng nhập ${field.label.toLowerCase()} hợp lệ`;
+                    jqueryJs += `").show();\n`;
                     jqueryJs += `      isValid = false;\n`;
-                    jqueryJs += `    }\n`;
+                    jqueryJs += `    } else {\n`;
+                    jqueryJs += `      ${field.name}Input.addClass("is-valid");\n`;
+                    jqueryJs += `    }`;
+                    if (!field.required) jqueryJs += `\n    }`;
+                  } else if (field.required) {
+                    jqueryJs += `{\n`;
+                    jqueryJs += `      ${field.name}Input.addClass("is-valid");\n`;
+                    jqueryJs += `    }`;
+                  }
+                  jqueryJs += `\n\n`;
+                  break;
+
+                case "date":
+                  // Required check
+                  if (field.required) {
+                    jqueryJs += `    if (${field.name}Input.val() === "") {\n`;
+                    jqueryJs += `      ${field.name}Input.addClass("is-invalid");\n`;
+                    jqueryJs += `      ${
+                      field.name
+                    }Input.siblings(".invalid-feedback").text("Vui lòng chọn ${field.label.toLowerCase()}").show();\n`;
+                    jqueryJs += `      isValid = false;\n`;
+                    jqueryJs += `    } else `;
                   }
 
-                  // Date validation for min/max dates that aren't handled by HTML attributes
-                  if (field.type === "date" && field.dateValidation) {
-                    if (field.dateValidation.minIsToday) {
-                      jqueryJs += `    if ($('#${field.name}').val()) {\n`;
-                      jqueryJs += `      const selectedDate = new Date($('#${field.name}').val());\n`;
-                      jqueryJs += `      const today = new Date(); today.setHours(0,0,0,0);\n`;
-                      jqueryJs += `      if (selectedDate < today) {\n`;
-                      jqueryJs += `        $('#${field.name}').addClass('is-invalid');\n`;
-                      jqueryJs += `        isValid = false;\n`;
-                      jqueryJs += `      }\n`;
-                      jqueryJs += `    }\n`;
-                    }
+                  // Date validation
+                  if (field.dateValidation) {
+                    let hasDateChecks = false;
 
-                    if (field.dateValidation.maxIsToday) {
-                      jqueryJs += `    if ($('#${field.name}').val()) {\n`;
-                      jqueryJs += `      const selectedDate = new Date($('#${field.name}').val());\n`;
+                    if (
+                      field.dateValidation.minIsToday ||
+                      field.dateValidation.maxIsToday
+                    ) {
+                      hasDateChecks = true;
+                      jqueryJs += field.required
+                        ? ``
+                        : `    if (${field.name}Input.val() !== "") {\n      `;
+                      jqueryJs += `{\n`;
+                      jqueryJs += `      const selectedDate = new Date(${field.name}Input.val());\n`;
                       jqueryJs += `      const today = new Date(); today.setHours(0,0,0,0);\n`;
-                      jqueryJs += `      if (selectedDate > today) {\n`;
-                      jqueryJs += `        $('#${field.name}').addClass('is-invalid');\n`;
-                      jqueryJs += `        isValid = false;\n`;
+
+                      if (field.dateValidation.minIsToday) {
+                        jqueryJs += `      if (selectedDate < today) {\n`;
+                        jqueryJs += `        ${field.name}Input.addClass("is-invalid");\n`;
+                        jqueryJs += `        ${field.name}Input.siblings(".invalid-feedback").text("Ngày phải từ hôm nay trở đi").show();\n`;
+                        jqueryJs += `        isValid = false;\n`;
+                        jqueryJs += `      } else `;
+                      }
+
+                      if (field.dateValidation.maxIsToday) {
+                        jqueryJs += field.dateValidation.minIsToday
+                          ? ``
+                          : `      if (`;
+                        jqueryJs += field.dateValidation.minIsToday
+                          ? `if (`
+                          : ``;
+                        jqueryJs += `selectedDate > today) {\n`;
+                        jqueryJs += `        ${field.name}Input.addClass("is-invalid");\n`;
+                        jqueryJs += `        ${field.name}Input.siblings(".invalid-feedback").text("Ngày không được sau hôm nay").show();\n`;
+                        jqueryJs += `        isValid = false;\n`;
+                        jqueryJs += `      } else `;
+                      }
+
+                      jqueryJs += `{\n`;
+                      jqueryJs += `        ${field.name}Input.addClass("is-valid");\n`;
                       jqueryJs += `      }\n`;
-                      jqueryJs += `    }\n`;
+                      if (!field.required) jqueryJs += `    }`;
+                    } else if (field.required) {
+                      jqueryJs += `{\n`;
+                      jqueryJs += `      ${field.name}Input.addClass("is-valid");\n`;
+                      jqueryJs += `    }`;
                     }
+                    jqueryJs += `\n\n`;
+                  } else if (field.required) {
+                    jqueryJs += `{\n`;
+                    jqueryJs += `      ${field.name}Input.addClass("is-valid");\n`;
+                    jqueryJs += `    }\n\n`;
                   }
                   break;
 
                 case "select":
                   if (field.required) {
-                    jqueryJs += `    if ($('#${field.name}').val() === '') {\n`;
-                    jqueryJs += `      $('#${field.name}').addClass('is-invalid');\n`;
+                    jqueryJs += `    if (${field.name}Input.val() === "") {\n`;
+                    jqueryJs += `      ${field.name}Input.addClass("is-invalid");\n`;
+                    jqueryJs += `      ${
+                      field.name
+                    }Input.siblings(".invalid-feedback").text("Vui lòng chọn ${field.label.toLowerCase()}").show();\n`;
                     jqueryJs += `      isValid = false;\n`;
-                    jqueryJs += `    }\n`;
+                    jqueryJs += `    } else {\n`;
+                    jqueryJs += `      ${field.name}Input.addClass("is-valid");\n`;
+                    jqueryJs += `    }\n\n`;
                   }
                   break;
 
                 case "radio":
                   if (field.required) {
-                    jqueryJs += `    if ($('input[name="${field.name}"]:checked').length === 0) {\n`;
-                    jqueryJs += `      $('input[name="${field.name}"]').addClass('is-invalid');\n`;
+                    jqueryJs += `    const ${field.name}Radio = $("input[name='${field.name}']:checked");\n`;
+                    jqueryJs += `    if (${field.name}Radio.length === 0) {\n`;
+                    jqueryJs += `      $("input[name='${field.name}']").addClass("is-invalid");\n`;
+                    jqueryJs += `      $("input[name='${field.name}']").siblings(".invalid-feedback").text("Vui lòng chọn một tùy chọn").show();\n`;
                     jqueryJs += `      isValid = false;\n`;
-                    jqueryJs += `    }\n`;
+                    jqueryJs += `    } else {\n`;
+                    jqueryJs += `      $("input[name='${field.name}']").addClass("is-valid");\n`;
+                    jqueryJs += `    }\n\n`;
                   }
                   break;
 
                 case "checkbox":
                   if (field.required) {
-                    jqueryJs += `    if ($('input[name="${field.name}"]:checked').length === 0) {\n`;
-                    jqueryJs += `      $('input[name="${field.name}"]').addClass('is-invalid');\n`;
+                    jqueryJs += `    const ${field.name}Checked = $("input[name='${field.name}']:checked");\n`;
+                    jqueryJs += `    if (${field.name}Checked.length === 0) {\n`;
+                    jqueryJs += `      $("input[name='${field.name}']").addClass("is-invalid");\n`;
+                    jqueryJs += `      $("input[name='${field.name}']").siblings(".invalid-feedback").text("Vui lòng chọn ít nhất một tùy chọn").show();\n`;
                     jqueryJs += `      isValid = false;\n`;
-                    jqueryJs += `    }\n`;
+                    jqueryJs += `    } else {\n`;
+                    jqueryJs += `      $("input[name='${field.name}']").addClass("is-valid");\n`;
+                    jqueryJs += `    }\n\n`;
                   }
                   break;
               }
-              jqueryJs += `\n`;
             }
           });
 
+          jqueryJs += `    // --- End of validation logic ---\n\n`;
+
           // Handle form submission if valid
+          jqueryJs += `    // Only proceed if the form is valid\n`;
           jqueryJs += `    if (isValid) {\n`;
           jqueryJs += `      // Collect form data\n`;
           jqueryJs += `      const rowData = {\n`;
 
           // Map form fields to table columns
-          tableColumns.forEach((column, index) => {
+          tableColumns.forEach((column) => {
             const jsFriendlyColName = column.name.replace(
               /[^a-zA-Z0-9_]/g,
               "_"
@@ -2276,25 +2371,27 @@
               if (field) {
                 switch (field.type) {
                   case "radio":
-                    jqueryJs += `        ${jsFriendlyColName}: $('input[name="${field.name}"]:checked').val() || '',\n`;
+                    jqueryJs += `        ${jsFriendlyColName}: $("input[name='${field.name}']:checked").val() || "",\n`;
                     break;
                   case "checkbox":
-                    jqueryJs += `        ${jsFriendlyColName}: $.map($('input[name="${field.name}"]:checked'), function(el) { return $(el).val(); }).join(', ') || '',\n`;
+                    jqueryJs += `        ${jsFriendlyColName}: $.map($("input[name='${field.name}']:checked"), function(el) { return $(el).val(); }).join(", ") || "",\n`;
                     break;
                   default:
-                    jqueryJs += `        ${jsFriendlyColName}: $('#${field.name}').val() || '',\n`;
+                    jqueryJs += `        ${jsFriendlyColName}: $("#${field.name}").val().trim() || "",\n`;
                     break;
                 }
               } else {
-                jqueryJs += `        ${jsFriendlyColName}: '',\n`;
+                jqueryJs += `        ${jsFriendlyColName}: "",\n`;
               }
             } else {
-              jqueryJs += `        ${jsFriendlyColName}: '',\n`;
+              jqueryJs += `        ${jsFriendlyColName}: "",\n`;
             }
           });
 
-          // Remove last comma
-          jqueryJs = jqueryJs.slice(0, -2) + "\n";
+          // Remove trailing comma
+          if (tableColumns.length > 0) {
+            jqueryJs = jqueryJs.slice(0, -2) + "\n";
+          }
           jqueryJs += `      };\n\n`;
 
           // Add data to table
@@ -2302,41 +2399,48 @@
           jqueryJs += `      addRowToTable(rowData);\n\n`;
 
           // Reset form and hide modal
-          jqueryJs += `      // Reset form and hide modal\n`;
+          jqueryJs += `      // Reset form\n`;
           jqueryJs += `      this.reset();\n`;
-          jqueryJs += `      $('#myModal').modal('hide');\n`;
+          jqueryJs += `      $(".form-control").removeClass("is-valid is-invalid"); // Clear validation classes on reset\n\n`;
+          jqueryJs += `      // Hide modal (using Bootstrap 5 instance if available)\n`;
+          jqueryJs += `      const modalElement = document.getElementById("myModal");\n`;
+          jqueryJs += `      if (modalElement) {\n`;
+          jqueryJs += `        const modalInstance = bootstrap.Modal.getInstance(modalElement);\n`;
+          jqueryJs += `        if (modalInstance) {\n`;
+          jqueryJs += `          modalInstance.hide();\n`;
+          jqueryJs += `        } else {\n`;
+          jqueryJs += `          // Fallback for older Bootstrap or if instance isn't found\n`;
+          jqueryJs += `          $("#myModal").modal("hide");\n`;
+          jqueryJs += `        }\n`;
+          jqueryJs += `      }\n`;
           jqueryJs += `    }\n`;
+          jqueryJs += `    // If !isValid, the invalid feedback is already shown by the validation logic\n`;
           jqueryJs += `  });\n\n`;
 
           // Function to add row to table
           jqueryJs += `  // Function to add a new row to the table\n`;
           jqueryJs += `  function addRowToTable(rowData) {\n`;
-          jqueryJs += `    const $tableBody = $('#memberList tbody');\n`;
+          jqueryJs += `    const $tableBody = $("#dataTableBody"); // Target the table in your HTML\n`;
+          jqueryJs += `    const $newRow = $("<tr></tr>");\n`;
           jqueryJs += `    \n`;
-          jqueryJs += `    // Create new row\n`;
-          jqueryJs += `    const $newRow = $('<tr></tr>');\n`;
-          jqueryJs += `    \n`;
-          jqueryJs += `    // Add STT (sequence number) cell\n`;
-          jqueryJs += `    const rowCount = $tableBody.children().length + 1;\n`;
-          jqueryJs += `    $newRow.append($('<td></td>').text(rowCount));\n`;
+          // Remove the automatic STT column generation
+          // jqueryJs += `    // Add STT (sequence number) cell\n`;
+          // jqueryJs += `    const rowCount = $tableBody.children().length + 1;\n`;
+          // jqueryJs += `    $newRow.append($("<td></td>").text(rowCount));\n`;
 
-          // Add cells for each column
+          // Add cells for each column directly
           tableColumns.forEach((column) => {
             const jsFriendlyColName = column.name.replace(
               /[^a-zA-Z0-9_]/g,
               "_"
             );
-            jqueryJs += `    \n`;
-            jqueryJs += `    // Add ${column.name} cell\n`;
-            jqueryJs += `    $newRow.append($('<td></td>').text(rowData.${jsFriendlyColName} || ''));\n`;
+            jqueryJs += `    $newRow.append($("<td></td>").text(rowData.${jsFriendlyColName} || "")); // Corresponds to '${column.name}' header\n`;
           });
 
-          jqueryJs += `    \n`;
-          jqueryJs += `    // Add row to table\n`;
           jqueryJs += `    $tableBody.append($newRow);\n`;
           jqueryJs += `  }\n`;
 
-          jqueryJs += `});\n`;
+          jqueryJs += `}); // End of $(document).ready`;
 
           // Update code in modal and highlight
           document.getElementById("modalHtmlCode").textContent = modalHtml;
