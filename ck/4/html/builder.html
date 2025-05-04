@@ -9,6 +9,11 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     />
+    <!-- Add highlight.js for code syntax highlighting -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css"
+    />
     <style>
       .builder-container {
         display: flex;
@@ -91,6 +96,29 @@
         background-color: #f8f9fa;
         border-radius: 5px;
       }
+      .code-container {
+        max-height: 500px;
+        overflow-y: auto;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        border: 1px solid #dee2e6;
+      }
+      .code-tabs .nav-link {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+      }
+      .copy-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 100;
+      }
+      pre {
+        margin-bottom: 0;
+      }
+      code {
+        padding: 1rem !important;
+      }
     </style>
   </head>
   <body>
@@ -166,6 +194,14 @@
                   id="form-panel"
                   role="tabpanel"
                 >
+                  <div class="d-flex justify-content-end mb-2">
+                    <button
+                      class="btn btn-outline-primary"
+                      id="exportFormCodeBtn"
+                    >
+                      <i class="fas fa-code me-1"></i> Export Form Code
+                    </button>
+                  </div>
                   <div class="builder-container">
                     <div class="field-palette">
                       <h5>Form Fields</h5>
@@ -238,6 +274,14 @@
 
                 <!-- Table Builder Panel -->
                 <div class="tab-pane fade" id="table-panel" role="tabpanel">
+                  <div class="d-flex justify-content-end mb-2">
+                    <button
+                      class="btn btn-outline-primary"
+                      id="exportTableCodeBtn"
+                    >
+                      <i class="fas fa-code me-1"></i> Export Table Code
+                    </button>
+                  </div>
                   <h5>Table Columns</h5>
                   <div class="column-list" id="columnListContainer">
                     <!-- Table columns will be added here -->
@@ -538,8 +582,202 @@
       </div>
     </div>
 
+    <!-- Modal for Exporting Form Code -->
+    <div
+      class="modal fade"
+      id="exportFormCodeModal"
+      tabindex="-1"
+      aria-labelledby="exportFormCodeModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exportFormCodeModalLabel">
+              Export Form Code
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <ul class="nav nav-tabs code-tabs" id="formCodeTabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link active"
+                  id="form-html-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#form-html"
+                  type="button"
+                  role="tab"
+                >
+                  HTML
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="form-js-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#form-js"
+                  type="button"
+                  role="tab"
+                >
+                  JavaScript
+                </button>
+              </li>
+            </ul>
+            <div class="tab-content mt-2">
+              <div
+                class="tab-pane fade show active position-relative"
+                id="form-html"
+                role="tabpanel"
+              >
+                <button
+                  class="btn btn-sm btn-outline-secondary copy-btn"
+                  id="copyFormHtml"
+                >
+                  <i class="far fa-copy"></i> Copy
+                </button>
+                <div class="code-container">
+                  <pre><code class="html" id="formHtmlCode"></code></pre>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade position-relative"
+                id="form-js"
+                role="tabpanel"
+              >
+                <button
+                  class="btn btn-sm btn-outline-secondary copy-btn"
+                  id="copyFormJs"
+                >
+                  <i class="far fa-copy"></i> Copy
+                </button>
+                <div class="code-container">
+                  <pre><code class="javascript" id="formJsCode"></code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for Exporting Table Code -->
+    <div
+      class="modal fade"
+      id="exportTableCodeModal"
+      tabindex="-1"
+      aria-labelledby="exportTableCodeModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exportTableCodeModalLabel">
+              Export Table Code
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <ul
+              class="nav nav-tabs code-tabs"
+              id="tableCodeTabs"
+              role="tablist"
+            >
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link active"
+                  id="table-html-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#table-html"
+                  type="button"
+                  role="tab"
+                >
+                  HTML
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="table-js-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#table-js"
+                  type="button"
+                  role="tab"
+                >
+                  JavaScript
+                </button>
+              </li>
+            </ul>
+            <div class="tab-content mt-2">
+              <div
+                class="tab-pane fade show active position-relative"
+                id="table-html"
+                role="tabpanel"
+              >
+                <button
+                  class="btn btn-sm btn-outline-secondary copy-btn"
+                  id="copyTableHtml"
+                >
+                  <i class="far fa-copy"></i> Copy
+                </button>
+                <div class="code-container">
+                  <pre><code class="html" id="tableHtmlCode"></code></pre>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade position-relative"
+                id="table-js"
+                role="tabpanel"
+              >
+                <button
+                  class="btn btn-sm btn-outline-secondary copy-btn"
+                  id="copyTableJs"
+                >
+                  <i class="far fa-copy"></i> Copy
+                </button>
+                <div class="code-container">
+                  <pre><code class="javascript" id="tableJsCode"></code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="../js/jquery-3.7.1.min.js"></script>
     <script src="../js/bootstrap.bundle.min.js"></script>
+    <!-- Add highlight.js for code syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         // Global variables
@@ -780,6 +1018,56 @@
           .getElementById("addOptionBtn")
           .addEventListener("click", function () {
             addOptionRow();
+          });
+
+        // Initialize code highlighting
+        hljs.highlightAll();
+
+        // Export form code button event
+        document
+          .getElementById("exportFormCodeBtn")
+          .addEventListener("click", function () {
+            generateFormCode();
+            const formCodeModal = new bootstrap.Modal(
+              document.getElementById("exportFormCodeModal")
+            );
+            formCodeModal.show();
+          });
+
+        // Export table code button event
+        document
+          .getElementById("exportTableCodeBtn")
+          .addEventListener("click", function () {
+            generateTableCode();
+            const tableCodeModal = new bootstrap.Modal(
+              document.getElementById("exportTableCodeModal")
+            );
+            tableCodeModal.show();
+          });
+
+        // Copy buttons events
+        document
+          .getElementById("copyFormHtml")
+          .addEventListener("click", function () {
+            copyToClipboard("formHtmlCode");
+          });
+
+        document
+          .getElementById("copyFormJs")
+          .addEventListener("click", function () {
+            copyToClipboard("formJsCode");
+          });
+
+        document
+          .getElementById("copyTableHtml")
+          .addEventListener("click", function () {
+            copyToClipboard("tableHtmlCode");
+          });
+
+        document
+          .getElementById("copyTableJs")
+          .addEventListener("click", function () {
+            copyToClipboard("tableJsCode");
           });
 
         // Helper Functions
@@ -1673,6 +1961,435 @@
           };
 
           return names[fieldType] || "field";
+        }
+
+        // Code generation functions
+        function generateFormCode() {
+          // Generate HTML code for the form
+          let formHtml = `<form id="myForm" class="needs-validation" novalidate>\n`;
+
+          formFields.forEach((field) => {
+            formHtml += `  <div class="mb-3">\n`;
+
+            // Add label
+            formHtml += `    <label for="${field.name}" class="form-label">${field.label}`;
+            if (field.required) {
+              formHtml += ` <span class="text-danger">*</span>`;
+            }
+            formHtml += `</label>\n`;
+
+            // Add input based on field type
+            switch (field.type) {
+              case "text":
+              case "email":
+              case "number":
+              case "tel":
+                formHtml += `    <input type="${field.type}" class="form-control" id="${field.name}" name="${field.name}"`;
+                if (field.placeholder)
+                  formHtml += ` placeholder="${field.placeholder}"`;
+                if (field.required) formHtml += ` required`;
+                if (field.validation && field.validation.pattern)
+                  formHtml += ` pattern="${field.validation.pattern}"`;
+                formHtml += `>\n`;
+                if (field.validation && field.validation.message) {
+                  formHtml += `    <div class="invalid-feedback">${field.validation.message}</div>\n`;
+                }
+                break;
+
+              case "date":
+                formHtml += `    <input type="date" class="form-control" id="${field.name}" name="${field.name}"`;
+                if (field.required) formHtml += ` required`;
+                if (field.dateValidation) {
+                  if (field.dateValidation.min)
+                    formHtml += ` min="${field.dateValidation.min}"`;
+                  if (field.dateValidation.max)
+                    formHtml += ` max="${field.dateValidation.max}"`;
+                }
+                formHtml += `>\n`;
+                if (field.validation && field.validation.message) {
+                  formHtml += `    <div class="invalid-feedback">${field.validation.message}</div>\n`;
+                }
+                break;
+
+              case "select":
+                formHtml += `    <select class="form-select" id="${
+                  field.name
+                }" name="${field.name}"${field.required ? " required" : ""}>\n`;
+                formHtml += `      <option value=""${
+                  !field.required ? " selected" : ""
+                }>Choose...</option>\n`;
+
+                if (field.options && field.options.length > 0) {
+                  field.options.forEach((option) => {
+                    formHtml += `      <option value="${option.value}">${option.text}</option>\n`;
+                  });
+                }
+
+                formHtml += `    </select>\n`;
+                formHtml += `    <div class="invalid-feedback">Please select an option</div>\n`;
+                break;
+
+              case "radio":
+                if (field.options && field.options.length > 0) {
+                  field.options.forEach((option, i) => {
+                    formHtml += `    <div class="form-check">\n`;
+                    formHtml += `      <input class="form-check-input" type="radio" name="${
+                      field.name
+                    }" id="${field.name}_${i}" value="${option.value}"${
+                      i === 0 && field.required ? " checked" : ""
+                    }>\n`;
+                    formHtml += `      <label class="form-check-label" for="${field.name}_${i}">${option.text}</label>\n`;
+                    formHtml += `    </div>\n`;
+                  });
+                }
+                formHtml += `    <div class="invalid-feedback">Please select an option</div>\n`;
+                break;
+
+              case "checkbox":
+                if (field.options && field.options.length > 0) {
+                  field.options.forEach((option, i) => {
+                    formHtml += `    <div class="form-check">\n`;
+                    formHtml += `      <input class="form-check-input" type="checkbox" name="${field.name}" id="${field.name}_${i}" value="${option.value}">\n`;
+                    formHtml += `      <label class="form-check-label" for="${field.name}_${i}">${option.text}</label>\n`;
+                    formHtml += `    </div>\n`;
+                  });
+                }
+                formHtml += `    <div class="invalid-feedback">Please select at least one option</div>\n`;
+                break;
+            }
+
+            formHtml += `  </div>\n`;
+          });
+
+          formHtml += `  <button type="submit" class="btn btn-primary">Submit</button>\n`;
+          formHtml += `</form>`;
+
+          // Generate JavaScript code for form validation
+          let formJs = `// Form validation script\n`;
+          formJs += `(function() {\n`;
+          formJs += `  'use strict';\n\n`;
+          formJs += `  // Fetch the form we want to validate\n`;
+          formJs += `  const form = document.getElementById('myForm');\n\n`;
+          formJs += `  // Add submit event listener\n`;
+          formJs += `  form.addEventListener('submit', function(event) {\n`;
+          formJs += `    if (!validateForm()) {\n`;
+          formJs += `      event.preventDefault();\n`;
+          formJs += `      event.stopPropagation();\n`;
+          formJs += `    }\n`;
+          formJs += `  }, false);\n\n`;
+
+          formJs += `  // Custom validation function\n`;
+          formJs += `  function validateForm() {\n`;
+          formJs += `    let isValid = true;\n\n`;
+
+          formJs += `    // Reset validation visuals\n`;
+          formJs += `    form.querySelectorAll('.is-invalid').forEach(el => {\n`;
+          formJs += `      el.classList.remove('is-invalid');\n`;
+          formJs += `    });\n\n`;
+
+          // Add validation for each field
+          let hasDateValidation = false;
+
+          formFields.forEach((field) => {
+            if (
+              field.type === "date" &&
+              field.dateValidation &&
+              (field.dateValidation.minIsToday ||
+                field.dateValidation.maxIsToday)
+            ) {
+              hasDateValidation = true;
+            }
+
+            if (
+              field.required ||
+              (field.validation && field.validation.pattern) ||
+              (field.type === "date" && field.dateValidation)
+            ) {
+              formJs += `    // Validate ${field.label}\n`;
+
+              switch (field.type) {
+                case "text":
+                case "email":
+                case "number":
+                case "tel":
+                case "date":
+                  formJs += `    const ${field.name}El = document.getElementById('${field.name}');\n`;
+
+                  if (field.required) {
+                    formJs += `    if (${field.name}El.value.trim() === '') {\n`;
+                    formJs += `      ${field.name}El.classList.add('is-invalid');\n`;
+                    formJs += `      isValid = false;\n`;
+                    formJs += `    }\n`;
+                  }
+
+                  if (field.validation && field.validation.pattern) {
+                    formJs += `    if (${field.name}El.value.trim() !== '' && !/${field.validation.pattern}/.test(${field.name}El.value.trim())) {\n`;
+                    formJs += `      ${field.name}El.classList.add('is-invalid');\n`;
+                    formJs += `      isValid = false;\n`;
+                    formJs += `    }\n`;
+                  }
+
+                  // Date validation
+                  if (field.type === "date" && field.dateValidation) {
+                    if (field.dateValidation.minIsToday) {
+                      formJs += `    if (${field.name}El.value) {\n`;
+                      formJs += `      const selectedDate = new Date(${field.name}El.value);\n`;
+                      formJs += `      const today = new Date();\n`;
+                      formJs += `      today.setHours(0, 0, 0, 0);\n`;
+                      formJs += `      if (selectedDate < today) {\n`;
+                      formJs += `        ${field.name}El.classList.add('is-invalid');\n`;
+                      formJs += `        isValid = false;\n`;
+                      formJs += `      }\n`;
+                      formJs += `    }\n`;
+                    }
+
+                    if (field.dateValidation.maxIsToday) {
+                      formJs += `    if (${field.name}El.value) {\n`;
+                      formJs += `      const selectedDate = new Date(${field.name}El.value);\n`;
+                      formJs += `      const today = new Date();\n`;
+                      formJs += `      today.setHours(0, 0, 0, 0);\n`;
+                      formJs += `      if (selectedDate > today) {\n`;
+                      formJs += `        ${field.name}El.classList.add('is-invalid');\n`;
+                      formJs += `        isValid = false;\n`;
+                      formJs += `      }\n`;
+                      formJs += `    }\n`;
+                    }
+                  }
+                  break;
+
+                case "select":
+                  if (field.required) {
+                    formJs += `    const ${field.name}El = document.getElementById('${field.name}');\n`;
+                    formJs += `    if (${field.name}El.value === '') {\n`;
+                    formJs += `      ${field.name}El.classList.add('is-invalid');\n`;
+                    formJs += `      isValid = false;\n`;
+                    formJs += `    }\n`;
+                  }
+                  break;
+
+                case "radio":
+                  if (field.required) {
+                    formJs += `    const ${field.name}Checked = form.querySelector('input[name="${field.name}"]:checked');\n`;
+                    formJs += `    if (!${field.name}Checked) {\n`;
+                    formJs += `      const radioButtons = form.querySelectorAll('input[name="${field.name}"]');\n`;
+                    formJs += `      radioButtons.forEach(radio => {\n`;
+                    formJs += `        radio.classList.add('is-invalid');\n`;
+                    formJs += `      });\n`;
+                    formJs += `      isValid = false;\n`;
+                    formJs += `    }\n`;
+                  }
+                  break;
+
+                case "checkbox":
+                  if (field.required) {
+                    formJs += `    const ${field.name}Checked = form.querySelector('input[name="${field.name}"]:checked');\n`;
+                    formJs += `    if (!${field.name}Checked) {\n`;
+                    formJs += `      const checkboxes = form.querySelectorAll('input[name="${field.name}"]');\n`;
+                    formJs += `      checkboxes.forEach(checkbox => {\n`;
+                    formJs += `        checkbox.classList.add('is-invalid');\n`;
+                    formJs += `      });\n`;
+                    formJs += `      isValid = false;\n`;
+                    formJs += `    }\n`;
+                  }
+                  break;
+              }
+
+              formJs += `\n`;
+            }
+          });
+
+          formJs += `    return isValid;\n`;
+          formJs += `  }\n\n`;
+
+          // For date inputs that need "today" as min or max
+          if (hasDateValidation) {
+            formJs += `  // Set min/max date attributes for date inputs that use "today"\n`;
+            formJs += `  function setDateLimits() {\n`;
+            formJs += `    const today = new Date().toISOString().split('T')[0];\n\n`;
+
+            formFields.forEach((field) => {
+              if (field.type === "date" && field.dateValidation) {
+                if (field.dateValidation.minIsToday) {
+                  formJs += `    document.getElementById('${field.name}').setAttribute('min', today);\n`;
+                }
+                if (field.dateValidation.maxIsToday) {
+                  formJs += `    document.getElementById('${field.name}').setAttribute('max', today);\n`;
+                }
+              }
+            });
+
+            formJs += `  }\n\n`;
+            formJs += `  // Initialize date limits\n`;
+            formJs += `  setDateLimits();\n`;
+          }
+
+          formJs += `})();`;
+
+          // Update code in modal and highlight
+          document.getElementById("formHtmlCode").textContent = formHtml;
+          document.getElementById("formJsCode").textContent = formJs;
+          hljs.highlightAll();
+        }
+
+        function generateTableCode() {
+          // Generate HTML code for the table
+          let tableHtml = `<div class="table-responsive">\n`;
+          tableHtml += `  <table class="table table-bordered" id="dataTable">\n`;
+          tableHtml += `    <thead>\n`;
+          tableHtml += `      <tr>\n`;
+
+          // Add table headers
+          tableColumns.forEach((column) => {
+            tableHtml += `        <th>${column.name}</th>\n`;
+          });
+
+          tableHtml += `      </tr>\n`;
+          tableHtml += `    </thead>\n`;
+          tableHtml += `    <tbody id="dataTableBody">\n`;
+          tableHtml += `      <!-- Table data will be inserted here -->\n`;
+          tableHtml += `    </tbody>\n`;
+          tableHtml += `  </table>\n`;
+          tableHtml += `</div>`;
+
+          // Generate JavaScript code for table data handling
+          let tableJs = `// Table data handling script\n`;
+          tableJs += `(function() {\n`;
+          tableJs += `  'use strict';\n\n`;
+
+          tableJs += `  // Sample data - replace with your actual data source\n`;
+          tableJs += `  const tableData = [];\n\n`;
+
+          tableJs += `  // Function to add a new row to the table\n`;
+          tableJs += `  function addRowToTable(rowData) {\n`;
+          tableJs += `    const tableBody = document.getElementById('dataTableBody');\n`;
+          tableJs += `    const row = document.createElement('tr');\n\n`;
+
+          tableJs += `    // Add cells for each column\n`;
+          tableColumns.forEach((column) => {
+            tableJs += `    const ${column.name.replace(
+              /\s+/g,
+              ""
+            )}Cell = document.createElement('td');\n`;
+            tableJs += `    ${column.name.replace(
+              /\s+/g,
+              ""
+            )}Cell.textContent = rowData.${column.name.replace(
+              /\s+/g,
+              ""
+            )} || '';\n`;
+            tableJs += `    row.appendChild(${column.name.replace(
+              /\s+/g,
+              ""
+            )}Cell);\n\n`;
+          });
+
+          tableJs += `    tableBody.appendChild(row);\n`;
+          tableJs += `  }\n\n`;
+
+          tableJs += `  // Function to collect form data\n`;
+          tableJs += `  function collectFormData(form) {\n`;
+          tableJs += `    const data = {};\n\n`;
+
+          // Map form fields to table columns
+          let hasFieldMappings = false;
+          tableColumns.forEach((column) => {
+            if (column.fieldId) {
+              const field = formFields.find((f) => f.id === column.fieldId);
+              if (field) {
+                hasFieldMappings = true;
+                const columnName = column.name.replace(/\s+/g, "");
+
+                switch (field.type) {
+                  case "radio":
+                    tableJs += `    const selected${columnName} = form.querySelector('input[name="${field.name}"]:checked');\n`;
+                    tableJs += `    data.${columnName} = selected${columnName} ? selected${columnName}.value : '';\n\n`;
+                    break;
+
+                  case "checkbox":
+                    tableJs += `    const selected${columnName}s = form.querySelectorAll('input[name="${field.name}"]:checked');\n`;
+                    tableJs += `    const ${columnName}Values = [];\n`;
+                    tableJs += `    selected${columnName}s.forEach(cb => ${columnName}Values.push(cb.value));\n`;
+                    tableJs += `    data.${columnName} = ${columnName}Values.join(', ');\n\n`;
+                    break;
+
+                  default:
+                    tableJs += `    data.${columnName} = document.getElementById('${field.name}')?.value || '';\n\n`;
+                    break;
+                }
+              }
+            }
+          });
+
+          if (!hasFieldMappings) {
+            tableJs += `    // No field mappings found. Add your own data collection logic here\n`;
+            tableJs += `    // For example:\n`;
+            tableColumns.forEach((column) => {
+              const columnName = column.name.replace(/\s+/g, "");
+              tableJs += `    // data.${columnName} = document.getElementById('elementId').value;\n`;
+            });
+            tableJs += `\n`;
+          }
+
+          tableJs += `    return data;\n`;
+          tableJs += `  }\n\n`;
+
+          tableJs += `  // Example of adding data from a form\n`;
+          tableJs += `  document.getElementById('myForm')?.addEventListener('submit', function(event) {\n`;
+          tableJs += `    event.preventDefault();\n`;
+          tableJs += `    \n`;
+          tableJs += `    if (this.checkValidity()) {\n`;
+          tableJs += `      // Collect form data\n`;
+          tableJs += `      const newRowData = collectFormData(this);\n`;
+          tableJs += `      \n`;
+          tableJs += `      // Add to data array\n`;
+          tableJs += `      tableData.push(newRowData);\n`;
+          tableJs += `      \n`;
+          tableJs += `      // Add to table\n`;
+          tableJs += `      addRowToTable(newRowData);\n`;
+          tableJs += `      \n`;
+          tableJs += `      // Reset the form\n`;
+          tableJs += `      this.reset();\n`;
+          tableJs += `    }\n`;
+          tableJs += `  });\n\n`;
+
+          tableJs += `  // Initialize table with existing data\n`;
+          tableJs += `  function initTable() {\n`;
+          tableJs += `    tableData.forEach(rowData => {\n`;
+          tableJs += `      addRowToTable(rowData);\n`;
+          tableJs += `    });\n`;
+          tableJs += `  }\n\n`;
+
+          tableJs += `  // Initialize the table\n`;
+          tableJs += `  initTable();\n`;
+          tableJs += `})();`;
+
+          // Update code in modal and highlight
+          document.getElementById("tableHtmlCode").textContent = tableHtml;
+          document.getElementById("tableJsCode").textContent = tableJs;
+          hljs.highlightAll();
+        }
+
+        function copyToClipboard(elementId) {
+          const element = document.getElementById(elementId);
+          const text = element.textContent;
+
+          navigator.clipboard
+            .writeText(text)
+            .then(function () {
+              // Show success message
+              const copyBtn = document.querySelector(
+                `#copy${elementId.replace("Code", "")}`
+              );
+              const originalText = copyBtn.innerHTML;
+              copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+
+              setTimeout(() => {
+                copyBtn.innerHTML = originalText;
+              }, 2000);
+            })
+            .catch(function (err) {
+              console.error("Failed to copy text: ", err);
+            });
         }
       });
     </script>
