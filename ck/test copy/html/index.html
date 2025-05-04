@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GFree English Course Registration</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+
+  <body>
+    <div class="container" style="border: 1px solid black">
+      <div id="header">
+        <div class="row" style="width: 100%">
+          <img
+            src="../image/website.png"
+            alt="Banner"
+            style="width: 100%; height: auto; display: block"
+          />
+        </div>
+      </div>
+
+      <div id="navbar">
+        <nav class="navbar navbar-expand-sm navbar-light bg-light">
+          <div class="container-fluid">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#">GFree English course </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../html/index.html">Trang chủ</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Giới thiệu</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Khóa học</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../html/builder.html">Web Builder</a>
+              </li>
+              <li class="nav-item">
+                <button
+                  class="btn btn-danger text-white btn-sm"
+                  data-bs-toggle="modal"
+                  data-bs-target="#myModal"
+                >
+                  Đăng ký
+                </button>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+
+      <div id="section">
+        <div class="container">
+          <div class="row my-3">
+            <h3>Danh sách đăng kí khóa học</h3>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-bordered" id="dataTable">
+            <thead>
+              <tr>
+                <th>ten</th>
+                <th>ma</th>
+              </tr>
+            </thead>
+            <tbody id="dataTableBody">
+              <!-- Table data will be inserted here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="myModal"
+        tabindex="-1"
+        aria-labelledby="modalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalLabel">Phone Number Form</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form id="generatedForm" class="needs-validation" novalidate>
+                <div class="mb-3">
+                  <label for="phone" class="form-label">Phone Number</label>
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="phone"
+                    name="phone"
+                    pattern="^[A-Z][a-z]*(\s+[A-Z][a-z]*)+$"
+                  />
+                  <div class="invalid-feedback">ffffffffffff</div>
+                </div>
+                <div class="mb-3">
+                  <label for="text_input" class="form-label">Text Input</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="text_input"
+                    name="text_input"
+                    pattern="@.*\.com$"
+                  />
+                  <div class="invalid-feedback">aaaaaaaaaaaaaaaaa</div>
+                </div>
+                <button type="submit" class="btn btn-primary">Đăng ký</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Đóng
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="footer">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <h5 class="text-white">Thông tin sinh viên</h5>
+              <p>Họ tên: Lê Thanh Long</p>
+              <p>Mã sinh viên: 23630851</p>
+              <p>Mã lớp: DHKTPM18A</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+  </body>
+</html>
