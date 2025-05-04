@@ -614,7 +614,7 @@
                   type="button"
                   role="tab"
                 >
-                  HTML
+                  Form HTML
                 </button>
               </li>
               <li class="nav-item" role="presentation">
@@ -626,7 +626,19 @@
                   type="button"
                   role="tab"
                 >
-                  JavaScript
+                  Form JavaScript
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button
+                  class="nav-link"
+                  id="form-modal-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#form-modal"
+                  type="button"
+                  role="tab"
+                >
+                  Modal HTML
                 </button>
               </li>
             </ul>
@@ -659,6 +671,21 @@
                 </button>
                 <div class="code-container">
                   <pre><code class="javascript" id="formJsCode"></code></pre>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade position-relative"
+                id="form-modal"
+                role="tabpanel"
+              >
+                <button
+                  class="btn btn-sm btn-outline-secondary copy-btn"
+                  id="copyFormModal"
+                >
+                  <i class="far fa-copy"></i> Copy
+                </button>
+                <div class="code-container">
+                  <pre><code class="html" id="formModalCode"></code></pre>
                 </div>
               </div>
             </div>
@@ -1068,6 +1095,13 @@
           .getElementById("copyTableJs")
           .addEventListener("click", function () {
             copyToClipboard("tableJsCode");
+          });
+
+        // Add event listener for the new modal copy button
+        document
+          .getElementById("copyFormModal")
+          .addEventListener("click", function () {
+            copyToClipboard("formModalCode");
           });
 
         // Helper Functions
@@ -2225,10 +2259,49 @@
 
           formJs += `})();`;
 
+          // Generate HTML code for the Bootstrap Modal
+          let modalHtml = `<!-- Button trigger modal (Example) -->\n`;
+          modalHtml += `<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#generatedFormModal">\n`;
+          modalHtml += `  Launch Form Modal\n`;
+          modalHtml += `</button>\n\n`;
+
+          modalHtml += `<!-- Modal -->\n`;
+          modalHtml += `<div class="modal fade" id="generatedFormModal" tabindex="-1" aria-labelledby="generatedFormModalLabel" aria-hidden="true">\n`;
+          modalHtml += `  <div class="modal-dialog modal-lg"> <!-- You can adjust size: modal-sm, modal-lg, modal-xl -->\n`;
+          modalHtml += `    <div class="modal-content">\n`;
+          modalHtml += `      <div class="modal-header">\n`;
+          // Use the first field's label as a default title or a generic one
+          const modalTitle =
+            formFields.length > 0
+              ? formFields[0].label + " Form"
+              : "Form Details";
+          modalHtml += `        <h5 class="modal-title" id="generatedFormModalLabel">${modalTitle}</h5>\n`;
+          modalHtml += `        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>\n`;
+          modalHtml += `      </div>\n`;
+          modalHtml += `      <div class="modal-body">\n`;
+          // Indent the generated form HTML
+          const indentedFormHtml = formHtml
+            .split("\n")
+            .map((line) => "        " + line)
+            .join("\n");
+          modalHtml += indentedFormHtml + "\n"; // Add the generated form here
+          modalHtml += `      </div>\n`;
+          modalHtml += `      <div class="modal-footer">\n`;
+          modalHtml += `        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>\n`;
+          // The submit button is now part of the form itself, so it doesn't strictly need to be duplicated here.
+          // However, often modals have explicit Save/Submit buttons in the footer that might trigger the form submission via JS.
+          // For simplicity, we'll rely on the form's internal submit button for now.
+          // You could add a button here like: <button type="button" class="btn btn-primary" onclick="document.getElementById('myForm').requestSubmit();">Save changes</button>
+          modalHtml += `      </div>\n`;
+          modalHtml += `    </div>\n`;
+          modalHtml += `  </div>\n`;
+          modalHtml += `</div>`;
+
           // Update code in modal and highlight
           document.getElementById("formHtmlCode").textContent = formHtml;
           document.getElementById("formJsCode").textContent = formJs;
-          hljs.highlightAll();
+          document.getElementById("formModalCode").textContent = modalHtml; // Populate the new modal code block
+          hljs.highlightAll(); // Re-run highlighting for all code blocks
         }
 
         function generateTableCode() {
@@ -2377,15 +2450,20 @@
             .writeText(text)
             .then(function () {
               // Show success message
-              const copyBtn = document.querySelector(
-                `#copy${elementId.replace("Code", "")}`
-              );
-              const originalText = copyBtn.innerHTML;
-              copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+              // Find the correct button relative to the code block
+              const copyBtn = element
+                .closest(".position-relative")
+                .querySelector(".copy-btn");
+              if (copyBtn) {
+                const originalText = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
 
-              setTimeout(() => {
-                copyBtn.innerHTML = originalText;
-              }, 2000);
+                setTimeout(() => {
+                  copyBtn.innerHTML = originalText;
+                }, 2000);
+              } else {
+                console.warn("Could not find copy button for", elementId);
+              }
             })
             .catch(function (err) {
               console.error("Failed to copy text: ", err);
