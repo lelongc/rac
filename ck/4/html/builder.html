@@ -261,6 +261,13 @@
                       >
                         <i class="fas fa-check-square me-2"></i>Checkbox
                       </div>
+                      <div
+                        class="field-item"
+                        draggable="true"
+                        data-field-type="readonly"
+                      >
+                        <i class="fas fa-eye me-2"></i>Readonly Field
+                      </div>
                     </div>
 
                     <div class="form-builder" id="formBuilderContainer">
@@ -501,6 +508,16 @@
                 <i class="fas fa-plus me-2"></i>Add Option
               </button>
             </div>
+
+            <!-- Add container for Readonly Source Field Selection -->
+            <div id="readonlySourceContainer" class="mt-3" style="display: none">
+                <label for="readonlySourceField" class="form-label">Source Select Field</label>
+                <select class="form-select" id="readonlySourceField">
+                    <option value="">Choose the select field to display...</option>
+                    <!-- Options will be populated dynamically -->
+                </select>
+            </div>
+            <!-- End of Readonly Source Field Selection -->
 
             <div id="validationContainer" class="mt-4">
               <h6>Validation Settings</h6>
@@ -952,6 +969,17 @@
               }
             }
 
+            // Handle readonly field source selection
+            if (fieldType === "readonly") {
+              const sourceFieldId = document.getElementById("readonlySourceField").value;
+              if (sourceFieldId) {
+                fieldData.sourceFieldId = sourceFieldId;
+              } else {
+                alert("Please select a source field for the readonly field");
+                return;
+              }
+            }
+
             // Update or add field
             if (editingFieldIndex !== null) {
               formFields[editingFieldIndex] = fieldData;
@@ -1381,6 +1409,32 @@
             dateValidationContainer.style.display = "none";
           }
 
+          // Handle readonly field source selection
+          const readonlySourceContainer = document.getElementById("readonlySourceContainer");
+          const readonlySourceField = document.getElementById("readonlySourceField");
+
+          if (field.type === "readonly") {
+            readonlySourceContainer.style.display = "block";
+
+            // Populate source field options
+            readonlySourceField.innerHTML = '<option value="">Choose the select field to display...</option>';
+            formFields.forEach((f) => {
+              if (f.type === "select") {
+                const option = document.createElement("option");
+                option.value = f.id;
+                option.textContent = f.label;
+                readonlySourceField.appendChild(option);
+              }
+            });
+
+            // Set the selected source field if it exists
+            if (field.sourceFieldId) {
+              readonlySourceField.value = field.sourceFieldId;
+            }
+          } else {
+            readonlySourceContainer.style.display = "none";
+          }
+
           // Show the modal
           const fieldModal = new bootstrap.Modal(
             document.getElementById("fieldModal")
@@ -1682,8 +1736,6 @@
                 fieldHtml += `
                                 <select class="form-select" id="preview_${field.id}" name="${field.name}"${
                   field.required ? " required" : ""
-                                }" name="${field.name}"${
-                  field.required ? " required" : ""
                 }>
                                     <option value="" ${
                                       !field.required ? "selected" : ""
@@ -1741,6 +1793,15 @@
 
                 fieldHtml += `<div class="invalid-feedback">Please select at least one option</div>`;
                 break;
+
+              // Add case for readonly field
+              case "readonly":
+                fieldHtml += `
+                                <input type="text" class="form-control" id="preview_${field.id}" name="${field.name}" readonly
+                                    placeholder="${field.placeholder || 'Value from source field'}">
+                                <!-- No validation needed for readonly -->
+                            `;
+                break;
             }
 
             fieldContainer.innerHTML = fieldHtml;
@@ -1779,6 +1840,41 @@
               }
             }
           });
+
+          // Add event listeners for readonly fields after rendering
+          setupReadonlyFieldListeners();
+        }
+
+        // New function to set up listeners for readonly fields
+        function setupReadonlyFieldListeners() {
+            formFields.forEach(field => {
+                if (field.type === 'readonly' && field.sourceFieldId) {
+                    const sourceFieldElement = document.getElementById(`preview_${field.sourceFieldId}`);
+                    const readonlyFieldElement = document.getElementById(`preview_${field.id}`);
+
+                    if (sourceFieldElement && readonlyFieldElement) {
+                        // Initial update
+                        updateReadonlyFieldValue(sourceFieldElement, readonlyFieldElement);
+
+                        // Update on change
+                        sourceFieldElement.addEventListener('change', () => {
+                            updateReadonlyFieldValue(sourceFieldElement, readonlyFieldElement);
+                        });
+                    }
+                }
+            });
+        }
+
+        // New helper function to update readonly field value
+        function updateReadonlyFieldValue(sourceSelectElement, readonlyInputElement) {
+            // Simply use the value directly - this is what actually gets sent to the table
+            if (sourceSelectElement.selectedIndex > 0) { // Skip the default "Choose..." option
+                const selectedValue = sourceSelectElement.value;
+                console.log("Selected value for table:", selectedValue);
+                readonlyInputElement.value = selectedValue;
+            } else {
+                readonlyInputElement.value = '';
+            }
         }
 
         function validatePreviewForm() {
@@ -1917,6 +2013,11 @@
                     rowData[column.name] = values.join(", ");
                     break;
 
+                  // Readonly fields usually don't need to be submitted, but if mapped, get their current value
+                  case "readonly":
+                     rowData[column.name] = document.getElementById(`preview_${field.id}`)?.value || "";
+                     break;
+
                   default:
                     const element = document.getElementById(
                       `preview_${field.id}`
@@ -1963,6 +2064,7 @@
             select: "Select Option",
             radio: "Radio Options",
             checkbox: "Checkboxes",
+            readonly: "Readonly Display", // Add label for readonly
           };
 
           return labels[fieldType] || "New Field";
@@ -1978,6 +2080,7 @@
             select: "select",
             radio: "radio",
             checkbox: "checkbox",
+            readonly: "readonly_display", // Add name for readonly
           };
 
           return names[fieldType] || "field";
@@ -1992,7 +2095,8 @@
             formHtml += `  <div class="mb-3">\n`;
             // Add label
             formHtml += `    <label for="${field.name}" class="form-label">${field.label}`;
-            if (field.required) {
+            // Readonly fields are never required in the traditional sense
+            if (field.required && field.type !== 'readonly') {
               formHtml += ` <span class="text-danger">*</span>`;
             }
             formHtml += `</label>\n`;
@@ -2079,6 +2183,14 @@
                 }
                 formHtml += `    <div class="invalid-feedback">Vui lòng chọn ít nhất một tùy chọn</div>\n`;
                 break;
+
+              // Add case for readonly field generation
+              case "readonly":
+                formHtml += `    <input type="text" class="form-control" id="${field.name}" name="${field.name}" readonly`;
+                if (field.placeholder) formHtml += ` placeholder="${field.placeholder}"`;
+                formHtml += `>\n`;
+                // No invalid feedback needed for readonly
+                break;
             }
             formHtml += `  </div>\n`;
           });
@@ -2161,6 +2273,36 @@
             jqueryJs += `  }\n\n`;
             jqueryJs += `  // Initialize date limits\n`;
             jqueryJs += `  setupDateFields();\n\n`;
+          }
+
+          // Add setup for readonly fields if needed
+          const readonlyFields = formFields.filter(f => f.type === 'readonly' && f.sourceFieldId);
+          if (readonlyFields.length > 0) {
+              jqueryJs += `  // Set up listeners for readonly fields\n`;
+              jqueryJs += `  function setupReadonlyFields() {\n`;
+              readonlyFields.forEach(field => {
+                  const sourceField = formFields.find(f => f.id === field.sourceFieldId);
+                  if (sourceField && sourceField.type === 'select') { // Ensure source is a select
+                      jqueryJs += `    const $source_${sourceField.name} = $("#${sourceField.name}");\n`;
+                      jqueryJs += `    const $target_${field.name} = $("#${field.name}");\n\n`;
+                      jqueryJs += `    function update_${field.name}() {\n`;
+                      jqueryJs += `      const selectedValue = $source_${sourceField.name}.val();\n`; // Get the value
+                      jqueryJs += `      // Update only if a valid option (not the default 'Choose...') is selected\n`;
+                      jqueryJs += `      if (selectedValue) {\n`;
+                      jqueryJs += `          $target_${field.name}.val(selectedValue);\n`; // Set the value
+                      jqueryJs += `      } else {\n`;
+                      jqueryJs += `          $target_${field.name}.val(""); // Clear if default is selected\n`;
+                      jqueryJs += `      }\n`;
+                      jqueryJs += `    }\n\n`;
+                      jqueryJs += `    // Update on change\n`;
+                      jqueryJs += `    $source_${sourceField.name}.on("change", update_${field.name});\n\n`;
+                      jqueryJs += `    // Initial update on load\n`;
+                      jqueryJs += `    update_${field.name}();\n\n`;
+                  }
+              });
+              jqueryJs += `  }\n\n`;
+              jqueryJs += `  // Initialize readonly fields\n`;
+              jqueryJs += `  setupReadonlyFields();\n\n`;
           }
 
           // Form submission handler
@@ -2375,6 +2517,10 @@
                   case "checkbox":
                     jqueryJs += `        ${jsFriendlyColName}: $.map($("input[name='${field.name}']:checked"), function(el) { return $(el).val(); }).join(", ") || "",\n`;
                     break;
+                  // Readonly fields usually don't need to be submitted, but if mapped, get their current value
+                  case "readonly":
+                     jqueryJs += `        ${jsFriendlyColName}: $("#${field.name}").val() || "",\n`;
+                     break;
                   default:
                     jqueryJs += `        ${jsFriendlyColName}: $("#${field.name}").val().trim() || "",\n`;
                     break;
@@ -2528,6 +2674,11 @@
                     tableJs += `    data.${columnName} = ${columnName}Values.join(', ');\n\n`;
                     break;
 
+                  // Handle readonly field data collection if mapped
+                  case "readonly":
+                    tableJs += `    data.${columnName} = document.getElementById('${field.name}')?.value || '';\n\n`;
+                    break;
+
                   default:
                     tableJs += `    data.${columnName} = document.getElementById('${field.name}')?.value || '';\n\n`;
                     break;
@@ -2601,7 +2752,7 @@
               // Find the correct button relative to the code block
               const copyBtn = element
                 .closest(".position-relative")
-                .querySelector(".copy-btn");
+                ?.querySelector(".copy-btn"); // Use optional chaining
               if (copyBtn) {
                 const originalText = copyBtn.innerHTML;
                 copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
@@ -2612,19 +2763,23 @@
               } else {
                 // Alternative: If we can't find the button in the relative position
                 // Find the button by its ID pattern
-                const possibleBtnId = "copy" + elementId.charAt(0).toUpperCase() + elementId.slice(1);
+                // Construct the potential ID carefully
+                 const baseId = elementId.replace(/Code$/, ''); // e.g., 'modalHtml', 'jqueryJs'
+                 const capitalizedBaseId = baseId.charAt(0).toUpperCase() + baseId.slice(1);
+                 const possibleBtnId = "copy" + capitalizedBaseId; // e.g., 'copyModalHtml', 'copyJqueryJs'
+
                 const alternativeCopyBtn = document.getElementById(possibleBtnId);
-                
+
                 if (alternativeCopyBtn) {
                   const originalText = alternativeCopyBtn.innerHTML;
                   alternativeCopyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                  
+
                   setTimeout(() => {
                     alternativeCopyBtn.innerHTML = originalText;
                   }, 2000);
                 } else {
-                  console.warn("Could not find copy button for", elementId);
-                  alert("Code copied to clipboard!");
+                  console.warn("Could not find copy button for", elementId, "using ID", possibleBtnId);
+                  alert("Code copied to clipboard!"); // Fallback alert
                 }
               }
             })
