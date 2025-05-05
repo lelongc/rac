@@ -1680,8 +1680,8 @@
 
               case "select":
                 fieldHtml += `
-                                <select class="form-select" id="${
-                                  field.id
+                                <select class="form-select" id="preview_${field.id}" name="${field.name}"${
+                  field.required ? " required" : ""
                                 }" name="${field.name}"${
                   field.required ? " required" : ""
                 }>
