@@ -1,3 +1,9 @@
-$newRow.append($("<td></td>").text(rowCount));
 
 <th>STT</th>
+
+thêm lên đầu hàm 
+let rowCount = 1;
+thêm ở  hàm cuối
+$newRow.append($("<td></td>").text(rowCount));
+
+rowCount++;

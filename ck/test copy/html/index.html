@@ -60,80 +60,106 @@
           </div>
         </div>
         <div class="table-responsive">
-          <table class="table table-bordered" id="dataTable">
-            <thead>
-              <tr>
-                <th>STT</th>
-                <th>ten</th>
-                <th>ma</th>
-              </tr>
-            </thead>
-            <tbody id="dataTableBody">
-              <!-- Table data will be inserted here -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Modal -->
-      <div
-        class="modal fade"
-        id="myModal"
-        tabindex="-1"
-        aria-labelledby="modalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="modalLabel">Phone Number Form</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <form id="generatedForm" class="needs-validation" novalidate>
-                <div class="mb-3">
-                  <label for="phone" class="form-label">Phone Number</label>
-                  <input
-                    type="tel"
-                    class="form-control"
-                    id="phone"
-                    name="phone"
-                    pattern="^[A-Z][a-z]*(\s+[A-Z][a-z]*)+$"
-                  />
-                  <div class="invalid-feedback">ffffffffffff</div>
-                </div>
-                <div class="mb-3">
-                  <label for="text_input" class="form-label">Text Input</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="text_input"
-                    name="text_input"
-                    pattern="@.*\.com$"
-                  />
-                  <div class="invalid-feedback">aaaaaaaaaaaaaaaaa</div>
-                </div>
-                <button type="submit" class="btn btn-primary">Đăng ký</button>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Đóng
-              </button>
-            </div>
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable">
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>na</th>
+                  <th>nga</th>
+                  <th>pho</th>
+                  <th>ma</th>
+                  <th>kh</th>
+                  <th>hth</th>
+                  <th>kn</th>
+                </tr>
+              </thead>
+              <tbody id="dataTableBody">
+                <!-- Table data will be inserted here -->
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
 
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">ho ten Form</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="generatedForm" class="needs-validation" novalidate>
+          <div class="mb-3">
+            <label for="text_input" class="form-label">ho ten</label>
+            <input type="text" class="form-control" id="text_input" name="text_input" placeholder="htv" pattern="^[A-Z][a-z]*(\s+[A-Z][a-z]*)+$">
+            <div class="invalid-feedback">hts</div>
+          </div>
+          <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input type="date" class="form-control" id="date" name="date">
+            <div class="invalid-feedback">fff</div>
+          </div>
+          <div class="mb-3">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" id="phone" name="phone" placeholder="pv" pattern="^(09|03|08)\d{8}$">
+            <div class="invalid-feedback">ps</div>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email Address</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="mv" pattern="@.*\.com$">
+            <div class="invalid-feedback">ms</div>
+          </div>
+          <div class="mb-3">
+            <label for="select" class="form-label">khoa học</label>
+            <select class="form-select" id="select" name="select">
+              <option value="" selected>Choose...</option>
+              <option value="6 tháng">k1</option>
+              <option value="12 tháng">k2</option>
+            </select>
+            <div class="invalid-feedback">Vui lòng chọn khoa học</div>
+          </div>
+          <div class="mb-3">
+            <label for="radio" class="form-label">hình thức hc</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="radio" id="radio_0" value="online">
+              <label class="form-check-label" for="radio_0">online</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="radio" id="radio_1" value="ónite">
+              <label class="form-check-label" for="radio_1">ónite</label>
+            </div>
+            <div class="invalid-feedback">Vui lòng chọn hình thức hc</div>
+          </div>
+          <div class="mb-3">
+            <label for="checkbox" class="form-label">ky nang</label>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="checkbox" id="checkbox_0" value="nghe">
+              <label class="form-check-label" for="checkbox_0">nghe</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="checkbox" id="checkbox_1" value="nói">
+              <label class="form-check-label" for="checkbox_1">nói</label>
+            </div>
+            <div class="invalid-feedback">Vui lòng chọn ít nhất một tùy chọn</div>
+          </div>
+          <div class="mb-3">
+            <label for="readonly_display" class="form-label">Readonly Display</label>
+            <input type="text" class="form-control" id="readonly_display" name="readonly_display" readonly>
+          </div>
+          <button type="submit" class="btn btn-primary">Đăng ký</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>
       <div id="footer">
         <div class="container">
           <div class="row">
