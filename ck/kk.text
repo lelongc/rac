@@ -1,0 +1,3 @@
+$newRow.append($("<td></td>").text(rowCount));
+
+<th>STT</th>

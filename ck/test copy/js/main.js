@@ -78,7 +78,7 @@ $(document).ready(function () {
     const $tableBody = $("#dataTableBody"); // Target the table in your HTML
     const $newRow = $("<tr></tr>");
     const rowCount = $tableBody.children().length + 1;
-    // If you only want the two columns from the form, remove the next line and adjust the data mapping below
+    $newRow.append($("<td></td>").text(rowCount));
     // $newRow.append($("<td></td>").text(rowCount));
     $newRow.append($("<td></td>").text(rowData.ten || "")); // Corresponds to 'ten' header
     $newRow.append($("<td></td>").text(rowData.ma || "")); // Corresponds to 'ma' header
