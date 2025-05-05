@@ -1045,17 +1045,17 @@
             tableCodeModal.show();
           });
 
-        // Copy buttons events
+        // Copy buttons events - Fix incorrect references and add proper error handling
         document
-          .getElementById("copyFormHtml")
+          .getElementById("copyModalHtml")
           .addEventListener("click", function () {
-            copyToClipboard("formHtmlCode");
+            copyToClipboard("modalHtmlCode");
           });
 
         document
-          .getElementById("copyFormJs")
+          .getElementById("copyJQueryJs")
           .addEventListener("click", function () {
-            copyToClipboard("formJsCode");
+            copyToClipboard("jqueryJsCode");
           });
 
         document
@@ -1070,25 +1070,24 @@
             copyToClipboard("tableJsCode");
           });
 
-        // Add event listener for the new modal copy button
-        document
-          .getElementById("copyFormModal")
-          .addEventListener("click", function () {
-            copyToClipboard("formModalCode");
-          });
+        // Remove incorrect references to non-existent elements
+        // document
+        //   .getElementById("copyFormHtml")
+        //   .addEventListener("click", function () {
+        //     copyToClipboard("formHtmlCode");
+        //   });
 
-        // Update copy button event listeners
-        document
-          .getElementById("copyModalHtml")
-          .addEventListener("click", function () {
-            copyToClipboard("modalHtmlCode");
-          });
+        // document
+        //   .getElementById("copyFormJs")
+        //   .addEventListener("click", function () {
+        //     copyToClipboard("formJsCode");
+        //   });
 
-        document
-          .getElementById("copyJQueryJs")
-          .addEventListener("click", function () {
-            copyToClipboard("jqueryJsCode");
-          });
+        // document
+        //   .getElementById("copyFormModal")
+        //   .addEventListener("click", function () {
+        //     copyToClipboard("formModalCode");
+        //   });
 
         // Helper Functions
 
@@ -2588,6 +2587,11 @@
 
         function copyToClipboard(elementId) {
           const element = document.getElementById(elementId);
+          if (!element) {
+            console.error("Element not found:", elementId);
+            return;
+          }
+          
           const text = element.textContent;
 
           navigator.clipboard
@@ -2606,11 +2610,39 @@
                   copyBtn.innerHTML = originalText;
                 }, 2000);
               } else {
-                console.warn("Could not find copy button for", elementId);
+                // Alternative: If we can't find the button in the relative position
+                // Find the button by its ID pattern
+                const possibleBtnId = "copy" + elementId.charAt(0).toUpperCase() + elementId.slice(1);
+                const alternativeCopyBtn = document.getElementById(possibleBtnId);
+                
+                if (alternativeCopyBtn) {
+                  const originalText = alternativeCopyBtn.innerHTML;
+                  alternativeCopyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                  
+                  setTimeout(() => {
+                    alternativeCopyBtn.innerHTML = originalText;
+                  }, 2000);
+                } else {
+                  console.warn("Could not find copy button for", elementId);
+                  alert("Code copied to clipboard!");
+                }
               }
             })
             .catch(function (err) {
               console.error("Failed to copy text: ", err);
+              // Fallback for browsers that don't support clipboard API
+              try {
+                const textarea = document.createElement("textarea");
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand("copy");
+                document.body.removeChild(textarea);
+                alert("Code copied to clipboard!");
+              } catch (e) {
+                console.error("Fallback copy method failed:", e);
+                alert("Failed to copy. Please select and copy the code manually.");
+              }
             });
         }
       });
