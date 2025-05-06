@@ -510,12 +510,18 @@
             </div>
 
             <!-- Add container for Readonly Source Field Selection -->
-            <div id="readonlySourceContainer" class="mt-3" style="display: none">
-                <label for="readonlySourceField" class="form-label">Source Select Field</label>
-                <select class="form-select" id="readonlySourceField">
-                    <option value="">Choose the select field to display...</option>
-                    <!-- Options will be populated dynamically -->
-                </select>
+            <div
+              id="readonlySourceContainer"
+              class="mt-3"
+              style="display: none"
+            >
+              <label for="readonlySourceField" class="form-label"
+                >Source Select Field</label
+              >
+              <select class="form-select" id="readonlySourceField">
+                <option value="">Choose the select field to display...</option>
+                <!-- Options will be populated dynamically -->
+              </select>
             </div>
             <!-- End of Readonly Source Field Selection -->
 
@@ -545,40 +551,112 @@
               </div>
 
               <div id="dateValidationContainer" style="display: none">
+                <h6 class="mt-3">Date Constraints</h6>
+
                 <div class="mb-3 form-check">
                   <input
-                    type="checkbox"
+                    type="radio"
                     class="form-check-input"
-                    id="minDateCheck"
+                    id="noDateConstraint"
+                    name="dateConstraintType"
+                    value="none"
+                    checked
                   />
-                  <label class="form-check-label" for="minDateCheck"
-                    >Set Minimum Date</label
+                  <label class="form-check-label" for="noDateConstraint"
+                    >No constraints</label
                   >
-                </div>
-                <div class="mb-3" id="minDateContainer" style="display: none">
-                  <select class="form-select" id="minDateType">
-                    <option value="specific">Specific Date</option>
-                    <option value="today">Today</option>
-                  </select>
-                  <input type="date" class="form-control mt-2" id="minDate" />
                 </div>
 
                 <div class="mb-3 form-check">
                   <input
-                    type="checkbox"
+                    type="radio"
                     class="form-check-input"
-                    id="maxDateCheck"
+                    id="beforeTodayConstraint"
+                    name="dateConstraintType"
+                    value="beforeToday"
                   />
-                  <label class="form-check-label" for="maxDateCheck"
-                    >Set Maximum Date</label
+                  <label class="form-check-label" for="beforeTodayConstraint"
+                    >Must be before today</label
                   >
                 </div>
-                <div class="mb-3" id="maxDateContainer" style="display: none">
-                  <select class="form-select" id="maxDateType">
-                    <option value="specific">Specific Date</option>
-                    <option value="today">Today</option>
-                  </select>
-                  <input type="date" class="form-control mt-2" id="maxDate" />
+
+                <div class="mb-3 form-check">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    id="afterTodayConstraint"
+                    name="dateConstraintType"
+                    value="afterToday"
+                  />
+                  <label class="form-check-label" for="afterTodayConstraint"
+                    >Must be after today</label
+                  >
+                </div>
+
+                <div class="mb-3 form-check">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    id="beforeYearsConstraint"
+                    name="dateConstraintType"
+                    value="beforeYears"
+                  />
+                  <label class="form-check-label" for="beforeYearsConstraint"
+                    >Must be before</label
+                  >
+                  <div
+                    class="input-group mt-2"
+                    id="beforeYearsContainer"
+                    style="display: none"
+                  >
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="beforeYears"
+                      min="0"
+                      value="1"
+                    />
+                    <span class="input-group-text">years ago</span>
+                  </div>
+                </div>
+
+                <div class="mb-3 form-check">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    id="afterYearsConstraint"
+                    name="dateConstraintType"
+                    value="afterYears"
+                  />
+                  <label class="form-check-label" for="afterYearsConstraint"
+                    >Must be after</label
+                  >
+                  <div
+                    class="input-group mt-2"
+                    id="afterYearsContainer"
+                    style="display: none"
+                  >
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="afterYears"
+                      min="0"
+                      value="1"
+                    />
+                    <span class="input-group-text">years ahead</span>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="dateErrorMessage" class="form-label"
+                    >Error Message</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="dateErrorMessage"
+                    placeholder="Error message to display for invalid dates"
+                  />
                 </div>
               </div>
             </div>
@@ -940,38 +1018,48 @@
               }
             }
 
-            // Handle date validation
+            // Handle date validation with simplified approach
             if (fieldType === "date") {
-              const dateValidation = {};
+              const dateConstraintType = document.querySelector(
+                'input[name="dateConstraintType"]:checked'
+              ).value;
+              const dateErrorMessage = document
+                .getElementById("dateErrorMessage")
+                .value.trim();
 
-              if (document.getElementById("minDateCheck").checked) {
-                const minDateType =
-                  document.getElementById("minDateType").value;
-                if (minDateType === "specific") {
-                  dateValidation.min = document.getElementById("minDate").value;
-                } else if (minDateType === "today") {
-                  dateValidation.minIsToday = true;
+              if (dateConstraintType !== "none") {
+                const dateValidation = {
+                  errorMessage: dateErrorMessage,
+                };
+
+                switch (dateConstraintType) {
+                  case "beforeToday":
+                    dateValidation.beforeToday = true;
+                    break;
+                  case "afterToday":
+                    dateValidation.afterToday = true;
+                    break;
+                  case "beforeYears":
+                    dateValidation.beforeYears =
+                      parseInt(document.getElementById("beforeYears").value) ||
+                      1;
+                    break;
+                  case "afterYears":
+                    dateValidation.afterYears =
+                      parseInt(document.getElementById("afterYears").value) ||
+                      1;
+                    break;
                 }
-              }
 
-              if (document.getElementById("maxDateCheck").checked) {
-                const maxDateType =
-                  document.getElementById("maxDateType").value;
-                if (maxDateType === "specific") {
-                  dateValidation.max = document.getElementById("maxDate").value;
-                } else if (maxDateType === "today") {
-                  dateValidation.maxIsToday = true;
-                }
-              }
-
-              if (Object.keys(dateValidation).length > 0) {
                 fieldData.dateValidation = dateValidation;
               }
             }
 
             // Handle readonly field source selection
             if (fieldType === "readonly") {
-              const sourceFieldId = document.getElementById("readonlySourceField").value;
+              const sourceFieldId = document.getElementById(
+                "readonlySourceField"
+              ).value;
               if (sourceFieldId) {
                 fieldData.sourceFieldId = sourceFieldId;
               } else {
@@ -995,10 +1083,16 @@
             renderPreviewForm();
             updateColumnFieldOptions();
 
-            // Close modal
-            bootstrap.Modal.getInstance(
+            // Close modal - ensure we're properly closing it
+            const fieldModal = bootstrap.Modal.getInstance(
               document.getElementById("fieldModal")
-            ).hide();
+            );
+            if (fieldModal) {
+              fieldModal.hide();
+            } else {
+              // Fallback if we can't get the instance
+              $("#fieldModal").modal("hide");
+            }
           });
 
         // Submit preview form
@@ -1024,22 +1118,24 @@
 
         // Event handlers for date validation
         document
-          .getElementById("minDateCheck")
+          .getElementById("beforeYearsConstraint")
           .addEventListener("change", function () {
-            document.getElementById("minDateContainer").style.display = this
+            document.getElementById("beforeYearsContainer").style.display = this
               .checked
-              ? "block"
+              ? "flex"
               : "none";
           });
 
         document
-          .getElementById("maxDateCheck")
+          .getElementById("afterYearsConstraint")
           .addEventListener("change", function () {
-            document.getElementById("maxDateContainer").style.display = this
+            document.getElementById("afterYearsContainer").style.display = this
               .checked
-              ? "block"
+              ? "flex"
               : "none";
           });
+
+        // Remove the old event handlers for minDateCheck and maxDateCheck since they no longer exist
 
         // Add option button event
         document
@@ -1369,40 +1465,42 @@
           if (field.type === "date") {
             dateValidationContainer.style.display = "block";
 
-            // Reset date validation controls
-            document.getElementById("minDateCheck").checked = false;
-            document.getElementById("maxDateCheck").checked = false;
-            document.getElementById("minDateContainer").style.display = "none";
-            document.getElementById("maxDateContainer").style.display = "none";
+            // Reset all date validation radio buttons
+            document.getElementById("noDateConstraint").checked = true;
+            document.getElementById("beforeYearsContainer").style.display =
+              "none";
+            document.getElementById("afterYearsContainer").style.display =
+              "none";
+            document.getElementById("beforeYears").value = "1";
+            document.getElementById("afterYears").value = "1";
+            document.getElementById("dateErrorMessage").value = "";
 
             // Set date validation values if they exist
             if (field.dateValidation) {
-              if (field.dateValidation.min || field.dateValidation.minIsToday) {
-                document.getElementById("minDateCheck").checked = true;
-                document.getElementById("minDateContainer").style.display =
-                  "block";
-
-                if (field.dateValidation.minIsToday) {
-                  document.getElementById("minDateType").value = "today";
-                } else {
-                  document.getElementById("minDateType").value = "specific";
-                  document.getElementById("minDate").value =
-                    field.dateValidation.min;
-                }
-              }
-
-              if (field.dateValidation.max || field.dateValidation.maxIsToday) {
-                document.getElementById("maxDateCheck").checked = true;
-                document.getElementById("maxDateContainer").style.display =
-                  "block";
-
-                if (field.dateValidation.maxIsToday) {
-                  document.getElementById("maxDateType").value = "today";
-                } else {
-                  document.getElementById("maxDateType").value = "specific";
-                  document.getElementById("maxDate").value =
-                    field.dateValidation.max;
-                }
+              if (field.dateValidation.beforeToday) {
+                document.getElementById("beforeTodayConstraint").checked = true;
+                document.getElementById("dateErrorMessage").value =
+                  field.dateValidation.errorMessage || "";
+              } else if (field.dateValidation.afterToday) {
+                document.getElementById("afterTodayConstraint").checked = true;
+                document.getElementById("dateErrorMessage").value =
+                  field.dateValidation.errorMessage || "";
+              } else if (field.dateValidation.beforeYears !== undefined) {
+                document.getElementById("beforeYearsConstraint").checked = true;
+                document.getElementById("beforeYearsContainer").style.display =
+                  "flex";
+                document.getElementById("beforeYears").value =
+                  field.dateValidation.beforeYears;
+                document.getElementById("dateErrorMessage").value =
+                  field.dateValidation.errorMessage || "";
+              } else if (field.dateValidation.afterYears !== undefined) {
+                document.getElementById("afterYearsConstraint").checked = true;
+                document.getElementById("afterYearsContainer").style.display =
+                  "flex";
+                document.getElementById("afterYears").value =
+                  field.dateValidation.afterYears;
+                document.getElementById("dateErrorMessage").value =
+                  field.dateValidation.errorMessage || "";
               }
             }
           } else {
@@ -1410,14 +1508,19 @@
           }
 
           // Handle readonly field source selection
-          const readonlySourceContainer = document.getElementById("readonlySourceContainer");
-          const readonlySourceField = document.getElementById("readonlySourceField");
+          const readonlySourceContainer = document.getElementById(
+            "readonlySourceContainer"
+          );
+          const readonlySourceField = document.getElementById(
+            "readonlySourceField"
+          );
 
           if (field.type === "readonly") {
             readonlySourceContainer.style.display = "block";
 
             // Populate source field options
-            readonlySourceField.innerHTML = '<option value="">Choose the select field to display...</option>';
+            readonlySourceField.innerHTML =
+              '<option value="">Choose the select field to display...</option>';
             formFields.forEach((f) => {
               if (f.type === "select") {
                 const option = document.createElement("option");
@@ -1726,6 +1829,7 @@
                                 }" name="${field.name}" 
                                     ${field.required ? "required" : ""}>
                                 <div class="invalid-feedback">${
+                                  field.dateValidation?.errorMessage ||
                                   field.validation?.message ||
                                   "Please select a valid date"
                                 }</div>
@@ -1734,7 +1838,9 @@
 
               case "select":
                 fieldHtml += `
-                                <select class="form-select" id="preview_${field.id}" name="${field.name}"${
+                                <select class="form-select" id="preview_${
+                                  field.id
+                                }" name="${field.name}"${
                   field.required ? " required" : ""
                 }>
                                     <option value="" ${
@@ -1797,8 +1903,13 @@
               // Add case for readonly field
               case "readonly":
                 fieldHtml += `
-                                <input type="text" class="form-control" id="preview_${field.id}" name="${field.name}" readonly
-                                    placeholder="${field.placeholder || 'Value from source field'}">
+                                <input type="text" class="form-control" id="preview_${
+                                  field.id
+                                }" name="${field.name}" readonly
+                                    placeholder="${
+                                      field.placeholder ||
+                                      "Value from source field"
+                                    }">
                                 <!-- No validation needed for readonly -->
                             `;
                 break;
@@ -1817,27 +1928,15 @@
               }
             }
 
-            // Apply date validation
+            // Remove the min/max attribute setting for date fields - we'll validate on submit instead
+            // For date fields, we'll attach change event listeners to provide immediate feedback
             if (field.type === "date" && field.dateValidation) {
               const dateInput = document.getElementById(`preview_${field.id}`);
 
-              if (field.dateValidation.min) {
-                dateInput.setAttribute("min", field.dateValidation.min);
-              } else if (field.dateValidation.minIsToday) {
-                dateInput.setAttribute(
-                  "min",
-                  new Date().toISOString().split("T")[0]
-                );
-              }
-
-              if (field.dateValidation.max) {
-                dateInput.setAttribute("max", field.dateValidation.max);
-              } else if (field.dateValidation.maxIsToday) {
-                dateInput.setAttribute(
-                  "max",
-                  new Date().toISOString().split("T")[0]
-                );
-              }
+              // Add change event listener for immediate validation feedback
+              dateInput.addEventListener("change", function () {
+                validateDateField(field, dateInput);
+              });
             }
           });
 
@@ -1845,36 +1944,72 @@
           setupReadonlyFieldListeners();
         }
 
-        // New function to set up listeners for readonly fields
-        function setupReadonlyFieldListeners() {
-            formFields.forEach(field => {
-                if (field.type === 'readonly' && field.sourceFieldId) {
-                    const sourceFieldElement = document.getElementById(`preview_${field.sourceFieldId}`);
-                    const readonlyFieldElement = document.getElementById(`preview_${field.id}`);
+        // New function to validate a date field
+        function validateDateField(field, dateInput) {
+          if (!dateInput.value) return; // Skip empty values
 
-                    if (sourceFieldElement && readonlyFieldElement) {
-                        // Initial update
-                        updateReadonlyFieldValue(sourceFieldElement, readonlyFieldElement);
+          const selectedDate = new Date(dateInput.value);
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
 
-                        // Update on change
-                        sourceFieldElement.addEventListener('change', () => {
-                            updateReadonlyFieldValue(sourceFieldElement, readonlyFieldElement);
-                        });
-                    }
-                }
-            });
-        }
+          let isValid = true;
+          const feedbackEl = dateInput.nextElementSibling;
 
-        // New helper function to update readonly field value
-        function updateReadonlyFieldValue(sourceSelectElement, readonlyInputElement) {
-            // Simply use the value directly - this is what actually gets sent to the table
-            if (sourceSelectElement.selectedIndex > 0) { // Skip the default "Choose..." option
-                const selectedValue = sourceSelectElement.value;
-                console.log("Selected value for table:", selectedValue);
-                readonlyInputElement.value = selectedValue;
-            } else {
-                readonlyInputElement.value = '';
+          if (field.dateValidation) {
+            if (field.dateValidation.beforeToday && selectedDate >= today) {
+              isValid = false;
+              if (feedbackEl)
+                feedbackEl.textContent =
+                  field.dateValidation.errorMessage ||
+                  "Date must be before today";
+            } else if (
+              field.dateValidation.afterToday &&
+              selectedDate < today
+            ) {
+              isValid = false;
+              if (feedbackEl)
+                feedbackEl.textContent =
+                  field.dateValidation.errorMessage ||
+                  "Date must be after today";
+            } else if (field.dateValidation.beforeYears !== undefined) {
+              const years = field.dateValidation.beforeYears;
+              const limitDate = new Date(today);
+              limitDate.setFullYear(today.getFullYear() - years);
+              limitDate.setHours(0, 0, 0, 0);
+
+              if (selectedDate > limitDate) {
+                isValid = false;
+                if (feedbackEl)
+                  feedbackEl.textContent =
+                    field.dateValidation.errorMessage ||
+                    `Date must be before ${years} years ago`;
+              }
+            } else if (field.dateValidation.afterYears !== undefined) {
+              const years = field.dateValidation.afterYears;
+              const limitDate = new Date(today);
+              limitDate.setFullYear(today.getFullYear() + years);
+              limitDate.setHours(0, 0, 0, 0);
+
+              if (selectedDate < limitDate) {
+                isValid = false;
+                if (feedbackEl)
+                  feedbackEl.textContent =
+                    field.dateValidation.errorMessage ||
+                    `Date must be after ${years} years from today`;
+              }
             }
+          }
+
+          // Show or hide validation feedback
+          if (!isValid) {
+            dateInput.classList.add("is-invalid");
+            dateInput.classList.remove("is-valid");
+          } else {
+            dateInput.classList.remove("is-invalid");
+            dateInput.classList.add("is-valid");
+          }
+
+          return isValid;
         }
 
         function validatePreviewForm() {
@@ -1910,43 +2045,14 @@
                 }
               }
 
-              // Check date validation
+              // Check date validation with simplified approach
               if (
                 field.type === "date" &&
                 field.dateValidation &&
                 element.value
               ) {
-                const selectedDate = new Date(element.value);
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-
-                // Check min date
-                if (field.dateValidation.min) {
-                  const minDate = new Date(field.dateValidation.min);
-                  if (selectedDate < minDate) {
-                    element.classList.add("is-invalid");
-                    isValid = false;
-                  }
-                } else if (
-                  field.dateValidation.minIsToday &&
-                  selectedDate < today
-                ) {
-                  element.classList.add("is-invalid");
-                  isValid = false;
-                }
-
-                // Check max date
-                if (field.dateValidation.max) {
-                  const maxDate = new Date(field.dateValidation.max);
-                  if (selectedDate > maxDate) {
-                    element.classList.add("is-invalid");
-                    isValid = false;
-                  }
-                } else if (
-                  field.dateValidation.maxIsToday &&
-                  selectedDate > today
-                ) {
-                  element.classList.add("is-invalid");
+                // Use our validateDateField function for consistent validation
+                if (!validateDateField(field, element)) {
                   isValid = false;
                 }
               }
@@ -2015,8 +2121,10 @@
 
                   // Readonly fields usually don't need to be submitted, but if mapped, get their current value
                   case "readonly":
-                     rowData[column.name] = document.getElementById(`preview_${field.id}`)?.value || "";
-                     break;
+                    rowData[column.name] =
+                      document.getElementById(`preview_${field.id}`)?.value ||
+                      "";
+                    break;
 
                   default:
                     const element = document.getElementById(
@@ -2096,7 +2204,7 @@
             // Add label
             formHtml += `    <label for="${field.name}" class="form-label">${field.label}`;
             // Readonly fields are never required in the traditional sense
-            if (field.required && field.type !== 'readonly') {
+            if (field.required && field.type !== "readonly") {
               formHtml += ` <span class="text-danger">*</span>`;
             }
             formHtml += `</label>\n`;
@@ -2187,7 +2295,8 @@
               // Add case for readonly field generation
               case "readonly":
                 formHtml += `    <input type="text" class="form-control" id="${field.name}" name="${field.name}" readonly`;
-                if (field.placeholder) formHtml += ` placeholder="${field.placeholder}"`;
+                if (field.placeholder)
+                  formHtml += ` placeholder="${field.placeholder}"`;
                 formHtml += `>\n`;
                 // No invalid feedback needed for readonly
                 break;
@@ -2248,24 +2357,46 @@
               field.type === "date" &&
               field.dateValidation &&
               (field.dateValidation.minIsToday ||
-                field.dateValidation.maxIsToday)
+                field.dateValidation.maxIsToday ||
+                field.dateValidation.minYearsBeforeToday ||
+                field.dateValidation.minYearsAfterToday ||
+                field.dateValidation.maxYearsBeforeToday ||
+                field.dateValidation.maxYearsAfterToday)
             ) {
               hasDateValidation = true;
             }
           });
 
           if (hasDateValidation) {
-            jqueryJs += `  // Set up date limits for fields with "today" constraints\n`;
+            jqueryJs += `  // Set up date limits for fields with dynamic constraints\n`;
             jqueryJs += `  function setupDateFields() {\n`;
-            jqueryJs += `    const today = new Date().toISOString().split('T')[0];\n\n`;
+            jqueryJs += `    const today = new Date();\n`;
+            jqueryJs += `    const todayString = today.toISOString().split('T')[0];\n\n`;
 
             formFields.forEach((field) => {
               if (field.type === "date" && field.dateValidation) {
                 if (field.dateValidation.minIsToday) {
-                  jqueryJs += `    $('#${field.name}').attr('min', today);\n`;
+                  jqueryJs += `    $('#${field.name}').attr('min', todayString);\n`;
+                } else if (field.dateValidation.minYearsBeforeToday) {
+                  jqueryJs += `    const min${field.name}Date = new Date(today);\n`;
+                  jqueryJs += `    min${field.name}Date.setFullYear(today.getFullYear() - ${field.dateValidation.minYearsBeforeToday});\n`;
+                  jqueryJs += `    $('#${field.name}').attr('min', min${field.name}Date.toISOString().split('T')[0]);\n`;
+                } else if (field.dateValidation.minYearsAfterToday) {
+                  jqueryJs += `    const min${field.name}Date = new Date(today);\n`;
+                  jqueryJs += `    min${field.name}Date.setFullYear(today.getFullYear() + ${field.dateValidation.minYearsAfterToday});\n`;
+                  jqueryJs += `    $('#${field.name}').attr('min', min${field.name}Date.toISOString().split('T')[0]);\n`;
                 }
+
                 if (field.dateValidation.maxIsToday) {
-                  jqueryJs += `    $('#${field.name}').attr('max', today);\n`;
+                  jqueryJs += `    $('#${field.name}').attr('max', todayString);\n`;
+                } else if (field.dateValidation.maxYearsBeforeToday) {
+                  jqueryJs += `    const max${field.name}Date = new Date(today);\n`;
+                  jqueryJs += `    max${field.name}Date.setFullYear(today.getFullYear() - ${field.dateValidation.maxYearsBeforeToday});\n`;
+                  jqueryJs += `    $('#${field.name}').attr('max', max${field.name}Date.toISOString().split('T')[0]);\n`;
+                } else if (field.dateValidation.maxYearsAfterToday) {
+                  jqueryJs += `    const max${field.name}Date = new Date(today);\n`;
+                  jqueryJs += `    max${field.name}Date.setFullYear(today.getFullYear() + ${field.dateValidation.maxYearsAfterToday});\n`;
+                  jqueryJs += `    $('#${field.name}').attr('max', max${field.name}Date.toISOString().split('T')[0]);\n`;
                 }
               }
             });
@@ -2276,33 +2407,38 @@
           }
 
           // Add setup for readonly fields if needed
-          const readonlyFields = formFields.filter(f => f.type === 'readonly' && f.sourceFieldId);
+          const readonlyFields = formFields.filter(
+            (f) => f.type === "readonly" && f.sourceFieldId
+          );
           if (readonlyFields.length > 0) {
-              jqueryJs += `  // Set up listeners for readonly fields\n`;
-              jqueryJs += `  function setupReadonlyFields() {\n`;
-              readonlyFields.forEach(field => {
-                  const sourceField = formFields.find(f => f.id === field.sourceFieldId);
-                  if (sourceField && sourceField.type === 'select') { // Ensure source is a select
-                      jqueryJs += `    const $source_${sourceField.name} = $("#${sourceField.name}");\n`;
-                      jqueryJs += `    const $target_${field.name} = $("#${field.name}");\n\n`;
-                      jqueryJs += `    function update_${field.name}() {\n`;
-                      jqueryJs += `      const selectedValue = $source_${sourceField.name}.val();\n`; // Get the value
-                      jqueryJs += `      // Update only if a valid option (not the default 'Choose...') is selected\n`;
-                      jqueryJs += `      if (selectedValue) {\n`;
-                      jqueryJs += `          $target_${field.name}.val(selectedValue);\n`; // Set the value
-                      jqueryJs += `      } else {\n`;
-                      jqueryJs += `          $target_${field.name}.val(""); // Clear if default is selected\n`;
-                      jqueryJs += `      }\n`;
-                      jqueryJs += `    }\n\n`;
-                      jqueryJs += `    // Update on change\n`;
-                      jqueryJs += `    $source_${sourceField.name}.on("change", update_${field.name});\n\n`;
-                      jqueryJs += `    // Initial update on load\n`;
-                      jqueryJs += `    update_${field.name}();\n\n`;
-                  }
-              });
-              jqueryJs += `  }\n\n`;
-              jqueryJs += `  // Initialize readonly fields\n`;
-              jqueryJs += `  setupReadonlyFields();\n\n`;
+            jqueryJs += `  // Set up listeners for readonly fields\n`;
+            jqueryJs += `  function setupReadonlyFields() {\n`;
+            readonlyFields.forEach((field) => {
+              const sourceField = formFields.find(
+                (f) => f.id === field.sourceFieldId
+              );
+              if (sourceField && sourceField.type === "select") {
+                // Ensure source is a select
+                jqueryJs += `    const $source_${sourceField.name} = $("#${sourceField.name}");\n`;
+                jqueryJs += `    const $target_${field.name} = $("#${field.name}");\n\n`;
+                jqueryJs += `    function update_${field.name}() {\n`;
+                jqueryJs += `      const selectedValue = $source_${sourceField.name}.val();\n`; // Get the value
+                jqueryJs += `      // Update only if a valid option (not the default 'Choose...') is selected\n`;
+                jqueryJs += `      if (selectedValue) {\n`;
+                jqueryJs += `          $target_${field.name}.val(selectedValue);\n`; // Set the value
+                jqueryJs += `      } else {\n`;
+                jqueryJs += `          $target_${field.name}.val(""); // Clear if default is selected\n`;
+                jqueryJs += `      }\n`;
+                jqueryJs += `    }\n\n`;
+                jqueryJs += `    // Update on change\n`;
+                jqueryJs += `    $source_${sourceField.name}.on("change", update_${field.name});\n\n`;
+                jqueryJs += `    // Initial update on load\n`;
+                jqueryJs += `    update_${field.name}();\n\n`;
+              }
+            });
+            jqueryJs += `  }\n\n`;
+            jqueryJs += `  // Initialize readonly fields\n`;
+            jqueryJs += `  setupReadonlyFields();\n\n`;
           }
 
           // Form submission handler
@@ -2400,8 +2536,10 @@
                     let hasDateChecks = false;
 
                     if (
-                      field.dateValidation.minIsToday ||
-                      field.dateValidation.maxIsToday
+                      field.dateValidation.beforeToday ||
+                      field.dateValidation.afterToday ||
+                      field.dateValidation.beforeYears !== undefined ||
+                      field.dateValidation.afterYears !== undefined
                     ) {
                       hasDateChecks = true;
                       jqueryJs += field.required
@@ -2411,24 +2549,92 @@
                       jqueryJs += `      const selectedDate = new Date(${field.name}Input.val());\n`;
                       jqueryJs += `      const today = new Date(); today.setHours(0,0,0,0);\n`;
 
-                      if (field.dateValidation.minIsToday) {
+                      // Handle min date checks
+                      if (field.dateValidation.beforeToday) {
                         jqueryJs += `      if (selectedDate < today) {\n`;
                         jqueryJs += `        ${field.name}Input.addClass("is-invalid");\n`;
                         jqueryJs += `        ${field.name}Input.siblings(".invalid-feedback").text("Ngày phải từ hôm nay trở đi").show();\n`;
                         jqueryJs += `        isValid = false;\n`;
                         jqueryJs += `      } else `;
+                      } else if (
+                        field.dateValidation.beforeYears !== undefined
+                      ) {
+                        jqueryJs += `      const minYearsDate = new Date(today);\n`;
+                        jqueryJs += `      minYearsDate.setFullYear(today.getFullYear() - ${field.dateValidation.beforeYears});\n`;
+                        jqueryJs += `      if (selectedDate > minYearsDate) {\n`;
+                        jqueryJs += `        ${field.name}Input.addClass("is-invalid");\n`;
+                        jqueryJs += `        ${field.name}Input.siblings(".invalid-feedback").text("Ngày phải sau ${field.dateValidation.beforeYears} năm trước").show();\n`;
+                        jqueryJs += `        isValid = false;\n`;
+                        jqueryJs += `      } else `;
+                      } else if (
+                        field.dateValidation.afterYears !== undefined
+                      ) {
+                        jqueryJs += `      const minYearsDate = new Date(today);\n`;
+                        jqueryJs += `      minYearsDate.setFullYear(today.getFullYear() + ${field.dateValidation.afterYears});\n`;
+                        jqueryJs += `      if (selectedDate < minYearsDate) {\n`;
+                        jqueryJs += `        ${field.name}Input.addClass("is-invalid");\n`;
+                        jqueryJs += `        ${field.name}Input.siblings(".invalid-feedback").text("Ngày phải sau ${field.dateValidation.afterYears} năm tới").show();\n`;
+                        jqueryJs += `        isValid = false;\n`;
+                        jqueryJs += `      } else `;
                       }
 
-                      if (field.dateValidation.maxIsToday) {
-                        jqueryJs += field.dateValidation.minIsToday
-                          ? ``
-                          : `      if (`;
-                        jqueryJs += field.dateValidation.minIsToday
-                          ? `if (`
-                          : ``;
+                      // Handle max date checks
+                      if (field.dateValidation.afterToday) {
+                        jqueryJs +=
+                          field.dateValidation.beforeToday ||
+                          field.dateValidation.beforeYears !== undefined ||
+                          field.dateValidation.afterYears !== undefined
+                            ? ``
+                            : `      if (`;
+                        jqueryJs +=
+                          field.dateValidation.beforeToday ||
+                          field.dateValidation.beforeYears !== undefined ||
+                          field.dateValidation.afterYears !== undefined
+                            ? `if (`
+                            : ``;
                         jqueryJs += `selectedDate > today) {\n`;
                         jqueryJs += `        ${field.name}Input.addClass("is-invalid");\n`;
                         jqueryJs += `        ${field.name}Input.siblings(".invalid-feedback").text("Ngày không được sau hôm nay").show();\n`;
+                        jqueryJs += `        isValid = false;\n`;
+                        jqueryJs += `      } else `;
+                      } else if (
+                        field.dateValidation.beforeYears !== undefined
+                      ) {
+                        jqueryJs +=
+                          field.dateValidation.beforeToday ||
+                          field.dateValidation.beforeYears !== undefined ||
+                          field.dateValidation.afterYears !== undefined
+                            ? ``
+                            : `      if (`;
+                        jqueryJs +=
+                          field.dateValidation.beforeToday ||
+                          field.dateValidation.beforeYears !== undefined ||
+                          field.dateValidation.afterYears !== undefined
+                            ? `if (`
+                            : ``;
+                        jqueryJs += `selectedDate > new Date(today.getFullYear() - ${field.dateValidation.beforeYears}, today.getMonth(), today.getDate())) {\n`;
+                        jqueryJs += `        ${field.name}Input.addClass("is-invalid");\n`;
+                        jqueryJs += `        ${field.name}Input.siblings(".invalid-feedback").text("Ngày không được sau ${field.dateValidation.beforeYears} năm trước").show();\n`;
+                        jqueryJs += `        isValid = false;\n`;
+                        jqueryJs += `      } else `;
+                      } else if (
+                        field.dateValidation.afterYears !== undefined
+                      ) {
+                        jqueryJs +=
+                          field.dateValidation.beforeToday ||
+                          field.dateValidation.beforeYears !== undefined ||
+                          field.dateValidation.afterYears !== undefined
+                            ? ``
+                            : `      if (`;
+                        jqueryJs +=
+                          field.dateValidation.beforeToday ||
+                          field.dateValidation.beforeYears !== undefined ||
+                          field.dateValidation.afterYears !== undefined
+                            ? `if (`
+                            : ``;
+                        jqueryJs += `selectedDate > new Date(today.getFullYear() + ${field.dateValidation.afterYears}, today.getMonth(), today.getDate())) {\n`;
+                        jqueryJs += `        ${field.name}Input.addClass("is-invalid");\n`;
+                        jqueryJs += `        ${field.name}Input.siblings(".invalid-feedback").text("Ngày không được sau ${field.dateValidation.afterYears} năm tới").show();\n`;
                         jqueryJs += `        isValid = false;\n`;
                         jqueryJs += `      } else `;
                       }
@@ -2437,12 +2643,7 @@
                       jqueryJs += `        ${field.name}Input.addClass("is-valid");\n`;
                       jqueryJs += `      }\n`;
                       if (!field.required) jqueryJs += `    }`;
-                    } else if (field.required) {
-                      jqueryJs += `{\n`;
-                      jqueryJs += `      ${field.name}Input.addClass("is-valid");\n`;
-                      jqueryJs += `    }`;
                     }
-                    jqueryJs += `\n\n`;
                   } else if (field.required) {
                     jqueryJs += `{\n`;
                     jqueryJs += `      ${field.name}Input.addClass("is-valid");\n`;
@@ -2519,8 +2720,8 @@
                     break;
                   // Readonly fields usually don't need to be submitted, but if mapped, get their current value
                   case "readonly":
-                     jqueryJs += `        ${jsFriendlyColName}: $("#${field.name}").val() || "",\n`;
-                     break;
+                    jqueryJs += `        ${jsFriendlyColName}: $("#${field.name}").val() || "",\n`;
+                    break;
                   default:
                     jqueryJs += `        ${jsFriendlyColName}: $("#${field.name}").val().trim() || "",\n`;
                     break;
@@ -2586,6 +2787,66 @@
           jqueryJs += `  }\n`;
 
           jqueryJs += `}); // End of $(document).ready`;
+
+          // Also add change event listeners for date fields
+          if (hasDateValidation) {
+            jqueryJs += `  // Add change event listeners to date fields for immediate validation\n`;
+            formFields.forEach((field) => {
+              if (field.type === "date" && field.dateValidation) {
+                jqueryJs += `  $('#${field.name}').on('change', function() {\n`;
+                jqueryJs += `    const selectedDate = new Date($(this).val());\n`;
+                jqueryJs += `    const today = new Date(); today.setHours(0,0,0,0);\n`;
+                jqueryJs += `    let isValid = true;\n`;
+                jqueryJs += `    let errorMessage = "";\n\n`;
+
+                // Add specific validation based on the constraint type
+                if (field.dateValidation.beforeToday) {
+                  jqueryJs += `    if (selectedDate >= today) {\n`;
+                  jqueryJs += `      isValid = false;\n`;
+                  jqueryJs += `      errorMessage = "${
+                    field.dateValidation.errorMessage ||
+                    "Ngày phải trước hôm nay"
+                  }";\n`;
+                  jqueryJs += `    }\n`;
+                } else if (field.dateValidation.afterToday) {
+                  jqueryJs += `    if (selectedDate < today) {\n`;
+                  jqueryJs += `      isValid = false;\n`;
+                  jqueryJs += `      errorMessage = "${
+                    field.dateValidation.errorMessage || "Ngày phải sau hôm nay"
+                  }";\n`;
+                  jqueryJs += `    }\n`;
+                } else if (field.dateValidation.beforeYears !== undefined) {
+                  jqueryJs += `    const limitDate = new Date(today);\n`;
+                  jqueryJs += `    limitDate.setFullYear(today.getFullYear() - ${field.dateValidation.beforeYears});\n`;
+                  jqueryJs += `    if (selectedDate > limitDate) {\n`;
+                  jqueryJs += `      isValid = false;\n`;
+                  jqueryJs += `      errorMessage = "${
+                    field.dateValidation.errorMessage ||
+                    `Ngày phải trước ${field.dateValidation.beforeYears} năm trước`
+                  }";\n`;
+                  jqueryJs += `    }\n`;
+                } else if (field.dateValidation.afterYears !== undefined) {
+                  jqueryJs += `    const limitDate = new Date(today);\n`;
+                  jqueryJs += `    limitDate.setFullYear(today.getFullYear() + ${field.dateValidation.afterYears});\n`;
+                  jqueryJs += `    if (selectedDate < limitDate) {\n`;
+                  jqueryJs += `      isValid = false;\n`;
+                  jqueryJs += `      errorMessage = "${
+                    field.dateValidation.errorMessage ||
+                    `Ngày phải sau ${field.dateValidation.afterYears} năm tới`
+                  }";\n`;
+                  jqueryJs += `    }\n`;
+                }
+
+                jqueryJs += `    if (!isValid) {\n`;
+                jqueryJs += `      $(this).addClass('is-invalid').removeClass('is-valid');\n`;
+                jqueryJs += `      $(this).siblings('.invalid-feedback').text(errorMessage).show();\n`;
+                jqueryJs += `    } else {\n`;
+                jqueryJs += `      $(this).removeClass('is-invalid').addClass('is-valid');\n`;
+                jqueryJs += `    }\n`;
+                jqueryJs += `  });\n\n`;
+              }
+            });
+          }
 
           // Update code in modal and highlight
           document.getElementById("modalHtmlCode").textContent = modalHtml;
@@ -2742,7 +3003,7 @@
             console.error("Element not found:", elementId);
             return;
           }
-          
+
           const text = element.textContent;
 
           navigator.clipboard
@@ -2764,21 +3025,29 @@
                 // Alternative: If we can't find the button in the relative position
                 // Find the button by its ID pattern
                 // Construct the potential ID carefully
-                 const baseId = elementId.replace(/Code$/, ''); // e.g., 'modalHtml', 'jqueryJs'
-                 const capitalizedBaseId = baseId.charAt(0).toUpperCase() + baseId.slice(1);
-                 const possibleBtnId = "copy" + capitalizedBaseId; // e.g., 'copyModalHtml', 'copyJqueryJs'
+                const baseId = elementId.replace(/Code$/, ""); // e.g., 'modalHtml', 'jqueryJs'
+                const capitalizedBaseId =
+                  baseId.charAt(0).toUpperCase() + baseId.slice(1);
+                const possibleBtnId = "copy" + capitalizedBaseId; // e.g., 'copyModalHtml', 'copyJqueryJs'
 
-                const alternativeCopyBtn = document.getElementById(possibleBtnId);
+                const alternativeCopyBtn =
+                  document.getElementById(possibleBtnId);
 
                 if (alternativeCopyBtn) {
                   const originalText = alternativeCopyBtn.innerHTML;
-                  alternativeCopyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                  alternativeCopyBtn.innerHTML =
+                    '<i class="fas fa-check"></i> Copied!';
 
                   setTimeout(() => {
                     alternativeCopyBtn.innerHTML = originalText;
                   }, 2000);
                 } else {
-                  console.warn("Could not find copy button for", elementId, "using ID", possibleBtnId);
+                  console.warn(
+                    "Could not find copy button for",
+                    elementId,
+                    "using ID",
+                    possibleBtnId
+                  );
                   alert("Code copied to clipboard!"); // Fallback alert
                 }
               }
@@ -2796,7 +3065,9 @@
                 alert("Code copied to clipboard!");
               } catch (e) {
                 console.error("Fallback copy method failed:", e);
-                alert("Failed to copy. Please select and copy the code manually.");
+                alert(
+                  "Failed to copy. Please select and copy the code manually."
+                );
               }
             });
         }
