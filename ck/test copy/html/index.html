@@ -64,18 +64,15 @@
             <thead>
               <tr>
                 <th>STT</th>
-                <th>2</th>
-                <th>g</th>
+                <th>ten</th>
+                <th>tuoi</th>
               </tr>
             </thead>
-            <tbody id="dataTableBody">
-              <!-- Table data will be inserted here -->
-            </tbody>
+            <tbody id="dataTableBody"></tbody>
           </table>
         </div>
       </div>
 
-      <!-- Modal -->
       <div
         class="modal fade"
         id="myModal"
@@ -107,15 +104,15 @@
                   <div class="invalid-feedback">Vui lòng chọn date</div>
                 </div>
                 <div class="mb-3">
-                  <label for="email" class="form-label">Email Address</label>
+                  <label for="text_input" class="form-label">Text Input</label>
                   <input
-                    type="email"
+                    type="text"
                     class="form-control"
-                    id="email"
-                    name="email"
-                    pattern="@.*\.com$"
+                    id="text_input"
+                    name="text_input"
+                    pattern="^[A-Z][a-z]*(\s+[A-Z][a-z]*)+$"
                   />
-                  <div class="invalid-feedback">aaaaaaaaaaaaaaaaa</div>
+                  <div class="invalid-feedback">ten sai</div>
                 </div>
                 <button type="submit" class="btn btn-primary">Đăng ký</button>
               </form>
