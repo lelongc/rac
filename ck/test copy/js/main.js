@@ -8,8 +8,7 @@ $(document).ready(function () {
     function update_readonly_display() {
       const selectedValue = $source_select.val();
       if (selectedValue) {
-        const selectedText = $source_select.find("option:selected").text();
-        $target_readonly_display.val(selectedText);
+        $target_readonly_display.val(selectedValue);
       } else {
         $target_readonly_display.val("");
       }
@@ -32,7 +31,6 @@ $(document).ready(function () {
     if (isValid) {
       const rowData = {
         _: $("#select").val().trim() || "",
-        ma: $("#date").val().trim() || "",
       };
 
       addRowToTable(rowData);
@@ -59,7 +57,6 @@ $(document).ready(function () {
     $newRow.append($("<td></td>").text(rowCount++));
 
     $newRow.append($("<td></td>").text(rowData._ || ""));
-    $newRow.append($("<td></td>").text(rowData.ma || ""));
 
     $tableBody.append($newRow);
   }

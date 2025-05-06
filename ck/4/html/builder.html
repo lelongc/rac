@@ -2396,8 +2396,7 @@
     function update_${field.name}() {
       const selectedValue = $source_${sourceField.name}.val();
       if (selectedValue) {
-          const selectedText = $source_${sourceField.name}.find("option:selected").text();
-          $target_${field.name}.val(selectedText);
+       $target_${field.name}.val(selectedValue);
       } else {
           $target_${field.name}.val("");
       }
