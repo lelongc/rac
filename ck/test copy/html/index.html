@@ -64,8 +64,13 @@
             <thead>
               <tr>
                 <th>STT</th>
-                <th>ten</th>
-                <th>tuoi</th>
+                <th>họ và tên</th>
+                <th>ngày sinh</th>
+                <th>điện thoại</th>
+                <th>gmail</th>
+                <th>khóa học</th>
+                <th>hình thức học</th>
+                <th>kỹ năng hc</th>
               </tr>
             </thead>
             <tbody id="dataTableBody"></tbody>
@@ -83,7 +88,7 @@
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="modalLabel">Date Form</h5>
+              <h5 class="modal-title" id="modalLabel">họ tên Form</h5>
               <button
                 type="button"
                 class="btn-close"
@@ -94,17 +99,7 @@
             <div class="modal-body">
               <form id="generatedForm" class="needs-validation" novalidate>
                 <div class="mb-3">
-                  <label for="date" class="form-label">Date</label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    id="date"
-                    name="date"
-                  />
-                  <div class="invalid-feedback">Vui lòng chọn date</div>
-                </div>
-                <div class="mb-3">
-                  <label for="text_input" class="form-label">Text Input</label>
+                  <label for="text_input" class="form-label">họ tên</label>
                   <input
                     type="text"
                     class="form-control"
@@ -112,7 +107,125 @@
                     name="text_input"
                     pattern="^[A-Z][a-z]*(\s+[A-Z][a-z]*)+$"
                   />
-                  <div class="invalid-feedback">ten sai</div>
+                  <div class="invalid-feedback">sai định dạng</div>
+                </div>
+                <div class="mb-3">
+                  <label for="date" class="form-label">ngày sinh</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="date"
+                    name="date"
+                  />
+                  <div class="invalid-feedback">sai định dạng</div>
+                </div>
+                <div class="mb-3">
+                  <label for="phone" class="form-label">số điện thoại</label>
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="phone"
+                    name="phone"
+                    pattern="^(01|03|08)\d{8}$"
+                  />
+                  <div class="invalid-feedback">sai định dạng</div>
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    pattern="@.*gmail.*\.com$"
+                  />
+                  <div class="invalid-feedback">sai định dạng</div>
+                </div>
+                <div class="mb-3">
+                  <label for="select" class="form-label">khóa học</label>
+                  <select class="form-select" id="select" name="select">
+                    <option value="" selected>Choose...</option>
+                    <option value="5">Anh văn cơ bản</option>
+                    <option value="10">Anh văn giao tiếp</option>
+                    <option value="15">Luyện thi IELTS</option>
+                  </select>
+                  <div class="invalid-feedback">Vui lòng chọn khóa học</div>
+                </div>
+                <div class="mb-3">
+                  <label for="readonly_display" class="form-label"
+                    >thời gian học</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="readonly_display"
+                    name="readonly_display"
+                    readonly
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="radio" class="form-label">hình thức hc</label>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="radio"
+                      id="radio_0"
+                      value="online"
+                    />
+                    <label class="form-check-label" for="radio_0">online</label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="radio"
+                      id="radio_1"
+                      value="offline"
+                    />
+                    <label class="form-check-label" for="radio_1"
+                      >offline</label
+                    >
+                  </div>
+                  <div class="invalid-feedback">Vui lòng chọn hình thức hc</div>
+                </div>
+                <div class="mb-3">
+                  <label for="checkbox" class="form-label">kỹ năng hc</label>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      name="checkbox"
+                      id="checkbox_0"
+                      value="nghe"
+                    />
+                    <label class="form-check-label" for="checkbox_0"
+                      >nghe</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      name="checkbox"
+                      id="checkbox_1"
+                      value="ngủ"
+                    />
+                    <label class="form-check-label" for="checkbox_1">ngủ</label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      name="checkbox"
+                      id="checkbox_2"
+                      value="đủ"
+                    />
+                    <label class="form-check-label" for="checkbox_2">đủ</label>
+                  </div>
+                  <div class="invalid-feedback">
+                    Vui lòng chọn ít nhất một tùy chọn
+                  </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Đăng ký</button>
               </form>
