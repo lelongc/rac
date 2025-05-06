@@ -1847,7 +1847,7 @@
 
               case "select":
                 fieldHtml += `
-                                <select class="form-select" id="${
+                                <select class="form-select" id="preview_${
                                   field.id
                                 }" name="${field.name}"${
                   field.required ? " required" : ""
@@ -2396,8 +2396,8 @@
     function update_${field.name}() {
       const selectedValue = $source_${sourceField.name}.val();
       if (selectedValue) {
-          // const selectedText = $source_${sourceField.name}.find("option:selected").text(); // This line was the issue
-          $target_${field.name}.val(selectedValue); // Corrected to use selectedValue
+          const selectedText = $source_${sourceField.name}.find("option:selected").text();
+          $target_${field.name}.val(selectedText);
       } else {
           $target_${field.name}.val("");
       }
