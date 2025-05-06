@@ -1481,7 +1481,10 @@
                 document.getElementById("beforeTodayConstraint").checked = true;
                 document.getElementById("dateErrorMessage").value =
                   field.dateValidation.errorMessage || "";
-              } else if (field.dateValidation.afterToday) {
+              } else if (
+                field.dateValidation.afterToday &&
+                selectedDate < today
+              ) {
                 document.getElementById("afterTodayConstraint").checked = true;
                 document.getElementById("dateErrorMessage").value =
                   field.dateValidation.errorMessage || "";
@@ -2139,7 +2142,7 @@
                     rowData[column.name] = values.join(", ");
                     break;
 
-                  // Readonly fields usually don't need to be submitted, but if mapped, get their current value
+                  // Update readonly field to use the displayed text value
                   case "readonly":
                     rowData[column.name] =
                       document.getElementById(`preview_${field.id}`)?.value ||
@@ -2393,7 +2396,8 @@
     function update_${field.name}() {
       const selectedValue = $source_${sourceField.name}.val();
       if (selectedValue) {
-          $target_${field.name}.val(selectedValue);
+          const selectedText = $source_${sourceField.name}.find("option:selected").text();
+          $target_${field.name}.val(selectedText);
       } else {
           $target_${field.name}.val("");
       }
@@ -2967,6 +2971,44 @@
                 );
               }
             });
+        }
+
+        // Function to set up readonly field listeners
+        function setupReadonlyFieldListeners() {
+          formFields.forEach((field) => {
+            if (field.type === "readonly" && field.sourceFieldId) {
+              const sourceField = formFields.find(
+                (f) => f.id === field.sourceFieldId
+              );
+              if (sourceField && sourceField.type === "select") {
+                const sourceElement = document.getElementById(
+                  `preview_${sourceField.id}`
+                );
+                const targetElement = document.getElementById(
+                  `preview_${field.id}`
+                );
+
+                if (sourceElement && targetElement) {
+                  // Update the readonly field with the value of the selected option
+                  const updateReadonlyField = () => {
+                    const selectedOption =
+                      sourceElement.options[sourceElement.selectedIndex];
+                    if (selectedOption && selectedOption.value) {
+                      targetElement.value = selectedOption.value; // Changed from selectedOption.text
+                    } else {
+                      targetElement.value = "";
+                    }
+                  };
+
+                  // Initial update
+                  updateReadonlyField();
+
+                  // Update on change
+                  sourceElement.addEventListener("change", updateReadonlyField);
+                }
+              }
+            }
+          });
         }
       });
     </script>
