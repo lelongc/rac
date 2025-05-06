@@ -1793,12 +1793,8 @@
 
             let fieldHtml = "";
 
-            // Field label
-            fieldHtml += `<label for="preview_${field.id}" class="form-label">${
-              field.label
-            }${
-              field.required ? ' <span class="text-danger">*</span>' : ""
-            }</label>`;
+            // Field label - Remove asterisk from label
+            fieldHtml += `<label for="preview_${field.id}" class="form-label">${field.label}</label>`;
 
             // Field input based on type
             switch (field.type) {
@@ -1819,6 +1815,11 @@
                                   field.validation?.message ||
                                   "This field is required"
                                 }</div>
+                                ${
+                                  field.required
+                                    ? '<div class="text-danger small mt-1">*</div>'
+                                    : ""
+                                }
                             `;
                 break;
 
@@ -1833,6 +1834,11 @@
                                   field.validation?.message ||
                                   "Please select a valid date"
                                 }</div>
+                                ${
+                                  field.required
+                                    ? '<div class="text-danger small mt-1">*</div>'
+                                    : ""
+                                }
                             `;
                 break;
 
@@ -1857,6 +1863,11 @@
                 fieldHtml += `
                                 </select>
                                 <div class="invalid-feedback">Please select an option</div>
+                                ${
+                                  field.required
+                                    ? '<div class="text-danger small mt-1">*</div>'
+                                    : ""
+                                }
                             `;
                 break;
 
@@ -1864,40 +1875,50 @@
                 if (field.options && field.options.length > 0) {
                   field.options.forEach((option, i) => {
                     fieldHtml += `
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="${
-                                              field.name
-                                            }" 
-                                                id="preview_${
-                                                  field.id
-                                                }_${i}" value="${
-                      option.value
-                    }" ${i === 0 && field.required ? "checked" : ""}>
-                                            <label class="form-check-label" for="preview_${
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="${
+                                          field.name
+                                        }" 
+                                            id="preview_${
                                               field.id
-                                            }_${i}">${option.text}</label>
-                                        </div>
-                                    `;
+                                            }_${i}" value="${option.value}" ${
+                      i === 0 && field.required ? "checked" : ""
+                    }>
+                                        <label class="form-check-label" for="preview_${
+                                          field.id
+                                        }_${i}">${option.text}</label>
+                                    </div>
+                                `;
                   });
                 }
 
-                fieldHtml += `<div class="invalid-feedback">Please select an option</div>`;
+                fieldHtml += `<div class="invalid-feedback">Please select an option</div>
+                             ${
+                               field.required
+                                 ? '<div class="text-danger small mt-1">*</div>'
+                                 : ""
+                             }`;
                 break;
 
               case "checkbox":
                 if (field.options && field.options.length > 0) {
                   field.options.forEach((option, i) => {
                     fieldHtml += `
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="${field.name}" 
-                                                id="preview_${field.id}_${i}" value="${option.value}">
-                                            <label class="form-check-label" for="preview_${field.id}_${i}">${option.text}</label>
-                                        </div>
-                                    `;
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="${field.name}" 
+                                            id="preview_${field.id}_${i}" value="${option.value}">
+                                        <label class="form-check-label" for="preview_${field.id}_${i}">${option.text}</label>
+                                    </div>
+                                `;
                   });
                 }
 
-                fieldHtml += `<div class="invalid-feedback">Please select at least one option</div>`;
+                fieldHtml += `<div class="invalid-feedback">Please select at least one option</div>
+                             ${
+                               field.required
+                                 ? '<div class="text-danger small mt-1">*</div>'
+                                 : ""
+                             }`;
                 break;
 
               // Add case for readonly field
@@ -1928,7 +1949,6 @@
               }
             }
 
-            // Remove the min/max attribute setting for date fields - we'll validate on submit instead
             // For date fields, we'll attach change event listeners to provide immediate feedback
             if (field.type === "date" && field.dateValidation) {
               const dateInput = document.getElementById(`preview_${field.id}`);
@@ -2201,13 +2221,8 @@
 
           formFields.forEach((field) => {
             formHtml += `  <div class="mb-3">\n`;
-            // Add label
-            formHtml += `    <label for="${field.name}" class="form-label">${field.label}`;
-            // Readonly fields are never required in the traditional sense
-            if (field.required && field.type !== "readonly") {
-              formHtml += ` <span class="text-danger">*</span>`;
-            }
-            formHtml += `</label>\n`;
+            // Add label without asterisk
+            formHtml += `    <label for="${field.name}" class="form-label">${field.label}</label>\n`;
 
             // Add input based on field type
             switch (field.type) {
@@ -2227,6 +2242,10 @@
                 } else {
                   formHtml += `    <div class="invalid-feedback">Vui lòng nhập ${field.label.toLowerCase()}</div>\n`;
                 }
+                // Add asterisk under the input if required
+                if (field.required) {
+                  formHtml += `    <div class="text-danger small mt-1">*</div>\n`;
+                }
                 break;
 
               case "date":
@@ -2237,6 +2256,10 @@
                   formHtml += `    <div class="invalid-feedback">${field.validation.message}</div>\n`;
                 } else {
                   formHtml += `    <div class="invalid-feedback">Vui lòng chọn ${field.label.toLowerCase()}</div>\n`;
+                }
+                // Add asterisk under the input if required
+                if (field.required) {
+                  formHtml += `    <div class="text-danger small mt-1">*</div>\n`;
                 }
                 break;
 
@@ -2256,6 +2279,10 @@
 
                 formHtml += `    </select>\n`;
                 formHtml += `    <div class="invalid-feedback">Vui lòng chọn ${field.label.toLowerCase()}</div>\n`;
+                // Add asterisk under the input if required
+                if (field.required) {
+                  formHtml += `    <div class="text-danger small mt-1">*</div>\n`;
+                }
                 break;
 
               case "radio":
@@ -2272,6 +2299,10 @@
                   });
                 }
                 formHtml += `    <div class="invalid-feedback">Vui lòng chọn ${field.label.toLowerCase()}</div>\n`;
+                // Add asterisk under the input if required
+                if (field.required) {
+                  formHtml += `    <div class="text-danger small mt-1">*</div>\n`;
+                }
                 break;
 
               case "checkbox":
@@ -2284,6 +2315,10 @@
                   });
                 }
                 formHtml += `    <div class="invalid-feedback">Vui lòng chọn ít nhất một tùy chọn</div>\n`;
+                // Add asterisk under the input if required
+                if (field.required) {
+                  formHtml += `    <div class="text-danger small mt-1">*</div>\n`;
+                }
                 break;
 
               case "readonly":
