@@ -1624,6 +1624,16 @@
               break;
             case "image":
               fieldHtml += `
+    <input type="file" class="form-control" id="preview_${field.id}" name="${field.name}" accept="image/*" ${field.required ? "required" : ""}>
+    <div class="mt-2 image-preview-container" style="display:none">
+      <img id="preview_${field.id}_preview" src="" alt="Preview" style="max-width: 200px; max-height: 200px; display: none;">
+    </div>
+    <div class="invalid-feedback">${field.validation?.message || "Please select an image"}</div>
+    ${field.required ? '<div class="text-danger small mt-1">*</div>' : ""}
+  `;
+              break;
+
+              fieldHtml += `
                         <input type="file" class="form-control" id="preview_${field.id}" name="${field.name}" accept="image/*" ${field.required ? "required" : ""}>
                         <div class="mt-2 image-preview-container">
                           <img id="preview_${field.id}_preview" src="" alt="Preview" style="max-width: 200px; max-height: 200px; display: none;">
@@ -1636,27 +1646,27 @@
 
           fieldContainer.innerHTML = fieldHtml;
           previewForm.appendChild(fieldContainer);
-          // Add event listener for image preview
+          // Add event listener for image preview but don't display it
           if (field.type === "image") {
-  const imageInput = document.getElementById(`preview_${field.id}`);
-  const imagePreview = document.getElementById(`preview_${field.id}_preview`);
-  
-  if (imageInput && imagePreview) {
-    imageInput.addEventListener('change', function() {
-      if (this.files && this.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          imagePreview.src = e.target.result;
-          imagePreview.style.display = 'block';
-        }
-        reader.readAsDataURL(this.files[0]);
-      } else {
-        imagePreview.style.display = 'none';
-      }
-    });
-  }
-}
-          // Apply validation attributes
+            const imageInput = document.getElementById(`preview_${field.id}`);
+            const imagePreview = document.getElementById(`preview_${field.id}_preview`);
+
+            if (imageInput && imagePreview) {
+              imageInput.addEventListener('change', function () {
+                if (this.files && this.files[0]) {
+                  const reader = new FileReader();
+                  reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'none'; // Hide the preview
+                  }
+                  reader.readAsDataURL(this.files[0]);
+                } else {
+                  imagePreview.style.display = 'none';
+                }
+              });
+            }
+          }
+
           if (field.validation && field.validation.pattern) {
             const inputElement = document.getElementById(
               `preview_${field.id}`
@@ -1855,7 +1865,16 @@
                   );
                   rowData[column.name] = values.join(", ");
                   break;
-
+                case "image":
+                  const imageInput = document.getElementById(`preview_${field.id}`);
+                  const imagePreview = document.getElementById(`preview_${field.id}_preview`);
+                  if (imageInput && imageInput.files.length > 0) {
+                    // Store the image src from preview
+                    rowData[column.name] = imagePreview.src;
+                  } else {
+                    rowData[column.name] = "";
+                  }
+                  break;
                 // Update readonly field to use the displayed text value
                 case "readonly":
                   rowData[column.name] =
@@ -1880,7 +1899,6 @@
 
         return rowData;
       }
-
       function renderDataTable() {
         // Clear table body
         dataTableBody.innerHTML = "";
@@ -1891,13 +1909,28 @@
 
           tableColumns.forEach((column) => {
             const cell = document.createElement("td");
-            cell.textContent = rowData[column.name] || "";
+
+            // Check if this column is for an image field
+            const field = column.fieldId ? formFields.find(f => f.id === column.fieldId) : null;
+            if (field && field.type === "image" && rowData[column.name]) {
+              // Create an image element
+              const img = document.createElement("img");
+              img.src = rowData[column.name];
+              img.style.maxWidth = "100px";
+              img.style.maxHeight = "100px";
+              cell.appendChild(img);
+            } else {
+              cell.textContent = rowData[column.name] || "";
+            }
+
             row.appendChild(cell);
           });
 
           dataTableBody.appendChild(row);
         });
       }
+
+
 
       function getDefaultLabel(fieldType) {
         const labels = {
@@ -2404,21 +2437,36 @@
     }
   });
 
-  function addRowToTable(rowData) {
-    const $tableBody = $("#dataTableBody");
-    const $newRow = $("<tr></tr>");
-    
-    $newRow.append($("<td></td>").text(rowCount++));
-    
-    ${tableColumns
+function addRowToTable(rowData) {
+  const $tableBody = $("#dataTableBody");
+  const $newRow = $("<tr></tr>");
+  
+  $newRow.append($("<td></td>").text(rowCount++));
+  
+  ${tableColumns
             .map((column) => {
               const jsFriendlyColName = column.name.replace(/[^a-zA-Z0-9_]/g, "_");
-              return `$newRow.append($("<td></td>").text(rowData.${jsFriendlyColName} || ""));`;
+              const field = column.fieldId ? formFields.find(f => f.id === column.fieldId) : null;
+
+              if (field && field.type === "image") {
+                return `if (rowData.${jsFriendlyColName}) {
+  const $cell = $("<td></td>");
+  $("<img>").attr({
+    src: rowData.${jsFriendlyColName},
+    style: "max-width:100px; max-height:100px;"
+  }).appendTo($cell);
+  $newRow.append($cell);
+} else {
+  $newRow.append($("<td></td>"));
+}`;
+              } else {
+                return `$newRow.append($("<td></td>").text(rowData.${jsFriendlyColName} || ""));`;
+              }
             })
             .join("\n    ")}
-    
-    $tableBody.append($newRow);
-  }
+  
+  $tableBody.append($newRow);
+}
 
   ${formFields
             .filter((field) => field.type === "date" && field.dateValidation)
@@ -2508,25 +2556,39 @@
   const tableData = [];
   let rowCount = 1;
 
-  function addRowToTable(rowData) {
-    const tableBody = document.getElementById('dataTableBody');
-    const row = document.createElement('tr');
-    
-    const sttCell = document.createElement('td');
-    sttCell.textContent = rowCount++;
-    row.appendChild(sttCell);
+function addRowToTable(rowData) {
+  const tableBody = document.getElementById('dataTableBody');
+  const row = document.createElement('tr');
+  
+  const sttCell = document.createElement('td');
+  sttCell.textContent = rowCount++;
+  row.appendChild(sttCell);
 
-    ${tableColumns
+  ${tableColumns
             .map((column) => {
               const columnName = column.name.replace(/\s+/g, "");
-              return `const ${columnName}Cell = document.createElement('td');
-    ${columnName}Cell.textContent = rowData.${columnName} || '';
-    row.appendChild(${columnName}Cell);`;
+              const field = column.fieldId ? formFields.find(f => f.id === column.fieldId) : null;
+
+              if (field && field.type === "image") {
+                return `const ${columnName}Cell = document.createElement('td');
+if (rowData.${columnName}) {
+  const img = document.createElement('img');
+  img.src = rowData.${columnName};
+  img.style.maxWidth = '100px';
+  img.style.maxHeight = '100px';
+  ${columnName}Cell.appendChild(img);
+}
+row.appendChild(${columnName}Cell);`;
+              } else {
+                return `const ${columnName}Cell = document.createElement('td');
+${columnName}Cell.textContent = rowData.${columnName} || '';
+row.appendChild(${columnName}Cell);`;
+              }
             })
             .join("\n    ")}
 
-    tableBody.appendChild(row);
-  }
+  tableBody.appendChild(row);
+}
 
   function collectFormData(form) {
     const data = {};
