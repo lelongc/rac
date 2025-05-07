@@ -1,359 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Form Builder</title>
-    <link rel="stylesheet" href="../css/bootstrap.min.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-    />
-    <!-- Add highlight.js for code syntax highlighting -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css"
-    />
-    <style>
-      .builder-container {
-        display: flex;
-        min-height: 600px;
-      }
-      .field-palette {
-        width: 250px;
-        background-color: #f8f9fa;
-        padding: 15px;
-        border-right: 1px solid #dee2e6;
-      }
-      .form-builder {
-        flex: 1;
-        padding: 15px;
-        background-color: #fff;
-        border: 1px dashed #ced4da;
-        min-height: 400px;
-        overflow-y: auto;
-      }
-      .field-item {
-        background-color: #e9ecef;
-        padding: 10px;
-        margin-bottom: 10px;
-        border-radius: 5px;
-        cursor: move;
-      }
-      .form-field {
-        background-color: #f8f9fa;
-        padding: 15px;
-        margin-bottom: 15px;
-        border: 1px solid #dee2e6;
-        border-radius: 5px;
-        position: relative;
-      }
-      .form-field .field-actions {
-        position: absolute;
-        right: 10px;
-        top: 10px;
-      }
-      .form-field .field-actions button {
-        margin-left: 5px;
-      }
-      .field-move {
-        cursor: move;
-      }
-      .field-config {
-        margin-top: 10px;
-        padding: 10px;
-        background-color: #e9ecef;
-        border-radius: 5px;
-        display: none;
-      }
-      .table-column {
-        cursor: move;
-        padding: 8px;
-        background-color: #f8f9fa;
-        border: 1px solid #dee2e6;
-        margin-right: 5px;
-        border-radius: 4px;
-        display: inline-block;
-      }
-      .preview-container {
-        margin-top: 20px;
-        padding: 15px;
-        border: 1px solid #dee2e6;
-        border-radius: 5px;
-        background-color: #fff;
-      }
-      .highlight-drop {
-        background-color: #e2f0ff !important;
-        border: 2px dashed #0d6efd !important;
-      }
-      .column-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 5px;
-        margin-bottom: 15px;
-        min-height: 40px;
-        padding: 10px;
-        background-color: #f8f9fa;
-        border-radius: 5px;
-      }
-      .code-container {
-        max-height: 500px;
-        overflow-y: auto;
-        background-color: #f8f9fa;
-        border-radius: 5px;
-        border: 1px solid #dee2e6;
-      }
-      .code-tabs .nav-link {
-        padding: 0.25rem 0.5rem;
-        font-size: 0.875rem;
-      }
-      .copy-btn {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        z-index: 100;
-      }
-      pre {
-        margin-bottom: 0;
-      }
-      code {
-        padding: 1rem !important;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container mt-4">
-      <h1 class="text-center mb-4">Form Builder</h1>
 
-      <!-- Navigation -->
-      <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Web Builder</a>
-          <div class="collapse navbar-collapse">
-            <ul class="navbar-nav me-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="index.html">Trang chủ</a>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Form Builder</title>
+  <link rel="stylesheet" href="../css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <!-- Add highlight.js for code syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css" />
+  <style>
+    .builder-container {
+      display: flex;
+      min-height: 600px;
+    }
+
+    .field-palette {
+      width: 250px;
+      background-color: #f8f9fa;
+      padding: 15px;
+      border-right: 1px solid #dee2e6;
+    }
+
+    .form-builder {
+      flex: 1;
+      padding: 15px;
+      background-color: #fff;
+      border: 1px dashed #ced4da;
+      min-height: 400px;
+      overflow-y: auto;
+    }
+
+    .field-item {
+      background-color: #e9ecef;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      cursor: move;
+    }
+
+    .form-field {
+      background-color: #f8f9fa;
+      padding: 15px;
+      margin-bottom: 15px;
+      border: 1px solid #dee2e6;
+      border-radius: 5px;
+      position: relative;
+    }
+
+    .form-field .field-actions {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
+
+    .form-field .field-actions button {
+      margin-left: 5px;
+    }
+
+    .field-move {
+      cursor: move;
+    }
+
+    .field-config {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #e9ecef;
+      border-radius: 5px;
+      display: none;
+    }
+
+    .table-column {
+      cursor: move;
+      padding: 8px;
+      background-color: #f8f9fa;
+      border: 1px solid #dee2e6;
+      margin-right: 5px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .preview-container {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #dee2e6;
+      border-radius: 5px;
+      background-color: #fff;
+    }
+
+    .highlight-drop {
+      background-color: #e2f0ff !important;
+      border: 2px dashed #0d6efd !important;
+    }
+
+    .column-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 15px;
+      min-height: 40px;
+      padding: 10px;
+      background-color: #f8f9fa;
+      border-radius: 5px;
+    }
+
+    .code-container {
+      max-height: 500px;
+      overflow-y: auto;
+      background-color: #f8f9fa;
+      border-radius: 5px;
+      border: 1px solid #dee2e6;
+    }
+
+    .code-tabs .nav-link {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.875rem;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 100;
+    }
+
+    pre {
+      margin-bottom: 0;
+    }
+
+    code {
+      padding: 1rem !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container mt-4">
+    <h1 class="text-center mb-4">Form Builder</h1>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Web Builder</a>
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Trang chủ</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card mb-4">
+          <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="form-tab" data-bs-toggle="tab" data-bs-target="#form-panel"
+                  type="button" role="tab" aria-selected="true">
+                  Form Builder
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="table-tab" data-bs-toggle="tab" data-bs-target="#table-panel" type="button"
+                  role="tab" aria-selected="false">
+                  Table Builder
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="preview-tab" data-bs-toggle="tab" data-bs-target="#preview-panel"
+                  type="button" role="tab" aria-selected="false">
+                  Preview
+                </button>
               </li>
             </ul>
           </div>
-        </div>
-      </nav>
 
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card mb-4">
-            <div class="card-header">
-              <ul class="nav nav-tabs card-header-tabs" role="tablist">
-                <li class="nav-item" role="presentation">
-                  <button
-                    class="nav-link active"
-                    id="form-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#form-panel"
-                    type="button"
-                    role="tab"
-                    aria-selected="true"
-                  >
-                    Form Builder
+          <div class="card-body">
+            <div class="tab-content">
+              <!-- Form Builder Panel -->
+              <div class="tab-pane fade show active" id="form-panel" role="tabpanel">
+                <div class="d-flex justify-content-end mb-2">
+                  <button class="btn btn-outline-primary" id="exportFormCodeBtn">
+                    <i class="fas fa-code me-1"></i> Export Form Code
                   </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <button
-                    class="nav-link"
-                    id="table-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#table-panel"
-                    type="button"
-                    role="tab"
-                    aria-selected="false"
-                  >
-                    Table Builder
-                  </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <button
-                    class="nav-link"
-                    id="preview-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#preview-panel"
-                    type="button"
-                    role="tab"
-                    aria-selected="false"
-                  >
-                    Preview
-                  </button>
-                </li>
-              </ul>
-            </div>
-
-            <div class="card-body">
-              <div class="tab-content">
-                <!-- Form Builder Panel -->
-                <div
-                  class="tab-pane fade show active"
-                  id="form-panel"
-                  role="tabpanel"
-                >
-                  <div class="d-flex justify-content-end mb-2">
-                    <button
-                      class="btn btn-outline-primary"
-                      id="exportFormCodeBtn"
-                    >
-                      <i class="fas fa-code me-1"></i> Export Form Code
-                    </button>
-                  </div>
-                  <div class="builder-container">
-                    <div class="field-palette">
-                      <h5>Form Fields</h5>
-                      <div
-                        class="field-item"
-                        draggable="true"
-                        data-field-type="text"
-                      >
-                        <i class="fas fa-font me-2"></i>Text Field
-                      </div>
-                      <div
-                        class="field-item"
-                        draggable="true"
-                        data-field-type="email"
-                      >
-                        <i class="fas fa-envelope me-2"></i>Email Field
-                      </div>
-                      <div
-                        class="field-item"
-                        draggable="true"
-                        data-field-type="number"
-                      >
-                        <i class="fas fa-hashtag me-2"></i>Number Field
-                      </div>
-                      <div
-                        class="field-item"
-                        draggable="true"
-                        data-field-type="tel"
-                      >
-                        <i class="fas fa-phone me-2"></i>Phone Field
-                      </div>
-                      <div
-                        class="field-item"
-                        draggable="true"
-                        data-field-type="date"
-                      >
-                        <i class="fas fa-calendar-alt me-2"></i>Date Field
-                      </div>
-                      <div
-                        class="field-item"
-                        draggable="true"
-                        data-field-type="select"
-                      >
-                        <i class="fas fa-list me-2"></i>Select Field
-                      </div>
-                      <div
-                        class="field-item"
-                        draggable="true"
-                        data-field-type="radio"
-                      >
-                        <i class="fas fa-dot-circle me-2"></i>Radio Buttons
-                      </div>
-                      <div
-                        class="field-item"
-                        draggable="true"
-                        data-field-type="checkbox"
-                      >
-                        <i class="fas fa-check-square me-2"></i>Checkbox
-                      </div>
-                      <div
-                        class="field-item"
-                        draggable="true"
-                        data-field-type="readonly"
-                      >
-                        <i class="fas fa-eye me-2"></i>Readonly Field
-                      </div>
+                </div>
+                <div class="builder-container">
+                  <div class="field-palette">
+                    <h5>Form Fields</h5>
+                    <div class="field-item" draggable="true" data-field-type="text">
+                      <i class="fas fa-font me-2"></i>Text Field
                     </div>
+                    <div class="field-item" draggable="true" data-field-type="email">
+                      <i class="fas fa-envelope me-2"></i>Email Field
+                    </div>
+                    <div class="field-item" draggable="true" data-field-type="number">
+                      <i class="fas fa-hashtag me-2"></i>Number Field
+                    </div>
+                    <div class="field-item" draggable="true" data-field-type="tel">
+                      <i class="fas fa-phone me-2"></i>Phone Field
+                    </div>
+                    <div class="field-item" draggable="true" data-field-type="date">
+                      <i class="fas fa-calendar-alt me-2"></i>Date Field
+                    </div>
+                    <div class="field-item" draggable="true" data-field-type="select">
+                      <i class="fas fa-list me-2"></i>Select Field
+                    </div>
+                    <div class="field-item" draggable="true" data-field-type="radio">
+                      <i class="fas fa-dot-circle me-2"></i>Radio Buttons
+                    </div>
+                    <div class="field-item" draggable="true" data-field-type="checkbox">
+                      <i class="fas fa-check-square me-2"></i>Checkbox
+                    </div>
+                    <div class="field-item" draggable="true" data-field-type="readonly">
+                      <i class="fas fa-eye me-2"></i>Readonly Field
+                    </div>
+                    <div class="field-item" draggable="true" data-field-type="image">
+                      <i class="fas fa-image me-2"></i>Image Upload
+                    </div>
+                  </div>
 
-                    <div class="form-builder" id="formBuilderContainer">
-                      <div class="alert alert-info">
-                        <i class="fas fa-info-circle me-2"></i> Drag and drop
-                        form fields here
-                      </div>
+                  <div class="form-builder" id="formBuilderContainer">
+                    <div class="alert alert-info">
+                      <i class="fas fa-info-circle me-2"></i> Drag and drop
+                      form fields here
                     </div>
                   </div>
                 </div>
+              </div>
 
-                <!-- Table Builder Panel -->
-                <div class="tab-pane fade" id="table-panel" role="tabpanel">
-                  <div class="d-flex justify-content-end mb-2">
-                    <button
-                      class="btn btn-outline-primary"
-                      id="exportTableCodeBtn"
-                    >
-                      <i class="fas fa-code me-1"></i> Export Table Code
-                    </button>
-                  </div>
-                  <h5>Table Columns</h5>
-                  <div class="column-list" id="columnListContainer">
-                    <!-- Table columns will be added here -->
-                  </div>
-                  <button
-                    class="btn btn-outline-primary mb-3"
-                    id="addColumnBtn"
-                  >
-                    <i class="fas fa-plus me-2"></i>Add Column
+              <!-- Table Builder Panel -->
+              <div class="tab-pane fade" id="table-panel" role="tabpanel">
+                <div class="d-flex justify-content-end mb-2">
+                  <button class="btn btn-outline-primary" id="exportTableCodeBtn">
+                    <i class="fas fa-code me-1"></i> Export Table Code
                   </button>
-                  <div class="table-responsive">
-                    <table class="table table-bordered" id="previewTable">
-                      <thead>
-                        <tr id="tableHeaderRow">
-                          <!-- Table headers will be added dynamically -->
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <!-- Table data will be added dynamically -->
-                      </tbody>
-                    </table>
-                  </div>
                 </div>
+                <h5>Table Columns</h5>
+                <div class="column-list" id="columnListContainer">
+                  <!-- Table columns will be added here -->
+                </div>
+                <button class="btn btn-outline-primary mb-3" id="addColumnBtn">
+                  <i class="fas fa-plus me-2"></i>Add Column
+                </button>
+                <div class="table-responsive">
+                  <table class="table table-bordered" id="previewTable">
+                    <thead>
+                      <tr id="tableHeaderRow">
+                        <!-- Table headers will be added dynamically -->
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- Table data will be added dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
 
-                <!-- Preview Panel -->
-                <div class="tab-pane fade" id="preview-panel" role="tabpanel">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="card">
-                        <div class="card-header">
-                          <h5>Preview Form</h5>
-                        </div>
-                        <div class="card-body">
-                          <form id="previewForm">
-                            <!-- Preview form fields will be added here -->
-                          </form>
-                          <button
-                            type="button"
-                            class="btn btn-primary mt-3"
-                            id="submitPreview"
-                          >
-                            Submit
-                          </button>
-                        </div>
+              <!-- Preview Panel -->
+              <div class="tab-pane fade" id="preview-panel" role="tabpanel">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="card">
+                      <div class="card-header">
+                        <h5>Preview Form</h5>
+                      </div>
+                      <div class="card-body">
+                        <form id="previewForm">
+                          <!-- Preview form fields will be added here -->
+                        </form>
+                        <button type="button" class="btn btn-primary mt-3" id="submitPreview">
+                          Submit
+                        </button>
                       </div>
                     </div>
+                  </div>
 
-                    <div class="col-md-6">
-                      <div class="card">
-                        <div class="card-header">
-                          <h5>Preview Table</h5>
-                        </div>
-                        <div class="card-body">
-                          <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable">
-                              <thead>
-                                <tr id="dataTableHeaderRow">
-                                  <!-- Table headers will be added dynamically -->
-                                </tr>
-                              </thead>
-                              <tbody id="dataTableBody">
-                                <!-- Table data will be added dynamically -->
-                              </tbody>
-                            </table>
-                          </div>
+                  <div class="col-md-6">
+                    <div class="card">
+                      <div class="card-header">
+                        <h5>Preview Table</h5>
+                      </div>
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <table class="table table-bordered" id="dataTable">
+                            <thead>
+                              <tr id="dataTableHeaderRow">
+                                <!-- Table headers will be added dynamically -->
+                              </tr>
+                            </thead>
+                            <tbody id="dataTableBody">
+                              <!-- Table data will be added dynamically -->
+                            </tbody>
+                          </table>
                         </div>
                       </div>
                     </div>
@@ -365,1019 +306,783 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Modal for Column Configuration -->
-    <div
-      class="modal fade"
-      id="columnModal"
-      tabindex="-1"
-      aria-labelledby="columnModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="columnModalLabel">Configure Column</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+  <!-- Modal for Column Configuration -->
+  <div class="modal fade" id="columnModal" tabindex="-1" aria-labelledby="columnModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="columnModalLabel">Configure Column</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="columnName" class="form-label">Column Name</label>
+            <input type="text" class="form-control" id="columnName" placeholder="Enter column name" />
           </div>
-          <div class="modal-body">
-            <div class="mb-3">
-              <label for="columnName" class="form-label">Column Name</label>
-              <input
-                type="text"
-                class="form-control"
-                id="columnName"
-                placeholder="Enter column name"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="columnField" class="form-label"
-                >Map to Form Field</label
-              >
-              <select class="form-select" id="columnField">
-                <option value="">Choose a form field...</option>
-                <!-- Options will be added dynamically based on form fields -->
-              </select>
-            </div>
+          <div class="mb-3">
+            <label for="columnField" class="form-label">Map to Form Field</label>
+            <select class="form-select" id="columnField">
+              <option value="">Choose a form field...</option>
+              <!-- Options will be added dynamically based on form fields -->
+            </select>
           </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Cancel
-            </button>
-            <button type="button" class="btn btn-primary" id="saveColumnBtn">
-              Save
-            </button>
-          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Cancel
+          </button>
+          <button type="button" class="btn btn-primary" id="saveColumnBtn">
+            Save
+          </button>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Modal for Field Configuration -->
-    <div
-      class="modal fade"
-      id="fieldModal"
-      tabindex="-1"
-      aria-labelledby="fieldModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="fieldModalLabel">Configure Field</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+  <!-- Modal for Field Configuration -->
+  <div class="modal fade" id="fieldModal" tabindex="-1" aria-labelledby="fieldModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="fieldModalLabel">Configure Field</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="fieldLabel" class="form-label">Field Label</label>
+            <input type="text" class="form-control" id="fieldLabel" placeholder="Enter field label" />
           </div>
-          <div class="modal-body">
+          <div class="mb-3">
+            <label for="fieldName" class="form-label">Field Name</label>
+            <input type="text" class="form-control" id="fieldName" placeholder="Enter field name" />
+          </div>
+          <div class="mb-3">
+            <label for="fieldPlaceholder" class="form-label">Placeholder</label>
+            <input type="text" class="form-control" id="fieldPlaceholder" placeholder="Enter placeholder text" />
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="fieldRequired" />
+            <label class="form-check-label" for="fieldRequired">Required Field</label>
+          </div>
+
+          <div id="optionsContainer" style="display: none">
+            <label class="form-label">Options</label>
+            <div id="optionsList">
+              <div class="mb-2 input-group">
+                <input type="text" class="form-control option-value" placeholder="Option value" />
+                <input type="text" class="form-control option-text" placeholder="Option text" />
+                <button type="button" class="btn btn-danger remove-option">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <button type="button" class="btn btn-outline-primary btn-sm mt-2" id="addOptionBtn">
+              <i class="fas fa-plus me-2"></i>Add Option
+            </button>
+          </div>
+
+          <!-- Add container for Readonly Source Field Selection -->
+          <div id="readonlySourceContainer" class="mt-3" style="display: none">
+            <label for="readonlySourceField" class="form-label">Source Select Field</label>
+            <select class="form-select" id="readonlySourceField">
+              <option value="">Choose the select field to display...</option>
+              <!-- Options will be populated dynamically -->
+            </select>
+          </div>
+          <!-- End of Readonly Source Field Selection -->
+
+          <div id="validationContainer" class="mt-4">
+            <h6>Validation Settings</h6>
             <div class="mb-3">
-              <label for="fieldLabel" class="form-label">Field Label</label>
-              <input
-                type="text"
-                class="form-control"
-                id="fieldLabel"
-                placeholder="Enter field label"
-              />
+              <label for="validationPattern" class="form-label">Regex Pattern</label>
+              <input type="text" class="form-control" id="validationPattern"
+                placeholder="Enter regular expression pattern" />
             </div>
             <div class="mb-3">
-              <label for="fieldName" class="form-label">Field Name</label>
-              <input
-                type="text"
-                class="form-control"
-                id="fieldName"
-                placeholder="Enter field name"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="fieldPlaceholder" class="form-label"
-                >Placeholder</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                id="fieldPlaceholder"
-                placeholder="Enter placeholder text"
-              />
-            </div>
-            <div class="mb-3 form-check">
-              <input
-                type="checkbox"
-                class="form-check-input"
-                id="fieldRequired"
-              />
-              <label class="form-check-label" for="fieldRequired"
-                >Required Field</label
-              >
+              <label for="errorMessage" class="form-label">Error Message</label>
+              <input type="text" class="form-control" id="errorMessage" placeholder="Enter error message" />
             </div>
 
-            <div id="optionsContainer" style="display: none">
-              <label class="form-label">Options</label>
-              <div id="optionsList">
-                <div class="mb-2 input-group">
-                  <input
-                    type="text"
-                    class="form-control option-value"
-                    placeholder="Option value"
-                  />
-                  <input
-                    type="text"
-                    class="form-control option-text"
-                    placeholder="Option text"
-                  />
-                  <button type="button" class="btn btn-danger remove-option">
-                    <i class="fas fa-minus"></i>
-                  </button>
+            <div id="dateValidationContainer" style="display: none">
+              <h6 class="mt-3">Date Constraints</h6>
+
+              <div class="mb-3 form-check">
+                <input type="radio" class="form-check-input" id="noDateConstraint" name="dateConstraintType"
+                  value="none" checked />
+                <label class="form-check-label" for="noDateConstraint">No constraints</label>
+              </div>
+
+              <div class="mb-3 form-check">
+                <input type="radio" class="form-check-input" id="beforeTodayConstraint" name="dateConstraintType"
+                  value="beforeToday" />
+                <label class="form-check-label" for="beforeTodayConstraint">Must be before today</label>
+              </div>
+
+              <div class="mb-3 form-check">
+                <input type="radio" class="form-check-input" id="afterTodayConstraint" name="dateConstraintType"
+                  value="afterToday" />
+                <label class="form-check-label" for="afterTodayConstraint">Must be after today</label>
+              </div>
+
+              <div class="mb-3 form-check">
+                <input type="radio" class="form-check-input" id="beforeYearsConstraint" name="dateConstraintType"
+                  value="beforeYears" />
+                <label class="form-check-label" for="beforeYearsConstraint">Must be before</label>
+                <div class="input-group mt-2" id="beforeYearsContainer" style="display: none">
+                  <input type="number" class="form-control" id="beforeYears" min="0" value="1" />
+                  <span class="input-group-text">years ago</span>
                 </div>
               </div>
-              <button
-                type="button"
-                class="btn btn-outline-primary btn-sm mt-2"
-                id="addOptionBtn"
-              >
-                <i class="fas fa-plus me-2"></i>Add Option
+
+              <div class="mb-3 form-check">
+                <input type="radio" class="form-check-input" id="afterYearsConstraint" name="dateConstraintType"
+                  value="afterYears" />
+                <label class="form-check-label" for="afterYearsConstraint">Must be after</label>
+                <div class="input-group mt-2" id="afterYearsContainer" style="display: none">
+                  <input type="number" class="form-control" id="afterYears" min="0" value="1" />
+                  <span class="input-group-text">years ahead</span>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="dateErrorMessage" class="form-label">Error Message</label>
+                <input type="text" class="form-control" id="dateErrorMessage"
+                  placeholder="Error message to display for invalid dates" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Cancel
+          </button>
+          <button type="button" class="btn btn-primary" id="saveFieldBtn">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Exporting Form Code -->
+  <div class="modal fade" id="exportFormCodeModal" tabindex="-1" aria-labelledby="exportFormCodeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exportFormCodeModalLabel">
+            Export Form Code
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="nav nav-tabs code-tabs" id="formCodeTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="modal-html-tab" data-bs-toggle="tab" data-bs-target="#modal-html"
+                type="button" role="tab">
+                Modal HTML
               </button>
-            </div>
-
-            <!-- Add container for Readonly Source Field Selection -->
-            <div
-              id="readonlySourceContainer"
-              class="mt-3"
-              style="display: none"
-            >
-              <label for="readonlySourceField" class="form-label"
-                >Source Select Field</label
-              >
-              <select class="form-select" id="readonlySourceField">
-                <option value="">Choose the select field to display...</option>
-                <!-- Options will be populated dynamically -->
-              </select>
-            </div>
-            <!-- End of Readonly Source Field Selection -->
-
-            <div id="validationContainer" class="mt-4">
-              <h6>Validation Settings</h6>
-              <div class="mb-3">
-                <label for="validationPattern" class="form-label"
-                  >Regex Pattern</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="validationPattern"
-                  placeholder="Enter regular expression pattern"
-                />
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="jquery-js-tab" data-bs-toggle="tab" data-bs-target="#jquery-js" type="button"
+                role="tab">
+                jQuery Script
+              </button>
+            </li>
+          </ul>
+          <div class="tab-content mt-2">
+            <div class="tab-pane fade show active position-relative" id="modal-html" role="tabpanel">
+              <button class="btn btn-sm btn-outline-secondary copy-btn" id="copyModalHtml">
+                <i class="far fa-copy"></i> Copy
+              </button>
+              <div class="code-container">
+                <pre><code class="html" id="modalHtmlCode"></code></pre>
               </div>
-              <div class="mb-3">
-                <label for="errorMessage" class="form-label"
-                  >Error Message</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="errorMessage"
-                  placeholder="Enter error message"
-                />
-              </div>
-
-              <div id="dateValidationContainer" style="display: none">
-                <h6 class="mt-3">Date Constraints</h6>
-
-                <div class="mb-3 form-check">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    id="noDateConstraint"
-                    name="dateConstraintType"
-                    value="none"
-                    checked
-                  />
-                  <label class="form-check-label" for="noDateConstraint"
-                    >No constraints</label
-                  >
-                </div>
-
-                <div class="mb-3 form-check">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    id="beforeTodayConstraint"
-                    name="dateConstraintType"
-                    value="beforeToday"
-                  />
-                  <label class="form-check-label" for="beforeTodayConstraint"
-                    >Must be before today</label
-                  >
-                </div>
-
-                <div class="mb-3 form-check">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    id="afterTodayConstraint"
-                    name="dateConstraintType"
-                    value="afterToday"
-                  />
-                  <label class="form-check-label" for="afterTodayConstraint"
-                    >Must be after today</label
-                  >
-                </div>
-
-                <div class="mb-3 form-check">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    id="beforeYearsConstraint"
-                    name="dateConstraintType"
-                    value="beforeYears"
-                  />
-                  <label class="form-check-label" for="beforeYearsConstraint"
-                    >Must be before</label
-                  >
-                  <div
-                    class="input-group mt-2"
-                    id="beforeYearsContainer"
-                    style="display: none"
-                  >
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="beforeYears"
-                      min="0"
-                      value="1"
-                    />
-                    <span class="input-group-text">years ago</span>
-                  </div>
-                </div>
-
-                <div class="mb-3 form-check">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    id="afterYearsConstraint"
-                    name="dateConstraintType"
-                    value="afterYears"
-                  />
-                  <label class="form-check-label" for="afterYearsConstraint"
-                    >Must be after</label
-                  >
-                  <div
-                    class="input-group mt-2"
-                    id="afterYearsContainer"
-                    style="display: none"
-                  >
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="afterYears"
-                      min="0"
-                      value="1"
-                    />
-                    <span class="input-group-text">years ahead</span>
-                  </div>
-                </div>
-
-                <div class="mb-3">
-                  <label for="dateErrorMessage" class="form-label"
-                    >Error Message</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="dateErrorMessage"
-                    placeholder="Error message to display for invalid dates"
-                  />
-                </div>
+            </div>
+            <div class="tab-pane fade position-relative" id="jquery-js" role="tabpanel">
+              <button class="btn btn-sm btn-outline-secondary copy-btn" id="copyJQueryJs">
+                <i class="far fa-copy"></i> Copy
+              </button>
+              <div class="code-container">
+                <pre><code class="javascript" id="jqueryJsCode"></code></pre>
               </div>
             </div>
           </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Cancel
-            </button>
-            <button type="button" class="btn btn-primary" id="saveFieldBtn">
-              Save
-            </button>
-          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Modal for Exporting Form Code -->
-    <div
-      class="modal fade"
-      id="exportFormCodeModal"
-      tabindex="-1"
-      aria-labelledby="exportFormCodeModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-lg modal-dialog-scrollable">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exportFormCodeModalLabel">
-              Export Form Code
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <ul class="nav nav-tabs code-tabs" id="formCodeTabs" role="tablist">
-              <li class="nav-item" role="presentation">
-                <button
-                  class="nav-link active"
-                  id="modal-html-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#modal-html"
-                  type="button"
-                  role="tab"
-                >
-                  Modal HTML
-                </button>
-              </li>
-              <li class="nav-item" role="presentation">
-                <button
-                  class="nav-link"
-                  id="jquery-js-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#jquery-js"
-                  type="button"
-                  role="tab"
-                >
-                  jQuery Script
-                </button>
-              </li>
-            </ul>
-            <div class="tab-content mt-2">
-              <div
-                class="tab-pane fade show active position-relative"
-                id="modal-html"
-                role="tabpanel"
-              >
-                <button
-                  class="btn btn-sm btn-outline-secondary copy-btn"
-                  id="copyModalHtml"
-                >
-                  <i class="far fa-copy"></i> Copy
-                </button>
-                <div class="code-container">
-                  <pre><code class="html" id="modalHtmlCode"></code></pre>
-                </div>
+  <!-- Modal for Exporting Table Code -->
+  <div class="modal fade" id="exportTableCodeModal" tabindex="-1" aria-labelledby="exportTableCodeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exportTableCodeModalLabel">
+            Export Table Code
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="nav nav-tabs code-tabs" id="tableCodeTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="table-html-tab" data-bs-toggle="tab" data-bs-target="#table-html"
+                type="button" role="tab">
+                HTML
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="table-js-tab" data-bs-toggle="tab" data-bs-target="#table-js" type="button"
+                role="tab">
+                JavaScript
+              </button>
+            </li>
+          </ul>
+          <div class="tab-content mt-2">
+            <div class="tab-pane fade show active position-relative" id="table-html" role="tabpanel">
+              <button class="btn btn-sm btn-outline-secondary copy-btn" id="copyTableHtml">
+                <i class="far fa-copy"></i> Copy
+              </button>
+              <div class="code-container">
+                <pre><code class="html" id="tableHtmlCode"></code></pre>
               </div>
-              <div
-                class="tab-pane fade position-relative"
-                id="jquery-js"
-                role="tabpanel"
-              >
-                <button
-                  class="btn btn-sm btn-outline-secondary copy-btn"
-                  id="copyJQueryJs"
-                >
-                  <i class="far fa-copy"></i> Copy
-                </button>
-                <div class="code-container">
-                  <pre><code class="javascript" id="jqueryJsCode"></code></pre>
-                </div>
+            </div>
+            <div class="tab-pane fade position-relative" id="table-js" role="tabpanel">
+              <button class="btn btn-sm btn-outline-secondary copy-btn" id="copyTableJs">
+                <i class="far fa-copy"></i> Copy
+              </button>
+              <div class="code-container">
+                <pre><code class="javascript" id="tableJsCode"></code></pre>
               </div>
             </div>
           </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
         </div>
       </div>
     </div>
-
-    <!-- Modal for Exporting Table Code -->
-    <div
-      class="modal fade"
-      id="exportTableCodeModal"
-      tabindex="-1"
-      aria-labelledby="exportTableCodeModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-lg modal-dialog-scrollable">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exportTableCodeModalLabel">
-              Export Table Code
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <ul
-              class="nav nav-tabs code-tabs"
-              id="tableCodeTabs"
-              role="tablist"
-            >
-              <li class="nav-item" role="presentation">
-                <button
-                  class="nav-link active"
-                  id="table-html-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#table-html"
-                  type="button"
-                  role="tab"
-                >
-                  HTML
-                </button>
-              </li>
-              <li class="nav-item" role="presentation">
-                <button
-                  class="nav-link"
-                  id="table-js-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#table-js"
-                  type="button"
-                  role="tab"
-                >
-                  JavaScript
-                </button>
-              </li>
-            </ul>
-            <div class="tab-content mt-2">
-              <div
-                class="tab-pane fade show active position-relative"
-                id="table-html"
-                role="tabpanel"
-              >
-                <button
-                  class="btn btn-sm btn-outline-secondary copy-btn"
-                  id="copyTableHtml"
-                >
-                  <i class="far fa-copy"></i> Copy
-                </button>
-                <div class="code-container">
-                  <pre><code class="html" id="tableHtmlCode"></code></pre>
-                </div>
-              </div>
-              <div
-                class="tab-pane fade position-relative"
-                id="table-js"
-                role="tabpanel"
-              >
-                <button
-                  class="btn btn-sm btn-outline-secondary copy-btn"
-                  id="copyTableJs"
-                >
-                  <i class="far fa-copy"></i> Copy
-                </button>
-                <div class="code-container">
-                  <pre><code class="javascript" id="tableJsCode"></code></pre>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <script src="../js/jquery-3.7.1.min.js"></script>
-    <script src="../js/bootstrap.bundle.min.js"></script>
-    <!-- Add highlight.js for code syntax highlighting -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        // Global variables
-        const formBuilder = document.getElementById("formBuilderContainer");
-        const columnList = document.getElementById("columnListContainer");
-        const tableHeaderRow = document.getElementById("tableHeaderRow");
-        const dataTableHeaderRow =
-          document.getElementById("dataTableHeaderRow");
-        const dataTableBody = document.getElementById("dataTableBody");
-        const previewForm = document.getElementById("previewForm");
-
-        let formFields = [];
-        let tableColumns = [];
-        let editingFieldIndex = null;
-        let editingColumnIndex = null;
-        let formData = [];
-
-        // Initialize drag and drop for form fields
-        initFormFieldsDragDrop();
-
-        // Initialize drag and drop for table columns
-        initTableColumnsDragDrop();
-
-        // Add column button event
-        document
-          .getElementById("addColumnBtn")
-          .addEventListener("click", function () {
-            editingColumnIndex = null;
-            document.getElementById("columnName").value = "";
-            document.getElementById("columnField").value = "";
-
-            // Populate form field options
-            populateFormFieldOptions();
-
-            // Show the modal
-            const columnModal = new bootstrap.Modal(
-              document.getElementById("columnModal")
-            );
-            columnModal.show();
-          });
-
-        // Save column button event
-        document
-          .getElementById("saveColumnBtn")
-          .addEventListener("click", function () {
-            const columnName = document
-              .getElementById("columnName")
-              .value.trim();
-            const fieldId = document.getElementById("columnField").value;
-
-            if (columnName === "") {
-              alert("Please enter a column name");
-              return;
-            }
-
-            const columnData = {
-              name: columnName,
-              fieldId: fieldId,
-            };
-
-            if (editingColumnIndex !== null) {
-              // Update existing column
-              tableColumns[editingColumnIndex] = columnData;
-            } else {
-              // Add new column
-              tableColumns.push(columnData);
-            }
-
-            // Update UI
-            renderTableColumns();
-            updatePreviewTable();
-
-            // Hide the modal
-            bootstrap.Modal.getInstance(
-              document.getElementById("columnModal")
-            ).hide();
-          });
-
-        // Save field button event
-        document
-          .getElementById("saveFieldBtn")
-          .addEventListener("click", function () {
-            const label = document.getElementById("fieldLabel").value.trim();
-            const name = document.getElementById("fieldName").value.trim();
-            const placeholder = document
-              .getElementById("fieldPlaceholder")
-              .value.trim();
-            const required = document.getElementById("fieldRequired").checked;
-            const pattern = document
-              .getElementById("validationPattern")
-              .value.trim();
-            const errorMsg = document
-              .getElementById("errorMessage")
-              .value.trim();
-
-            if (label === "" || name === "") {
-              alert("Please enter both label and name for the field");
-              return;
-            }
-
-            // Get field type from the editing field
-            const fieldType = formFields[editingFieldIndex].type;
-
-            // Create field data object
-            const fieldData = {
-              id:
-                editingFieldIndex !== null
-                  ? formFields[editingFieldIndex].id
-                  : "field_" + Date.now(),
-              type: fieldType,
-              label: label,
-              name: name,
-              placeholder: placeholder,
-              required: required,
-              validation: {
-                pattern: pattern,
-                message: errorMsg,
-              },
-            };
-
-            // Handle options for select, radio, checkbox
-            if (["select", "radio", "checkbox"].includes(fieldType)) {
-              const optionElements = document.querySelectorAll(
-                "#optionsList .input-group"
-              );
-              const options = [];
-
-              optionElements.forEach((optionEl) => {
-                const value = optionEl
-                  .querySelector(".option-value")
-                  .value.trim();
-                const text = optionEl
-                  .querySelector(".option-text")
-                  .value.trim();
-
-                if (value && text) {
-                  options.push({ value, text });
-                }
-              });
-
-              if (options.length > 0) {
-                fieldData.options = options;
-              }
-            }
-
-            // Handle date validation with simplified approach
-            if (fieldType === "date") {
-              const dateConstraintType = document.querySelector(
-                'input[name="dateConstraintType"]:checked'
-              ).value;
-              const dateErrorMessage = document
-                .getElementById("dateErrorMessage")
-                .value.trim();
-
-              if (dateConstraintType !== "none") {
-                const dateValidation = {
-                  errorMessage: dateErrorMessage,
-                };
-
-                switch (dateConstraintType) {
-                  case "beforeToday":
-                    dateValidation.beforeToday = true;
-                    break;
-                  case "afterToday":
-                    dateValidation.afterToday = true;
-                    break;
-                  case "beforeYears":
-                    dateValidation.beforeYears =
-                      parseInt(document.getElementById("beforeYears").value) ||
-                      1;
-                    break;
-                  case "afterYears":
-                    dateValidation.afterYears =
-                      parseInt(document.getElementById("afterYears").value) ||
-                      1;
-                    break;
-                }
-
-                fieldData.dateValidation = dateValidation;
-              }
-            }
-
-            // Handle readonly field source selection
-            if (fieldType === "readonly") {
-              const sourceFieldId = document.getElementById(
-                "readonlySourceField"
-              ).value;
-              if (sourceFieldId) {
-                fieldData.sourceFieldId = sourceFieldId;
-              } else {
-                alert("Please select a source field for the readonly field");
-                return;
-              }
-            }
-
-            // Update or add field
-            if (editingFieldIndex !== null) {
-              formFields[editingFieldIndex] = fieldData;
-
-              // Update the field UI
-              const fieldElement = document.querySelector(
-                `.form-field[data-field-index="${editingFieldIndex}"]`
-              );
-              updateFieldElement(fieldElement, fieldData, editingFieldIndex);
-            }
-
-            // Update preview
-            renderPreviewForm();
-            updateColumnFieldOptions();
-
-            // Close modal - ensure we're properly closing it
-            const fieldModal = bootstrap.Modal.getInstance(
-              document.getElementById("fieldModal")
-            );
-            if (fieldModal) {
-              fieldModal.hide();
-            } else {
-              // Fallback if we can't get the instance
-              $("#fieldModal").modal("hide");
-            }
-          });
-
-        // Submit preview form
-        document
-          .getElementById("submitPreview")
-          .addEventListener("click", function () {
-            const formValid = validatePreviewForm();
-
-            if (formValid) {
-              // Collect data from the preview form
-              const newRow = collectFormData();
-
-              // Add to form data array
-              formData.push(newRow);
-
-              // Update the data table
-              renderDataTable();
-
-              // Reset the form
-              document.getElementById("previewForm").reset();
-            }
-          });
-
-        // Event handlers for date validation
-        document
-          .getElementById("beforeYearsConstraint")
-          .addEventListener("change", function () {
-            document.getElementById("beforeYearsContainer").style.display = this
-              .checked
-              ? "flex"
-              : "none";
-          });
-
-        document
-          .getElementById("afterYearsConstraint")
-          .addEventListener("change", function () {
-            document.getElementById("afterYearsContainer").style.display = this
-              .checked
-              ? "flex"
-              : "none";
-          });
-
-        // Remove the old event handlers for minDateCheck and maxDateCheck since they no longer exist
-
-        // Add option button event
-        document
-          .getElementById("addOptionBtn")
-          .addEventListener("click", function () {
-            addOptionRow();
-          });
-
-        // Initialize code highlighting
-        hljs.highlightAll();
-
-        // Export form code button event
-        document
-          .getElementById("exportFormCodeBtn")
-          .addEventListener("click", function () {
-            generateFormCode();
-            const formCodeModal = new bootstrap.Modal(
-              document.getElementById("exportFormCodeModal")
-            );
-            formCodeModal.show();
-          });
-
-        // Export table code button event
-        document
-          .getElementById("exportTableCodeBtn")
-          .addEventListener("click", function () {
-            generateTableCode();
-            const tableCodeModal = new bootstrap.Modal(
-              document.getElementById("exportTableCodeModal")
-            );
-            tableCodeModal.show();
-          });
-
-        // Copy buttons events - Fix incorrect references and add proper error handling
-        document
-          .getElementById("copyModalHtml")
-          .addEventListener("click", function () {
-            copyToClipboard("modalHtmlCode");
-          });
-
-        document
-          .getElementById("copyJQueryJs")
-          .addEventListener("click", function () {
-            copyToClipboard("jqueryJsCode");
-          });
-
-        document
-          .getElementById("copyTableHtml")
-          .addEventListener("click", function () {
-            copyToClipboard("tableHtmlCode");
-          });
-
-        document
-          .getElementById("copyTableJs")
-          .addEventListener("click", function () {
-            copyToClipboard("tableJsCode");
-          });
-
-        // Remove incorrect references to non-existent elements
-        // document
-        //   .getElementById("copyFormHtml")
-        //   .addEventListener("click", function () {
-        //     copyToClipboard("formHtmlCode");
-        //   });
-
-        // document
-        //   .getElementById("copyFormJs")
-        //   .addEventListener("click", function () {
-        //     copyToClipboard("formJsCode");
-        //   });
-
-        // document
-        //   .getElementById("copyFormModal")
-        //   .addEventListener("click", function () {
-        //     copyToClipboard("formModalCode");
-        //   });
-
-        // Helper Functions
-
-        function initFormFieldsDragDrop() {
-          // Make palette items draggable
-          const fieldItems = document.querySelectorAll(".field-item");
-
-          fieldItems.forEach((item) => {
-            item.addEventListener("dragstart", function (e) {
-              e.dataTransfer.setData(
-                "text/plain",
-                this.getAttribute("data-field-type")
-              );
-              e.dataTransfer.effectAllowed = "copy";
-            });
-          });
-
-          // Enable form builder as drop target
-          formBuilder.addEventListener("dragover", function (e) {
-            e.preventDefault();
-            e.dataTransfer.dropEffect = "copy";
-            this.classList.add("highlight-drop");
-          });
-
-          formBuilder.addEventListener("dragleave", function () {
-            this.classList.remove("highlight-drop");
-          });
-
-          formBuilder.addEventListener("drop", function (e) {
-            e.preventDefault();
-            this.classList.remove("highlight-drop");
-
-            // Get the field type
-            const fieldType = e.dataTransfer.getData("text/plain");
-
-            // Add field to the form builder
-            addFieldToBuilder(fieldType);
-          });
-        }
-
-        function initTableColumnsDragDrop() {
-          // Enable column list as sortable
-          columnList.addEventListener("dragover", function (e) {
-            e.preventDefault();
-            e.dataTransfer.dropEffect = "move";
-
-            const target = getColumnDropTarget(e.clientX);
-
-            // Reset all highlights
-            document.querySelectorAll(".table-column").forEach((col) => {
-              col.classList.remove("highlight-drop");
-            });
-
-            if (target) {
-              target.classList.add("highlight-drop");
-            }
-          });
-
-          columnList.addEventListener("drop", function (e) {
-            e.preventDefault();
-
-            // Reset all highlights
-            document.querySelectorAll(".table-column").forEach((col) => {
-              col.classList.remove("highlight-drop");
-            });
-
-            const sourceIndex = parseInt(e.dataTransfer.getData("text/plain"));
-            const targetColumn = getColumnDropTarget(e.clientX);
-
-            if (targetColumn) {
-              const targetIndex = parseInt(
-                targetColumn.getAttribute("data-column-index")
-              );
-
-              if (sourceIndex !== targetIndex) {
-                // Reorder columns
-                moveArrayElement(tableColumns, sourceIndex, targetIndex);
-                renderTableColumns();
-                updatePreviewTable();
-              }
-            }
-          });
-        }
-
-        function getColumnDropTarget(clientX) {
-          const columns = document.querySelectorAll(".table-column");
-          let targetColumn = null;
-
-          columns.forEach((column) => {
-            const rect = column.getBoundingClientRect();
-            const midX = rect.left + rect.width / 2;
-
-            if (clientX < midX) {
-              if (!targetColumn) {
-                targetColumn = column;
-              }
-            } else if (!targetColumn && clientX < rect.right) {
-              targetColumn = column;
-            }
-          });
-
-          return targetColumn;
-        }
-
-        function moveArrayElement(array, fromIndex, toIndex) {
-          const element = array.splice(fromIndex, 1)[0];
-          array.splice(toIndex, 0, element);
-        }
-
-        function addFieldToBuilder(fieldType) {
-          // Create a new field object
-          const newField = {
-            id: "field_" + Date.now(),
+  </div>
+
+  <script src="../js/jquery-3.7.1.min.js"></script>
+  <script src="../js/bootstrap.bundle.min.js"></script>
+  <!-- Add highlight.js for code syntax highlighting -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Global variables
+      const formBuilder = document.getElementById("formBuilderContainer");
+      const columnList = document.getElementById("columnListContainer");
+      const tableHeaderRow = document.getElementById("tableHeaderRow");
+      const dataTableHeaderRow =
+        document.getElementById("dataTableHeaderRow");
+      const dataTableBody = document.getElementById("dataTableBody");
+      const previewForm = document.getElementById("previewForm");
+
+      let formFields = [];
+      let tableColumns = [];
+      let editingFieldIndex = null;
+      let editingColumnIndex = null;
+      let formData = [];
+
+      // Initialize drag and drop for form fields
+      initFormFieldsDragDrop();
+
+      // Initialize drag and drop for table columns
+      initTableColumnsDragDrop();
+
+      // Add column button event
+      document
+        .getElementById("addColumnBtn")
+        .addEventListener("click", function () {
+          editingColumnIndex = null;
+          document.getElementById("columnName").value = "";
+          document.getElementById("columnField").value = "";
+
+          // Populate form field options
+          populateFormFieldOptions();
+
+          // Show the modal
+          const columnModal = new bootstrap.Modal(
+            document.getElementById("columnModal")
+          );
+          columnModal.show();
+        });
+
+      // Save column button event
+      document
+        .getElementById("saveColumnBtn")
+        .addEventListener("click", function () {
+          const columnName = document
+            .getElementById("columnName")
+            .value.trim();
+          const fieldId = document.getElementById("columnField").value;
+
+          if (columnName === "") {
+            alert("Please enter a column name");
+            return;
+          }
+
+          const columnData = {
+            name: columnName,
+            fieldId: fieldId,
+          };
+
+          if (editingColumnIndex !== null) {
+            // Update existing column
+            tableColumns[editingColumnIndex] = columnData;
+          } else {
+            // Add new column
+            tableColumns.push(columnData);
+          }
+
+          // Update UI
+          renderTableColumns();
+          updatePreviewTable();
+
+          // Hide the modal
+          bootstrap.Modal.getInstance(
+            document.getElementById("columnModal")
+          ).hide();
+        });
+
+      // Save field button event
+      document
+        .getElementById("saveFieldBtn")
+        .addEventListener("click", function () {
+          const label = document.getElementById("fieldLabel").value.trim();
+          const name = document.getElementById("fieldName").value.trim();
+          const placeholder = document
+            .getElementById("fieldPlaceholder")
+            .value.trim();
+          const required = document.getElementById("fieldRequired").checked;
+          const pattern = document
+            .getElementById("validationPattern")
+            .value.trim();
+          const errorMsg = document
+            .getElementById("errorMessage")
+            .value.trim();
+
+          if (label === "" || name === "") {
+            alert("Please enter both label and name for the field");
+            return;
+          }
+
+          // Get field type from the editing field
+          const fieldType = formFields[editingFieldIndex].type;
+
+          // Create field data object
+          const fieldData = {
+            id:
+              editingFieldIndex !== null
+                ? formFields[editingFieldIndex].id
+                : "field_" + Date.now(),
             type: fieldType,
-            label: getDefaultLabel(fieldType),
-            name: getDefaultName(fieldType),
-            placeholder: "",
-            required: false,
+            label: label,
+            name: name,
+            placeholder: placeholder,
+            required: required,
             validation: {
-              pattern: "",
-              message: "",
+              pattern: pattern,
+              message: errorMsg,
             },
           };
 
-          // Add options for select, radio, checkbox
+          // Handle options for select, radio, checkbox
           if (["select", "radio", "checkbox"].includes(fieldType)) {
-            newField.options = [
-              { value: "option1", text: "Option 1" },
-              { value: "option2", text: "Option 2" },
-            ];
+            const optionElements = document.querySelectorAll(
+              "#optionsList .input-group"
+            );
+            const options = [];
+
+            optionElements.forEach((optionEl) => {
+              const value = optionEl
+                .querySelector(".option-value")
+                .value.trim();
+              const text = optionEl
+                .querySelector(".option-text")
+                .value.trim();
+
+              if (value && text) {
+                options.push({ value, text });
+              }
+            });
+
+            if (options.length > 0) {
+              fieldData.options = options;
+            }
           }
 
-          // Add to form fields array
-          const fieldIndex = formFields.length;
-          formFields.push(newField);
+          // Handle date validation with simplified approach
+          if (fieldType === "date") {
+            const dateConstraintType = document.querySelector(
+              'input[name="dateConstraintType"]:checked'
+            ).value;
+            const dateErrorMessage = document
+              .getElementById("dateErrorMessage")
+              .value.trim();
 
-          // Create field element
-          const fieldElement = createFieldElement(newField, fieldIndex);
+            if (dateConstraintType !== "none") {
+              const dateValidation = {
+                errorMessage: dateErrorMessage,
+              };
 
-          // Add to form builder
-          formBuilder.appendChild(fieldElement);
+              switch (dateConstraintType) {
+                case "beforeToday":
+                  dateValidation.beforeToday = true;
+                  break;
+                case "afterToday":
+                  dateValidation.afterToday = true;
+                  break;
+                case "beforeYears":
+                  dateValidation.beforeYears =
+                    parseInt(document.getElementById("beforeYears").value) ||
+                    1;
+                  break;
+                case "afterYears":
+                  dateValidation.afterYears =
+                    parseInt(document.getElementById("afterYears").value) ||
+                    1;
+                  break;
+              }
 
-          // Remove the "drag here" message if it exists
-          const dragHereMessage = formBuilder.querySelector(".alert-info");
-          if (dragHereMessage) {
-            dragHereMessage.remove();
+              fieldData.dateValidation = dateValidation;
+            }
+          }
+
+          // Handle readonly field source selection
+          if (fieldType === "readonly") {
+            const sourceFieldId = document.getElementById(
+              "readonlySourceField"
+            ).value;
+            if (sourceFieldId) {
+              fieldData.sourceFieldId = sourceFieldId;
+            } else {
+              alert("Please select a source field for the readonly field");
+              return;
+            }
+          }
+
+          // Update or add field
+          if (editingFieldIndex !== null) {
+            formFields[editingFieldIndex] = fieldData;
+
+            // Update the field UI
+            const fieldElement = document.querySelector(
+              `.form-field[data-field-index="${editingFieldIndex}"]`
+            );
+            updateFieldElement(fieldElement, fieldData, editingFieldIndex);
           }
 
           // Update preview
           renderPreviewForm();
           updateColumnFieldOptions();
+
+          // Close modal - ensure we're properly closing it
+          const fieldModal = bootstrap.Modal.getInstance(
+            document.getElementById("fieldModal")
+          );
+          if (fieldModal) {
+            fieldModal.hide();
+          } else {
+            // Fallback if we can't get the instance
+            $("#fieldModal").modal("hide");
+          }
+        });
+
+      // Submit preview form
+      document
+        .getElementById("submitPreview")
+        .addEventListener("click", function () {
+          const formValid = validatePreviewForm();
+
+          if (formValid) {
+            // Collect data from the preview form
+            const newRow = collectFormData();
+
+            // Add to form data array
+            formData.push(newRow);
+
+            // Update the data table
+            renderDataTable();
+
+            // Reset the form
+            document.getElementById("previewForm").reset();
+          }
+        });
+
+      // Event handlers for date validation
+      document
+        .getElementById("beforeYearsConstraint")
+        .addEventListener("change", function () {
+          document.getElementById("beforeYearsContainer").style.display = this
+            .checked
+            ? "flex"
+            : "none";
+        });
+
+      document
+        .getElementById("afterYearsConstraint")
+        .addEventListener("change", function () {
+          document.getElementById("afterYearsContainer").style.display = this
+            .checked
+            ? "flex"
+            : "none";
+        });
+
+      // Remove the old event handlers for minDateCheck and maxDateCheck since they no longer exist
+
+      // Add option button event
+      document
+        .getElementById("addOptionBtn")
+        .addEventListener("click", function () {
+          addOptionRow();
+        });
+
+      // Initialize code highlighting
+      hljs.highlightAll();
+
+      // Export form code button event
+      document
+        .getElementById("exportFormCodeBtn")
+        .addEventListener("click", function () {
+          generateFormCode();
+          const formCodeModal = new bootstrap.Modal(
+            document.getElementById("exportFormCodeModal")
+          );
+          formCodeModal.show();
+        });
+
+      // Export table code button event
+      document
+        .getElementById("exportTableCodeBtn")
+        .addEventListener("click", function () {
+          generateTableCode();
+          const tableCodeModal = new bootstrap.Modal(
+            document.getElementById("exportTableCodeModal")
+          );
+          tableCodeModal.show();
+        });
+
+      // Copy buttons events - Fix incorrect references and add proper error handling
+      document
+        .getElementById("copyModalHtml")
+        .addEventListener("click", function () {
+          copyToClipboard("modalHtmlCode");
+        });
+
+      document
+        .getElementById("copyJQueryJs")
+        .addEventListener("click", function () {
+          copyToClipboard("jqueryJsCode");
+        });
+
+      document
+        .getElementById("copyTableHtml")
+        .addEventListener("click", function () {
+          copyToClipboard("tableHtmlCode");
+        });
+
+      document
+        .getElementById("copyTableJs")
+        .addEventListener("click", function () {
+          copyToClipboard("tableJsCode");
+        });
+
+      // Remove incorrect references to non-existent elements
+      // document
+      //   .getElementById("copyFormHtml")
+      //   .addEventListener("click", function () {
+      //     copyToClipboard("formHtmlCode");
+      //   });
+
+      // document
+      //   .getElementById("copyFormJs")
+      //   .addEventListener("click", function () {
+      //     copyToClipboard("formJsCode");
+      //   });
+
+      // document
+      //   .getElementById("copyFormModal")
+      //   .addEventListener("click", function () {
+      //     copyToClipboard("formModalCode");
+      //   });
+
+      // Helper Functions
+
+      function initFormFieldsDragDrop() {
+        // Make palette items draggable
+        const fieldItems = document.querySelectorAll(".field-item");
+
+        fieldItems.forEach((item) => {
+          item.addEventListener("dragstart", function (e) {
+            e.dataTransfer.setData(
+              "text/plain",
+              this.getAttribute("data-field-type")
+            );
+            e.dataTransfer.effectAllowed = "copy";
+          });
+        });
+
+        // Enable form builder as drop target
+        formBuilder.addEventListener("dragover", function (e) {
+          e.preventDefault();
+          e.dataTransfer.dropEffect = "copy";
+          this.classList.add("highlight-drop");
+        });
+
+        formBuilder.addEventListener("dragleave", function () {
+          this.classList.remove("highlight-drop");
+        });
+
+        formBuilder.addEventListener("drop", function (e) {
+          e.preventDefault();
+          this.classList.remove("highlight-drop");
+
+          // Get the field type
+          const fieldType = e.dataTransfer.getData("text/plain");
+
+          // Add field to the form builder
+          addFieldToBuilder(fieldType);
+        });
+      }
+
+      function initTableColumnsDragDrop() {
+        // Enable column list as sortable
+        columnList.addEventListener("dragover", function (e) {
+          e.preventDefault();
+          e.dataTransfer.dropEffect = "move";
+
+          const target = getColumnDropTarget(e.clientX);
+
+          // Reset all highlights
+          document.querySelectorAll(".table-column").forEach((col) => {
+            col.classList.remove("highlight-drop");
+          });
+
+          if (target) {
+            target.classList.add("highlight-drop");
+          }
+        });
+
+        columnList.addEventListener("drop", function (e) {
+          e.preventDefault();
+
+          // Reset all highlights
+          document.querySelectorAll(".table-column").forEach((col) => {
+            col.classList.remove("highlight-drop");
+          });
+
+          const sourceIndex = parseInt(e.dataTransfer.getData("text/plain"));
+          const targetColumn = getColumnDropTarget(e.clientX);
+
+          if (targetColumn) {
+            const targetIndex = parseInt(
+              targetColumn.getAttribute("data-column-index")
+            );
+
+            if (sourceIndex !== targetIndex) {
+              // Reorder columns
+              moveArrayElement(tableColumns, sourceIndex, targetIndex);
+              renderTableColumns();
+              updatePreviewTable();
+            }
+          }
+        });
+      }
+
+      function getColumnDropTarget(clientX) {
+        const columns = document.querySelectorAll(".table-column");
+        let targetColumn = null;
+
+        columns.forEach((column) => {
+          const rect = column.getBoundingClientRect();
+          const midX = rect.left + rect.width / 2;
+
+          if (clientX < midX) {
+            if (!targetColumn) {
+              targetColumn = column;
+            }
+          } else if (!targetColumn && clientX < rect.right) {
+            targetColumn = column;
+          }
+        });
+
+        return targetColumn;
+      }
+
+      function moveArrayElement(array, fromIndex, toIndex) {
+        const element = array.splice(fromIndex, 1)[0];
+        array.splice(toIndex, 0, element);
+      }
+
+      function addFieldToBuilder(fieldType) {
+        // Create a new field object
+        const newField = {
+          id: "field_" + Date.now(),
+          type: fieldType,
+          label: getDefaultLabel(fieldType),
+          name: getDefaultName(fieldType),
+          placeholder: "",
+          required: false,
+          validation: {
+            pattern: "",
+            message: "",
+          },
+        };
+
+        // Add options for select, radio, checkbox
+        if (["select", "radio", "checkbox"].includes(fieldType)) {
+          newField.options = [
+            { value: "option1", text: "Option 1" },
+            { value: "option2", text: "Option 2" },
+          ];
         }
 
-        function createFieldElement(field, index) {
-          const fieldElement = document.createElement("div");
-          fieldElement.className = "form-field";
-          fieldElement.setAttribute("data-field-index", index);
+        // Add to form fields array
+        const fieldIndex = formFields.length;
+        formFields.push(newField);
 
-          // Add field info
-          updateFieldElement(fieldElement, field, index);
+        // Create field element
+        const fieldElement = createFieldElement(newField, fieldIndex);
 
-          return fieldElement;
+        // Add to form builder
+        formBuilder.appendChild(fieldElement);
+
+        // Remove the "drag here" message if it exists
+        const dragHereMessage = formBuilder.querySelector(".alert-info");
+        if (dragHereMessage) {
+          dragHereMessage.remove();
         }
 
-        function updateFieldElement(element, field, index) {
-          element.innerHTML = `
+        // Update preview
+        renderPreviewForm();
+        updateColumnFieldOptions();
+      }
+
+      function createFieldElement(field, index) {
+        const fieldElement = document.createElement("div");
+        fieldElement.className = "form-field";
+        fieldElement.setAttribute("data-field-index", index);
+
+        // Add field info
+        updateFieldElement(fieldElement, field, index);
+
+        return fieldElement;
+      }
+
+      function updateFieldElement(element, field, index) {
+        element.innerHTML = `
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="field-move">
                             <i class="fas fa-grip-lines me-2"></i>
@@ -1394,166 +1099,166 @@
                     </div>
                 `;
 
-          // Make the field movable
-          element.setAttribute("draggable", "true");
+        // Make the field movable
+        element.setAttribute("draggable", "true");
 
-          // Set up field reordering with drag and drop
-          element.addEventListener("dragstart", function (e) {
-            e.dataTransfer.setData("text/plain", index);
-            e.dataTransfer.effectAllowed = "move";
+        // Set up field reordering with drag and drop
+        element.addEventListener("dragstart", function (e) {
+          e.dataTransfer.setData("text/plain", index);
+          e.dataTransfer.effectAllowed = "move";
+        });
+
+        // Setup edit button
+        element
+          .querySelector(".edit-field")
+          .addEventListener("click", function () {
+            editField(index);
           });
 
-          // Setup edit button
-          element
-            .querySelector(".edit-field")
-            .addEventListener("click", function () {
-              editField(index);
-            });
+        // Setup remove button
+        element
+          .querySelector(".remove-field")
+          .addEventListener("click", function () {
+            removeField(index);
+          });
 
-          // Setup remove button
-          element
-            .querySelector(".remove-field")
-            .addEventListener("click", function () {
-              removeField(index);
-            });
+        return element;
+      }
 
-          return element;
+      function editField(index) {
+        editingFieldIndex = index;
+        const field = formFields[index];
+
+        // Populate modal with field data
+        document.getElementById("fieldLabel").value = field.label;
+        document.getElementById("fieldName").value = field.name;
+        document.getElementById("fieldPlaceholder").value =
+          field.placeholder || "";
+        document.getElementById("fieldRequired").checked = field.required;
+        document.getElementById("validationPattern").value =
+          field.validation?.pattern || "";
+        document.getElementById("errorMessage").value =
+          field.validation?.message || "";
+
+        // Handle options for select, radio, checkbox
+        const optionsContainer = document.getElementById("optionsContainer");
+        const optionsList = document.getElementById("optionsList");
+
+        // Reset options list
+        optionsList.innerHTML = "";
+
+        if (["select", "radio", "checkbox"].includes(field.type)) {
+          optionsContainer.style.display = "block";
+
+          if (field.options && field.options.length > 0) {
+            field.options.forEach((option) => {
+              addOptionRow(option.value, option.text);
+            });
+          } else {
+            // Add at least one empty option
+            addOptionRow();
+          }
+        } else {
+          optionsContainer.style.display = "none";
         }
 
-        function editField(index) {
-          editingFieldIndex = index;
-          const field = formFields[index];
+        // Handle date validation
+        const dateValidationContainer = document.getElementById(
+          "dateValidationContainer"
+        );
 
-          // Populate modal with field data
-          document.getElementById("fieldLabel").value = field.label;
-          document.getElementById("fieldName").value = field.name;
-          document.getElementById("fieldPlaceholder").value =
-            field.placeholder || "";
-          document.getElementById("fieldRequired").checked = field.required;
-          document.getElementById("validationPattern").value =
-            field.validation?.pattern || "";
-          document.getElementById("errorMessage").value =
-            field.validation?.message || "";
+        if (field.type === "date") {
+          dateValidationContainer.style.display = "block";
 
-          // Handle options for select, radio, checkbox
-          const optionsContainer = document.getElementById("optionsContainer");
-          const optionsList = document.getElementById("optionsList");
+          // Reset all date validation radio buttons
+          document.getElementById("noDateConstraint").checked = true;
+          document.getElementById("beforeYearsContainer").style.display =
+            "none";
+          document.getElementById("afterYearsContainer").style.display =
+            "none";
+          document.getElementById("beforeYears").value = "1";
+          document.getElementById("afterYears").value = "1";
+          document.getElementById("dateErrorMessage").value = "";
 
-          // Reset options list
-          optionsList.innerHTML = "";
-
-          if (["select", "radio", "checkbox"].includes(field.type)) {
-            optionsContainer.style.display = "block";
-
-            if (field.options && field.options.length > 0) {
-              field.options.forEach((option) => {
-                addOptionRow(option.value, option.text);
-              });
-            } else {
-              // Add at least one empty option
-              addOptionRow();
+          // Set date validation values if they exist
+          if (field.dateValidation) {
+            if (field.dateValidation.beforeToday) {
+              document.getElementById("beforeTodayConstraint").checked = true;
+              document.getElementById("dateErrorMessage").value =
+                field.dateValidation.errorMessage || "";
+            } else if (
+              field.dateValidation.afterToday &&
+              selectedDate < today
+            ) {
+              document.getElementById("afterTodayConstraint").checked = true;
+              document.getElementById("dateErrorMessage").value =
+                field.dateValidation.errorMessage || "";
+            } else if (field.dateValidation.beforeYears !== undefined) {
+              document.getElementById("beforeYearsConstraint").checked = true;
+              document.getElementById("beforeYearsContainer").style.display =
+                "flex";
+              document.getElementById("beforeYears").value =
+                field.dateValidation.beforeYears;
+              document.getElementById("dateErrorMessage").value =
+                field.dateValidation.errorMessage || "";
+            } else if (field.dateValidation.afterYears !== undefined) {
+              document.getElementById("afterYearsConstraint").checked = true;
+              document.getElementById("afterYearsContainer").style.display =
+                "flex";
+              document.getElementById("afterYears").value =
+                field.dateValidation.afterYears;
+              document.getElementById("dateErrorMessage").value =
+                field.dateValidation.errorMessage || "";
             }
-          } else {
-            optionsContainer.style.display = "none";
           }
-
-          // Handle date validation
-          const dateValidationContainer = document.getElementById(
-            "dateValidationContainer"
-          );
-
-          if (field.type === "date") {
-            dateValidationContainer.style.display = "block";
-
-            // Reset all date validation radio buttons
-            document.getElementById("noDateConstraint").checked = true;
-            document.getElementById("beforeYearsContainer").style.display =
-              "none";
-            document.getElementById("afterYearsContainer").style.display =
-              "none";
-            document.getElementById("beforeYears").value = "1";
-            document.getElementById("afterYears").value = "1";
-            document.getElementById("dateErrorMessage").value = "";
-
-            // Set date validation values if they exist
-            if (field.dateValidation) {
-              if (field.dateValidation.beforeToday) {
-                document.getElementById("beforeTodayConstraint").checked = true;
-                document.getElementById("dateErrorMessage").value =
-                  field.dateValidation.errorMessage || "";
-              } else if (
-                field.dateValidation.afterToday &&
-                selectedDate < today
-              ) {
-                document.getElementById("afterTodayConstraint").checked = true;
-                document.getElementById("dateErrorMessage").value =
-                  field.dateValidation.errorMessage || "";
-              } else if (field.dateValidation.beforeYears !== undefined) {
-                document.getElementById("beforeYearsConstraint").checked = true;
-                document.getElementById("beforeYearsContainer").style.display =
-                  "flex";
-                document.getElementById("beforeYears").value =
-                  field.dateValidation.beforeYears;
-                document.getElementById("dateErrorMessage").value =
-                  field.dateValidation.errorMessage || "";
-              } else if (field.dateValidation.afterYears !== undefined) {
-                document.getElementById("afterYearsConstraint").checked = true;
-                document.getElementById("afterYearsContainer").style.display =
-                  "flex";
-                document.getElementById("afterYears").value =
-                  field.dateValidation.afterYears;
-                document.getElementById("dateErrorMessage").value =
-                  field.dateValidation.errorMessage || "";
-              }
-            }
-          } else {
-            dateValidationContainer.style.display = "none";
-          }
-
-          // Handle readonly field source selection
-          const readonlySourceContainer = document.getElementById(
-            "readonlySourceContainer"
-          );
-          const readonlySourceField = document.getElementById(
-            "readonlySourceField"
-          );
-
-          if (field.type === "readonly") {
-            readonlySourceContainer.style.display = "block";
-
-            // Populate source field options
-            readonlySourceField.innerHTML =
-              '<option value="">Choose the select field to display...</option>';
-            formFields.forEach((f) => {
-              if (f.type === "select") {
-                const option = document.createElement("option");
-                option.value = f.id;
-                option.textContent = f.label;
-                readonlySourceField.appendChild(option);
-              }
-            });
-
-            // Set the selected source field if it exists
-            if (field.sourceFieldId) {
-              readonlySourceField.value = field.sourceFieldId;
-            }
-          } else {
-            readonlySourceContainer.style.display = "none";
-          }
-
-          // Show the modal
-          const fieldModal = new bootstrap.Modal(
-            document.getElementById("fieldModal")
-          );
-          fieldModal.show();
+        } else {
+          dateValidationContainer.style.display = "none";
         }
 
-        function addOptionRow(value = "", text = "") {
-          const optionsList = document.getElementById("optionsList");
+        // Handle readonly field source selection
+        const readonlySourceContainer = document.getElementById(
+          "readonlySourceContainer"
+        );
+        const readonlySourceField = document.getElementById(
+          "readonlySourceField"
+        );
 
-          const optionRow = document.createElement("div");
-          optionRow.className = "mb-2 input-group";
-          optionRow.innerHTML = `
+        if (field.type === "readonly") {
+          readonlySourceContainer.style.display = "block";
+
+          // Populate source field options
+          readonlySourceField.innerHTML =
+            '<option value="">Choose the select field to display...</option>';
+          formFields.forEach((f) => {
+            if (f.type === "select") {
+              const option = document.createElement("option");
+              option.value = f.id;
+              option.textContent = f.label;
+              readonlySourceField.appendChild(option);
+            }
+          });
+
+          // Set the selected source field if it exists
+          if (field.sourceFieldId) {
+            readonlySourceField.value = field.sourceFieldId;
+          }
+        } else {
+          readonlySourceContainer.style.display = "none";
+        }
+
+        // Show the modal
+        const fieldModal = new bootstrap.Modal(
+          document.getElementById("fieldModal")
+        );
+        fieldModal.show();
+      }
+
+      function addOptionRow(value = "", text = "") {
+        const optionsList = document.getElementById("optionsList");
+
+        const optionRow = document.createElement("div");
+        optionRow.className = "mb-2 input-group";
+        optionRow.innerHTML = `
                     <input type="text" class="form-control option-value" value="${value}" placeholder="Option value">
                     <input type="text" class="form-control option-text" value="${text}" placeholder="Option text">
                     <button type="button" class="btn btn-danger remove-option">
@@ -1561,140 +1266,140 @@
                     </button>
                 `;
 
-          optionsList.appendChild(optionRow);
+        optionsList.appendChild(optionRow);
 
-          // Setup remove button
-          optionRow
-            .querySelector(".remove-option")
-            .addEventListener("click", function () {
-              optionRow.remove();
-            });
+        // Setup remove button
+        optionRow
+          .querySelector(".remove-option")
+          .addEventListener("click", function () {
+            optionRow.remove();
+          });
+      }
+
+      function removeField(index) {
+        if (confirm("Are you sure you want to remove this field?")) {
+          // Remove field from the array
+          formFields.splice(index, 1);
+
+          // Re-render form builder
+          renderFormBuilder();
+
+          // Update preview
+          renderPreviewForm();
+          updateColumnFieldOptions();
+
+          // Update any table columns mapped to this field
+          tableColumns.forEach((column) => {
+            if (column.fieldId === formFields[index]?.id) {
+              column.fieldId = "";
+            }
+          });
         }
+      }
 
-        function removeField(index) {
-          if (confirm("Are you sure you want to remove this field?")) {
-            // Remove field from the array
-            formFields.splice(index, 1);
+      function renderFormBuilder() {
+        // Clear form builder
+        formBuilder.innerHTML = "";
 
-            // Re-render form builder
-            renderFormBuilder();
-
-            // Update preview
-            renderPreviewForm();
-            updateColumnFieldOptions();
-
-            // Update any table columns mapped to this field
-            tableColumns.forEach((column) => {
-              if (column.fieldId === formFields[index]?.id) {
-                column.fieldId = "";
-              }
-            });
-          }
-        }
-
-        function renderFormBuilder() {
-          // Clear form builder
-          formBuilder.innerHTML = "";
-
-          if (formFields.length === 0) {
-            formBuilder.innerHTML = `
+        if (formFields.length === 0) {
+          formBuilder.innerHTML = `
                         <div class="alert alert-info">
                             <i class="fas fa-info-circle me-2"></i> Drag and drop form fields here
                         </div>
                     `;
-            return;
+          return;
+        }
+
+        // Add each field
+        formFields.forEach((field, index) => {
+          const fieldElement = createFieldElement(field, index);
+          formBuilder.appendChild(fieldElement);
+        });
+
+        // Make the form builder a drop target for reordering fields
+        setupFormBuilderDropTarget();
+      }
+
+      function setupFormBuilderDropTarget() {
+        formBuilder.addEventListener("dragover", function (e) {
+          e.preventDefault();
+          e.dataTransfer.dropEffect = "move";
+
+          const target = getFieldDropTarget(e.clientY);
+
+          // Reset all highlights
+          document.querySelectorAll(".form-field").forEach((field) => {
+            field.classList.remove("highlight-drop");
+          });
+
+          if (target) {
+            target.classList.add("highlight-drop");
           }
+        });
 
-          // Add each field
-          formFields.forEach((field, index) => {
-            const fieldElement = createFieldElement(field, index);
-            formBuilder.appendChild(fieldElement);
+        formBuilder.addEventListener("drop", function (e) {
+          e.preventDefault();
+
+          // Reset all highlights
+          document.querySelectorAll(".form-field").forEach((field) => {
+            field.classList.remove("highlight-drop");
           });
 
-          // Make the form builder a drop target for reordering fields
-          setupFormBuilderDropTarget();
-        }
+          const sourceIndexStr = e.dataTransfer.getData("text/plain");
 
-        function setupFormBuilderDropTarget() {
-          formBuilder.addEventListener("dragover", function (e) {
-            e.preventDefault();
-            e.dataTransfer.dropEffect = "move";
+          // Check if this is a field from palette or reordering
+          if (sourceIndexStr.length > 0 && !isNaN(parseInt(sourceIndexStr))) {
+            const sourceIndex = parseInt(sourceIndexStr);
+            const targetField = getFieldDropTarget(e.clientY);
 
-            const target = getFieldDropTarget(e.clientY);
+            if (targetField) {
+              const targetIndex = parseInt(
+                targetField.getAttribute("data-field-index")
+              );
 
-            // Reset all highlights
-            document.querySelectorAll(".form-field").forEach((field) => {
-              field.classList.remove("highlight-drop");
-            });
-
-            if (target) {
-              target.classList.add("highlight-drop");
-            }
-          });
-
-          formBuilder.addEventListener("drop", function (e) {
-            e.preventDefault();
-
-            // Reset all highlights
-            document.querySelectorAll(".form-field").forEach((field) => {
-              field.classList.remove("highlight-drop");
-            });
-
-            const sourceIndexStr = e.dataTransfer.getData("text/plain");
-
-            // Check if this is a field from palette or reordering
-            if (sourceIndexStr.length > 0 && !isNaN(parseInt(sourceIndexStr))) {
-              const sourceIndex = parseInt(sourceIndexStr);
-              const targetField = getFieldDropTarget(e.clientY);
-
-              if (targetField) {
-                const targetIndex = parseInt(
-                  targetField.getAttribute("data-field-index")
-                );
-
-                if (sourceIndex !== targetIndex) {
-                  // Reorder fields
-                  moveArrayElement(formFields, sourceIndex, targetIndex);
-                  renderFormBuilder();
-                  renderPreviewForm();
-                }
+              if (sourceIndex !== targetIndex) {
+                // Reorder fields
+                moveArrayElement(formFields, sourceIndex, targetIndex);
+                renderFormBuilder();
+                renderPreviewForm();
               }
             }
-          });
-        }
+          }
+        });
+      }
 
-        function getFieldDropTarget(clientY) {
-          const fields = document.querySelectorAll(".form-field");
-          let targetField = null;
+      function getFieldDropTarget(clientY) {
+        const fields = document.querySelectorAll(".form-field");
+        let targetField = null;
 
-          fields.forEach((field) => {
-            const rect = field.getBoundingClientRect();
-            const midY = rect.top + rect.height / 2;
+        fields.forEach((field) => {
+          const rect = field.getBoundingClientRect();
+          const midY = rect.top + rect.height / 2;
 
-            if (clientY < midY) {
-              if (!targetField) {
-                targetField = field;
-              }
-            } else if (!targetField && clientY < rect.bottom) {
+          if (clientY < midY) {
+            if (!targetField) {
               targetField = field;
             }
-          });
+          } else if (!targetField && clientY < rect.bottom) {
+            targetField = field;
+          }
+        });
 
-          return targetField;
-        }
+        return targetField;
+      }
 
-        function renderTableColumns() {
-          columnList.innerHTML = "";
-          tableHeaderRow.innerHTML = "";
-          dataTableHeaderRow.innerHTML = "";
+      function renderTableColumns() {
+        columnList.innerHTML = "";
+        tableHeaderRow.innerHTML = "";
+        dataTableHeaderRow.innerHTML = "";
 
-          tableColumns.forEach((column, index) => {
-            // Add to column list
-            const columnElement = document.createElement("div");
-            columnElement.className = "table-column";
-            columnElement.setAttribute("draggable", "true");
-            columnElement.setAttribute("data-column-index", index);
-            columnElement.innerHTML = `
+        tableColumns.forEach((column, index) => {
+          // Add to column list
+          const columnElement = document.createElement("div");
+          columnElement.className = "table-column";
+          columnElement.setAttribute("draggable", "true");
+          columnElement.setAttribute("data-column-index", index);
+          columnElement.innerHTML = `
                         <span>${column.name}</span>
                         <div class="btn-group btn-group-sm ms-2">
                             <button type="button" class="btn btn-outline-secondary edit-column">
@@ -1706,690 +1411,697 @@
                         </div>
                     `;
 
-            // Setup drag and drop for reordering
-            columnElement.addEventListener("dragstart", function (e) {
-              e.dataTransfer.setData("text/plain", index);
-              e.dataTransfer.effectAllowed = "move";
+          // Setup drag and drop for reordering
+          columnElement.addEventListener("dragstart", function (e) {
+            e.dataTransfer.setData("text/plain", index);
+            e.dataTransfer.effectAllowed = "move";
+          });
+
+          // Setup edit button
+          columnElement
+            .querySelector(".edit-column")
+            .addEventListener("click", function () {
+              editColumn(index);
             });
 
-            // Setup edit button
-            columnElement
-              .querySelector(".edit-column")
-              .addEventListener("click", function () {
-                editColumn(index);
-              });
+          // Setup remove button
+          columnElement
+            .querySelector(".remove-column")
+            .addEventListener("click", function () {
+              removeColumn(index);
+            });
 
-            // Setup remove button
-            columnElement
-              .querySelector(".remove-column")
-              .addEventListener("click", function () {
-                removeColumn(index);
-              });
+          columnList.appendChild(columnElement);
 
-            columnList.appendChild(columnElement);
+          // Add to table header
+          const headerCell = document.createElement("th");
+          headerCell.textContent = column.name;
+          tableHeaderRow.appendChild(headerCell);
 
-            // Add to table header
-            const headerCell = document.createElement("th");
-            headerCell.textContent = column.name;
-            tableHeaderRow.appendChild(headerCell);
+          // Add to data table header
+          const dataHeaderCell = document.createElement("th");
+          dataHeaderCell.textContent = column.name;
+          dataTableHeaderRow.appendChild(dataHeaderCell);
+        });
+      }
 
-            // Add to data table header
-            const dataHeaderCell = document.createElement("th");
-            dataHeaderCell.textContent = column.name;
-            dataTableHeaderRow.appendChild(dataHeaderCell);
-          });
+      function editColumn(index) {
+        editingColumnIndex = index;
+        const column = tableColumns[index];
+
+        document.getElementById("columnName").value = column.name;
+        document.getElementById("columnField").value = column.fieldId;
+
+        // Populate form field options
+        populateFormFieldOptions();
+
+        // Show the modal
+        const columnModal = new bootstrap.Modal(
+          document.getElementById("columnModal")
+        );
+        columnModal.show();
+      }
+
+      function removeColumn(index) {
+        if (confirm("Are you sure you want to remove this column?")) {
+          tableColumns.splice(index, 1);
+          renderTableColumns();
+          updatePreviewTable();
         }
+      }
 
-        function editColumn(index) {
-          editingColumnIndex = index;
-          const column = tableColumns[index];
+      function populateFormFieldOptions() {
+        const columnField = document.getElementById("columnField");
+        columnField.innerHTML =
+          '<option value="">Choose a form field...</option>';
 
-          document.getElementById("columnName").value = column.name;
-          document.getElementById("columnField").value = column.fieldId;
+        formFields.forEach((field) => {
+          const option = document.createElement("option");
+          option.value = field.id;
+          option.textContent = field.label;
+          columnField.appendChild(option);
+        });
+      }
 
-          // Populate form field options
-          populateFormFieldOptions();
+      function updateColumnFieldOptions() {
+        populateFormFieldOptions();
+      }
 
-          // Show the modal
-          const columnModal = new bootstrap.Modal(
-            document.getElementById("columnModal")
-          );
-          columnModal.show();
-        }
+      function updatePreviewTable() {
+        // Update the preview table headers
+        renderDataTable();
+      }
 
-        function removeColumn(index) {
-          if (confirm("Are you sure you want to remove this column?")) {
-            tableColumns.splice(index, 1);
-            renderTableColumns();
-            updatePreviewTable();
-          }
-        }
+      function renderPreviewForm() {
+        previewForm.innerHTML = "";
 
-        function populateFormFieldOptions() {
-          const columnField = document.getElementById("columnField");
-          columnField.innerHTML =
-            '<option value="">Choose a form field...</option>';
+        formFields.forEach((field) => {
+          const fieldContainer = document.createElement("div");
+          fieldContainer.className = "mb-3";
 
-          formFields.forEach((field) => {
-            const option = document.createElement("option");
-            option.value = field.id;
-            option.textContent = field.label;
-            columnField.appendChild(option);
-          });
-        }
+          let fieldHtml = "";
 
-        function updateColumnFieldOptions() {
-          populateFormFieldOptions();
-        }
+          // Field label - Remove asterisk from label
+          fieldHtml += `<label for="preview_${field.id}" class="form-label">${field.label}</label>`;
 
-        function updatePreviewTable() {
-          // Update the preview table headers
-          renderDataTable();
-        }
-
-        function renderPreviewForm() {
-          previewForm.innerHTML = "";
-
-          formFields.forEach((field) => {
-            const fieldContainer = document.createElement("div");
-            fieldContainer.className = "mb-3";
-
-            let fieldHtml = "";
-
-            // Field label - Remove asterisk from label
-            fieldHtml += `<label for="preview_${field.id}" class="form-label">${field.label}</label>`;
-
-            // Field input based on type
-            switch (field.type) {
-              case "text":
-              case "email":
-              case "number":
-              case "tel":
-                fieldHtml += `
-                                <input type="${
-                                  field.type
-                                }" class="form-control" id="preview_${
-                  field.id
+          // Field input based on type
+          switch (field.type) {
+            case "text":
+            case "email":
+            case "number":
+            case "tel":
+              fieldHtml += `
+                                <input type="${field.type
+                }" class="form-control" id="preview_${field.id
                 }" name="${field.name}" 
-                                    placeholder="${field.placeholder}" ${
-                  field.required ? "required" : ""
+                                    placeholder="${field.placeholder}" ${field.required ? "required" : ""
                 }>
-                                <div class="invalid-feedback">${
-                                  field.validation?.message ||
-                                  "This field is required"
-                                }</div>
-                                ${
-                                  field.required
-                                    ? '<div class="text-danger small mt-1">*</div>'
-                                    : ""
-                                }
-                            `;
-                break;
-
-              case "date":
-                fieldHtml += `
-                                <input type="date" class="form-control" id="preview_${
-                                  field.id
-                                }" name="${field.name}" 
-                                    ${field.required ? "required" : ""}>
-                                <div class="invalid-feedback">${
-                                  field.dateValidation?.errorMessage ||
-                                  field.validation?.message ||
-                                  "Please select a valid date"
-                                }</div>
-                                ${
-                                  field.required
-                                    ? '<div class="text-danger small mt-1">*</div>'
-                                    : ""
-                                }
-                            `;
-                break;
-
-              case "select":
-                fieldHtml += `
-                                <select class="form-select" id="preview_${
-                                  field.id
-                                }" name="${field.name}"${
-                  field.required ? " required" : ""
-                }>
-                                    <option value="" ${
-                                      !field.required ? "selected" : ""
-                                    }>Choose...</option>
-                            `;
-
-                if (field.options && field.options.length > 0) {
-                  field.options.forEach((option) => {
-                    fieldHtml += `<option value="${option.value}">${option.text}</option>`;
-                  });
+                                <div class="invalid-feedback">${field.validation?.message ||
+                "This field is required"
+                }</div>
+                                ${field.required
+                  ? '<div class="text-danger small mt-1">*</div>'
+                  : ""
                 }
+                            `;
+              break;
 
-                fieldHtml += `
+            case "date":
+              fieldHtml += `
+                                <input type="date" class="form-control" id="preview_${field.id
+                }" name="${field.name}" 
+                                    ${field.required ? "required" : ""}>
+                                <div class="invalid-feedback">${field.dateValidation?.errorMessage ||
+                field.validation?.message ||
+                "Please select a valid date"
+                }</div>
+                                ${field.required
+                  ? '<div class="text-danger small mt-1">*</div>'
+                  : ""
+                }
+                            `;
+              break;
+
+            case "select":
+              fieldHtml += `
+                                <select class="form-select" id="preview_${field.id
+                }" name="${field.name}"${field.required ? " required" : ""
+                }>
+                                    <option value="" ${!field.required ? "selected" : ""
+                }>Choose...</option>
+                            `;
+
+              if (field.options && field.options.length > 0) {
+                field.options.forEach((option) => {
+                  fieldHtml += `<option value="${option.value}">${option.text}</option>`;
+                });
+              }
+
+              fieldHtml += `
                                 </select>
                                 <div class="invalid-feedback">Please select an option</div>
-                                ${
-                                  field.required
-                                    ? '<div class="text-danger small mt-1">*</div>'
-                                    : ""
-                                }
+                                ${field.required
+                  ? '<div class="text-danger small mt-1">*</div>'
+                  : ""
+                }
                             `;
-                break;
+              break;
 
-              case "radio":
-                if (field.options && field.options.length > 0) {
-                  field.options.forEach((option, i) => {
-                    fieldHtml += `
+            case "radio":
+              if (field.options && field.options.length > 0) {
+                field.options.forEach((option, i) => {
+                  fieldHtml += `
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="${
-                                          field.name
-                                        }" 
-                                            id="preview_${
-                                              field.id
-                                            }_${i}" value="${option.value}" ${
-                      i === 0 && field.required ? "checked" : ""
+                                        <input class="form-check-input" type="radio" name="${field.name
+                    }" 
+                                            id="preview_${field.id
+                    }_${i}" value="${option.value}" ${i === 0 && field.required ? "checked" : ""
                     }>
-                                        <label class="form-check-label" for="preview_${
-                                          field.id
-                                        }_${i}">${option.text}</label>
+                                        <label class="form-check-label" for="preview_${field.id
+                    }_${i}">${option.text}</label>
                                     </div>
                                 `;
-                  });
-                }
+                });
+              }
 
-                fieldHtml += `<div class="invalid-feedback">Please select an option</div>
-                             ${
-                               field.required
-                                 ? '<div class="text-danger small mt-1">*</div>'
-                                 : ""
-                             }`;
-                break;
+              fieldHtml += `<div class="invalid-feedback">Please select an option</div>
+                             ${field.required
+                  ? '<div class="text-danger small mt-1">*</div>'
+                  : ""
+                }`;
+              break;
 
-              case "checkbox":
-                if (field.options && field.options.length > 0) {
-                  field.options.forEach((option, i) => {
-                    fieldHtml += `
+            case "checkbox":
+              if (field.options && field.options.length > 0) {
+                field.options.forEach((option, i) => {
+                  fieldHtml += `
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="${field.name}" 
                                             id="preview_${field.id}_${i}" value="${option.value}">
                                         <label class="form-check-label" for="preview_${field.id}_${i}">${option.text}</label>
                                     </div>
                                 `;
-                  });
-                }
+                });
+              }
 
-                fieldHtml += `<div class="invalid-feedback">Please select at least one option</div>
-                             ${
-                               field.required
-                                 ? '<div class="text-danger small mt-1">*</div>'
-                                 : ""
-                             }`;
-                break;
+              fieldHtml += `<div class="invalid-feedback">Please select at least one option</div>
+                             ${field.required
+                  ? '<div class="text-danger small mt-1">*</div>'
+                  : ""
+                }`;
+              break;
 
-              // Add case for readonly field
-              case "readonly":
-                fieldHtml += `
-                                <input type="text" class="form-control" id="preview_${
-                                  field.id
-                                }" name="${field.name}" readonly
-                                    placeholder="${
-                                      field.placeholder ||
-                                      "Value from source field"
-                                    }">
+            // Add case for readonly field
+            case "readonly":
+              fieldHtml += `
+                                <input type="text" class="form-control" id="preview_${field.id
+                }" name="${field.name}" readonly
+                                    placeholder="${field.placeholder ||
+                "Value from source field"
+                }">
                                 <!-- No validation needed for readonly -->
                             `;
-                break;
-            }
+              break;
+            case "image":
+              fieldHtml += `
+                        <input type="file" class="form-control" id="preview_${field.id}" name="${field.name}" accept="image/*" ${field.required ? "required" : ""}>
+                        <div class="mt-2 image-preview-container">
+                          <img id="preview_${field.id}_preview" src="" alt="Preview" style="max-width: 200px; max-height: 200px; display: none;">
+                        </div>
+                        <div class="invalid-feedback">${field.validation?.message || "Please select an image"}</div>
+                        ${field.required ? '<div class="text-danger small mt-1">*</div>' : ""}
+                      `;
+              break;
+          }
 
-            fieldContainer.innerHTML = fieldHtml;
-            previewForm.appendChild(fieldContainer);
-
-            // Apply validation attributes
-            if (field.validation && field.validation.pattern) {
-              const inputElement = document.getElementById(
-                `preview_${field.id}`
-              );
-              if (inputElement) {
-                inputElement.setAttribute("pattern", field.validation.pattern);
-              }
-            }
-
-            // For date fields, we'll attach change event listeners to provide immediate feedback
-            if (field.type === "date" && field.dateValidation) {
-              const dateInput = document.getElementById(`preview_${field.id}`);
-
-              // Add change event listener for immediate validation feedback
-              dateInput.addEventListener("change", function () {
-                validateDateField(field, dateInput);
-              });
-            }
-          });
-
-          // Add event listeners for readonly fields after rendering
-          setupReadonlyFieldListeners();
+          fieldContainer.innerHTML = fieldHtml;
+          previewForm.appendChild(fieldContainer);
+          // Add event listener for image preview
+          if (field.type === "image") {
+  const imageInput = document.getElementById(`preview_${field.id}`);
+  const imagePreview = document.getElementById(`preview_${field.id}_preview`);
+  
+  if (imageInput && imagePreview) {
+    imageInput.addEventListener('change', function() {
+      if (this.files && this.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          imagePreview.src = e.target.result;
+          imagePreview.style.display = 'block';
         }
+        reader.readAsDataURL(this.files[0]);
+      } else {
+        imagePreview.style.display = 'none';
+      }
+    });
+  }
+}
+          // Apply validation attributes
+          if (field.validation && field.validation.pattern) {
+            const inputElement = document.getElementById(
+              `preview_${field.id}`
+            );
+            if (inputElement) {
+              inputElement.setAttribute("pattern", field.validation.pattern);
+            }
+          }
 
-        // New function to validate a date field
-        function validateDateField(field, dateInput) {
-          if (!dateInput.value) return; // Skip empty values
+          // For date fields, we'll attach change event listeners to provide immediate feedback
+          if (field.type === "date" && field.dateValidation) {
+            const dateInput = document.getElementById(`preview_${field.id}`);
 
-          const selectedDate = new Date(dateInput.value);
-          const today = new Date();
-          today.setHours(0, 0, 0, 0);
+            // Add change event listener for immediate validation feedback
+            dateInput.addEventListener("change", function () {
+              validateDateField(field, dateInput);
+            });
+          }
+        });
 
-          let isValid = true;
-          const feedbackEl = dateInput.nextElementSibling;
+        // Add event listeners for readonly fields after rendering
+        setupReadonlyFieldListeners();
+      }
 
-          if (field.dateValidation) {
-            if (field.dateValidation.beforeToday && selectedDate >= today) {
+      // New function to validate a date field
+      function validateDateField(field, dateInput) {
+        if (!dateInput.value) return; // Skip empty values
+
+        const selectedDate = new Date(dateInput.value);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        let isValid = true;
+        const feedbackEl = dateInput.nextElementSibling;
+
+        if (field.dateValidation) {
+          if (field.dateValidation.beforeToday && selectedDate >= today) {
+            isValid = false;
+            if (feedbackEl)
+              feedbackEl.textContent =
+                field.dateValidation.errorMessage ||
+                "Date must be before today";
+          } else if (
+            field.dateValidation.afterToday &&
+            selectedDate < today
+          ) {
+            isValid = false;
+            if (feedbackEl)
+              feedbackEl.textContent =
+                field.dateValidation.errorMessage ||
+                "Date must be after today";
+          } else if (field.dateValidation.beforeYears !== undefined) {
+            const years = field.dateValidation.beforeYears;
+            const limitDate = new Date(today);
+            limitDate.setFullYear(today.getFullYear() - years);
+            limitDate.setHours(0, 0, 0, 0);
+
+            if (selectedDate > limitDate) {
               isValid = false;
               if (feedbackEl)
                 feedbackEl.textContent =
                   field.dateValidation.errorMessage ||
-                  "Date must be before today";
-            } else if (
-              field.dateValidation.afterToday &&
-              selectedDate < today
+                  `Date must be before ${years} years ago`;
+            }
+          } else if (field.dateValidation.afterYears !== undefined) {
+            const years = field.dateValidation.afterYears;
+            const limitDate = new Date(today);
+            limitDate.setFullYear(today.getFullYear() + years);
+            limitDate.setHours(0, 0, 0, 0);
+
+            if (selectedDate < limitDate) {
+              isValid = false;
+              if (feedbackEl)
+                feedbackEl.textContent =
+                  field.dateValidation.errorMessage ||
+                  `Date must be after ${years} years from today`;
+            }
+          }
+        }
+
+        // Show or hide validation feedback
+        if (!isValid) {
+          dateInput.classList.add("is-invalid");
+          dateInput.classList.remove("is-valid");
+        } else {
+          dateInput.classList.remove("is-invalid");
+          dateInput.classList.add("is-valid");
+        }
+
+        return isValid;
+      }
+
+      function validatePreviewForm() {
+        const form = document.getElementById("previewForm");
+        let isValid = true;
+
+        // Reset all validation visuals
+        form.querySelectorAll(".is-invalid").forEach((el) => {
+          el.classList.remove("is-invalid");
+        });
+
+        // Validate each field
+        formFields.forEach((field) => {
+          const element = document.getElementById(`preview_${field.id}`);
+
+          if (element) {
+            // Check required
+            if (field.required && !element.value.trim()) {
+              element.classList.add("is-invalid");
+              isValid = false;
+            }
+
+            // Check regex pattern
+            if (
+              field.validation &&
+              field.validation.pattern &&
+              element.value.trim()
             ) {
-              isValid = false;
-              if (feedbackEl)
-                feedbackEl.textContent =
-                  field.dateValidation.errorMessage ||
-                  "Date must be after today";
-            } else if (field.dateValidation.beforeYears !== undefined) {
-              const years = field.dateValidation.beforeYears;
-              const limitDate = new Date(today);
-              limitDate.setFullYear(today.getFullYear() - years);
-              limitDate.setHours(0, 0, 0, 0);
-
-              if (selectedDate > limitDate) {
-                isValid = false;
-                if (feedbackEl)
-                  feedbackEl.textContent =
-                    field.dateValidation.errorMessage ||
-                    `Date must be before ${years} years ago`;
-              }
-            } else if (field.dateValidation.afterYears !== undefined) {
-              const years = field.dateValidation.afterYears;
-              const limitDate = new Date(today);
-              limitDate.setFullYear(today.getFullYear() + years);
-              limitDate.setHours(0, 0, 0, 0);
-
-              if (selectedDate < limitDate) {
-                isValid = false;
-                if (feedbackEl)
-                  feedbackEl.textContent =
-                    field.dateValidation.errorMessage ||
-                    `Date must be after ${years} years from today`;
-              }
-            }
-          }
-
-          // Show or hide validation feedback
-          if (!isValid) {
-            dateInput.classList.add("is-invalid");
-            dateInput.classList.remove("is-valid");
-          } else {
-            dateInput.classList.remove("is-invalid");
-            dateInput.classList.add("is-valid");
-          }
-
-          return isValid;
-        }
-
-        function validatePreviewForm() {
-          const form = document.getElementById("previewForm");
-          let isValid = true;
-
-          // Reset all validation visuals
-          form.querySelectorAll(".is-invalid").forEach((el) => {
-            el.classList.remove("is-invalid");
-          });
-
-          // Validate each field
-          formFields.forEach((field) => {
-            const element = document.getElementById(`preview_${field.id}`);
-
-            if (element) {
-              // Check required
-              if (field.required && !element.value.trim()) {
+              const regex = new RegExp(field.validation.pattern);
+              if (!regex.test(element.value.trim())) {
                 element.classList.add("is-invalid");
                 isValid = false;
               }
-
-              // Check regex pattern
-              if (
-                field.validation &&
-                field.validation.pattern &&
-                element.value.trim()
-              ) {
-                const regex = new RegExp(field.validation.pattern);
-                if (!regex.test(element.value.trim())) {
-                  element.classList.add("is-invalid");
-                  isValid = false;
-                }
-              }
-
-              // Check date validation with simplified approach
-              if (
-                field.type === "date" &&
-                field.dateValidation &&
-                element.value
-              ) {
-                // Use our validateDateField function for consistent validation
-                if (!validateDateField(field, element)) {
-                  isValid = false;
-                }
-              }
             }
 
-            // Special handling for radio and checkbox
-            if (field.type === "radio" && field.required) {
-              const radioButtons = document.querySelectorAll(
-                `input[name="${field.name}"]:checked`
-              );
-              if (radioButtons.length === 0) {
-                document
-                  .querySelectorAll(`input[name="${field.name}"]`)
-                  .forEach((radio) => {
-                    radio.classList.add("is-invalid");
-                  });
+            // Check date validation with simplified approach
+            if (
+              field.type === "date" &&
+              field.dateValidation &&
+              element.value
+            ) {
+              // Use our validateDateField function for consistent validation
+              if (!validateDateField(field, element)) {
                 isValid = false;
               }
             }
+          }
 
-            if (field.type === "checkbox" && field.required) {
-              const checkboxes = document.querySelectorAll(
-                `input[name="${field.name}"]:checked`
-              );
-              if (checkboxes.length === 0) {
-                document
-                  .querySelectorAll(`input[name="${field.name}"]`)
-                  .forEach((checkbox) => {
-                    checkbox.classList.add("is-invalid");
-                  });
-                isValid = false;
-              }
+          // Special handling for radio and checkbox
+          if (field.type === "radio" && field.required) {
+            const radioButtons = document.querySelectorAll(
+              `input[name="${field.name}"]:checked`
+            );
+            if (radioButtons.length === 0) {
+              document
+                .querySelectorAll(`input[name="${field.name}"]`)
+                .forEach((radio) => {
+                  radio.classList.add("is-invalid");
+                });
+              isValid = false;
             }
-          });
+          }
 
-          return isValid;
-        }
+          if (field.type === "checkbox" && field.required) {
+            const checkboxes = document.querySelectorAll(
+              `input[name="${field.name}"]:checked`
+            );
+            if (checkboxes.length === 0) {
+              document
+                .querySelectorAll(`input[name="${field.name}"]`)
+                .forEach((checkbox) => {
+                  checkbox.classList.add("is-invalid");
+                });
+              isValid = false;
+            }
+          }
+        });
 
-        function collectFormData() {
-          const rowData = {};
+        return isValid;
+      }
 
-          tableColumns.forEach((column) => {
-            if (column.fieldId) {
-              const field = formFields.find((f) => f.id === column.fieldId);
+      function collectFormData() {
+        const rowData = {};
 
-              if (field) {
-                switch (field.type) {
-                  case "radio":
-                    const selectedRadio = document.querySelector(
-                      `input[name="${field.name}"]:checked`
-                    );
-                    rowData[column.name] = selectedRadio
-                      ? selectedRadio.value
-                      : "";
-                    break;
+        tableColumns.forEach((column) => {
+          if (column.fieldId) {
+            const field = formFields.find((f) => f.id === column.fieldId);
 
-                  case "checkbox":
-                    const selectedCheckboxes = document.querySelectorAll(
-                      `input[name="${field.name}"]:checked`
-                    );
-                    const values = Array.from(selectedCheckboxes).map(
-                      (cb) => cb.value
-                    );
-                    rowData[column.name] = values.join(", ");
-                    break;
+            if (field) {
+              switch (field.type) {
+                case "radio":
+                  const selectedRadio = document.querySelector(
+                    `input[name="${field.name}"]:checked`
+                  );
+                  rowData[column.name] = selectedRadio
+                    ? selectedRadio.value
+                    : "";
+                  break;
 
-                  // Update readonly field to use the displayed text value
-                  case "readonly":
-                    rowData[column.name] =
-                      document.getElementById(`preview_${field.id}`)?.value ||
-                      "";
-                    break;
+                case "checkbox":
+                  const selectedCheckboxes = document.querySelectorAll(
+                    `input[name="${field.name}"]:checked`
+                  );
+                  const values = Array.from(selectedCheckboxes).map(
+                    (cb) => cb.value
+                  );
+                  rowData[column.name] = values.join(", ");
+                  break;
 
-                  default:
-                    const element = document.getElementById(
-                      `preview_${field.id}`
-                    );
-                    rowData[column.name] = element ? element.value : "";
-                    break;
-                }
-              } else {
-                rowData[column.name] = "";
+                // Update readonly field to use the displayed text value
+                case "readonly":
+                  rowData[column.name] =
+                    document.getElementById(`preview_${field.id}`)?.value ||
+                    "";
+                  break;
+
+                default:
+                  const element = document.getElementById(
+                    `preview_${field.id}`
+                  );
+                  rowData[column.name] = element ? element.value : "";
+                  break;
               }
             } else {
               rowData[column.name] = "";
             }
+          } else {
+            rowData[column.name] = "";
+          }
+        });
+
+        return rowData;
+      }
+
+      function renderDataTable() {
+        // Clear table body
+        dataTableBody.innerHTML = "";
+
+        // Add each row
+        formData.forEach((rowData) => {
+          const row = document.createElement("tr");
+
+          tableColumns.forEach((column) => {
+            const cell = document.createElement("td");
+            cell.textContent = rowData[column.name] || "";
+            row.appendChild(cell);
           });
 
-          return rowData;
-        }
+          dataTableBody.appendChild(row);
+        });
+      }
 
-        function renderDataTable() {
-          // Clear table body
-          dataTableBody.innerHTML = "";
+      function getDefaultLabel(fieldType) {
+        const labels = {
+          text: "Text Input",
+          email: "Email Address",
+          number: "Number",
+          tel: "Phone Number",
+          date: "Date",
+          select: "Select Option",
+          radio: "Radio Options",
+          checkbox: "Checkboxes",
+          readonly: "Readonly Display", // Add label for readonly
+          image: "Upload Image"
+        };
 
-          // Add each row
-          formData.forEach((rowData) => {
-            const row = document.createElement("tr");
+        return labels[fieldType] || "New Field";
+      }
 
-            tableColumns.forEach((column) => {
-              const cell = document.createElement("td");
-              cell.textContent = rowData[column.name] || "";
-              row.appendChild(cell);
-            });
+      function getDefaultName(fieldType) {
+        const names = {
+          text: "text_input",
+          email: "email",
+          number: "number",
+          tel: "phone",
+          date: "date",
+          select: "select",
+          radio: "radio",
+          checkbox: "checkbox",
+          readonly: "readonly_display", // Add name for readonly
+          image: "image_upload"
+        };
 
-            dataTableBody.appendChild(row);
-          });
-        }
+        return names[fieldType] || "field";
+      }
 
-        function getDefaultLabel(fieldType) {
-          const labels = {
-            text: "Text Input",
-            email: "Email Address",
-            number: "Number",
-            tel: "Phone Number",
-            date: "Date",
-            select: "Select Option",
-            radio: "Radio Options",
-            checkbox: "Checkboxes",
-            readonly: "Readonly Display", // Add label for readonly
-          };
+      // Code generation functions
+      function generateFormCode() {
+        // --- 1. Generate Form HTML (used within Modal HTML) ---
+        let formHtml = `<form id="generatedForm" class="needs-validation" novalidate>\n`;
 
-          return labels[fieldType] || "New Field";
-        }
+        formFields.forEach((field) => {
+          formHtml += `  <div class="mb-3">\n`;
+          // Add label without asterisk
+          formHtml += `    <label for="${field.name}" class="form-label">${field.label}</label>\n`;
 
-        function getDefaultName(fieldType) {
-          const names = {
-            text: "text_input",
-            email: "email",
-            number: "number",
-            tel: "phone",
-            date: "date",
-            select: "select",
-            radio: "radio",
-            checkbox: "checkbox",
-            readonly: "readonly_display", // Add name for readonly
-          };
+          // Add input based on field type
+          switch (field.type) {
+            case "text":
+            case "email":
+            case "number":
+            case "tel":
+              formHtml += `    <input type="${field.type}" class="form-control" id="${field.name}" name="${field.name}"`;
+              if (field.placeholder)
+                formHtml += ` placeholder="${field.placeholder}"`;
+              if (field.required) formHtml += ` required`;
+              if (field.validation && field.validation.pattern)
+                formHtml += ` pattern="${field.validation.pattern}"`;
+              formHtml += `>\n`;
+              if (field.validation && field.validation.message) {
+                formHtml += `    <div class="invalid-feedback">${field.validation.message}</div>\n`;
+              } else {
+                formHtml += `    <div class="invalid-feedback">Vui lòng nhập ${field.label.toLowerCase()}</div>\n`;
+              }
+              // Add asterisk under the input if required
+              if (field.required) {
+                formHtml += `    <div class="text-danger small mt-1">*</div>\n`;
+              }
+              break;
 
-          return names[fieldType] || "field";
-        }
+            case "date":
+              formHtml += `    <input type="date" class="form-control" id="${field.name}" name="${field.name}"`;
+              if (field.required) formHtml += ` required`;
+              formHtml += `>\n`;
+              if (field.validation && field.validation.message) {
+                formHtml += `    <div class="invalid-feedback">${field.validation.message}</div>\n`;
+              } else {
+                formHtml += `    <div class="invalid-feedback">Vui lòng chọn ${field.label.toLowerCase()}</div>\n`;
+              }
+              // Add asterisk under the input if required
+              if (field.required) {
+                formHtml += `    <div class="text-danger small mt-1">*</div>\n`;
+              }
+              break;
 
-        // Code generation functions
-        function generateFormCode() {
-          // --- 1. Generate Form HTML (used within Modal HTML) ---
-          let formHtml = `<form id="generatedForm" class="needs-validation" novalidate>\n`;
-
-          formFields.forEach((field) => {
-            formHtml += `  <div class="mb-3">\n`;
-            // Add label without asterisk
-            formHtml += `    <label for="${field.name}" class="form-label">${field.label}</label>\n`;
-
-            // Add input based on field type
-            switch (field.type) {
-              case "text":
-              case "email":
-              case "number":
-              case "tel":
-                formHtml += `    <input type="${field.type}" class="form-control" id="${field.name}" name="${field.name}"`;
-                if (field.placeholder)
-                  formHtml += ` placeholder="${field.placeholder}"`;
-                if (field.required) formHtml += ` required`;
-                if (field.validation && field.validation.pattern)
-                  formHtml += ` pattern="${field.validation.pattern}"`;
-                formHtml += `>\n`;
-                if (field.validation && field.validation.message) {
-                  formHtml += `    <div class="invalid-feedback">${field.validation.message}</div>\n`;
-                } else {
-                  formHtml += `    <div class="invalid-feedback">Vui lòng nhập ${field.label.toLowerCase()}</div>\n`;
-                }
-                // Add asterisk under the input if required
-                if (field.required) {
-                  formHtml += `    <div class="text-danger small mt-1">*</div>\n`;
-                }
-                break;
-
-              case "date":
-                formHtml += `    <input type="date" class="form-control" id="${field.name}" name="${field.name}"`;
-                if (field.required) formHtml += ` required`;
-                formHtml += `>\n`;
-                if (field.validation && field.validation.message) {
-                  formHtml += `    <div class="invalid-feedback">${field.validation.message}</div>\n`;
-                } else {
-                  formHtml += `    <div class="invalid-feedback">Vui lòng chọn ${field.label.toLowerCase()}</div>\n`;
-                }
-                // Add asterisk under the input if required
-                if (field.required) {
-                  formHtml += `    <div class="text-danger small mt-1">*</div>\n`;
-                }
-                break;
-
-              case "select":
-                formHtml += `    <select class="form-select" id="${
-                  field.name
+            case "select":
+              formHtml += `    <select class="form-select" id="${field.name
                 }" name="${field.name}"${field.required ? " required" : ""}>\n`;
-                formHtml += `      <option value=""${
-                  !field.required ? " selected" : ""
+              formHtml += `      <option value=""${!field.required ? " selected" : ""
                 }>Choose...</option>\n`;
 
-                if (field.options && field.options.length > 0) {
-                  field.options.forEach((option) => {
-                    formHtml += `      <option value="${option.value}">${option.text}</option>\n`;
-                  });
-                }
+              if (field.options && field.options.length > 0) {
+                field.options.forEach((option) => {
+                  formHtml += `      <option value="${option.value}">${option.text}</option>\n`;
+                });
+              }
 
-                formHtml += `    </select>\n`;
-                formHtml += `    <div class="invalid-feedback">Vui lòng chọn ${field.label.toLowerCase()}</div>\n`;
-                // Add asterisk under the input if required
-                if (field.required) {
-                  formHtml += `    <div class="text-danger small mt-1">*</div>\n`;
-                }
-                break;
+              formHtml += `    </select>\n`;
+              formHtml += `    <div class="invalid-feedback">Vui lòng chọn ${field.label.toLowerCase()}</div>\n`;
+              // Add asterisk under the input if required
+              if (field.required) {
+                formHtml += `    <div class="text-danger small mt-1">*</div>\n`;
+              }
+              break;
 
-              case "radio":
-                if (field.options && field.options.length > 0) {
-                  field.options.forEach((option, i) => {
-                    formHtml += `    <div class="form-check">\n`;
-                    formHtml += `      <input class="form-check-input" type="radio" name="${
-                      field.name
-                    }" id="${field.name}_${i}" value="${option.value}"${
-                      i === 0 && field.required ? " checked" : ""
+            case "radio":
+              if (field.options && field.options.length > 0) {
+                field.options.forEach((option, i) => {
+                  formHtml += `    <div class="form-check">\n`;
+                  formHtml += `      <input class="form-check-input" type="radio" name="${field.name
+                    }" id="${field.name}_${i}" value="${option.value}"${i === 0 && field.required ? " checked" : ""
                     }>\n`;
-                    formHtml += `      <label class="form-check-label" for="${field.name}_${i}">${option.text}</label>\n`;
-                    formHtml += `    </div>\n`;
-                  });
-                }
-                formHtml += `    <div class="invalid-feedback">Vui lòng chọn ${field.label.toLowerCase()}</div>\n`;
-                // Add asterisk under the input if required
-                if (field.required) {
-                  formHtml += `    <div class="text-danger small mt-1">*</div>\n`;
-                }
-                break;
+                  formHtml += `      <label class="form-check-label" for="${field.name}_${i}">${option.text}</label>\n`;
+                  formHtml += `    </div>\n`;
+                });
+              }
+              formHtml += `    <div class="invalid-feedback">Vui lòng chọn ${field.label.toLowerCase()}</div>\n`;
+              // Add asterisk under the input if required
+              if (field.required) {
+                formHtml += `    <div class="text-danger small mt-1">*</div>\n`;
+              }
+              break;
 
-              case "checkbox":
-                if (field.options && field.options.length > 0) {
-                  field.options.forEach((option, i) => {
-                    formHtml += `    <div class="form-check">\n`;
-                    formHtml += `      <input class="form-check-input" type="checkbox" name="${field.name}" id="${field.name}_${i}" value="${option.value}">\n`;
-                    formHtml += `      <label class="form-check-label" for="${field.name}_${i}">${option.text}</label>\n`;
-                    formHtml += `    </div>\n`;
-                  });
-                }
-                formHtml += `    <div class="invalid-feedback">Vui lòng chọn ít nhất một tùy chọn</div>\n`;
-                // Add asterisk under the input if required
-                if (field.required) {
-                  formHtml += `    <div class="text-danger small mt-1">*</div>\n`;
-                }
-                break;
+            case "checkbox":
+              if (field.options && field.options.length > 0) {
+                field.options.forEach((option, i) => {
+                  formHtml += `    <div class="form-check">\n`;
+                  formHtml += `      <input class="form-check-input" type="checkbox" name="${field.name}" id="${field.name}_${i}" value="${option.value}">\n`;
+                  formHtml += `      <label class="form-check-label" for="${field.name}_${i}">${option.text}</label>\n`;
+                  formHtml += `    </div>\n`;
+                });
+              }
+              formHtml += `    <div class="invalid-feedback">Vui lòng chọn ít nhất một tùy chọn</div>\n`;
+              // Add asterisk under the input if required
+              if (field.required) {
+                formHtml += `    <div class="text-danger small mt-1">*</div>\n`;
+              }
+              break;
 
-              case "readonly":
-                formHtml += `    <input type="text" class="form-control" id="${field.name}" name="${field.name}" readonly`;
-                if (field.placeholder)
-                  formHtml += ` placeholder="${field.placeholder}"`;
-                formHtml += `>\n`;
-                break;
-            }
-            formHtml += `  </div>\n`;
-          });
+            case "readonly":
+              formHtml += `    <input type="text" class="form-control" id="${field.name}" name="${field.name}" readonly`;
+              if (field.placeholder)
+                formHtml += ` placeholder="${field.placeholder}"`;
+              formHtml += `>\n`;
+              break;
+          }
+          formHtml += `  </div>\n`;
+        });
 
-          formHtml += `  <button type="submit" class="btn btn-primary">Đăng ký</button>\n`;
-          formHtml += `</form>`;
+        formHtml += `  <button type="submit" class="btn btn-primary">Đăng ký</button>\n`;
+        formHtml += `</form>`;
 
-          // --- 2. Generate Modal HTML with ID="myModal" (embedding the form HTML) ---
-          let modalHtml = `<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">\n`;
-          modalHtml += `  Đăng ký\n`;
-          modalHtml += `</button>\n\n`;
+        // --- 2. Generate Modal HTML with ID="myModal" (embedding the form HTML) ---
+        let modalHtml = `<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">\n`;
+        modalHtml += `  Đăng ký\n`;
+        modalHtml += `</button>\n\n`;
 
-          modalHtml += `<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">\n`;
-          modalHtml += `  <div class="modal-dialog modal-lg">\n`;
-          modalHtml += `    <div class="modal-content">\n`;
-          modalHtml += `      <div class="modal-header">\n`;
+        modalHtml += `<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">\n`;
+        modalHtml += `  <div class="modal-dialog modal-lg">\n`;
+        modalHtml += `    <div class="modal-content">\n`;
+        modalHtml += `      <div class="modal-header">\n`;
 
-          // Use the first field's label as a default title or a generic one
-          const modalTitle =
-            formFields.length > 0
-              ? formFields[0].label + " Form"
-              : "THÔNG TIN ĐĂNG KÍ";
+        // Use the first field's label as a default title or a generic one
+        const modalTitle =
+          formFields.length > 0
+            ? formFields[0].label + " Form"
+            : "THÔNG TIN ĐĂNG KÍ";
 
-          modalHtml += `        <h5 class="modal-title" id="modalLabel">${modalTitle}</h5>\n`;
-          modalHtml += `        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>\n`;
-          modalHtml += `      </div>\n`;
-          modalHtml += `      <div class="modal-body">\n`;
+        modalHtml += `        <h5 class="modal-title" id="modalLabel">${modalTitle}</h5>\n`;
+        modalHtml += `        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>\n`;
+        modalHtml += `      </div>\n`;
+        modalHtml += `      <div class="modal-body">\n`;
 
-          // Indent the generated form HTML
-          const indentedFormHtml = formHtml
-            .split("\n")
-            .map((line) => "        " + line)
-            .join("\n");
+        // Indent the generated form HTML
+        const indentedFormHtml = formHtml
+          .split("\n")
+          .map((line) => "        " + line)
+          .join("\n");
 
-          modalHtml += indentedFormHtml + "\n";
-          modalHtml += `      </div>\n`;
-          modalHtml += `      <div class="modal-footer">\n`;
-          modalHtml += `        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>\n`;
-          modalHtml += `      </div>\n`;
-          modalHtml += `    </div>\n`;
-          modalHtml += `  </div>\n`;
-          modalHtml += `</div>`;
+        modalHtml += indentedFormHtml + "\n";
+        modalHtml += `      </div>\n`;
+        modalHtml += `      <div class="modal-footer">\n`;
+        modalHtml += `        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>\n`;
+        modalHtml += `      </div>\n`;
+        modalHtml += `    </div>\n`;
+        modalHtml += `  </div>\n`;
+        modalHtml += `</div>`;
 
-          // --- 3. Generate jQuery script for form validation & table interaction ---
-          let jqueryJs = `$(document).ready(function () {
+        // --- 3. Generate jQuery script for form validation & table interaction ---
+        let jqueryJs = `$(document).ready(function () {
   let rowCount = 1;
 
   function setupReadonlyFields() {`;
 
-          // Only include this section if there are readonly fields
-          const readonlyFields = formFields.filter(
-            (f) => f.type === "readonly" && f.sourceFieldId
-          );
-          if (readonlyFields.length > 0) {
-            readonlyFields.forEach((field) => {
-              const sourceField = formFields.find(
-                (f) => f.id === field.sourceFieldId
-              );
-              if (sourceField && sourceField.type === "select") {
-                jqueryJs += `
+        // Only include this section if there are readonly fields
+        const readonlyFields = formFields.filter(
+          (f) => f.type === "readonly" && f.sourceFieldId
+        );
+        if (readonlyFields.length > 0) {
+          readonlyFields.forEach((field) => {
+            const sourceField = formFields.find(
+              (f) => f.id === field.sourceFieldId
+            );
+            if (sourceField && sourceField.type === "select") {
+              jqueryJs += `
     const $source_${sourceField.name} = $("#${sourceField.name}");
     const $target_${field.name} = $("#${field.name}");
 
@@ -2404,11 +2116,11 @@
     
     $source_${sourceField.name}.on("change", update_${field.name});
     update_${field.name}();`;
-              }
-            });
-          }
+            }
+          });
+        }
 
-          jqueryJs += `
+        jqueryJs += `
   }
 
   setupReadonlyFields();
@@ -2418,158 +2130,148 @@
     
     let isValid = true;`;
 
-          // Declare variables for fields needing validation
-          formFields.forEach((field) => {
-            if (
-              field.required ||
-              field.validation?.pattern ||
-              (field.type === "date" && field.dateValidation)
-            ) {
-              jqueryJs += `
+        // Declare variables for fields needing validation
+        formFields.forEach((field) => {
+          if (
+            field.required ||
+            field.validation?.pattern ||
+            (field.type === "date" && field.dateValidation)
+          ) {
+            jqueryJs += `
     const ${field.name}Input = $("#${field.name}");`;
-              if (field.validation?.pattern) {
-                jqueryJs += `
+            if (field.validation?.pattern) {
+              jqueryJs += `
     const ${field.name}Pattern = /${field.validation.pattern}/;`;
-              }
             }
-          });
+          }
+        });
 
-          jqueryJs += `
+        jqueryJs += `
 
     $(".form-control").removeClass("is-invalid is-valid");
     $(".invalid-feedback").hide();`;
 
-          // Add validation logic
-          formFields.forEach((field) => {
-            if (
-              field.required ||
-              field.validation?.pattern ||
-              (field.type === "date" && field.dateValidation)
-            ) {
-              jqueryJs += `\n`;
+        // Add validation logic
+        formFields.forEach((field) => {
+          if (
+            field.required ||
+            field.validation?.pattern ||
+            (field.type === "date" && field.dateValidation)
+          ) {
+            jqueryJs += `\n`;
 
-              // Field validation based on type
-              switch (field.type) {
-                case "text":
-                case "email":
-                case "number":
-                case "tel":
-                  // Required check
-                  if (field.required) {
-                    jqueryJs += `
+            // Field validation based on type
+            switch (field.type) {
+              case "text":
+              case "email":
+              case "number":
+              case "tel":
+                // Required check
+                if (field.required) {
+                  jqueryJs += `
     if (${field.name}Input.val().trim() === "") {
       ${field.name}Input.addClass("is-invalid");
-      ${
-        field.name
-      }Input.siblings(".invalid-feedback").text("Vui lòng nhập ${field.label.toLowerCase()}").show();
+      ${field.name
+                    }Input.siblings(".invalid-feedback").text("Vui lòng nhập ${field.label.toLowerCase()}").show();
       isValid = false;
     } else `;
-                  }
+                }
 
-                  // Pattern check
-                  if (field.validation?.pattern) {
-                    jqueryJs += field.required
-                      ? ``
-                      : `
+                // Pattern check
+                if (field.validation?.pattern) {
+                  jqueryJs += field.required
+                    ? ``
+                    : `
     if (${field.name}Input.val().trim() !== "") {
       `;
-                    jqueryJs += `if (!${field.name}Pattern.test(${
-                      field.name
+                  jqueryJs += `if (!${field.name}Pattern.test(${field.name
                     }Input.val().trim())) {
       ${field.name}Input.addClass("is-invalid");
-      ${field.name}Input.siblings(".invalid-feedback").text("${
-                      field.validation.message ||
-                      `Vui lòng nhập ${field.label.toLowerCase()} hợp lệ`
+      ${field.name}Input.siblings(".invalid-feedback").text("${field.validation.message ||
+                    `Vui lòng nhập ${field.label.toLowerCase()} hợp lệ`
                     }").show();
       isValid = false;
     } else {
       ${field.name}Input.addClass("is-valid");
     }`;
-                    if (!field.required)
-                      jqueryJs += `
+                  if (!field.required)
+                    jqueryJs += `
     }`;
-                  } else if (field.required) {
-                    jqueryJs += `{
+                } else if (field.required) {
+                  jqueryJs += `{
       ${field.name}Input.addClass("is-valid");
     }`;
-                  }
-                  break;
+                }
+                break;
 
-                case "date":
-                  // Required check
-                  if (field.required) {
-                    jqueryJs += `
+              case "date":
+                // Required check
+                if (field.required) {
+                  jqueryJs += `
     if (${field.name}Input.val() === "") {
       ${field.name}Input.addClass("is-invalid");
-      ${
-        field.name
-      }Input.siblings(".invalid-feedback").text("Vui lòng chọn ${field.label.toLowerCase()}").show();
+      ${field.name
+                    }Input.siblings(".invalid-feedback").text("Vui lòng chọn ${field.label.toLowerCase()}").show();
       isValid = false;
     } else `;
-                  }
+                }
 
-                  // Date validation
-                  if (field.dateValidation) {
-                    jqueryJs += field.required
-                      ? ``
-                      : `
+                // Date validation
+                if (field.dateValidation) {
+                  jqueryJs += field.required
+                    ? ``
+                    : `
     if (${field.name}Input.val() !== "") {
       `;
-                    jqueryJs += `{
+                  jqueryJs += `{
       const selectedDate = new Date(${field.name}Input.val());
       const today = new Date(); today.setHours(0,0,0,0);
       let dateIsValid = true;
       let errorMessage = "";`;
 
-                    if (field.dateValidation.beforeToday) {
-                      jqueryJs += `
+                  if (field.dateValidation.beforeToday) {
+                    jqueryJs += `
       
       if (selectedDate >= today) {
         dateIsValid = false;
-        errorMessage = "${
-          field.dateValidation.errorMessage || "Ngày phải trước hôm nay"
-        }";
+        errorMessage = "${field.dateValidation.errorMessage || "Ngày phải trước hôm nay"
+                      }";
       }`;
-                    } else if (field.dateValidation.afterToday) {
-                      jqueryJs += `
+                  } else if (field.dateValidation.afterToday) {
+                    jqueryJs += `
       
       if (selectedDate < today) {
         dateIsValid = false;
-        errorMessage = "${
-          field.dateValidation.errorMessage || "Ngày phải sau hôm nay"
-        }";
+        errorMessage = "${field.dateValidation.errorMessage || "Ngày phải sau hôm nay"
+                      }";
       }`;
-                    } else if (field.dateValidation.beforeYears !== undefined) {
-                      jqueryJs += `
+                  } else if (field.dateValidation.beforeYears !== undefined) {
+                    jqueryJs += `
       
       const limitDate = new Date(today);
-      limitDate.setFullYear(today.getFullYear() - ${
-        field.dateValidation.beforeYears
-      });
+      limitDate.setFullYear(today.getFullYear() - ${field.dateValidation.beforeYears
+                      });
       if (selectedDate > limitDate) {
         dateIsValid = false;
-        errorMessage = "${
-          field.dateValidation.errorMessage ||
-          `Ngày phải trước ${field.dateValidation.beforeYears} năm trước`
-        }";
+        errorMessage = "${field.dateValidation.errorMessage ||
+                      `Ngày phải trước ${field.dateValidation.beforeYears} năm trước`
+                      }";
       }`;
-                    } else if (field.dateValidation.afterYears !== undefined) {
-                      jqueryJs += `
+                  } else if (field.dateValidation.afterYears !== undefined) {
+                    jqueryJs += `
       
       const limitDate = new Date(today);
-      limitDate.setFullYear(today.getFullYear() + ${
-        field.dateValidation.afterYears
-      });
+      limitDate.setFullYear(today.getFullYear() + ${field.dateValidation.afterYears
+                      });
       if (selectedDate < limitDate) {
         dateIsValid = false;
-        errorMessage = "${
-          field.dateValidation.errorMessage ||
-          `Ngày phải sau ${field.dateValidation.afterYears} năm tới`
-        }";
+        errorMessage = "${field.dateValidation.errorMessage ||
+                      `Ngày phải sau ${field.dateValidation.afterYears} năm tới`
+                      }";
       }`;
-                    }
+                  }
 
-                    jqueryJs += `
+                  jqueryJs += `
       
       if (!dateIsValid) {
         ${field.name}Input.addClass("is-invalid");
@@ -2579,34 +2281,33 @@
         ${field.name}Input.addClass("is-valid");
       }
     }`;
-                    if (!field.required)
-                      jqueryJs += `
+                  if (!field.required)
+                    jqueryJs += `
     }`;
-                  } else if (field.required) {
-                    jqueryJs += `{
+                } else if (field.required) {
+                  jqueryJs += `{
       ${field.name}Input.addClass("is-valid");
     }`;
-                  }
-                  break;
+                }
+                break;
 
-                case "select":
-                  if (field.required) {
-                    jqueryJs += `
+              case "select":
+                if (field.required) {
+                  jqueryJs += `
     if (${field.name}Input.val() === "") {
       ${field.name}Input.addClass("is-invalid");
-      ${
-        field.name
-      }Input.siblings(".invalid-feedback").text("Vui lòng chọn ${field.label.toLowerCase()}").show();
+      ${field.name
+                    }Input.siblings(".invalid-feedback").text("Vui lòng chọn ${field.label.toLowerCase()}").show();
       isValid = false;
     } else {
       ${field.name}Input.addClass("is-valid");
     }`;
-                  }
-                  break;
+                }
+                break;
 
-                case "radio":
-                  if (field.required) {
-                    jqueryJs += `
+              case "radio":
+                if (field.required) {
+                  jqueryJs += `
     const ${field.name}Radio = $("input[name='${field.name}']:checked");
     if (${field.name}Radio.length === 0) {
       $("input[name='${field.name}']").addClass("is-invalid");
@@ -2615,12 +2316,12 @@
     } else {
       $("input[name='${field.name}']").addClass("is-valid");
     }`;
-                  }
-                  break;
+                }
+                break;
 
-                case "checkbox":
-                  if (field.required) {
-                    jqueryJs += `
+              case "checkbox":
+                if (field.required) {
+                  jqueryJs += `
     const ${field.name}Checked = $("input[name='${field.name}']:checked");
     if (${field.name}Checked.length === 0) {
       $("input[name='${field.name}']").addClass("is-invalid");
@@ -2629,61 +2330,61 @@
     } else {
       $("input[name='${field.name}']").addClass("is-valid");
     }`;
-                  }
-                  break;
-              }
+                }
+                break;
             }
-          });
+          }
+        });
 
-          jqueryJs += `
+        jqueryJs += `
 
     if (isValid) {
       const rowData = {`;
 
-          // Map form fields to table columns
-          tableColumns.forEach((column) => {
-            const jsFriendlyColName = column.name.replace(
-              /[^a-zA-Z0-9_]/g,
-              "_"
-            );
-            if (column.fieldId) {
-              const field = formFields.find((f) => f.id === column.fieldId);
-              if (field) {
-                switch (field.type) {
-                  case "radio":
-                    jqueryJs += `
+        // Map form fields to table columns
+        tableColumns.forEach((column) => {
+          const jsFriendlyColName = column.name.replace(
+            /[^a-zA-Z0-9_]/g,
+            "_"
+          );
+          if (column.fieldId) {
+            const field = formFields.find((f) => f.id === column.fieldId);
+            if (field) {
+              switch (field.type) {
+                case "radio":
+                  jqueryJs += `
         ${jsFriendlyColName}: $("input[name='${field.name}']:checked").val() || "",`;
-                    break;
-                  case "checkbox":
-                    jqueryJs += `
+                  break;
+                case "checkbox":
+                  jqueryJs += `
         ${jsFriendlyColName}: $.map($("input[name='${field.name}']:checked"), function(el) { return $(el).val(); }).join(", ") || "",`;
-                    break;
-                  case "readonly":
-                    jqueryJs += `
+                  break;
+                case "readonly":
+                  jqueryJs += `
         ${jsFriendlyColName}: $("#${field.name}").val() || "",`;
-                    break;
-                  default:
-                    jqueryJs += `
+                  break;
+                default:
+                  jqueryJs += `
         ${jsFriendlyColName}: $("#${field.name}").val().trim() || "",`;
-                    break;
-                }
-              } else {
-                jqueryJs += `
-        ${jsFriendlyColName}: "",`;
+                  break;
               }
             } else {
               jqueryJs += `
         ${jsFriendlyColName}: "",`;
             }
-          });
-
-          // Remove trailing comma and close object
-          if (tableColumns.length > 0) {
-            // Remove the last comma by removing 1 character
-            jqueryJs = jqueryJs.slice(0, -1);
+          } else {
+            jqueryJs += `
+        ${jsFriendlyColName}: "",`;
           }
+        });
 
-          jqueryJs += `
+        // Remove trailing comma and close object
+        if (tableColumns.length > 0) {
+          // Remove the last comma by removing 1 character
+          jqueryJs = jqueryJs.slice(0, -1);
+        }
+
+        jqueryJs += `
       };
 
       addRowToTable(rowData);
@@ -2710,65 +2411,58 @@
     $newRow.append($("<td></td>").text(rowCount++));
     
     ${tableColumns
-      .map((column) => {
-        const jsFriendlyColName = column.name.replace(/[^a-zA-Z0-9_]/g, "_");
-        return `$newRow.append($("<td></td>").text(rowData.${jsFriendlyColName} || ""));`;
-      })
-      .join("\n    ")}
+            .map((column) => {
+              const jsFriendlyColName = column.name.replace(/[^a-zA-Z0-9_]/g, "_");
+              return `$newRow.append($("<td></td>").text(rowData.${jsFriendlyColName} || ""));`;
+            })
+            .join("\n    ")}
     
     $tableBody.append($newRow);
   }
 
   ${formFields
-    .filter((field) => field.type === "date" && field.dateValidation)
-    .map((field) => {
-      return `$('#${field.name}').on('change', function() {
+            .filter((field) => field.type === "date" && field.dateValidation)
+            .map((field) => {
+              return `$('#${field.name}').on('change', function() {
     const selectedDate = new Date($(this).val());
     const today = new Date(); today.setHours(0,0,0,0);
     let isValid = true;
     let errorMessage = "";
     
-    ${
-      field.dateValidation.beforeToday
-        ? `if (selectedDate >= today) {
+    ${field.dateValidation.beforeToday
+                  ? `if (selectedDate >= today) {
       isValid = false;
-      errorMessage = "${
-        field.dateValidation.errorMessage || "Ngày phải trước hôm nay"
-      }";
+      errorMessage = "${field.dateValidation.errorMessage || "Ngày phải trước hôm nay"
+                  }";
     }`
-        : field.dateValidation.afterToday
-        ? `if (selectedDate < today) {
+                  : field.dateValidation.afterToday
+                    ? `if (selectedDate < today) {
       isValid = false;
-      errorMessage = "${
-        field.dateValidation.errorMessage || "Ngày phải sau hôm nay"
-      }";
+      errorMessage = "${field.dateValidation.errorMessage || "Ngày phải sau hôm nay"
+                    }";
     }`
-        : field.dateValidation.beforeYears !== undefined
-        ? `const limitDate = new Date(today);
-    limitDate.setFullYear(today.getFullYear() - ${
-      field.dateValidation.beforeYears
-    });
+                    : field.dateValidation.beforeYears !== undefined
+                      ? `const limitDate = new Date(today);
+    limitDate.setFullYear(today.getFullYear() - ${field.dateValidation.beforeYears
+                      });
     if (selectedDate > limitDate) {
       isValid = false;
-      errorMessage = "${
-        field.dateValidation.errorMessage ||
-        `Ngày phải trước ${field.dateValidation.beforeYears} năm trước`
-      }";
+      errorMessage = "${field.dateValidation.errorMessage ||
+                      `Ngày phải trước ${field.dateValidation.beforeYears} năm trước`
+                      }";
     }`
-        : field.dateValidation.afterYears !== undefined
-        ? `const limitDate = new Date(today);
-    limitDate.setFullYear(today.getFullYear() + ${
-      field.dateValidation.afterYears
-    });
+                      : field.dateValidation.afterYears !== undefined
+                        ? `const limitDate = new Date(today);
+    limitDate.setFullYear(today.getFullYear() + ${field.dateValidation.afterYears
+                        });
     if (selectedDate < limitDate) {
       isValid = false;
-      errorMessage = "${
-        field.dateValidation.errorMessage ||
-        `Ngày phải sau ${field.dateValidation.afterYears} năm tới`
-      }";
+      errorMessage = "${field.dateValidation.errorMessage ||
+                        `Ngày phải sau ${field.dateValidation.afterYears} năm tới`
+                        }";
     }`
-        : ""
-    }
+                        : ""
+                }
     
     if (!isValid) {
       $(this).addClass('is-invalid').removeClass('is-valid');
@@ -2777,38 +2471,38 @@
       $(this).removeClass('is-invalid').addClass('is-valid');
     }
   });`;
-    })
-    .join("\n\n  ")}
+            })
+            .join("\n\n  ")}
 });`;
 
-          // Update code in modal and highlight
-          document.getElementById("modalHtmlCode").textContent = modalHtml;
-          document.getElementById("jqueryJsCode").textContent = jqueryJs;
-          hljs.highlightAll();
-        }
+        // Update code in modal and highlight
+        document.getElementById("modalHtmlCode").textContent = modalHtml;
+        document.getElementById("jqueryJsCode").textContent = jqueryJs;
+        hljs.highlightAll();
+      }
 
-        function generateTableCode() {
-          // Generate HTML code for the table
-          let tableHtml = `<div class="table-responsive">\n`;
-          tableHtml += `  <table class="table table-bordered" id="dataTable">\n`;
-          tableHtml += `    <thead>\n`;
-          tableHtml += `      <tr>\n`;
-          tableHtml += `        <th>STT</th>\n`; // Added STT column
+      function generateTableCode() {
+        // Generate HTML code for the table
+        let tableHtml = `<div class="table-responsive">\n`;
+        tableHtml += `  <table class="table table-bordered" id="dataTable">\n`;
+        tableHtml += `    <thead>\n`;
+        tableHtml += `      <tr>\n`;
+        tableHtml += `        <th>STT</th>\n`; // Added STT column
 
-          // Add table headers
-          tableColumns.forEach((column) => {
-            tableHtml += `        <th>${column.name}</th>\n`;
-          });
+        // Add table headers
+        tableColumns.forEach((column) => {
+          tableHtml += `        <th>${column.name}</th>\n`;
+        });
 
-          tableHtml += `      </tr>\n`;
-          tableHtml += `    </thead>\n`;
-          tableHtml += `    <tbody id="dataTableBody">\n`;
-          tableHtml += `    </tbody>\n`;
-          tableHtml += `  </table>\n`;
-          tableHtml += `</div>`;
+        tableHtml += `      </tr>\n`;
+        tableHtml += `    </thead>\n`;
+        tableHtml += `    <tbody id="dataTableBody">\n`;
+        tableHtml += `    </tbody>\n`;
+        tableHtml += `  </table>\n`;
+        tableHtml += `</div>`;
 
-          // Generate JavaScript code for table data handling
-          let tableJs = `(function() {
+        // Generate JavaScript code for table data handling
+        let tableJs = `(function() {
   'use strict';
 
   const tableData = [];
@@ -2823,13 +2517,13 @@
     row.appendChild(sttCell);
 
     ${tableColumns
-      .map((column) => {
-        const columnName = column.name.replace(/\s+/g, "");
-        return `const ${columnName}Cell = document.createElement('td');
+            .map((column) => {
+              const columnName = column.name.replace(/\s+/g, "");
+              return `const ${columnName}Cell = document.createElement('td');
     ${columnName}Cell.textContent = rowData.${columnName} || '';
     row.appendChild(${columnName}Cell);`;
-      })
-      .join("\n    ")}
+            })
+            .join("\n    ")}
 
     tableBody.appendChild(row);
   }
@@ -2837,36 +2531,36 @@
   function collectFormData(form) {
     const data = {};
     ${tableColumns
-      .map((column) => {
-        if (!column.fieldId)
-          return `// data.${column.name.replace(
-            /\s+/g,
-            ""
-          )} needs manual configuration`;
+            .map((column) => {
+              if (!column.fieldId)
+                return `// data.${column.name.replace(
+                  /\s+/g,
+                  ""
+                )} needs manual configuration`;
 
-        const field = formFields.find((f) => f.id === column.fieldId);
-        if (!field)
-          return `// data.${column.name.replace(/\s+/g, "")} field not found`;
+              const field = formFields.find((f) => f.id === column.fieldId);
+              if (!field)
+                return `// data.${column.name.replace(/\s+/g, "")} field not found`;
 
-        const columnName = column.name.replace(/\s+/g, "");
+              const columnName = column.name.replace(/\s+/g, "");
 
-        switch (field.type) {
-          case "radio":
-            return `const selected${columnName} = form.querySelector('input[name="${field.name}"]:checked');
+              switch (field.type) {
+                case "radio":
+                  return `const selected${columnName} = form.querySelector('input[name="${field.name}"]:checked');
     data.${columnName} = selected${columnName} ? selected${columnName}.value : '';`;
-          case "checkbox":
-            return `const selected${columnName}s = form.querySelectorAll('input[name="${field.name}"]:checked');
+                case "checkbox":
+                  return `const selected${columnName}s = form.querySelectorAll('input[name="${field.name}"]:checked');
     const ${columnName}Values = [];
     selected${columnName}s.forEach(cb => ${columnName}Values.push(cb.value));
     data.${columnName} = ${columnName}Values.join(', ');`;
-          case "readonly":
-            return `data.${columnName} = document.getElementById('${field.name}')?.value || '';`;
-          default:
-            return `data.${columnName} = document.getElementById('${field.name}')?.value || '';`;
-        }
-      })
-      .filter((line) => line)
-      .join("\n    ")}
+                case "readonly":
+                  return `data.${columnName} = document.getElementById('${field.name}')?.value || '';`;
+                default:
+                  return `data.${columnName} = document.getElementById('${field.name}')?.value || '';`;
+              }
+            })
+            .filter((line) => line)
+            .join("\n    ")}
 
     return data;
   }
@@ -2891,125 +2585,126 @@
   initTable();
 })();`;
 
-          // Update code in modal and highlight
-          document.getElementById("tableHtmlCode").textContent = tableHtml;
-          document.getElementById("tableJsCode").textContent = tableJs;
-          hljs.highlightAll();
+        // Update code in modal and highlight
+        document.getElementById("tableHtmlCode").textContent = tableHtml;
+        document.getElementById("tableJsCode").textContent = tableJs;
+        hljs.highlightAll();
+      }
+
+      function copyToClipboard(elementId) {
+        const element = document.getElementById(elementId);
+        if (!element) {
+          console.error("Element not found:", elementId);
+          return;
         }
 
-        function copyToClipboard(elementId) {
-          const element = document.getElementById(elementId);
-          if (!element) {
-            console.error("Element not found:", elementId);
-            return;
-          }
+        const text = element.textContent;
 
-          const text = element.textContent;
+        navigator.clipboard
+          .writeText(text)
+          .then(function () {
+            // Show success message
+            // Find the correct button relative to the code block
+            const copyBtn = element
+              .closest(".position-relative")
+              ?.querySelector(".copy-btn"); // Use optional chaining
+            if (copyBtn) {
+              const originalText = copyBtn.innerHTML;
+              copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
 
-          navigator.clipboard
-            .writeText(text)
-            .then(function () {
-              // Show success message
-              // Find the correct button relative to the code block
-              const copyBtn = element
-                .closest(".position-relative")
-                ?.querySelector(".copy-btn"); // Use optional chaining
-              if (copyBtn) {
-                const originalText = copyBtn.innerHTML;
-                copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+              setTimeout(() => {
+                copyBtn.innerHTML = originalText;
+              }, 2000);
+            } else {
+              // Alternative: If we can't find the button in the relative position
+              // Find the button by its ID pattern
+              // Construct the potential ID carefully
+              const baseId = elementId.replace(/Code$/, ""); // e.g., 'modalHtml', 'jqueryJs'
+              const capitalizedBaseId =
+                baseId.charAt(0).toUpperCase() + baseId.slice(1);
+              const possibleBtnId = "copy" + capitalizedBaseId; // e.g., 'copyModalHtml', 'copyJqueryJs'
+
+              const alternativeCopyBtn =
+                document.getElementById(possibleBtnId);
+
+              if (alternativeCopyBtn) {
+                const originalText = alternativeCopyBtn.innerHTML;
+                alternativeCopyBtn.innerHTML =
+                  '<i class="fas fa-check"></i> Copied!';
 
                 setTimeout(() => {
-                  copyBtn.innerHTML = originalText;
+                  alternativeCopyBtn.innerHTML = originalText;
                 }, 2000);
               } else {
-                // Alternative: If we can't find the button in the relative position
-                // Find the button by its ID pattern
-                // Construct the potential ID carefully
-                const baseId = elementId.replace(/Code$/, ""); // e.g., 'modalHtml', 'jqueryJs'
-                const capitalizedBaseId =
-                  baseId.charAt(0).toUpperCase() + baseId.slice(1);
-                const possibleBtnId = "copy" + capitalizedBaseId; // e.g., 'copyModalHtml', 'copyJqueryJs'
-
-                const alternativeCopyBtn =
-                  document.getElementById(possibleBtnId);
-
-                if (alternativeCopyBtn) {
-                  const originalText = alternativeCopyBtn.innerHTML;
-                  alternativeCopyBtn.innerHTML =
-                    '<i class="fas fa-check"></i> Copied!';
-
-                  setTimeout(() => {
-                    alternativeCopyBtn.innerHTML = originalText;
-                  }, 2000);
-                } else {
-                  console.warn(
-                    "Could not find copy button for",
-                    elementId,
-                    "using ID",
-                    possibleBtnId
-                  );
-                  alert("Code copied to clipboard!"); // Fallback alert
-                }
-              }
-            })
-            .catch(function (err) {
-              console.error("Failed to copy text: ", err);
-              // Fallback for browsers that don't support clipboard API
-              try {
-                const textarea = document.createElement("textarea");
-                textarea.value = text;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand("copy");
-                document.body.removeChild(textarea);
-                alert("Code copied to clipboard!");
-              } catch (e) {
-                console.error("Fallback copy method failed:", e);
-                alert(
-                  "Failed to copy. Please select and copy the code manually."
+                console.warn(
+                  "Could not find copy button for",
+                  elementId,
+                  "using ID",
+                  possibleBtnId
                 );
-              }
-            });
-        }
-
-        // Function to set up readonly field listeners
-        function setupReadonlyFieldListeners() {
-          formFields.forEach((field) => {
-            if (field.type === "readonly" && field.sourceFieldId) {
-              const sourceField = formFields.find(
-                (f) => f.id === field.sourceFieldId
-              );
-              if (sourceField && sourceField.type === "select") {
-                const sourceElement = document.getElementById(
-                  `preview_${sourceField.id}`
-                );
-                const targetElement = document.getElementById(
-                  `preview_${field.id}`
-                );
-
-                if (sourceElement && targetElement) {
-                  // Update the readonly field with the value of the selected option
-                  const updateReadonlyField = () => {
-                    const selectedOption =
-                      sourceElement.options[sourceElement.selectedIndex];
-                    if (selectedOption && selectedOption.value) {
-                      targetElement.value = selectedOption.value; // Changed from selectedOption.text
-                    } else {
-                      targetElement.value = "";
-                    }
-                  };
-
-                  // Initial update
-                  updateReadonlyField();
-
-                  // Update on change
-                  sourceElement.addEventListener("change", updateReadonlyField);
-                }
+                alert("Code copied to clipboard!"); // Fallback alert
               }
             }
+          })
+          .catch(function (err) {
+            console.error("Failed to copy text: ", err);
+            // Fallback for browsers that don't support clipboard API
+            try {
+              const textarea = document.createElement("textarea");
+              textarea.value = text;
+              document.body.appendChild(textarea);
+              textarea.select();
+              document.execCommand("copy");
+              document.body.removeChild(textarea);
+              alert("Code copied to clipboard!");
+            } catch (e) {
+              console.error("Fallback copy method failed:", e);
+              alert(
+                "Failed to copy. Please select and copy the code manually."
+              );
+            }
           });
-        }
-      });
-    </script>
-  </body>
+      }
+
+      // Function to set up readonly field listeners
+      function setupReadonlyFieldListeners() {
+        formFields.forEach((field) => {
+          if (field.type === "readonly" && field.sourceFieldId) {
+            const sourceField = formFields.find(
+              (f) => f.id === field.sourceFieldId
+            );
+            if (sourceField && sourceField.type === "select") {
+              const sourceElement = document.getElementById(
+                `preview_${sourceField.id}`
+              );
+              const targetElement = document.getElementById(
+                `preview_${field.id}`
+              );
+
+              if (sourceElement && targetElement) {
+                // Update the readonly field with the value of the selected option
+                const updateReadonlyField = () => {
+                  const selectedOption =
+                    sourceElement.options[sourceElement.selectedIndex];
+                  if (selectedOption && selectedOption.value) {
+                    targetElement.value = selectedOption.value; // Changed from selectedOption.text
+                  } else {
+                    targetElement.value = "";
+                  }
+                };
+
+                // Initial update
+                updateReadonlyField();
+
+                // Update on change
+                sourceElement.addEventListener("change", updateReadonlyField);
+              }
+            }
+          }
+        });
+      }
+    });
+  </script>
+</body>
+
 </html>

@@ -1,7 +1,7 @@
 họ tên
 
 chữ cái đầu
-^[A-Z][a-z]_(\s+[A-Z][a-z]_)+$
+^[A-Z][a-z]*(\s+[A-Z][a-z]*)+$
 
 số điện thoại
 hoặc và 10 số
@@ -9,39 +9,41 @@ hoặc và 10 số
 
 gmail
 
-@.\*\.com$
+@.*\.com$
 ^[a-zA-Z0-9._%+-]+@gmail\.com$
 
 1đ) HỌ VÀ TÊN: Có ít nhất 2 từ và ký tự đầu tiên của mỗi từ phải được viết hoa. Thiết lập
 giá trị mặc định là Họ tên SV (ví dụ: Nguyen Van An )
-^[A-Z][a-z]_(\s+[A-Z][a-z]_)+$
+^[A-Z][a-z]*(\s+[A-Z][a-z]*)+$
+
 
 b. (1đ) SỐ ĐIỆN THOẠI: theo mẫu: 0XXX.XXX.XXX trong đó X: là ký tự số (số điện thoại
 10 ký tự số, bắt đầu là 09, 08, 07, 06, 05, 04,03).
 ^(09|08|07|06|05|04|03)\d{2}\.\d{3}\.\d{3}$
 ^0[3-9]\d{2}\.\d{3}\.\d{3}$
 
-c. (1đ) EMAIL theo mẫu: name_email@gmail.com, trong đó name*email ít nhất là 3 ký tự
-chỉ là các ký tự chữ, số hoặc dấu gạch *
+EMAIL theo mẫu: name_email@gmail.com, trong đó name_email ít nhất là 3 ký tự chỉ là các ký tự chữ,sốhoặc dấu gạch _ 
 ^[a-zA-Z0-9_]{3,}@gmail\.com$
 
 d. (1đ) ĐỊA CHỈ bao gồm các kí tự số và chữ và kí tự /
 ^[a-zA-Z0-9/]+$
-nếu có thêm dấu cách 
+nếu có thêm dấu cách
 ^[a-zA-Z0-9\s/]+$
 
-Họ Và Tên: Có ít nhất 2 từ và ký tự đầu tiên của mỗi từ phải được viết hoa. Thiết lập giá trị mặc định là Họ tên SV ví dụ: Tran Anh Dung  
+Họ Và Tên: Có ít nhất 2 từ và ký tự đầu tiên của mỗi từ phải được viết hoa. Thiết lập giá trị mặc định là Họ tên SV ví dụ: Tran Anh Dung
 value="Nguyen Van An" vô chõ input
-^[A-Z][a-z]_(\s+[A-Z][a-z]_)+$
+^[A-Z][a-z]*(\s+[A-Z][a-z]*)+$
 
 c. Số Điện Thoại: theo mẫu: 0XXX.XXX.XXX trong đó X: là ký tự số.
 ^0\d{3}\.\d{3}\.\d{3}$
 
-e. Email Của Bạn theo mẫu: name_email@gmail.com , trong đó name_email ít nhất là
-3 ký tự trong đó có kí tự chữ, ký tự số, ít nhất 1 ký tự đặc biệt.
+e. Email Của Bạn theo mẫu: name_email@gmail.com , trong đó name_email ít nhất là 3 ký tự trong đó có kí tự chữ, ký tự số, ít nhất 1 ký tự đặc biệt.
+^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*_)[a-zA-Z0-9_]{3,}@gmail\.com$
 
 Mã Tour theo mẫu: XXX-XXX-mm-yyyy với X là các ký tự hoa chỉ thông tin điểm
 khởi hành và điểm đến, mm: tháng khởi hành, yyyy: năm khởi hành(1 điểm). (mức 1)
+^[A-Z]{3}-[A-Z]{3}-(0[1-9]|1[0-2])-\d{4}$
+
 c. Ngày khởi hành phải sau ngày hiện tại 30 ngày (1 điểm). (mức 2)
 d. Giá Tour là số >0 (1 điểm). (mức 3)
 e. Hình đại diện phải đúng loại hình thuộc 1 trong các đuôi kiểu jpg, gif, png không phân
