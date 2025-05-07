@@ -1511,44 +1511,26 @@
             case "number":
             case "tel":
               fieldHtml += `
-                                <input type="${field.type
-                }" class="form-control" id="preview_${field.id
-                }" name="${field.name}" 
-                                    placeholder="${field.placeholder}" ${field.required ? "required" : ""
-                }>
-                                <div class="invalid-feedback">${field.validation?.message ||
-                "This field is required"
-                }</div>
-                                ${field.required
-                  ? '<div class="text-danger small mt-1">*</div>'
-                  : ""
-                }
+                                <input type="${field.type}" class="form-control" id="preview_${field.id}" name="${field.name}" 
+                                    placeholder="${field.placeholder}" ${field.required ? "required" : ""}>
+                                <div class="invalid-feedback">${field.validation?.message || "This field is required"}</div>
+                                ${field.required ? '<div class="text-danger small mt-1">*</div>' : ""}
                             `;
               break;
 
             case "date":
               fieldHtml += `
-                                <input type="date" class="form-control" id="preview_${field.id
-                }" name="${field.name}" 
+                                <input type="date" class="form-control" id="preview_${field.id}" name="${field.name}" 
                                     ${field.required ? "required" : ""}>
-                                <div class="invalid-feedback">${field.dateValidation?.errorMessage ||
-                field.validation?.message ||
-                "Please select a valid date"
-                }</div>
-                                ${field.required
-                  ? '<div class="text-danger small mt-1">*</div>'
-                  : ""
-                }
+                                <div class="invalid-feedback">${field.dateValidation?.errorMessage || field.validation?.message || "Please select a valid date"}</div>
+                                ${field.required ? '<div class="text-danger small mt-1">*</div>' : ""}
                             `;
               break;
 
             case "select":
               fieldHtml += `
-                                <select class="form-select" id="preview_${field.id
-                }" name="${field.name}"${field.required ? " required" : ""
-                }>
-                                    <option value="" ${!field.required ? "selected" : ""
-                }>Choose...</option>
+                                <select class="form-select" id="preview_${field.id}" name="${field.name}"${field.required ? " required" : ""}>
+                                    <option value="" ${!field.required ? "selected" : ""}>Choose...</option>
                             `;
 
               if (field.options && field.options.length > 0) {
@@ -1560,10 +1542,7 @@
               fieldHtml += `
                                 </select>
                                 <div class="invalid-feedback">Please select an option</div>
-                                ${field.required
-                  ? '<div class="text-danger small mt-1">*</div>'
-                  : ""
-                }
+                                ${field.required ? '<div class="text-danger small mt-1">*</div>' : ""}
                             `;
               break;
 
@@ -1572,23 +1551,16 @@
                 field.options.forEach((option, i) => {
                   fieldHtml += `
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="${field.name
-                    }" 
-                                            id="preview_${field.id
-                    }_${i}" value="${option.value}" ${i === 0 && field.required ? "checked" : ""
-                    }>
-                                        <label class="form-check-label" for="preview_${field.id
-                    }_${i}">${option.text}</label>
+                                        <input class="form-check-input" type="radio" name="${field.name}" 
+                                            id="preview_${field.id}_${i}" value="${option.value}" ${i === 0 && field.required ? "checked" : ""}>
+                                        <label class="form-check-label" for="preview_${field.id}_${i}">${option.text}</label>
                                     </div>
                                 `;
                 });
               }
 
               fieldHtml += `<div class="invalid-feedback">Please select an option</div>
-                             ${field.required
-                  ? '<div class="text-danger small mt-1">*</div>'
-                  : ""
-                }`;
+                             ${field.required ? '<div class="text-danger small mt-1">*</div>' : ""}`;
               break;
 
             case "checkbox":
@@ -1605,48 +1577,33 @@
               }
 
               fieldHtml += `<div class="invalid-feedback">Please select at least one option</div>
-                             ${field.required
-                  ? '<div class="text-danger small mt-1">*</div>'
-                  : ""
-                }`;
+                             ${field.required ? '<div class="text-danger small mt-1">*</div>' : ""}`;
               break;
 
             // Add case for readonly field
             case "readonly":
               fieldHtml += `
-                                <input type="text" class="form-control" id="preview_${field.id
-                }" name="${field.name}" readonly
-                                    placeholder="${field.placeholder ||
-                "Value from source field"
-                }">
+                                <input type="text" class="form-control" id="preview_${field.id}" name="${field.name}" readonly
+                                    placeholder="${field.placeholder || "Value from source field"}">
                                 <!-- No validation needed for readonly -->
                             `;
               break;
             case "image":
               fieldHtml += `
     <input type="file" class="form-control" id="preview_${field.id}" name="${field.name}" accept="image/*" ${field.required ? "required" : ""}>
-    <div class="mt-2 image-preview-container" style="display:none">
+    <div class="mt-2 image-preview-container">
       <img id="preview_${field.id}_preview" src="" alt="Preview" style="max-width: 200px; max-height: 200px; display: none;">
     </div>
     <div class="invalid-feedback">${field.validation?.message || "Please select an image"}</div>
     ${field.required ? '<div class="text-danger small mt-1">*</div>' : ""}
   `;
               break;
-
-              fieldHtml += `
-                        <input type="file" class="form-control" id="preview_${field.id}" name="${field.name}" accept="image/*" ${field.required ? "required" : ""}>
-                        <div class="mt-2 image-preview-container">
-                          <img id="preview_${field.id}_preview" src="" alt="Preview" style="max-width: 200px; max-height: 200px; display: none;">
-                        </div>
-                        <div class="invalid-feedback">${field.validation?.message || "Please select an image"}</div>
-                        ${field.required ? '<div class="text-danger small mt-1">*</div>' : ""}
-                      `;
-              break;
           }
 
           fieldContainer.innerHTML = fieldHtml;
           previewForm.appendChild(fieldContainer);
-          // Add event listener for image preview but don't display it
+          
+          // Add event listener for image preview
           if (field.type === "image") {
             const imageInput = document.getElementById(`preview_${field.id}`);
             const imagePreview = document.getElementById(`preview_${field.id}_preview`);
@@ -1657,7 +1614,7 @@
                   const reader = new FileReader();
                   reader.onload = function (e) {
                     imagePreview.src = e.target.result;
-                    imagePreview.style.display = 'none'; // Hide the preview
+                    imagePreview.style.display = 'block';
                   }
                   reader.readAsDataURL(this.files[0]);
                 } else {
@@ -1899,6 +1856,7 @@
 
         return rowData;
       }
+      
       function renderDataTable() {
         // Clear table body
         dataTableBody.innerHTML = "";
@@ -1929,8 +1887,6 @@
           dataTableBody.appendChild(row);
         });
       }
-
-
 
       function getDefaultLabel(fieldType) {
         const labels = {
@@ -2075,6 +2031,17 @@
                 formHtml += ` placeholder="${field.placeholder}"`;
               formHtml += `>\n`;
               break;
+              
+            case "image":
+              formHtml += `    <input type="file" class="form-control" id="${field.name}" name="${field.name}" accept="image/*"${field.required ? " required" : ""}>\n`;
+              formHtml += `    <div class="mt-2 image-preview-container">\n`;
+              formHtml += `      <img id="${field.name}_preview" src="" alt="Preview" style="max-width: 200px; max-height: 200px; display: none;">\n`;
+              formHtml += `    </div>\n`;
+              formHtml += `    <div class="invalid-feedback">${field.validation?.message || "Vui lòng chọn ảnh"}</div>\n`;
+              if (field.required) {
+                formHtml += `    <div class="text-danger small mt-1">*</div>\n`;
+              }
+              break;
           }
           formHtml += `  </div>\n`;
         });
@@ -2122,6 +2089,29 @@
         let jqueryJs = `$(document).ready(function () {
   let rowCount = 1;
 
+  // Setup image preview functionality
+  function setupImagePreviews() {
+    $('input[type="file"][accept="image/*"]').each(function() {
+      const inputId = $(this).attr('id');
+      const previewId = inputId + '_preview';
+      
+      $(this).on('change', function() {
+        const file = this.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            $('#' + previewId).attr('src', e.target.result).show();
+          }
+          reader.readAsDataURL(file);
+        } else {
+          $('#' + previewId).attr('src', '').hide();
+        }
+      });
+    });
+  }
+  
+  setupImagePreviews();
+
   function setupReadonlyFields() {`;
 
         // Only include this section if there are readonly fields
@@ -2141,7 +2131,7 @@
     function update_${field.name}() {
       const selectedValue = $source_${sourceField.name}.val();
       if (selectedValue) {
-       $target_${field.name}.val(selectedValue);
+       $target_${field.name}.val($source_${sourceField.name}.find("option:selected").text());
       } else {
           $target_${field.name}.val("");
       }
@@ -2204,8 +2194,7 @@
                   jqueryJs += `
     if (${field.name}Input.val().trim() === "") {
       ${field.name}Input.addClass("is-invalid");
-      ${field.name
-                    }Input.siblings(".invalid-feedback").text("Vui lòng nhập ${field.label.toLowerCase()}").show();
+      ${field.name}Input.siblings(".invalid-feedback").text("Vui lòng nhập ${field.label.toLowerCase()}").show();
       isValid = false;
     } else `;
                 }
@@ -2217,12 +2206,9 @@
                     : `
     if (${field.name}Input.val().trim() !== "") {
       `;
-                  jqueryJs += `if (!${field.name}Pattern.test(${field.name
-                    }Input.val().trim())) {
+                  jqueryJs += `if (!${field.name}Pattern.test(${field.name}Input.val().trim())) {
       ${field.name}Input.addClass("is-invalid");
-      ${field.name}Input.siblings(".invalid-feedback").text("${field.validation.message ||
-                    `Vui lòng nhập ${field.label.toLowerCase()} hợp lệ`
-                    }").show();
+      ${field.name}Input.siblings(".invalid-feedback").text("${field.validation.message || `Vui lòng nhập ${field.label.toLowerCase()} hợp lệ`}").show();
       isValid = false;
     } else {
       ${field.name}Input.addClass("is-valid");
@@ -2243,8 +2229,7 @@
                   jqueryJs += `
     if (${field.name}Input.val() === "") {
       ${field.name}Input.addClass("is-invalid");
-      ${field.name
-                    }Input.siblings(".invalid-feedback").text("Vui lòng chọn ${field.label.toLowerCase()}").show();
+      ${field.name}Input.siblings(".invalid-feedback").text("Vui lòng chọn ${field.label.toLowerCase()}").show();
       isValid = false;
     } else `;
                 }
@@ -2267,40 +2252,32 @@
       
       if (selectedDate >= today) {
         dateIsValid = false;
-        errorMessage = "${field.dateValidation.errorMessage || "Ngày phải trước hôm nay"
-                      }";
+        errorMessage = "${field.dateValidation.errorMessage || "Ngày phải trước hôm nay"}";
       }`;
                   } else if (field.dateValidation.afterToday) {
                     jqueryJs += `
       
       if (selectedDate < today) {
         dateIsValid = false;
-        errorMessage = "${field.dateValidation.errorMessage || "Ngày phải sau hôm nay"
-                      }";
+        errorMessage = "${field.dateValidation.errorMessage || "Ngày phải sau hôm nay"}";
       }`;
                   } else if (field.dateValidation.beforeYears !== undefined) {
                     jqueryJs += `
       
       const limitDate = new Date(today);
-      limitDate.setFullYear(today.getFullYear() - ${field.dateValidation.beforeYears
-                      });
+      limitDate.setFullYear(today.getFullYear() - ${field.dateValidation.beforeYears});
       if (selectedDate > limitDate) {
         dateIsValid = false;
-        errorMessage = "${field.dateValidation.errorMessage ||
-                      `Ngày phải trước ${field.dateValidation.beforeYears} năm trước`
-                      }";
+        errorMessage = "${field.dateValidation.errorMessage || `Ngày phải trước ${field.dateValidation.beforeYears} năm trước`}";
       }`;
                   } else if (field.dateValidation.afterYears !== undefined) {
                     jqueryJs += `
       
       const limitDate = new Date(today);
-      limitDate.setFullYear(today.getFullYear() + ${field.dateValidation.afterYears
-                      });
+      limitDate.setFullYear(today.getFullYear() + ${field.dateValidation.afterYears});
       if (selectedDate < limitDate) {
         dateIsValid = false;
-        errorMessage = "${field.dateValidation.errorMessage ||
-                      `Ngày phải sau ${field.dateValidation.afterYears} năm tới`
-                      }";
+        errorMessage = "${field.dateValidation.errorMessage || `Ngày phải sau ${field.dateValidation.afterYears} năm tới`}";
       }`;
                   }
 
@@ -2329,8 +2306,7 @@
                   jqueryJs += `
     if (${field.name}Input.val() === "") {
       ${field.name}Input.addClass("is-invalid");
-      ${field.name
-                    }Input.siblings(".invalid-feedback").text("Vui lòng chọn ${field.label.toLowerCase()}").show();
+      ${field.name}Input.siblings(".invalid-feedback").text("Vui lòng chọn ${field.label.toLowerCase()}").show();
       isValid = false;
     } else {
       ${field.name}Input.addClass("is-valid");
@@ -2365,6 +2341,19 @@
     }`;
                 }
                 break;
+                
+              case "image":
+                if (field.required) {
+                  jqueryJs += `
+    if (${field.name}Input.get(0).files.length === 0) {
+      ${field.name}Input.addClass("is-invalid");
+      ${field.name}Input.siblings(".invalid-feedback").text("Vui lòng chọn ${field.label.toLowerCase()}").show();
+      isValid = false;
+    } else {
+      ${field.name}Input.addClass("is-valid");
+    }`;
+                }
+                break;
             }
           }
         });
@@ -2396,6 +2385,10 @@
                   jqueryJs += `
         ${jsFriendlyColName}: $("#${field.name}").val() || "",`;
                   break;
+                case "image":
+                  jqueryJs += `
+        ${jsFriendlyColName}: $("#${field.name}_preview").attr("src") || "",`;
+                  break;
                 default:
                   jqueryJs += `
         ${jsFriendlyColName}: $("#${field.name}").val().trim() || "",`;
@@ -2424,6 +2417,8 @@
       
       this.reset();
       $(".form-control").removeClass("is-valid is-invalid");
+      // Reset image previews
+      $('img[id$="_preview"]').attr("src", "").hide();
       
       const modalElement = document.getElementById("myModal");
       if (modalElement) {
@@ -2444,73 +2439,65 @@ function addRowToTable(rowData) {
   $newRow.append($("<td></td>").text(rowCount++));
   
   ${tableColumns
-            .map((column) => {
-              const jsFriendlyColName = column.name.replace(/[^a-zA-Z0-9_]/g, "_");
-              const field = column.fieldId ? formFields.find(f => f.id === column.fieldId) : null;
+    .map((column) => {
+      const jsFriendlyColName = column.name.replace(/[^a-zA-Z0-9_]/g, "_");
+      const field = column.fieldId ? formFields.find(f => f.id === column.fieldId) : null;
 
-              if (field && field.type === "image") {
-                return `if (rowData.${jsFriendlyColName}) {
-  const $cell = $("<td></td>");
-  $("<img>").attr({
-    src: rowData.${jsFriendlyColName},
-    style: "max-width:100px; max-height:100px;"
-  }).appendTo($cell);
-  $newRow.append($cell);
-} else {
-  $newRow.append($("<td></td>"));
-}`;
-              } else {
-                return `$newRow.append($("<td></td>").text(rowData.${jsFriendlyColName} || ""));`;
-              }
-            })
-            .join("\n    ")}
+      if (field && field.type === "image") {
+        return `if (rowData.${jsFriendlyColName}) {
+    const $cell = $("<td></td>");
+    $("<img>").attr({
+      src: rowData.${jsFriendlyColName},
+      style: "max-width:100px; max-height:100px;"
+    }).appendTo($cell);
+    $newRow.append($cell);
+  } else {
+    $newRow.append($("<td></td>"));
+  }`;
+      } else {
+        return `$newRow.append($("<td></td>").text(rowData.${jsFriendlyColName} || ""));`;
+      }
+    })
+    .join("\n    ")}
   
   $tableBody.append($newRow);
 }
 
   ${formFields
-            .filter((field) => field.type === "date" && field.dateValidation)
-            .map((field) => {
-              return `$('#${field.name}').on('change', function() {
+    .filter((field) => field.type === "date" && field.dateValidation)
+    .map((field) => {
+      return `$('#${field.name}').on('change', function() {
     const selectedDate = new Date($(this).val());
     const today = new Date(); today.setHours(0,0,0,0);
     let isValid = true;
     let errorMessage = "";
     
     ${field.dateValidation.beforeToday
-                  ? `if (selectedDate >= today) {
+      ? `if (selectedDate >= today) {
       isValid = false;
-      errorMessage = "${field.dateValidation.errorMessage || "Ngày phải trước hôm nay"
-                  }";
+      errorMessage = "${field.dateValidation.errorMessage || "Ngày phải trước hôm nay"}";
     }`
-                  : field.dateValidation.afterToday
-                    ? `if (selectedDate < today) {
+      : field.dateValidation.afterToday
+      ? `if (selectedDate < today) {
       isValid = false;
-      errorMessage = "${field.dateValidation.errorMessage || "Ngày phải sau hôm nay"
-                    }";
+      errorMessage = "${field.dateValidation.errorMessage || "Ngày phải sau hôm nay"}";
     }`
-                    : field.dateValidation.beforeYears !== undefined
-                      ? `const limitDate = new Date(today);
-    limitDate.setFullYear(today.getFullYear() - ${field.dateValidation.beforeYears
-                      });
+      : field.dateValidation.beforeYears !== undefined
+      ? `const limitDate = new Date(today);
+    limitDate.setFullYear(today.getFullYear() - ${field.dateValidation.beforeYears});
     if (selectedDate > limitDate) {
       isValid = false;
-      errorMessage = "${field.dateValidation.errorMessage ||
-                      `Ngày phải trước ${field.dateValidation.beforeYears} năm trước`
-                      }";
+      errorMessage = "${field.dateValidation.errorMessage || `Ngày phải trước ${field.dateValidation.beforeYears} năm trước`}";
     }`
-                      : field.dateValidation.afterYears !== undefined
-                        ? `const limitDate = new Date(today);
-    limitDate.setFullYear(today.getFullYear() + ${field.dateValidation.afterYears
-                        });
+      : field.dateValidation.afterYears !== undefined
+      ? `const limitDate = new Date(today);
+    limitDate.setFullYear(today.getFullYear() + ${field.dateValidation.afterYears});
     if (selectedDate < limitDate) {
       isValid = false;
-      errorMessage = "${field.dateValidation.errorMessage ||
-                        `Ngày phải sau ${field.dateValidation.afterYears} năm tới`
-                        }";
+      errorMessage = "${field.dateValidation.errorMessage || `Ngày phải sau ${field.dateValidation.afterYears} năm tới`}";
     }`
-                        : ""
-                }
+      : ""
+    }
     
     if (!isValid) {
       $(this).addClass('is-invalid').removeClass('is-valid');
@@ -2519,8 +2506,8 @@ function addRowToTable(rowData) {
       $(this).removeClass('is-invalid').addClass('is-valid');
     }
   });`;
-            })
-            .join("\n\n  ")}
+    })
+    .join("\n\n  ")}
 });`;
 
         // Update code in modal and highlight
@@ -2555,86 +2542,153 @@ function addRowToTable(rowData) {
 
   const tableData = [];
   let rowCount = 1;
-
-function addRowToTable(rowData) {
-  const tableBody = document.getElementById('dataTableBody');
-  const row = document.createElement('tr');
   
-  const sttCell = document.createElement('td');
-  sttCell.textContent = rowCount++;
-  row.appendChild(sttCell);
+  // Setup image previews
+  document.querySelectorAll('input[type="file"][accept="image/*"]').forEach(input => {
+    const previewId = input.id + '_preview';
+    input.addEventListener('change', function() {
+      if (this.files && this.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById(previewId).src = e.target.result;
+          document.getElementById(previewId).style.display = 'block';
+        }
+        reader.readAsDataURL(this.files[0]);
+      } else {
+        document.getElementById(previewId).style.display = 'none';
+      }
+    });
+  });
 
-  ${tableColumns
-            .map((column) => {
-              const columnName = column.name.replace(/\s+/g, "");
-              const field = column.fieldId ? formFields.find(f => f.id === column.fieldId) : null;
+  function addRowToTable(rowData) {
+    const tableBody = document.getElementById('dataTableBody');
+    const row = document.createElement('tr');
+    
+    const sttCell = document.createElement('td');
+    sttCell.textContent = rowCount++;
+    row.appendChild(sttCell);
 
-              if (field && field.type === "image") {
-                return `const ${columnName}Cell = document.createElement('td');
-if (rowData.${columnName}) {
-  const img = document.createElement('img');
-  img.src = rowData.${columnName};
-  img.style.maxWidth = '100px';
-  img.style.maxHeight = '100px';
-  ${columnName}Cell.appendChild(img);
-}
-row.appendChild(${columnName}Cell);`;
-              } else {
-                return `const ${columnName}Cell = document.createElement('td');
-${columnName}Cell.textContent = rowData.${columnName} || '';
-row.appendChild(${columnName}Cell);`;
-              }
-            })
-            .join("\n    ")}
+    ${tableColumns
+      .map((column) => {
+        const columnName = column.name.replace(/\s+/g, "");
+        const field = column.fieldId ? formFields.find(f => f.id === column.fieldId) : null;
 
-  tableBody.appendChild(row);
-}
+        if (field && field.type === "image") {
+          return `const ${columnName}Cell = document.createElement('td');
+  if (rowData.${columnName}) {
+    const img = document.createElement('img');
+    img.src = rowData.${columnName};
+    img.style.maxWidth = '100px';
+    img.style.maxHeight = '100px';
+    ${columnName}Cell.appendChild(img);
+  }
+  row.appendChild(${columnName}Cell);`;
+        } else {
+          return `const ${columnName}Cell = document.createElement('td');
+  ${columnName}Cell.textContent = rowData.${columnName} || '';
+  row.appendChild(${columnName}Cell);`;
+        }
+      })
+      .join("\n    ")}
+
+    tableBody.appendChild(row);
+  }
 
   function collectFormData(form) {
     const data = {};
     ${tableColumns
-            .map((column) => {
-              if (!column.fieldId)
-                return `// data.${column.name.replace(
-                  /\s+/g,
-                  ""
-                )} needs manual configuration`;
+      .map((column) => {
+        if (!column.fieldId)
+          return `// data.${column.name.replace(/\s+/g, "")} needs manual configuration`;
 
-              const field = formFields.find((f) => f.id === column.fieldId);
-              if (!field)
-                return `// data.${column.name.replace(/\s+/g, "")} field not found`;
+        const field = formFields.find((f) => f.id === column.fieldId);
+        if (!field)
+          return `// data.${column.name.replace(/\s+/g, "")} field not found`;
 
-              const columnName = column.name.replace(/\s+/g, "");
+        const columnName = column.name.replace(/\s+/g, "");
 
-              switch (field.type) {
-                case "radio":
-                  return `const selected${columnName} = form.querySelector('input[name="${field.name}"]:checked');
+        switch (field.type) {
+          case "radio":
+            return `const selected${columnName} = form.querySelector('input[name="${field.name}"]:checked');
     data.${columnName} = selected${columnName} ? selected${columnName}.value : '';`;
-                case "checkbox":
-                  return `const selected${columnName}s = form.querySelectorAll('input[name="${field.name}"]:checked');
+          case "checkbox":
+            return `const selected${columnName}s = form.querySelectorAll('input[name="${field.name}"]:checked');
     const ${columnName}Values = [];
     selected${columnName}s.forEach(cb => ${columnName}Values.push(cb.value));
     data.${columnName} = ${columnName}Values.join(', ');`;
-                case "readonly":
-                  return `data.${columnName} = document.getElementById('${field.name}')?.value || '';`;
-                default:
-                  return `data.${columnName} = document.getElementById('${field.name}')?.value || '';`;
-              }
-            })
-            .filter((line) => line)
-            .join("\n    ")}
+          case "readonly":
+            return `data.${columnName} = document.getElementById('${field.name}')?.value || '';`;
+          case "image":
+            return `data.${columnName} = document.getElementById('${field.name}_preview')?.src || '';`;
+          default:
+            return `data.${columnName} = document.getElementById('${field.name}')?.value || '';`;
+        }
+      })
+      .filter((line) => line)
+      .join("\n    ")}
 
     return data;
+  }
+
+  function validateForm(form) {
+    let isValid = true;
+    
+    // Reset validation states
+    form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+    
+    ${formFields
+      .filter(field => field.required)
+      .map(field => {
+        switch (field.type) {
+          case "text":
+          case "email":
+          case "number":
+          case "tel":
+          case "date":
+          case "select":
+            return `const ${field.name}El = form.querySelector('#${field.name}');
+    if (!${field.name}El.value.trim()) {
+      ${field.name}El.classList.add('is-invalid');
+      isValid = false;
+    }`;
+          case "radio":
+            return `const ${field.name}Checked = form.querySelector('input[name="${field.name}"]:checked');
+    if (!${field.name}Checked) {
+      form.querySelectorAll('input[name="${field.name}"]').forEach(el => el.classList.add('is-invalid'));
+      isValid = false;
+    }`;
+          case "checkbox":
+            return `const ${field.name}Checked = form.querySelectorAll('input[name="${field.name}"]:checked');
+    if (${field.name}Checked.length === 0) {
+      form.querySelectorAll('input[name="${field.name}"]').forEach(el => el.classList.add('is-invalid'));
+      isValid = false;
+    }`;
+          case "image":
+            return `const ${field.name}El = form.querySelector('#${field.name}');
+    if (${field.name}El.files.length === 0) {
+      ${field.name}El.classList.add('is-invalid');
+      isValid = false;
+    }`;
+        }
+      })
+      .join("\n    ")}
+      
+    return isValid;
   }
 
   document.getElementById('myForm')?.addEventListener('submit', function(event) {
     event.preventDefault();
     
-    if (this.checkValidity()) {
+    if (validateForm(this)) {
       const newRowData = collectFormData(this);
       tableData.push(newRowData);
       addRowToTable(newRowData);
       this.reset();
+      // Reset image previews
+      this.querySelectorAll('img[id$="_preview"]').forEach(img => {
+        img.src = '';
+        img.style.display = 'none';
+      });
     }
   });
 
