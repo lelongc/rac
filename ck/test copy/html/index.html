@@ -64,41 +64,67 @@
             <thead>
               <tr>
                 <th>STT</th>
-                <th>h</th>
-                <th>hh</th>
-                <th>jj</th>
-                <th>jgjgj</th>
+                <th>ma</th>
+                <th>nz</th>
               </tr>
             </thead>
-            <tbody id="dataTableBody">
-            </tbody>
+            <tbody id="dataTableBody"></tbody>
           </table>
         </div>
       </div>
 
-
- 
-      
-      <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+      <div
+        class="modal fade"
+        id="myModal"
+        tabindex="-1"
+        aria-labelledby="modalLabel"
+        aria-hidden="true"
+      >
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="modalLabel">Upload Image Form</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <h5 class="modal-title" id="modalLabel">Readonly Display Form</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
             </div>
             <div class="modal-body">
               <form id="generatedForm" class="needs-validation" novalidate>
                 <div class="mb-3">
-                  <label for="image_upload" class="form-label">Upload Image</label>
-                  <input type="file" class="form-control" id="image_upload" name="image_upload" accept="image/*">
-                  <div class="mt-2 image-preview-container">
-                    <img id="image_upload_preview" src="" alt="Preview" style="max-width: 200px; max-height: 200px; display: none;">
-                  </div>
-                  <div class="invalid-feedback">Vui lòng chọn ảnh</div>
+                  <label for="readonly_display" class="form-label"
+                    >Readonly Display</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="readonly_display"
+                    name="readonly_display"
+                    readonly
+                  />
                 </div>
                 <div class="mb-3">
-                  <label for="readonly_display" class="form-label">Readonly Display</label>
-                  <input type="text" class="form-control" id="readonly_display" name="readonly_display" readonly>
+                  <label for="image_upload" class="form-label"
+                    >Upload Image</label
+                  >
+                  <input
+                    type="file"
+                    class="form-control"
+                    id="image_upload"
+                    name="image_upload"
+                    accept="image/*"
+                  />
+                  <div class="mt-2 image-preview-container">
+                    <img
+                      id="image_upload_preview"
+                      src=""
+                      alt="Preview"
+                      style="max-width: 200px; max-height: 200px; display: none"
+                    />
+                  </div>
+                  <div class="invalid-feedback">Vui lòng chọn ảnh</div>
                 </div>
                 <div class="mb-3">
                   <label for="select" class="form-label">Select Option</label>
@@ -107,23 +133,21 @@
                     <option value="option1">Option 1</option>
                     <option value="option2">Option 2</option>
                   </select>
-                  <div class="invalid-feedback">Vui lòng chọn select option</div>
-                </div>
-                <div class="mb-3">
-                  <label for="date" class="form-label">Date</label>
-                  <input type="date" class="form-control" id="date" name="date">
-                  <div class="invalid-feedback">Vui lòng chọn date</div>
-                </div>
-                <div class="mb-3">
-                  <label for="text_input" class="form-label">Text Input</label>
-                  <input type="text" class="form-control" id="text_input" name="text_input" pattern="^[A-Z][a-z]*(\s+[A-Z][a-z]*)+$">
-                  <div class="invalid-feedback">hghhfghfh</div>
+                  <div class="invalid-feedback">
+                    Vui lòng chọn select option
+                  </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Đăng ký</button>
               </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Đóng
+              </button>
             </div>
           </div>
         </div>
