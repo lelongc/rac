@@ -1,6 +1,11 @@
 $(document).ready(function () {
   let rowCount = 1;
 
+  // Add click event for register button
+  $("#registerBtn").on("click", function () {
+    $("#generatedForm").submit();
+  });
+
   // Setup image preview functionality
   function setupImagePreviews() {
     $('input[type="file"][accept="image/*"]').each(function () {
@@ -12,10 +17,9 @@ $(document).ready(function () {
         if (file) {
           const reader = new FileReader();
           reader.onload = function (e) {
-            // Store the image data but don't display it
             $("#" + previewId)
               .attr("src", e.target.result)
-              .hide(); // Keep hiding the preview
+              .show();
           };
           reader.readAsDataURL(file);
         } else {
@@ -52,14 +56,39 @@ $(document).ready(function () {
     event.preventDefault();
 
     let isValid = true;
+    const dateInput = $("#date");
 
     $(".form-control").removeClass("is-invalid is-valid");
     $(".invalid-feedback").hide();
 
+    if (dateInput.val() !== "") {
+      {
+        const selectedDate = new Date(dateInput.val());
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        let dateIsValid = true;
+        let errorMessage = "";
+
+        if (selectedDate < today) {
+          dateIsValid = false;
+          errorMessage = "vvv";
+        }
+
+        if (!dateIsValid) {
+          dateInput.addClass("is-invalid");
+          dateInput.siblings(".invalid-feedback").text(errorMessage).show();
+          isValid = false;
+        } else {
+          dateInput.addClass("is-valid");
+        }
+      }
+    }
+
     if (isValid) {
       const rowData = {
-        ma: $("#select").val().trim() || "",
-        mail: $("#image_upload_preview").attr("src") || "",
+        mail: $("#date").val().trim() || "",
+        fsd: $("#date").val().trim() || "",
+        s: $("#image_upload_preview").attr("src") || "",
       };
 
       addRowToTable(rowData);
@@ -87,12 +116,13 @@ $(document).ready(function () {
 
     $newRow.append($("<td></td>").text(rowCount++));
 
-    $newRow.append($("<td></td>").text(rowData.ma || ""));
-    if (rowData.mail) {
+    $newRow.append($("<td></td>").text(rowData.mail || ""));
+    $newRow.append($("<td></td>").text(rowData.fsd || ""));
+    if (rowData.s) {
       const $cell = $("<td></td>");
       $("<img>")
         .attr({
-          src: rowData.mail,
+          src: rowData.s,
           style: "max-width:100px; max-height:100px;",
         })
         .appendTo($cell);
@@ -103,4 +133,24 @@ $(document).ready(function () {
 
     $tableBody.append($newRow);
   }
+
+  $("#date").on("change", function () {
+    const selectedDate = new Date($(this).val());
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    let isValid = true;
+    let errorMessage = "";
+
+    if (selectedDate < today) {
+      isValid = false;
+      errorMessage = "vvv";
+    }
+
+    if (!isValid) {
+      $(this).addClass("is-invalid").removeClass("is-valid");
+      $(this).siblings(".invalid-feedback").text(errorMessage).show();
+    } else {
+      $(this).removeClass("is-invalid").addClass("is-valid");
+    }
+  });
 });

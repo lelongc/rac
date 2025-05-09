@@ -64,8 +64,9 @@
             <thead>
               <tr>
                 <th>STT</th>
-                <th>ma</th>
-                <th>nz</th>
+                <th>mail</th>
+                <th>fsd</th>
+                <th>s</th>
               </tr>
             </thead>
             <tbody id="dataTableBody"></tbody>
@@ -106,6 +107,27 @@
                   />
                 </div>
                 <div class="mb-3">
+                  <label for="date" class="form-label">Date</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="date"
+                    name="date"
+                  />
+                  <div class="invalid-feedback">Vui lòng chọn date</div>
+                </div>
+                <div class="mb-3">
+                  <label for="select" class="form-label">Select Option</label>
+                  <select class="form-select" id="select" name="select">
+                    <option value="" selected>Choose...</option>
+                    <option value="option1">Option 1</option>
+                    <option value="option2">Option 2</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    Vui lòng chọn select option
+                  </div>
+                </div>
+                <div class="mb-3">
                   <label for="image_upload" class="form-label"
                     >Upload Image</label
                   >
@@ -126,19 +148,7 @@
                   </div>
                   <div class="invalid-feedback">Vui lòng chọn ảnh</div>
                 </div>
-                <div class="mb-3">
-                  <label for="select" class="form-label">Select Option</label>
-                  <select class="form-select" id="select" name="select">
-                    <option value="" selected>Choose...</option>
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    Vui lòng chọn select option
-                  </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Đăng ký</button>
-              </form>
+                
             </div>
             <div class="modal-footer">
               <button
@@ -147,6 +157,9 @@
                 data-bs-dismiss="modal"
               >
                 Đóng
+              </button>
+              <button type="button" class="btn btn-primary" id="registerBtn">
+                Đăng ký
               </button>
             </div>
           </div>

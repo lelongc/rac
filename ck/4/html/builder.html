@@ -2478,6 +2478,7 @@
           modalHtml += `      </div>\n`;
           modalHtml += `      <div class="modal-footer">\n`;
           modalHtml += `        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>\n`;
+          modalHtml += `        <button type="button" class="btn btn-primary" id="registerBtn">Đăng ký</button>\n`;
           modalHtml += `      </div>\n`;
           modalHtml += `    </div>\n`;
           modalHtml += `  </div>\n`;
@@ -2486,6 +2487,11 @@
           // --- 3. Generate jQuery script for form validation & table interaction ---
           let jqueryJs = `$(document).ready(function () {
   let rowCount = 1;
+
+  // Add click event for register button
+  $("#registerBtn").on("click", function () {
+    $("#generatedForm").submit();
+  });
 
   // Setup image preview functionality
   function setupImagePreviews() {
