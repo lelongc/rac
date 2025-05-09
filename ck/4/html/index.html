@@ -94,259 +94,109 @@
           </div>
 
           <!-- Registration table -->
-          <table class="table table-bordered" id="memberList">
-            <thead class="bg-light">
-              <tr>
-                <th>STT</th>
-                <th>Họ và tên</th>
-                <th>Ngày sinh</th>
-                <th>Số điện thoại</th>
-                <th>Email</th>
-                <th>Khóa học</th>
-                <th>Hình thức học</th>
-                <th>Kỹ năng cần luyện</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Registration data will be inserted here -->
-            </tbody>
-          </table>
+<div class="table-responsive">
+  <table class="table table-bordered" id="dataTable">
+    <thead>
+      <tr>
+        <th>STT</th>
+        <th>name</th>
+        <th>date</th>
+        <th>pho</th>
+        <th>sec</th>
+        <th>rad</th>
+        <th>imh</th>
+      </tr>
+    </thead>
+    <tbody id="dataTableBody">
+    </tbody>
+  </table>
+</div>
         </div>
       </div>
 
       <!-- Registration modal -->
-      <div
-        class="modal fade"
-        id="myModal"
-        tabindex="-1"
-        aria-labelledby="modalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <!-- Modal header -->
-            <div class="modal-header">
-              <h2 class="modal-title" id="modalLabel">THÔNG TIN ĐĂNG KÍ</h2>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
 
-            <!-- Modal body with registration form -->
-            <div class="modal-body">
-              <div class="form-group">
-                <!-- Full name -->
-                <div class="row mt-2">
-                  <div class="col-3 text-end">
-                    <label for="txtName" class="fw-normal">Họ và tên</label>
-                  </div>
-                  <div class="col-9">
-                    <input type="text" id="txtName" class="form-control" value="Nguyen Van An"/>
-                    <span
-                      id="erName"
-                      class="text-danger small mt-1 d-block"
-                    ></span>
-                  </div>
-                </div>
 
-                <!-- Phone number -->
-                <div class="row mt-2">
-                  <div class="col-3 text-end">
-                    <label for="txtSDT" class="fw-normal">Số điện thoại</label>
-                  </div>
-                  <div class="col-9">
-                    <input type="text" id="txtSDT" class="form-control" />
-                    <span
-                      id="erSDT"
-                      class="text-danger small mt-1 d-block"
-                    ></span>
-                  </div>
-                </div>
-
-                <!-- Date of birth -->
-                <div class="row mt-2">
-                  <div class="col-3 text-end">
-                    <label for="txtNgaysinh" class="fw-normal">Ngày sinh</label>
-                  </div>
-                  <div class="col-9">
-                    <input type="date" id="txtNgaysinh" class="form-control" />
-                    <span
-                      id="erNgaysinh"
-                      class="text-danger small mt-1 d-block"
-                    ></span>
-                  </div>
-                </div>
-
-                <!-- Email -->
-                <div class="row mt-2">
-                  <div class="col-3 text-end">
-                    <label for="txtEmail" class="fw-normal">Email</label>
-                  </div>
-                  <div class="col-9">
-                    <input
-                      type="email"
-                      id="txtEmail"
-                      class="form-control"
-                      placeholder="your.email@example.com"
-                    />
-                    <span
-                      id="erEmail"
-                      class="text-danger small mt-1 d-block"
-                    ></span>
-                  </div>
-                </div>
-
-                <!-- Course selection -->
-                <div class="row mt-2">
-                  <div class="col-3 text-end">
-                    <label for="slKhoahoc" class="fw-normal">Khóa học</label>
-                  </div>
-                  <div class="col-9">
-                    <select id="slKhoahoc" class="form-select">
-                      <option value="3" data-name="Anh văn cơ bản">
-                        Anh văn cơ bản
-                      </option>
-                      <option value="6" data-name="Anh văn giao tiếp">
-                        Anh văn giao tiếp
-                      </option>
-                      <option value="12" data-name="Luyện thi IELTS">
-                        Luyện thi IELTS
-                      </option>
-                    </select>
-                  </div>
-                </div>
-
-                <!-- Study duration -->
-                <div class="row mt-2">
-                  <div class="col-3 text-end">
-                    <label for="txtThoiGianHoc" class="fw-normal"
-                      >Thời gian học</label
-                    >
-                  </div>
-                  <div class="col-9">
-                    <input
-                      type="text"
-                      id="txtThoiGianHoc"
-                      class="form-control"
-                      readonly
-                    />
-                  </div>
-                </div>
-
-                <!-- Study method -->
-                <div class="row mt-2">
-                  <div class="col-3 text-end">
-                    <label for="radioHinhthuc" class="fw-normal"
-                      >Hình thức học</label
-                    >
-                  </div>
-                  <div class="col-9">
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="hinhthuc"
-                        id="radioCenter"
-                        value="Học tại trung tâm"
-                        checked
-                      />
-                      <label class="form-check-label" for="radioCenter"
-                        >Học tại trung tâm</label
-                      >
-                    </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="hinhthuc"
-                        id="radioOnline"
-                        value="Học online"
-                      />
-                      <label class="form-check-label" for="radioOnline"
-                        >Học online</label
-                      >
-                    </div>
-                    <span
-                      id="erHinhthuc"
-                      class="text-danger small mt-1 d-block"
-                    ></span>
-                  </div>
-                </div>
-
-                <!-- Skills needed -->
-                <div class="row mt-2">
-                  <div class="col-3 text-end">
-                    <label for="chkSkills" class="fw-normal"
-                      >Kỹ năng cần luyện</label
-                    >
-                  </div>
-                  <div class="col-9">
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        id="chkListening"
-                        value="Kỹ năng nghe"
-                      />
-                      <label class="form-check-label" for="chkListening"
-                        >Kỹ năng nghe</label
-                      >
-                    </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        id="chkReading"
-                        value="Kỹ năng đọc"
-                      />
-                      <label class="form-check-label" for="chkReading"
-                        >Kỹ năng đọc</label
-                      >
-                    </div>
-                    <div class="form-check">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        id="chkWriting"
-                        value="Kỹ năng viết"
-                      />
-                      <label class="form-check-label" for="chkWriting"
-                        >Kỹ năng viết</label
-                      >
-                    </div>
-                    <span
-                      id="erSkills"
-                      class="text-danger small mt-1 d-block"
-                    ></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer d-flex justify-content-end">
-              <button
-                type="button"
-                class="btn btn-success btn-sm me-2"
-                onclick="DangKy()"
-              >
-                Đăng kí
-              </button>
-              <button
-                type="button"
-                class="btn btn-danger btn-sm"
-                data-bs-dismiss="modal"
-              >
-                Hủy
-              </button>
-            </div>
-          </div>
-        </div>
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLabel">Text Input Form</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-
+      <div class="modal-body">
+        <form id="generatedForm" class="needs-validation" novalidate>
+          <div class="mb-3">
+            <label for="text_input" class="form-label">Text Input</label>
+            <input type="text" class="form-control" id="text_input" name="text_input" required pattern="^[A-Z][a-z]*(\s+[A-Z][a-z]*)+$">
+            <div class="invalid-feedback">ss</div>
+            <div class="text-danger small mt-1">*</div>
+          </div>
+          <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input type="date" class="form-control" id="date" name="date">
+            <div class="invalid-feedback">Vui lòng chọn date</div>
+          </div>
+          <div class="mb-3">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" id="phone" name="phone">
+            <div class="invalid-feedback">Vui lòng nhập phone number</div>
+          </div>
+          <div class="mb-3">
+            <label for="select" class="form-label">Select Option</label>
+            <select class="form-select" id="select" name="select">
+              <option value="" selected>Choose...</option>
+              <option value="option1">Option 1</option>
+              <option value="option2">Option 2</option>
+            </select>
+            <div class="invalid-feedback">Vui lòng chọn select option</div>
+          </div>
+          <div class="mb-3">
+            <label for="checkbox" class="form-label">Checkboxes</label>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="checkbox" id="checkbox_0" value="option1">
+              <label class="form-check-label" for="checkbox_0">Option 1</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="checkbox" id="checkbox_1" value="option2">
+              <label class="form-check-label" for="checkbox_1">Option 2</label>
+            </div>
+            <div class="invalid-feedback">Vui lòng chọn ít nhất một tùy chọn</div>
+          </div>
+          <div class="mb-3">
+            <label for="readonly_display" class="form-label">Readonly Display</label>
+            <input type="text" class="form-control" id="readonly_display" name="readonly_display" readonly>
+          </div>
+          <div class="mb-3">
+            <label for="radio" class="form-label">Radio Options</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="radio" id="radio_0" value="option1">
+              <label class="form-check-label" for="radio_0">Option 1</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="radio" id="radio_1" value="option2">
+              <label class="form-check-label" for="radio_1">Option 2</label>
+            </div>
+            <div class="invalid-feedback">Vui lòng chọn radio options</div>
+          </div>
+          <div class="mb-3">
+            <label for="image_upload" class="form-label">Upload Image</label>
+            <input type="file" class="form-control" id="image_upload" name="image_upload" accept="image/*">
+            <div class="mt-2 image-preview-container">
+              <img id="image_upload_preview" src="" alt="Preview" style="max-width: 200px; max-height: 200px; display: none;">
+            </div>
+            <div class="invalid-feedback">Vui lòng chọn ảnh</div>
+          </div>
+          <button type="submit" class="btn btn-primary">Đăng ký</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-primary" id="registerBtn">Đăng ký</button>
+      </div>
+    </div>
+  </div>
+</div>
       <!-- Footer with student information -->
       <div id="footer">
         <div class="container">

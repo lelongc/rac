@@ -1,184 +1,179 @@
-function checkName() {
-  var name = $("#txtName").val();
+$(document).ready(function () {
+  let rowCount = 1;
 
-  if (name.trim() === "") {
-    $("#erName").text("Họ tên không được để trống");
-    return false;
+  // Add click event for register button
+  $("#registerBtn").on("click", function () {
+    $("#generatedForm").submit();
+  });
+
+  // Setup image preview functionality
+  function setupImagePreviews() {
+    $('input[type="file"][accept="image/*"]').each(function () {
+      const inputId = $(this).attr("id");
+      const previewId = inputId + "_preview";
+
+      $(this).on("change", function () {
+        const file = this.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            $("#" + previewId)
+              .attr("src", e.target.result)
+              .show();
+          };
+          reader.readAsDataURL(file);
+        } else {
+          $("#" + previewId)
+            .attr("src", "")
+            .hide();
+        }
+      });
+    });
   }
 
-  var regex = /^[A-Z][a-z]*(\s+[A-Z][a-z]*)+$/;
-  if (!regex.test(name)) {
-    $("#erName").text(
-      "Mỗi từ phải bắt đầu bằng chữ hoa và phần còn lại viết thường"
-    );
-    return false;
+  setupImagePreviews();
+
+  function setupReadonlyFields() {
+    const $source_select = $("#select");
+    const $target_readonly_display = $("#readonly_display");
+
+    function update_readonly_display() {
+      const selectedValue = $source_select.val();
+      if (selectedValue) {
+        $target_readonly_display.val(selectedValue);
+      } else {
+        $target_readonly_display.val("");
+      }
+    }
+
+    $source_select.on("change", update_readonly_display);
+    update_readonly_display();
   }
 
-  $("#erName").text("");
-  return true;
-}
+  setupReadonlyFields();
 
-function checkDateOfBirth() {
-  var dob = $("#txtNgaysinh").val();
-  var today = new Date();
-  var dobDate = new Date(dob);
+  $("#generatedForm").on("submit", function (event) {
+    event.preventDefault();
 
-  if (dob === "") {
-    $("#erNgaysinh").text("Ngày sinh không được rỗng");
-    return false;
-  } else if (dobDate >= today) {
-    $("#erNgaysinh").text("Ngày sinh phải trước ngày hiện tại");
-    return false;
-  } else {
-    $("#erNgaysinh").text("");
-    return true;
-  }
-}
+    let isValid = true;
+    const text_inputInput = $("#text_input");
+    const text_inputPattern = /^[A-Z][a-z]*(\s+[A-Z][a-z]*)+$/;
+    const dateInput = $("#date");
 
-function checkPhoneNum() {
-  var phone = $("#txtSDT").val();
+    $(".form-control").removeClass("is-invalid is-valid");
+    $(".invalid-feedback").hide();
 
-  if (phone.trim() === "") {
-    $("#erSDT").text("Số điện thoại không được để trống");
-    return false;
-  }
+    if (text_inputInput.val().trim() === "") {
+      text_inputInput.addClass("is-invalid");
+      text_inputInput
+        .siblings(".invalid-feedback")
+        .text("Vui lòng nhập text input")
+        .show();
+      isValid = false;
+    } else if (!text_inputPattern.test(text_inputInput.val().trim())) {
+      text_inputInput.addClass("is-invalid");
+      text_inputInput.siblings(".invalid-feedback").text("ss").show();
+      isValid = false;
+    } else {
+      text_inputInput.addClass("is-valid");
+    }
 
-  var regex = /^(09|03|08)\d{8}$/;
-  if (!regex.test(phone)) {
-    $("#erSDT").text(
-      "Số điện thoại phải có 10 số và bắt đầu với 09, 03 hoặc 08"
-    );
-    return false;
-  }
+    if (dateInput.val() !== "") {
+      {
+        const selectedDate = new Date(dateInput.val());
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        let dateIsValid = true;
+        let errorMessage = "";
 
-  $("#erSDT").text("");
-  return true;
-}
+        if (selectedDate >= today) {
+          dateIsValid = false;
+          errorMessage = "aaaa";
+        }
 
-function checkEmail() {
-  var email = $("#txtEmail").val();
+        if (!dateIsValid) {
+          dateInput.addClass("is-invalid");
+          dateInput.siblings(".invalid-feedback").text(errorMessage).show();
+          isValid = false;
+        } else {
+          dateInput.addClass("is-valid");
+        }
+      }
+    }
 
-  var regex = /@.*\.com$/;
-  if (!regex.test(email)) {
-    $("#erEmail").text("Email phải chứa @ và kết thúc với .com");
-    return false;
-  }
+    if (isValid) {
+      const rowData = {
+        name: $("#text_input").val().trim() || "",
+        date: $("#date").val().trim() || "",
+        pho: $("#phone").val().trim() || "",
+        sec: $("#select").val().trim() || "",
+        rad: $("input[name='radio']:checked").val() || "",
+        imh: $("#image_upload_preview").attr("src") || "",
+      };
 
-  $("#erEmail").text("");
-  return true;
-}
+      addRowToTable(rowData);
 
-function checkStudyMethod() {
-  if (!$("input[name='hinhthuc']:checked").length) {
-    $("#erHinhthuc").text("Vui lòng chọn hình thức học");
-    return false;
-  }
-  $("#erHinhthuc").text("");
-  return true;
-}
+      this.reset();
+      $(".form-control").removeClass("is-valid is-invalid");
+      // Reset image previews
+      $('img[id$="_preview"]').attr("src", "").hide();
 
-function checkSkills() {
-  if (
-    !$("#chkListening").is(":checked") &&
-    !$("#chkReading").is(":checked") &&
-    !$("#chkWriting").is(":checked")
-  ) {
-    $("#erSkills").text("Vui lòng chọn ít nhất một kỹ năng cần luyện");
-    return false;
-  }
-  $("#erSkills").text("");
-  return true;
-}
+      const modalElement = document.getElementById("myModal");
+      if (modalElement) {
+        const modalInstance = bootstrap.Modal.getInstance(modalElement);
+        if (modalInstance) {
+          modalInstance.hide();
+        } else {
+          $("#myModal").modal("hide");
+        }
+      }
+    }
+  });
 
-function updateThoiGianHoc() {
-  var selectedCourse = $("#slKhoahoc option:selected");
-  var duration = selectedCourse.val();
+  function addRowToTable(rowData) {
+    const $tableBody = $("#dataTableBody");
+    const $newRow = $("<tr></tr>");
 
-  $("#txtThoiGianHoc").val(duration + " tháng");
-}
+    $newRow.append($("<td></td>").text(rowCount++));
 
-function formatDate(dateString) {
-  if (!dateString) return "";
-  const date = new Date(dateString);
-  const day = date.getDate().toString().padStart(2, "0");
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const year = date.getFullYear();
-  return `${day}/${month}/${year}`;
-}
+    $newRow.append($("<td></td>").text(rowData.name || ""));
+    $newRow.append($("<td></td>").text(rowData.date || ""));
+    $newRow.append($("<td></td>").text(rowData.pho || ""));
+    $newRow.append($("<td></td>").text(rowData.sec || ""));
+    $newRow.append($("<td></td>").text(rowData.rad || ""));
+    if (rowData.imh) {
+      const $cell = $("<td></td>");
+      $("<img>")
+        .attr({
+          src: rowData.imh,
+          style: "max-width:100px; max-height:100px;",
+        })
+        .appendTo($cell);
+      $newRow.append($cell);
+    } else {
+      $newRow.append($("<td></td>"));
+    }
 
-function DangKy() {
-  var nameValid = checkName();
-  var dobValid = checkDateOfBirth();
-  var phoneValid = checkPhoneNum();
-  var emailValid = checkEmail();
-  var methodValid = checkStudyMethod();
-  var skillsValid = checkSkills();
-
-  if (
-    !nameValid ||
-    !dobValid ||
-    !phoneValid ||
-    !emailValid ||
-    !methodValid ||
-    !skillsValid
-  ) {
-    return;
+    $tableBody.append($newRow);
   }
 
-  var name = $("#txtName").val();
-  var sdt = $("#txtSDT").val();
-  var ngaysinh = $("#txtNgaysinh").val();
-  var email = $("#txtEmail").val();
-  var khoahocText = $("#slKhoahoc option:selected").text();
-  var hinhthuc = $('input[name="hinhthuc"]:checked').val();
+  $("#date").on("change", function () {
+    const selectedDate = new Date($(this).val());
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    let isValid = true;
+    let errorMessage = "";
 
-  var skills = [];
-  if ($("#chkListening").is(":checked")) skills.push($("#chkListening").val());
-  if ($("#chkReading").is(":checked")) skills.push($("#chkReading").val());
-  if ($("#chkWriting").is(":checked")) skills.push($("#chkWriting").val());
-  var skillsString = skills.join(", ");
+    if (selectedDate >= today) {
+      isValid = false;
+      errorMessage = "aaaa";
+    }
 
-  var formattedDate = formatDate(ngaysinh);
-
-  var rowCount = $("#memberList tbody tr").length + 1;
-  var newRow = `<tr>
-                  <td>${rowCount}</td>
-                  <td>${name}</td>
-                  <td>${formattedDate}</td>
-                  <td>${sdt}</td>
-                  <td>${email}</td>
-                  <td>${khoahocText}</td>
-                  <td>${hinhthuc}</td>
-                  <td>${skillsString}</td>
-                </tr>`;
-  $("#memberList tbody").append(newRow);
-
-  var myModalEl = document.getElementById("myModal");
-  var modal = bootstrap.Modal.getInstance(myModalEl);
-  modal.hide();
-
-  $(
-    '#myModal input[type="text"], #myModal input[type="email"], #myModal input[type="date"]'
-  ).val("");
-  $('#myModal input[type="checkbox"]').prop("checked", false);
-  $("#radioCenter").prop("checked", true);
-  $("#slKhoahoc").val("3");
-  updateThoiGianHoc();
-
-  $("#erName, #erNgaysinh, #erSDT, #erEmail, #erHinhthuc, #erSkills").text("");
-}
-
-$(function () {
-  $("#txtName").on("blur", checkName);
-  $("#txtNgaysinh").on("blur", checkDateOfBirth);
-  $("#txtSDT").on("blur", checkPhoneNum);
-  $("#txtEmail").on("blur", checkEmail);
-
-  $("#chkListening, #chkReading, #chkWriting").on("click", checkSkills);
-
-  $("input[name='hinhthuc']").on("click", checkStudyMethod);
-
-  updateThoiGianHoc();
-
-  $("#slKhoahoc").on("change", updateThoiGianHoc);
+    if (!isValid) {
+      $(this).addClass("is-invalid").removeClass("is-valid");
+      $(this).siblings(".invalid-feedback").text(errorMessage).show();
+    } else {
+      $(this).removeClass("is-invalid").addClass("is-valid");
+    }
+  });
 });
