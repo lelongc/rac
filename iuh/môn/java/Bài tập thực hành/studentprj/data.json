@@ -1,0 +1,37 @@
+[
+    {
+        "id":"1",
+        "name":"Ho Phuc Lam",
+        "age":"20",
+        "gender":"Male",
+        "major":"Computer Science"
+    },
+    {
+        "id":"2",
+        "name":"Tran Minh Anh",
+        "age":"20",
+        "gender":"Female",
+        "major":"Account"
+    },
+    {
+        "id":"3",
+        "name":"Nguyen Van Binh",
+        "age":"19",
+        "gender":"Male",
+        "major":"Software engiener"
+    },
+    {
+        "id":"4",
+        "name":"Le Van Can",
+        "age":"19",
+        "gender":"Male",
+        "major":"Information System"
+    },
+    {
+        "id":"5",
+        "name":"Tran Anh Dung",
+        "age":"18",
+        "gender":"Male",
+        "major":"Mathematics"
+    }
+]

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Đặt Mua Hoa</title>
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="../js/script.js"></script>
+    <style>
+      body {
+        margin: 0 auto;
+        box-sizing: border-box;
+      }
+      table img {
+        max-width: 50px;
+        height: auto;
+        display: block;
+        margin: auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container border border-black">
+      <nav class="bg-white text-primary p-2">
+        <div class="container d-flex align-items-center gap-3 ps-5 fw-light">
+          <a href="#" class="text-primary text-decoration-none">TRANG CHỦ</a>
+
+          <a href="#" class="text-primary text-decoration-none"
+            >CÂY XANH VĂN PHÒNG</a
+          >
+
+          <a href="#" class="text-primary text-decoration-none">TIN TỨC</a>
+
+          <a
+            href="#"
+            class="btn text-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#myModal"
+          >
+            ĐẶT MUA HOA
+          </a>
+        </div>
+      </nav>
+
+      <header class="text-center my-3">
+        <img src="../img/1.jpg" class="img-fluid rounded-top w-100" alt="" />
+      </header>
+
+      <div class="container mb-4">
+        <div class="row">
+          <div class="col-2 text-center mb-3">
+            <img
+              src="../img/2.jpg"
+              alt="Ảnh bên trái"
+              class="img-fluid rounded w-100 h-100"
+            />
+          </div>
+
+          <div class="col-8 text-center mb-3">
+            <h3 class="text-center text-uppercase fw-bold mb-3">
+              Danh Sách Thông Tin Đặt Hàng Nhanh
+            </h3>
+            <div class="table-responsive">
+              <table class="table table-striped" id="dataTable">
+                <thead>
+                  <tr>
+                    <th>STT</th>
+                    <th>h</th>
+                    <th>s</th>
+                    <th>n</th>
+                    <th>km</th>
+                    <th>a</th>
+                  </tr>
+                </thead>
+                <tbody id="dataTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="col-2 text-center mb-3">
+            <img
+              src="../img/3.jpg"
+              alt="Ảnh bên phải"
+              class="img-fluid rounded w-100 h-100"
+            />
+          </div>
+        </div>
+      </div>
+
+      <footer class="text-center p-3 mt-4">
+        MSSV: 23630851 | Lớp: DHCNTT19A | Họ Và Tên: Lê Thành Long
+      </footer>
+
+      <div
+        class="modal fade"
+        id="myModal"
+        tabindex="-1"
+        aria-labelledby="modalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title text-center w-100" id="modalLabel">
+                thông tin đặt hàng
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form id="generatedForm" class="needs-validation" novalidate>
+                <div class="mb-3 row">
+                  <label for="text_input" class="form-label text-end col-4"
+                    >họ và tên</label
+                  >
+                  <div class="col-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="text_input"
+                      name="text_input"
+                      required
+                    />
+                    <div class="invalid-feedback">sai định dạng ten</div>
+                    <div class="text-danger small mt-1">*</div>
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label for="phone" class="form-label text-end col-4"
+                    >số điện thoại</label
+                  >
+                  <div class="col-8">
+                    <input
+                      type="tel"
+                      class="form-control"
+                      id="phone"
+                      name="phone"
+                      required
+                    />
+                    <div class="invalid-feedback">sai định dangsdt</div>
+                    <div class="text-danger small mt-1">*</div>
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label for="date" class="form-label text-end col-4"
+                    >ngày đăt</label
+                  >
+                  <div class="col-8">
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="date"
+                      name="date"
+                    />
+                    <div class="invalid-feedback">Vui lòng chọn ngày đăt</div>
+                    <div class="text-danger small mt-1">*</div>
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label for="email" class="form-label text-end col-4"
+                    >mail</label
+                  >
+                  <div class="col-8">
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="email"
+                      name="email"
+                      required
+                    />
+                    <div class="invalid-feedback">sai định dạng mau</div>
+                    <div class="text-danger small mt-1">*</div>
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label for="image_upload" class="form-label text-end col-4"
+                    >Upload Image</label
+                  >
+                  <div class="col-8">
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="image_upload"
+                      name="image_upload"
+                      accept="image/*"
+                      required
+                    />
+                    <div class="mt-2 image-preview-container">
+                      <img
+                        id="image_upload_preview"
+                        src=""
+                        alt="Preview"
+                        style="
+                          max-width: 200px;
+                          max-height: 200px;
+                          display: none;
+                        "
+                      />
+                    </div>
+                    <div class="invalid-feedback">Vui lòng chọn ảnh</div>
+                    <div class="text-danger small mt-1">*</div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-primary w-100"
+                id="registerBtn"
+              >
+                Đăng ký
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

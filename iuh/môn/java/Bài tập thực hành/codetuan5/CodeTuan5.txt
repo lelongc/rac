@@ -1,0 +1,177 @@
+package lab5;
+public class BinarySearchTree {
+	private Node root;
+	int count;
+	public BinarySearchTree() {
+		
+		this.root = null;
+	}
+	public void insert(int value) {
+		root = insertr(root,value);
+	}	
+	private Node insertr(Node cur , int value) {
+		if( cur == null) return new Node(value);
+		if(value < cur.id) {
+			cur.left = insertr(cur.left , value);
+		}
+		else if (value > cur.id) {
+			cur.right = insertr(cur.right, value);
+		}
+		else return cur;
+		
+		return cur;
+		
+	}
+	public  void travel() {
+		System.out.println("duyet cay LNR");
+		travelr(root);
+		
+	}
+
+	private void travelr(Node cur) {
+		if(cur != null) {
+			travelr(cur.left);
+			System.out.println(cur.id + " ");
+			travelr(cur.right);
+			
+		}
+	}
+	public int demnode() {
+		return count = demnoder(root);
+	}
+	private int demnoder(Node cur) {
+		// TODO Auto-generated metShod stub
+		if(cur == null) return 0;
+		return 1 + demnoder(cur.left) + demnoder(cur.right);
+		
+	}
+	public int demnodela() {
+		return count = demnodelar(root);
+	}
+	private int demnodelar(Node cur) {
+		// TODO Auto-generated metShod stub
+		if(cur == null) return 0;
+		if(cur.left == null && cur.right == null) return 1;
+		return demnodelar(cur.left) + demnodelar(cur.right);
+		
+	}
+	public Node timmin() {
+		return timminr(root);
+	}
+	private Node timminr(Node cur) {
+		
+		if(cur == null)return null;
+		while(cur.left != null) {
+			cur = cur.left;
+		}
+		return cur;
+	}
+	public Node timmax( ) {
+		return timmaxr(root);
+		
+	}
+	private Node timmaxr(Node cur) {
+		if(cur == null)return null;
+		while(cur.right != null) {
+			cur = cur.right;
+		}
+		return cur;
+	}
+	public Node find(int id) {
+		return findr(root,id);
+	}
+	private Node findr(Node cur , int id) {
+		if( cur == null || cur.id == id) {
+			return cur;
+		}
+		if( cur.id > id ) {
+			return findr(cur.left,id);
+		}
+		return findr(cur.right,id);
+		
+		
+	}
+	public void xoa(int id ) {
+		root = xoar(root , id);
+	}
+	private Node xoar(Node cur , int id ) {
+		if (cur == null) {
+	        return null;
+	    }
+		
+		if(id < cur.id) {
+			cur.left = xoar(cur.left,id);
+			
+		}
+		else if(id > cur.id) {
+			cur.right = xoar(cur.right,id);		
+		}
+		else {
+			if(cur.left == null) {
+				return cur.right;
+			}
+			else if(cur.right == null) {
+				return cur.left;
+			}
+			
+			Node suc = timminr(cur.right);
+			cur.id = suc.id;
+			cur.right = xoar(cur.right,suc.id);
+			
+		}
+		return cur;
+	}
+
+	public static void main(String[] args) {
+		BinarySearchTree bst = new BinarySearchTree();
+		
+		System.out.println("--- Bắt đầu chèn các node vào cây ---");
+		int[] nodes = {50, 30, 70, 20, 40, 60, 80};
+		for (int nodeValue : nodes) {
+			bst.insert(nodeValue);
+		}
+		
+		System.out.println("\n--- 1. Kiểm tra duyệt cây ---");
+		bst.travel(); // Kết quả mong đợi: 20 30 40 50 60 70 80 
+		
+		System.out.println("\n--- 2. Kiểm tra đếm node ---");
+		System.out.println("Tổng số node: " + bst.demnode()); // Mong đợi: 7
+		System.out.println("Số node lá: " + bst.demnodela()); // Mong đợi: 4 (là các node 20, 40, 60, 80)
+		
+		System.out.println("\n--- 3. Kiểm tra tìm Min/Max ---");
+		System.out.println("Node nhỏ nhất: " + bst.timmin().id); // Mong đợi: 20
+		System.out.println("Node lớn nhất: " + bst.timmax().id); // Mong đợi: 80
+		
+		System.out.println("\n--- 4. Kiểm tra tìm kiếm ---");
+		System.out.println("Tìm node 40: " + (bst.find(40) != null ? "Tìm thấy" : "Không tìm thấy")); // Mong đợi: Tìm thấy
+		System.out.println("Tìm node 99: " + (bst.find(99) != null ? "Tìm thấy" : "Không tìm thấy")); // Mong đợi: Không tìm thấy
+
+		System.out.println("\n--- 5. Kiểm tra xóa node ---");
+		
+		// Test 1: Xóa node lá (20)
+		System.out.println("\nXóa node lá (20)...");
+		bst.xoa(20);
+		bst.travel(); // Mong đợi: 30 40 50 60 70 80
+		
+		// Test 2: Xóa node có 1 con (30)
+		System.out.println("\nXóa node có 1 con (30)...");
+		bst.xoa(30);
+		bst.travel(); // Mong đợi: 40 50 60 70 80
+		
+		// Test 3: Xóa node có 2 con (70)
+		System.out.println("\nXóa node có 2 con (70)...");
+		bst.xoa(70);
+		bst.travel(); // Mong đợi: 40 50 60 80
+        
+        // Test 4: Xóa node gốc (50)
+		System.out.println("\nXóa node gốc (50)...");
+		bst.xoa(50);
+		bst.travel(); // Mong đợi: 40 60 80
+        
+        System.out.println("\n--- Kiểm tra lại số node sau khi xóa ---");
+        System.out.println("Tổng số node: " + bst.demnode()); // Mong đợi: 3
+		System.out.println("Số node lá: " + bst.demnodela()); // Mong đợi: 2
+	}
+}
+
+

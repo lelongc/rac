@@ -1,0 +1,118 @@
+Bài 1: Viết chương trình nhập vào 3 số a, b, c. Xuất ra giá trị lớn nhất, giá trị nhỏ nhất.
+import java.util.Scanner;
+import java.math.*;
+public class bt1 {
+	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in);
+		System.out.print("Nhập a: ");
+		int a = input.nextInt();
+		System.out.print("Nhập b: ");
+		int b = input.nextInt();
+		System.out.print("Nhập c: ");
+		int c = input.nextInt();
+
+		int max = Math.max(a, Math.max(b, c));
+		int min = Math.min(a, Math.min(b, c));
+
+		System.out.println("Giá trị lớn nhất là: " + max);
+		System.out.println("Giá trị nhỏ nhất là: " + min);
+		input.close();
+	}
+}
+Bài 2: Viết chương trình Java xuất ra màn hình 10 dòng:
+*
+**
+***
+****
+*****
+******
+*******
+********
+*********
+**********
+public class bt2 {
+public static void main(String[] args) {
+   for (int i = 0; i < 10 ; i ++) {
+	   for(int j = 0 ; j < i+1; j++)
+		   System.out.print("*");
+	   System.out.println();
+	  }
+   }
+}
+
+Bài 3: Viết chương trình Java xuất ra màn hình 10 dòng:
+**********
+  *********
+    ********
+      *******
+        ******
+          *****
+            ****
+              ***
+                **
+                  *
+public class bt3 {
+public static void main(String[] args) {
+for (int i = 0; i < 10 ; i ++) {
+	for (int j = 0; j < i * 2 ; j++) System.out.print(" ");
+	for (int j = 0; j < 10 - i; j++) System.out.print("*");
+	System.out.println();
+	}
+}
+}
+Bài 4: Viết chương trình Java xuất ra màn hình 10 dòng:
+**********
+*                *
+*                *
+*                *
+*                *
+*                *
+*                *
+*                *
+*                *
+**********
+public class bt4 {
+      public static void main(String[] args) {
+            System.out.print("\n\n");
+            for (int i = 0; i < 10; i++) {
+                  for (int j = 0; j < 10; j++) {
+                        if (i == 0 || j == 0 || i == 9 || j == 9) {
+                              System.out.print("*");
+                        } else {
+                              System.out.print(" ");
+                        }
+
+                  }
+                  System.out.println();
+            }
+      }
+}
+Bài 5: Viết chương trình xuất ra màn hình 10 dòng:
+* * * * * * * * * * 
+* *                   * *
+*    *              *   *
+*       *        *      *
+*          *  *         *
+*          *  *         *
+*        *     *        *
+*      *         *      *
+*   *               *   *
+* *                   * *
+* * * * * * * * * * 
+public class bt5 {
+public static void main(String[] args) {
+    for(int i = 0 ; i < 10 ; i++) {
+		for(int j = 0; j < 10; j ++) {
+		    if(i == 0 || j == 0 || i== 9 || j ==9 || i==j || j == 9 - i    ) {
+		   	    System.out.print("*");
+		   	}
+		   	else {
+		   		System.out.print(" ");
+		   	}
+		 
+		}
+	    System.out.println();
+	}
+}
+}
+

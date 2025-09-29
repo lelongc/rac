@@ -1,0 +1,24 @@
+Chào bạn, hình này cho thấy máy ảo của bạn đang khởi động lại từ **file cài đặt (.iso)** thay vì từ ổ cứng đã cài Ubuntu. Đây là một bước rất bình thường sau khi cài đặt, bạn chỉ cần "tháo đĩa" cài đặt ra là xong.
+
+---
+### ## Nguyên nhân
+
+Hyper-V không tự động "tháo" file ISO ra khỏi ổ đĩa DVD ảo sau khi cài đặt xong. Vì vậy, khi khởi động lại, máy ảo ưu tiên khởi động từ ổ DVD (chứa file ISO) trước.
+
+---
+### ## Cách khắc phục
+
+1.  **Tắt máy ảo:** Trong Hyper-V Manager, chuột phải vào máy ảo và chọn **Turn Off**.
+2.  **Mở Cài đặt:** Chuột phải vào máy ảo lần nữa và chọn **Settings**.
+3.  **Tìm ổ DVD ảo:**
+    * Ở menu bên trái, tìm mục **SCSI Controller**.
+    * Bên dưới nó, bạn sẽ thấy **DVD Drive**. Hãy chọn vào mục này.
+4.  **Tháo file ISO:**
+    * Ở khung bên phải, bạn sẽ thấy phần "Media" đang trỏ đến file ISO của Ubuntu.
+    * Hãy chọn tùy chọn **None**.
+    * Nhấn **OK** để lưu lại.
+
+
+Thao tác này giống hệt như việc bạn lấy đĩa CD/DVD cài đặt ra khỏi máy tính thật sau khi cài xong Windows.
+
+Bây giờ, hãy **Start** máy ảo lại. Nó sẽ không còn thấy file cài đặt nữa và sẽ khởi động thẳng vào hệ điều hành Ubuntu mà bạn đã cài trên ổ cứng.

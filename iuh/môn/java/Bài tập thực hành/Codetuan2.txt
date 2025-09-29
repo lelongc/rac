@@ -1,0 +1,243 @@
+Bài 6: Viết chương trình nhập vào n số nguyên. Xuất ra màn hình giá trị lớn nhất, giá trị nhỏ nhất, giá trị trung bình n số nguyên đó, đếm số lượng lớn hơn trung bình, nhỏ hơn trung bình .
+import java.util.Scanner;
+
+public class bt6{
+      public static void main(String[] args) {
+            Scanner sc = new Scanner(System.in);
+            System.out.print("\nNhập vào số lượng số nguyên: ");
+            int n = sc.nextInt();
+
+            int[] numbers = new int[n];
+            int max = -999999999;
+            int min = 99999999;
+            int sum = 0;
+            for (int i = 0; i < n; i++) {
+                  System.out.print("Nhập số nguyên thứ " + (i + 1) + ": ");
+                  numbers[i] = sc.nextInt();
+                  if (numbers[i] > max) {
+                        max = numbers[i];
+                  }
+                  if (numbers[i] < min) {
+                        min = numbers[i];
+                  }
+                  sum += numbers[i];
+            }
+
+            double average = (double) sum / n;
+
+            System.out.println("Giá trị lớn nhất: " + max);
+            System.out.println("Giá trị nhỏ nhất: " + min);
+            System.out.println("Giá trị trung bình: " + average);
+            sc.close();
+      }
+}
+
+Bài 7: Viết chương trình nhập vào n số nguyên. Xuất ra màn hình dãy số theo thứ tự tăng dần, theo thứ tự giảm dần và dãy số đã nhập.
+import java.util.Scanner;
+
+public class bt7{
+      public static void main(String[] args) {
+            Scanner sc = new Scanner(System.in);
+            System.out.print("\nNhập vào số lượng số nguyên: ");
+            int n = sc.nextInt();
+
+            int[] numbers = new int[n];
+            for (int i = 0; i < n; i++) {
+                  System.out.print("Nhập số nguyên thứ " + (i + 1) + ": ");
+                  numbers[i] = sc.nextInt();
+            }
+
+            System.out.print("Dãy số đã nhập: \n");
+            for (int i = 0; i < n; i++) {
+                  System.out.print(numbers[i] + " ");
+            }
+
+            for (int i = 0; i < n - 1; i++) {
+                  for (int j = i + 1; j < n; j++) {
+                        if (numbers[i] > numbers[j]) {
+                              int temp = numbers[i];
+                              numbers[i] = numbers[j];
+                              numbers[j] = temp;
+                        }
+                  }
+            }
+
+            System.out.print("\nDãy số theo thứ tự tăng dần: ");
+            for (int i = 0; i < n; i++) {
+                  System.out.print(numbers[i] + " ");
+            }
+
+            for (int i = 0; i < n - 1; i++) {
+                  for (int j = i + 1; j < n; j++) {
+                        if (numbers[i] < numbers[j]) {
+                              int temp = numbers[i];
+                              numbers[i] = numbers[j];
+                              numbers[j] = temp;
+                        }
+                  }
+            }
+
+            System.out.print("\nDãy số theo thứ tự giảm dần: ");
+            for (int i = 0; i < n; i++) {
+                  System.out.print(numbers[i] + " ");
+            }
+
+            sc.close();
+      }
+}
+Bài 8: Viết chương trình nhập xuất ra màn hình dãy số Fibonachi F(n)=F(n-1)+F(n-2). F(0)=1;F(1)=1.
+1 1 2 3 5 8 13 21 34...
+public class bai8 {
+	public static int fibo(int n) {
+		if (n==0) return 1;
+		if (n==1) return 1;
+		return fibo(n-1)+fibo(n-2);
+	}
+	public static void main(String[] args) {
+		
+		for (int i=0;i<20;i++) System.out.print(fibo(i)+" ");
+	}
+
+}
+
+Bài 9: Viết chương trình xuất ra màn hình các chuỗi nhị phân n bít.
+
+public class bt9{
+	public class test {
+      public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Nhập số bít n: ");
+            int n = scanner.nextInt();
+            int max = (int) Math.pow(2, n);
+            for (int i = 0; i < max; i++) {
+                  String binary = Integer.toBinaryString(i);
+                  while (binary.length() < n) {
+                        binary = "0" + binary;
+                  }
+                  System.out.println(binary);
+            }
+            scanner.close();
+      }
+}
+
+
+}
+Bài 10: Viết chương trình liệt kê các phần tử xuất hiện trong mảng.
+import java.util.Scanner;
+
+public class test {
+      public static void main(String[] args) {
+            int n;
+            System.out.println("Nhap so phan tu: ");
+            Scanner nhap = new Scanner(System.in);
+            n = nhap.nextInt();
+            int dayso[] = new int[n];
+
+            for (int i = 0; i < n; i++) {
+                  System.out.print("nhap phan tu thu " + (i + 1) + ": ");
+                  dayso[i] = nhap.nextInt();
+            }
+
+            System.out.println("Cac phan tu trong mang:");
+            for (int i = 0; i < n; i++) {
+                  int count = 0;
+                  
+                  for (int j = 0; j < n; j++) {
+                        if (dayso[i] == dayso[j]) {
+                              count++;
+                        }
+                  }
+
+                  
+                  boolean check = false;
+                  for (int k = 0; k < i; k++) {
+                        if (dayso[k] == dayso[i]) {
+                              check = true;
+                              break;
+                        }
+                  }
+
+                  if (!check) {
+                        System.out.println("phan tu " + dayso[i] + " xuat hien " + count + " lan");
+                  }
+            }
+            nhap.close();
+      }
+}
+
+Bài 11: Viết chương trình tìm kiếm, thêm, xoá 1 phần tử vào 1 mảng đã sắp xếp.
+
+// Viết chương trình tìm kiếm, thêm, xoá 1 phần tử vào 1 mảng đã sắp xếp.
+import java.util.Scanner;
+
+public class test {
+      public static int binarySearch(int[] arr, int target) {
+            int left = 0;
+            int right = arr.length - 1;
+            while (left <= right) {
+                  int mid = (left + right) / 2;
+                  if (arr[mid] == target) {
+                        return mid;
+                  } else if (arr[mid] < target) {
+                        left = mid + 1;
+                  } else {
+                        right = mid - 1;
+                  }
+            }
+            return -1;
+      }
+
+      public static int[] insertElement(int[] arr, int newElement) {
+
+            int[] newArr = new int[arr.length + 1];
+            int i;
+            for (i = 0; i < arr.length && arr[i] < newElement; i++) {
+                  newArr[i] = arr[i];
+            }
+            newArr[i] = newElement;
+            for (; i < arr.length; i++) {
+                  newArr[i + 1] = arr[i];
+            }
+            return newArr;
+      }
+
+      public static void main(String[] args) {
+            int[] arr = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            System.out.print("nhap phan tu can tim: ");
+            Scanner scanner = new Scanner(System.in);
+            int searchElement = scanner.nextInt();
+            int index = binarySearch(arr, searchElement);
+            if (index != -1) {
+                  System.out.println("phan tu " + searchElement + " tai chi so: " + index);
+            } else {
+                  System.out.println("phan tu " + searchElement + " khong ton tai.");
+            }
+
+            System.out.print("Nhap phan tu can them: ");
+            int newElement = scanner.nextInt();
+            arr = insertElement(arr, newElement);
+            System.out.println("Mang sau khi them phan tu: ");
+            for (int i : arr) {
+                  System.out.print(i + " ");
+            }
+            System.out.print("\nnhap phan tu can xoa: ");
+            int deleteElement = scanner.nextInt();
+            int deleteIndex = binarySearch(arr, deleteElement);
+            if (deleteIndex != -1) {
+                  int[] newArr = new int[arr.length - 1];
+                  for (int i = 0, j = 0; i < arr.length; i++) {
+                        if (i != deleteIndex) {
+                              newArr[j++] = arr[i];
+                        }
+                  }
+                  arr = newArr;
+                  System.out.println("Mang sau khi xoa phan tu: ");
+                  for (int i : arr) {
+                        System.out.print(i + " ");
+                  }
+            } else {
+                  System.out.println("Phan tu " + deleteElement + " khong ton tai.");
+            }
+            scanner.close();
+      }
+} 

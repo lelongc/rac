@@ -1,0 +1,147 @@
+Chào bạn, để cài đặt mạng cho máy ảo Ubuntu trên Hyper-V, bạn có hai phương án chính. Tùy vào mục đích sử dụng mà bạn chọn cách phù hợp.
+
+Cách đơn giản và tốt nhất cho bạn là dùng **Default Switch** có sẵn của Hyper-V hoặc tạo một switch ảo kiểu **Internal** rồi cấu hình **NAT**.
+
+-----
+
+### \#\# Phương án 1: Dùng "Default Switch" (Dễ nhất) 🚀
+
+Hyper-V có sẵn một switch tên là "Default Switch". Đây là lựa chọn nhanh nhất, nó tự động cấp IP cho máy ảo và cho phép máy ảo truy cập Internet ngay lập tức thông qua kết nối của máy thật.
+
+#### **Cách làm:**
+
+1.  Tắt máy ảo Ubuntu.
+2.  Mở **Hyper-V Manager**, chuột phải vào máy ảo Ubuntu và chọn **Settings**.
+3.  Tìm đến mục **Network Adapter** ở menu bên trái.
+4.  Ở mục **Virtual switch**, chọn **Default Switch** từ danh sách.
+5.  Nhấn **OK**.
+
+Khi bạn khởi động Ubuntu, nó sẽ tự động nhận một địa chỉ IP (ví dụ: `172.x.x.x`) và có thể kết nối Internet luôn.
+
+  * **Ưu điểm:** Cực kỳ đơn giản, không cần cấu hình gì thêm.
+  * **Nhược điểm:** Địa chỉ IP của máy ảo có thể thay đổi sau mỗi lần khởi động lại, không ổn định để làm server.
+
+-----
+
+### \#\# Phương án 2: Tạo Switch "Internal" + Cấu hình NAT (Ổn định và chuyên nghiệp hơn) 💻
+
+Đây là cách chúng ta đã đề cập trước đó, giúp tạo ra một mạng riêng ảo (ví dụ `192.168.100.0/24`) cho máy ảo và máy thật giao tiếp. IP của máy ảo sẽ do bạn tự đặt và không bao giờ thay đổi. Đây là cách tốt nhất để dựng môi trường lab.
+
+#### **Bước 1: Tạo Virtual Switch kiểu Internal**
+
+1.  Trong **Hyper-V Manager**, nhìn sang menu **Actions** bên phải, chọn **Virtual Switch Manager...**.
+2.  Chọn **New virtual network switch**.
+3.  Chọn loại là **Internal** rồi nhấn **Create Virtual Switch**.
+4.  Đặt tên cho nó, ví dụ: **NATSwitch**.
+5.  Nhấn **OK**.
+
+#### **Bước 2: Cấu hình NAT bằng PowerShell**
+
+1.  Mở **PowerShell** với quyền **Administrator** (chuột phải vào Start, chọn PowerShell (Admin)).
+
+2.  Gõ lệnh sau để xem tên đầy đủ của card mạng ảo vừa tạo:
+
+    ```powershell
+    Get-NetAdapter
+    ```
+
+    Tìm dòng có tên chứa "NATSwitch", ví dụ: `vEthernet (NATSwitch)`.
+
+3.  Chạy lệnh sau để gán IP cho máy thật (máy host) làm gateway cho mạng ảo này. Thay `vEthernet (NATSwitch)` bằng tên đúng bạn vừa tìm được.
+
+    ```powershell
+    New-NetIPAddress -IPAddress 192.168.100.1 -PrefixLength 24 -InterfaceAlias "vEthernet (NATSwitch)"
+    ```
+
+4.  Chạy lệnh cuối để tạo NAT, cho phép máy ảo trong mạng này đi ra Internet:
+
+    ```powershell
+    New-NetNat -Name NATNetwork -InternalIPInterfaceAddressPrefix 192.168.100.0/24
+    ```
+
+#### **Bước 3: Gắn máy ảo vào Switch và Cấu hình IP tĩnh**
+
+1.  Vào **Settings** của máy ảo Ubuntu, mục **Network Adapter**, chọn virtual switch là **NATSwitch** bạn vừa tạo.
+2.  Khởi động Ubuntu và làm theo hướng dẫn **cấu hình IP tĩnh bằng Netplan** mà tôi đã gửi bạn ở câu trả lời trước, để đặt IP cho Ubuntu là `192.168.100.10`.
+
+-----
+
+### \#\# Tóm lại
+
+👉 Nếu bạn chỉ cần máy ảo có Internet để cài đặt phần mềm, dùng **Phương án 1 (Default Switch)** cho nhanh.
+
+👉 Nếu bạn muốn xây dựng một môi trường web server ổn định, lâu dài với IP không đổi để lập trình, hãy dùng **Phương án 2 (Internal + NAT)**. Đây là cách làm đúng chuẩn và chuyên nghiệp.
+
+
+
+Chào bạn, kết quả `ip a` cho thấy card mạng của bạn tên là **eth0** và đang nhận IP động (`172.22.77.60`). Để cài IP tĩnh thành `192.168.100.10` cho mạng NAT bạn đã tạo, bạn cần chỉnh sửa file cấu hình Netplan.
+
+-----
+
+### \#\# Hướng dẫn cài đặt IP tĩnh (Netplan) 📝
+
+#### **Bước 1: Chắc chắn máy ảo đang kết nối đúng Switch**
+
+Trước tiên, hãy **tắt máy ảo**. Mở **Settings** của máy ảo trong Hyper-V và đảm bảo mục **Network Adapter** đang được kết nối vào **NATSwitch** (mạng `192.168.100.x`) chứ không phải `Default Switch` (mạng `172.x.x.x`). Sau đó khởi động lại máy ảo.
+
+#### **Bước 2: Mở file cấu hình Netplan**
+
+Trong cửa sổ dòng lệnh của Ubuntu, gõ lệnh sau để mở file cấu hình. Tên file có thể hơi khác một chút (ví dụ `50-cloud-init.yaml`), nhưng nó thường là file `.yaml` duy nhất trong thư mục `/etc/netplan/`.
+
+```bash
+sudo nano /etc/netplan/00-installer-config.yaml
+
+```
+
+#### **Bước 3: Chỉnh sửa nội dung file**
+
+Bạn sẽ thấy một cấu hình có sẵn cho DHCP. Hãy xóa toàn bộ nội dung đó và thay thế bằng cấu hình sau.
+
+**Lưu ý:** Hãy copy và dán chính xác, vì YAML rất nhạy cảm với việc thụt lề (dấu cách).
+
+```yaml
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eth0:
+      dhcp4: no
+      addresses:
+        - 192.168.100.10/24  # IP tĩnh bạn muốn đặt
+      routes:
+        - to: default
+          via: 192.168.100.1    # Gateway, chính là IP của máy host
+      nameservers:
+        addresses: [8.8.8.8, 1.1.1.1] # DNS Server
+```
+
+Nhấn `Ctrl + X` để thoát, sau đó nhấn `Y` và `Enter` để lưu file.
+
+#### **Bước 4: Áp dụng và kiểm tra**
+
+1.  **Áp dụng cấu hình mạng mới:**
+
+    ```bash
+    sudo netplan apply
+nếu lỗi thì chmod 600 , chuyển qua root làm cho đỡ lỗi 
+    ```
+
+2.  **Kiểm tra lại IP:**
+
+    ```bash
+    ip a
+    ```
+
+    Bây giờ bạn sẽ thấy `eth0` đã có địa chỉ `inet 192.168.100.10/24`.
+
+3.  **Kiểm tra kết nối:**
+
+    ```bash
+    # Ping đến gateway (máy Windows host)
+    ping 192.168.100.1
+
+    # Ping ra Internet
+    ping google.com
+    ```
+
+Nếu các lệnh ping thành công là bạn đã cấu hình IP tĩnh hoàn tất.

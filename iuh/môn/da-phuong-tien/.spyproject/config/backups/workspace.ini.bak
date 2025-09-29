@@ -1,0 +1,12 @@
+[workspace]
+restore_data_on_startup = True
+save_data_on_exit = True
+save_history = True
+save_non_project_files = False
+project_type = 'empty-project-type'
+recent_files = ['lab3\\CODE_TH_IMAGES_VIDEOS\\module5_interlaced.py', 'lab3\\CODE_TH_IMAGES_VIDEOS\\module6_ntsc_pal.py', 'lab3\\CODE_TH_IMAGES_VIDEOS\\module7_keyframes.py', 'lab3\\CODE_TH_IMAGES_VIDEOS\\module8_chroma_subsampling.py']
+
+[main]
+version = 0.2.0
+recent_files = []
+

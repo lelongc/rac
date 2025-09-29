@@ -1,0 +1,139 @@
+Chắc chắn rồi. Đây là một script tự động hóa toàn bộ quá trình trên Ubuntu.
+
+Bạn chỉ cần tạo một file, dán nội dung này vào, sửa lại tên miền ở dòng số 4, sau đó chạy script với quyền `sudo` là xong.
+
+-----
+
+### **Hướng dẫn sử dụng**
+
+1.  **Trên máy ảo Ubuntu**, tạo một file mới, ví dụ `setup_ssl.sh , lỗi thì sửa sudo nano /etc/apt/sources.list`:
+
+    ```bash
+ sudo apt install apache2 openssl -y
+sudo apt update && sudo apt upgrade -y
+sudo systemctl start apache2
+sudo systemctl restart  apache2
+    nano setup_ssl.sh
+    ```
+
+2.  **Copy và dán** toàn bộ nội dung script bên dưới vào file đó.
+
+3.  **Sửa tên miền:** Thay đổi `"myweb.local"` ở dòng số 4 thành tên miền bạn muốn (ví dụ: `"project-x.dev"`).
+
+4.  **Lưu file:** Nhấn `Ctrl + X`, rồi `Y`, rồi `Enter`.
+
+5.  **Cấp quyền thực thi** cho file:
+
+    ```bash
+    chmod +x setup_ssl.sh
+    ```
+
+6.  **Chạy script** với quyền root:
+
+    ```bash
+    sudo ./setup_ssl.sh
+    ```
+
+Script sẽ tự động làm mọi thứ. Cuối cùng, nó sẽ in ra hướng dẫn các bước bạn cần làm tiếp theo trên máy Windows.
+
+-----
+
+### **Nội dung Script `setup_ssl.sh`**
+
+#!/bin/bash
+
+# ==========================================================
+# --- CẤU HÌNH: CHỈ CẦN SỬA TÊN MIỀN CỦA BẠN Ở ĐÂY ---
+DOMAIN="ubuntu.hyperv"
+# ==========================================================
+
+# Các biến tự động, không cần sửa
+WEB_ROOT="/var/www/$DOMAIN"
+CONF_FILE="/etc/apache2/sites-available/$DOMAIN.conf"
+KEY_FILE="/etc/ssl/private/$DOMAIN.key"
+CERT_FILE="/etc/ssl/certs/$DOMAIN.crt"
+
+# Kiểm tra quyền root
+if [ "$EUID" -ne 0 ]; then
+  echo "Lỗi: Vui lòng chạy script này với quyền root (sudo ./setup_ssl.sh)"
+  exit 1
+fi
+
+echo "🚀 Bắt đầu cấu hình web server cho domain: $DOMAIN (phiên bản có SAN)"
+echo "----------------------------------------------------"
+
+# [Bước 1/6] Tạo thư mục web
+echo "[1/6] Đang tạo thư mục web..."
+mkdir -p "$WEB_ROOT"
+chown -R www-data:www-data "$WEB_ROOT"
+# (Phần tạo file index.html giữ nguyên như cũ, không cần dán lại cho gọn)
+
+# [Bước 2/6] Tạo chứng chỉ SSL self-signed (phiên bản có SAN)
+echo "[2/6] Đang tạo chứng chỉ SSL có Subject Alternative Name (SAN)..."
+openssl req -x509 -nodes -days 3650 -newkey rsa:2048 \
+-keyout "$KEY_FILE" \
+-out "$CERT_FILE" \
+-subj "/C=VN/ST=Hanoi/L=Hanoi/O=LocalDev/CN=$DOMAIN" \
+-addext "subjectAltName = DNS:$DOMAIN"
+
+# [Bước 3/6] Tạo file cấu hình Apache VirtualHost
+echo "[3/6] Đang tạo file cấu hình Apache..."
+cat << EOF > "$CONF_FILE"
+<VirtualHost *:80>
+    ServerName $DOMAIN
+    Redirect permanent / https://$DOMAIN/
+</VirtualHost>
+
+<VirtualHost *:443>
+    ServerName $DOMAIN
+    DocumentRoot $WEB_ROOT
+    SSLEngine on
+    SSLCertificateFile $CERT_FILE
+    SSLCertificateKeyFile $KEY_FILE
+    <Directory $WEB_ROOT>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+EOF
+
+# [Bước 4/6] Kích hoạt site và module
+echo "[4/6] Đang kích hoạt site và module..."
+a2ensite "$DOMAIN.conf" > /dev/null 2>&1
+a2enmod ssl > /dev/null 2>&1
+a2dissite 000-default.conf > /dev/null 2>&1
+
+# [Bước 5/6] Khởi động lại Apache
+echo "[5/6] Đang khởi động lại Apache..."
+systemctl restart apache2
+
+# [Bước 6/6] In ra hướng dẫn
+# (Phần hướng dẫn giữ nguyên như cũ)
+echo ""
+echo "✅ HOÀN TẤT! ✅"
+echo "----------------------------------------------------"
+echo "Web server cho https://$DOMAIN đã được cấu hình xong trên Ubuntu."
+echo ""
+echo "👉 CÁC BƯỚC TIẾP THEO BẠN CẦN LÀM:"
+echo ""
+echo "1. ĐƯA WEB VÀO THƯ MỤC:"
+echo "   => Copy toàn bộ source code web của bạn vào thư mục: $WEB_ROOT . scp -r website neko@$DOMAIN:~/"
+echo "sudo mv ~/website/* /var/www/$DOMAIN/"
+
+echo "sudo chown -R www-data:www-data /var/www/$DOMAIN/"
+
+echo "2. COPY FILE CHỨNG CHỈ SANG WINDOWS:"
+echo "   => Dùng WinSCP hoặc scp để copy file sau từ Ubuntu sang máy Windows: scp neko@$DOMAIN:/etc/ssl/certs/$DOMAIN.crt . "
+echo "   $CERT_FILE"
+echo ""
+echo "3. CẤU HÌNH FILE HOSTS TRÊN WINDOWS:"
+echo "   => Mở file C:\Windows\System32\drivers\etc\hosts (bằng quyền Admin) và thêm dòng:"
+echo "      <IP_CUA_UBUNTU>  $DOMAIN"
+echo ""
+echo "4. CÀI ĐẶT CHỨNG CHỈ TRÊN WINDOWS ĐỂ CÓ Ổ KHÓA XANH:"
+echo "   => Nháy đúp vào file '$DOMAIN.crt' vừa copy, chọn:"
+echo "      'Install Certificate' -> 'Local Machine' -> 'Place all certificates...' -> 'Trusted Root Certification Authorities'."
+echo ""
+echo "   Lưu ý: Nhớ khởi động lại trình duyệt sau khi cài đặt."
+echo "----------------------------------------------------"

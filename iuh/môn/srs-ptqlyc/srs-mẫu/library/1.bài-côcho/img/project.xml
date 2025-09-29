@@ -1,0 +1,748 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project Author="Neko" CommentTableSortAscending="false" CommentTableSortColumn="Date Time" DocumentationType="html" ExportedFromDifferentName="false" ExporterVersion="16.1.1" Name="DFD-lv1" TextualAnalysisHighlightOptionCaseSensitive="false" UmlVersion="2.x" Xml_structure="simple">
+	<ProjectInfo>
+		<LogicalView>
+			<LogicalViewElement DiagramRef="FPxgUGmGAqC4AQXF" Id="FPxgUGmGAqC4AQXF" Type="Diagram"/>
+		</LogicalView>
+		<ProjectOptions>
+			<DiagramOptions ActivityDiagramControlFlowDisplayOption="\u0000" ActivityDiagramShowActionCallBehaviorOption="\u0000" ActivityDiagramShowActivityEdgeWeight="true" ActivityDiagramShowDiagramFrame="true" ActivityDiagramShowObjectNodeType="true" ActivityDiagramShowPartitionHandle="\u0000" AddDataStoresExtEntitiesToDecomposedDFD="\u0002" AlignColumnProperties="true" AllowConfigShowInOutFlowButtonsInDataFlowDiagram="false" AutoGenerateRoleName="false" AutoSetAttributeType="true" AutoSetColumnType="true" AutoSyncRoleName="true" BlockDefinitionDiagramShowDiagramFrame="true" BpPoolLaneDefaultOrientation="\u0000" BpdAutoStretchPools="true" BpdConnectGatewayWithFlowObjectInDifferentPool="\u0000" BpdDefaultConnectionPointStyle="\u0001" BpdDefaultConnectorStyle="\u0005" BpdDhowIdOption="\u0000" BpdShowActivitiesTypeIcon="true" BusinessProcessDiagramDefaultLanguage="English" ClassVisibilityStyle="\u0001" ConnectorLabelOrientation="\u0000" CreateOneMessagePerDirection="true" DecisionMergeNodeConnectionPointStyle="\u0000" DefaultAssociationEndNavigable="\u0001" DefaultAssociationEndVisibility="\u0000" DefaultAssociationShowFromMultiplicity="true" DefaultAssociationShowFromRoleName="true" DefaultAssociationShowFromRoleVisibility="true" DefaultAssociationShowStereotypes="true" DefaultAssociationShowToMultiplicity="true" DefaultAssociationShowToRoleName="true" DefaultAssociationShowToRoleVisibility="true" DefaultAttributeMultiplicity="false" DefaultAttributeType="" DefaultAttributeVisibility="\u0001" DefaultClassAttributeMultiplicity="" DefaultClassAttributeMultiplicityOrdered="false" DefaultClassAttributeMultiplicityUnique="true" DefaultClassInterfaceBall="false" DefaultClassVisibility="\u0004" DefaultColumnType="integer(10)" DefaultConnectionPointStyle="\u0000" DefaultConnectorStyle="\u0001" DefaultDiagramBackground="rgb(255, 255, 255)" DefaultDisplayAsRobustnessAnalysisIcon="true" DefaultDisplayAsRobustnessAnalysisIconInSequenceDiagram="true" DefaultDisplayAsStereotypeIcon="false" DefaultFontColor="rgb(0, 0, 0)" DefaultGenDiagramTypeFromScenario="\u0000" DefaultHtmlDocFontColor="rgb(0, 0, 0)" DefaultLineJumps="\u0000" DefaultOperationVisibility="\u0004" DefaultParameterDirection="\u0002" DefaultShowAttributeInitialValue="true" DefaultShowAttributeOption="\u0001" DefaultShowClassMemberStereotype="true" DefaultShowDirection="false" DefaultShowMultiplicityConstraints="false" DefaultShowOperationOption="\u0001" DefaultShowOperationSignature="true" DefaultShowOrderedMultiplicityConstraint="true" DefaultShowOwnedAssociationEndAsAttribute="true" DefaultShowOwner="false" DefaultShowOwnerSkipModelInFullyQualifiedOwnerSignature="true" DefaultShowReceptionOption="\u0001" DefaultShowTemplateParameter="true" DefaultShowTypeOption="\u0001" DefaultShowUniqueMultiplicityConstraint="true" DefaultTypeOfSubProcess="\u0000" DefaultWrapClassMember="false" DrawTextAnnotationOpenRectangleFollowConnectorEnd="true" EnableMinimumSize="true" EntityColumnConstraintsPresentation="\u0002" ErdIndexNumOfDigits="-1" ErdIndexPattern="{table_name}" ErdIndexPatternSyncAutomatically="true" ErdManyToManyJoinTableDelimiter="_" EtlTableDiagramFontSize="14" ExpandedSubProcessDiagramContent="\u0001" ForeignKeyArrowHeadSize="\u0002" ForeignKeyConnectorEndPointAssociatedColumn="false" ForeignKeyNamePattern="{reference_table_name}{reference_column_name}" ForeignKeyNamePatternCaseHandling="0" ForeignKeyRelationshipPattern="{association_name}" FractionalMetrics="true" GeneralizationSetNotation="\u0001" GraphicAntiAliasing="true" GridDiagramFontSize="14" InteractionDiagramShowDiagramFrame="true" InternalBlockDiagramShowDiagramFrame="true" LineJumpSize="\u0000" ModelElementNameAlignment="\u0004" MultipleLineClassName="\u0001" PackageDiagramShowDiagramFrame="true" PaintConnectorThroughLabel="false" ParametricDiagramShowDiagramFrame="true" PointConnectorEndToCompartmentMember="true" PrimaryKeyConstraintPattern="" PrimaryKeyNamePattern="ID" RenameConstructorAfterRenameClass="\u0000" RenameExtensionPointToFollowExtendUseCase="\u0000" RequirementDiagramShowDiagramFrame="true" ShapeAutoFitSize="false" ShowActivationsInSequenceDiagram="true" ShowActivityStateNodeCaption="524287" ShowArtifactOption="\u0002" ShowAssociatedDiagramNameOfInteraction="false" ShowAssociationRoleStereotypes="true" ShowAttributeGetterSetter="false" ShowBSElementCode="true" ShowClassEmptyCompartments="false" ShowColumnDefaultValue="false" ShowColumnNullable="true" ShowColumnType="true" ShowColumnUniqueConstraintName="false" ShowColumnUserType="false" ShowComponentOption="\u0002" ShowExtraColumnProperties="true" ShowInOutFlowButtonsInDataFlowDiagram="false" ShowInOutFlowsInSubLevelDiagram="true" ShowMessageOperationSignatureForSequenceAndCommunicationDiagram="true" ShowMessageStereotypeInSequenceAndCommunicationDiagram="true" ShowNumberInCollaborationDiagram="true" ShowNumberInSequenceDiagram="true" ShowPackageNameStyle="\u0000" ShowParameterNameInOperationSignature="true" ShowRowGridLineWithinCompClassDiagram="false" ShowRowGridLineWithinCompERD="true" ShowRowGridLineWithinORMDiagram="true" ShowSchemaNameInERD="true" ShowTransitionTrigger="\u0000" ShowUseCaseExtensionPoint="true" ShowUseCaseID="false" SnapConnectorsAfterZoom="false" StateDiagramShowDiagramFrame="true" StateShowParametersOfInternalActivities="false" StateShowPrePostConditionAndBodyOfInternalActivities="true" StopTargetLifelineOnCreateDestroyMessage="\u0002" SupportHtmlTaggedValue="true" SupportMultipleLineAttribute="true" SuppressImpliedMultiplicityForAttributeAssociationEnd="false" SyncAssociationNameWithAssociationClass="\u0000" SyncAssociationRoleNameWithReferencedAttributeName="true" SyncDocOfInterfaceToSubClass="\u0000" TextAntiAliasing="true" TextualAnalysisGenerateRequirementTextOption="\u0001" TextualAnalysisHighlightOption="\u0000" UnnamedIndexPattern="{table_name}_{column_name}" UseCaseDiagramShowDiagramFrame="true" UseStateNameTab="false" WireflowDiagramDevice="0" WireflowDiagramShowActiveFlowLabel="true" WireflowDiagramTheme="0" WireflowDiagramWireflowShowPreview="true" WireflowDiagramWireflowShowScreenId="true">
+				<DefaultHtmlDocFont Family="Dialog" Size="12" Style="0"/>
+			</DiagramOptions>
+			<GeneralOptions ConfirmSubLevelIdWithDot="true" QuickAddGlossaryTermParentModelId="default"/>
+			<InstantReverseOptions CalculateGeneralizationAndRealization="false" CreateShapeForParentModelOfDraggedClassPackage="false" ReverseGetterSetter="\u0000" ReverseOperationImplementation="false" ShowPackageForNewDiagram="\u0001" ShowPackageOwner="\u0000"/>
+			<ModelQualityOptions EnableModelQualityChecking="false"/>
+			<ORMOptions AlterColumnUserType="true" DecimalPrecision="19" DecimalScale="0" ExportCommentToDatabase="true" FormattedSQL="false" GenerateAssociationWithAttribute="false" GenerateDiagramFromORMWizards="true" GetterSetterVisibility="\u0000" IdGeneratorType="native" MappingFileColumnOrder="\u0000" NumericToClassType="\u0000" QuoteSQLIdentifier="\u0000" RecreateShapeWhenSync="false" SyncToClassDiagramAttributeName="\u0001" SyncToClassDiagramAttributeNamePrefix="" SyncToClassDiagramAttributeNameSuffix="" SyncToClassDiagramClassName="\u0000" SyncToClassDiagramClassNamePrefix="" SyncToClassDiagramClassNameSuffix="" SyncToERDColumnName="\u0000" SyncToERDColumnNamePrefix="" SyncToERDColumnNameSuffix="" SyncToERDTableName="\u0004" SyncToERDTableNamePrefix="" SyncToERDTableNameSuffix="" SynchronizeDefaultValueToColumn="false" SynchronizeName="\u0002" TablePerSubclassFKMapping="\u0000" UpperCaseSQL="true" UseDefaultDecimal="true" WrappingServletRequest="\u0001"/>
+			<RequirementDiagramOptions DefaultWrapMember="true" ShowAttributes="\u0001" SupportHTMLAttribute="false"/>
+			<StateCodeEngineOptions AutoCreateInitialStateInStateDiagram="true" AutoCreateTransitionMethods="true" DefaultInitialStateLocationX="-1" DefaultInitialStateLocationY="-1" GenerateDebugMessage="false" GenerateSample="true" GenerateTryCatch="true" Language="\u0000" RegenerateTransitionMethods="false" SyncTransitionMethods="true"/>
+			<WarningOptions CreateORMClassInDefaultPackage="true"/>
+			<PORepository>
+				<POUserIDFormats>
+					<POUserIDFormat Digits="2" Guid="false" Id="GxagUGmGAqC4AQWS" LastNumericValue="0" ModelType="BPMNElement" Prefix="BP" Suffix=""/>
+					<POUserIDFormat Digits="2" Guid="false" Id="WxagUGmGAqC4AQWT" LastNumericValue="0" ModelType="Actor" Prefix="AC" Suffix=""/>
+					<POUserIDFormat Digits="2" Guid="false" Id="2xagUGmGAqC4AQWU" LastNumericValue="0" ModelType="UseCase" Prefix="UC" Suffix=""/>
+					<POUserIDFormat Digits="3" Guid="false" Id="2xagUGmGAqC4AQWV" LastNumericValue="0" ModelType="Requirement" Prefix="REQ" Suffix=""/>
+					<POUserIDFormat Digits="3" Guid="false" Id="2xagUGmGAqC4AQWW" LastNumericValue="0" ModelType="BusinessRule" Prefix="BR" Suffix=""/>
+					<POUserIDFormat Digits="-1" Guid="false" Id="2xagUGmGAqC4AQWX" LastNumericValue="0" ModelType="BusinessProcessDiagram" Prefix="" Suffix=""/>
+				</POUserIDFormats>
+			</PORepository>
+		</ProjectOptions>
+	</ProjectInfo>
+	<Models>
+		<DataType BacklogActivityId="0" Documentation_plain="" Id="24agUGmGAqC4AQBQ" Name="boolean" PmAuthor="" PmCreateDateTime="2017-06-21T18:09:47.441" PmLastModified="2025-04-06T14:35:03.872" QualityReason_IsNull="true" QualityScore="-1" UserIDLastNumericValue="0" UserID_IsNull="true"/>
+		<DataType BacklogActivityId="0" Documentation_plain="" Id="QEagUGmGAqC4AQBR" Name="byte" PmAuthor="" PmCreateDateTime="2017-06-21T18:09:47.443" PmLastModified="2025-04-06T14:35:03.873" QualityReason_IsNull="true" QualityScore="-1" UserIDLastNumericValue="0" UserID_IsNull="true"/>
+		<DataType BacklogActivityId="0" Documentation_plain="" Id="IEagUGmGAqC4AQBS" Name="char" PmAuthor="" PmCreateDateTime="2017-06-21T18:09:47.443" PmLastModified="2025-04-06T14:35:03.872" QualityReason_IsNull="true" QualityScore="-1" UserIDLastNumericValue="0" UserID_IsNull="true"/>
+		<DataType BacklogActivityId="0" Documentation_plain="" Id="cEagUGmGAqC4AQBT" Name="double" PmAuthor="" PmCreateDateTime="2017-06-21T18:09:47.444" PmLastModified="2025-04-06T14:35:03.869" QualityReason_IsNull="true" QualityScore="-1" UserIDLastNumericValue="0" UserID_IsNull="true"/>
+		<DataType BacklogActivityId="0" Documentation_plain="" Id="iEagUGmGAqC4AQBU" Name="float" PmAuthor="" PmCreateDateTime="2017-06-21T18:09:47.444" PmLastModified="2025-04-06T14:35:03.870" QualityReason_IsNull="true" QualityScore="-1" UserIDLastNumericValue="0" UserID_IsNull="true"/>
+		<DataType BacklogActivityId="0" Documentation_plain="" Id="KEagUGmGAqC4AQBV" Name="int" PmAuthor="" PmCreateDateTime="2017-06-21T18:09:47.445" PmLastModified="2025-04-06T14:35:03.873" QualityReason_IsNull="true" QualityScore="-1" UserIDLastNumericValue="0" UserID_IsNull="true"/>
+		<DataType BacklogActivityId="0" Documentation_plain="" Id="qEagUGmGAqC4AQBW" Name="long" PmAuthor="" PmCreateDateTime="2017-06-21T18:09:47.445" PmLastModified="2025-04-06T14:35:03.872" QualityReason_IsNull="true" QualityScore="-1" UserIDLastNumericValue="0" UserID_IsNull="true"/>
+		<DataType BacklogActivityId="0" Documentation_plain="" Id="6EagUGmGAqC4AQBX" Name="short" PmAuthor="" PmCreateDateTime="2017-06-21T18:09:47.446" PmLastModified="2025-04-06T14:35:03.873" QualityReason_IsNull="true" QualityScore="-1" UserIDLastNumericValue="0" UserID_IsNull="true"/>
+		<DataType BacklogActivityId="0" Documentation_plain="" Id="mEagUGmGAqC4AQBY" Name="void" PmAuthor="" PmCreateDateTime="2017-06-21T18:09:47.446" PmLastModified="2025-04-06T14:35:03.871" QualityReason_IsNull="true" QualityScore="-1" UserIDLastNumericValue="0" UserID_IsNull="true"/>
+		<DataType BacklogActivityId="0" Documentation_plain="" Id="WEagUGmGAqC4AQBZ" Name="string" PmAuthor="" PmCreateDateTime="2017-06-21T18:09:47.446" PmLastModified="2025-04-06T14:35:03.867" QualityReason_IsNull="true" QualityScore="-1" UserIDLastNumericValue="0" UserID_IsNull="true"/>
+		<Model Abstract="false" BacklogActivityId="0" ConnectToCodeModel="1" Documentation_plain="" Id=".HxgUGmGAqC4AQWe" Leaf="false" Name="Data Flow Diagram - Supermarket App" PmAuthor="" PmCreateDateTime="2017-06-22T14:48:23.029" PmLastModified="2025-04-06T14:35:03.873" QualityReason_IsNull="true" QualityScore="-1" Root="false" UserIDLastNumericValue="0" UserID_IsNull="true">
+			<ModelChildren>
+				<DFExternalEntity BacklogActivityId="0" DfId_IsNull="true" Documentation_plain="" Id="tHxgUGmGAqC4AQWg" Name="Nhân viên" PmAuthor="" PmCreateDateTime="2017-06-22T14:48:58.799" PmLastModified="2025-04-06T15:27:56.547" QualityReason_IsNull="true" QualityScore="-1" UserIDLastNumericValue="0" UserID_IsNull="true">
+					<FromSimpleRelationships>
+						<DFDataFlow Idref="IXxgUGmGAqC4AQWw" Name=""/>
+						<DFDataFlow Idref="xXcIUGmGAqC4AQbr" Name="Thông tin đăng ký thành viên"/>
+						<DFDataFlow Idref="M1jIUGmGAqC4AQcD" Name="Thêm/Xóa sách"/>
+						<DFDataFlow Idref="eurIUGmGAqC4AQcJ" Name=" TT Mượn, Trả, Gia hạn"/>
+						<DFDataFlow Idref="gnXIUGmGAqC4AQcP" Name="Đặt/Hủy giữ, xử lý giữ"/>
+						<DFDataFlow Idref="jVvIUGmGAqC4AQcV" Name="Yêu cầu báo cáo"/>
+						<DFDataFlow Idref="7ZgoUGmGAqC4AQcb" Name="Lệnh lưu, tải, thoát"/>
+					</FromSimpleRelationships>
+					<ToSimpleRelationships>
+						<DFDataFlow Idref="l3eoUGmGAqC4AQcl" Name="TT ID thành viên mới"/>
+						<DFDataFlow Idref="JVZoUGmGAqC4AQcv" Name="Xác nhận thêm/xóa sách&#10;&#10;"/>
+						<DFDataFlow Idref="tNVoUGmGAqC4AQc1" Name="Xác nhận mượn/trả/gia hạn"/>
+						<DFDataFlow Idref="qcEYUGmGAqC4AQdB" Name="Báo cáo giao dịch"/>
+						<DFDataFlow Idref="H3MYUGmGAqC4AQdT" Name="Trạng thái lưu/tải/thoát"/>
+						<DFDataFlow Idref="FVJsUGmGAqC4AQqr" Name="Xác nhận giữ, thông báo người tiếp theo"/>
+					</ToSimpleRelationships>
+					<MasterView>
+						<DFExternalEntity Idref="6PxgUGmGAqC4AQXB" Name="Nhân viên"/>
+					</MasterView>
+				</DFExternalEntity>
+				<DFProcess BacklogActivityId="0" DecomposedDiagramId="FPxgUGmGAqC4AQXF" DfId="0" Documentation_plain="" Id="onxgUGmGAqC4AQWi" Location_IsNull="true" Name="Supermarket App" PmAuthor="" PmCreateDateTime="2017-06-22T14:49:02.515" PmLastModified="2025-04-06T14:42:00.866" QualityReason_IsNull="true" QualityScore="-1" UserIDLastNumericValue="0" UserID_IsNull="true">
+					<ToSimpleRelationships>
+						<DFDataFlow Idref="IXxgUGmGAqC4AQWw" Name=""/>
+					</ToSimpleRelationships>
+					<SubDiagrams>
+						<DataFlowDiagram Idref="FPxgUGmGAqC4AQXF"/>
+					</SubDiagrams>
+					<MasterView>
+						<DFProcess Idref="t3xgUGmGAqC4AQW_" Name="Supermarket App"/>
+					</MasterView>
+					<ModelChildren>
+						<DFProcess BacklogActivityId="0" DecomposedDiagramId_IsNull="true" DfId="1" Documentation_plain="" Id="knxgUGmGAqC4AQWj" Location_IsNull="true" Name=" Quản lý Thành viên" PmAuthor="" PmCreateDateTime="2017-06-22T14:49:19.966" PmLastModified="2025-04-06T14:56:15.208" QualityReason_IsNull="true" QualityScore="-1" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<FromSimpleRelationships>
+								<DFDataFlow Idref="l3eoUGmGAqC4AQcl" Name="TT ID thành viên mới"/>
+								<DFDataFlow Idref="LAaYUGmGAqC4AQdb" Name="Đọc/Ghi thông tin thành viên"/>
+							</FromSimpleRelationships>
+							<ToSimpleRelationships>
+								<DFDataFlow Idref="xXcIUGmGAqC4AQbr" Name="Thông tin đăng ký thành viên"/>
+							</ToSimpleRelationships>
+							<MasterView>
+								<DFProcess Idref="VvxgUGmGAqC4AQXV" Name=" Quản lý Thành viên"/>
+							</MasterView>
+						</DFProcess>
+						<DFProcess BacklogActivityId="0" DecomposedDiagramId_IsNull="true" DfId="2" Documentation_plain="" Id="CnxgUGmGAqC4AQWk" Location_IsNull="true" Name="Quản lý Sách" PmAuthor="" PmCreateDateTime="2017-06-22T14:49:20.542" PmLastModified="2025-04-06T14:56:55.338" QualityReason_IsNull="true" QualityScore="-1" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<FromSimpleRelationships>
+								<DFDataFlow Idref="JVZoUGmGAqC4AQcv" Name="Xác nhận thêm/xóa sách&#10;&#10;"/>
+								<DFDataFlow Idref="BquYUGmGAqC4AQdf" Name="&#9;Thêm/Xóa sách"/>
+							</FromSimpleRelationships>
+							<ToSimpleRelationships>
+								<DFDataFlow Idref="M1jIUGmGAqC4AQcD" Name="Thêm/Xóa sách"/>
+								<DFDataFlow Idref="IdhYUGmGAqC4AQdl" Name="&#9;Kiểm tra đặt giữ trước khi xóa"/>
+							</ToSimpleRelationships>
+							<MasterView>
+								<DFProcess Idref="JvxgUGmGAqC4AQXT" Name="Quản lý Sách"/>
+							</MasterView>
+						</DFProcess>
+						<DFProcess BacklogActivityId="0" DecomposedDiagramId_IsNull="true" DfId="3" Documentation_plain="" Id="SnxgUGmGAqC4AQWl" Location_IsNull="true" Name="Quản lý Mượn/Trả" PmAuthor="" PmCreateDateTime="2017-06-22T14:49:20.889" PmLastModified="2025-04-06T14:59:06.940" QualityReason_IsNull="true" QualityScore="-1" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<FromSimpleRelationships>
+								<DFDataFlow Idref="tNVoUGmGAqC4AQc1" Name="Xác nhận mượn/trả/gia hạn"/>
+								<DFDataFlow Idref="sQzYUGmGAqC4AQdr" Name="Xác thực thành viên"/>
+								<DFDataFlow Idref="9WnYUGmGAqC4AQdx" Name="Cập nhật trạng thái sách"/>
+								<DFDataFlow Idref="0SfYUGmGAqC4AQd3" Name="&#9;Lưu giao dịch mượn/trả/gia hạn"/>
+							</FromSimpleRelationships>
+							<ToSimpleRelationships>
+								<DFDataFlow Idref="eurIUGmGAqC4AQcJ" Name=" TT Mượn, Trả, Gia hạn"/>
+								<DFDataFlow Idref="teg4UGmGAqC4AQd9" Name="&#9;Kiểm tra đặt giữ khi trả/gia hạn"/>
+							</ToSimpleRelationships>
+							<MasterView>
+								<DFProcess Idref="evxgUGmGAqC4AQXR" Name="Quản lý Mượn/Trả"/>
+							</MasterView>
+						</DFProcess>
+						<DFProcess BacklogActivityId="0" DecomposedDiagramId_IsNull="true" DfId="4" Documentation_plain="" Id="6nxgUGmGAqC4AQWm" Location_IsNull="true" Name="Quản lý Đặt giữ" PmAuthor="" PmCreateDateTime="2017-06-22T14:49:21.474" PmLastModified="2025-04-06T15:27:56.579" QualityReason_IsNull="true" QualityScore="-1" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<FromSimpleRelationships>
+								<DFDataFlow Idref="AFk4UGmGAqC4AQeJ" Name="Kiểm tra trạng thái sách"/>
+								<DFDataFlow Idref="ayM4UGmGAqC4AQeP" Name="Tạo/Xóa yêu cầu giữ"/>
+								<DFDataFlow Idref="FVJsUGmGAqC4AQqr" Name="Xác nhận giữ, thông báo người tiếp theo"/>
+							</FromSimpleRelationships>
+							<ToSimpleRelationships>
+								<DFDataFlow Idref="gnXIUGmGAqC4AQcP" Name="Đặt/Hủy giữ, xử lý giữ"/>
+								<DFDataFlow Idref="uMY4UGmGAqC4AQeD" Name="&#9;Lấy thông tin liên hệ thành viên"/>
+							</ToSimpleRelationships>
+							<MasterView>
+								<DFProcess Idref="WvxgUGmGAqC4AQXP" Name="Quản lý Đặt giữ"/>
+							</MasterView>
+						</DFProcess>
+						<DFProcess BacklogActivityId="0" DecomposedDiagramId_IsNull="true" DfId="5" Documentation_plain="" Id="enxgUGmGAqC4AQWn" Location_IsNull="true" Name="Tạo Báo cáo" PmAuthor="" PmCreateDateTime="2017-06-22T14:49:21.723" PmLastModified="2025-04-06T15:00:30.538" QualityReason_IsNull="true" QualityScore="-1" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<FromSimpleRelationships>
+								<DFDataFlow Idref="qcEYUGmGAqC4AQdB" Name="Báo cáo giao dịch"/>
+							</FromSimpleRelationships>
+							<ToSimpleRelationships>
+								<DFDataFlow Idref="jVvIUGmGAqC4AQcV" Name="Yêu cầu báo cáo"/>
+								<DFDataFlow Idref="2Ey4UGmGAqC4AQeV" Name="Tạo báo cáo từ thông tin thành viên &amp; giao dịch"/>
+								<DFDataFlow Idref="evq4UGmGAqC4AQeb" Name="Tạo báo cáo từ thông tin thành viên &amp; giao dịch"/>
+							</ToSimpleRelationships>
+							<MasterView>
+								<DFProcess Idref="svxgUGmGAqC4AQXN" Name="Tạo Báo cáo"/>
+							</MasterView>
+						</DFProcess>
+						<DFDataStore BacklogActivityId="0" DfId="1" Documentation_plain="" Id="pnxgUGmGAqC4AQWp" Name="Kho Dữ liệu Thành viên" PmAuthor="" PmCreateDateTime="2017-06-22T14:50:12.432" PmLastModified="2025-04-06T15:00:47.915" QualityReason_IsNull="true" QualityScore="-1" Type="Computerized Data" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<FromSimpleRelationships>
+								<DFDataFlow Idref="uMY4UGmGAqC4AQeD" Name="&#9;Lấy thông tin liên hệ thành viên"/>
+								<DFDataFlow Idref="2Ey4UGmGAqC4AQeV" Name="Tạo báo cáo từ thông tin thành viên &amp; giao dịch"/>
+							</FromSimpleRelationships>
+							<ToSimpleRelationships>
+								<DFDataFlow Idref="LAaYUGmGAqC4AQdb" Name="Đọc/Ghi thông tin thành viên"/>
+								<DFDataFlow Idref="sQzYUGmGAqC4AQdr" Name="Xác thực thành viên"/>
+								<DFDataFlow Idref="0_m4UGmGAqC4AQeh" Name="Lưu/Tải toàn bộ dữ liệu"/>
+							</ToSimpleRelationships>
+							<MasterView>
+								<DFDataStore Idref="gvxgUGmGAqC4AQXL" Name="Kho Dữ liệu Thành viên"/>
+							</MasterView>
+						</DFDataStore>
+						<DFDataStore BacklogActivityId="0" DfId="2" Documentation_plain="" Id="lnxgUGmGAqC4AQWq" Name="Kho Dữ liệu Sách" PmAuthor="" PmCreateDateTime="2017-06-22T14:50:18.531" PmLastModified="2025-04-06T14:59:51.146" QualityReason_IsNull="true" QualityScore="-1" Type="Computerized Data" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<ToSimpleRelationships>
+								<DFDataFlow Idref="BquYUGmGAqC4AQdf" Name="&#9;Thêm/Xóa sách"/>
+								<DFDataFlow Idref="9WnYUGmGAqC4AQdx" Name="Cập nhật trạng thái sách"/>
+								<DFDataFlow Idref="AFk4UGmGAqC4AQeJ" Name="Kiểm tra trạng thái sách"/>
+							</ToSimpleRelationships>
+							<MasterView>
+								<DFDataStore Idref="_PxgUGmGAqC4AQXJ" Name="Kho Dữ liệu Sách"/>
+							</MasterView>
+						</DFDataStore>
+						<DFDataStore BacklogActivityId="0" DfId="3" Documentation_plain="" Id="9nxgUGmGAqC4AQWr" Name="Kho Dữ liệu Giao dịch  mượn/trả/gia hạn" PmAuthor="" PmCreateDateTime="2017-06-22T14:50:21.593" PmLastModified="2025-04-06T15:43:10.774" QualityReason_IsNull="true" QualityScore="-1" Type="Computerized Data" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<FromSimpleRelationships>
+								<DFDataFlow Idref="evq4UGmGAqC4AQeb" Name="Tạo báo cáo từ thông tin thành viên &amp; giao dịch"/>
+							</FromSimpleRelationships>
+							<ToSimpleRelationships>
+								<DFDataFlow Idref="0SfYUGmGAqC4AQd3" Name="&#9;Lưu giao dịch mượn/trả/gia hạn"/>
+							</ToSimpleRelationships>
+							<MasterView>
+								<DFDataStore Idref="rPxgUGmGAqC4AQXH" Name="Kho Dữ liệu Giao dịch  mượn/trả/gia hạn"/>
+							</MasterView>
+						</DFDataStore>
+						<DFProcess BacklogActivityId="0" DecomposedDiagramId_IsNull="true" DfId="6" Documentation_plain="" Id="0fcQUGmGAqC4AQY6" Location="" Name="Quản lý dữ liệu và điều khiển hệ thống" PmAuthor="Neko" PmCreateDateTime="2025-04-06T14:37:59.947" PmLastModified="2025-04-06T15:45:16.402" QualityReason_IsNull="true" QualityScore="-1" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<FromSimpleRelationships>
+								<DFDataFlow Idref="H3MYUGmGAqC4AQdT" Name="Trạng thái lưu/tải/thoát"/>
+								<DFDataFlow Idref="0_m4UGmGAqC4AQeh" Name="Lưu/Tải toàn bộ dữ liệu"/>
+								<DFDataFlow Idref="YVx4UGmGAqC4AQet" Name="Lưu/Tải toàn bộ dữ liệu"/>
+							</FromSimpleRelationships>
+							<ToSimpleRelationships>
+								<DFDataFlow Idref="7ZgoUGmGAqC4AQcb" Name="Lệnh lưu, tải, thoát"/>
+							</ToSimpleRelationships>
+							<MasterView>
+								<DFProcess Idref="0fcQUGmGAqC4AQY5" Name="Quản lý dữ liệu và điều khiển hệ thống"/>
+							</MasterView>
+						</DFProcess>
+						<DFDataStore BacklogActivityId="0" DfId="4" Documentation_plain="" Id="yerQUGmGAqC4AQZ4" Name="Kho Dữ liệu Đặt giữ" PmAuthor="Neko" PmCreateDateTime="2025-04-06T14:40:37.651" PmLastModified="2025-04-06T15:01:30.056" QualityReason_IsNull="true" QualityScore="-1" Type="Computerized Data" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<FromSimpleRelationships>
+								<DFDataFlow Idref="IdhYUGmGAqC4AQdl" Name="&#9;Kiểm tra đặt giữ trước khi xóa"/>
+								<DFDataFlow Idref="teg4UGmGAqC4AQd9" Name="&#9;Kiểm tra đặt giữ khi trả/gia hạn"/>
+							</FromSimpleRelationships>
+							<ToSimpleRelationships>
+								<DFDataFlow Idref="ayM4UGmGAqC4AQeP" Name="Tạo/Xóa yêu cầu giữ"/>
+								<DFDataFlow Idref="YVx4UGmGAqC4AQet" Name="Lưu/Tải toàn bộ dữ liệu"/>
+							</ToSimpleRelationships>
+							<MasterView>
+								<DFDataStore Idref="yerQUGmGAqC4AQZ3" Name="Kho Dữ liệu Đặt giữ"/>
+							</MasterView>
+						</DFDataStore>
+					</ModelChildren>
+				</DFProcess>
+			</ModelChildren>
+		</Model>
+		<ModelRelationshipContainer BacklogActivityId="0" Documentation_plain="" Id="znxgUGmGAqC4AQWt" Name="relationships" PmAuthor="Jick" PmCreateDateTime="2017-06-22T15:44:54.085" PmLastModified="2025-04-06T14:35:03.872" QualityReason_IsNull="true" QualityScore="-1" UserIDLastNumericValue="0" UserID_IsNull="true">
+			<ModelChildren>
+				<ModelRelationshipContainer BacklogActivityId="0" Documentation_plain="" Id="rnxgUGmGAqC4AQWu" Name="DFDataFlow" PmAuthor="Jick" PmCreateDateTime="2017-06-22T15:44:54.125" PmLastModified="2025-04-06T15:27:56.579" QualityReason_IsNull="true" QualityScore="-1" UserIDLastNumericValue="0" UserID_IsNull="true">
+					<ModelChildren>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="true" Documentation_plain="" From="tHxgUGmGAqC4AQWg" Id="IXxgUGmGAqC4AQWw" PmAuthor="" PmCreateDateTime="2017-06-22T14:49:02.538" PmLastModified="2025-04-06T14:35:03.869" QualityReason_IsNull="true" QualityScore="-1" To="onxgUGmGAqC4AQWi" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="xPxgUGmGAqC4AQXD"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="false" Documentation_plain="" From="tHxgUGmGAqC4AQWg" Id="xXcIUGmGAqC4AQbr" Name="Thông tin đăng ký thành viên" PmAuthor="Neko" PmCreateDateTime="2025-04-06T14:46:44.003" PmLastModified="2025-04-06T14:48:54.518" QualityReason_IsNull="true" QualityScore="-1" To="knxgUGmGAqC4AQWj" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="ZXcIUGmGAqC4AQbs" Name="Thông tin đăng ký thành viên"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="false" Documentation_plain="" From="tHxgUGmGAqC4AQWg" Id="M1jIUGmGAqC4AQcD" Name="Thêm/Xóa sách" PmAuthor="Neko" PmCreateDateTime="2025-04-06T14:49:06.380" PmLastModified="2025-04-06T14:49:17.813" QualityReason_IsNull="true" QualityScore="-1" To="CnxgUGmGAqC4AQWk" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="81jIUGmGAqC4AQcE" Name="Thêm/Xóa sách"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="false" Documentation_plain="" From="tHxgUGmGAqC4AQWg" Id="eurIUGmGAqC4AQcJ" Name=" TT Mượn, Trả, Gia hạn" PmAuthor="Neko" PmCreateDateTime="2025-04-06T14:49:21.886" PmLastModified="2025-04-06T15:22:04.642" QualityReason_IsNull="true" QualityScore="-1" To="SnxgUGmGAqC4AQWl" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="7urIUGmGAqC4AQcK" Name=" TT Mượn, Trả, Gia hạn"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="false" Documentation_plain="" From="tHxgUGmGAqC4AQWg" Id="gnXIUGmGAqC4AQcP" Name="Đặt/Hủy giữ, xử lý giữ" PmAuthor="Neko" PmCreateDateTime="2025-04-06T14:49:44.129" PmLastModified="2025-04-06T14:50:06.965" QualityReason_IsNull="true" QualityScore="-1" To="6nxgUGmGAqC4AQWm" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="InXIUGmGAqC4AQcQ" Name="Đặt/Hủy giữ, xử lý giữ"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="false" Documentation_plain="" From="tHxgUGmGAqC4AQWg" Id="jVvIUGmGAqC4AQcV" Name="Yêu cầu báo cáo" PmAuthor="Neko" PmCreateDateTime="2025-04-06T14:49:55.505" PmLastModified="2025-04-06T14:50:06.967" QualityReason_IsNull="true" QualityScore="-1" To="enxgUGmGAqC4AQWn" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="LVvIUGmGAqC4AQcW" Name="Yêu cầu báo cáo"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="false" Documentation_plain="" From="tHxgUGmGAqC4AQWg" Id="7ZgoUGmGAqC4AQcb" Name="Lệnh lưu, tải, thoát" PmAuthor="Neko" PmCreateDateTime="2025-04-06T14:50:11.639" PmLastModified="2025-04-06T14:50:23.253" QualityReason_IsNull="true" QualityScore="-1" To="0fcQUGmGAqC4AQY6" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="nZgoUGmGAqC4AQcc" Name="Lệnh lưu, tải, thoát"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="false" Documentation_plain="" From="knxgUGmGAqC4AQWj" Id="l3eoUGmGAqC4AQcl" Name="TT ID thành viên mới" PmAuthor="Neko" PmCreateDateTime="2025-04-06T14:52:11.753" PmLastModified="2025-04-06T14:52:41.093" QualityReason_IsNull="true" QualityScore="-1" To="tHxgUGmGAqC4AQWg" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="t3eoUGmGAqC4AQcm" Name="TT ID thành viên mới"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="false" Documentation_plain="" From="CnxgUGmGAqC4AQWk" Id="JVZoUGmGAqC4AQcv" Name="Xác nhận thêm/xóa sách&#10;&#10;" PmAuthor="Neko" PmCreateDateTime="2025-04-06T14:52:43.428" PmLastModified="2025-04-06T14:52:55.796" QualityReason_IsNull="true" QualityScore="-1" To="tHxgUGmGAqC4AQWg" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="5VZoUGmGAqC4AQcw" Name="Xác nhận thêm/xóa sách&#10;&#10;"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="false" Documentation_plain="" From="SnxgUGmGAqC4AQWl" Id="tNVoUGmGAqC4AQc1" Name="Xác nhận mượn/trả/gia hạn" PmAuthor="Neko" PmCreateDateTime="2025-04-06T14:52:59.949" PmLastModified="2025-04-06T14:53:11.269" QualityReason_IsNull="true" QualityScore="-1" To="tHxgUGmGAqC4AQWg" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="8tVoUGmGAqC4AQc2" Name="Xác nhận mượn/trả/gia hạn"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="false" Documentation_plain="" From="enxgUGmGAqC4AQWn" Id="qcEYUGmGAqC4AQdB" Name="Báo cáo giao dịch" PmAuthor="Neko" PmCreateDateTime="2025-04-06T14:55:00.885" PmLastModified="2025-04-06T14:55:17.492" QualityReason_IsNull="true" QualityScore="-1" To="tHxgUGmGAqC4AQWg" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="PcEYUGmGAqC4AQdC" Name="Báo cáo giao dịch"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="false" Documentation_plain="" From="0fcQUGmGAqC4AQY6" Id="H3MYUGmGAqC4AQdT" Name="Trạng thái lưu/tải/thoát" PmAuthor="Neko" PmCreateDateTime="2025-04-06T14:55:20.184" PmLastModified="2025-04-06T14:55:32.184" QualityReason_IsNull="true" QualityScore="-1" To="tHxgUGmGAqC4AQWg" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="WPMYUGmGAqC4AQdU" Name="Trạng thái lưu/tải/thoát"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="true" Documentation_plain="" From="knxgUGmGAqC4AQWj" Id="LAaYUGmGAqC4AQdb" Name="Đọc/Ghi thông tin thành viên" PmAuthor="Neko" PmCreateDateTime="2025-04-06T14:55:57.364" PmLastModified="2025-04-06T14:56:15.181" QualityReason_IsNull="true" QualityScore="-1" To="pnxgUGmGAqC4AQWp" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="SgaYUGmGAqC4AQdc" Name="Đọc/Ghi thông tin thành viên"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="true" Documentation_plain="" From="CnxgUGmGAqC4AQWk" Id="BquYUGmGAqC4AQdf" Name="&#9;Thêm/Xóa sách" PmAuthor="Neko" PmCreateDateTime="2025-04-06T14:56:27.360" PmLastModified="2025-04-06T14:56:38.947" QualityReason_IsNull="true" QualityScore="-1" To="lnxgUGmGAqC4AQWq" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="xquYUGmGAqC4AQdg" Name="&#9;Thêm/Xóa sách"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="false" Documentation_plain="" From="yerQUGmGAqC4AQZ4" Id="IdhYUGmGAqC4AQdl" Name="&#9;Kiểm tra đặt giữ trước khi xóa" PmAuthor="Neko" PmCreateDateTime="2025-04-06T14:56:45.316" PmLastModified="2025-04-06T14:57:06.025" QualityReason_IsNull="true" QualityScore="-1" To="CnxgUGmGAqC4AQWk" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="EdhYUGmGAqC4AQdm" Name="&#9;Kiểm tra đặt giữ trước khi xóa"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="true" Documentation_plain="" From="SnxgUGmGAqC4AQWl" Id="sQzYUGmGAqC4AQdr" Name="Xác thực thành viên" PmAuthor="Neko" PmCreateDateTime="2025-04-06T14:57:56.237" PmLastModified="2025-04-06T14:58:17.558" QualityReason_IsNull="true" QualityScore="-1" To="pnxgUGmGAqC4AQWp" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="jQzYUGmGAqC4AQds" Name="Xác thực thành viên"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="true" Documentation_plain="" From="SnxgUGmGAqC4AQWl" Id="9WnYUGmGAqC4AQdx" Name="Cập nhật trạng thái sách" PmAuthor="Neko" PmCreateDateTime="2025-04-06T14:58:22.383" PmLastModified="2025-04-06T14:58:33.951" QualityReason_IsNull="true" QualityScore="-1" To="lnxgUGmGAqC4AQWq" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="TWnYUGmGAqC4AQdy" Name="Cập nhật trạng thái sách"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="false" Documentation_plain="" From="SnxgUGmGAqC4AQWl" Id="0SfYUGmGAqC4AQd3" Name="&#9;Lưu giao dịch mượn/trả/gia hạn" PmAuthor="Neko" PmCreateDateTime="2025-04-06T14:58:42.315" PmLastModified="2025-04-06T14:58:54.016" QualityReason_IsNull="true" QualityScore="-1" To="9nxgUGmGAqC4AQWr" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="cSfYUGmGAqC4AQd4" Name="&#9;Lưu giao dịch mượn/trả/gia hạn"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="false" Documentation_plain="" From="yerQUGmGAqC4AQZ4" Id="teg4UGmGAqC4AQd9" Name="&#9;Kiểm tra đặt giữ khi trả/gia hạn" PmAuthor="Neko" PmCreateDateTime="2025-04-06T14:58:55.405" PmLastModified="2025-04-06T15:35:57.502" QualityReason_IsNull="true" QualityScore="-1" To="SnxgUGmGAqC4AQWl" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="Deg4UGmGAqC4AQd." Name="&#9;Kiểm tra đặt giữ khi trả/gia hạn"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="true" Documentation_plain="" From="pnxgUGmGAqC4AQWp" Id="uMY4UGmGAqC4AQeD" Name="&#9;Lấy thông tin liên hệ thành viên" PmAuthor="Neko" PmCreateDateTime="2025-04-06T14:59:14.717" PmLastModified="2025-04-06T14:59:27.303" QualityReason_IsNull="true" QualityScore="-1" To="6nxgUGmGAqC4AQWm" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="jMY4UGmGAqC4AQeE" Name="&#9;Lấy thông tin liên hệ thành viên"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="true" Documentation_plain="" From="6nxgUGmGAqC4AQWm" Id="AFk4UGmGAqC4AQeJ" Name="Kiểm tra trạng thái sách" PmAuthor="Neko" PmCreateDateTime="2025-04-06T14:59:28.768" PmLastModified="2025-04-06T14:59:51.144" QualityReason_IsNull="true" QualityScore="-1" To="lnxgUGmGAqC4AQWq" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="QFk4UGmGAqC4AQeK" Name="Kiểm tra trạng thái sách"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="true" Documentation_plain="" From="6nxgUGmGAqC4AQWm" Id="ayM4UGmGAqC4AQeP" Name="Tạo/Xóa yêu cầu giữ" PmAuthor="Neko" PmCreateDateTime="2025-04-06T14:59:39.734" PmLastModified="2025-04-06T14:59:51.145" QualityReason_IsNull="true" QualityScore="-1" To="yerQUGmGAqC4AQZ4" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="AKM4UGmGAqC4AQeQ" Name="Tạo/Xóa yêu cầu giữ"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="false" Documentation_plain="" From="pnxgUGmGAqC4AQWp" Id="2Ey4UGmGAqC4AQeV" Name="Tạo báo cáo từ thông tin thành viên &amp; giao dịch" PmAuthor="Neko" PmCreateDateTime="2025-04-06T15:00:07.707" PmLastModified="2025-04-06T15:00:30.517" QualityReason_IsNull="true" QualityScore="-1" To="enxgUGmGAqC4AQWn" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="7Ey4UGmGAqC4AQeW" Name="Tạo báo cáo từ thông tin thành viên &amp; giao dịch"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="false" Documentation_plain="" From="9nxgUGmGAqC4AQWr" Id="evq4UGmGAqC4AQeb" Name="Tạo báo cáo từ thông tin thành viên &amp; giao dịch" PmAuthor="Neko" PmCreateDateTime="2025-04-06T15:00:19.294" PmLastModified="2025-04-06T15:00:30.537" QualityReason_IsNull="true" QualityScore="-1" To="enxgUGmGAqC4AQWn" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="kfq4UGmGAqC4AQec" Name="Tạo báo cáo từ thông tin thành viên &amp; giao dịch"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="true" Documentation_plain="" From="0fcQUGmGAqC4AQY6" Id="0_m4UGmGAqC4AQeh" Name="Lưu/Tải toàn bộ dữ liệu" PmAuthor="Neko" PmCreateDateTime="2025-04-06T15:00:35.787" PmLastModified="2025-04-06T15:00:47.885" QualityReason_IsNull="true" QualityScore="-1" To="pnxgUGmGAqC4AQWp" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="c_m4UGmGAqC4AQei" Name="Lưu/Tải toàn bộ dữ liệu"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="false" Documentation_plain="" From="0fcQUGmGAqC4AQY6" Id="YVx4UGmGAqC4AQet" Name="Lưu/Tải toàn bộ dữ liệu" PmAuthor="Neko" PmCreateDateTime="2025-04-06T15:01:15.398" PmLastModified="2025-04-06T15:01:30.029" QualityReason_IsNull="true" QualityScore="-1" To="yerQUGmGAqC4AQZ4" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="0Vx4UGmGAqC4AQeu" Name="Lưu/Tải toàn bộ dữ liệu"/>
+							</MasterView>
+						</DFDataFlow>
+						<DFDataFlow BacklogActivityId="0" Bidirectional="false" Documentation_plain="" From="6nxgUGmGAqC4AQWm" Id="FVJsUGmGAqC4AQqr" Name="Xác nhận giữ, thông báo người tiếp theo" PmAuthor="Neko" PmCreateDateTime="2025-04-06T15:27:32.392" PmLastModified="2025-04-06T15:27:56.547" QualityReason_IsNull="true" QualityScore="-1" To="tHxgUGmGAqC4AQWg" UserIDLastNumericValue="0" UserID_IsNull="true">
+							<MasterView>
+								<DFDataFlow Idref="Q1JsUGmGAqC4AQqs" Name="Xác nhận giữ, thông báo người tiếp theo"/>
+							</MasterView>
+						</DFDataFlow>
+					</ModelChildren>
+				</ModelRelationshipContainer>
+			</ModelChildren>
+		</ModelRelationshipContainer>
+	</Models>
+	<Diagrams>
+		<DataFlowDiagram AlignToGrid="false" AutoFitShapesSize="false" ConnectionPointStyle="0" ConnectorLabelOrientation="0" ConnectorLineJumps="0" ConnectorLineJumpsSize="0" ConnectorModelElementNameAlignment="4" ConnectorStyle="1" DiagramBackground="rgb(255, 255, 255)" DiagramImageFileName="DFD-lv1-library.png" Editable="true" FilterByViewpointLegend="true" FollowDiagramParentElement="true" GridColor="rgb(192, 192, 192)" GridHeight="10" GridVisible="false" GridWidth="10" Height="423" HideConnectorIfFromToIsHidden="0" HideEmptyTaggedValues="false" Id="FPxgUGmGAqC4AQXF" ImageHeight="930" ImageScale="1.0" ImageWidth="1360" InitializeDiagramForCreate="true" Maximized="true" ModelElementNameAlignment="4" Name="DFD-lv1-library" PaintConnectorThroughLabel="1" ParentModel="onxgUGmGAqC4AQWi" PmAuthor="" PmCreateDateTime="2017-06-22T14:49:12.876" PmLastModified="2025-04-06T15:47:48.112" PointConnectorEndToCompartmentMember="true" QualityScore="-1" RequestFitSizeWithPromptUser="false" RequestValidateSnapToGrid="false" ShapePresentationOption="0" ShowActivityStateNodeCaption="65535" ShowAllocatedFrom="true" ShowAllocatedTo="true" ShowColorLegend="false" ShowConnectorLegend="false" ShowConnectorName="0" ShowConstraints="false" ShowDFDataStoreType="true" ShowDFParentDataFlowID="true" ShowDefaultPackage="false" ShowInformationItemOption="2" ShowPMAuthor="false" ShowPMDifficulty="false" ShowPMDiscipline="false" ShowPMIteration="false" ShowPMPhase="false" ShowPMPriority="false" ShowPMStatus="false" ShowPMVersion="false" ShowPackageNameStyle="0" ShowRelationshipConstraintExpression="false" ShowShapeLegend="false" ShowShapeStereotypeIconName="true" ShowStereotypes="true" ShowTaggedValues="false" TeamworkAuthor="Jick Yeung" TeamworkCreateDateTime="1498117490297" TrimmedHeight="64" TrimmedWidth="184" Width="1062" X="0" Y="0" ZoomRatio="0.36" _globalPaletteOption="true" documentation="&lt;html&gt;&#13;&#10;  &lt;head&gt;&#13;&#10;    &lt;style type=&quot;text/css&quot;&gt;&#10;      &lt;!--&#10;        body { color: #000000; font-family: Dialog; font-size: 12px }&#10;      --&gt;&#10;    &lt;/style&gt;&#13;&#10;    &#13;&#10;  &lt;/head&gt;&#13;&#10;  &lt;body&gt;&#13;&#10;    &lt;p&gt;&#13;&#10;      &#13;&#10;    &lt;/p&gt;&#13;&#10;  &lt;/body&gt;&#13;&#10;&lt;/html&gt;&#13;&#10;">
+			<Shapes>
+				<DFDataStore Background="rgb(122, 207, 245)" ConnectToPoint="true" ConnectionPointType="2" CoverConnector="false" Duplicated="false" Foreground="rgb(0, 0, 0)" Height="53" Id="rPxgUGmGAqC4AQXH" MetaModelElement="9nxgUGmGAqC4AQWr" Model="9nxgUGmGAqC4AQWr" ModelElementNameAlignment="9" Name="Kho Dữ liệu Giao dịch  mượn/trả/gia hạn" OverrideAppearanceWithStereotypeIcon="true" ParentConnectorDTheta="0.0" ParentConnectorHeaderLength="40" ParentConnectorLineLength="10" PresentationOption="4" PrimitiveShapeType="0" RequestDefaultSize="false" RequestFitSize="false" RequestFitSizeFromCenter="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" RequestSetSizeOption="0" Selectable="true" ShowAllocatedFrom="0" ShowAllocatedTo="0" ShowStereotypeIconName="0" ShowTaggedValues="0" Width="138" X="51" Y="46" ZOrder="6">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="50" InternalHeight="-2147483648" InternalWidth="-2147483648" Side="FreeMove" Visible="true" Width="107" X="-153" Y="-64"/>
+					<FillColor Color="rgb(244, 234, 154)" Style="1" Transparency="0" Type="1"/>
+				</DFDataStore>
+				<DFDataStore Background="rgb(122, 207, 245)" ConnectToPoint="true" ConnectionPointType="2" CoverConnector="false" Duplicated="false" Foreground="rgb(0, 0, 0)" Height="55" Id="_PxgUGmGAqC4AQXJ" MetaModelElement="lnxgUGmGAqC4AQWq" Model="lnxgUGmGAqC4AQWq" ModelElementNameAlignment="9" Name="Kho Dữ liệu Sách" OverrideAppearanceWithStereotypeIcon="true" ParentConnectorDTheta="0.0" ParentConnectorHeaderLength="40" ParentConnectorLineLength="10" PresentationOption="4" PrimitiveShapeType="0" RequestDefaultSize="false" RequestFitSize="false" RequestFitSizeFromCenter="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" RequestSetSizeOption="0" Selectable="true" ShowAllocatedFrom="0" ShowAllocatedTo="0" ShowStereotypeIconName="0" ShowTaggedValues="0" Width="90" X="510" Y="298" ZOrder="8">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="56" InternalHeight="-2147483648" InternalWidth="-2147483648" Side="FreeMove" Visible="true" Width="58" X="-152" Y="-64"/>
+					<FillColor Color="rgb(244, 234, 154)" Style="1" Transparency="0" Type="1"/>
+				</DFDataStore>
+				<DFDataStore Background="rgb(122, 207, 245)" ConnectToPoint="true" ConnectionPointType="2" CoverConnector="false" Duplicated="false" Foreground="rgb(0, 0, 0)" Height="42" Id="gvxgUGmGAqC4AQXL" MetaModelElement="pnxgUGmGAqC4AQWp" Model="pnxgUGmGAqC4AQWp" ModelElementNameAlignment="9" Name="Kho Dữ liệu Thành viên" OverrideAppearanceWithStereotypeIcon="true" ParentConnectorDTheta="0.0" ParentConnectorHeaderLength="40" ParentConnectorLineLength="10" PresentationOption="4" PrimitiveShapeType="0" RequestDefaultSize="false" RequestFitSize="false" RequestFitSizeFromCenter="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" RequestSetSizeOption="0" Selectable="true" ShowAllocatedFrom="0" ShowAllocatedTo="0" ShowStereotypeIconName="0" ShowTaggedValues="0" Width="170" X="1186" Y="306" ZOrder="10">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="42" InternalHeight="-2147483648" InternalWidth="-2147483648" Side="FreeMove" Visible="true" Width="136" X="-152" Y="-64"/>
+					<FillColor Color="rgb(244, 234, 154)" Style="1" Transparency="0" Type="1"/>
+				</DFDataStore>
+				<DFProcess Background="rgb(122, 207, 245)" ConnectToPoint="true" ConnectionPointType="2" CoverConnector="false" Foreground="rgb(0, 0, 0)" Height="70" Id="svxgUGmGAqC4AQXN" MetaModelElement="enxgUGmGAqC4AQWn" Model="enxgUGmGAqC4AQWn" ModelElementNameAlignment="9" Name="Tạo Báo cáo" OverrideAppearanceWithStereotypeIcon="true" ParentConnectorDTheta="0.0" ParentConnectorHeaderLength="40" ParentConnectorLineLength="10" PresentationOption="4" PrimitiveShapeType="0" RequestDefaultSize="false" RequestFitSize="false" RequestFitSizeFromCenter="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" RequestSetSizeOption="0" Selectable="true" ShowAllocatedFrom="0" ShowAllocatedTo="0" ShowStereotypeIconName="0" ShowTaggedValues="0" Width="110" X="41" Y="856" ZOrder="12">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="30" InternalHeight="-2147483648" InternalWidth="-2147483648" Side="FreeMove" Visible="true" Width="110" X="-184" Y="-44"/>
+					<FillColor Color="rgb(244, 234, 154)" Style="1" Transparency="0" Type="1"/>
+				</DFProcess>
+				<DFProcess Background="rgb(122, 207, 245)" ConnectToPoint="true" ConnectionPointType="2" CoverConnector="false" Foreground="rgb(0, 0, 0)" Height="70" Id="WvxgUGmGAqC4AQXP" MetaModelElement="6nxgUGmGAqC4AQWm" Model="6nxgUGmGAqC4AQWm" ModelElementNameAlignment="9" Name="Quản lý Đặt giữ" OverrideAppearanceWithStereotypeIcon="true" ParentConnectorDTheta="0.0" ParentConnectorHeaderLength="40" ParentConnectorLineLength="10" PresentationOption="4" PrimitiveShapeType="0" RequestDefaultSize="false" RequestFitSize="false" RequestFitSizeFromCenter="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" RequestSetSizeOption="0" Selectable="true" ShowAllocatedFrom="0" ShowAllocatedTo="0" ShowStereotypeIconName="0" ShowTaggedValues="0" Width="110" X="700" Y="291" ZOrder="14">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="16" InternalHeight="-2147483648" InternalWidth="-2147483648" Side="FreeMove" Visible="true" Width="110" X="-184" Y="-45"/>
+					<FillColor Color="rgb(244, 234, 154)" Style="1" Transparency="0" Type="1"/>
+				</DFProcess>
+				<DFProcess Background="rgb(122, 207, 245)" ConnectToPoint="true" ConnectionPointType="2" CoverConnector="false" Foreground="rgb(0, 0, 0)" Height="70" Id="evxgUGmGAqC4AQXR" MetaModelElement="SnxgUGmGAqC4AQWl" Model="SnxgUGmGAqC4AQWl" ModelElementNameAlignment="9" Name="Quản lý Mượn/Trả" OverrideAppearanceWithStereotypeIcon="true" ParentConnectorDTheta="0.0" ParentConnectorHeaderLength="40" ParentConnectorLineLength="10" PresentationOption="4" PrimitiveShapeType="0" RequestDefaultSize="false" RequestFitSize="false" RequestFitSizeFromCenter="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" RequestSetSizeOption="0" Selectable="true" ShowAllocatedFrom="0" ShowAllocatedTo="0" ShowStereotypeIconName="0" ShowTaggedValues="0" Width="110" X="400" Y="2" ZOrder="16">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="30" InternalHeight="-2147483648" InternalWidth="-2147483648" Side="FreeMove" Visible="true" Width="110" X="-184" Y="-44"/>
+					<FillColor Color="rgb(244, 234, 154)" Style="1" Transparency="0" Type="1"/>
+				</DFProcess>
+				<DFProcess Background="rgb(122, 207, 245)" ConnectToPoint="true" ConnectionPointType="2" CoverConnector="false" Foreground="rgb(0, 0, 0)" Height="70" Id="JvxgUGmGAqC4AQXT" MetaModelElement="CnxgUGmGAqC4AQWk" Model="CnxgUGmGAqC4AQWk" ModelElementNameAlignment="9" Name="Quản lý Sách" OverrideAppearanceWithStereotypeIcon="true" ParentConnectorDTheta="0.0" ParentConnectorHeaderLength="40" ParentConnectorLineLength="10" PresentationOption="4" PrimitiveShapeType="0" RequestDefaultSize="false" RequestFitSize="false" RequestFitSizeFromCenter="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" RequestSetSizeOption="0" Selectable="true" ShowAllocatedFrom="0" ShowAllocatedTo="0" ShowStereotypeIconName="0" ShowTaggedValues="0" Width="110" X="151" Y="291" ZOrder="18">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="30" InternalHeight="-2147483648" InternalWidth="-2147483648" Side="FreeMove" Visible="true" Width="110" X="-184" Y="-44"/>
+					<FillColor Color="rgb(244, 234, 154)" Style="1" Transparency="0" Type="1"/>
+				</DFProcess>
+				<DFProcess Background="rgb(122, 207, 245)" ConnectToPoint="true" ConnectionPointType="2" CoverConnector="false" Foreground="rgb(0, 0, 0)" Height="70" Id="VvxgUGmGAqC4AQXV" MetaModelElement="knxgUGmGAqC4AQWj" Model="knxgUGmGAqC4AQWj" ModelElementNameAlignment="9" Name=" Quản lý Thành viên" OverrideAppearanceWithStereotypeIcon="true" ParentConnectorDTheta="0.0" ParentConnectorHeaderLength="40" ParentConnectorLineLength="10" PresentationOption="4" PrimitiveShapeType="0" RequestDefaultSize="false" RequestFitSize="false" RequestFitSizeFromCenter="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" RequestSetSizeOption="0" Selectable="true" ShowAllocatedFrom="0" ShowAllocatedTo="0" ShowStereotypeIconName="0" ShowTaggedValues="0" Width="110" X="1211" Y="670" ZOrder="20">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="31" InternalHeight="-2147483648" InternalWidth="-2147483648" Side="FreeMove" Visible="true" Width="110" X="-184" Y="-45"/>
+					<FillColor Color="rgb(244, 234, 154)" Style="1" Transparency="0" Type="1"/>
+				</DFProcess>
+				<DFExternalEntity Background="rgb(122, 207, 245)" ConnectToPoint="true" ConnectionPointType="2" CoverConnector="false" Duplicated="false" Foreground="rgb(0, 0, 0)" Height="114" Id="tvxgUGmGAqC4AQXX" MetaModelElement="tHxgUGmGAqC4AQWg" Model="tHxgUGmGAqC4AQWg" ModelElementNameAlignment="9" Name="Nhân viên" OverrideAppearanceWithStereotypeIcon="true" ParentConnectorDTheta="0.0" ParentConnectorHeaderLength="40" ParentConnectorLineLength="10" PresentationOption="4" PrimitiveShapeType="0" RequestDefaultSize="false" RequestFitSize="false" RequestFitSizeFromCenter="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" RequestSetSizeOption="0" Selectable="true" ShowAllocatedFrom="0" ShowAllocatedTo="0" ShowStereotypeIconName="0" ShowTaggedValues="0" Width="90" X="710" Y="659" ZOrder="22">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="114" InternalHeight="-2147483648" InternalWidth="-2147483648" Side="FreeMove" Visible="true" Width="90" X="-184" Y="-64"/>
+					<FillColor Color="rgb(244, 234, 154)" Style="1" Transparency="0" Type="1"/>
+				</DFExternalEntity>
+				<DFProcess Background="rgb(122, 207, 245)" ConnectToPoint="true" ConnectionPointType="2" CoverConnector="false" Foreground="rgb(0, 0, 0)" Height="70" Id="0fcQUGmGAqC4AQY5" MetaModelElement="0fcQUGmGAqC4AQY6" Model="0fcQUGmGAqC4AQY6" ModelElementNameAlignment="9" Name="Quản lý dữ liệu và điều khiển hệ thống" OverrideAppearanceWithStereotypeIcon="true" ParentConnectorDTheta="0.0" ParentConnectorHeaderLength="40" ParentConnectorLineLength="10" PresentationOption="4" PrimitiveShapeType="0" RequestDefaultSize="false" RequestFitSize="false" RequestFitSizeFromCenter="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" RequestSetSizeOption="0" Selectable="true" ShowAllocatedFrom="0" ShowAllocatedTo="0" ShowStereotypeIconName="0" ShowTaggedValues="0" Width="110" X="950" Y="391" ZOrder="4">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="15" InternalHeight="-2147483648" InternalWidth="-2147483648" Side="FreeMove" Visible="true" Width="110" X="-184" Y="-44"/>
+					<FillColor Color="rgb(244, 234, 154)" Style="1" Transparency="0" Type="1"/>
+				</DFProcess>
+				<DFDataStore Background="rgb(122, 207, 245)" ConnectToPoint="true" ConnectionPointType="2" CoverConnector="false" Duplicated="false" Foreground="rgb(0, 0, 0)" Height="66" Id="yerQUGmGAqC4AQZ3" MetaModelElement="yerQUGmGAqC4AQZ4" Model="yerQUGmGAqC4AQZ4" ModelElementNameAlignment="9" Name="Kho Dữ liệu Đặt giữ" OverrideAppearanceWithStereotypeIcon="true" ParentConnectorDTheta="0.0" ParentConnectorHeaderLength="40" ParentConnectorLineLength="10" PresentationOption="4" PrimitiveShapeType="0" RequestDefaultSize="false" RequestFitSize="false" RequestFitSizeFromCenter="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" RequestSetSizeOption="0" Selectable="true" ShowAllocatedFrom="0" ShowAllocatedTo="0" ShowStereotypeIconName="0" ShowTaggedValues="0" Width="94" X="700" Y="148" ZOrder="2">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="66" InternalHeight="-2147483648" InternalWidth="-2147483648" Side="FreeMove" Visible="true" Width="62" X="-152" Y="-64"/>
+					<FillColor Color="rgb(244, 234, 154)" Style="1" Transparency="0" Type="1"/>
+				</DFDataStore>
+			</Shapes>
+			<Connectors>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="tvxgUGmGAqC4AQXX" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="77" Id="ZXcIUGmGAqC4AQbs" MetaModelElement="xXcIUGmGAqC4AQbr" Model="xXcIUGmGAqC4AQbr" ModelElementNameAlignment="9" Name="Thông tin đăng ký thành viên" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="VvxgUGmGAqC4AQXV" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="488" X="762" Y="697" ZOrder="24">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="23" InternalHeight="21" InternalWidth="152" Side="None" Visible="true" Width="153" X="984" Y="739"/>
+					<Points>
+						<Point X="801.0" Y="736.0"/>
+						<Point X="1213.0" Y="736.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="tvxgUGmGAqC4AQXX" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="432" Id="81jIUGmGAqC4AQcE" MetaModelElement="M1jIUGmGAqC4AQcD" Model="M1jIUGmGAqC4AQcD" ModelElementNameAlignment="9" Name="Thêm/Xóa sách" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="JvxgUGmGAqC4AQXT" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="580" X="167" Y="322" ZOrder="26">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="15" InternalHeight="-2147483648" InternalWidth="-2147483648" Side="None" Visible="true" Width="97" X="407" Y="722"/>
+					<Points>
+						<Point X="709.0" Y="716.0"/>
+						<Point X="205.0" Y="716.0"/>
+						<Point X="205.0" Y="361.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="tvxgUGmGAqC4AQXX" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="687" Id="7urIUGmGAqC4AQcK" MetaModelElement="eurIUGmGAqC4AQcJ" Model="eurIUGmGAqC4AQcJ" ModelElementNameAlignment="9" Name=" TT Mượn, Trả, Gia hạn" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="evxgUGmGAqC4AQXR" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="380" X="367" Y="32" ZOrder="28">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="104" InternalHeight="102" InternalWidth="44" Side="None" Visible="true" Width="46" X="356" Y="367"/>
+					<Points>
+						<Point X="709.0" Y="681.0"/>
+						<Point X="405.0" Y="681.0"/>
+						<Point X="405.0" Y="70.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="tvxgUGmGAqC4AQXX" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="374" Id="InXIUGmGAqC4AQcQ" MetaModelElement="gnXIUGmGAqC4AQcP" Model="gnXIUGmGAqC4AQcP" ModelElementNameAlignment="9" Name="Đặt/Hủy giữ, xử lý giữ" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="WvxgUGmGAqC4AQXP" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="76" X="727" Y="322" ZOrder="30">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="87" InternalHeight="86" InternalWidth="55" Side="None" Visible="true" Width="57" X="775" Y="467"/>
+					<Points>
+						<Point X="765.0" Y="659.0"/>
+						<Point X="765.0" Y="361.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="tvxgUGmGAqC4AQXX" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="194" Id="LVvIUGmGAqC4AQcW" MetaModelElement="jVvIUGmGAqC4AQcV" Model="jVvIUGmGAqC4AQcV" ModelElementNameAlignment="9" Name="Yêu cầu báo cáo" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="svxgUGmGAqC4AQXN" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="690" X="112" Y="735" ZOrder="32">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="73" InternalHeight="72" InternalWidth="38" Side="None" Visible="true" Width="40" X="767" Y="797"/>
+					<Points>
+						<Point X="764.0" Y="773.0"/>
+						<Point X="764.0" Y="891.0"/>
+						<Point X="151.0" Y="891.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="tvxgUGmGAqC4AQXX" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="311" Id="nZgoUGmGAqC4AQcc" MetaModelElement="7ZgoUGmGAqC4AQcb" Model="7ZgoUGmGAqC4AQcb" ModelElementNameAlignment="9" Name="Lệnh lưu, tải, thoát" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="0fcQUGmGAqC4AQY5" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="281" X="762" Y="422" ZOrder="34">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="68" InternalHeight="68" InternalWidth="61" Side="None" Visible="true" Width="64" X="932" Y="558"/>
+					<Points>
+						<Point X="800.0" Y="696.0"/>
+						<Point X="1005.0" Y="696.0"/>
+						<Point X="1005.0" Y="461.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="VvxgUGmGAqC4AQXV" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="76" Id="t3eoUGmGAqC4AQcm" MetaModelElement="l3eoUGmGAqC4AQcl" Model="l3eoUGmGAqC4AQcl" ModelElementNameAlignment="9" Name="TT ID thành viên mới" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="tvxgUGmGAqC4AQXX" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="486" X="762" Y="679" ZOrder="36">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="17" InternalHeight="-2147483648" InternalWidth="-2147483648" Side="None" Visible="true" Width="124" X="1043" Y="696"/>
+					<Points>
+						<Point X="1210.0" Y="718.0"/>
+						<Point X="800.0" Y="718.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="JvxgUGmGAqC4AQXT" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="414" Id="5VZoUGmGAqC4AQcw" MetaModelElement="JVZoUGmGAqC4AQcv" Model="JVZoUGmGAqC4AQcv" ModelElementNameAlignment="9" Name="Xác nhận thêm/xóa sách&#10;&#10;" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="tvxgUGmGAqC4AQXX" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="572" X="176" Y="322" ZOrder="38">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="21" InternalHeight="20" InternalWidth="141" Side="None" Visible="true" Width="142" X="236" Y="676"/>
+					<Points>
+						<Point X="214.0" Y="361.0"/>
+						<Point X="214.0" Y="699.0"/>
+						<Point X="709.0" Y="699.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="evxgUGmGAqC4AQXR" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="680" Id="8tVoUGmGAqC4AQc2" MetaModelElement="tNVoUGmGAqC4AQc1" Model="tNVoUGmGAqC4AQc1" ModelElementNameAlignment="9" Name="Xác nhận mượn/trả/gia hạn" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="tvxgUGmGAqC4AQXX" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="352" X="396" Y="33" ZOrder="40">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="120" InternalHeight="120" InternalWidth="41" Side="None" Visible="true" Width="44" X="442" Y="370"/>
+					<Points>
+						<Point X="434.0" Y="72.0"/>
+						<Point X="434.0" Y="675.0"/>
+						<Point X="709.0" Y="675.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="svxgUGmGAqC4AQXN" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="184" Id="PcEYUGmGAqC4AQdC" MetaModelElement="qcEYUGmGAqC4AQdB" Model="qcEYUGmGAqC4AQdB" ModelElementNameAlignment="9" Name="Báo cáo giao dịch" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="tvxgUGmGAqC4AQXX" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="680" X="112" Y="735" ZOrder="42">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="14" InternalHeight="-2147483648" InternalWidth="-2147483648" Side="None" Visible="true" Width="109" X="435" Y="859"/>
+					<Points>
+						<Point X="151.0" Y="881.0"/>
+						<Point X="755.0" Y="881.0"/>
+						<Point X="755.0" Y="773.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="0fcQUGmGAqC4AQY5" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="321" Id="WPMYUGmGAqC4AQdU" MetaModelElement="H3MYUGmGAqC4AQdT" Model="H3MYUGmGAqC4AQdT" ModelElementNameAlignment="9" Name="Trạng thái lưu/tải/thoát" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="tvxgUGmGAqC4AQXX" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="291" X="762" Y="422" ZOrder="44">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="100" InternalHeight="99" InternalWidth="69" Side="None" Visible="true" Width="69" X="1034" Y="532"/>
+					<Points>
+						<Point X="1015.0" Y="461.0"/>
+						<Point X="1015.0" Y="706.0"/>
+						<Point X="800.0" Y="706.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="VvxgUGmGAqC4AQXV" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="522" Id="SgaYUGmGAqC4AQdc" MetaModelElement="LAaYUGmGAqC4AQdb" Model="LAaYUGmGAqC4AQdb" ModelElementNameAlignment="9" Name="Đọc/Ghi thông tin thành viên" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="gvxgUGmGAqC4AQXL" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="200" X="1168" Y="248" ZOrder="46">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="88" InternalHeight="87" InternalWidth="66" Side="None" Visible="true" Width="68" X="1196" Y="478"/>
+					<Points>
+						<Point X="1268.0" Y="671.0"/>
+						<Point X="1268.0" Y="348.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="JvxgUGmGAqC4AQXT" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="200" Id="xquYUGmGAqC4AQdg" MetaModelElement="BquYUGmGAqC4AQdf" Model="BquYUGmGAqC4AQdf" ModelElementNameAlignment="9" Name="&#9;Thêm/Xóa sách" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="_PxgUGmGAqC4AQXJ" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="448" X="162" Y="220" ZOrder="48">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="14" InternalHeight="-2147483648" InternalWidth="-2147483648" Side="None" Visible="true" Width="98" X="284" Y="300"/>
+					<Points>
+						<Point X="262.0" Y="320.0"/>
+						<Point X="510.0" Y="320.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="yerQUGmGAqC4AQZ3" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="313" Id="EdhYUGmGAqC4AQdm" MetaModelElement="IdhYUGmGAqC4AQdl" Model="IdhYUGmGAqC4AQdl" ModelElementNameAlignment="9" Name="&#9;Kiểm tra đặt giữ trước khi xóa" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="JvxgUGmGAqC4AQXT" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="693" X="106" Y="76" ZOrder="50">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="49" InternalHeight="47" InternalWidth="95" Side="None" Visible="true" Width="95" X="254" Y="127"/>
+					<Points>
+						<Point X="699.0" Y="176.0"/>
+						<Point X="206.0" Y="176.0"/>
+						<Point X="206.0" Y="289.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="evxgUGmGAqC4AQXR" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="456" Id="jQzYUGmGAqC4AQds" MetaModelElement="sQzYUGmGAqC4AQdr" Model="sQzYUGmGAqC4AQdr" ModelElementNameAlignment="9" Name="Xác thực thành viên" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="gvxgUGmGAqC4AQXL" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="944" X="410" Y="-50" ZOrder="52">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="18" InternalHeight="-2147483648" InternalWidth="-2147483648" Side="None" Visible="true" Width="120" X="826" Y="30"/>
+					<Points>
+						<Point X="510.0" Y="50.0"/>
+						<Point X="1254.0" Y="50.0"/>
+						<Point X="1254.0" Y="306.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="evxgUGmGAqC4AQXR" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="356" Id="TWnYUGmGAqC4AQdy" MetaModelElement="9WnYUGmGAqC4AQdx" Model="9WnYUGmGAqC4AQdx" ModelElementNameAlignment="9" Name="Cập nhật trạng thái sách" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="_PxgUGmGAqC4AQXJ" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="127" X="444" Y="4" ZOrder="54">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="77" InternalHeight="76" InternalWidth="55" Side="None" Visible="true" Width="55" X="511" Y="204"/>
+					<Points>
+						<Point X="507.0" Y="67.0"/>
+						<Point X="509.0" Y="298.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="evxgUGmGAqC4AQXR" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="125" Id="cSfYUGmGAqC4AQd4" MetaModelElement="0SfYUGmGAqC4AQd3" Model="0SfYUGmGAqC4AQd3" ModelElementNameAlignment="9" Name="&#9;Lưu giao dịch mượn/trả/gia hạn" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="rPxgUGmGAqC4AQXH" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="336" X="126" Y="-13" ZOrder="56">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="35" InternalHeight="35" InternalWidth="108" Side="None" Visible="true" Width="108" X="241" Y="11"/>
+					<Points>
+						<Point X="399.0" Y="49.0"/>
+						<Point X="188.0" Y="49.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="yerQUGmGAqC4AQZ3" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="287" Id="Deg4UGmGAqC4AQd." MetaModelElement="teg4UGmGAqC4AQd9" Model="teg4UGmGAqC4AQd9" ModelElementNameAlignment="9" Name="&#9;Kiểm tra đặt giữ khi trả/gia hạn" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="evxgUGmGAqC4AQXR" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="446" X="409" Y="-41" ZOrder="58">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="20" InternalHeight="20" InternalWidth="176" Side="None" Visible="true" Width="175" X="546" Y="63"/>
+					<Points>
+						<Point X="756.0" Y="147.0"/>
+						<Point X="756.0" Y="59.0"/>
+						<Point X="509.0" Y="59.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="gvxgUGmGAqC4AQXL" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="200" Id="jMY4UGmGAqC4AQeE" MetaModelElement="uMY4UGmGAqC4AQeD" Model="uMY4UGmGAqC4AQeD" ModelElementNameAlignment="9" Name="&#9;Lấy thông tin liên hệ thành viên" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="WvxgUGmGAqC4AQXP" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="576" X="709" Y="226" ZOrder="60">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="30" InternalHeight="30" InternalWidth="97" Side="None" Visible="true" Width="99" X="853" Y="289"/>
+					<Points>
+						<Point X="1186.0" Y="326.0"/>
+						<Point X="809.0" Y="326.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="WvxgUGmGAqC4AQXP" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="200" Id="QFk4UGmGAqC4AQeK" MetaModelElement="AFk4UGmGAqC4AQeJ" Model="AFk4UGmGAqC4AQeJ" ModelElementNameAlignment="9" Name="Kiểm tra trạng thái sách" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="_PxgUGmGAqC4AQXJ" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="300" X="500" Y="220" ZOrder="62">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="74" InternalHeight="74" InternalWidth="62" Side="None" Visible="true" Width="62" X="622" Y="322"/>
+					<Points>
+						<Point X="700.0" Y="320.0"/>
+						<Point X="600.0" Y="320.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="WvxgUGmGAqC4AQXP" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="276" Id="AKM4UGmGAqC4AQeQ" MetaModelElement="ayM4UGmGAqC4AQeP" Model="ayM4UGmGAqC4AQeP" ModelElementNameAlignment="9" Name="Tạo/Xóa yêu cầu giữ" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="yerQUGmGAqC4AQZ3" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="200" X="666" Y="114" ZOrder="64">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="16" InternalHeight="-2147483648" InternalWidth="-2147483648" Side="None" Visible="true" Width="124" X="640" Y="244"/>
+					<Points>
+						<Point X="766.0" Y="290.0"/>
+						<Point X="766.0" Y="214.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="gvxgUGmGAqC4AQXL" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="752" Id="7Ey4UGmGAqC4AQeW" MetaModelElement="2Ey4UGmGAqC4AQeV" Model="2Ey4UGmGAqC4AQeV" ModelElementNameAlignment="9" Name="Tạo báo cáo từ thông tin thành viên &amp; giao dịch" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="svxgUGmGAqC4AQXN" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="1373" X="52" Y="248" ZOrder="66">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="20" InternalHeight="20" InternalWidth="311" Side="None" Visible="true" Width="312" X="902" Y="878"/>
+					<Points>
+						<Point X="1326.0" Y="348.0"/>
+						<Point X="1326.0" Y="901.0"/>
+						<Point X="152.0" Y="901.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="rPxgUGmGAqC4AQXH" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="881" Id="kfq4UGmGAqC4AQec" MetaModelElement="evq4UGmGAqC4AQeb" Model="evq4UGmGAqC4AQeb" ModelElementNameAlignment="9" Name="Tạo báo cáo từ thông tin thành viên &amp; giao dịch" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="svxgUGmGAqC4AQXN" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="125" X="57" Y="37" ZOrder="68">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="50" InternalHeight="50" InternalWidth="116" Side="None" Visible="true" Width="115" X="2" Y="453"/>
+					<Points>
+						<Point X="119.0" Y="99.0"/>
+						<Point X="119.0" Y="856.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="0fcQUGmGAqC4AQY5" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="254" Id="c_m4UGmGAqC4AQei" MetaModelElement="0_m4UGmGAqC4AQeh" Model="0_m4UGmGAqC4AQeh" ModelElementNameAlignment="9" Name="Lưu/Tải toàn bộ dữ liệu" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="gvxgUGmGAqC4AQXL" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="370" X="916" Y="236" ZOrder="70">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="52" InternalHeight="50" InternalWidth="58" Side="None" Visible="true" Width="60" X="1070" Y="338"/>
+					<Points>
+						<Point X="1016.0" Y="390.0"/>
+						<Point X="1016.0" Y="336.0"/>
+						<Point X="1186.0" Y="336.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="0fcQUGmGAqC4AQY5" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="414" Id="0Vx4UGmGAqC4AQeu" MetaModelElement="YVx4UGmGAqC4AQet" Model="YVx4UGmGAqC4AQet" ModelElementNameAlignment="9" Name="Lưu/Tải toàn bộ dữ liệu" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="yerQUGmGAqC4AQZ3" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="412" X="694" Y="76" ZOrder="72">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="16" InternalHeight="-2147483648" InternalWidth="-2147483648" Side="None" Visible="true" Width="134" X="873" Y="157"/>
+					<Points>
+						<Point X="1006.0" Y="390.0"/>
+						<Point X="1006.0" Y="176.0"/>
+						<Point X="794.0" Y="176.0"/>
+					</Points>
+				</DFDataFlow>
+				<DFDataFlow Background="rgb(0, 0, 0)" ConnectorLabelOrientation="4" ConnectorLineJumps="4" ConnectorStyle="Follow Diagram" Foreground="rgb(0, 0, 0)" From="WvxgUGmGAqC4AQXP" FromConnectType="0" FromPinType="1" FromShapeXDiff="0" FromShapeYDiff="0" Height="374" Id="Q1JsUGmGAqC4AQqs" MetaModelElement="FVJsUGmGAqC4AQqr" Model="FVJsUGmGAqC4AQqr" ModelElementNameAlignment="9" Name="Xác nhận giữ, thông báo người tiếp theo" PaintThroughLabel="2" RequestRebuild="false" RequestRebuildFromEnd="false" RequestRebuildToEnd="false" RequestResetCaption="false" RequestResetCaptionFitWidth="false" RequestResetCaptionSize="false" Selectable="true" ShowConnectorName="2" To="tvxgUGmGAqC4AQXX" ToConnectType="0" ToPinType="1" ToShapeXDiff="0" ToShapeYDiff="0" UseFromShapeCenter="true" UseToShapeCenter="true" Width="76" X="699" Y="322" ZOrder="74">
+					<ElementFont Color="rgb(0, 0, 0)" Name="Dialog" Size="11" Style="0"/>
+					<Line Cap="0" Color="rgb(0, 0, 0)" Transparency="0" Weight="1.0">
+						<Stroke/>
+					</Line>
+					<Caption Height="108" InternalHeight="107" InternalWidth="60" Side="None" Visible="true" Width="62" X="674" Y="474"/>
+					<Points>
+						<Point X="738.0" Y="361.0"/>
+						<Point X="738.0" Y="659.0"/>
+					</Points>
+				</DFDataFlow>
+			</Connectors>
+		</DataFlowDiagram>
+	</Diagrams>
+</Project>

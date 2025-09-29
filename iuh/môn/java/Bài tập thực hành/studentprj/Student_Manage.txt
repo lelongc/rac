@@ -1,0 +1,102 @@
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.LinkedList;
+import java.util.Scanner;
+
+public class Student_Manage {
+	static Student tree;
+	static LinkedList<Student> list = new LinkedList<Student>();
+	public static boolean Save_to_file(LinkedList<Student> ds, String path) {
+        try {
+            FileOutputStream fos = new FileOutputStream(path);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(ds);
+            oos.close();
+            fos.close();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    @SuppressWarnings("unchecked")
+	public static LinkedList<Student> Read_from_file(String path) {
+        
+        LinkedList<Student> s=null;
+		try {
+            FileInputStream fis = new FileInputStream(path);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            Object o = ois.readObject();
+            s = (LinkedList<Student>) o;
+            ois.close();
+            fis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return s;
+    }
+   public static void Readstudentlist(LinkedList<Student> list) {
+   System.out.printf("%-3s %-8s %-20s %-10s %-10s","#","Std_id","Std_name","Std_result","Std_rank");
+   System.out.println();
+    int stt=0;
+    for (Student e:list) {
+    	System.out.printf("%-3d %-8s %-20s %-10.2f %-10s",++stt,e.getStudent_id(),e.getStudent_name(),e.getStudent_result(),e.getStudent_rank());
+    	System.out.println();
+    	}
+   
+    }
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		/*
+		Student s1 = new Student("100","Nguyen Van Dung");
+		Student s2 = new Student("104","Nguyen Thi Hanh");
+		Student s3 = new Student("106","Tran Thi Hai");
+		Student s4 = new Student("109","Le Van Phuoc");
+		Student s5 = new Student("101","Quach Thanh Danh");
+		Student s6 = new Student("105","Vu Van Hung");
+		Student s7 = new Student("102","Le Tien Loc");
+		Student s8 = new Student("107","Pham Quang Minh");
+		Student s9 = new Student("108","Ho Van Mui");
+		Student s10 = new Student("103","Nguyen Van Dat ");
+		Student s11 = new Student("110","Le Van Hai");
+		list.addLast(s1);
+		list.addLast(s2);
+		list.addLast(s3);
+		list.addLast(s4);
+		list.addLast(s5);
+		list.addLast(s6);
+		list.addLast(s7);
+		list.addLast(s8);
+		list.addLast(s9);
+		list.addLast(s10);
+		list.addLast(s11);
+		Readstudentlist(list);
+		
+		Save_to_file(list,"D:\\StudentList.dat");
+		*/
+		int menu=1;
+		Scanner scan = new Scanner(System.in);
+		while (menu!=0) {
+		System.out.println("STUDENT MANAGE PROGRAM");
+		System.out.println("1-Open Student List from File");
+		System.out.println("2-View Student List ");
+		System.out.println("0-Save/Exit");
+		System.out.println("Please choose: ");
+		menu = scan.nextInt();
+					
+		switch (menu) {
+		case 1: {list=Read_from_file("D:\\StudentList.dat");break;}
+		case 2: {System.out.println("READ LIST:"); Readstudentlist(list); break;}
+		case 0: {Save_to_file(list,"D:\\StudentList.dat");break;}
+		}
+		}
+		
+		scan.close();
+		}
+
+	}
+
+
+

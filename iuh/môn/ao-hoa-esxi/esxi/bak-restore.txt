@@ -1,0 +1,36 @@
+Chào bạn, việc tạo lại máy ảo từ các file `.ovf` và `.vmdk` đã lưu là một thao tác rất cơ bản và an toàn trên ESXi. Quá trình này được gọi là "triển khai" (deploy) một máy ảo từ một mẫu có sẵn.
+
+Bạn chỉ cần làm theo các bước sau trên giao diện web của ESXi.
+
+---
+### ## Hướng dẫn Tạo lại Máy ảo từ file OVF/VMDK
+
+1.  **Bắt đầu Trình hướng dẫn (Wizard)**
+    * Trong giao diện ESXi, ở menu bên trái, nhấp vào **Virtual Machines**.
+    * Nhấp vào nút **Create / Register VM**.
+
+2.  **Chọn Phương thức Tạo**
+    * Một cửa sổ mới sẽ hiện ra. Hãy chọn tùy chọn thứ hai: **"Deploy a virtual machine from an OVF or OVA file"**.
+    * Nhấn **Next**.
+
+    
+
+3.  **Đặt tên và Chọn file**
+    * **Enter a name for the virtual machine:** Đặt một cái tên cho máy ảo mới của bạn (ví dụ: `Ubuntu-Restored`).
+    * **Select files:** Kéo và thả **toàn bộ các file** bạn đã lưu (`.ovf`, `.vmdk`, và `.mf` nếu có) vào khung upload, hoặc nhấp vào để chọn file từ máy tính của bạn.
+    * Nhấn **Next**.
+
+4.  **Chọn Nơi lưu trữ (Storage)**
+    * ESXi sẽ hỏi bạn muốn lưu ổ cứng ảo này vào đâu. Hãy chọn datastore (kho lưu trữ) mà bạn đang sử dụng.
+    * Nhấn **Next**.
+
+5.  **Tùy chọn Triển khai (Deployment options)**
+    * Ở bước này, bạn có thể kiểm tra lại các cài đặt mạng và định dạng ổ cứng. Thường thì bạn chỉ cần để các tùy chọn mặc định.
+    * Nhấn **Next**.
+
+6.  **Hoàn tất**
+    * Một trang tóm tắt sẽ hiện ra. Hãy kiểm tra lại thông tin lần cuối và nhấn **Finish**.
+
+ESXi sẽ bắt đầu quá trình upload các file và tạo lại máy ảo. Quá trình này có thể mất một lúc tùy thuộc vào dung lượng của file `.vmdk` và tốc độ mạng của bạn.
+
+Sau khi hoàn tất, bạn sẽ thấy máy ảo mới xuất hiện trong danh sách. Bạn chỉ cần **khởi động (Start)** nó lên là mọi thứ sẽ quay trở lại đúng trạng thái như lúc bạn sao lưu. ✅

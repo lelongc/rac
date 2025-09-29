@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Đăng Kí Khóa Học</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="../js/script.js"></script>
+    <style>
+      body {
+        margin: 0;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container border border-dark">
+      <header class="text-center">
+        <img
+          src="../img/header.jpg"
+          class="img-fluid rounded-top w-100"
+          alt="Header"
+        />
+      </header>
+
+      <div class="row my-4">
+        <nav class="col-2 col-md-2 text-center mb-3">
+          <div class="bg-white d-flex flex-column align-items-start gap-3">
+            <a href="#" class="text-decoration-none text-success">Hoạt động</a>
+            <a href="#" class="text-decoration-none text-success"
+              >Danh sách lớp</a
+            >
+            <a href="#" class="text-decoration-none text-success">Ưu đãi</a>
+            <a
+              href="#"
+              class="btn btn-success btn-lg"
+              data-bs-toggle="modal"
+              data-bs-target="#myModal"
+              >Đăng kí</a
+            >
+          </div>
+        </nav>
+
+        <section class="col-10 col-md-10">
+          <h3 class="text-uppercase fw-bold mb-3">
+            DANH SÁCH ĐĂNG KÍ KHÓA HỌC
+          </h3>
+          <div class="table-responsive">
+            <table class="table table-striped" id="dataTable">
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>họ tên</th>
+                  <th>so dien thoại</th>
+                  <th>email</th>
+                  <th>địa chỉ</th>
+                  <th>năm sinh sinh viên</th>
+                  <th>giáo viên</th>
+                </tr>
+              </thead>
+              <tbody id="dataTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <footer class="text-center bg-success text-light p-3">
+        23630851_Lê Thành Long_DHCNTT19A
+      </footer>
+
+      <div
+        class="modal fade"
+        id="myModal"
+        tabindex="-1"
+        aria-labelledby="modalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalLabel">thong tin hc vuenvuen</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form id="generatedForm" class="needs-validation" novalidate>
+                <div class="mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="text_input"
+                    name="text_input"
+                    placeholder="họ tên"
+                    required
+                  />
+                  <div class="invalid-feedback">nhập sai định dạng họ tên</div>
+                  <div class="text-danger small mt-1">(*)</div>
+                </div>
+                <div class="mb-3">
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="phone"
+                    name="phone"
+                    placeholder="số điện thoại"
+                    required
+                  />
+                  <div class="invalid-feedback">sai định dạng sdt</div>
+                  <div class="text-danger small mt-1">(*)</div>
+                </div>
+                <div class="mb-3">
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    placeholder="email"
+                    required
+                  />
+                  <div class="invalid-feedback">sai định dạng email</div>
+                  <div class="text-danger small mt-1">(*)</div>
+                </div>
+                <div class="mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="address"
+                    name="address"
+                    placeholder="địa chỉ"
+                    required
+                  />
+                  <div class="invalid-feedback">sai định dạng địa chủ</div>
+                  <div class="text-danger small mt-1">(*)</div>
+                </div>
+                <div class="mb-3">
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="date"
+                    name="date"
+                  />
+                  <div class="invalid-feedback">Vui lòng chọn date</div>
+                </div>
+                <div class="mb-3">
+                  <label for="radio" class="form-label"
+                    >bạn mún hc giáo viên hn hay hcm</label
+                  >
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="radio"
+                      id="radio_0"
+                      value="hn"
+                      checked
+                    />
+                    <label class="form-check-label" for="radio_0">hà nội</label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="radio"
+                      id="radio_1"
+                      value="hcm"
+                    />
+                    <label class="form-check-label" for="radio_1">HCM</label>
+                  </div>
+                  <div class="invalid-feedback">
+                    Vui lòng chọn bạn mún hc giáo viên hn hay hcm
+                  </div>
+                  <div class="text-danger small mt-1">(*)</div>
+                </div>
+                <button type="submit" class="btn btn-primary">Đăng ký</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <h4 class="text-primary w-100 text-center">
+                23630851-LêThànhLong-DHCNTT19A
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

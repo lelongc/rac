@@ -1,0 +1,136 @@
+package BinaryTree;
+
+public class Tree {
+	int val;
+	Tree left,right,parent;
+	Tree(int data){
+		this.val=data;
+		this.right=null;
+		this.left=null;
+		this.parent=null;
+	}
+	public static void Readtree(Tree root) {
+		if (root!=null) {
+			
+			Readtree(root.left);
+			System.out.print(root.val+" ");
+			Readtree(root.right);
+			
+		}
+	}
+	public static Tree Addnode(Tree root,int data) {
+		if (root ==null) {root = new Tree(data);return root;}
+		else if (root.val>=data) {
+			if (root.left==null) {
+				Tree newnode = new Tree(data);
+				root.left = newnode;
+				newnode.parent = root;
+			}
+			else {root.left = Addnode(root.left,data);return root;}
+		}
+		else if (root.right==null) {
+			Tree newnode = new Tree(data);
+			root.right = newnode;
+			newnode.parent = root;
+		}
+		else {root.right = Addnode(root.right,data);return root;}
+			
+		return root;
+	}
+	public static int Countnode(Tree root) {
+		if (root==null) return 0;
+		else return 1+Countnode(root.left)+Countnode(root.right);
+	}
+	public static Tree findleftnode(Tree root) {
+		if (root == null) return null;
+		else if (root.left==null) return root;
+		else return findleftnode(root.left);
+	}
+	public Tree Delnode(Tree root,int data) {
+		if (root==null) return null;
+		else if (root.val==data) {
+			if (root.parent==null) {
+				if (root.left==null) return root.right;
+				if (root.right==null) return root.left;
+				
+				Tree changnode = findleftnode(root.right);
+				
+				
+				if (changnode.right!=null) {
+					changnode.parent.left = changnode.right;
+					changnode.right=null;
+				}
+				Tree L = root.left;
+				Tree R = root.right;
+				changnode.left = L;
+				changnode.right = R;
+				changnode.parent=null;
+				root = changnode;
+				return root;
+			}
+			else {
+				if (root.left==null) return root.right;
+				if (root.right==null) return root.left;
+				Tree changnode = findleftnode(root.right);
+				if (changnode.right!=null) {
+					changnode.parent.left = changnode.right;
+					changnode.right=null;
+				}
+				changnode.parent.left=null;
+				Tree L = root.left;
+				Tree R = root.right;
+							
+				changnode.left = L;
+				changnode.right = R;
+				changnode.parent = root.parent;
+				root = changnode;
+								
+				return root;
+			}
+		} 
+		else {
+			if (root.val<data) root.right = Delnode(root.right,data);
+			else root.left = Delnode(root.left,data);
+		return root;
+		}
+			
+		
+	}
+	public static Tree delete(Tree N,int value) {
+		if(N==null)return null;
+		else if(N.val>value) N.left=delete(N.left, value);
+		else if(N.val<value) N.right=delete(N.right, value);
+		else {
+			if(N.left!=null&&N.right==null)return N.left;
+			else if(N.left==null&&N.right!=null)return N.right;
+			else if(N.left==null&&N.right==null)return null;
+			else {
+				Tree min=findleftnode(N.right);
+				N.val=min.val;
+				N.right=delete(N.right, min.val);
+			}
+		}
+		return N;
+	}
+	static Tree root;
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		int value[] = {14,2,5,20,42,1,4,16,18,30,12,9};
+		for (int i:value) root = Addnode(root,i);
+		Readtree(root); System.out.println();
+		root = Addnode(root,7);root = Addnode(root,40);
+		Readtree(root); System.out.println();
+		
+		System.out.println("Xoa node 14 - Su dung Delnode");
+		root = root.Delnode(root, 14);
+		//System.out.println("Xoa node 14 - Su dung delete");
+		//root = root.delete(root, 14)
+		
+		
+		Readtree(root); System.out.println();
+		
+		
+	}
+
+}

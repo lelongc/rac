@@ -1,0 +1,22 @@
+trước khi cài ip tĩnh 
+chạy ip route xem coi default gateway rồi mới chỉnh config được 
+
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    ens160: # <-- Tên card mạng của bạn
+      dhcp4: no
+      addresses:
+        - 192.168.3.10/24    
+      routes:
+        - to: default
+          via: 192.168.3.2      # <--- ĐỊA CHỈ GATEWAY ĐÚNG
+      nameservers:
+        addresses: [8.8.8.8, 1.1.1.1]
+
+
+apt cài không đượcc thì vô sudo nano /etc/apt/sources.list bỏ chữ vn đi 
+
+
+chỉnh ip tĩnh cho esxi thì vào console bấm f2 rồi đi mò chỗ ipv4 chỉnh tĩnh 

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GFree English Course Registration</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+        color: black;
+      }
+
+      body {
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      #header {
+        overflow: hidden;
+      }
+
+      #footer {
+        background-color: #0d6efd; 
+        color: white;
+        padding: 20px 0;
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      #footer p {
+        margin: 5px 0;
+        color: white;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div class="container" style="border: 1px solid black">
+
+      <div id="header">
+        <div class="row" style="width: 100%">
+          <img
+            src="../image/website.png"
+            alt="Banner"
+            style="width: 100%; height: auto; display: block"
+          />
+        </div>
+      </div>
+
+      <div id="navbar">
+        <nav class="navbar navbar-expand-sm navbar-light bg-light">
+          <div class="container-fluid">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#">GFree English course </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Trang chủ</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="#">Giới thiệu</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Khóa học</a>
+              </li>
+              
+              <li class="nav-item">
+                <button
+                  class="btn btn-danger text-white btn-sm"
+                  href="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#myModal"
+                  >Đăng ký<button
+                >
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+
+
+      <div id="section">
+        <div class="container">
+       
+          <div class="row my-3 border-top pt-4 text-center">
+            <h3>Danh sách đăng kí khóa học</h3>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable">
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>họ tên</th>
+                  <th>ngày sinh</th>
+                  <th>sdt</th>
+                  <th>Email Address</th>
+                  <th>kh</th>
+                  <th>hth</th>
+                  <th>kỹ năng hc</th>
+                </tr>
+              </thead>
+              <tbody id="dataTableBody">
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+
+      
+      <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalLabel">họ tên Form</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="generatedForm" class="needs-validation" novalidate>
+                <div class="mb-3 row">
+                  <label for="text_input" class="form-label col-3 text-end">họ tên</label>
+                  <div class="col-9">
+                    <input type="text" class="form-control" id="text_input" name="text_input" required >
+                  <div class="invalid-feedback">sai định dạng ten</div>
+                  </div>
+                  
+                </div>
+                <div class="mb-3 row">
+                  <label for="date" class="form-label col-3 text-end">ngày sinhh</label>
+                  <div class="col-9">
+                    <input type="date" class="form-control" id="date" name="date"  required>
+                  <div class="invalid-feedback">Vui lòng chọn ngày sinhh</div>
+                  </div>
+                  
+                </div>
+                <div class="mb-3 row">
+                  <label for="phone" class="form-label col-3 text-end">số điện thoại</label>
+                  <div class="col-8">
+                    <input type="tel" class="form-control" id="phone" name="phone" required >
+                  <div class="invalid-feedback">sai định dạng dt</div>
+                  </div>
+                  
+                </div>
+                <div class="mb-3 row">
+                  <label for="email" class="form-label col-3 text-end">Email</label>
+                  <div class="col-9">
+                    <input type="email" class="form-control" id="email" name="email" required >
+                  <div class="invalid-feedback">sai định dạng gmail</div>
+                  </div>
+                  
+                </div>
+                <div class="mb-3 row">
+                  <label for="select" class="form-label col-3 text-end">chọn khóa học</label>
+                  <div class="col">
+                    <select class="form-select" id="select" name="select" required>
+                      <option value="">chọn...</option>
+                      <option value="3 tháng">Anh văn cơ bản</option>
+                      <option value="6 tháng">Anh văn giao tiếp</option>
+                      <option value="12 tháng">Luyện thi IELTS</option>
+                    </select>
+                    <div class="invalid-feedback">Vui lòng chọn chọn khóa học</div>
+                  </div>
+                  
+                </div>
+                <div class="mb-3 row">
+                  <label for="readonly_display" class="form-label col-3 text-end">thời gian hc</label>
+                  <div class="col-9">
+                    <input type="text" class="form-control bg-body-secondary" id="readonly_display" name="readonly_display" readonly>
+                  </div>
+                </div>
+                <div class="mb-3 row">
+                  <label for="radio" class="form-label col-3 text-end">hình thức hc</label>
+                  <div class="col-9">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="radio" id="radio_0" value="học trung tâm" checked>
+                      <label class="form-check-label" for="radio_0">học trung tâm</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="radio" id="radio_1" value="học online">
+                      <label class="form-check-label" for="radio_1">học online</label>
+                    </div>
+                    <div class="invalid-feedback">Vui lòng chọn hình thức hc</div>
+                  </div>
+                  
+                </div>
+                <div class="mb-3 row">
+                  <label for="checkbox" class="form-label col-3 text-end">kỹ năng hc</label>
+                  <div class="col-9">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="checkbox" id="checkbox_0" value="nghe">
+                      <label class="form-check-label" for="checkbox_0">nghe</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="checkbox" id="checkbox_1" value="nói">
+                      <label class="form-check-label" for="checkbox_1">nói</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="checkbox" id="checkbox_2" value="đọc">
+                      <label class="form-check-label" for="checkbox_2">đọc</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="checkbox" id="checkbox_3" value="viết">
+                      <label class="form-check-label" for="checkbox_3">viết</label>
+                    </div>
+                    <div class="invalid-feedback">Vui lòng chọn ít nhất một tùy chọn</div>
+                  </div>
+                  
+                </div>
+               
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" id="registerBtn">Đăng ký</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+     
+      <div id="footer">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <h5 class="text-white">Thông tin sinh viên</h5>
+              <p>Họ tên: Lê Thanh Long</p>
+              <p>Mã sinh viên: 23630851</p>
+              <p>Mã lớp: DHKTPM18A</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+  </body>
+</html>

@@ -1,0 +1,196 @@
+Chào bạn,
+
+**Hoàn toàn khả thi\!** Đây là một kỹ thuật rất phổ biến khi lập trình và kiểm thử web ở môi trường local.
+
+Mục tiêu của bạn là làm cho trình duyệt trên máy Windows "tin tưởng" một chứng chỉ SSL (ổ khóa xanh 🔒) do chính bạn tạo ra cho một tên miền không có thật (ví dụ `myweb.local`), được trỏ đến máy ảo Ubuntu qua file `hosts`.
+
+Chúng ta không thể dùng các dịch vụ cấp SSL miễn phí như Let's Encrypt vì họ yêu cầu tên miền phải public trên Internet để xác thực. Vì vậy, giải pháp chính là:
+
+1.  **Tự tạo một bộ chứng chỉ SSL (Self-signed certificate)** trên Ubuntu cho tên miền `myweb.local`.
+2.  **"Dạy" cho Windows tin tưởng** chứng chỉ này bằng cách thêm nó vào kho lưu trữ chứng chỉ gốc đáng tin cậy (Trusted Root Certification Authorities).
+
+Sau đây là các bước chi tiết từ A-Z.
+
+-----
+
+### 💡 Giả định ban đầu
+
+  * Máy ảo **Ubuntu Server** đã được cài trên Hyper-V.
+  * Bạn đã cấu hình **mạng NAT** cho Hyper-V.
+  * Máy ảo Ubuntu có IP tĩnh là `192.168.100.10`.
+  * Bạn có thể `ping 192.168.100.10` thành công từ máy Windows host.
+
+-----
+
+### **Bước 1: Cấu hình Domain ảo trên máy Windows Host**
+
+Bước này để "đánh lừa" máy Windows rằng tên miền `myweb.local` chính là địa chỉ IP `192.168.100.10`.
+
+1.  Mở **Notepad** với quyền **Administrator**. (Tìm Notepad trong Start Menu, chuột phải → Run as administrator).
+2.  Trong Notepad, vào **File → Open**.
+3.  Dán đường dẫn này vào ô File name và nhấn Enter:
+    ```
+    C:\Windows\System32\drivers\etc\hosts
+    ```
+4.  Thêm dòng sau vào cuối file:
+    ```
+    192.168.100.10  myweb.local
+    ```
+5.  Lưu file lại (Ctrl + S).
+
+**Kiểm tra:** Mở Command Prompt trên Windows và gõ `ping myweb.local`. Nếu nó trả về kết quả từ IP `192.168.100.10` là thành công.
+
+-----
+
+### **Bước 2: Cài đặt Apache và tạo Website tĩnh trên Ubuntu**
+
+Bây giờ, hãy truy cập vào máy ảo Ubuntu của bạn (qua SSH hoặc console của Hyper-V) và thực hiện các lệnh sau.
+
+1.  **Cài đặt Apache2:**
+
+    ```bash
+    sudo apt update
+    sudo apt install apache2 -y
+    ```
+
+2.  **Tạo thư mục và file HTML cho web:**
+
+    ```bash
+    # Tạo thư mục cho web
+    sudo mkdir -p /var/www/myweb.local
+
+    # Gán quyền sở hữu cho user Apache
+    sudo chown -R www-data:www-data /var/www/myweb.local
+
+    # Tạo một file index.html để test
+    sudo nano /var/www/myweb.local/index.html
+    ```
+
+3.  Dán nội dung HTML đơn giản này vào file `index.html`:
+
+    ```html
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Welcome to MyWeb.local</title>
+    </head>
+    <body style="font-family: sans-serif; text-align: center; margin-top: 50px;">
+        <h1>Hello from myweb.local! 👋</h1>
+        <p>This site is served via HTTPS with a local trusted certificate. 🔒</p>
+    </body>
+    </html>
+    ```
+
+    Nhấn `Ctrl + X`, rồi `Y`, rồi `Enter` để lưu và thoát.
+
+-----
+
+### **Bước 3: Tạo chứng chỉ SSL Self-Signed trên Ubuntu**
+
+Đây là bước quan trọng nhất. Chúng ta sẽ dùng `openssl` để tạo ra một cặp khóa (private key) và chứng chỉ (certificate).
+
+Chạy lệnh sau:
+
+```bash
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+-keyout /etc/ssl/private/myweb.local.key \
+-out /etc/ssl/certs/myweb.local.crt
+```
+
+Hệ thống sẽ hỏi bạn một vài thông tin. Bạn có thể bỏ trống hầu hết, nhưng **dòng quan trọng nhất** là:
+
+> **Common Name (e.g. server FQDN or YOUR name) []:**
+
+Tại đây, bạn **bắt buộc** phải nhập đúng tên miền ảo đã cấu hình ở Bước 1:
+`myweb.local`
+
+Lệnh này sẽ tạo ra 2 file:
+
+  * `/etc/ssl/private/myweb.local.key` (Khóa bí mật, không bao giờ chia sẻ).
+  * `/etc/ssl/certs/myweb.local.crt` (Chứng chỉ công khai, file này chúng ta sẽ copy sang Windows).
+
+-----
+
+### **Bước 4: Cấu hình Apache sử dụng SSL (Virtual Host)**
+
+Chúng ta sẽ bảo Apache rằng: "Khi có ai truy cập `myweb.local`, hãy sử dụng thư mục web và bộ chứng chỉ SSL chúng ta vừa tạo".
+
+1.  **Tạo file cấu hình Virtual Host cho trang web:**
+
+    ```bash
+    sudo nano /etc/apache2/sites-available/myweb.local.conf
+    ```
+
+2.  Dán toàn bộ nội dung sau vào file:
+
+    ```apache
+    <VirtualHost *:80>
+        ServerName myweb.local
+        Redirect permanent / https://myweb.local/
+    </VirtualHost>
+
+    <VirtualHost *:443>
+        ServerName myweb.local
+        DocumentRoot /var/www/myweb.local
+
+        SSLEngine on
+        SSLCertificateFile /etc/ssl/certs/myweb.local.crt
+        SSLCertificateKeyFile /etc/ssl/private/myweb.local.key
+
+        <Directory /var/www/myweb.local>
+            Options Indexes FollowSymLinks
+            AllowOverride All
+            Require all granted
+        </Directory>
+    </VirtualHost>
+    ```
+
+      * **Block `*:80`:** Tự động chuyển hướng mọi truy cập HTTP sang HTTPS.
+      * **Block `*:443`:** Cấu hình chính cho HTTPS, chỉ định thư mục web và đường dẫn đến file SSL.
+
+3.  **Kích hoạt các module cần thiết và cấu hình mới:**
+
+    ```bash
+    # Bật site mới
+    sudo a2ensite myweb.local.conf
+
+    # Bật module SSL của Apache
+    sudo a2enmod ssl
+
+    # Tắt site mặc định (tùy chọn nhưng nên làm)
+    sudo a2dissite 000-default.conf
+
+    # Khởi động lại Apache để áp dụng thay đổi
+    sudo systemctl restart apache2
+    ```
+
+-----
+
+### **Bước 5: Thêm chứng chỉ vào Windows để có "Ổ khóa xanh"**
+
+1.  **Copy file `.crt` từ Ubuntu sang Windows:**
+    Bạn có thể dùng công cụ như **WinSCP** để kết nối vào Ubuntu và tải file `/etc/ssl/certs/myweb.local.crt` về máy Windows (ví dụ: lưu ở Desktop).
+
+2.  **Cài đặt chứng chỉ vào Windows:**
+
+      * Trên máy Windows, tìm file `myweb.local.crt` bạn vừa tải về.
+      * Nháy đúp chuột vào file đó.
+      * Một cửa sổ Certificate sẽ hiện ra, nhấn **Install Certificate...**.
+      * Chọn **Local Machine** và nhấn Next.
+      * Chọn **Place all certificates in the following store** và nhấn **Browse...**.
+      * Trong danh sách, chọn **Trusted Root Certification Authorities** và nhấn OK.
+      * Nhấn Next, rồi Finish. Sẽ có một cảnh báo bảo mật, bạn nhấn **Yes**.
+
+3.  **Khởi động lại trình duyệt web của bạn** (quan trọng\!) để nó nhận diện chứng chỉ mới.
+
+-----
+
+### **Bước 6: Kiểm tra thành quả**
+
+Bây giờ, mở trình duyệt Chrome/Edge/Firefox trên máy Windows của bạn và truy cập:
+
+`https://myweb.local`
+
+Kết quả bạn nhận được sẽ là trang web "Hello world" với **biểu tượng ổ khóa xanh** và không có bất kỳ cảnh báo bảo mật nào, giống hệt như một trang web thật.
+
+Chúc bạn thành công\!

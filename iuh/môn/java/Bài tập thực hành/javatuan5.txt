@@ -1,0 +1,10 @@
+thực hành tuần 5 gồm:
+1) Hiện thực 1 cây nhị phân tìm kiếm
+2) Đọc (duyệt RLN, LRN, LNR) cây nhị phân tìm kiếm
+3) Đếm số node, số node lá
+4) Tính chiều cao của cây
+5) Tìm node trái nhất (chứa giá trị nhỏ nhất), node bên phải nhất (chứa giá trị lớn nhất).
+Các em đọc hiểu rồi tự code vào máy. Làm thêm các nội dung:
+1) Tính tổng giá trị các node.
+2) Tính giá trị trung bình các node, có bao nhiêu node nhỏ hơn giá trị trung bình, bao nhiêu node lớn hơn giá trị trung bình
+3) Tìm kiếm có node nào trong cây có giá trị cần tìm kiếm

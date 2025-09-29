@@ -1,0 +1,62 @@
+public class Findpath2 {
+static int matrix[][] = new int[10][10];
+public static void Init() {
+	for (int i=0;i<10;i++)
+		for (int j=0;j<10;j++) matrix[i][j] = 0;
+	matrix[0][0]=5;
+	matrix[9][9] = 10;
+	for (int i=3;i<8;i++) matrix[i][5] = 1;
+	for (int j=5;j<8;j++) matrix[6][j] = 1;
+	}
+public static void Output() {
+	for (int i=0;i<10;i++) {
+		for (int j=0;j<10;j++) {
+			if (matrix[i][j]==5) System.out.print(" S ");
+			if (matrix[i][j]==10) System.out.print(" F ");
+			if (matrix[i][j]==0) System.out.print(" . ");
+			if (matrix[i][j]==1) System.out.print(" X ");
+			if (matrix[i][j]==2) System.out.print(" * ");
+		}
+		System.out.println();
+	}
+}
+public static void Findway(int x,int y) {
+	if (x==9&&y==9) System.out.println("Findway Success");
+	else {
+		
+		double d = Math.sqrt((x-9)*(x-9)+(y-9)*(y-9));
+		int v=0;
+		if (x-1>=0) if (matrix[x-1][y]==0||matrix[x-1][y]==10) {
+			double d1 = Math.sqrt((x-1-9)*(x-1-9)+(y-9)*(y-9));
+			if (d1<d) {v=1;d=d1;}	
+		}
+		if (x+1<10) if (matrix[x+1][y]==0||matrix[x+1][y]==10) {
+			double d2 = Math.sqrt((x+1-9)*(x+1-9)+(y-9)*(y-9));
+			if (d2<d) {v=2;d=d2;}	
+		}
+		if (y-1>=0) if (matrix[x][y-1]==0||matrix[x][y-1]==10) {
+			double d3 = Math.sqrt((x-9)*(x-9)+(y-1-9)*(y-1-9));
+			if (d3<d) {v=3;d=d3;}	
+		}
+		if (y+1<10) if (matrix[x][y+1]==0||matrix[x][y+1]==10) {
+			double d4 = Math.sqrt((x-9)*(x-9)+(y+1-9)*(y+1-9));
+			if (d4<d) {v=4;d=d4;}	
+		}
+		if (v==0) {System.out.println("Bi mac ket");}
+		if (v==1) {matrix[x-1][y]=2;Findway(x-1,y);}
+		if (v==2) {matrix[x+1][y]=2;Findway(x+1,y);}
+		if (v==3) {matrix[x][y-1]=2;Findway(x,y-1);}
+		if (v==4) {matrix[x][y+1]=2;Findway(x,y+1);}
+		
+	}
+}
+public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Init();
+		Output();
+		Findway(0,0);
+		matrix[9][9] = 10;
+		Output();
+	}
+
+}

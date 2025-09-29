@@ -1,0 +1,8 @@
+{
+    "java.project.sourcePaths": [
+        "iuh/môn/java/Bài tập thực hành/studentprj",
+        "iuh/môn/java/Bài tập thực hành/codetuan3"
+    ],
+    "python-envs.defaultEnvManager": "ms-python.python:system",
+    "python-envs.pythonProjects": []
+}
