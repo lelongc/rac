@@ -1,4 +1,4 @@
-package StudentApp;
+package StudentApp1;
 
 import java.io.Serializable;
 
@@ -6,8 +6,8 @@ public class Student implements Serializable {
     private int studentId;
     private String studentName;
     private double studentResult;
-    private Student prev; // Dùng làm con trái (ID nhỏ) trong BST
-    private Student next; // Dùng làm con phải (ID lớn) trong BST
+    private Student prev;
+    private Student next;
 
     public Student(int id, String name, double result) {
         this.studentId = id;

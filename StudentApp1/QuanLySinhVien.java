@@ -1,8 +1,7 @@
-package StudentApp;
+package StudentApp1;
 
 import java.io.*;
 import java.util.*;
-// KHÔNG CẦN IMPORT Student
 
 public class QuanLySinhVien {
     private Student root; 
