@@ -144,6 +144,29 @@ public class StudentBST {
         }
     }
     
+    // Tim kiem sinh vien theo ID
+    public void timKiem(int id) {
+        Student ketQua = timKiemNode(root, id);
+        if (ketQua != null) {
+            System.out.println("Tim thay sinh vien:");
+            System.out.println(ketQua);
+        } else {
+            System.out.println("Khong tim thay sinh vien co ID: " + id);
+        }
+    }
+    
+    private Student timKiemNode(Student node, int id) {
+        if (node == null || node.Student_ID == id) {
+            return node;
+        }
+        
+        if (id < node.Student_ID) {
+            return timKiemNode(node.Left, id);
+        } else {
+            return timKiemNode(node.Right, id);
+        }
+    }
+
     // Class ho tro thong ke
     private class ThongKe {
         int soSV = 0;
