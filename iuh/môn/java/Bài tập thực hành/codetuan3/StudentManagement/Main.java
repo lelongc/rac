@@ -1,4 +1,4 @@
-package codetuan3.StudentManagement;
+package StudentManagement;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

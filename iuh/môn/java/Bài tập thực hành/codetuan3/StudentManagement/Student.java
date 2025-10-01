@@ -1,4 +1,4 @@
-package codetuan3.StudentManagement;
+package StudentManagement;
 
 public class Student {
 	private int id;

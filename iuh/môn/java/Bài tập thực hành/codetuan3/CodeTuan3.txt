@@ -1,1 +1,0 @@
-Viết ứng dụng quản lý sinh viên sử dụng Array, ArrayList, LinkedList. Class Student gồm id, name, result. Chương trình thực hiện nhập danh sách sinh viên, xuất danh sách sinh viên, thêm, xóa sinh viên trong danh sách. Sắp xếp danh sách sinh viên theo name, theo result.
