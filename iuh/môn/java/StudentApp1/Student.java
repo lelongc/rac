@@ -1,4 +1,4 @@
-package StudentApp1;
+package iuh.môn.java.StudentApp1;
 
 import java.io.Serializable;
 
