@@ -1,5 +1,3 @@
-
-
 import java.io.File;
 import java.util.Scanner;
 
@@ -51,11 +49,6 @@ public class Main {
             } catch (NumberFormatException e) {
                 System.out.println("Vui lòng nhập số!");
                 luaChon = -1;
-            }
-            
-            if (luaChon != 0) {
-                System.out.println("\nNhấn Enter để tiếp tục...");
-                scanner.nextLine();
             }
             
         } while (luaChon != 0);
