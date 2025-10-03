@@ -1,0 +1,47 @@
+Giai đoạn 1: Cài đặt Windows Server 2022 trên Hyper-V
+Bước 1: Chuẩn bị
+Tải file ISO: Tải về bản dùng thử của Windows Server 2022 từ trang Microsoft Evaluation Center.
+
+Khi tải, hãy chọn loại file là ISO.
+
+Bước 2: Tạo Máy ảo mới
+Mở Hyper-V Manager.
+
+Ở menu Actions, chọn New -> Virtual Machine....
+
+Specify Name: Đặt tên cho máy ảo, ví dụ Windows-Server-2022.
+
+Specify Generation: Chọn Generation 2.
+
+Assign Memory: Gán ít nhất 4096 MB (4GB) RAM. Bạn có thể tick vào ô "Use Dynamic Memory..." vì tính năng này hoạt động tốt với máy ảo Windows.
+
+Configure Networking: Chọn Default Switch. Switch này sẽ giúp máy ảo có kết nối Internet ngay để cập nhật.
+
+Connect Virtual Hard Disk: Tạo một ổ cứng ảo mới với dung lượng ít nhất 60 GB.
+
+Installation Options: Chọn "Install an operating system from a bootable image file" và trỏ đến file ISO Windows Server 2022 bạn vừa tải về.
+
+Nhấn Finish.
+
+Bước 3: Tinh chỉnh và Cài đặt
+Tắt (Shut down) máy ảo nếu nó đang chạy. Chuột phải vào máy ảo mới tạo và chọn Settings.
+
+Vào mục Security, đảm bảo rằng ô "Enable Secure Boot" đang được BẬT. (Ngược lại với Ubuntu Server).
+
+Vào mục Processor, tăng số lượng virtual processors lên ít nhất là 2.
+
+Nhấn OK, sau đó Start máy ảo.
+
+Quá trình cài đặt Windows sẽ bắt đầu.
+
+Chọn ngôn ngữ và nhấn Install now.
+
+Khi được hỏi phiên bản, hãy chọn Windows Server 2022 Standard Evaluation (Desktop Experience). Lựa chọn "Desktop Experience" rất quan trọng, nó sẽ cài đặt giao diện đồ họa đầy đủ cho bạn.
+
+Chọn Custom: Install Windows only.
+
+Chọn ổ đĩa và nhấn Next.
+
+Đặt mật khẩu cho tài khoản Administrator.
+
+Sau khi cài đặt xong, hãy đăng nhập và cho phép Windows Update chạy để cập nhật đầy đủ.

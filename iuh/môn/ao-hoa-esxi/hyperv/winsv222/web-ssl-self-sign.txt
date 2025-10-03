@@ -1,0 +1,148 @@
+
+
+# Hướng dẫn Toàn diện: Triển khai Web Server (IIS) với SSL cho Môi trường Lab
+
+## Giới thiệu 🎯
+
+Tài liệu này cung cấp một quy trình chi tiết từ đầu đến cuối để xây dựng một môi trường lab cho web server an toàn trên nền tảng ảo hóa Hyper-V. Mục tiêu là tạo ra một website (`https://winserver.local`) hoạt động trên máy ảo Windows Server 2022, có thể truy cập được từ cả máy chủ và máy host với **ổ khóa xanh bảo mật** 🔒.
+
+Quy trình này bao gồm ba giai đoạn chính:
+
+1.  **Thiết lập hạ tầng mạng ảo** trên máy host.
+2.  **Cài đặt và cấu hình toàn diện** máy chủ web trên máy ảo.
+3.  **Cấu hình máy khách** để nhận diện và tin tưởng website.
+
+-----
+
+### **Chuẩn bị Môi trường Lab**
+
+  * **Tên miền ảo:** `winserver.local`
+  * **Máy chủ (Server):** Máy ảo Windows Server 2022 (phiên bản **Desktop Experience**).
+      * IP tĩnh sẽ đặt: **`192.168.100.20`**
+  * **Máy khách (Host):** Máy tính Windows 10/11 thật của bạn, chạy Hyper-V.
+      * IP gateway ảo sẽ đặt: **`192.168.100.1`**
+
+-----
+
+## Giai đoạn 1: Cấu hình Môi trường Mạng [Trên Máy Host]
+
+Mục tiêu của giai đoạn này là tạo một mạng riêng ảo, cho phép máy Host và máy Server giao tiếp với nhau và cùng chia sẻ kết nối Internet của máy Host.
+
+#### **A. Tạo Virtual Switch**
+
+Switch ảo loại **Internal** sẽ tạo ra một mạng LAN ảo chỉ có máy Host và các máy ảo kết nối vào nó mới thấy nhau.
+
+1.  Mở **Hyper-V Manager**.
+2.  Ở menu bên phải, chọn **Virtual Switch Manager...**.
+3.  Chọn **New virtual network switch**, loại là **Internal**, và nhấn **Create Virtual Switch**.
+4.  Đặt tên cho nó là **`NATSwitch`** và nhấn **OK**.
+
+#### **B. Cấu hình Network Address Translation (NAT)**
+
+NAT là công nghệ cho phép một dải IP riêng (private) có thể đi ra Internet thông qua một địa chỉ IP công cộng (public) duy nhất. Ở đây, chúng ta sẽ cấu hình máy Host làm "cổng" chia sẻ Internet cho mạng ảo.
+
+1.  Mở **PowerShell** với quyền **Administrator**.
+2.  Chạy lệnh sau để gán cho máy Host một địa chỉ IP tĩnh trên mạng ảo. Địa chỉ này sẽ đóng vai trò là **Gateway** cho máy ảo.
+    ```powershell
+    New-NetIPAddress -IPAddress 192.168.100.1 -PrefixLength 24 -InterfaceAlias "vEthernet (NATSwitch)"
+    ```
+3.  Chạy lệnh tiếp theo để tạo quy tắc NAT, cho phép mọi lưu lượng từ dải IP `192.168.100.x` được "dịch" và gửi ra ngoài Internet.
+    ```powershell
+    New-NetNat -Name NATNetwork -InternalIPInterfaceAddressPrefix 192.168.100.0/24
+    ```
+
+-----
+
+## Giai đoạn 2: Cài đặt và Cấu hình Máy ảo [Trên Máy Server]
+
+Giai đoạn này tập trung vào việc xây dựng máy chủ web bên trong máy ảo.
+
+#### **A. Cấu hình Mạng & Firewall**
+
+1.  Trong **Hyper-V Manager**, vào **Settings** của máy ảo và đảm bảo **Network Adapter** được kết nối vào switch **`NATSwitch`**.
+2.  Khởi động máy ảo, mở hộp thoại Run (`Windows + R`), gõ `ncpa.cpl` và Enter.
+3.  Cấu hình **IPv4** với các thông số tĩnh:
+      * **IP address:** `192.168.100.20` (Địa chỉ riêng của server).
+      * **Subnet mask:** `255.255.255.0` (Xác định các máy trong cùng mạng con).
+      * **Default gateway:** `192.168.100.1` (Cổng ra ngoài, trỏ về máy Host).
+      * **DNS server:** `8.8.8.8` (Máy chủ phân giải tên miền, ở đây dùng của Google).
+4.  **Cho phép Ping:** Để dễ dàng kiểm tra kết nối, chúng ta cần ra lệnh cho Firewall cho phép các gói tin `ping` đi vào.
+      * Mở **Windows Defender Firewall with Advanced Security**.
+      * Vào **Inbound Rules**, tìm và **Enable Rule** cho `File and Printer Sharing (Echo Request - ICMPv4-In)`.
+
+#### **B. Cài đặt vai trò Web Server (IIS)**
+
+IIS (Internet Information Services) là dịch vụ web server của Microsoft.
+
+1.  Mở **Server Manager** -\> **Manage** -\> **Add Roles and Features**.
+2.  Chọn vai trò **Web Server (IIS)** và nhấn **Add Features** trong hộp thoại hiện ra.
+3.  Nhấn **Next** qua các bước và **Install** để hoàn tất.
+
+#### **C. Chuẩn bị Thư mục và Cấp quyền**
+
+Mỗi website cần có một thư mục riêng để chứa mã nguồn.
+
+1.  Tạo thư mục `C:\inetpub\wwwroot\MySecureSite`.
+2.  Tạo một file `index.html` bên trong với nội dung `<h1>Welcome to winserver.local!</h1>`.
+3.  **Cấp quyền:** IIS không dùng tài khoản của bạn để truy cập file, nó dùng một tài khoản hệ thống đặc biệt tên là **`IUSR`**. Chúng ta cần cấp quyền cho tài khoản này.
+      * Chuột phải vào thư mục `MySecureSite` -\> **Properties** -\> **Security** -\> **Edit** -\> **Add**.
+      * Gõ `IUSR`, nhấn **Check Names** rồi **OK**.
+      * Chọn user `IUSR` và cấp các quyền **Read & execute**, **List folder contents**, và **Read**.
+
+#### **D. Tạo và Gán Chứng chỉ SSL**
+
+Để có HTTPS, chúng ta cần một chứng chỉ SSL. Công cụ `New-SelfSignedCertificate` trong PowerShell mạnh hơn công cụ có sẵn của IIS vì nó cho phép tạo chứng chỉ đúng chuẩn với **Subject Alternative Name (SAN)**.
+
+1.  **Tạo Chứng chỉ:** Mở **PowerShell (Admin)** và chạy lệnh:
+    ```powershell
+    New-SelfSignedCertificate -DnsName "winserver.local" -CertStoreLocation "cert:\LocalMachine\My"
+    ```
+2.  **Tạo Website trong IIS:**
+      * Mở **IIS Manager**, chuột phải vào **Sites** -\> **Add Website...**.
+      * **Site name:** `MySecureSite` (tên quản lý).
+      * **Physical path:** `C:\inetpub\wwwroot\MySecureSite`.
+      * **Type:** `https`
+      * **Host name:** `winserver.local`
+      * **SSL certificate:** Chọn chứng chỉ `winserver.local` bạn vừa tạo từ danh sách.
+      * Nhấn **OK**.
+
+-----
+
+## Giai đoạn 3: Cấu hình Client để có Khóa Xanh 🔒
+
+Mục tiêu là làm cho cả máy Server và máy Host đều có thể truy cập `https://winserver.local` với ổ khóa xanh.
+
+#### **A. Cấu hình file `hosts`**
+
+File `hosts` hoạt động như một "danh bạ" cục bộ, giúp máy tính phân giải tên miền mà không cần hỏi DNS server.
+
+1.  **[Trên Máy Server]:** Mở Notepad (Admin) và thêm dòng sau vào file `hosts`:
+    ```
+    127.0.0.1   winserver.local
+    ```
+2.  **[Trên Máy Host]:** Mở Notepad (Admin) và thêm dòng sau vào file `hosts`:
+    ```
+    192.168.100.20  winserver.local
+    ```
+
+#### **B. Cài đặt Tin tưởng Chứng chỉ**
+
+Vì chứng chỉ của chúng ta là "tự ký", chúng ta phải ra lệnh cho hệ điều hành tin tưởng nó.
+
+1.  **[Trên Máy Server] - Export Chứng chỉ:**
+      * Mở `certlm.msc`, đi đến **Personal -\> Certificates**.
+      * Chuột phải vào chứng chỉ `winserver.local`, chọn **All Tasks -\> Export...**.
+      * Chọn **"Yes, export the private key"**, đặt một mật khẩu, và lưu lại thành file `winserver.local.pfx`.
+2.  **[Trên Máy Server] - Tự Trust Chứng chỉ:**
+      * Vẫn trong `certlm.msc`, chuột phải vào chứng chỉ `winserver.local` ở thư mục **Personal -\> Certificates** và chọn **Copy**.
+      * Đi đến thư mục **Trusted Root Certification Authorities -\> Certificates**.
+      * Chuột phải vào khoảng trống và chọn **Paste**. Nhấn **Yes** nếu có cảnh báo.
+3.  **[Trên Máy Host] - Trust Chứng chỉ:**
+      * Copy file `winserver.local.pfx` từ máy Server sang máy Host.
+      * Nháy đúp vào file `.pfx`, chọn **Local Machine** -\> Nhập mật khẩu -\> Chọn **Place all certificates...** và chọn kho là **Trusted Root Certification Authorities**.
+
+-----
+
+### **Kiểm tra cuối cùng**
+
+Khởi động lại trình duyệt trên **cả hai máy** và truy cập **`https://winserver.local`**. Cả hai nơi đều sẽ hiển thị trang web của bạn với ổ khóa xanh an toàn.
