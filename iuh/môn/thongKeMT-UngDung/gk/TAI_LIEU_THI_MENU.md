@@ -1,63 +1,324 @@
-# 📚 TÀI LIỆU THI GIỮA KỲ - THỐNG KÊ & MÔ PHỎNG
+# 🎯 TÀI LIỆU THI COPY & PASTE - THỐNG KÊ MÔ TẢ
 
-## 🔍 MENU TÌM KIẾM NHANH - XEM CÂU HỎI LÀ BIẾT COPY Ở ĐÂU!
-
----
-
-## 🚀 BẢNG TÌM KIẾM THEO CÂU HỎI
-
-| **CÂU HỎI TRONG ĐỀ THI**           | **TÌM Ở MỤC**                       | **CTRL+F TÌM** |
-| ---------------------------------- | ----------------------------------- | -------------- |
-| "Đọc file dữ liệu"                 | [A1](#a1-đọc-file-dữ-liệu)          | `#A1`          |
-| "Hiển thị 5 dòng đầu"              | [A1](#a1-đọc-file-dữ-liệu)          | `#A1`          |
-| "Có bao nhiêu dòng, cột?"          | [A2](#a2-kích-thước-dữ-liệu)        | `#A2`          |
-| "Có bao nhiêu giá trị thiếu?"      | [A3](#a3-kiểm-tra-giá-trị-thiếu)    | `#A3`          |
-| "Thuộc tính định tính, định lượng" | [A4](#a4-phân-loại-thuộc-tính)      | `#A4`          |
-| "Có bao nhiêu loại...?"            | [B1](#b1-đếm-số-lượng)              | `#B1`          |
-| "...được mua nhiều nhất?"          | [B2](#b2-tìm-giá-trị-phổ-biến-nhất) | `#B2`          |
-| "Tỷ lệ nam và nữ"                  | [B3](#b3-tính-tỷ-lệ-phần-trăm)      | `#B3`          |
-| "Nhóm tuổi chi tiêu cao nhất"      | [B4](#b4-so-sánh-theo-nhóm)         | `#B4`          |
-| "Trung bình, trung vị"             | [C1](#c1-thống-kê-mô-tả-cơ-bản)     | `#C1`          |
-| "Độ lệch chuẩn"                    | [C1](#c1-thống-kê-mô-tả-cơ-bản)     | `#C1`          |
-| "Phân vị 25%, 75%"                 | [C2](#c2-phân-vị)                   | `#C2`          |
-| "Vẽ biểu đồ cột"                   | [D1](#d1-biểu-đồ-cột)               | `#D1`          |
-| "Vẽ biểu đồ tròn"                  | [D2](#d2-biểu-đồ-tròn)              | `#D2`          |
-| "Vẽ histogram"                     | [D3](#d3-histogram)                 | `#D3`          |
-| "Vẽ boxplot"                       | [D4](#d4-boxplot)                   | `#D4`          |
-| "So sánh theo nhóm"                | [D5](#d5-boxplot-so-sánh-nhóm)      | `#D5`          |
-| "Tính xác suất"                    | [E1](#e1-phân-phối-nhị-thức)        | `#E1`          |
-| "Phân phối nhị thức"               | [E1](#e1-phân-phối-nhị-thức)        | `#E1`          |
-| "Phân phối Poisson"                | [E2](#e2-phân-phối-poisson)         | `#E2`          |
-| "Phân phối chuẩn"                  | [E3](#e3-phân-phối-chuẩn)           | `#E3`          |
-| "Lấy mẫu ngẫu nhiên"               | [F1](#f1-lấy-mẫu-ngẫu-nhiên)        | `#F1`          |
-| "Mô phỏng 100 lần"                 | [F2](#f2-mô-phỏng-nhiều-lần)        | `#F2`          |
-| "Chuyển đổi đơn vị"                | [G1](#g1-chuyển-đổi-đơn-vị)         | `#G1`          |
-| "Tính BMI"                         | [G2](#g2-tính-bmi)                  | `#G2`          |
-| "Lọc dữ liệu"                      | [G3](#g3-lọc-dữ-liệu)               | `#G3`          |
-| "Theo thời gian/tháng"             | [H1](#h1-phân-tích-theo-thời-gian)  | `#H1`          |
+## ⚡ ĐỌC ĐỀ THI → TÌM CODE → COPY → THAY TÊN → XONG!
 
 ---
 
-## 📖 NỘI DUNG CHI TIẾT
+## � BẢNG TÌM KIẾM SIÊU NHANH
 
-### A. ĐỌC VÀ KHÁM PHÁ DỮ LIỆU
+### 👁️ NHÌN THẤY TỪ KHÓA NÀO → CTRL+F TÌM MÃ ĐÓ
 
-#### A1. Đọc file dữ liệu
+| **NHÌN THẤY TỪ KHÓA TRONG ĐỀ**      | **CTRL+F TÌM** | **THAY GÌ**                |
+| ----------------------------------- | -------------- | -------------------------- |
+| `đọc file`, `hiển thị dòng`         | `A1`           | Tên file                   |
+| `bao nhiêu dòng`, `bao nhiêu cột`   | `A2`           | Không thay                 |
+| `giá trị thiếu`, `missing`          | `A3`           | Không thay                 |
+| `định tính`, `định lượng`           | `A4`           | Không thay                 |
+| `có bao nhiêu loại`, `nunique`      | `B1`           | Tên cột                    |
+| `nhiều nhất`, `ít nhất`, `top`      | `B2`           | Tên cột                    |
+| `tỷ lệ`, `phần trăm`, `%`           | `B3`           | Tên cột                    |
+| `theo nhóm`, `groupby`, `so sánh`   | `B4`           | Tên 2 cột                  |
+| `trung bình`, `trung vị`, `mean`    | `C1`           | Tên cột                    |
+| `phân vị`, `25%`, `75%`, `Q1`       | `C2`           | Tên cột                    |
+| `biểu đồ cột`, `bar chart`          | `D1`           | Tên cột                    |
+| `biểu đồ tròn`, `pie chart`         | `D2`           | Tên cột                    |
+| `histogram`, `phân bố`              | `D3`           | Tên cột                    |
+| `boxplot`, `hộp`                    | `D4`           | Tên cột                    |
+| `so sánh boxplot`, `theo nhóm`      | `D5`           | Tên 2 cột                  |
+| `xác suất`, `tính P(`, `nhị thức`   | `E1`           | Số n, p, k                 |
+| `Poisson`, `λ`, `lambda`            | `E2`           | Số λ, k                    |
+| `chuẩn`, `normal`, `N(μ,σ)`         | `E3`           | Số μ, σ, x                 |
+| `lấy mẫu`, `sample`                 | `F1`           | Số mẫu                     |
+| `mô phỏng`, `100 lần`, `simulation` | `F2`           | Số lần, số mẫu             |
+| `inches`, `pounds`, `đổi đơn vị`    | `G1`           | Tên cột                    |
+| `BMI`, `béo phì`                    | `G2`           | Tên cột chiều cao/cân nặng |
+| `lọc`, `filter`, `điều kiện`        | `G3`           | Tên cột + điều kiện        |
+| `theo tháng`, `thời gian`, `date`   | `H1`           | Tên cột thời gian          |
+
+---
+
+## 🎯 KHU VỰC COPY CODE
+
+### A1. ĐỌC FILE + HIỂN THỊ
+
+**Thấy: "Đọc dữ liệu", "hiển thị 5 dòng đầu"**
 
 ```python
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+# ⭐ THAY TÊN FILE Ở ĐÂY
+df = pd.read_csv('TÊN_FILE.csv')
+
+# Hiển thị dữ liệu
+print(df.head())      # 5 dòng đầu
+print(df.head(10))    # 10 dòng đầu
+```
+
+### A2. SỐ DÒNG - SỐ CỘT
+
+**Thấy: "có bao nhiêu dòng", "bao nhiêu cột"**
+
+```python
+print(f"Dữ liệu có {df.shape[0]} dòng và {df.shape[1]} cột")
+```
+
+### A3. GIÁ TRỊ THIẾU
+
+**Thấy: "giá trị thiếu", "missing value"**
+
+```python
+print("Số giá trị thiếu trong từng cột:")
+print(df.isnull().sum())
+```
+
+### A4. PHÂN LOẠI THUỘC TÍNH
+
+**Thấy: "định tính", "định lượng"**
+
+```python
+# Thuộc tính định lượng (số)
+quantitative = df.select_dtypes(include=[np.number]).columns.tolist()
+print("Thuộc tính định lượng:", quantitative)
+
+# Thuộc tính định tính (chữ)
+categorical = df.select_dtypes(include=['object']).columns.tolist()
+print("Thuộc tính định tính:", categorical)
+```
+
+### B1. ĐẾM SỐ LƯỢNG
+
+**Thấy: "có bao nhiêu loại", "nunique"**
+
+```python
+# ⭐ THAY TÊN CỘT Ở ĐÂY
+counts = df['TÊN_CỘT'].value_counts()
+print(counts)
+print(f"Số loại khác nhau: {df['TÊN_CỘT'].nunique()}")
+```
+
+### B2. TÌM NHIỀU NHẤT/ÍT NHẤT
+
+**Thấy: "nhiều nhất", "ít nhất", "top"**
+
+```python
+# ⭐ THAY TÊN CỘT Ở ĐÂY
+top_value = df['TÊN_CỘT'].value_counts().head(1)
+print(f"Giá trị phổ biến nhất: {top_value.index[0]} ({top_value.iloc[0]} lần)")
+
+# Nếu hỏi sản phẩm được mua nhiều nhất
+top_product = df['Product_ID'].value_counts().head(1)
+print(f"Sản phẩm bán chạy: {top_product.index[0]} ({top_product.iloc[0]} lần)")
+```
+
+### B3. TỶ LỆ PHẦN TRĂM
+
+**Thấy: "tỷ lệ", "phần trăm", "%"**
+
+```python
+# ⭐ THAY TÊN CỘT Ở ĐÂY
+counts = df['TÊN_CỘT'].value_counts()
+percentages = (counts / len(df) * 100).round(1)
+print("Tỷ lệ phần trăm:")
+for value in counts.index:
+    print(f"{value}: {counts[value]} ({percentages[value]}%)")
+
+# Nếu hỏi tỷ lệ nam nữ cụ thể
+male_count = (df['Gender'] == 'M').sum()
+female_count = (df['Gender'] == 'F').sum()
+total = len(df)
+print(f"Nam: {male_count} ({male_count/total*100:.1f}%)")
+print(f"Nữ: {female_count} ({female_count/total*100:.1f}%)")
+```
+
+### B4. SO SÁNH THEO NHÓM
+
+**Thấy: "theo nhóm", "groupby", "so sánh"**
+
+```python
+# ⭐ THAY TÊN 2 CỘT Ở ĐÂY
+result = df.groupby('CỘT_NHÓM')['CỘT_GIÁ_TRỊ'].mean().sort_values(ascending=False)
+print("Kết quả so sánh:")
+print(result)
+print(f"Nhóm cao nhất: {result.index[0]} ({result.iloc[0]:.2f})")
+
+# Ví dụ: Chi tiêu theo độ tuổi
+avg_by_age = df.groupby('Age')['Purchase'].mean().sort_values(ascending=False)
+print(f"Nhóm tuổi chi tiêu cao nhất: {avg_by_age.index[0]} ({avg_by_age.iloc[0]:,.0f})")
+```
+
+### C1. THỐNG KÊ MÔ TẢ
+
+**Thấy: "trung bình", "trung vị", "độ lệch chuẩn"**
+
+```python
+# ⭐ THAY TÊN CỘT Ở ĐÂY
+print(f"Trung bình: {df['TÊN_CỘT'].mean():.2f}")
+print(f"Trung vị: {df['TÊN_CỘT'].median():.2f}")
+print(f"Độ lệch chuẩn: {df['TÊN_CỘT'].std():.2f}")
+print(f"Min: {df['TÊN_CỘT'].min()}")
+print(f"Max: {df['TÊN_CỘT'].max()}")
+
+# Hoặc tổng hợp
+print(df['TÊN_CỘT'].describe())
+```
+
+### C2. PHÂN VỊ
+
+**Thấy: "phân vị", "25%", "75%", "Q1", "Q3"**
+
+```python
+# ⭐ THAY TÊN CỘT Ở ĐÂY
+q1 = df['TÊN_CỘT'].quantile(0.25)
+q2 = df['TÊN_CỘT'].quantile(0.50)  # Trung vị
+q3 = df['TÊN_CỘT'].quantile(0.75)
+
+print(f"Phân vị 25%: {q1:.2f}")
+print(f"Phân vị 50% (trung vị): {q2:.2f}")
+print(f"Phân vị 75%: {q3:.2f}")
+print(f"Khoảng tứ phân vị (IQR): {q3 - q1:.2f}")
+```
+
+### D1. BIỂU ĐỒ CỘT
+
+**Thấy: "biểu đồ cột", "bar chart"**
+
+```python
+# ⭐ THAY TÊN CỘT Ở ĐÂY
+counts = df['TÊN_CỘT'].value_counts()
+plt.figure(figsize=(10, 6))
+counts.plot(kind='bar', color='skyblue')
+plt.title('Biểu đồ cột')
+plt.xlabel('Danh mục')
+plt.ylabel('Số lượng')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+```
+
+### D2. BIỂU ĐỒ TRÒN
+
+**Thấy: "biểu đồ tròn", "pie chart"**
+
+```python
+# ⭐ THAY TÊN CỘT Ở ĐÂY
+counts = df['TÊN_CỘT'].value_counts()
+plt.figure(figsize=(8, 8))
+plt.pie(counts.values, labels=counts.index, autopct='%1.1f%%', startangle=90)
+plt.title('Biểu đồ tròn')
+plt.axis('equal')
+plt.show()
+```
+
+### D3. HISTOGRAM
+
+**Thấy: "histogram", "phân bố"**
+
+```python
+# ⭐ THAY TÊN CỘT Ở ĐÂY
+plt.figure(figsize=(10, 6))
+plt.hist(df['TÊN_CỘT'], bins=20, color='lightblue', edgecolor='black', alpha=0.7)
+plt.title('Histogram')
+plt.xlabel('Giá trị')
+plt.ylabel('Tần suất')
+plt.show()
+
+# Nếu hỏi nhiều histogram cùng lúc
+fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+columns = ['COL1', 'COL2', 'COL3', 'COL4']  # ⭐ THAY TÊN CỘT
+for i, col in enumerate(columns):
+    ax = axes[i//2, i%2]
+    ax.hist(df[col], bins=20, alpha=0.7)
+    ax.set_title(f'Histogram của {col}')
+plt.tight_layout()
+plt.show()
+```
+
+### D4. BOXPLOT ĐƠN GIẢN
+
+**Thấy: "boxplot", "hộp"**
+
+```python
+# ⭐ THAY TÊN CỘT Ở ĐÂY
+plt.figure(figsize=(8, 6))
+plt.boxplot(df['TÊN_CỘT'])
+plt.title('Boxplot')
+plt.ylabel('Giá trị')
+plt.show()
+```
+
+### D5. BOXPLOT SO SÁNH NHÓM
+
+**Thấy: "so sánh boxplot", "theo nhóm"**
+
+```python
+# ⭐ THAY TÊN 2 CỘT Ở ĐÂY
+plt.figure(figsize=(10, 6))
+df.boxplot(column='CỘT_GIÁ_TRỊ', by='CỘT_NHÓM')
+plt.title('Boxplot so sánh theo nhóm')
+plt.suptitle('')  # Xóa title mặc định
+plt.show()
+
+# Hoặc dùng seaborn
+import seaborn as sns
+plt.figure(figsize=(10, 6))
+sns.boxplot(data=df, x='CỘT_NHÓM', y='CỘT_GIÁ_TRỊ')
+plt.title('Boxplot so sánh')
+plt.xticks(rotation=45)
+plt.show()
+```
+
+````
+
+### B3. TỶ LỆ PHẦN TRĂM
+**Thấy: "tỷ lệ", "phần trăm", "%"**
+
+```python
+# ⭐ THAY TÊN CỘT Ở ĐÂY
+counts = df['TÊN_CỘT'].value_counts()
+percentages = (counts / len(df) * 100).round(1)
+print("Tỷ lệ phần trăm:")
+for value in counts.index:
+    print(f"{value}: {counts[value]} ({percentages[value]}%)")
+
+# Nếu hỏi tỷ lệ nam nữ cụ thể
+male_count = (df['Gender'] == 'M').sum()
+female_count = (df['Gender'] == 'F').sum()
+total = len(df)
+print(f"Nam: {male_count} ({male_count/total*100:.1f}%)")
+print(f"Nữ: {female_count} ({female_count/total*100:.1f}%)")
+````
+
+### B4. SO SÁNH THEO NHÓM
+
+**Thấy: "theo nhóm", "groupby", "so sánh"**
+
+```python
+# ⭐ THAY TÊN 2 CỘT Ở ĐÂY
+result = df.groupby('CỘT_NHÓM')['CỘT_GIÁ_TRỊ'].mean().sort_values(ascending=False)
+print("Kết quả so sánh:")
+print(result)
+print(f"Nhóm cao nhất: {result.index[0]} ({result.iloc[0]:.2f})")
+
+# Ví dụ: Chi tiêu theo độ tuổi
+avg_by_age = df.groupby('Age')['Purchase'].mean().sort_values(ascending=False)
+print(f"Nhóm tuổi chi tiêu cao nhất: {avg_by_age.index[0]} ({avg_by_age.iloc[0]:,.0f})")
+```
+
 # Đọc dữ liệu
-df = pd.read_csv('filename.csv')  # Thay 'filename.csv'
+
+df = pd.read_csv('filename.csv') # Thay 'filename.csv'
 
 # Hiển thị 5 dòng đầu tiên
+
 print(df.head())
 
 # Hiển thị 10 dòng đầu tiên
+
 print(df.head(10))
-```
+
+````
 
 #### A2. Kích thước dữ liệu
 
@@ -66,7 +327,7 @@ print(df.head(10))
 print(f"Dữ liệu có {df.shape[0]} dòng và {df.shape[1]} cột")
 print(f"Số dòng: {df.shape[0]}")
 print(f"Số cột: {df.shape[1]}")
-```
+````
 
 #### A3. Kiểm tra giá trị thiếu
 
