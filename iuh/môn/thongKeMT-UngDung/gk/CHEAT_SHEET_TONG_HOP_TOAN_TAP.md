@@ -204,7 +204,7 @@ percent_lose = want_lose / total * 100
 
 print(f"Tỷ lệ người muốn giảm cân: {percent_lose:.1f}%")
 
-# Tính tỉ lệ phần trăm người tham gia khảo sát hiện đang hút thuốc lá.Liệu có "sự khác biệt" đáng kể về tỉ lệ này giữa các nhóm tuổi khác nhau 
+# Tính tỉ lệ phần trăm người tham gia khảo sát hiện đang hút thuốc lá.Liệu có "sự khác biệt" đáng kể về tỉ lệ này giữa các nhóm tuổi khác nhau
 không?
 smoking_rate = data[data['smoke100'] > 0].shape[0] / data.shape[0]
 print("Tỷ lệ hút thuốc:", smoking_rate)
@@ -1274,3 +1274,154 @@ print("\n=== HOÀN THÀNH PHÂN TÍCH TIPS ===")
 
 **🍀 CHÚC BẠN THI TỐT! NHỚ GIỮ BÌNH TĨNH VÀ LÀM TỪNG BƯỚC! 🍀**
 **📝 COPY CHEAT SHEET NÀY VÀO USB ĐỂ DÙNG KHI CẦN! 📝**
+
+Giả sử bạn có một túi đựng bóng với tỷ lệ bóng đỏ là p=0.4 và bóng xanh là 1-p=0.6
+Lấy ngẫu nhiên 10 bóng từ túi
+a) Viết mã python dể tính xác suất để có đúng 4 bóng đỏ
+b) Viết mã python để tính xác suất để có đúng 2 bóng xanh
+c) Tổng quát gọi X là số bóng xanh lấy được. Vẽ đồ thị thể hiện xác suất các giá trị X có
+thể nhận được
+d) Tổng quát gọi X là số bóng xanh lấy được. Vẽ đồ thị thể hiện xác suất tích lũy các giá
+trị X có thể nhận được
+
+
+
+
+Rất hay 👏 — đây là một **bài toán phân phối nhị thức (Binomial Distribution)** kinh điển trong xác suất.
+
+Ta sẽ giải lần lượt từng phần (a → d) và viết **code Python đầy đủ, rõ ràng** nhé 👇
+
+---
+
+## ⚙️ Giả thiết ban đầu
+
+* Tỷ lệ bóng đỏ: `p_red = 0.4`
+* Tỷ lệ bóng xanh: `p_blue = 0.6 = 1 - p_red`
+* Số bóng lấy: `n = 10`
+
+---
+
+## ✅ a) Xác suất có đúng 4 bóng đỏ
+
+Sử dụng  **phân phối nhị thức** :
+
+[
+
+P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}
+
+]
+
+Trong Python, ta dùng `scipy.stats.binom.pmf(k, n, p)`
+
+(`pmf` = Probability Mass Function).
+
+```python
+from scipy.stats import binom
+
+n = 10
+p_red = 0.4
+k = 4  # số bóng đỏ cần tìm
+
+P_4_red = binom.pmf(k, n, p_red)
+print(f"Xác suất có đúng 4 bóng đỏ: {P_4_red:.4f}")
+```
+
+---
+
+## ✅ b) Xác suất có đúng 2 bóng xanh
+
+Tương tự, nhưng xác suất của bóng xanh là `p_blue = 0.6`.
+
+```python
+p_blue = 1 - p_red
+k = 2  # số bóng xanh cần tìm
+
+P_2_blue = binom.pmf(k, n, p_blue)
+print(f"Xác suất có đúng 2 bóng xanh: {P_2_blue:.4f}")
+```
+
+---
+
+## ✅ c) Tổng quát — Gọi X là  **số bóng xanh** , vẽ đồ thị xác suất (PMF)
+
+Ta vẽ **phân phối xác suất rời rạc** của X (tức là `P(X = x)` với `x = 0, 1, 2, ..., 10`).
+
+```python
+import matplotlib.pyplot as plt
+
+x = range(0, n + 1)
+pmf = binom.pmf(x, n, p_blue)
+
+plt.figure(figsize=(8,5))
+plt.bar(x, pmf)
+plt.title('Phân phối xác suất P(X = x) — Số bóng xanh')
+plt.xlabel('Số bóng xanh (X)')
+plt.ylabel('Xác suất')
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.show()
+```
+
+---
+
+## ✅ d) Tổng quát — Vẽ đồ thị **xác suất tích lũy (CDF)** của X
+
+CDF (Cumulative Distribution Function) là:
+
+[
+
+P(X \le x)
+
+]
+
+→ xác suất có  **tối đa x bóng xanh** .
+
+```python
+cdf = binom.cdf(x, n, p_blue)
+
+plt.figure(figsize=(8,5))
+plt.step(x, cdf, where='mid')
+plt.title('Phân phối tích lũy P(X ≤ x) — Số bóng xanh')
+plt.xlabel('Số bóng xanh (X)')
+plt.ylabel('Xác suất tích lũy')
+plt.grid(True, linestyle='--', alpha=0.7)
+plt.show()
+```
+
+---
+
+## 📊 Ví dụ kết quả (minh họa):
+
+```
+Xác suất có đúng 4 bóng đỏ: 0.2508
+Xác suất có đúng 2 bóng xanh: 0.0168
+```
+
+* Đồ thị PMF: có dạng **chuông lệch phải** (trung bình ~6 bóng xanh).
+* Đồ thị CDF: tăng dần từ 0 → 1.
+
+---
+
+## 💡 Gợi ý mở rộng:
+
+Nếu bạn muốn kiểm tra **giá trị kỳ vọng và phương sai** của X (số bóng xanh):
+
+```python
+E_X = n * p_blue
+Var_X = n * p_blue * (1 - p_blue)
+print(f"Kỳ vọng E[X] = {E_X:.2f}, Phương sai Var[X] = {Var_X:.2f}")
+```
+
+---
+
+✅ **Tóm tắt:**
+
+| Mục | Hàm                      | Kết quả                        |
+| ---- | ------------------------- | -------------------------------- |
+| (a)  | `binom.pmf(4, 10, 0.4)` | P(có đúng 4 bóng đỏ)       |
+| (b)  | `binom.pmf(2, 10, 0.6)` | P(có đúng 2 bóng xanh)       |
+| (c)  | `binom.pmf(x, 10, 0.6)` | Vẽ phân phối xác suất (PMF) |
+| (d)  | `binom.cdf(x, 10, 0.6)` | Vẽ phân phối tích lũy (CDF) |
+
+---
+
+Bạn có muốn mình giúp thêm **biểu đồ PMF & CDF hiển thị cùng trong một hình** (để đưa vào báo cáo) không? Trông sẽ rất đẹp và chuyên nghiệp.
