@@ -28,37 +28,37 @@ plt.rcParams['figure.figsize'] = (10, 6)
 
 ### 🔍 THẤY TỪ KHÓA GÌ TRONG ĐỀ → CTRL+F TÌM MÃ ĐÓ
 
-| **THẤY TRONG ĐỀ**                | **TÌM MÃ** | **THAY GÌ**      |
-| -------------------------------- | ---------- | ---------------- |
-| đọc dữ liệu, hiển thị            | `A01`      | tên file         |
-| bao nhiêu dòng, bao nhiêu cột    | `A02`      | không thay       |
-| thiếu dữ liệu, missing, null     | `A03`      | không thay       |
-| định tính, định lượng, phân loại | `A04`      | không thay       |
-| có bao nhiêu, value_counts       | `B01`      | tên cột          |
-| nhiều nhất, ít nhất, top         | `B02`      | tên cột          |
-| tỷ lệ, %, phần trăm              | `B03`      | tên cột          |
-| theo nhóm, groupby, so sánh      | `B04`      | 2 tên cột        |
-| trung bình, mean, median         | `C01`      | tên cột          |
-| độ lệch chuẩn, std, var          | `C02`      | tên cột          |
-| phân vị, quantile, Q1, Q3        | `C03`      | tên cột          |
-| biểu đồ cột, bar chart           | `D01`      | tên cột          |
-| biểu đồ tròn, pie chart          | `D02`      | tên cột          |
-| histogram, phân bố               | `D03`      | tên cột          |
-| boxplot, hộp râu                 | `D04`      | tên cột          |
-| so sánh boxplot, theo hãng       | `D05`      | 2 tên cột        |
-| ma trận tương quan, heatmap      | `D06`      | không thay       |
-| scatter plot, tương quan         | `D07`      | 2 tên cột        |
-| xác suất, P(, nhị thức           | `E01`      | n, p, k          |
-| Poisson, λ, lambda               | `E02`      | λ, k             |
-| chuẩn, normal, mm, đường kính    | `E03`      | μ, σ, x          |
-| lấy mẫu, sample                  | `F01`      | số mẫu           |
-| mô phỏng, simulation, 100 lần    | `F02`      | số lần           |
-| đổi đơn vị, inches, pounds       | `G01`      | công thức        |
-| BMI, kg/m², béo phì              | `G02`      | height, weight   |
-| datetime, thời gian, tháng       | `G03`      | cột time         |
-| histogram nhiều cột              | `H01`      | danh sách cột    |
-| subplot, nhiều biểu đồ           | `H02`      | số dòng, cột     |
-| phân nhóm theo ngưỡng            | `H03`      | ngưỡng phân nhóm |
+| **THẤY TRONG ĐỀ**                | **TÌM MÃ** | **THAY GÌ**   |
+| ----------------------------------------- | ------------------ | -------------------- |
+| đọc dữ liệu, hiển thị               | `A01`            | tên file            |
+| bao nhiêu dòng, bao nhiêu cột         | `A02`            | không thay          |
+| thiếu dữ liệu, missing, null           | `A03`            | không thay          |
+| định tính, định lượng, phân loại | `A04`            | không thay          |
+| có bao nhiêu, value_counts              | `B01`            | tên cột            |
+| nhiều nhất, ít nhất, top              | `B02`            | tên cột            |
+| tỷ lệ, %, phần trăm , sự khác biệt | `B03`            | tên cột            |
+| theo nhóm, groupby, so sánh             | `B04`            | 2 tên cột          |
+| trung bình, mean, median                 | `C01`            | tên cột            |
+| độ lệch chuẩn, std, var               | `C02`            | tên cột            |
+| phân vị, quantile, Q1, Q3               | `C03`            | tên cột            |
+| biểu đồ cột, bar chart                | `D01`            | tên cột            |
+| biểu đồ tròn, pie chart               | `D02`            | tên cột            |
+| histogram, phân bố                      | `D03`            | tên cột            |
+| boxplot, hộp râu                        | `D04`            | tên cột            |
+| so sánh boxplot, theo hãng              | `D05`            | 2 tên cột          |
+| ma trận tương quan, heatmap            | `D06`            | không thay          |
+| scatter plot, tương quan                | `D07`            | 2 tên cột          |
+| xác suất, P(, nhị thức                | `E01`            | n, p, k              |
+| Poisson, λ, lambda                       | `E02`            | λ, k                |
+| chuẩn, normal, mm, đường kính        | `E03`            | μ, σ, x            |
+| lấy mẫu, sample                         | `F01`            | số mẫu             |
+| mô phỏng, simulation, 100 lần          | `F02`            | số lần             |
+| đổi đơn vị, inches, pounds           | `G01`            | công thức          |
+| BMI, kg/m², béo phì                    | `G02`            | height, weight       |
+| datetime, thời gian, tháng              | `G03`            | cột time            |
+| histogram nhiều cột                     | `H01`            | danh sách cột      |
+| subplot, nhiều biểu đồ                | `H02`            | số dòng, cột      |
+| phân nhóm theo ngưỡng                 | `H03`            | ngưỡng phân nhóm |
 
 ---
 
@@ -180,6 +180,59 @@ for i, value in enumerate(counts.index):
 percent_direct = df['TÊN_CỘT'].value_counts(normalize=True) * 100
 print("\nTỷ lệ % trực tiếp:")
 print(percent_direct.round(1))
+
+
+
+# lọc rồi tính tổng rồi tính phần trăm giá trị nào đó trong cột
+
+## Lọc những người có tập thể thao (exerany == 1)
+exercisers = df[df['exerany'] == 1]
+
+## Tính tỷ lệ người có sức khỏe 'poor' trong nhóm này
+count_poor = (exercisers['genhlth'] == 'poor').sum()
+total = len(exercisers)
+percent_poor = count_poor / total * 100
+
+print(f"Tỷ lệ người có sức khỏe 'poor' trong nhóm tập thể thao: {percent_poor:.1f}%")
+
+
+# Người muốn giảm cân là người có cân nặng mong muốn nhỏ hơn cân nặng hiện tại
+want_lose = (df['wtdesire'] < df['weight']).sum()
+total = len(df)
+
+percent_lose = want_lose / total * 100
+
+print(f"Tỷ lệ người muốn giảm cân: {percent_lose:.1f}%")
+
+# Tính tỉ lệ phần trăm người tham gia khảo sát hiện đang hút thuốc lá.Liệu có "sự khác biệt" đáng kể về tỉ lệ này giữa các nhóm tuổi khác nhau 
+không?
+smoking_rate = data[data['smoke100'] > 0].shape[0] / data.shape[0]
+print("Tỷ lệ hút thuốc:", smoking_rate)
+
+# 2️⃣ Tạo biến phân loại người hút thuốc
+df['smoker'] = df['smoke100'] > 0
+# 3️⃣ Gom nhóm theo độ tuổi để xem sự khác biệt
+# Có thể chia nhóm tuổi thành các khoảng dễ hiểu
+bins = [18, 30, 45, 60, 75, 90]
+labels = ['18–29', '30–44', '45–59', '60–74', '75+']
+df['age_group'] = pd.cut(df['age'], bins=bins, labels=labels, right=False)
+
+# 4️⃣ Tính tỷ lệ hút thuốc theo nhóm tuổi
+crosstab_percent = pd.crosstab(df['age_group'], df['smoker'], normalize='index') * 100
+print("\nTỷ lệ % hút thuốc theo nhóm tuổi:")
+print(crosstab_percent.round(1))
+
+
+from scipy.stats import chi2_contingency
+contingency_table = pd.crosstab(age_groups, data_cleaned['smoke100'] > 0)
+# Thực hiện kiểm định Chi-Square
+chi2, p, dof, expected = chi2_contingency(contingency_table)
+print("Kiểm định Chi-Square")
+print(f"Chi2 statistic: {chi2}, p-value: {p}")
+if p < 0.05:
+print("Có sự khác biệt đáng kể về tỷ lệ hút thuốc giữa các nhóm tuổi.")
+else:
+print("Không có sự khác biệt đáng kể về tỷ lệ hút thuốc giữa các nhóm tuổi.")
 ```
 
 ### B04 - SO SÁNH THEO NHÓM
@@ -215,6 +268,13 @@ print(f"Mode: {df['TÊN_CỘT'].mode().iloc[0] if len(df['TÊN_CỘT'].mode()) >
 # Thống kê tổng hợp
 print("\nThống kê tổng hợp:")
 print(df['TÊN_CỘT'].describe())
+
+age_stats = data['age'].describe()
+print("Tuổi trung bình:", age_stats['mean'])
+print("Độ lệch chuẩn:", age_stats['std'])
+print("Phân vị 25%:", age_stats['25%'])
+print("Phân vị 50%:", age_stats['50%'])
+print("Phân vị 75%:", age_stats['75%'])
 
 # Theo nhóm
 group_stats = df.groupby('CỘT_NHÓM')['CỘT_GIÁ_TRỊ'].agg(['mean', 'median', 'std', 'count']).round(2)
@@ -381,6 +441,8 @@ plt.title('Boxplot so sánh theo nhóm')
 plt.suptitle('')  # Xóa title mặc định
 plt.show()
 
+# Vẽ boxplot so sánh cân nặng giữa nhóm có và không tập thể dục
+df.boxplot(column='weight', by='exerany', figsize=(12, 8))
 # Cách 2: Seaborn (đẹp hơn)
 plt.figure(figsize=(12, 8))
 sns.boxplot(data=df, x='CỘT_NHÓM', y='CỘT_GIÁ_TRỊ')
@@ -596,6 +658,22 @@ print(f"\nPhân phối chuẩn tắc:")
 z = (a - mu) / sigma
 print(f"Z-score của {a}: {z:.2f}")
 print(f"P(Z < {z:.2f}) = {norm.cdf(z):.6f}")
+
+# Phân phối chuẩn
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Danh sách các cột dạng số cần kiểm tra
+cols = ['height', 'weight', 'wtdesire', 'age']
+
+for col in cols:
+    plt.figure(figsize=(6,4))
+    sns.histplot(df[col].dropna(), kde=True, bins=30)
+    plt.title(f'Phân phối của {col}')
+    plt.xlabel(col)
+    plt.ylabel('Tần suất')
+    plt.show()
+
 ```
 
 ---
@@ -688,6 +766,8 @@ print(f"Chiều cao TB: {df['height_cm'].mean():.1f} cm")
 # Pounds sang kg
 df['weight_kg'] = df['weight'] * 0.453592
 print(f"Cân nặng TB: {df['weight_kg'].mean():.1f} kg")
+
+print(df[['height_cm', 'weight_kg']].head())
 
 # Fahrenheit sang Celsius
 df['temp_celsius'] = (df['temp_fahrenheit'] - 32) * 5/9
@@ -1180,15 +1260,15 @@ print("\n=== HOÀN THÀNH PHÂN TÍCH TIPS ===")
 
 ## 🎨 CÁC LOẠI BIỂU ĐỒ VÀ KHI NÀO DÙNG
 
-| **Loại biểu đồ** | **Khi nào dùng**               | **Code mẫu**                                  |
-| ---------------- | ------------------------------ | --------------------------------------------- |
-| **Histogram**    | Phân bố của 1 biến liên tục    | `plt.hist(df['col'], bins=20)`                |
-| **Bar Chart**    | So sánh các nhóm riêng biệt    | `df['col'].value_counts().plot(kind='bar')`   |
-| **Pie Chart**    | Tỷ lệ phần trăm các thành phần | `plt.pie(counts.values, labels=counts.index)` |
-| **Boxplot**      | Phân bố và outliers            | `plt.boxplot(df['col'])`                      |
-| **Scatter Plot** | Tương quan 2 biến              | `plt.scatter(df['x'], df['y'])`               |
-| **Line Plot**    | Xu hướng theo thời gian        | `plt.plot(df['time'], df['value'])`           |
-| **Heatmap**      | Ma trận tương quan             | `sns.heatmap(df.corr(), annot=True)`          |
+| **Loại biểu đồ** | **Khi nào dùng**              | **Code mẫu**                             |
+| -------------------------- | ------------------------------------- | ----------------------------------------------- |
+| **Histogram**        | Phân bố của 1 biến liên tục     | `plt.hist(df['col'], bins=20)`                |
+| **Bar Chart**        | So sánh các nhóm riêng biệt      | `df['col'].value_counts().plot(kind='bar')`   |
+| **Pie Chart**        | Tỷ lệ phần trăm các thành phần | `plt.pie(counts.values, labels=counts.index)` |
+| **Boxplot**          | Phân bố và outliers                | `plt.boxplot(df['col'])`                      |
+| **Scatter Plot**     | Tương quan 2 biến                  | `plt.scatter(df['x'], df['y'])`               |
+| **Line Plot**        | Xu hướng theo thời gian            | `plt.plot(df['time'], df['value'])`           |
+| **Heatmap**          | Ma trận tương quan                 | `sns.heatmap(df.corr(), annot=True)`          |
 
 ---
 
