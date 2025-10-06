@@ -5,16 +5,19 @@
 ## 🚀 HƯỚNG DẪN SỬ DỤNG NHANH (ĐỌC TRƯỚC KHI THI)
 
 ### ⚡ 3 BƯỚC CƠ BẢN:
+
 1. **Mở file thi** → Copy toàn bộ phần **📚 IMPORT** vào cell đầu tiên
 2. **Đọc đề bài** → Dùng **Ctrl+F** tìm từ khóa trong bảng **🔍 MENU TÌM KIẾM**
 3. **Copy template** tương ứng → Thay tên file/cột theo đề → Chạy!
 
 ### 🎯 VÍ DỤ NHANH:
+
 - Thấy "đọc dữ liệu tips.csv" → **Ctrl+F "A01"** → Copy code A01 → Thay "TÊN_FILE.csv" thành "tips.csv"
 - Thấy "tính trung bình tip" → **Ctrl+F "C01"** → Copy code C01 → Thay "TÊN_CỘT" thành "tip"
 - Thấy "vẽ biểu đồ cột" → **Ctrl+F "D01"** → Copy code D01 → Thay tên cột
 
 ### 🔥 LƯU Ý QUAN TRỌNG:
+
 - **LUÔN LUÔN** copy phần import trước tiên!
 - **CHỈ THAY** những phần có ⭐ trong code
 - **CTRL+F** là vũ khí bí mật để tìm code nhanh!
@@ -32,6 +35,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy import stats
 
+
 # Import phân phối xác suất (nếu đề có xác suất)
 from scipy.stats import binom, poisson, norm, t
 
@@ -46,41 +50,42 @@ plt.rcParams['figure.figsize'] = (10, 6)
 
 ### 🔍 THẤY TỪ KHÓA GÌ TRONG ĐỀ → CTRL+F TÌM MÃ ĐÓ
 
-| **THẤY TRONG ĐỀ**                | **TÌM MÃ** | **THAY GÌ**   |
-| ----------------------------------------- | ------------------ | -------------------- |
-| đọc dữ liệu, hiển thị               | `A01`            | tên file            |
-| bao nhiêu dòng, bao nhiêu cột         | `A02`            | không thay          |
-| thiếu dữ liệu, missing, null           | `A03`            | không thay          |
-| định tính, định lượng, phân loại | `A04`            | không thay          |
-| có bao nhiêu, value_counts              | `B01`            | tên cột            |
-| nhiều nhất, ít nhất, top              | `B02`            | tên cột            |
-| tỷ lệ, %, phần trăm                    | `B03`            | tên cột            |
-| theo nhóm, groupby, so sánh             | `B04`            | 2 tên cột          |
-| trung bình, mean, median                 | `C01`            | tên cột            |
-| độ lệch chuẩn, std, var               | `C02`            | tên cột            |
-| phân vị, quantile, Q1, Q3               | `C03`            | tên cột            |
-| biểu đồ cột, bar chart                | `D01`            | tên cột            |
-| biểu đồ tròn, pie chart               | `D02`            | tên cột            |
-| histogram, phân bố                      | `D03`            | tên cột            |
-| boxplot, hộp râu                        | `D04`            | tên cột            |
-| so sánh boxplot                         | `D05`            | 2 tên cột          |
-| ma trận tương quan, heatmap            | `D06`            | không thay          |
-| scatter plot, tương quan                | `D07`            | 2 tên cột          |
-| xác suất, nhị thức, P(X=k)            | `E01`            | n, p, k              |
-| Poisson, λ, lambda                       | `E02`            | λ, k                |
-| chuẩn, normal, phân phối chuẩn        | `E03`            | μ, σ, x            |
-| lấy mẫu, sample                         | `F01`            | số mẫu             |
-| mô phỏng, simulation                    | `F02`            | số lần             |
+| **THẤY TRONG ĐỀ**                | **TÌM MÃ** | **THAY GÌ** |
+| ----------------------------------------- | ------------------ | ------------------ |
+| đọc dữ liệu, hiển thị               | `A01`            | tên file          |
+| bao nhiêu dòng, bao nhiêu cột         | `A02`            | không thay        |
+| thiếu dữ liệu, missing, null           | `A03`            | không thay        |
+| định tính, định lượng, phân loại | `A04`            | không thay        |
+| có bao nhiêu, value_counts              | `B01`            | tên cột          |
+| nhiều nhất, ít nhất, top              | `B02`            | tên cột          |
+| tỷ lệ, %, phần trăm                   | `B03`            | tên cột          |
+| theo nhóm, groupby, so sánh             | `B04`            | 2 tên cột        |
+| trung bình, mean, median                 | `C01`            | tên cột          |
+| độ lệch chuẩn, std, var               | `C02`            | tên cột          |
+| phân vị, quantile, Q1, Q3               | `C03`            | tên cột          |
+| biểu đồ cột, bar chart                | `D01`            | tên cột          |
+| biểu đồ tròn, pie chart               | `D02`            | tên cột          |
+| histogram, phân bố                      | `D03`            | tên cột          |
+| boxplot, hộp râu                        | `D04`            | tên cột          |
+| so sánh boxplot                          | `D05`            | 2 tên cột        |
+| ma trận tương quan, heatmap            | `D06`            | không thay        |
+| scatter plot, tương quan                | `D07`            | 2 tên cột        |
+| xác suất, nhị thức, P(X=k)            | `E01`            | n, p, k            |
+| Poisson, λ, lambda                       | `E02`            | λ, k              |
+| chuẩn, normal, phân phối chuẩn        | `E03`            | μ, σ, x          |
+| lấy mẫu, sample                         | `F01`            | số mẫu           |
+| mô phỏng, simulation                    | `F02`            | số lần           |
 
 ---
 
 ## 📋 MỤC LỤC CHI TIẾT
+
 1. [A - Đọc và Khám phá Dữ liệu](#a---đọc-và-khám-phá-dữ-liệu)
-2. [B - Thống kê Cơ bản](#b---thống-kê-cơ-bản)  
+2. [B - Thống kê Cơ bản](#b---thống-kê-cơ-bản)
 3. [C - Thống kê Mô tả](#c---thống-kê-mô-tả)
 4. [D - Trực quan hóa](#d---trực-quan-hóa)
 5. [E - Xác suất](#e---xác-suất)
-6. [F - Lấy mẫu & Mô phỏng](#f---lấy-mẫu--mô-phỏng)
+6. [F - Lấy mẫu &amp; Mô phỏng](#f---lấy-mẫu--mô-phỏng)
 7. [Templates Hoàn chỉnh](#templates-hoàn-chỉnh)
 
 ---
@@ -707,9 +712,11 @@ plt.show()
 ## 🎯 BÀI TẬP MẪU PHÂN PHỐI XÁC SUẤT
 
 ### 📚 BÀI 1: TRẮC NGHIỆM (NHỊ THỨC)
+
 **Đề bài:** Một bài thi trắc nghiệm gồm 10 câu, mỗi câu có 4 phương án. Sinh viên làm bài bằng cách chọn ngẫu nhiên. Mỗi câu đúng được 4 điểm, sai bị trừ 2 điểm.
 
 **⚡ Giải nhanh:**
+
 ```python
 # Thiết lập
 n, p = 10, 0.25  # 10 câu, 1/4 xác suất đúng
@@ -731,9 +738,11 @@ print(f"Kết quả 10 lần: {results}")
 ```
 
 ### 📚 BÀI 2: CUỘC GỌI ĐIỆN THOẠI (POISSON)
+
 **Đề bài:** Trung tâm bưu điện nhận được 3 cuộc gọi mỗi phút. Tính xác suất nhận được 1, 2, 3 cuộc gọi trong một phút.
 
 **⚡ Giải nhanh:**
+
 ```python
 # Thiết lập  
 lam = 3  # λ = 3 cuộc gọi/phút
@@ -752,9 +761,11 @@ print(f"Trong 30s, P(X = 1) = {poisson(lam_30s).pmf(1):.6f}")
 ```
 
 ### 📚 BÀI 3: TRỌNG LƯỢNG TRÁI CÂY (CHUẨN)
+
 **Đề bài:** Trọng lượng trái cây có phân phối chuẩn μ=500g, σ²=16g². Phân loại: Loại 1 (>505g), Loại 2 (495-505g), Loại 3 (<495g).
 
 **⚡ Giải nhanh:**
+
 ```python
 # Thiết lập
 mu, sigma = 500, 4  # σ = √16 = 4
@@ -786,9 +797,11 @@ plt.show()
 ```
 
 ### 📚 BÀI 4: SẢN PHẨM LỖI (POISSON XẤP XỈ NHỊ THỨC)
+
 **Đề bài:** Máy dệt có 5000 ống sợi, xác suất mỗi ống ngưng hoạt động trong 1 phút là 0.0004. Tính xác suất có >2 ống ngưng hoạt động.
 
 **⚡ Giải nhanh:**
+
 ```python
 # Phương pháp 1: Nhị thức (chính xác)
 n, p = 5000, 0.0004
@@ -811,9 +824,11 @@ print(f"n={n} (lớn ✓), p={p} (nhỏ ✓), np={n*p} (vừa ✓)")
 ```
 
 ### 📚 BÀI 5: ĐIỀU TRỊ BỆNH (NHỊ THỨC)
+
 **Đề bài:** Xác suất chữa khỏi bệnh là 0.4. Có 15 người điều trị. Tính xác suất: a) Ít nhất 10 người khỏi, b) Từ 3-8 người khỏi, c) Đúng 5 người khỏi.
 
 **⚡ Giải nhanh:**
+
 ```python
 # Thiết lập
 n, p = 15, 0.4
@@ -841,9 +856,11 @@ print(f"Số người khỏi có khả năng cao nhất: {mode}")
 ```
 
 ### 📚 BÀI 6: KIỂM TRA CHẤT LƯỢNG (NHỊ THỨC LỒNG)
+
 **Đề bài:** Thiết bị điện tử có 3% bị hỏng. Kiểm tra ngẫu nhiên 20 thiết bị từ mỗi lô. Có 10 lô/tháng. Tính xác suất có đúng 3 lô chứa ít nhất 1 thiết bị hỏng.
 
 **⚡ Giải nhanh:**
+
 ```python
 # Bước 1: Xác suất 1 lô có ít nhất 1 thiết bị hỏng
 n_thiet_bi, p_hong = 20, 0.03
@@ -869,11 +886,11 @@ print(f"- Cần đúng 3 lô có hỏng")
 
 ### ✅ NHẬN DẠNG PHÂN PHỐI:
 
-| **Từ khóa trong đề** | **Phân phối** | **Tham số** |
-|---------------------|---------------|-------------|
-| "trắc nghiệm", "có/không", "thành công/thất bại" | **Nhị thức** | n (số lần), p (xác suất) |
-| "số lần xảy ra", "trung bình X lần", "hiếm" | **Poisson** | λ (trung bình) |
-| "chiều cao", "cân nặng", "điểm số", "sai số" | **Chuẩn** | μ (TB), σ (độ lệch) |
+| **Từ khóa trong đề**                           | **Phân phối** | **Tham số**           |
+| -------------------------------------------------------- | --------------------- | ---------------------------- |
+| "trắc nghiệm", "có/không", "thành công/thất bại" | **Nhị thức**  | n (số lần), p (xác suất) |
+| "số lần xảy ra", "trung bình X lần", "hiếm"        | **Poisson**     | λ (trung bình)             |
+| "chiều cao", "cân nặng", "điểm số", "sai số"      | **Chuẩn**      | μ (TB), σ (độ lệch)     |
 
 ### ✅ CÁC CÔNG THỨC NHANH:
 
@@ -892,6 +909,7 @@ print(f"- Cần đúng 3 lô có hỏng")
 ```
 
 ### ✅ KHI NÀO DÙNG POISSON XẤP XỈ NHỊ THỨC:
+
 - **n lớn** (>= 100), **p nhỏ** (<= 0.01), **np vừa** (<= 10)
 - **λ = np**
 - **Ví dụ:** n=1000, p=0.002 → λ=2 ✓
@@ -1072,6 +1090,7 @@ print(df.columns.tolist())
 
 import matplotlib.pyplot as plt
 import seaborn as sns
+
 ```
 
 ## 🎯 TEMPLATES ĐẶC BIỆT CHO TỪNG DATASET PHỔ BIẾN
@@ -1102,6 +1121,7 @@ plt.tight_layout(); plt.show()
 ```
 
 ### 🚗 DATASET MPG - Template hoàn chỉnh:
+
 ```python
 # Đọc và xử lý mpg.csv
 df = pd.read_csv('mpg.csv')
@@ -1132,6 +1152,7 @@ plt.tight_layout(); plt.show()
 ```
 
 ### 👶 DATASET BABY NAMES - Template hoàn chỉnh:
+
 ```python
 # Đọc và xử lý US_Baby_Names.csv
 df = pd.read_csv('US_Baby_Names.csv')
@@ -1165,6 +1186,7 @@ plt.tight_layout(); plt.show()
 ```
 
 ### 🎯 Đọc dữ liệu và làm sạch:
+
 ```python
 # Template cơ bản
 df = pd.read_csv('FILE_NAME.csv')  # ⚠️ SỬA TÊN FILE
@@ -1174,6 +1196,7 @@ print(f"Dữ liệu: {df.shape[0]} dòng, {df.shape[1]} cột")
 ```
 
 ### 🎯 Thống kê nhanh:
+
 ```python
 # Mô tả tổng quan
 print(df.describe())
@@ -1186,6 +1209,7 @@ print(f"Min-Max: {df[bien].min():.2f} - {df[bien].max():.2f}")
 ```
 
 ### 🎯 Group by nhanh:
+
 ```python
 # Template group by cơ bản
 result = df.groupby('BIEN_NHOM')['BIEN_SO'].agg(['mean', 'sum', 'count']).round(2)  # ⚠️ SỬA
@@ -1193,6 +1217,7 @@ print(result)
 ```
 
 ### 🎯 Plot nhanh:
+
 ```python
 # Bar chart nhanh
 df.groupby('BIEN_NHOM')['BIEN_SO'].mean().plot(kind='bar')  # ⚠️ SỬA
@@ -1210,6 +1235,7 @@ plt.show()
 ## 🚨 CHECKLIST KHI LÀM BÀI THI
 
 ### ✅ Bước 1: Đọc đề và xác định
+
 - [ ] File dữ liệu tên gì? (tips.csv, mpg.csv, US_Baby_Names.csv...)
 - [ ] Biến cần phân tích là gì? (tip, mpg, Count, Final Exam...)
 - [ ] Cần tính thống kê gì? (mean, median, sum, count, correlation...)
@@ -1217,18 +1243,21 @@ plt.show()
 - [ ] Cần vẽ biểu đồ gì? (bar, scatter, line, histogram, boxplot...)
 
 ### ✅ Bước 2: Setup cơ bản
+
 - [ ] Import thư viện: `pandas, numpy, matplotlib.pyplot, seaborn`
 - [ ] Đọc file CSV: `pd.read_csv('filename.csv')`
 - [ ] Xóa cột thừa: `df.drop(['Unnamed: 0'], axis=1)`
 - [ ] Kiểm tra null: `df.isnull().sum()`
 
 ### ✅ Bước 3: Thực hiện yêu cầu
+
 - [ ] Tìm template phù hợp trong tài liệu
 - [ ] Copy code và sửa tên biến
 - [ ] Sửa tiêu đề biểu đồ cho phù hợp
 - [ ] Chạy và kiểm tra kết quả hợp lý
 
 ### ✅ Bước 4: Hoàn thiện
+
 - [ ] Format số thập phân (.2f, .1f)
 - [ ] Thêm tiêu đề và nhãn trục
 - [ ] Kiểm tra logic kết quả
@@ -1238,24 +1267,25 @@ plt.show()
 
 ## 🎯 KEYWORDS QUAN TRỌNG TRONG ĐỀ THI
 
-| Từ khóa trong đề | Code cần dùng | Dataset ví dụ |
-|------------------|---------------|---------------|
-| **"trung bình"** | `.mean()` | `df['tip'].mean()` |
-| **"trung vị"** | `.median()` | `df['mpg'].median()` |
-| **"tỷ lệ"** | `.value_counts(normalize=True)*100` | `df['Gender'].value_counts(normalize=True)*100` |
-| **"so sánh"** | `.groupby().agg(['mean','sum','count'])` | `df.groupby('sex')['tip'].mean()` |
-| **"top 10"** | `.nlargest(10)` hoặc `.head(10)` | `df.groupby('Name')['Count'].sum().nlargest(10)` |
-| **"mối quan hệ"** | `.corr()` + scatter plot | `df['mpg'].corr(df['weight'])` |
-| **"phân phối"** | histogram | `plt.hist(df['total_bill'])` |
-| **"so sánh nhóm"** | boxplot | `sns.boxplot(data=df, x='origin', y='mpg')` |
-| **"xu hướng"** | line plot | `plt.plot(years, values)` |
-| **"năm 2014"** | filter data | `df[df['Year'] == 2014]` |
+| Từ khóa trong đề       | Code cần dùng                            | Dataset ví dụ                                    |
+| -------------------------- | ------------------------------------------ | -------------------------------------------------- |
+| **"trung bình"**    | `.mean()`                                | `df['tip'].mean()`                               |
+| **"trung vị"**      | `.median()`                              | `df['mpg'].median()`                             |
+| **"tỷ lệ"**        | `.value_counts(normalize=True)*100`      | `df['Gender'].value_counts(normalize=True)*100`  |
+| **"so sánh"**       | `.groupby().agg(['mean','sum','count'])` | `df.groupby('sex')['tip'].mean()`                |
+| **"top 10"**         | `.nlargest(10)` hoặc `.head(10)`      | `df.groupby('Name')['Count'].sum().nlargest(10)` |
+| **"mối quan hệ"**  | `.corr()` + scatter plot                 | `df['mpg'].corr(df['weight'])`                   |
+| **"phân phối"**    | histogram                                  | `plt.hist(df['total_bill'])`                     |
+| **"so sánh nhóm"** | boxplot                                    | `sns.boxplot(data=df, x='origin', y='mpg')`      |
+| **"xu hướng"**     | line plot                                  | `plt.plot(years, values)`                        |
+| **"năm 2014"**      | filter data                                | `df[df['Year'] == 2014]`                         |
 
 ---
 
 ## 🔧 TEMPLATE SIÊU NHANH - COPY PASTE
 
 ### 📊 Thống kê cơ bản 1 biến:
+
 ```python
 col = 'TEN_COT'  # ⚠️ SỬA
 print(f"TB: {df[col].mean():.2f}, TV: {df[col].median():.2f}")
@@ -1263,18 +1293,21 @@ print(f"Min-Max: {df[col].min():.2f} - {df[col].max():.2f}")
 ```
 
 ### 📊 So sánh nhóm:
+
 ```python
 result = df.groupby('NHOM')['GIA_TRI'].agg(['mean','count']).round(2)  # ⚠️ SỬA
 print(result)
 ```
 
 ### 📊 Top N:
+
 ```python
 top_n = df.groupby('NHOM')['GIA_TRI'].sum().nlargest(10)  # ⚠️ SỬA N và tên cột
 print(top_n)
 ```
 
 ### 📊 Vẽ nhanh:
+
 ```python
 # Bar chart
 df.groupby('NHOM')['GIA_TRI'].mean().plot(kind='bar')  # ⚠️ SỬA
@@ -1285,6 +1318,7 @@ plt.scatter(df['X'], df['Y']); plt.title('TIÊU ĐỀ'); plt.show()  # ⚠️ S�
 ```
 
 ### 📊 Lọc dữ liệu:
+
 ```python
 # Lọc theo điều kiện
 filtered = df[df['COT'] == 'GIA_TRI']  # ⚠️ SỬA
@@ -1310,6 +1344,7 @@ print(f"Số dòng sau lọc: {len(filtered)}")
 ## 📚 PHỤ LỤC: VÍ DỤ CỤ THỂ VÀ HÌNH DUNG
 
 ### 🎯 VÍ DỤ THAY THẾ BIẾN - DATASET TIPS:
+
 ```python
 # ❌ Template gốc:
 df.groupby('BIEN_NHOM')['BIEN_SO'].mean()
@@ -1321,6 +1356,7 @@ df.groupby('time')['tip'].count()         # số lượng tip theo bữa ăn
 ```
 
 ### 🎯 VÍ DỤ THAY THẾ BIẾN - DATASET MPG:
+
 ```python
 # ❌ Template gốc:
 df['BIEN_CAN_SO_SANH'].corr(df['BIEN_KHAC'])
@@ -1332,6 +1368,7 @@ df['mpg'].corr(df['cylinders'])          # tương quan mpg với số xi lanh
 ```
 
 ### 🎯 VÍ DỤ THAY THẾ BIẾN - DATASET US BABY NAMES:
+
 ```python
 # ❌ Template gốc:
 df.groupby(['Year', 'Gender'])['Count'].sum().unstack()
@@ -1344,16 +1381,17 @@ df.groupby('Name')['Count'].sum()        # tổng theo tên
 
 ### 🎯 BẢNG CHEAT SHEET - THAY THẾ NHANH:
 
-| Dataset | Cột Số | Cột Phân Loại | Cột Thời Gian | Cột ID |
-|---------|---------|---------------|---------------|---------|
-| **Tips** | tip, total_bill, size | sex, smoker, day, time | - | - |
-| **MPG** | mpg, horsepower, weight, acceleration | origin | model_year | - |
-| **Baby Names** | Count | Name, Gender | Year | Id (xóa) |
-| **Grades** | Project 1, Project 2, Final Exam | Gender, Grade | - | Student ID (xóa) |
+| Dataset              | Cột Số                              | Cột Phân Loại       | Cột Thời Gian | Cột ID           |
+| -------------------- | ------------------------------------- | ---------------------- | --------------- | ----------------- |
+| **Tips**       | tip, total_bill, size                 | sex, smoker, day, time | -               | -                 |
+| **MPG**        | mpg, horsepower, weight, acceleration | origin                 | model_year      | -                 |
+| **Baby Names** | Count                                 | Name, Gender           | Year            | Id (xóa)         |
+| **Grades**     | Project 1, Project 2, Final Exam      | Gender, Grade          | -               | Student ID (xóa) |
 
 ### 🎯 VÍ DỤ GROUPBY NÂNG CAO:
 
 #### Giải thích groupby().unstack():
+
 ```python
 # BƯỚC 1: Groupby tạo MultiIndex Series
 result = df.groupby(['Year', 'Gender'])['Count'].sum()
@@ -1368,7 +1406,7 @@ result = df.groupby(['Year', 'Gender'])['Count'].sum()
 table = result.unstack()
 # Kết quả:
 # Gender     F        M
-# Year               
+# Year             
 # 2004    1500000  1600000
 # 2005    1520000  1580000
 
@@ -1376,12 +1414,13 @@ table = result.unstack()
 percentage = table.div(table.sum(axis=1), axis=0) * 100
 # Kết quả:
 # Gender      F     M
-# Year              
+# Year            
 # 2004     48.4  51.6
 # 2005     49.0  51.0
 ```
 
 ### 🎯 VÍ DỤ SCATTER PLOT VÀ TƯƠNG QUAN:
+
 ```python
 # Template:
 plt.scatter(df['BIEN_X'], df['BIEN_Y'])
@@ -1400,6 +1439,7 @@ plt.plot(df['horsepower'], p(df['horsepower']), "r--")
 ### 🎯 PATTERN THƯỜNG GẶP TRONG ĐỀ:
 
 #### Pattern 1: "Top N cái gì đó"
+
 ```python
 # Template:
 top_n = df.groupby('COT_NHOM')['COT_SO'].sum().sort_values(ascending=False).head(N)
@@ -1409,7 +1449,8 @@ top_10_names = df.groupby('Name')['Count'].sum().sort_values(ascending=False).he
 top_5_tips = df.groupby('day')['tip'].sum().sort_values(ascending=False).head(5)
 ```
 
-#### Pattern 2: "So sánh A với B" 
+#### Pattern 2: "So sánh A với B"
+
 ```python
 # Template:
 comparison = df.groupby('COT_PHAN_LOAI')['COT_SO'].agg(['mean', 'sum', 'count'])
@@ -1420,6 +1461,7 @@ origin_comparison = df.groupby('origin')['mpg'].agg(['mean', 'count'])
 ```
 
 #### Pattern 3: "Xu hướng theo thời gian"
+
 ```python
 # Template:
 trend = df.groupby('COT_THOI_GIAN')['COT_SO'].mean()
@@ -1431,6 +1473,7 @@ plt.plot(mpg_trend.index, mpg_trend.values)
 ```
 
 ### 🎯 CÂU LỆNH 1 DÒNG HAY DÙNG:
+
 ```python
 # Đếm tần số
 df['column'].value_counts()
@@ -1625,12 +1668,14 @@ print("=== HOÀN THÀNH ===")
 ## 🚨 CHECKLIST THI CỰC QUAN TRỌNG
 
 ### ✅ TRƯỚC KHI BẮT ĐẦU (2 PHÚT ĐẦU):
+
 1. **Copy toàn bộ import** vào cell đầu tiên
-2. **Ctrl+F tìm keyword** trong đề bài  
+2. **Ctrl+F tìm keyword** trong đề bài
 3. **Kiểm tra tên file** có đúng không?
 4. **Print df.columns** để biết tên cột chính xác
 
 ### ✅ KHI LÀM BÀI (TỪNG CELL):
+
 1. **Copy template** phù hợp từ cheat sheet
 2. **Thay tên file/cột** theo đề bài
 3. **Chạy ngay** để kiểm tra
@@ -1638,20 +1683,21 @@ print("=== HOÀN THÀNH ===")
 
 ### ✅ KEYWORDS SIÊU QUAN TRỌNG:
 
-| **THẤY TRONG ĐỀ** | **SEARCH** | **ACTION** |
-|-------------------|------------|------------|
-| "đọc dữ liệu" | `A01` | Copy A01, thay tên file |
-| "bao nhiêu dòng" | `A02` | Copy A02, chạy luôn |
-| "trung bình" | `C01` | Copy C01, thay tên cột |
-| "tỷ lệ %" | `B03` | Copy B03, thay tên cột |
-| "biểu đồ cột" | `D01` | Copy D01, thay tên cột |
-| "histogram" | `D03` | Copy D03, thay tên cột |
-| "boxplot" | `D04` hoặc `D05` | Copy template, thay cột |
-| "so sánh nhóm" | `B04` | Copy B04, thay 2 tên cột |
-| "tương quan" | `D07` | Copy D07, thay 2 tên cột |
-| "xác suất" | `E01/E02/E03` | Copy template, thay số |
+| **THẤY TRONG ĐỀ** | **SEARCH**      | **ACTION**           |
+| -------------------------- | --------------------- | -------------------------- |
+| "đọc dữ liệu"          | `A01`               | Copy A01, thay tên file   |
+| "bao nhiêu dòng"         | `A02`               | Copy A02, chạy luôn      |
+| "trung bình"              | `C01`               | Copy C01, thay tên cột   |
+| "tỷ lệ %"                | `B03`               | Copy B03, thay tên cột   |
+| "biểu đồ cột"          | `D01`               | Copy D01, thay tên cột   |
+| "histogram"                | `D03`               | Copy D03, thay tên cột   |
+| "boxplot"                  | `D04` hoặc `D05` | Copy template, thay cột   |
+| "so sánh nhóm"           | `B04`               | Copy B04, thay 2 tên cột |
+| "tương quan"             | `D07`               | Copy D07, thay 2 tên cột |
+| "xác suất"               | `E01/E02/E03`       | Copy template, thay số    |
 
 ### 💡 CHIẾN THUẬT 20 PHÚT CUỐI:
+
 1. **Ưu tiên câu dễ**: Đọc file, thống kê cơ bản
 2. **Copy paste nhanh**: Đừng viết code từ đầu
 3. **Thay tên nhanh**: Ctrl+H để replace all
@@ -1661,12 +1707,12 @@ print("=== HOÀN THÀNH ===")
 
 ## 🎨 BẢNG CHEAT DATASETS THƯỜNG GẶP
 
-| **Dataset** | **File** | **Cột Số** | **Cột Phân Loại** | **Ví dụ Groupby** |
-|-------------|----------|-------------|-------------------|-------------------|
-| **Tips** | `tips.csv` | tip, total_bill, size | sex, smoker, day, time | `df.groupby('sex')['tip'].mean()` |
-| **MPG** | `mpg.csv` | mpg, horsepower, weight | origin | `df.groupby('origin')['mpg'].mean()` |
-| **Baby Names** | `US_Baby_Names.csv` | Count | Name, Gender | `df.groupby('Gender')['Count'].sum()` |
-| **Grades** | `sample_grades.csv` | Final Exam, Mid-Term | Gender, Grade | `df.groupby('Grade')['Final Exam'].mean()` |
+| **Dataset**    | **File**        | **Cột Số**      | **Cột Phân Loại** | **Ví dụ Groupby**                    |
+| -------------------- | --------------------- | ----------------------- | -------------------------- | -------------------------------------------- |
+| **Tips**       | `tips.csv`          | tip, total_bill, size   | sex, smoker, day, time     | `df.groupby('sex')['tip'].mean()`          |
+| **MPG**        | `mpg.csv`           | mpg, horsepower, weight | origin                     | `df.groupby('origin')['mpg'].mean()`       |
+| **Baby Names** | `US_Baby_Names.csv` | Count                   | Name, Gender               | `df.groupby('Gender')['Count'].sum()`      |
+| **Grades**     | `sample_grades.csv` | Final Exam, Mid-Term    | Gender, Grade              | `df.groupby('Grade')['Final Exam'].mean()` |
 
 ### 🔥 COPY-PASTE SIÊU NHANH:
 
@@ -1702,12 +1748,14 @@ print(f"Correlation: {corr:.3f}")
 ## 🎯 CHIẾN THUẬT LÀM BÀI HIỆU QUẢ
 
 ### ⏰ PHÂN BỔ THỜI GIAN (90 phút):
+
 - **5 phút đầu**: Đọc đề, xác định dataset, copy import
 - **70 phút giữa**: Làm từng câu theo template
 - **10 phút cuối**: Kiểm tra, format output
 - **5 phút cuối**: Xuất file, nộp bài
 
 ### 🚨 THỨ TỰ LÀM BÀI KHUYẾN NGHỊ:
+
 1. **Câu đọc dữ liệu** (A01, A02) - 5 điểm dễ lấy
 2. **Câu thống kê cơ bản** (C01, C02) - 10 điểm
 3. **Câu vẽ biểu đồ đơn giản** (D01, D03) - 10 điểm
@@ -1716,15 +1764,16 @@ print(f"Correlation: {corr:.3f}")
 
 ### 🔧 TROUBLESHOOTING NHANH:
 
-| **Lỗi gặp phải** | **Nguyên nhân** | **Cách sửa** |
-|------------------|-----------------|-------------|
-| KeyError: 'column' | Tên cột sai | `print(df.columns)` để kiểm tra |
-| FileNotFoundError | Tên file sai | Kiểm tra tên file trong đề |
-| AttributeError | Kiểu dữ liệu sai | `df.dtypes` để kiểm tra |
-| Empty plot | Dữ liệu rỗng | `df.dropna()` trước khi vẽ |
-| Unicode error | Encoding | `pd.read_csv('file.csv', encoding='utf-8')` |
+| **Lỗi gặp phải** | **Nguyên nhân** | **Cách sửa**                          |
+| ------------------------- | ----------------------- | --------------------------------------------- |
+| KeyError: 'column'        | Tên cột sai           | `print(df.columns)` để kiểm tra          |
+| FileNotFoundError         | Tên file sai           | Kiểm tra tên file trong đề                |
+| AttributeError            | Kiểu dữ liệu sai     | `df.dtypes` để kiểm tra                  |
+| Empty plot                | Dữ liệu rỗng         | `df.dropna()` trước khi vẽ               |
+| Unicode error             | Encoding                | `pd.read_csv('file.csv', encoding='utf-8')` |
 
 ### 📝 FORMAT OUTPUT CHUẨN:
+
 ```python
 # Luôn format số đẹp
 print(f"Kết quả: {value:.2f}")  # 2 chữ số thập phân
@@ -1737,12 +1786,14 @@ print(f"Độ lệch chuẩn: {std:.2f}")  # Độ biến thiên vừa phải
 ```
 
 ### 🎯 ĐIỂM CỘNG THÊM:
+
 - **Giải thích kết quả**: "Giá trị này cho thấy..."
 - **So sánh hợp lý**: "Nhóm A cao hơn nhóm B..."
 - **Nhận xét biểu đồ**: "Phân phối lệch phải", "Tương quan mạnh"
 - **Code sạch đẹp**: Có comment, format đẹp
 
 ### 🚀 TIPS BÍ MẬT:
+
 1. **Ctrl+D** để duplicate dòng code (sửa nhanh)
 2. **Tab** để auto-complete tên cột
 3. **Shift+Tab** để xem help của function
@@ -1750,6 +1801,7 @@ print(f"Độ lệch chuẩn: {std:.2f}")  # Độ biến thiên vừa phải
 5. **Alt+Click** để edit multiple lines
 
 ### 📱 CHECKPOINT CUỐI BÀI:
+
 - [ ] Đã import đầy đủ thư viện?
 - [ ] Tất cả cell đều chạy được?
 - [ ] Kết quả có hợp lý không?
@@ -1761,6 +1813,7 @@ print(f"Độ lệch chuẩn: {std:.2f}")  # Độ biến thiên vừa phải
 ## 🔥 LAST MINUTE CHECKLIST
 
 ### ✅ 5 PHÚT CUỐI:
+
 ```python
 # Test toàn bộ code 1 lần cuối
 print("=== KIỂM TRA CUỐI ===")
@@ -1770,6 +1823,7 @@ print("Code chạy thành công! ✅")
 ```
 
 ### ✅ XUẤT KẾT QUẢ:
+
 ```python
 # Save kết quả quan trọng
 results = {
