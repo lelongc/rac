@@ -2,9 +2,27 @@
 
 ## 🎯 QUY TẮC VÀNG: NHÌN ĐỀ → TÌM MÃ → COPY → THAY TÊN → CHẠY!
 
+## 🚀 HƯỚNG DẪN SỬ DỤNG NHANH (ĐỌC TRƯỚC KHI THI)
+
+### ⚡ 3 BƯỚC CƠ BẢN:
+1. **Mở file thi** → Copy toàn bộ phần **📚 IMPORT** vào cell đầu tiên
+2. **Đọc đề bài** → Dùng **Ctrl+F** tìm từ khóa trong bảng **🔍 MENU TÌM KIẾM**
+3. **Copy template** tương ứng → Thay tên file/cột theo đề → Chạy!
+
+### 🎯 VÍ DỤ NHANH:
+- Thấy "đọc dữ liệu tips.csv" → **Ctrl+F "A01"** → Copy code A01 → Thay "TÊN_FILE.csv" thành "tips.csv"
+- Thấy "tính trung bình tip" → **Ctrl+F "C01"** → Copy code C01 → Thay "TÊN_CỘT" thành "tip"
+- Thấy "vẽ biểu đồ cột" → **Ctrl+F "D01"** → Copy code D01 → Thay tên cột
+
+### 🔥 LƯU Ý QUAN TRỌNG:
+- **LUÔN LUÔN** copy phần import trước tiên!
+- **CHỈ THAY** những phần có ⭐ trong code
+- **CTRL+F** là vũ khí bí mật để tìm code nhanh!
+- Nếu lỗi, kiểm tra tên file và tên cột có đúng không
+
 ---
 
-## � IMPORT TOÀN BỘ THỨ VIỆN CẦN THIẾT (COPY NGUYÊN KHỐI NÀY)
+## 📚 IMPORT TOÀN BỘ THƯ VIỆN CẦN THIẾT (COPY NGUYÊN KHỐI NÀY)
 
 ```python
 # Import cơ bản - COPY TOÀN BỘ KHỐI NÀY VÀO ĐẦU FILE!
@@ -880,9 +898,270 @@ print(f"- Cần đúng 3 lô có hỏng")
 
 ---
 
+## F - LẤY MẪU & MÔ PHỎNG
+
+### F01 - LẤY MẪU NGẪU NHIÊN ✨ CHỈ THAY SỐ LƯỢNG
+
+```python
+# ⭐ THAY SỐ LƯỢNG MẪU
+n_samples = 100  # Số mẫu cần lấy
+
+# Lấy mẫu ngẫu nhiên từ DataFrame
+sample_data = df.sample(n=n_samples, random_state=42)
+print(f"Đã lấy {len(sample_data)} mẫu ngẫu nhiên")
+print(sample_data.head())
+
+# Lấy mẫu theo tỷ lệ %
+sample_percent = df.sample(frac=0.1, random_state=42)  # Lấy 10%
+print(f"Lấy 10%: {len(sample_percent)} mẫu")
+
+# Lấy mẫu phân tầng theo nhóm
+stratified = df.groupby('CỘT_NHÓM').apply(lambda x: x.sample(n=min(10, len(x)), random_state=42))
+print("Mẫu phân tầng theo nhóm:")
+print(stratified.reset_index(drop=True))
+
+# 📝 VÍ DỤ:
+# df.sample(n=50)                    # Lấy 50 mẫu
+# df.sample(frac=0.2)                # Lấy 20%
+# df.groupby('sex').apply(lambda x: x.sample(n=5))  # 5 mẫu mỗi nhóm
+```
+
+### F02 - MÔ PHỎNG DỮ LIỆU ✨ THAY THAM SỐ
+
+```python
+import numpy as np
+from scipy.stats import norm, binom, poisson
+
+# ⭐ MÔ PHỎNG PHÂN PHỐI CHUẨN
+mu, sigma = 100, 15  # ⭐ THAY TRUNG BÌNH VÀ ĐỘ LỆCH CHUẨN
+n_sim = 1000        # ⭐ THAY SỐ LẦN MÔ PHỎNG
+
+# Tạo dữ liệu mô phỏng
+simulated_normal = np.random.normal(mu, sigma, n_sim)
+print(f"Mô phỏng {n_sim} giá trị từ N({mu}, {sigma}²)")
+print(f"TB mô phỏng: {np.mean(simulated_normal):.2f}")
+print(f"Std mô phỏng: {np.std(simulated_normal, ddof=1):.2f}")
+
+# Vẽ so sánh lý thuyết vs mô phỏng
+plt.figure(figsize=(12, 4))
+plt.subplot(1, 2, 1)
+plt.hist(simulated_normal, bins=30, alpha=0.7, density=True, label='Mô phỏng')
+x = np.linspace(mu-4*sigma, mu+4*sigma, 100)
+y = norm.pdf(x, mu, sigma)
+plt.plot(x, y, 'r-', linewidth=2, label='Lý thuyết')
+plt.title('Phân phối Chuẩn')
+plt.legend()
+
+# ⭐ MÔ PHỎNG PHÂN PHỐI NHỊ THỨC
+n, p = 20, 0.3      # ⭐ THAY n VÀ p
+simulated_binom = np.random.binomial(n, p, n_sim)
+plt.subplot(1, 2, 2)
+plt.hist(simulated_binom, bins=range(n+2), alpha=0.7, density=True, label='Mô phỏng')
+x_binom = range(n+1)
+y_binom = [binom.pmf(k, n, p) for k in x_binom]
+plt.bar(x_binom, y_binom, alpha=0.3, color='red', label='Lý thuyết')
+plt.title(f'Phân phối Nhị thức B({n}, {p})')
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+# ⭐ MÔ PHỎNG QUÁ TRÌNH NGẪU NHIÊN
+print("\n=== MÔ PHỎNG QUÁ TRÌNH ===")
+# Mô phỏng tung đồng xu
+flips = np.random.choice(['Ngửa', 'Sấp'], size=100)  # ⭐ THAY SỐ LẦN TUNG
+print(f"Tung 100 lần: Ngửa={np.sum(flips=='Ngửa')}, Sấp={np.sum(flips=='Sấp')}")
+
+# Mô phỏng tung xúc xắc
+dice = np.random.randint(1, 7, size=1000)  # ⭐ THAY SỐ LẦN TUNG
+print(f"Tung xúc xắc 1000 lần:")
+for i in range(1, 7):
+    count = np.sum(dice == i)
+    print(f"Mặt {i}: {count} lần ({count/1000*100:.1f}%)")
+
+# 📝 VÍ DỤ ỨNG DỤNG:
+# - Mô phỏng chiều cao học sinh: np.random.normal(165, 8, 1000)
+# - Mô phỏng số lỗi sản phẩm: np.random.poisson(2, 1000)  
+# - Mô phỏng kết quả thi: np.random.binomial(20, 0.7, 1000)
+```
+
+---
+
 *🎯 Học thuộc các template này, khi thi chỉ cần thay số và chạy!*
+
+---
+
+## 📚 PHẦN BỔ SUNG: CODE NHANH CHO CÁC TRƯỜNG HỢP ĐặC BIỆT
+
+### 🔧 XỬ LÝ DỮ LIỆU NHANH
+
+```python
+# Làm sạch dữ liệu nhanh
+df_clean = df.copy()
+df_clean = df_clean.dropna()  # Xóa missing
+df_clean = df_clean.drop_duplicates()  # Xóa trùng lặp
+if 'Unnamed: 0' in df_clean.columns:
+    df_clean = df_clean.drop('Unnamed: 0', axis=1)
+
+# Chuyển kiểu dữ liệu
+df['CỘT_SỐ'] = pd.to_numeric(df['CỘT_SỐ'], errors='coerce')  # ⭐ THAY TÊN CỘT
+df['CỘT_THỜI_GIAN'] = pd.to_datetime(df['CỘT_THỜI_GIAN'])  # ⭐ THAY TÊN CỘT
+
+# Tạo nhóm tuổi/điểm
+df['NHÓM_TUỔI'] = pd.cut(df['AGE'], bins=[0, 18, 30, 50, 100], 
+                        labels=['<18', '18-30', '30-50', '>50'])  # ⭐ THAY
+```
+
+### 🎯 THỐNG KÊ CHO BÁO CÁO
+
+```python
+# Template báo cáo hoàn chỉnh
+print("=== BÁO CÁO THỐNG KÊ ===")
+print(f"Dataset: {df.shape[0]} dòng, {df.shape[1]} cột")
+print(f"Thời gian phân tích: {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M')}")
+
+# Thống kê từng cột số
+numeric_cols = df.select_dtypes(include=[np.number]).columns
+print("\n=== THỐNG KÊ CÁC BIẾN SỐ ===")
+for col in numeric_cols:
+    print(f"{col}:")
+    print(f"  - Trung bình: {df[col].mean():.2f}")
+    print(f"  - Trung vị: {df[col].median():.2f}")
+    print(f"  - Độ lệch chuẩn: {df[col].std():.2f}")
+    print(f"  - Min-Max: {df[col].min():.1f} - {df[col].max():.1f}")
+    print(f"  - Missing: {df[col].isnull().sum()}/{len(df)} ({df[col].isnull().sum()/len(df)*100:.1f}%)")
+
+# Thống kê từng cột phân loại
+categorical_cols = df.select_dtypes(include=['object']).columns
+print("\n=== THỐNG KÊ CÁC BIẾN PHÂN LOẠI ===")
+for col in categorical_cols:
+    print(f"{col}:")
+    print(f"  - Số loại: {df[col].nunique()}")
+    print(f"  - Top 3: {df[col].value_counts().head(3).to_dict()}")
+    print(f"  - Missing: {df[col].isnull().sum()}/{len(df)}")
+```
+
+### 🚨 DEBUG VÀ TROUBLESHOOTING
+
+```python
+# Kiểm tra lỗi thường gặp
+print("=== KIỂM TRA LỖI ===")
+
+# 1. Kiểm tra tên cột
+print("Tên cột hiện tại:")
+print(df.columns.tolist())
+
+# 2. Kiểm tra kiểu dữ liệu
+print("\nKiểu dữ liệu:")
+print(df.dtypes)
+
+# 3. Kiểm tra giá trị lạ
+print("\nGiá trị lạ (inf, -inf):")
+for col in df.select_dtypes(include=[np.number]).columns:
+    inf_count = np.isinf(df[col]).sum()
+    if inf_count > 0:
+        print(f"{col}: {inf_count} giá trị inf")
+
+# 4. Sửa tên cột (nếu có dấu cách hoặc ký tự đặc biệt)
+df.columns = df.columns.str.strip()  # Xóa dấu cách
+df.columns = df.columns.str.replace(' ', '_')  # Thay dấu cách = _
+print("\nTên cột sau khi sửa:")
+print(df.columns.tolist())
+```
+
+---
+
 import matplotlib.pyplot as plt
 import seaborn as sns
+```
+
+## 🎯 TEMPLATES ĐẶC BIỆT CHO TỪNG DATASET PHỔ BIẾN
+
+### 📊 DATASET TIPS - Template hoàn chỉnh:
+```python
+# Đọc và xử lý tips.csv
+df = pd.read_csv('tips.csv')
+if 'Unnamed: 0' in df.columns: df = df.drop('Unnamed: 0', axis=1)
+print(f"Tips dataset: {df.shape[0]} dòng, {df.shape[1]} cột")
+
+# Các cột quan trọng: total_bill, tip, sex, smoker, day, time, size
+# Thống kê nhanh
+print(f"Tip trung bình: ${df['tip'].mean():.2f}")
+print(f"Hóa đơn trung bình: ${df['total_bill'].mean():.2f}")
+print(f"Tỷ lệ tip: {(df['tip']/df['total_bill']*100).mean():.1f}%")
+
+# So sánh theo giới tính
+print("\nTheo giới tính:")
+print(df.groupby('sex')['tip'].agg(['mean', 'count']).round(2))
+
+# Vẽ nhanh
+plt.figure(figsize=(15, 5))
+plt.subplot(1,3,1); df['sex'].value_counts().plot(kind='bar'); plt.title('Phân bố giới tính')
+plt.subplot(1,3,2); plt.scatter(df['total_bill'], df['tip']); plt.title('Tip vs Hóa đơn')
+plt.subplot(1,3,3); df.groupby('day')['tip'].sum().plot(kind='bar'); plt.title('Tip theo ngày')
+plt.tight_layout(); plt.show()
+```
+
+### 🚗 DATASET MPG - Template hoàn chỉnh:
+```python
+# Đọc và xử lý mpg.csv
+df = pd.read_csv('mpg.csv')
+if 'Unnamed: 0' in df.columns: df = df.drop('Unnamed: 0', axis=1)
+print(f"MPG dataset: {df.shape[0]} dòng, {df.shape[1]} cột")
+
+# Các cột quan trọng: mpg, cylinders, displacement, horsepower, weight, acceleration, model_year, origin
+# Thống kê nhanh
+print(f"MPG trung bình: {df['mpg'].mean():.1f}")
+print(f"Công suất trung bình: {df['horsepower'].mean():.0f} HP")
+print(f"Trọng lượng trung bình: {df['weight'].mean():.0f} lbs")
+
+# So sánh theo xuất xứ
+print("\nTheo xuất xứ (1=USA, 2=Europe, 3=Japan):")
+print(df.groupby('origin')['mpg'].agg(['mean', 'count']).round(1))
+
+# Tương quan quan trọng
+print(f"\nTương quan MPG với:")
+print(f"- Trọng lượng: {df['mpg'].corr(df['weight']):.3f}")
+print(f"- Công suất: {df['mpg'].corr(df['horsepower']):.3f}")
+
+# Vẽ nhanh
+plt.figure(figsize=(15, 5))
+plt.subplot(1,3,1); plt.scatter(df['weight'], df['mpg']); plt.title('MPG vs Trọng lượng')
+plt.subplot(1,3,2); plt.scatter(df['horsepower'], df['mpg']); plt.title('MPG vs Công suất')
+plt.subplot(1,3,3); df.groupby('origin')['mpg'].mean().plot(kind='bar'); plt.title('MPG theo xuất xứ')
+plt.tight_layout(); plt.show()
+```
+
+### 👶 DATASET BABY NAMES - Template hoàn chỉnh:
+```python
+# Đọc và xử lý US_Baby_Names.csv
+df = pd.read_csv('US_Baby_Names.csv')
+if 'Unnamed: 0' in df.columns: df = df.drop('Unnamed: 0', axis=1)
+if 'Id' in df.columns: df = df.drop('Id', axis=1)
+print(f"Baby Names dataset: {df.shape[0]} dòng, {df.shape[1]} cột")
+
+# Các cột quan trọng: Name, Year, Gender, Count
+# Thống kê nhanh
+print(f"Khoảng thời gian: {df['Year'].min()} - {df['Year'].max()}")
+print(f"Tổng số tên: {df['Name'].nunique():,}")
+print(f"Tổng số trẻ: {df['Count'].sum():,}")
+
+# Top 10 tên phổ biến nhất
+print("\nTop 10 tên phổ biến:")
+top_names = df.groupby('Name')['Count'].sum().nlargest(10)
+print(top_names)
+
+# Phân bố theo giới tính
+print("\nTheo giới tính:")
+gender_stats = df.groupby('Gender')['Count'].sum()
+print(gender_stats)
+print(f"Tỷ lệ: {gender_stats.values[0]/gender_stats.sum()*100:.1f}% F, {gender_stats.values[1]/gender_stats.sum()*100:.1f}% M")
+
+# Xu hướng theo năm
+yearly = df.groupby(['Year', 'Gender'])['Count'].sum().unstack()
+plt.figure(figsize=(15, 5))
+plt.subplot(1,2,1); top_names.plot(kind='bar'); plt.title('Top 10 tên')
+plt.subplot(1,2,2); yearly.plot(); plt.title('Xu hướng theo năm'); plt.legend(['F', 'M'])
+plt.tight_layout(); plt.show()
 ```
 
 ### 🎯 Đọc dữ liệu và làm sạch:
@@ -1420,9 +1699,92 @@ print(f"Correlation: {corr:.3f}")
 
 ---
 
+## 🎯 CHIẾN THUẬT LÀM BÀI HIỆU QUẢ
+
+### ⏰ PHÂN BỔ THỜI GIAN (90 phút):
+- **5 phút đầu**: Đọc đề, xác định dataset, copy import
+- **70 phút giữa**: Làm từng câu theo template
+- **10 phút cuối**: Kiểm tra, format output
+- **5 phút cuối**: Xuất file, nộp bài
+
+### 🚨 THỨ TỰ LÀM BÀI KHUYẾN NGHỊ:
+1. **Câu đọc dữ liệu** (A01, A02) - 5 điểm dễ lấy
+2. **Câu thống kê cơ bản** (C01, C02) - 10 điểm
+3. **Câu vẽ biểu đồ đơn giản** (D01, D03) - 10 điểm
+4. **Câu phân phối xác suất** (E01, E02, E03) - 15 điểm
+5. **Câu khó, groupby phức tạp** - làm cuối
+
+### 🔧 TROUBLESHOOTING NHANH:
+
+| **Lỗi gặp phải** | **Nguyên nhân** | **Cách sửa** |
+|------------------|-----------------|-------------|
+| KeyError: 'column' | Tên cột sai | `print(df.columns)` để kiểm tra |
+| FileNotFoundError | Tên file sai | Kiểm tra tên file trong đề |
+| AttributeError | Kiểu dữ liệu sai | `df.dtypes` để kiểm tra |
+| Empty plot | Dữ liệu rỗng | `df.dropna()` trước khi vẽ |
+| Unicode error | Encoding | `pd.read_csv('file.csv', encoding='utf-8')` |
+
+### 📝 FORMAT OUTPUT CHUẨN:
+```python
+# Luôn format số đẹp
+print(f"Kết quả: {value:.2f}")  # 2 chữ số thập phân
+print(f"Tỷ lệ: {percent:.1f}%")  # 1 chữ số thập phân cho %
+print(f"Số lượng: {count:,}")    # Thêm dấu phẩy cho số lớn
+
+# Comment kết quả
+print(f"Trung bình: {mean:.2f}")  # TB tip = 3.00$
+print(f"Độ lệch chuẩn: {std:.2f}")  # Độ biến thiên vừa phải
+```
+
+### 🎯 ĐIỂM CỘNG THÊM:
+- **Giải thích kết quả**: "Giá trị này cho thấy..."
+- **So sánh hợp lý**: "Nhóm A cao hơn nhóm B..."
+- **Nhận xét biểu đồ**: "Phân phối lệch phải", "Tương quan mạnh"
+- **Code sạch đẹp**: Có comment, format đẹp
+
+### 🚀 TIPS BÍ MẬT:
+1. **Ctrl+D** để duplicate dòng code (sửa nhanh)
+2. **Tab** để auto-complete tên cột
+3. **Shift+Tab** để xem help của function
+4. **Ctrl+/** để comment/uncomment nhanh
+5. **Alt+Click** để edit multiple lines
+
+### 📱 CHECKPOINT CUỐI BÀI:
+- [ ] Đã import đầy đủ thư viện?
+- [ ] Tất cả cell đều chạy được?
+- [ ] Kết quả có hợp lý không?
+- [ ] Biểu đồ có title và label?
+- [ ] File được save?
+
+---
+
+## 🔥 LAST MINUTE CHECKLIST
+
+### ✅ 5 PHÚT CUỐI:
+```python
+# Test toàn bộ code 1 lần cuối
+print("=== KIỂM TRA CUỐI ===")
+print(f"Dataset shape: {df.shape}")
+print(f"Columns: {list(df.columns)}")
+print("Code chạy thành công! ✅")
+```
+
+### ✅ XUẤT KẾT QUẢ:
+```python
+# Save kết quả quan trọng
+results = {
+    'mean_tip': df['tip'].mean(),
+    'correlation': df['total_bill'].corr(df['tip']),
+    'top_day': df.groupby('day')['tip'].sum().idxmax()
+}
+print("Kết quả chính:", results)
+```
+
 **🍀 CHÚC BẠN THI TỐT! CTRL+F LÀ VŨ KHÍ BÍ MẬT! 🍀**
 **🔥 COPY CHEAT SHEET VÀO USB - DÙNG KHI CẦN! 🔥**
+**⭐ NHỚ: IMPORT FIRST, CTRL+F, COPY-PASTE, THAY TÊN! ⭐**
 
 ---
 
 *LƯU Ý: Tài liệu này được tối ưu cho kỳ thi Giữa kỳ Thống kê máy tính - IUH*
+*Phiên bản cập nhật: October 2025 - Bổ sung templates đặc biệt và troubleshooting*
