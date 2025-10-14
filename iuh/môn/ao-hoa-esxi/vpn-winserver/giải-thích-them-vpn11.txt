@@ -1,0 +1,31 @@
+Câu hỏi của bạn rất hay! Đây chính là "phép màu" của VPN. Máy host của bạn (ở mạng `192.168.100.x`) có thể ping được máy `DC-SERVER` (ở mạng `172.16.1.x`) là nhờ **VPN Server** đóng vai trò như một **cây cầu** hoặc một **bộ định tuyến (Router)** thông minh.
+
+Khi bạn kết nối VPN thành công, máy host của bạn không còn chỉ là một thành viên của mạng `192.168.100.x` nữa.
+
+---
+### **The Analogy: A Secure Bridge Between Two Cities 🌉**
+
+Hãy tưởng tượng:
+* **Mạng nội bộ (`172.16.1.x`):** Là một "Thành phố B" riêng biệt, có tường bao quanh. Máy `DC-SERVER` (`172.16.1.2`) là một tòa nhà trong thành phố này.
+* **Mạng bên ngoài (`192.168.100.x`):** Là "Thành phố A", nơi máy tính thật (Client) của bạn đang ở.
+* **VPN Server:** Là một **"Trạm kiểm soát an ninh"** có hai cổng: một cổng ở Thành phố A (`192.168.100.20`) và một cổng ở Thành phố B (`172.16.1.1`).
+
+**Quá trình hoạt động như sau:**
+
+1.  **Kết nối (Connect):** Máy tính của bạn (Client) lái xe đến cổng của Trạm kiểm soát ở Thành phố A (`192.168.100.20`). Bạn xuất trình "giấy tờ" (tài khoản `vpnuser`).
+2.  **Được cấp "Giấy thông hành":** Sau khi xác thực, Trạm kiểm soát (VPN Server) cấp cho bạn một **địa chỉ tạm trú** bên trong Thành phố B. Đây chính là một IP từ dải bạn đã cấu hình, ví dụ: **`172.16.1.100`**.
+3.  **Gửi `ping`:** Bây giờ, máy tính của bạn, với địa chỉ tạm trú `172.16.1.100`, muốn gửi một "bức thư" (`ping`) đến tòa nhà `DC-SERVER` ở địa chỉ `172.16.1.2`.
+4.  **Định tuyến (Routing):** "Bức thư" được gửi qua một đường hầm an toàn đến Trạm kiểm soát. Trạm kiểm soát (VPN Server) nhìn vào địa chỉ người nhận (`172.16.1.2`) và thấy rằng "À, người này cũng ở trong Thành phố B!". Vì vậy, nó hoạt động như một người đưa thư, chuyển bức thư đến đúng tòa nhà. Đây chính là chức năng **"LAN routing"** mà chúng ta đã bật.
+5.  **Phản hồi:** Tòa nhà `DC-SERVER` nhận được thư và gửi thư trả lời lại cho địa chỉ tạm trú của bạn (`172.16.1.100`). Trạm kiểm soát nhận thư trả lời và gửi nó qua đường hầm an toàn về lại cho bạn.
+
+Kết quả là bạn nhận được phản hồi `ping` thành công!
+
+---
+### **How It Works Technically 🛰️**
+
+1.  **The VPN Tunnel:** Khi bạn kết nối, một "đường hầm ảo" được tạo ra giữa máy Host của bạn và `VPN-SERVER`. Mọi dữ liệu đi qua đường hầm này đều được mã hóa.
+2.  **The Client Gets a New IP:** `VPN-SERVER` gán cho máy Host của bạn một địa chỉ IP ảo từ dải IP tĩnh đã cấu hình (ví dụ: `172.16.1.100`). Lúc này, máy Host của bạn tạm thời **trở thành một thành viên của mạng `172.16.1.x`**.
+3.  **The VPN Server as a Router:** Khi bạn `ping 172.16.1.2`, yêu cầu này được gửi qua đường hầm đến `VPN-SERVER`. Vì chúng ta đã bật tính năng **LAN routing**, `VPN-SERVER` biết cách chuyển tiếp (route) gói tin này từ card mạng nội bộ của nó (`172.16.1.1`) đến máy `DC-SERVER` (`172.16.1.2`).
+4.  **The Return Trip:** Máy `DC-SERVER` nhận được ping và gửi trả lời. Gateway của `DC-SERVER` chính là `VPN-SERVER` (`172.16.1.1`), vì vậy gói tin trả lời được gửi đến `VPN-SERVER`, và `VPN-SERVER` lại gửi nó qua đường hầm về cho máy Host của bạn.
+
+**Tóm lại:** Kết nối VPN đã tạm thời "dịch chuyển" máy tính của bạn vào bên trong mạng nội bộ, cho phép bạn truy cập các tài nguyên ở đó một cách an toàn. ✅

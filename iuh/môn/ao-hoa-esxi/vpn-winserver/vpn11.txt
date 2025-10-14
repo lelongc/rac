@@ -1,0 +1,147 @@
+Chắc chắn rồi. Chúng ta sẽ xây dựng lại chính xác mô hình lab VPN kinh điển đó, nhưng lần này sẽ **tận dụng mạng NAT (`192.168.100.x`) có sẵn của bạn** để mô phỏng "mạng bên ngoài".
+
+Cách này rất ổn định và tránh được các lỗi liên quan đến card mạng vật lý. Máy chủ web cũ của bạn (`192.168.100.20`) sẽ được "nâng cấp" thành `VPN-SERVER`.
+
+-----
+
+### **Mô hình Lab của chúng ta**
+
+  * **Client:** Máy tính Windows 10/11 thật của bạn.
+  * **Mạng "Bên ngoài" (Internet):** Mạng NAT ảo `192.168.100.x` của bạn.
+  * **VPN Server:** Máy ảo Windows Server 2022 cũ của bạn (IP `192.168.100.20`), sẽ được nâng cấp để có **2 card mạng**.
+  * **Mạng "Nội bộ" (LAN):** Một mạng Internal ảo mới, tách biệt hoàn toàn.
+  * **Data Center Server:** Một máy ảo Windows Server 2022 mới, chỉ có **1 card mạng** và nằm trong mạng nội bộ ảo.
+
+-----
+
+## Giai đoạn 1: Xây dựng "Đường sá" Mạng ảo [Trên Máy Host]
+
+Mạng NAT của bạn đã sẵn sàng. Chúng ta chỉ cần tạo thêm một mạng nội bộ ảo.
+
+#### **A. Xác nhận Mạng NAT (Mạng bên ngoài)**
+
+1.  Mở **Hyper-V Manager** -\> **Virtual Switch Manager...**.
+2.  Đảm bảo bạn đã có một Virtual Switch loại **Internal** tên là **`NATSwitch`**.
+
+#### **B. Tạo Internal Switch mới (Mạng nội bộ)**
+
+Switch này dùng để tạo mạng LAN ảo cho Data Center, hoàn toàn tách biệt.
+
+1.  Trong **Virtual Switch Manager**, chọn **New virtual network switch**, loại là **Internal**.
+2.  Đặt tên là **`InternalLAN`** và nhấn **OK**.
+
+-----
+
+## Giai đoạn 2: Chuẩn bị các Máy ảo [Trên Máy Host]
+
+#### **A. "Nâng cấp" Máy chủ cũ (`192.168.100.20`) thành `VPN-SERVER`**
+
+1.  **Tắt (Shut Down)** hoàn toàn máy chủ Windows Server 2022 cũ của bạn.
+2.  **Thêm Card mạng:**
+      * Trong **Hyper-V Manager**, chuột phải vào máy chủ cũ -\> **Settings**.
+      * Chọn **Add Hardware** -\> **Network Adapter** -\> **Add**. Bây giờ máy ảo đã có 2 card mạng.
+3.  **Kết nối các Card mạng vào đúng Switch:**
+      * **Card mạng 1 (cũ):** Kết nối vào **`NATSwitch`** (Đây là card mạng "bên ngoài").
+      * **Card mạng 2 (mới):** Kết nối vào **`InternalLAN`** (Đây là card mạng "nội bộ").
+
+#### **B. Tạo Máy ảo mới `DC-SERVER`**
+
+1.  Tạo một máy ảo Windows Server 2022 mới, đặt tên là `DC-SERVER`.
+2.  Khi đến bước **Configure Networking**, hãy kết nối nó vào switch **`InternalLAN`**.
+3.  Hoàn tất việc tạo và tiến hành cài đặt Windows Server 2022 (phiên bản **Desktop Experience**).
+
+-----
+
+## Giai đoạn 3: Cấu hình Địa chỉ IP 🔌 [Bên trong các Máy ảo]
+
+Sau khi cả hai máy ảo đã sẵn sàng, hãy đăng nhập vào từng máy để cấu hình IP tĩnh.
+
+#### **A. Trên `DC-SERVER`**
+
+1.  Mở `ncpa.cpl` (Windows + R).
+2.  Cấu hình card mạng duy nhất với các thông số:
+      * **IP address:** `172.16.1.2`
+      * **Subnet mask:** `255.255.255.0`
+      * **Default gateway:** **`172.16.1.1`** (Trỏ về card mạng nội bộ của VPN Server).
+      * **Preferred DNS server:** `8.8.8.8`
+
+#### **B. Trên `VPN-SERVER`**
+
+Bạn sẽ thấy 2 card mạng. Hãy đổi tên chúng trong `ncpa.cpl` thành `EXTERNAL_NAT` và `INTERNAL_LAN` để dễ phân biệt.
+
+1.  **Cấu hình card `INTERNAL_LAN`:**
+      * **IP address:** `172.16.1.1`
+      * **Subnet mask:** `255.255.255.0`
+      * **Default gateway & DNS:** **Để trống**.
+2.  **Cấu hình card `EXTERNAL_NAT`:**
+      * Giữ nguyên IP tĩnh bạn đã đặt từ trước:
+      * **IP address:** `192.168.100.20`
+      * **Subnet mask:** `255.255.255.0`
+      * **Default gateway:** `192.168.100.1` (Trỏ về máy Host).
+      * **DNS server:** `8.8.8.8`
+
+Khi thay đổi IP, Windows có thể đã tự động chuyển profile mạng sang "Public", khiến Firewall chặn các kết nối ping đến.
+
+Cách sửa: Hãy vào Windows Defender Firewall with Advanced Security trên các SERVER, mục Inbound Rules, và chắc chắn rằng quy tắc File and Printer Sharing (Echo Request - ICMPv4-In) vẫn đang được Enable (hiển thị màu xanh lá). để cho phép ping 
+
+**Kiểm tra:**
+
+  * Từ `VPN-SERVER`, bạn phải `ping` được `8.8.8.8` và `172.16.1.2`.
+  * Từ `DC-SERVER`, bạn phải `ping` được `172.16.1.1`.
+
+-----
+
+## Giai đoạn 4: Cấu hình Dịch vụ VPN 🛰️ [Trên `VPN-SERVER`]
+
+Thực hiện các bước sau trên máy ảo `VPN-SERVER`.
+
+#### **A. Cài đặt vai trò Remote Access**
+
+1.  Mở **Server Manager** -\> **Manage** -\> **Add Roles and Features**.
+2.  Cài đặt vai trò **Remote Access**.
+3.  Ở màn hình **Role Services**, tick vào **DirectAccess and VPN (RAS)**.
+4.  Hoàn tất quá trình cài đặt.
+
+#### **B. Cấu hình Routing and Remote Access (RRAS)**
+
+1.  Trong **Server Manager**, chọn **Tools** -\> **Routing and Remote Access**.
+2.  Chuột phải vào tên máy chủ, chọn **Configure and Enable Routing and Remote Access**.
+3.  Chọn **Custom configuration** -\> **Next**.
+4.  Tick vào cả hai ô: **VPN access** và **LAN routing**.
+5.  Nhấn **Next** -\> **Finish** và **Start service**.
+6.  **Cấu hình Dải IP cho Client:**
+      * Chuột phải vào tên máy chủ, chọn **Properties** -\> tab **IPv4**.
+      * Chọn **"Static address pool"** và **Add...**.
+      * Nhập dải IP cho các client kết nối, ví dụ: `172.16.1.100` đến `172.16.1.110`.
+      * Nhấn **OK**.
+
+#### **C. Tạo Người dùng VPN 🧑‍💻**
+
+1.  Trong **Server Manager**, chọn **Tools** -\> **Computer Management**.
+2.  Đi đến **Local Users and Groups** -\> **Users**.
+3.  Tạo một user mới, ví dụ `vpnuser` với mật khẩu an toàn.
+4.  Chuột phải vào `vpnuser` -\> **Properties** -\> tab **Dial-in** -\> chọn **Allow access**.
+5.  Nhấn **OK**.
+
+-----
+
+## Giai đoạn 5: Kết nối và Kiểm tra 🚀 [Trên Máy Host]
+
+Thực hiện các bước sau trên máy tính **Windows 10/11 thật** của bạn.
+
+1.  **Tạo kết nối VPN:**
+      * Vào **Settings** -\> **Network & internet** -\> **VPN** -\> **Add a VPN connection**.
+      * **Server name or address:** **`192.168.100.20`** (IP "bên ngoài" của VPN Server).
+      * **VPN type:** `Automatic`.
+      * **Type of sign-in info:** `User name and password`.
+      * Nhấn **Save**.
+2.  **Kết nối:** Nhấn **Connect** và nhập tài khoản `vpnuser` và mật khẩu.
+
+**Kiểm tra cuối cùng:**
+Sau khi kết nối thành công, mở **Command Prompt** trên máy thật của bạn và chạy lệnh:
+
+```
+ping 172.16.1.2
+```
+
+Nếu bạn nhận được phản hồi, bạn đã cấu hình thành công\! Máy tính của bạn đã kết nối an toàn qua VPN Server để "nói chuyện" với Data Center Server trong mạng nội bộ.
