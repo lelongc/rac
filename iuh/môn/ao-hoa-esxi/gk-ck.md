@@ -2618,3 +2618,154 @@ Hiệu năng ESXi phụ thuộc vào nhiều yếu tố: phần cứng, cấu h�
 
 **Tóm lại:**
 Bảo mật ESXi Server cần kết hợp nhiều lớp (truy cập, mạng, VM, dữ liệu, giám sát, quy trình, đào tạo), đảm bảo cập nhật thường xuyên, phân quyền chặt chẽ, mã hóa dữ liệu, giám sát chủ động và có quy trình phản ứng sự cố rõ ràng. Đây là nền tảng bảo vệ hiệu quả cho hệ thống máy chủ ảo hóa doanh nghiệp.
+
+
+---
+
+Câu 28:
+Giải thích sự khác biệt giữa HTTP và HTTPS, nêu rõ các yếu tố bảo mật mà HTTPS bổ sung, đồng thời phân tích tác động của việc chuyển từ HTTP sang HTTPS đối với cả người dùng và quản trị hệ thống.
+1. Sự khác biệt giữa HTTP và HTTPS:
+ * HTTP (Hypertext Transfer Protocol): Là giao thức truyền tải siêu văn bản. Đây là giao thức nền tảng để trao đổi dữ liệu (như các trang web HTML) giữa máy chủ web (web server) và trình duyệt (client).
+   * Hoạt động: Dữ liệu được truyền đi dưới dạng văn bản thuần túy (plain text), không mã hóa.
+   * Cổng (Port): Sử dụng cổng mặc định là 80.
+ * HTTPS (Hypertext Transfer Protocol Secure): Về cơ bản là giao thức HTTP được "bọc" thêm một lớp bảo mật.
+   * Hoạt động: Giao thức này sử dụng SSL/TLS (Secure Sockets Layer/Transport Layer Security) để mã hóa toàn bộ dữ liệu trao đổi.
+   * Cổng (Port): Sử dụng cổng mặc định là 443.
+Sự khác biệt cốt lõi: HTTP truyền dữ liệu "trần" (ai cũng có thể đọc được nếu bắt được gói tin), trong khi HTTPS truyền dữ liệu đã được mã hóa (chỉ client và server mới giải mã được).
+2. Các yếu tố bảo mật HTTPS bổ sung:
+HTTPS cung cấp ba lớp bảo vệ chính nhờ sử dụng chứng chỉ SSL/TLS:
+ * Mã hóa (Encryption): Tất cả dữ liệu trao đổi (URL, cookie, mật khẩu, nội dung trang) đều được mã hóa. Kể cả khi kẻ tấn công nghe lén (sniffing) được đường truyền, chúng cũng chỉ thấy một mớ dữ liệu lộn xộn, không thể đọc được.
+ * Xác thực (Authentication): Đảm bảo rằng người dùng đang giao tiếp đúng với máy chủ web mà họ mong muốn. Chứng chỉ SSL/TLS được cấp bởi một bên thứ ba tin cậy (Certificate Authority - CA) sẽ xác nhận danh tính của website. Điều này giúp ngăn chặn các cuộc tấn công giả mạo (spoofing) và Man-in-the-Middle (MITM).
+ * Toàn vẹn dữ liệu (Data Integrity): Đảm bảo dữ liệu không bị thay đổi hoặc làm hỏng trong quá trình truyền tải mà không bị phát hiện. Nếu kẻ tấn công cố gắng thay đổi dữ liệu, bên nhận sẽ phát hiện ra ngay lập tức.
+3. Tác động của việc chuyển từ HTTP sang HTTPS:
+ * Đối với Người dùng:
+   * An toàn hơn: Thông tin nhạy cảm (mật khẩu, thông tin thẻ tín dụng) được bảo vệ tuyệt đối khi gửi đi.
+   * Tin cậy hơn: Biểu tượng ổ khóa (hoặc tên công ty màu xanh lá) trên trình duyệt tạo ra sự tin tưởng, giúp người dùng an tâm khi giao dịch.
+   * Tránh cảnh báo: Các trình duyệt hiện đại (Chrome, Firefox) sẽ cảnh báo "Không an toàn" (Not Secure) đối với các trang HTTP yêu cầu nhập mật khẩu, gây hoang mang cho người dùng. HTTPS loại bỏ cảnh báo này.
+ * Đối với Quản trị hệ thống (Admin):
+   * Cấu hình phức tạp hơn: Phải mua/tạo (ví dụ: Let's Encrypt), cài đặt và gia hạn chứng chỉ SSL/TLS.
+   * SEO: Google ưu tiên xếp hạng các trang HTTPS. Đây là một yếu tố tích cực cho marketing và hiển thị.
+   * Chuyển hướng (Redirection): Phải cấu hình chuyển hướng 301 (Redirect 301) vĩnh viễn từ tất cả các link HTTP sang HTTPS để đảm bảo mọi truy cập đều được bảo mật.
+   * Sửa lỗi "Mixed Content": Phải đảm bảo tất cả tài nguyên (ảnh, CSS, Javascript) trên trang đều được tải qua HTTPS. Nếu không, trình duyệt sẽ báo lỗi "nội dung hỗn hợp" (mixed content) và có thể phá vỡ giao diện hoặc chức năng của trang.
+   * Hiệu suất: Trước đây, việc mã hóa/giải mã tiêu tốn một phần nhỏ tài nguyên CPU (overhead). Tuy nhiên, với phần cứng hiện đại và việc HTTPS thường đi kèm với giao thức HTTP/2, hiệu suất tổng thể thường được cải thiện đáng kể so với HTTP/1.1.
+Câu 29:
+Phân tích các rủi ro bảo mật nếu một website vẫn dùng HTTP thay vì HTTPS, đồng thời nêu các biện pháp mà quản trị viên hệ thống có thể thực hiện để nâng cấp và bảo vệ dịch vụ web.
+1. Các rủi ro bảo mật khi dùng HTTP:
+ * Nghe lén (Eavesdropping/Sniffing):
+   * Rủi ro: Vì dữ liệu là văn bản thuần túy, bất kỳ ai trong cùng mạng (đặc biệt là Wi-Fi công cộng) đều có thể sử dụng các công cụ "ngửi gói tin" (packet sniffer) để đọc toàn bộ nội dung trao đổi.
+   * Hậu quả: Kẻ tấn công dễ dàng lấy cắp tên đăng nhập, mật khẩu, tin nhắn riêng tư, và thông tin thẻ tín dụng.
+ * Đánh cắp Cookie/Phiên (Session Hijacking):
+   * Rủi ro: Kẻ tấn công có thể bắt được "session cookie" (cookie phiên) của người dùng. Cookie này giống như một "chìa khóa" tạm thời để duy trì trạng thái đăng nhập.
+   * Hậu quả: Kẻ tấn công chèn cookie này vào trình duyệt của chúng và mạo danh người dùng, chiếm quyền truy cập vào tài khoản mà không cần biết mật khẩu.
+ * Tấn công Man-in-the-Middle (MITM):
+   * Rủi ro: Kẻ tấn công không chỉ đọc mà còn có thể chặn và thay đổi dữ liệu trên đường truyền.
+   * Hậu quả: Kẻ tấn công có thể chèn mã độc (malware), quảng cáo lừa đảo (phishing) vào nội dung website mà người dùng thấy. Ví dụ: Thay đổi số tài khoản ngân hàng trên trang thanh toán, hoặc thay đổi link tải phần mềm bằng link chứa virus.
+ * Giả mạo (Spoofing):
+   * Rủi ro: Kẻ tấn công có thể tạo ra một trang web giả mạo (ví dụ: mybank.com giả mạo mybank.com) và điều hướng người dùng đến đó. Vì không có SSL để xác thực, người dùng khó có thể nhận ra.
+ * Mất uy tín:
+   * Rủi ro: Các trình duyệt hiện đại cảnh báo trang "Không an toàn".
+   * Hậu quả: Người dùng mất lòng tin, doanh nghiệp mất khách hàng và bị ảnh hưởng xấu đến thứ hạng SEO.
+2. Biện pháp nâng cấp và bảo vệ dịch vụ web (Chuyển sang HTTPS):
+ * Lấy và Cài đặt Chứng chỉ SSL/TLS:
+   * Hành động: Mua chứng chỉ từ các CA uy tín (DigiCert, Comodo, GlobalSign) hoặc sử dụng chứng chỉ miễn phí (và tự động gia hạn) từ Let's Encrypt.
+   * Mục đích: Đây là bước tiên quyết để kích hoạt HTTPS.
+ * Cấu hình Máy chủ Web (Web Server):
+   * Hành động: Cấu hình web server (Apache, Nginx, IIS) để lắng nghe trên cổng 443 và sử dụng file chứng chỉ (certificate file) và file khóa riêng tư (private key).
+   * Mục đích: Kích hoạt dịch vụ HTTPS trên máy chủ.
+ * Thực thi Chuyển hướng 301 (301 Redirect):
+   * Hành động: Cấu hình máy chủ tự động chuyển hướng vĩnh viễn (HTTP 301) tất cả các yêu cầu từ http:// sang https://.
+   * Mục đích: Đảm bảo 100% người dùng (kể cả khi họ gõ nhầm HTTP) đều được bảo vệ và tránh trùng lặp nội dung (duplicate content) cho SEO.
+ * Cập nhật Liên kết Nội bộ (Update Internal Links):
+   * Hành động: Rà soát mã nguồn, cơ sở dữ liệu để cập nhật tất cả các tài nguyên (ảnh, CSS, JS, link nội bộ) sử dụng đường dẫn tuyệt đối từ http:// sang https:// (hoặc tốt nhất là dùng đường dẫn tương đối).
+   * Mục đích: Tránh lỗi "Mixed Content".
+ * Bật HSTS (HTTP Strict Transport Security):
+   * Hành động: Cấu hình máy chủ gửi về một header HSTS. Header này yêu cầu trình duyệt chỉ giao tiếp với website này qua HTTPS trong một khoảng thời gian nhất định (ví dụ: 1 năm).
+   * Mục đích: Ngăn chặn các cuộc tấn công hạ cấp (downgrade attacks), nơi kẻ tấn công cố gắng buộc trình duyệt quay lại dùng HTTP.
+Câu 30:
+Trình bày khái niệm về SSL VPN và phân biệt SSL VPN với IPsec VPN.
+1. Khái niệm SSL VPN:
+SSL VPN (Secure Sockets Layer Virtual Private Network) là một loại mạng riêng ảo (VPN) sửF dụng giao thức SSL/TLS (giao thức nền tảng của HTTPS) để tạo ra một kênh liên lạc an toàn, được mã hóa qua mạng công cộng (thường là Internet).
+Nó cho phép người dùng từ xa (nhân viên làm việc tại nhà, đối tác) truy cập an toàn vào các tài nguyên mạng nội bộ của công ty (như máy chủ file, email nội bộ, ứng dụng nghiệp vụ) mà không cần phải cài đặt phần mềm VPN client phức tạp.
+2. Phân biệt SSL VPN và IPsec VPN:
+| Đặc điểm | SSL VPN | IPsec VPN (Internet Protocol Security) |
+|---|---|---|
+| Giao thức cốt lõi | SSL/TLS (hoạt động trên cổng 443/TCP) | Bộ giao thức IPsec (AH, ESP) (hoạt động trên cổng 500/UDP, 4500/UDP và giao thức 50, 51) |
+| Lớp hoạt động (OSI) | Thường ở Lớp 4 (Transport) hoặc Lớp 7 (Application) | Hoạt động ở Lớp 3 (Network) |
+| Yêu cầu Client | Linh hoạt:
+ 1. Clientless (Không cần client): Chỉ cần trình duyệt web. 
+ 2. Client-based (Cần client): Cần một client mỏng (thường là Java applet, ActiveX, hoặc ứng dụng nhỏ) để truy cập đầy đủ hơn. | Bắt buộc: Phải cài đặt một phần mềm VPN client chuyên dụng (ví dụ: Cisco AnyConnect, FortiClient, hoặc client tích hợp sẵn của HĐH). |
+| Khả năng vượt tường lửa | Rất tốt. Sử dụng cổng 443 (HTTPS), vốn hầu như luôn được mở ở mọi nơi (khách sạn, sân bay) để duyệt web. | Khó khăn hơn. Các cổng và giao thức của IPsec (ESP, AH) thường bị chặn bởi các tường lửa NAT hoặc tường lửa công cộng. |
+| Mức độ truy cập | Chi tiết (Granular). 
+Clientless: Chỉ truy cập được các ứng dụng web cụ thể (Email, Intranet) thông qua cổng thông tin (portal). 
+Client-based: Có thể cấp quyền truy cập ở Lớp 4 (truy cập theo từng ứng dụng/cổng). | Truy cập toàn bộ mạng (Full Network Access). 
+Sau khi kết nối, máy người dùng hoạt động như thể đang cắm dây LAN trực tiếp vào mạng công ty. Cung cấp quyền truy cập Lớp 3 vào toàn bộ subnet. |
+| Đối tượng sử dụng chính | Người dùng di động, đối tác, nhà thầu cần truy cập nhanh vào các ứng dụng cụ thể. | Kết nối Site-to-Site (nối hai văn phòng) hoặc nhân viên cần quyền truy cập đầy đủ vào mọi tài nguyên mạng. |
+Câu 31:
+Những lợi ích và hạn chế của việc triển khai SSL VPN cho doanh nghiệp là gì?
+1. Lợi ích (Advantages):
+ * Dễ dàng truy cập (Ease of Access): Lợi ích lớn nhất là khả năng truy cập "clientless". Người dùng chỉ cần một trình duyệt web tiêu chuẩn để truy cập vào các ứng dụng web nội bộ từ bất kỳ đâu.
+ * Vượt tường lửa dễ dàng (Firewall/NAT Traversal): Vì SSL VPN chạy trên cổng 443 (cổng HTTPS), nó gần như không bao giờ bị chặn bởi các tường lửa tại các địa điểm công cộng (quán cà phê, khách sạn, sân bay), không giống như IPsec.
+ * Kiểm soát truy cập chi tiết (Granular Access Control): Quản trị viên có thể định cấu hình chính sách rất cụ thể. Ví dụ: Nhóm "Kế toán" chỉ thấy ứng dụng Kế toán, nhóm "Kinh doanh" chỉ thấy CRM. Điều này tuân thủ nguyên tắc đặc quyền tối thiểu (least privilege) tốt hơn IPsec (thường cấp quyền truy cập toàn mạng).
+ * Giảm chi phí quản lý Client: Với chế độ clientless, không cần phải cài đặt, cấu hình, vá lỗi và cập nhật phần mềm VPN client trên hàng ngàn máy tính của người dùng (đặc biệt là máy tính cá nhân - BYOD).
+ * Bảo mật điểm cuối (Endpoint Security): Nhiều giải pháp SSL VPN cho phép kiểm tra "sức khỏe" (host checker) của máy client (có anti-virus không? có tường lửa không?) trước khi cho phép kết nối, giúp bảo vệ mạng nội bộ.
+2. Hạn chế (Limitations):
+ * Hỗ trợ ứng dụng (Application Support): Chế độ clientless (qua trình duyệt) chỉ hỗ trợ các ứng dụng nền tảng web (HTTP/HTTPS, RDP/SSH qua web). Các ứng dụng client-server phức tạp (ví dụ: ứng dụng SQL client-server, VoIP) sẽ không hoạt động.
+ * Hiệu suất (Performance): Quá trình mã hóa/giải mã SSL/TLS có độ trễ (overhead) cao hơn so với IPsec. Điều này có thể ảnh hưởng đến các ứng dụng nhạy cảm với độ trễ (real-time) như gọi video hoặc VoIP.
+ * Phức tạp khi cấu hình (Configuration Complexity): Mặc dù dễ sử dụng cho người dùng cuối, việc cấu hình các chính sách truy cập chi tiết và cổng thông tin (web portal) phía máy chủ có thể phức tạp và tốn thời gian cho quản trị viên.
+ * Rủi ro từ máy tính công cộng: Nếu người dùng truy cập SSL VPN (chế độ clientless) từ máy tính công cộng, dữ liệu nhạy cảm có thể bị lưu lại trong bộ đệm (cache) của trình duyệt nếu không được cấu hình dọn dẹp đúng cách.
+ * Yêu cầu Client-based cho ứng dụng phức tạp: Để hỗ trợ các ứng dụng không phải web, người dùng vẫn phải tải về và chạy một client (dù là client "mỏng"), làm mất đi một phần lợi thế "clientless".
+Câu 32:
+Mô tả các thành phần chính trong cấu trúc của SSL VPN và vai trò của chúng trong việc cung cấp truy cập từ xa.
+Một cấu trúc SSL VPN điển hình bao gồm các thành phần chính sau:
+ * SSL VPN Gateway (Cổng SSL VPN):
+   * Là gì: Đây là một thiết bị (phần cứng chuyên dụng như Cisco ASA, FortiGate) hoặc một phần mềm (ví dụ: OpenVPN) được đặt tại biên mạng của côngpy (thường trong vùng DMZ).
+   * Vai trò: Đây là "trái tim" của hệ thống. Nó là điểm cuối (endpoint) cho tất cả các kết nối VPN từ người dùng xa. Vai trò của nó bao gồm:
+     * Chấm dứt (Terminate) phiên SSL: Nhận kết nối, giải mã lưu lượng đến và mã hóa lưu lượng đi.
+     * Xác thực người dùng: Kiểm tra danh tính người dùng.
+     * Thực thi chính sách: Áp dụng các quy tắc truy cập (ai được vào đâu).
+ * Hệ thống Xác thực (Authentication System):
+   * Là gì: Cơ sở dữ liệu chứa thông tin người dùng. Đây có thể là một máy chủ nội bộ (ví dụ: Active Directory, LDAP, RADIUS) hoặc cơ sở dữ liệu người dùng cục bộ trên chính Gateway.
+   * Vai trò: Cung cấp thông tin (tên người dùng, mật khẩu, tư cách thành viên nhóm) để Gateway có thể xác minh danh tính người dùng và quyết định cấp quyền truy cập. Thường được tích hợp thêm Xác thực đa yếu tố (MFA).
+ * Chứng chỉ SSL (SSL Certificate):
+   * Là gì: Một tệp dữ liệu kỹ thuật số được cấp bởi một CA (Certificate Authority).
+   * Vai trò: Được cài đặt trên SSL VPN Gateway để:
+     * Xác thực Gateway: Chứng minh cho người dùng rằng họ đang kết nối đến đúng cổng VPN của công ty, chứ không phải một máy chủ giả mạo.
+     * Khởi tạo kênh mã hóa: Là cơ sở để thiết lập phiên giao dịch SSL/TLS an toàn.
+ * Cổng thông tin Web (Web Portal) - (Chế độ Clientless):
+   * Là gì: Một trang web nội bộ được tạo ra và lưu trữ bởi SSL VPN Gateway.
+   * Vai trò: Sau khi người dùng đăng nhập qua trình duyệt, cổng thông tin này sẽ hiển thị một danh sách các ứng dụng (dưới dạng các đường link) mà họ được phép truy cập. Khi người dùng nhấp vào, Gateway sẽ hoạt động như một Reverse Proxy, thay mặt người dùng lấy tài nguyên từ máy chủ nội bộ và hiển thị lại trên trình duyệt của họ.
+ * SSL VPN Client (Phần mềm Client) - (Chế độ Client-based/Tunnel):
+   * Là gì: Một phần mềm nhỏ (client) được cài đặt trên máy tính của người dùng. Nó có thể được tự động đẩy xuống (ví dụ: ActiveX, Java applet) hoặc là một ứng dụng độc lập (standalone).
+   * Vai trò: Tạo ra một "đường hầm" (tunnel) mạng ảo đầy đủ hoặc bán phần. Nó tạo ra một card mạng ảo trên máy người dùng, cho phép các ứng dụng không phải web (ví dụ: RDP, SSH, ứng dụng client-server) giao tiếp trực tiếp với mạng nội bộ qua kênh SSL đã được mã hóa.
+Câu 33:
+Trình bày quy trình triển khai SSL VPN trong môi trường doanh nghiệp, bao gồm các bước cấu hình cơ bản và các vấn đề cần lưu ý.
+1. Quy trình triển khai SSL VPN (Các bước cơ bản):
+ * Giai đoạn 1: Lập kế hoạch và Thiết kế
+   * Xác định nhu cầu: Trả lời các câu hỏi: Ai cần truy cập (nhân viên, đối tác, IT)? Họ cần truy cập từ đâu (tại nhà, di động)?
+   * Xác định tài nguyên: Họ cần truy cập vào những gì (Email, Web nội bộ, File Server, ứng dụng kế toán)?
+   * Chọn chế độ triển khai: Quyết định sẽ dùng Clientless (chỉ cho ứng dụng web), Client-based (full tunnel, cho mọi ứng dụng), hay kết hợp cả hai.
+   * Chọn giải pháp: Mua thiết bị phần cứng (Firewall/VPN Gateway) hay sử dụng giải pháp phần mềm (OpenVPN, Windows Server RRAS).
+ * Giai đoạn 2: Cài đặt và Cấu hình ban đầu
+   * Cài đặt Gateway: Lắp đặt thiết bị/cài đặt phần mềm SSL VPN Gateway tại biên mạng (thường là vùng DMZ).
+   * Cấu hình mạng: Đặt địa chỉ IP (cổng WAN, cổng LAN), cấu hình định tuyến (routing) để Gateway có thể "thấy" mạng nội bộ và Internet.
+   * Cài đặt Chứng chỉ SSL: Mua (hoặc tạo miễn phí) một chứng chỉ SSL tin cậy và cài đặt lên Gateway.
+ * Giai đoạn 3: Cấu hình Xác thực
+   * Kết nối máy chủ xác thực: Tích hợp Gateway với hệ thống quản lý người dùng hiện có (ví dụ: Active Directory, LDAP, RADIUS).
+   * Cấu hình MFA/2FA (Khuyến nghị): Thêm một lớp bảo mật (ví dụ: token, SMS, ứng dụng authenticator) ngoài mật khẩu.
+   * Tạo Nhóm người dùng (User Groups): Tạo các nhóm tương ứng với vai trò của họ (ví dụ: Nhom_KeToan, Nhom_KyThuat).
+ * Giai đoạn 4: Cấu hình Chính sách Truy cập (Authorization)
+   * Định nghĩa tài nguyên: Khai báo các tài nguyên nội bộ (máy chủ web, máy chủ RDP, file share) trên Gateway.
+   * Tạo Chính sách (Policies): Đây là bước quan trọng nhất. Tạo các quy tắc "Ai (Nhóm nào) được phép truy cập vào Cái gì (Tài nguyên nào) bằng Phương thức nào (Web hay Tunnel)". Luôn tuân thủ nguyên tắc đặc quyền tối thiểu.
+   * Cấu hình Portal (nếu dùng Clientless): Tùy chỉnh cổng thông tin web để hiển thị các liên kết ứng dụng tương ứng với từng nhóm người dùng.
+   * Cấu hình Tunnel (nếu dùng Client-based): Định nghĩa dải IP (IP Pool) sẽ cấp phát cho client, cấu hình DNS và WINS server để client phân giải tên máy chủ nội bộ.
+ * Giai đoạn 5: Kiểm thử và Triển khai
+   * Kiểm thử: Đóng vai các nhóm người dùng khác nhau và kết nối từ bên ngoài Internet. Đảm bảo họ chỉ thấy và truy cập được đúng tài nguyên đã cấp phép.
+   * Viết tài liệu: Chuẩn bị tài liệu hướng dẫn cài đặt (nếu cần client) và sử dụng cho người dùng cuối.
+   * Triển khai: Thông báo và cho phép người dùng bắt đầu sử dụng.
+2. Các vấn đề cần lưu ý khi triển khai:
+ * Bảo mật Điểm cuối (Endpoint Security): Làm thế nào để đảm bảo máy tính cá nhân (BYOD) của người dùng không bị nhiễm virus? Nên bật tính năng "Host Checker" (nếu có) để kiểm tra máy client (có anti-virus, đã cập nhật HĐH chưa) trước khi cho phép kết nối.
+ * Phân quyền (Authorization): Tránh cấp quyền truy cập "full-network" một cách bừa bãi. Phải phân quyền chi tiết (granular) nhất có thể. Nếu người dùng chỉ cần vào web mail, chỉ cấp quyền cho họ vào web mail (dùng chế độ Clientless).
+ * Băng thông (Bandwidth): Mỗi người dùng kết nối sẽ tiêu tốn băng thông Internet của công ty. Cần tính toán đủ băng thông (đặc biệt là upload) cho số lượng người dùng đồng thời dự kiến.
+ * Cấp phép (Licensing): Hầu hết các giải pháp thương mại đều bán giấy phép (license) dựa trên số lượng kết nối đồng thời. Cần mua đủ license cho giờ cao điểm.
+ * Dọn dẹp phiên (Session Cleanup): Đảm bảo cấu hình dọn dẹp bộ đệm trình duyệt (browser cache cleanup) và tự động ngắt kết nối (session timeout) sau một thời gian không hoạt động, đặc biệt quan trọng để chống rủi ro từ máy tính công cộng.
+ * Giám sát và Ghi log (Monitoring & Logging): Phải bật ghi log đầy đủ (ai kết nối, khi nào, từ đâu, truy cập gì) để phục vụ việc theo dõi và điều tra khi có sự cố.
