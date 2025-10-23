@@ -23,51 +23,89 @@ public class CustomerManagementApp {
         scanner.close();
     }
     
-    private static void inputCustomers() {
-        System.out.println("Nhập thông tin 10 khách hàng:");
-        System.out.println("(Tuổi >= 18, Email hợp lệ, SĐT định dạng: +84xxxxxxxxx hoặc 0xxxxxxxxx)\n");
+    // private static void inputCustomers() {
+    //     System.out.println("Nhập thông tin 10 khách hàng:");
+    //     System.out.println("(Tuổi >= 18, Email hợp lệ, SĐT định dạng: +84xxxxxxxxx hoặc 0xxxxxxxxx)\n");
         
-        for (int i = 0; i < 10; i++) {
-            while (true) {
-                try {
-                    System.out.println("--- Khách hàng thứ " + (i + 1) + " ---");
-                    System.out.print("ID: ");
-                    int id = scanner.nextInt();
-                    scanner.nextLine(); 
+    //     for (int i = 0; i < 10; i++) {
+    //         while (true) {
+    //             try {
+    //                 System.out.println("--- Khách hàng thứ " + (i + 1) + " ---");
+    //                 System.out.print("ID: ");
+    //                 int id = scanner.nextInt();
+    //                 scanner.nextLine(); 
                     
-                    System.out.print("Tên: ");
-                    String name = scanner.nextLine();
+    //                 System.out.print("Tên: ");
+    //                 String name = scanner.nextLine();
                     
-                    System.out.print("Tuổi: ");
-                    int age = scanner.nextInt();
-                    scanner.nextLine(); 
+    //                 System.out.print("Tuổi: ");
+    //                 int age = scanner.nextInt();
+    //                 scanner.nextLine(); 
                     
-                    System.out.print("Giới tính (Nam/Nữ): ");
-                    String gender = scanner.nextLine();
+    //                 System.out.print("Giới tính (Nam/Nữ): ");
+    //                 String gender = scanner.nextLine();
                     
-                    System.out.print("Email: ");
-                    String email = scanner.nextLine();
+    //                 System.out.print("Email: ");
+    //                 String email = scanner.nextLine();
                     
-                    System.out.print("SĐT: ");
-                    String phone = scanner.nextLine();
+    //                 System.out.print("SĐT: ");
+    //                 String phone = scanner.nextLine();
                     
-                    Customer customer = new Customer(id, name, age, gender, email, phone);
-                    customers.add(customer);
-                    System.out.println("Thêm khách hàng thành công!\n");
-                    break;
+    //                 Customer customer = new Customer(id, name, age, gender, email, phone);
+    //                 customers.add(customer);
+    //                 System.out.println("Thêm khách hàng thành công!\n");
+    //                 break;
                     
-                } catch (InvalidAgeException | InvalidEmailException | InvalidPhoneException e) {
-                    System.out.println("Lỗi: " + e.getMessage());
-                    System.out.println("Vui lòng nhập lại thông tin khách hàng này.\n");
-                } catch (InputMismatchException e) {
-                    System.out.println("Lỗi: Dữ liệu nhập vào không hợp lệ!");
-                    System.out.println("Vui lòng nhập lại thông tin khách hàng này.\n");
-                    scanner.nextLine(); 
-                }
-            }
+    //             } catch (InvalidAgeException | InvalidEmailException | InvalidPhoneException e) {
+    //                 System.out.println("Lỗi: " + e.getMessage());
+    //                 System.out.println("Vui lòng nhập lại thông tin khách hàng này.\n");
+    //             } catch (InputMismatchException e) {
+    //                 System.out.println("Lỗi: Dữ liệu nhập vào không hợp lệ!");
+    //                 System.out.println("Vui lòng nhập lại thông tin khách hàng này.\n");
+    //                 scanner.nextLine(); 
+    //             }
+    //         }
+    //     }
+    // }
+    
+
+    private static void inputCustomers() {
+    System.out.println("Đang tạo dữ liệu mẫu cho 10 khách hàng...\n");
+    
+    // Dữ liệu mẫu cho 10 khách hàng
+    Object[][] sampleData = {
+        {1, "Nguyễn Văn An", 25, "Nam", "nguyenvanan@email.com", "+84901234567"},
+        {2, "Trần Thị Bình", 22, "Nữ", "tranthibinh@email.com", "0987654321"},
+        {3, "Lê Văn Cường", 30, "Nam", "levancuong@email.com", "+84912345678"},
+        {4, "Phạm Thị Duyên", 28, "Nữ", "phamthiduyen@email.com", "0976543210"},
+        {5, "Hoàng Văn Dũng", 35, "Nam", "hoangvandung@email.com", "+84923456789"},
+        {6, "Ngô Thị Hoa", 24, "Nữ", "ngothihoa@email.com", "0965432109"},
+        {7, "Vũ Văn Hùng", 29, "Nam", "vuvanhung@email.com", "+84934567890"},
+        {8, "Đặng Thị Lan", 26, "Nữ", "dangthilan@email.com", "0954321098"},
+        {9, "Bùi Văn Minh", 32, "Nam", "buivanminh@email.com", "+84945678901"},
+        {10, "Lý Thị Nga", 21, "Nữ", "lythinga@email.com", "0943210987"}
+    };
+    
+    for (int i = 0; i < sampleData.length; i++) {
+        try {
+            Object[] data = sampleData[i];
+            Customer customer = new Customer(
+                (Integer) data[0],  // ID
+                (String) data[1],   // Name
+                (Integer) data[2],  // Age
+                (String) data[3],   // Gender
+                (String) data[4],   // Email
+                (String) data[5]    // Phone
+            );
+            customers.add(customer);
+            System.out.println("Đã thêm: " + customer);
+        } catch (InvalidAgeException | InvalidEmailException | InvalidPhoneException e) {
+            System.out.println("Lỗi tạo khách hàng " + (i + 1) + ": " + e.getMessage());
         }
     }
     
+    System.out.println("\nĐã tạo thành công " + customers.size() + " khách hàng!\n");
+}
     private static void performOperations() {
        
         System.out.println("=== 1. Sắp xếp danh sách theo tuổi ===");
