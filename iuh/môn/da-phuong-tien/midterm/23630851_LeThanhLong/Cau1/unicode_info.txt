@@ -1,0 +1,27 @@
+Phân tích chuỗi: 'Trường Đại học iuh'
+==============================
+
+1. Mã Unicode (Code Point) của từng ký tự:
+'T' -> U+0054
+'r' -> U+0072
+'ư' -> U+01B0
+'ờ' -> U+1EDD
+'n' -> U+006E
+'g' -> U+0067
+' ' -> U+0020
+'Đ' -> U+0110
+'ạ' -> U+1EA1
+'i' -> U+0069
+' ' -> U+0020
+'h' -> U+0068
+'ọ' -> U+1ECD
+'c' -> U+0063
+' ' -> U+0020
+'i' -> U+0069
+'u' -> U+0075
+'h' -> U+0068
+
+2. Chuẩn hóa và so sánh độ dài:
+Dạng NFC: 'Trường Đại học iuh' - Độ dài: 18
+Dạng NFD: 'Trường Đại học iuh' - Độ dài: 23
+Độ dài chuỗi NFD lớn hơn NFC vì NFD tách ký tự thành ký tự cơ sở và dấu.

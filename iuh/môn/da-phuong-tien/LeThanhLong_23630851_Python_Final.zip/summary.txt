@@ -1,0 +1,4 @@
+KẾT QUẢ THỐNG KÊ FILE sample.txt
+Số dòng: 2
+Số từ: 15
+Số ký tự: 73

@@ -1,0 +1,35 @@
+sẽ lỗi từ host không kết nối được thì tắt firewall đi hoặc 
+
+ **Windows Defender Firewall** trên **máy tính thật (Host)** của bạn đang chặn kết nối VPN đi ra.
+
+Giờ bạn cần **bật lại Firewall** và tạo một **quy tắc đi ra (Outbound Rule)** cụ thể để cho phép lưu lượng VPN SSTP đi qua.
+
+## Hướng dẫn tạo Outbound Rule cho VPN SSTP
+
+Thực hiện các bước sau trên **máy tính thật (Host)** của bạn.
+
+1.  **Bật lại Firewall:**
+    * Mở **Control Panel** -> **Windows Defender Firewall**.
+    * Chọn **Turn Windows Defender Firewall on or off**.
+    * Chọn **Turn on...** cho cả hai loại mạng (private và public). Nhấn **OK**.
+
+2.  **Mở Advanced Security:**
+    * Vẫn trong cửa sổ Windows Defender Firewall, nhấp vào **Advanced settings** ở menu bên trái.
+
+3.  **Tạo Quy tắc Mới:**
+    * Trong cửa sổ "Windows Defender Firewall with Advanced Security", ở menu bên trái, chọn **Outbound Rules**.
+    * Ở menu **Actions** bên phải, nhấp vào **New Rule...**.
+
+4.  **Cấu hình Quy tắc:**
+    * **Rule Type:** Chọn **Port**. Nhấn **Next**.
+    * **Protocol and Ports:**
+        * Chọn **TCP**.
+        * Chọn **Specific remote ports**.
+        * Gõ vào ô: **443** (Đây là cổng mà SSTP sử dụng). Nhấn **Next**.
+        
+    * **Action:** Chọn **Allow the connection**. Nhấn **Next**.
+    * **Profile:** Để đảm bảo hoạt động, hãy tick vào cả ba ô: **Domain**, **Private**, **Public**. Nhấn **Next**.
+    * **Name:** Đặt tên dễ nhớ cho quy tắc, ví dụ: `Allow VPN SSTP Outbound`. Nhấn **Finish**.
+
+## Kiểm tra lại
+Sau khi tạo xong quy tắc, bạn hãy thử **kết nối lại VPN**. Lần này, kết nối sẽ thành công ngay cả khi Firewall đang được bật. ✅

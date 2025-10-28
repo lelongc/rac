@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['lab4\\IMAGES_VIDEOS_NANGCAO-t2\\image_video_properties_spyder_lab.py']
+recent_files = ['midterm\\23630851_LeThanhLong\\Cau1\\cau1.py', 'midterm\\23630851_LeThanhLong\\Cau2\\cau2.py', 'midterm\\23630851_LeThanhLong\\Cau3\\cau3.py', 'midterm\\23630851_LeThanhLong\\Cau4\\cau4.py', 'midterm\\kk.py', 'midterm\\23630851_LeThanhLong\\Cau1\\unicode_info.txt']
 
 [main]
 version = 0.2.0

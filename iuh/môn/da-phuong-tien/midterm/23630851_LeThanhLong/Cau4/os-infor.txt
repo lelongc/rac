@@ -1,0 +1,8 @@
+Báo cáo hệ thống 
+==============================
+
+--- Thông tin hệ thống ---
+Hệ điều hành: Windows 10
+Số lõi CPU: 4
+Dung lượng RAM: 19.88 GB
+

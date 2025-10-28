@@ -1,0 +1,90 @@
+ muốn cấu hình **VPN SSTP** sử dụng chính chứng chỉ **`iuh.edu.vn`** mà bạn đã cài đặt thành công cho IIS trước đó. Đây là một cách làm rất hay để tránh xung đột cổng 443.
+
+Chúng ta sẽ bắt đầu lại từ **Giai đoạn 6**, nhưng sẽ điều chỉnh các bước để sử dụng chứng chỉ `iuh.edu.vn`.
+
+-----
+
+## Giai đoạn 6 (Đã điều chỉnh): Cấu hình VPN SSTP với Chứng chỉ `iuh.edu.vn` 🔒
+
+### **A. Bỏ qua bước tạo Chứng chỉ mới**
+
+Vì bạn đã có sẵn chứng chỉ `iuh.edu.vn` hợp lệ và đang hoạt động, chúng ta **không cần** chạy lệnh `New-SelfSignedCertificate` nữa.
+
+-----
+
+### **B. Gán Chứng chỉ `iuh.edu.vn` vào RRAS [Trên `VPN-SERVER`]**
+
+Đây là bước quan trọng để RRAS sử dụng đúng chứng chỉ cho SSTP.
+
+1.  Mở **Routing and Remote Access** (Trong Server Manager -\> Tools).
+2.  Chuột phải vào tên máy chủ của bạn, chọn **Properties**.
+3.  Chuyển qua tab **Security**.
+4.  Trong mục **SSL Certificate Binding**, nhấp vào danh sách thả xuống và **chọn chứng chỉ `iuh.edu.vn`**.
+5.  Nhấn **Apply** và **OK**. Khởi động lại dịch vụ RRAS nếu được yêu cầu.
+
+<!-- end list -->
+
+  * **Lưu ý:** Bạn sẽ không gặp cảnh báo hay lỗi bị trả về mặc định ở bước này vì IIS cũng đang dùng chính chứng chỉ này, không có xung đột.
+
+-----
+
+### **C. Cấu hình file `hosts` [Trên Máy Host]**
+
+Máy Host cần biết tên miền `iuh.edu.vn` trỏ về địa chỉ IP nào của VPN Server.
+
+1.  Mở **Notepad (Admin)** trên máy Host, mở file `C:\Windows\System32\drivers\etc\hosts`.
+2.  Đảm bảo bạn đã có dòng sau (hoặc thêm/sửa lại nếu cần):
+    ```
+    192.168.100.20  iuh.edu.vn
+    ```
+3.  Lưu file.
+
+-----
+
+### **D. Bỏ qua bước Trust Chứng chỉ**
+
+để truy cập được website `https://iuh.edu.vn` với khóa xanh từ máy Host, điều đó có nghĩa là máy Host của bạn **đã tin tưởng** chứng chỉ `iuh.edu.vn` . Chúng ta **cần** export/import lại chứng chỉ.
+[Trên Máy Host] - Trust Chứng chỉ:**
+      * Copy file `iuh.edu.vn.pfx` từ máy Server sang máy Host.
+      * Nháy đúp vào file `.pfx`, chọn **Local Machine** -\> Nhập mật khẩu -\> Chọn **Place all certificates...** và chọn kho là **Trusted Root Certification Authorities**.
+
+-----
+
+### **E. Chỉnh sửa Kết nối VPN [Trên Máy Host]**
+
+Cấu hình lại kết nối VPN hiện có để sử dụng đúng tên miền và giao thức SSTP.
+
+1.  Vào **Settings** -\> **Network & internet** -\> **VPN**.
+2.  Chọn kết nối VPN bạn đã tạo (`My Lab VPN`) và nhấn **Advanced options**.
+3.  Nhấn **Edit**.
+4.  Trong cửa sổ chỉnh sửa:
+      * **Server name or address:** Đổi thành tên miền khớp với chứng chỉ: **`iuh.edu.vn`**.
+      * **VPN type:** Chọn **`SSTP (Secure Socket Tunneling Protocol)`**.
+      * Các thông tin khác (User name and password) giữ nguyên.
+5.  Nhấn **Save**.
+
+-----
+
+### **F. (Tùy chọn nhưng nên làm) Vô hiệu hóa CRL Check**
+
+Việc này giúp tránh lỗi kết nối không cần thiết khi dùng chứng chỉ tự ký. Thực hiện trên **CẢ HAI MÁY** (`VPN-SERVER` và Host).
+
+1.  Mở **PowerShell (Admin)**.
+2.  Chạy lệnh:
+    ```powershell
+    New-ItemProperty -Path "HKLM:SYSTEM\CurrentControlSet\Services\Sstpsvc\Parameters" -Name "NoCertRevocationCheck" -Value 1 -PropertyType DWORD -Force
+    ```
+3.  **Khởi động lại (Restart)** cả hai máy.
+
+-----
+
+## Giai đoạn 7: Kết nối lại và Kiểm tra 🚀
+
+1.  Sau khi cả hai máy khởi động lại, trên máy Host, nhấn **Connect** vào kết nối VPN đã chỉnh sửa (`My Lab VPN`).
+2.  Nhập username `vpnuser` và mật khẩu.
+3.  Sau khi kết nối thành công, kiểm tra lại bằng cách ping vào `DC-SERVER`:
+    ```
+    ping 172.16.1.2
+    ```
+
+Nếu thành công, bạn đã nâng cấp kết nối VPN của mình lên SSTP an toàn hơn, sử dụng chung chứng chỉ với website IIS một cách hiệu quả\! 👍

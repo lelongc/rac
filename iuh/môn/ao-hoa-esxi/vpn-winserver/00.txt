@@ -1,1 +1,3 @@
 cài qua folder hyperv trước 
+làm cái ssl luôn mới qua cái này 
+

@@ -1,0 +1,47 @@
+Okay, chúng ta sẽ so sánh rõ ràng 3 cấp độ: lab đơn giản bạn vừa làm, lab "chuẩn doanh nghiệp" (giống bài lab 2012), và cách triển khai VPN trong thực tế ngoài đời.
+
+## 1. Lab Đơn giản (Bạn vừa làm) 🧪
+
+* **Mục tiêu:** Hiểu cách SSTP hoạt động ở mức cơ bản nhất.
+* **Thành phần:** 1 VPN Server (Win Server 2022), 1 Client (Máy thật). Mạng NAT mô phỏng Internet.
+* **Xác thực (Ai được vào?):** Dùng **tài khoản cục bộ** (Local User - `vpnuser`) tạo trực tiếp trên máy VPN Server.
+    * *Giống như:* Bảo vệ chỉ hỏi tên và xem một cái thẻ tự làm của bạn.
+* **Chứng chỉ SSL (Giấy tờ của Server):** Dùng **chứng chỉ tự ký (Self-Signed Certificate)** tạo bằng PowerShell ngay trên VPN Server.
+    * *Giống như:* Server tự in một cái thẻ ID cho chính nó.
+* **Tin tưởng (Client tin Server):** Client (Máy thật) **phải cài đặt thủ công** chứng chỉ tự ký đó vào kho "Trusted Root..." để tin tưởng Server. Nếu không cài, kết nối sẽ báo lỗi.
+    * *Giống như:* Bạn phải tự tay lưu mẫu thẻ tự làm của Server vào ví và tự nhủ "Ok, tôi sẽ tin cái thẻ này".
+* **Ưu điểm:** Nhanh, dễ làm, không cần hạ tầng phức tạp.
+* **Nhược điểm:** Kém an toàn (ai cũng có thể tạo self-signed cert), khó quản lý (tài khoản phân tán), client phải cài đặt thủ công -> Không phù hợp cho doanh nghiệp.
+
+---
+## 2. Lab "Chuẩn Doanh nghiệp" (Giống bài 2012 / Có AD + CA) 🏢
+
+* **Mục tiêu:** Mô phỏng gần hơn môi trường doanh nghiệp với quản lý tập trung.
+* **Thành phần:** Thêm 1 máy Domain Controller (DC) kiêm Certificate Authority (CA). VPN Server và Client đều join domain.
+* **Xác thực (Ai được vào?):** Dùng **tài khoản Active Directory (AD)** được quản lý tập trung trên DC.
+    * *Giống như:* Bảo vệ kiểm tra **thẻ nhân viên** do phòng nhân sự (AD) cấp.
+* **Chứng chỉ SSL (Giấy tờ của Server):** VPN Server **"xin"** chứng chỉ từ **máy chủ CA nội bộ** (Enterprise CA) của công ty (cài trên DC).
+    * *Giống như:* Server đến phòng ban chức năng (CA nội bộ) để được cấp một thẻ ID "xịn" hơn, có dấu của công ty.
+* **Tin tưởng (Client tin Server):** Client (nếu đã join domain) sẽ **tự động tin tưởng** chứng chỉ của VPN Server vì nó đã tự động tin tưởng CA nội bộ của công ty rồi (thông qua Group Policy). Client ngoài domain vẫn phải cài đặt CA gốc thủ công.
+    * *Giống như:* Máy tính của bạn đã được công ty cài đặt sẵn để tự động nhận diện và tin tưởng mọi thẻ ID do phòng ban chức năng (CA nội bộ) cấp.
+* **Ưu điểm:** Quản lý người dùng tập trung (qua AD), chứng chỉ có độ tin cậy cao hơn *trong nội bộ*, client trong domain không cần cài đặt thủ công.
+* **Nhược điểm:** Cần dựng thêm hạ tầng AD và CA phức tạp, CA nội bộ vẫn chưa được thế giới bên ngoài tin tưởng mặc định.
+
+---
+## 3. Ngoài Đời Thực (Doanh nghiệp lớn) 🌍
+
+* **Mục tiêu:** Cung cấp kết nối VPN an toàn, ổn định, dễ sử dụng cho hàng trăm/ngàn nhân viên từ khắp nơi trên thế giới.
+* **Thành phần:** Hạ tầng mạng chuyên nghiệp, thiết bị chuyên dụng.
+* **Xác thực (Ai được vào?):** Vẫn dùng **tài khoản Active Directory**, nhưng **bắt buộc** phải có thêm **Xác thực Đa Yếu tố (MFA - Multi-Factor Authentication)**. Ví dụ: sau khi nhập mật khẩu, phải nhập thêm mã từ ứng dụng trên điện thoại (Google Authenticator, Microsoft Authenticator) hoặc xác nhận qua thông báo đẩy (push notification).
+    * *Giống như:* Ngoài thẻ nhân viên, bảo vệ còn yêu cầu bạn quét vân tay hoặc nhập mã OTP trên điện thoại.
+* **Chứng chỉ SSL (Giấy tờ của Server):**
+    * **Thường gặp:** VPN Server vẫn "xin" chứng chỉ từ **CA nội bộ** (giống Lab 2). *Nhưng* các thiết bị của nhân viên (laptop công ty) được **quản lý tập trung** (qua MDM, Intune, Group Policy) và **bị bắt buộc** phải tin tưởng CA nội bộ đó.
+    * **Ít gặp hơn (cho endpoint):** Đôi khi, địa chỉ VPN công khai (ví dụ `vpn.congty.com`) có thể dùng chứng chỉ do **Public CA** cấp (Let's Encrypt, DigiCert...) để client dễ dàng kết nối ban đầu mà không báo lỗi, nhưng việc xác thực *người dùng* vẫn dựa vào AD + MFA.
+* **Tin tưởng (Client tin Server):** Nhờ việc quản lý thiết bị tập trung, chứng chỉ CA nội bộ được tự động cài đặt và tin tưởng trên máy nhân viên. Hoặc nếu dùng Public CA cho endpoint thì trình duyệt/OS đã tin sẵn.
+* **Thiết bị VPN Server:** Thường không dùng Windows Server RRAS đơn thuần mà dùng các **thiết bị Firewall/VPN Gateway chuyên dụng** (Cisco ASA/Firepower, Fortinet FortiGate, Palo Alto NGFW...). Các thiết bị này có hiệu năng cao, ổn định và nhiều tính năng bảo mật hơn.
+* **Địa chỉ Kết nối:** Dùng một **tên miền công cộng** (đã đăng ký, ví dụ `vpn.congtyabc.com`) trỏ về một **địa chỉ IP Public tĩnh** (mua từ nhà mạng).
+    * *Giống như:* Công ty có một địa chỉ và tên gọi chính thức trên bản đồ thế giới, ai cũng tìm được.
+* **Ưu điểm:** Bảo mật cao nhất (MFA, thiết bị chuyên dụng), quản lý tập trung toàn diện, dễ sử dụng cho nhân viên (với thiết bị được quản lý), ổn định và hiệu năng cao.
+* **Nhược điểm:** Chi phí đầu tư hạ tầng và quản lý cao, cần kiến thức chuyên sâu để vận hành.
+
+Hy vọng sự so sánh này giúp bạn hình dung rõ ràng sự khác biệt giữa các cấp độ triển khai VPN!
