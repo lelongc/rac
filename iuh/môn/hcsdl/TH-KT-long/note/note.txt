@@ -1,0 +1,79 @@
+HumanResources.Department(DepartmentID:smallint|PK|ID, Name:Name, GroupName:Name)
+HumanResources.Employee(BusinessEntityID:int|PK|FK->Person.Person, NationalIDNumber:nvarchar(30), LoginID:nvarchar(512), JobTitle:nvarchar(100), BirthDate:date, MaritalStatus:nchar(2), Gender:nchar(2), HireDate:date, SalariedFlag:Flag, VacationHours:smallint, SickLeaveHours:smallint, CurrentFlag:Flag)
+HumanResources.EmployeeDepartmentHistory(BusinessEntityID:int|PK|FK->Employee, DepartmentID:smallint|PK|FK->Department, ShiftID:tinyint|PK|FK->Shift, StartDate:date|PK, EndDate:date|NULL)
+HumanResources.EmployeePayHistory(BusinessEntityID:int|PK|FK->Employee, RateChangeDate:datetime|PK, Rate:money, PayFrequency:tinyint)
+HumanResources.JobCandidate(JobCandidateID:int|PK|ID, BusinessEntityID:int|NULL|FK->Employee, Resume:xml|NULL)
+HumanResources.Shift(ShiftID:tinyint|PK|ID, Name:Name, StartTime:time, EndTime:time)
+Person.Address(AddressID:int|PK|ID, AddressLine1:nvarchar(120), City:nvarchar(60), StateProvinceID:int|FK->StateProvince, PostalCode:nvarchar(30))
+Person.BusinessEntity(BusinessEntityID:int|PK|ID)
+Person.BusinessEntityAddress(BusinessEntityID:int|PK|FK->BusinessEntity, AddressID:int|PK|FK->Address, AddressTypeID:int|PK|FK->AddressType)
+Person.CountryRegion(CountryRegionCode:nvarchar(6)|PK, Name:Name)
+Person.EmailAddress(BusinessEntityID:int|PK|FK->Person, EmailAddressID:int|PK|ID, EmailAddress:nvarchar(100)|NULL)
+Person.Person(BusinessEntityID:int|PK|FK->BusinessEntity, PersonType:nchar(4), Title:nvarchar(16)|NULL, FirstName:Name, MiddleName:Name|NULL, LastName:Name, Suffix:nvarchar(20)|NULL, EmailPromotion:int)
+Person.PersonPhone(BusinessEntityID:int|PK|FK->Person, PhoneNumber:Phone|PK, PhoneNumberTypeID:int|PK|FK->PhoneNumberType)
+Person.StateProvince(StateProvinceID:int|PK|ID, StateProvinceCode:nchar(6), CountryRegionCode:nvarchar(6)|FK->CountryRegion, Name:Name, TerritoryID:int|FK->Sales.SalesTerritory)
+Production.Product(ProductID:int|PK|ID, Name:Name, ProductNumber:nvarchar(50), Color:nvarchar(30)|NULL, StandardCost:money, ListPrice:money, Size:nvarchar(10)|NULL, Weight:decimal(8,2)|NULL, ProductSubcategoryID:int|NULL|FK->ProductSubcategory, ProductModelID:int|NULL|FK->ProductModel, SellStartDate:datetime)
+Production.ProductCategory(ProductCategoryID:int|PK|ID, Name:Name)
+Production.ProductInventory(ProductID:int|PK|FK->Product, LocationID:smallint|PK|FK->Location, Quantity:smallint)
+Production.ProductSubcategory(ProductSubcategoryID:int|PK|ID, ProductCategoryID:int|FK->ProductCategory, Name:Name)
+Production.TransactionHistory(TransactionID:int|PK|ID, ProductID:int|FK->Product, ReferenceOrderID:int, TransactionDate:datetime, TransactionType:nchar(2), Quantity:int, ActualCost:money)
+Purchasing.ProductVendor(ProductID:int|PK|FK->Production.Product, BusinessEntityID:int|PK|FK->Vendor, AverageLeadTime:int, StandardPrice:money)
+Purchasing.PurchaseOrderDetail(PurchaseOrderID:int|PK|FK->PurchaseOrderHeader, PurchaseOrderDetailID:int|PK|ID, DueDate:datetime, OrderQty:smallint, ProductID:int|FK->Production.Product, UnitPrice:money)
+Purchasing.PurchaseOrderHeader(PurchaseOrderID:int|PK|ID, Status:tinyint, EmployeeID:int|FK->HumanResources.Employee, VendorID:int|FK->Vendor, ShipMethodID:int|FK->ShipMethod, OrderDate:datetime, SubTotal:money, TaxAmt:money, Freight:money, TotalDue:money)
+Purchasing.ShipMethod(ShipMethodID:int|PK|ID, Name:Name, ShipBase:money, ShipRate:money)
+Purchasing.Vendor(BusinessEntityID:int|PK|FK->Person.BusinessEntity, AccountNumber:AccountNumber, Name:Name, CreditRating:tinyint)
+Sales.CreditCard(CreditCardID:int|PK|ID, CardType:nvarchar(100), CardNumber:nvarchar(50), ExpMonth:tinyint, ExpYear:smallint)
+Sales.Customer(CustomerID:int|PK|ID, PersonID:int|NULL|FK->Person.Person, StoreID:int|NULL|FK->Store, TerritoryID:int|NULL|FK->SalesTerritory)
+Sales.SalesOrderDetail(SalesOrderID:int|PK|FK->SalesOrderHeader, SalesOrderDetailID:int|PK|ID, OrderQty:smallint, ProductID:int|FK->Production.Product, SpecialOfferID:int, UnitPrice:money, UnitPriceDiscount:money)
+Sales.SalesOrderHeader(SalesOrderID:int|PK|ID, OrderDate:datetime, DueDate:datetime, ShipDate:datetime|NULL, Status:tinyint, OnlineOrderFlag:Flag, SalesOrderNumber:nvarchar(50), CustomerID:int|FK->Customer, SalesPersonID:int|NULL|FK->SalesPerson, TerritoryID:int|NULL|FK->SalesTerritory, BillToAddressID:int|FK->Person.Address, ShipToAddressID:int|FK->Person.Address, ShipMethodID:int|FK->Purchasing.ShipMethod, CreditCardID:int|NULL|FK->CreditCard, SubTotal:money, TaxAmt:money, Freight:money, TotalDue:money)
+Sales.SalesPerson(BusinessEntityID:int|PK|FK->HumanResources.Employee, TerritoryID:int|NULL|FK->SalesTerritory, SalesQuota:money|NULL, Bonus:money, CommissionPct:smallmoney, SalesYTD:money, SalesLastYear:money)
+Sales.SalesTerritory(TerritoryID:int|PK|ID, Name:Name, CountryRegionCode:nvarchar(6)|FK->Person.CountryRegion, Group:nvarchar(100), SalesYTD:money, SalesLastYear:money)
+Sales.Store(BusinessEntityID:int|PK|FK->Person.BusinessEntity, Name:Name, SalesPersonID:int|NULL|FK->SalesPerson)
+
+Chào AI,
+
+Hãy đóng vai là một sinh viên đang giải bài tập SQL Server. Dựa vào cấu trúc CSDL bên dưới, hãy giải đề bài tôi đưa ra.
+
+TƯ DUY VIẾT CODE (QUAN TRỌNG NHẤT):
+
+1.  Rule: JOIN để thể hiện tư duy. Khi đề bài nhắc đến nhiều đối tượng (ví dụ: 'nhân viên' và 'hóa đơn'), hãy viết lệnh `JOIN` một cách tường minh giữa các bảng tương ứng (`SalesPerson` và `SalesOrderHeader`). Việc này nhằm mục đích thể hiện sự hiểu biết về mối quan-hệ dữ liệu, ngay cả khi không thực sự cần thiết cho việc tính toán.
+
+2.  Rule: Không kiểm tra dữ liệu đầu vào. Chỉ tập trung vào logic tính toán chính. Không được viết code để kiểm tra xem dữ liệu đầu vào (như mã nhân viên) có tồn tại hay không.
+
+QUY TRÌNH BẮT BUỘC:
+
+1.  Bước 1: Tìm hiểu dữ liệu
+     Viết một câu `SELECT` đơn giản để xem dữ liệu trong các bảng liên quan.
+
+2.  Bước 2: Viết code giải quyết
+     Viết T-SQL (Batch, Stored Procedure, hoặc Function) để giải quyết yêu cầu.
+     Giữ code đơn giản, dễ hiểu, theo đúng phong cách sinh viên.
+
+3.  Bước 3: Thực thi và kiểm tra
+     Viết đoạn code để gọi và chạy thử giải pháp ở Bước 2. khai báo các biến liên quan để mà nếu cần thử nhiều testcase thì chỉ cần thay số ở biến (ví dụ: một mã hợp lệ có dữ liệu, một mã hợp lệ nhưng không có dữ liệu) để kiểm tra các loại output khác nhau (bảng, message, hoặc print).
+
+---
+CẤU TRÚC CƠ SỞ DỮ LIỆU:
+<-- Dán cấu trúc CSDL dạng cô đọng VÀO ĐÂY -->
+
+---
+ĐỀ BÀI CẦN GIẢI:
+<-- Dán đề bài của bạn VÀO ĐÂY -->
+
+
+     
+
+SELECT 
+    TABLE_SCHEMA,
+    TABLE_NAME,
+    COLUMN_NAME,
+    DATA_TYPE,
+    CHARACTER_MAXIMUM_LENGTH
+FROM INFORMATION_SCHEMA.COLUMNS
+ORDER BY TABLE_SCHEMA, TABLE_NAME, ORDINAL_POSITION;
+
+
+
+
+
+
