@@ -4,12 +4,12 @@
 
 ### Câu 1: So sánh VMware ESXi và VMware Workstation
 
-| Tiêu chí                    | VMware ESXi                                                                                                                              | VMware Workstation                                                                                                                      |
-| :---------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------- |
-| **Kiến trúc**         | **Bare-metal (Type 1 Hypervisor):** Cài đặt trực tiếp lên phần cứng máy chủ vật lý, không cần hệ điều hành nền. | **Hosted (Type 2 Hypervisor):** Cài đặt như một phần mềm ứng dụng trên nền hệ điều hành có sẵn (Windows, Linux). |
-| **Hiệu suất**         | **Rất cao:** Do truy xuất trực tiếp phần cứng, không qua lớp trung gian OS.                                                | **Trung bình/Thấp:** Do phải đi qua lớp OS của máy trạm (Host OS) nên tốn tài nguyên và có độ trễ.               |
-| **Quản lý**           | Quản lý tập trung qua vCenter Server hoặc giao diện Web (Host Client).                                                              | Quản lý trực tiếp trên giao diện phần mềm tại máy cài đặt.                                                                 |
-| **Phạm vi ứng dụng** | Môi trường doanh nghiệp (Enterprise), trung tâm dữ liệu (Data Center), chạy các Server quan trọng 24/7.                        | Môi trường cá nhân, thử nghiệm (Lab), phát triển phần mềm (Dev/Test), học tập.                                             |
+| Tiêu chí             | VMware ESXi                                                                                                     | VMware Workstation                                                                                               |
+| :------------------- | :-------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------- |
+| **Kiến trúc**        | **Bare-metal (Type 1 Hypervisor):** Cài đặt trực tiếp lên phần cứng máy chủ vật lý, không cần hệ điều hành nền. | **Hosted (Type 2 Hypervisor):** Cài đặt như một phần mềm ứng dụng trên nền hệ điều hành có sẵn (Windows, Linux). |
+| **Hiệu suất**        | **Rất cao:** Do truy xuất trực tiếp phần cứng, không qua lớp trung gian OS.                                     | **Trung bình/Thấp:** Do phải đi qua lớp OS của máy trạm (Host OS) nên tốn tài nguyên và có độ trễ.               |
+| **Quản lý**          | Quản lý tập trung qua vCenter Server hoặc giao diện Web (Host Client).                                          | Quản lý trực tiếp trên giao diện phần mềm tại máy cài đặt.                                                       |
+| **Phạm vi ứng dụng** | Môi trường doanh nghiệp (Enterprise), trung tâm dữ liệu (Data Center), chạy các Server quan trọng 24/7.         | Môi trường cá nhân, thử nghiệm (Lab), phát triển phần mềm (Dev/Test), học tập.                                   |
 
 ---
 
@@ -170,12 +170,12 @@ Hyper-V sử dụng kiến trúc **Microkernelized (Vi nhân)** loại 1 (Bare-m
 
 **1. Bảng so sánh chi tiết:**
 
-| **Tiêu chí**                | **VMware ESXi**                                                                                                          | **Microsoft Hyper-V**                                                                                                                   |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Kiến trúc Lõi (Kernel)** | **Monolithic (Nguyên khối):**Các driver thiết bị được tích hợp trực tiếp vào trong VMkernel.                      | **Microkernelized (Vi nhân):**Driver thiết bị nằm ở phân vùng cha (Parent Partition/Management OS), không nằm trong lớp Hypervisor. |
-| **Quản lý VM**              | Quản lý qua**vCenter Server**(tập trung) hoặc Host Client (đơn lẻ). Giao diện web là chủ đạo.                | Quản lý qua**System Center (SCVMM)**hoặc**Hyper-V Manager** . Giao diện Windows native là chủ đạo.                        |
-| **Tính năng bảo mật**     | Sử dụng VM Encryption, Secure Boot, TPM 2.0. Mô hình phân quyền RBAC rất chặt chẽ.                                    | Nổi bật với**Shielded VMs**(mã hóa VM để Admin Host không xem được dữ liệu bên trong), Guarded Fabric.                    |
-| **Khả năng mở rộng**      | Rất cao, thường dẫn đầu về hỗ trợ số lượng vCPU/RAM khổng lồ cho 1 VM. Chuẩn công nghiệp cho Enterprise lớn. | Đã tiệm cận ESXi, hỗ trợ tốt cho hầu hết nhu cầu doanh nghiệp vừa và lớn.                                                       |
+| **Tiêu chí**               | **VMware ESXi**                                                                                              | **Microsoft Hyper-V**                                                                                                               |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
+| **Kiến trúc Lõi (Kernel)** | **Monolithic (Nguyên khối):**Các driver thiết bị được tích hợp trực tiếp vào trong VMkernel.                 | **Microkernelized (Vi nhân):**Driver thiết bị nằm ở phân vùng cha (Parent Partition/Management OS), không nằm trong lớp Hypervisor. |
+| **Quản lý VM**             | Quản lý qua**vCenter Server**(tập trung) hoặc Host Client (đơn lẻ). Giao diện web là chủ đạo.                | Quản lý qua**System Center (SCVMM)**hoặc**Hyper-V Manager** . Giao diện Windows native là chủ đạo.                                  |
+| **Tính năng bảo mật**      | Sử dụng VM Encryption, Secure Boot, TPM 2.0. Mô hình phân quyền RBAC rất chặt chẽ.                           | Nổi bật với**Shielded VMs**(mã hóa VM để Admin Host không xem được dữ liệu bên trong), Guarded Fabric.                              |
+| **Khả năng mở rộng**       | Rất cao, thường dẫn đầu về hỗ trợ số lượng vCPU/RAM khổng lồ cho 1 VM. Chuẩn công nghiệp cho Enterprise lớn. | Đã tiệm cận ESXi, hỗ trợ tốt cho hầu hết nhu cầu doanh nghiệp vừa và lớn.                                                           |
 
 **2. Đánh giá ưu/nhược điểm của Hyper-V so với ESXi:**
 
@@ -275,12 +275,12 @@ Hyper-V sử dụng kiến trúc **Microkernelized (Vi nhân)** loại 1 (Bare-m
 
 ### Câu 17: So sánh VMware ESX (Cũ) và VMware ESXi (Mới)
 
-| **Tiêu chí**  | **VMware ESX (Legacy)**                                                                                                      | **VMware ESXi (Modern)**                                                                                                                                   |
-| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Tiêu chí**  | **VMware ESX (Legacy)**                                                                                   | **VMware ESXi (Modern)**                                                                                                                 |
+| ------------- | --------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | **Kiến trúc** | Có**Service Console**(một hệ điều hành Linux đầy đủ) chạy song song với VMkernel để quản lý. Khá nặng nề. | Kiến trúc**Thin Hypervisor** . Loại bỏ Service Console, tích hợp thẳng chức năng quản lý vào VMkernel. Rất nhẹ (chỉ khoảng vài trăm MB). |
-| **Bảo mật**   | Thấp hơn. Do Service Console là Linux nên có nhiều lỗ hổng bảo mật, cần vá lỗi thường xuyên.                       | Cao hơn. Do kích thước nhỏ (Small footprint), bề mặt tấn công (Attack surface) ít hơn hẳn.                                                           |
-| **Quản lý**   | Dùng dòng lệnh Linux hoặc vSphere Client cũ.                                                                                  | Dùng**DCUI**(giao diện menu text trên server), vSphere Web Client, hoặc PowerCLI.                                                                      |
-| **Ưu/Nhược** | **Ưu:**Dễ dùng script Linux cũ.**Nhược:**Nặng, kém an toàn.                                                               | **Ưu:**Nhanh, nhẹ, an toàn, chuẩn công nghiệp hiện nay.**Nhược:**Khó dùng script Linux cũ trực tiếp, phải dùng API.                              |
+| **Bảo mật**   | Thấp hơn. Do Service Console là Linux nên có nhiều lỗ hổng bảo mật, cần vá lỗi thường xuyên.              | Cao hơn. Do kích thước nhỏ (Small footprint), bề mặt tấn công (Attack surface) ít hơn hẳn.                                               |
+| **Quản lý**   | Dùng dòng lệnh Linux hoặc vSphere Client cũ.                                                              | Dùng**DCUI**(giao diện menu text trên server), vSphere Web Client, hoặc PowerCLI.                                                        |
+| **Ưu/Nhược**  | **Ưu:**Dễ dùng script Linux cũ.**Nhược:**Nặng, kém an toàn.                                               | **Ưu:**Nhanh, nhẹ, an toàn, chuẩn công nghiệp hiện nay.**Nhược:**Khó dùng script Linux cũ trực tiếp, phải dùng API.                      |
 
 ---
 
@@ -480,11 +480,11 @@ Hyper-V sử dụng kiến trúc **Microkernelized (Vi nhân)** loại 1 (Bare-m
 
 **1. Sự khác biệt:**
 
-| **Tiêu chí**   | **HTTP (Hypertext Transfer Protocol)**                           | **HTTPS (Secure)**                                                                                           |
-| ---------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| **Bảo mật**    | Không. Dữ liệu truyền đi dưới dạng văn bản rõ (Clear Text). | Có. Dữ liệu được mã hóa bằng SSL/TLS.                                                                     |
-| **Cổng (Port)** | Port 80.                                                               | Port 443.                                                                                                          |
-| **Hiệu năng**  | Nhanh hơn (do không mất công mã hóa).                            | Chậm hơn một chút (do quá trình bắt tay SSL Handshake) nhưng không đáng kể với phần cứng hiện nay. |
+| **Tiêu chí**    | **HTTP (Hypertext Transfer Protocol)**                      | **HTTPS (Secure)**                                                                                 |
+| --------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| **Bảo mật**     | Không. Dữ liệu truyền đi dưới dạng văn bản rõ (Clear Text). | Có. Dữ liệu được mã hóa bằng SSL/TLS.                                                              |
+| **Cổng (Port)** | Port 80.                                                    | Port 443.                                                                                          |
+| **Hiệu năng**   | Nhanh hơn (do không mất công mã hóa).                       | Chậm hơn một chút (do quá trình bắt tay SSL Handshake) nhưng không đáng kể với phần cứng hiện nay. |
 
 **2. Yếu tố bảo mật HTTPS bổ sung:**
 
@@ -523,12 +523,12 @@ Là giải pháp mạng riêng ảo sử dụng giao thức SSL/TLS (giống HTT
 
 **2. Phân biệt với IPsec VPN:**
 
-| **Tiêu chí**             | **SSL VPN**                                                                                                                    | **IPsec VPN**                                                                                                                                              |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Mô hình hoạt động** | Hoạt động ở**Tầng Ứng dụng (Layer 7)** . Thường dùng cho người dùng di động truy cập vào ứng dụng cụ thể. | Hoạt động ở**Tầng Mạng (Layer 3)** . Thường dùng để kết nối 2 văn phòng (Site-to-Site) hoặc kết nối toàn bộ máy tính vào mạng cty. |
-| **Cài đặt Client**      | Không cần (Clientless - dùng Browser) hoặc cài App nhẹ.                                                                        | Bắt buộc phải cài phần mềm Client chuyên dụng và cấu hình phức tạp.                                                                                 |
-| **Vượt Tường lửa**    | Rất dễ (Sử dụng Port 443 như lướt web thông thường).                                                                       | Khó hơn (Dễ bị chặn bởi tường lửa hoặc gặp lỗi khi qua NAT).                                                                                         |
-| **Kiểm soát truy cập**  | Chi tiết (Granular): Cho phép user A chỉ vào Web, user B chỉ vào Mail.                                                         | Rộng (Broad): Khi kết nối xong, máy tính user coi như nằm trong mạng nội bộ, rủi ro cao hơn nếu máy user nhiễm virus.                             |
+| **Tiêu chí**           | **SSL VPN**                                                                                               | **IPsec VPN**                                                                                                                      |
+| ---------------------- | --------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| **Mô hình hoạt động**  | Hoạt động ở**Tầng Ứng dụng (Layer 7)** . Thường dùng cho người dùng di động truy cập vào ứng dụng cụ thể. | Hoạt động ở**Tầng Mạng (Layer 3)** . Thường dùng để kết nối 2 văn phòng (Site-to-Site) hoặc kết nối toàn bộ máy tính vào mạng cty. |
+| **Cài đặt Client**     | Không cần (Clientless - dùng Browser) hoặc cài App nhẹ.                                                   | Bắt buộc phải cài phần mềm Client chuyên dụng và cấu hình phức tạp.                                                                |
+| **Vượt Tường lửa**     | Rất dễ (Sử dụng Port 443 như lướt web thông thường).                                                      | Khó hơn (Dễ bị chặn bởi tường lửa hoặc gặp lỗi khi qua NAT).                                                                       |
+| **Kiểm soát truy cập** | Chi tiết (Granular): Cho phép user A chỉ vào Web, user B chỉ vào Mail.                                    | Rộng (Broad): Khi kết nối xong, máy tính user coi như nằm trong mạng nội bộ, rủi ro cao hơn nếu máy user nhiễm virus.              |
 
 ### Câu 31: Lợi ích và Hạn chế của SSL VPN cho doanh nghiệp
 
