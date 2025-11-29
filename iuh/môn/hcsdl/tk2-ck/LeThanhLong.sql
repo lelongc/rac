@@ -140,6 +140,26 @@ GO
 
 --f
 use [AdventureWorks2008R2]
+
+SELECT 
+    eph.BusinessEntityID, 
+    edh.ShiftID,
+    eph.Rate,
+	DepartmentID
+FROM 
+    HumanResources.EmployeePayHistory AS eph
+JOIN 
+    HumanResources.EmployeeDepartmentHistory AS edh 
+    ON eph.BusinessEntityID = edh.BusinessEntityID
+WHERE 
+    edh.ShiftID IN (1,3) 
+ORDER BY
+    edh.ShiftID, eph.BusinessEntityID;
+GO
+
+
+SELECT COUNT(*) AS SoLuongDong FROM Production.ProductCostHistory;
+
 SELECT * FROM Person.PersonPhone WHERE BusinessEntityID = 10001;
 
 

@@ -122,7 +122,16 @@ GO
     WHERE BusinessEntityID IN (SELECT BusinessEntityID FROM HumanResources.EmployeeDepartmentHistory WHERE ShiftID = 3);
     COMMIT TRANSACTION;
 
-
+	   -- BEGIN TRANSACTION;
+     
+    --UPDATE HumanResources.EmployeePayHistory
+    --SET Rate = Rate * 1.10
+    --WHERE BusinessEntityID IN (SELECT BusinessEntityID FROM HumanResources.EmployeeDepartmentHistory WHERE ShiftID = 1 and [DepartmentID] in (1,3,5) );
+     
+    --UPDATE HumanResources.EmployeePayHistory
+    --SET Rate = Rate * 1.20
+    --WHERE BusinessEntityID IN (SELECT BusinessEntityID FROM HumanResources.EmployeeDepartmentHistory WHERE ShiftID = 3);
+    --COMMIT TRANSACTION;
 
 -- sau cap nhat 
 SELECT 

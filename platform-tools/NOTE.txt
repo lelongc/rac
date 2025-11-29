@@ -1,0 +1,63 @@
+adb devices 
+pm list packages
+adb shell pm grant com.feeshy.canta moe.shizuku.manager.permission.API_V23
+
+adb shell sh /storage/emulated/0/android/data/moe.shizuku.privileged.api/start.sh 
+pm list packages
+
+adb shell
+
+app quản lý pin 
+
+pm enable com.coloros.oppoguardelf
+
+pm disable-user --user 0 com.coloros.oppoguardelf
+
+quản lý đt 
+pm enable com.coloros.phonemanager
+pm disable-user --user 0 com.coloros.phonemanager
+
+Bạn có thể disable app giao diện như com.android.mms (icon tin nhắn mặc định sẽ biến mất).
+
+Nhưng vẫn phải giữ lại mấy gói dịch vụ (providers.telephony, phone, incallui) để hệ thống không lỗi.
+
+pm disable-user --user 0 com.android.mms
+pm disable-user --user 0 com.android.contacts
+
+
+pm enable com.android.contacts
+
+
+
+
+
+pm disable-user --user 0 com.heytap.market
+pm disable-user --user 0 com.nearme.gamecenter
+pm disable-user --user 0 com.heytap.themestore
+
+
+
+
+
+
+
+
+
+
+
+realme 
+
+pm disable-user --user 0 com.coloros.weather2 
+pm disable-user --user 0 com.heytap.themestore  
+pm disable-user --user 0 com.heytap.market  
+pm disable-user --user 0 com.coloros.weather.service 
+
+pm disable-user --user 0 com.coloros.compass2
+pm disable-user --user 0 com.heytap.usercenter
+ 
+pm disable-user --user 0 com.coloros.operationmanual
+
+pm uninstall --user 0 com.google.android.calendar
+pm uninstall --user 0 com.android.chrome
+pm uninstall --user 0 com.google.android.googlequicksearchbox
+
