@@ -105,8 +105,6 @@ Phân loại theo đối tượng sử dụng:
    · Lưu trữ Object (Object Storage): Amazon S3 (Lưu trữ file tĩnh, backup).
    · Trí tuệ nhân tạo (AI Services): Chatbot, nhận diện khuôn mặt, chuyển văn bản thành giọng nói (API).
 
-
-
 ---
 
 Câu 8: Công nghệ ảo hóa là gì? Hãy liệt kê một số loại hình ảo hóa và cho ví dụ cụ thể
