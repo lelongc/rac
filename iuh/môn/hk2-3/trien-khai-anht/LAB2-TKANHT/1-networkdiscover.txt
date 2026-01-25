@@ -1,0 +1,14 @@
+$baseIP = "192.168.1"
+$start = 1
+$end = 254
+
+for ($i = $start; $i -le $end; $i++) {
+    $ip = "$baseIP.$i"
+    Write-Host "Pinging $ip..." -ForegroundColor Cyan
+    $result = Test-Connection -ComputerName $ip -Count 1 -Quiet
+    if ($result) {
+        Write-Host "$ip is reachable." -ForegroundColor Green
+    } else {
+        Write-Host "$ip is unreachable." -ForegroundColor Red
+    }
+}

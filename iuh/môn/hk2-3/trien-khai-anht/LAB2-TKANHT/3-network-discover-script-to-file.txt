@@ -1,0 +1,36 @@
+# Cấu hình dải IP
+$baseIP = "192.168.1"
+$start = 1
+$end = 254
+
+# Tạo danh sách kết quả
+$results = @()
+
+# Ping từng địa chỉ IP
+for ($i = $start; $i -le $end; $i++) {
+    $ip = "$baseIP.$i"
+    Write-Host "Đang ping $ip..." -ForegroundColor Cyan
+
+    $ping = Test-Connection -ComputerName $ip -Count 2 -Quiet
+
+    $status = if ($ping) { "Reachable" } else { "Unreachable" }
+
+    # Ghi kết quả vào danh sách
+    $results += [PSCustomObject]@{
+        IPAddress = $ip
+        Status    = $status
+        Timestamp = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
+    }
+
+    # Hiển thị kết quả
+    if ($ping) {
+        Write-Host "$ip phản hồi." -ForegroundColor Green
+    } else {
+        Write-Host "$ip không phản hồi." -ForegroundColor Red
+    }
+}
+
+# Xuất kết quả ra file CSV
+$results | Export-Csv -Path "PingResults.csv" -NoTypeInformation -Encoding UTF8
+
+Write-Host "`n✅ Quét hoàn tất. Kết quả đã lưu vào PingResults.csv" -ForegroundColor Yellow

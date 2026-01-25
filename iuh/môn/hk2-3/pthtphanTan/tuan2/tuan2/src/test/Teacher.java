@@ -3,24 +3,33 @@ package test;
 import java.util.Scanner;
 
 public class Teacher extends Person implements IPerson {
-    private double luong;
+    public Teacher(String id, String name, int age) {
+		super(id, name, age);
+		// TODO Auto-generated constructor stub
+	}
+
+	public Teacher() {
+		// TODO Auto-generated constructor stub
+	}
+
+	private double salary;
 
     @Override
     public void input(Scanner sc) {
-        System.out.print("Nhap Ma GV: ");
-        id = sc.nextLine();
-        System.out.print("Nhap Ten GV: ");
-        name = sc.nextLine();
-        System.out.print("Nhap Tuoi: ");
-        age = sc.nextInt();
-        System.out.print("Nhap Luong: ");
-        luong = sc.nextDouble();
+        System.out.print("Enter teacher's ID: ");
+        setId(sc.nextLine());
+        System.out.print("Enter teacher's name: ");
+        setName(sc.nextLine());
+        System.out.print("Enter teacher's age: ");
+        setAge(sc.nextInt());
+        System.out.print("Enter teacher's salary: ");
+        salary = sc.nextDouble();
         sc.nextLine(); 
     }
 
     @Override
     public void display() {
-        System.out.println("[Giao Vien] Ma: " + id + " | Ten: " + name + 
-                           " | Tuoi: " + age + " | Luong: " + luong);
+        System.out.println("[Teacher] ID: " + getId() + " | Name: " + getName() + 
+                           " | Age: " + getAge() + " | Salary: " + salary);
     }
 }

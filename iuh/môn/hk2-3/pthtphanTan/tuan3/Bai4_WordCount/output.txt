@@ -1,0 +1,4 @@
+[Client Output]
+Đã kết nối tới Server đếm từ.
+Nhập chuỗi văn bản: Distributed Programming with Java Socket
+Tần suất xuất hiện của các từ: java:1; with:1; socket:1; distributed:1; programming:1;

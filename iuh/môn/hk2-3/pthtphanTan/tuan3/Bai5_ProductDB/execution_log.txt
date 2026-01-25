@@ -1,0 +1,14 @@
+Querying for: Laptop
+Server response: Product [ID=1, Name=Laptop Dell XPS, Price=1500.0, Description=High-end laptop]
+Querying for: iPhone
+Server response: Product [ID=2, Name=iPhone 15 Pro, Price=1200.0, Description=Apple smartphone]
+Querying for: Samsung
+Server response: Product [ID=3, Name=Samsung Monitor, Price=300.0, Description=4K UHD Monitor]
+Querying for: Nike
+Server response: Product not found: Nike
+UDP Querying for: Mouse
+UDP Server response: Product [ID=4, Name=Logitech Mouse, Price=50.0, Description=Wireless gaming mouse]
+UDP Querying for: Headphones
+UDP Server response: Product [ID=5, Name=Sony Headphones, Price=200.0, Description=Noise cancelling headphones]
+UDP Querying for: XPS
+UDP Server response: Product [ID=1, Name=Laptop Dell XPS, Price=1500.0, Description=High-end laptop]

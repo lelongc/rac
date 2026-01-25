@@ -1,0 +1,25 @@
+function Check-ArpSpoof {
+    $gatewayIP = (Get-NetRoute -DestinationPrefix "0.0.0.0/0").NextHop
+    $gatewayMAC = arp -a $gatewayIP | Select-String $gatewayIP | ForEach-Object {
+        ($_ -split "\s+")[1].ToUpper()
+    }
+
+    Write-Host "`n🔍 Gateway IP: $gatewayIP" -ForegroundColor Cyan
+    Write-Host "🔐 Gateway MAC: $gatewayMAC`n"
+
+    $arpTable = arp -a | Select-String "dynamic"
+
+    foreach ($entry in $arpTable) {
+        $parts = $entry -split "\s+"
+        $ip = $parts[0]
+        $mac = $parts[1].ToUpper()
+
+        if ($ip -ne $gatewayIP -and $mac -eq $gatewayMAC) {
+            Write-Host "⚠️ CẢNH BÁO: IP $ip có MAC trùng với gateway!" -ForegroundColor Red
+        } else {
+            Write-Host "✅ IP $ip an toàn." -ForegroundColor Green
+        }
+    }
+}
+
+Check-ArpSpoof

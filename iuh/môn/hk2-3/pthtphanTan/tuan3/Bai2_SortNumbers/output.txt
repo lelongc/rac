@@ -1,0 +1,4 @@
+[Client Output]
+Đã kết nối tới Server sắp xếp số.
+Nhập các số tự nhiên, cách nhau bằng dấu phẩy (vd: 5,1,9): 9,1,5,2,8,3
+Kết quả sau sắp xếp: 1, 2, 3, 5, 8, 9

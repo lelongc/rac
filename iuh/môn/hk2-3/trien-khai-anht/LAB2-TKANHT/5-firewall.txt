@@ -1,0 +1,36 @@
+# Hiển thị trạng thái tổng quan của Windows Firewall
+Write-Host "`n🔍 Trạng thái tổng quan của Windows Firewall:" -ForegroundColor Cyan
+Get-NetFirewallProfile | Format-Table Name, Enabled, DefaultInboundAction, DefaultOutboundAction -AutoSize
+
+# Hiển thị các rule đang được áp dụng
+Write-Host "`n📋 Danh sách các rule đang hoạt động:" -ForegroundColor Cyan
+Get-NetFirewallRule | Where-Object { $_.Enabled -eq "True" } | 
+    Select-Object DisplayName, Direction, Action, Profile, Enabled | 
+    Format-Table -AutoSize
+
+# Hiển thị các rule theo ứng dụng cụ thể
+Write-Host "`n🧩 Các rule liên quan đến ứng dụng:" -ForegroundColor Cyan
+Get-NetFirewallApplicationFilter | Format-Table -AutoSize
+
+# Hiển thị các rule theo cổng (port)
+Write-Host "`n🔌 Các rule theo cổng:" -ForegroundColor Cyan
+Get-NetFirewallPortFilter | Format-Table -AutoSize
+
+# Hiển thị các rule theo địa chỉ IP
+Write-Host "`n🌐 Các rule theo địa chỉ IP:" -ForegroundColor Cyan
+Get-NetFirewallAddressFilter | Format-Table -AutoSize
+# Hiển thị cấu hình từng profile
+Write-Host "`n🔐 Cấu hình Firewall theo từng profile:" -ForegroundColor Cyan
+Get-NetFirewallProfile | Format-Table Name, Enabled, DefaultInboundAction, DefaultOutboundAction -AutoSize
+
+# Lọc các rule đang hoạt động theo profile cụ thể
+$profiles = @("Private", "Public")
+
+foreach ($profile in $profiles) {
+    Write-Host "`n📋 Các rule đang hoạt động trong profile: $profile" -ForegroundColor Yellow
+    Get-NetFirewallRule -PolicyStore ActiveStore |
+        Where-Object { $_.Enabled -eq "True" -and $_.Profile -like "*$profile*" } |
+        Select-Object DisplayName, Direction, Action, Profile |
+        Format-Table -AutoSize
+}
+

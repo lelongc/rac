@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mô phỏng ARP Spoofing</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #f4f4f4; }
+    .device { border: 1px solid #ccc; padding: 10px; margin: 10px; background: #fff; }
+    .spoofed { background: #ffe0e0; }
+    button { margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h2>🔐 Mô phỏng tấn công ARP Spoofing</h2>
+
+  <div class="device" id="gateway">
+    <strong>Gateway</strong><br>
+    IP: 192.168.1.1<br>
+    MAC: AA:AA:AA:AA:AA:AA
+  </div>
+
+  <div class="device" id="victim">
+    <strong>Nạn nhân</strong><br>
+    IP: 192.168.1.100<br>
+    MAC: BB:BB:BB:BB:BB:BB<br>
+    Gateway MAC: <span id="victim-gw-mac">AA:AA:AA:AA:AA:AA</span>
+  </div>
+
+  <div class="device" id="attacker">
+    <strong>Kẻ tấn công</strong><br>
+    IP: 192.168.1.200<br>
+    MAC: CC:CC:CC:CC:CC:CC
+  </div>
+
+  <button onclick="spoof()">🚨 Thực hiện ARP Spoofing</button>
+  <button onclick="detect()">🔍 Phát hiện giả mạo</button>
+  <button onclick="reset()">🔄 Khôi phục</button>
+
+  <script>
+    function spoof() {
+      document.getElementById("victim-gw-mac").innerText = "CC:CC:CC:CC:CC:CC";
+      document.getElementById("victim").classList.add("spoofed");
+      alert("ARP Spoofing đã được mô phỏng: Nạn nhân tin rằng kẻ tấn công là gateway.");
+    }
+
+    function detect() {
+      const mac = document.getElementById("victim-gw-mac").innerText;
+      if (mac !== "AA:AA:AA:AA:AA:AA") {
+        alert("⚠️ Phát hiện ARP giả mạo! MAC của gateway đã bị thay đổi.");
+      } else {
+        alert("✅ Không phát hiện giả mạo.");
+      }
+    }
+
+    function reset() {
+      document.getElementById("victim-gw-mac").innerText = "AA:AA:AA:AA:AA:AA";
+      document.getElementById("victim").classList.remove("spoofed");
+      alert("Đã khôi phục trạng thái ban đầu.");
+    }
+  </script>
+</body>
+</html>
+

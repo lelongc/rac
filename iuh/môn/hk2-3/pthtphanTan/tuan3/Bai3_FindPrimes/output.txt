@@ -1,0 +1,4 @@
+[Client Output]
+Đã kết nối tới Server tìm số nguyên tố.
+Nhập các số (vd: 12, 5, 7, 20): 12, 5, 7, 20, 11, 13, 22
+Các số nguyên tố là: 5, 7, 11, 13

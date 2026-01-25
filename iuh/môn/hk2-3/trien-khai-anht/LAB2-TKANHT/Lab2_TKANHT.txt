@@ -1,0 +1,12 @@
+Step1: Footprinting shopee.vn
+
+Step 2: Mở PowerShell chạy các script cho biết ý nghĩa script và kết quả.
+
+Step 3: DNS là gì, quá trình DNS resolver phân giải tên miền DNS
+
+Step 4:DHCP là gì, trình bày quá trình cấp phát địa chỉ DHCP
+
+Step 5: Tìm hiểu về các câu lệnh Ping, Pathping, Tracert
+
+Step 6: Cài wireshark xem quan sát và phân tích gói tin từ Pcap-files
+
