@@ -1,5 +1,0 @@
-[Client Output]
-Đang kết nối tới Server...
-Đã kết nối thành công!
-Nhập chuỗi cần đảo ngược: Hello Distributed Programming
-Kết quả từ Server: gnimmargorP detubirtsiD olleH

@@ -1,3 +1,5 @@
+package Bai5_ProductDB;
+
 import java.io.Serializable;
 
 public class Product implements Serializable {
@@ -13,10 +15,21 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    public int getId() { return id; }
-    public String getName() { return name; }
-    public double getPrice() { return price; }
-    public String getDescription() { return description; }
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 
     @Override
     public String toString() {
