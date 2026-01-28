@@ -1,82 +1,35 @@
 package Bai3_FindPrimes;
 
 import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
+import java.net.*;
+import java.util.*;
+import java.util.stream.*;
 
-/**
- * Server Class cho Bài 3: Tìm số nguyên tố
- * Nhiệm vụ:
- * 1. Nhận danh sách số.
- * 2. Lọc ra các số nguyên tố.
- * 3. Trả về danh sách các số nguyên tố.
- */
 public class Server {
-    public static void main(String[] args) {
-        int port = 3000;
-
-        try {
-            ServerSocket serverSocket = new ServerSocket(port);
-            System.out.println("Server Bai 3 đang chạy tại cổng " + port + "...");
-
+    public static void main(String[] a) throws Exception {
+        try (ServerSocket srv = new ServerSocket(3000)) {
+            System.out.println("Server 3000");
             while (true) {
-                Socket socket = serverSocket.accept();
-                System.out.println("Client Bai 3 đã kết nối.");
-
-                BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                PrintWriter pw = new PrintWriter(socket.getOutputStream(), true);
-
-                String inputLine = br.readLine();
-                if (inputLine != null) {
-                    System.out.println("Nhận dữ liệu: " + inputLine);
-                    String result = filterPrimes(inputLine);
-                    System.out.println("Kết quả (số nguyên tố): " + result);
-                    pw.println(result);
+                try (Socket s = srv.accept();
+                        BufferedReader r = new BufferedReader(new InputStreamReader(s.getInputStream()));
+                        PrintWriter w = new PrintWriter(s.getOutputStream(), true)) {
+                    String l = r.readLine();
+                    if (l != null) {
+                        try {
+                            String res = Arrays.stream(l.split("[,\\s]+"))
+                                    .map(String::trim).filter(x -> !x.isEmpty())
+                                    .map(Integer::parseInt)
+                                    .filter(n -> n > 1 && java.util.stream.IntStream.rangeClosed(2, (int) Math.sqrt(n))
+                                            .noneMatch(i -> n % i == 0))
+                                    .map(String::valueOf)
+                                    .collect(Collectors.joining(", "));
+                            w.println(res.isEmpty() ? "No primes" : res);
+                        } catch (Exception e) {
+                            w.println("Err: " + e);
+                        }
+                    }
                 }
-                socket.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static String filterPrimes(String input) {
-        String[] parts = input.split(",");
-        List<Integer> primes = new ArrayList<>();
-
-        for (String part : parts) {
-            try {
-                int num = Integer.parseInt(part.trim());
-                if (isPrime(num)) {
-                    primes.add(num);
-                }
-            } catch (NumberFormatException e) {
-                // Ignore non-numbers
             }
         }
-
-        if (primes.isEmpty())
-            return "Không có số nguyên tố nào.";
-
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < primes.size(); i++) {
-            sb.append(primes.get(i));
-            if (i < primes.size() - 1) {
-                sb.append(", ");
-            }
-        }
-        return sb.toString();
-    }
-
-    private static boolean isPrime(int n) {
-        if (n <= 1)
-            return false;
-        for (int i = 2; i <= Math.sqrt(n); i++) {
-            if (n % i == 0)
-                return false;
-        }
-        return true;
     }
 }
