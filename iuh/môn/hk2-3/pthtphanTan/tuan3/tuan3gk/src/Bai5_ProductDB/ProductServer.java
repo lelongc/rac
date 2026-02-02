@@ -4,32 +4,20 @@ import java.io.*;
 import java.net.*;
 
 public class ProductServer {
-    public static void main(String[] args) {
-        int port = 6123;
-        try (ServerSocket serverSocket = new ServerSocket(port)) {
-            System.out.println("TCP Product Server is running on port " + port);
+    public static void main(String[] args) throws Exception {
+        try (ServerSocket srv = new ServerSocket(6123)) {
+            System.out.println("TCP Server: 6123");
             while (true) {
-                try (Socket socket = serverSocket.accept();
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                        PrintWriter writer = new PrintWriter(socket.getOutputStream(), true)) {
-
-                    String productName = reader.readLine();
-                    System.out.println("Received request for product: " + productName);
-
-                    if (productName != null && !productName.isEmpty()) {
-                        Product product = DatabaseUtils.findProductByName(productName);
-                        if (product != null) {
-                            writer.println(product.toString());
-                        } else {
-                            writer.println("Product not found: " + productName);
-                        }
+                try (Socket s = srv.accept();
+                        BufferedReader r = new BufferedReader(new InputStreamReader(s.getInputStream()));
+                        PrintWriter w = new PrintWriter(s.getOutputStream(), true)) {
+                    String q = r.readLine();
+                    if (q != null) {
+                        Product p = DatabaseUtils.find(q);
+                        w.println(p != null ? p.toString() : "Not found: " + q);
                     }
-                } catch (IOException e) {
-                    System.err.println("Error handling client: " + e.getMessage());
                 }
             }
-        } catch (IOException e) {
-            System.err.println("Server error: " + e.getMessage());
         }
     }
 }
