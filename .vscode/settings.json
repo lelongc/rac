@@ -1,9 +1,7 @@
 {
     "java.project.sourcePaths": [
         "iuh/môn/java/Bài tập thực hành/codetuan3",
-        "StudentApp1-tree",
-        "BST",
-        "student-menu"
+        "iuh/môn/hk2-3/ptht-tichhop/t5/t5-2"
     ],
     "python-envs.defaultEnvManager": "ms-python.python:system",
     "python-envs.pythonProjects": []
