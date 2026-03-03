@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 2: Tính thành tiền (jQuery)</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .form-group { margin-bottom: 10px; width: 250px; }
+        label { display: block; margin-bottom: 5px; }
+        input { width: 100%; padding: 8px; box-sizing: border-box; }
+        button { margin-top: 10px; padding: 10px 20px; background: #28a745; color: white; border: none; cursor: pointer; }
+        #tongTien { margin-top: 15px; font-size: 1.2em; color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h2>Tính hóa đơn</h2>
+    <div class="form-group">
+        <label>Đơn giá:</label>
+        <input type="number" id="donGia" placeholder="Nhập giá tiền">
+    </div>
+    <div class="form-group">
+        <label>Số lượng:</label>
+        <input type="number" id="soLuong" placeholder="Nhập số lượng">
+    </div>
+
+    <button id="btnTinh">Thành tiền</button>
+
+    <p id="tongTien">Thành tiền: 0 VND</p>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(function () {
+            $('#btnTinh').on('click', function () {
+                const gia = Number($('#donGia').val());
+                const sl = Number($('#soLuong').val());
+
+                if (gia <= 0 || sl <= 0) {
+                    alert('Vui lòng nhập số dương!');
+                    return;
+                }
+
+                const thanhTien = gia * sl;
+                $('#tongTien').text('Thành tiền: ' + thanhTien.toLocaleString('vi-VN') + ' VND');
+            });
+        });
+    </script>
+</body>
+</html>

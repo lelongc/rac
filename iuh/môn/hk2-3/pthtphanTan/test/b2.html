@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 1: Quy đổi tiền tệ</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .container { border: 1px solid #ccc; padding: 20px; width: 300px; border-radius: 8px; }
+        input { width: 100%; margin-bottom: 10px; padding: 8px; box-sizing: border-box; }
+        button { padding: 8px 12px; cursor: pointer; margin-right: 5px; }
+        #result { margin-top: 15px; font-weight: bold; color: blue; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h3>Quy đổi tiền tệ</h3>
+        <input type="number" id="vndInput" placeholder="Nhập số tiền VND">
+        <br>
+        <button onclick="doiSangUSD()">Đổi ra USD</button>
+        <button onclick="doiSangYen()">Đổi ra Yên Nhật</button>
+        
+        <p id="result">Kết quả: </p>
+    </div>
+
+    <script>
+        function doiSangUSD() {
+            const vnd = document.getElementById('vndInput').value;
+            if (vnd === "") { alert("Vui lòng nhập tiền!"); return; }
+            
+            // Tỷ giá giả định: 1 USD = 25,000 VND
+            const usd = (vnd / 25000).toFixed(2);
+            document.getElementById('result').innerText = "Kết quả: " + usd + " USD";
+        }
+
+        function doiSangYen() {
+            const vnd = document.getElementById('vndInput').value;
+            if (vnd === "") { alert("Vui lòng nhập tiền!"); return; }
+
+            // Tỷ giá giả định: 1 JPY = 165 VND
+            const jpy = (vnd / 165).toFixed(0);
+            document.getElementById('result').innerText = "Kết quả: " + jpy + " JPY (Yên)";
+        }
+    </script>
+</body>
+</html>
