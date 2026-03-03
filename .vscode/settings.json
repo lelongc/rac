@@ -1,9 +1,7 @@
 {
     "java.project.sourcePaths": [
         "iuh/môn/java/Bài tập thực hành/codetuan3",
-        "iuh/môn/hk2-3/ptht-tichhop/t5/t5-2",
-        "iuh/môn/hk2-3/ptht-tichhop/t5"
-    ],
-    "python-envs.defaultEnvManager": "ms-python.python:system",
-    "python-envs.pythonProjects": []
+        "iuh/môn/hk2-3/ptht-tichhop/t5/t5-2/cac-bai-co-ban/lowercase",
+        "iuh/môn/hk2-3/ptht-tichhop/t5/t5-2/gui-nhan-luong"
+    ]
 }
