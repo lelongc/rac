@@ -15,10 +15,10 @@ tuan4/
 
 ## bai1/ – Thread Cơ Bản (extends Thread)
 
-| File | Vai trò |
-|------|---------|
+| File                  | Vai trò                                                       |
+| --------------------- | -------------------------------------------------------------- |
 | `ThreadSimple.java` | Thread đơn giản nhất: override `run()`, gọi `start()` |
-| `MyThread.java` | Thread có tên + số lần lặp, tạo 4 thread chạy song song |
+| `MyThread.java`     | Thread có tên + số lần lặp, tạo 4 thread chạy song song |
 
 ```bash
 cd "d:\folder\rac\iuh\môn\hk2-3\ptht-tichhop\tuan4\bai1"
@@ -31,10 +31,10 @@ java bai1.MyThread        # 4 thread chạy song song (n=1000 lần)
 
 ## bai2/ – Thread Ghi File
 
-| File | Vai trò |
-|------|---------|
-| `FileTWrite.java` | Ghi 10 số random vào file. **C1** (comment): `extends Thread`. **C2** (đang chạy): `implements Runnable` |
-| `Main.java` | Tạo 3 thread, mỗi thread ghi 1 file (file11.txt, file22.txt, file33.txt) |
+| File                | Vai trò                                                                                                                    |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `FileTWrite.java` | Ghi 10 số random vào file.**C1** (comment): `extends Thread`. **C2** (đang chạy): `implements Runnable` |
+| `Main.java`       | Tạo 3 thread, mỗi thread ghi 1 file (file11.txt, file22.txt, file33.txt)                                                  |
 
 ```bash
 cd "d:\folder\rac\iuh\môn\hk2-3\ptht-tichhop\tuan4\bai2"
@@ -47,10 +47,10 @@ java bai2.Main
 
 ## bai3/ – Thread Đọc File
 
-| File | Vai trò |
-|------|---------|
-| `FileTReader.java` | Đọc file bằng `BufferedReader`. **C1** (comment): `extends Thread`. **C2** (đang chạy): `implements Runnable` |
-| `Main.java` | Tạo 3 thread, mỗi thread đọc 1 file (file11.txt, file22.txt, file33.txt) |
+| File                 | Vai trò                                                                                                                              |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `FileTReader.java` | Đọc file bằng `BufferedReader`. **C10** (comment): `extends Thread`. **C2** (đang chạy): `implements Runnable` |
+| `Main.java`        | Tạo 3 thread, mỗi thread đọc 1 file (file11.txt, file22.txt, file33.txt)                                                          |
 
 ```bash
 cd "d:\folder\rac\iuh\môn\hk2-3\ptht-tichhop\tuan4\bai3"
@@ -63,12 +63,12 @@ java bai3.Main
 
 ## bai4/ – Thread Synchronized (ghi/đọc file luân phiên)
 
-| File | Vai trò |
-|------|---------|
-| `FileBuffer.java` | **Trung gian** – dùng `synchronized` + `wait()` + `notifyAll()` đảm bảo ghi xong mới đọc |
-| `FileWriterThread.java` | Thread ghi 10 dòng random vào file qua `FileBuffer` |
-| `FileReaderThread.java` | Thread đọc từng dòng mới từ file qua `FileBuffer` |
-| `Main.java` | Tạo 1 buffer, 1 writer, 1 reader → chạy đồng thời |
+| File                      | Vai trò00                                                                                                   |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `FileBuffer.java`       | **Trung gian** – dùng `synchronized` + `wait()` + `notifyAll()` đảm bảo ghi xong mới đọc |
+| `FileWriterThread.java` | Thread ghi 10 dòng random vào file qua `FileBuffer`                                                      |
+| `FileReaderThread.java` | Thread đọc từng dòng mới từ file qua `FileBuffer`                                                    |
+| `Main.java`             | Tạo 1 buffer, 1 writer, 1 reader → chạy đồng thời                                                      |
 
 ```bash
 cd "d:\folder\rac\iuh\môn\hk2-3\ptht-tichhop\tuan4\bai4"
@@ -83,12 +83,12 @@ java bai4.Main
 
 ## bai5/ – Producer-Consumer (Kho hàng)
 
-| File | Vai trò |
-|------|---------|
-| `Kho.java` | **Kho chung** – dùng `synchronized` + `wait/notifyAll`; có `nhapKho()` và `xuatKho()` |
-| `NguoiSanXuat.java` | Thread nhập kho ngẫu nhiên 1-5 sản phẩm, nghỉ 500-1500ms |
-| `NguoiTieuDung.java` | Thread xuất kho ngẫu nhiên, nghỉ ngẫu nhiên |
-| `Demo.java` | **Chạy chính** – tạo 1 kho (sức chứa 10), 2 NSX, 2 NTD |
+| File                   | Vai trò                                                                                                |
+| ---------------------- | ------------------------------------------------------------------------------------------------------- |
+| `Kho.java`           | **Kho chung** – dùng `synchronized` + `wait/notifyAll`; có `nhapKho()` và `xuatKho()` |
+| `NguoiSanXuat.java`  | Thread nhập kho ngẫu nhiên 1-5 sản phẩm, nghỉ 500-1500ms                                          |
+| `NguoiTieuDung.java` | Thread xuất kho ngẫu nhiên, nghỉ ngẫu nhiên                                                       |
+| `Demo.java`          | **Chạy chính** – tạo 1 kho (sức chứa 10), 2 NSX, 2 NTD                                      |
 
 ```bash
 cd "d:\folder\rac\iuh\môn\hk2-3\ptht-tichhop\tuan4\bai5"
@@ -103,10 +103,10 @@ java bai5.Demo
 
 ## Tóm Tắt Kiến Thức Thread qua 5 Bài
 
-| Bài | Kỹ thuật | Từ khóa |
-|-----|----------|---------|
-| bai1 | Thread cơ bản | `extends Thread`, `run()`, `start()` |
-| bai2 | Ghi file đa luồng | `implements Runnable`, `new Thread(obj)` |
-| bai3 | Đọc file đa luồng | `BufferedReader`, `readLine()` |
-| bai4 | Đồng bộ ghi/đọc | `synchronized`, `wait()`, `notifyAll()` |
-| bai5 | Producer-Consumer | `synchronized`, `wait()`, `notifyAll()` |
+| Bài | Kỹ thuật            | Từ khóa                                     |
+| ---- | --------------------- | --------------------------------------------- |
+| bai1 | Thread cơ bản       | `extends Thread`, `run()`, `start()`    |
+| bai2 | Ghi file đa luồng   | `implements Runnable`, `new Thread(obj)`  |
+| bai3 | Đọc file đa luồng | `BufferedReader`, `readLine()`            |
+| bai4 | Đồng bộ ghi/đọc  | `synchronized`, `wait()`, `notifyAll()` |
+| bai5 | Producer-Consumer     | `synchronized`, `wait()`, `notifyAll()` |
