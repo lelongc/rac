@@ -1,17 +1,20 @@
 package tuan1;
 
-import java.util.Scanner;
+import java.io.*;
 
 public class ex4 {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Nhap vao mot so: ");
-        int n = sc.nextInt();
-        
+    public static void main(String[] args) throws IOException {
+        // InputStream (byte) → InputStreamReader (byte→char) → BufferedReader (buffer + dòng)
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        PrintWriter pw = new PrintWriter(System.out, true);
+
+        pw.print("Nhap vao mot so: "); pw.flush();
+        int n = Integer.parseInt(br.readLine());
+
         if (n % 2 == 0) {
-            System.out.println(n + " la so chan.");
+            pw.println(n + " la so chan.");
         } else {
-            System.out.println(n + " la so le.");
+            pw.println(n + " la so le.");
         }
     }
 }

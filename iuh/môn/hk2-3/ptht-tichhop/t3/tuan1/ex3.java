@@ -1,20 +1,23 @@
 package tuan1;
 
-import java.util.Scanner;
+import java.io.*;
 
 public class ex3 {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        // InputStream (byte) → InputStreamReader (byte→char) → BufferedReader (buffer + dòng)
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        PrintWriter pw = new PrintWriter(System.out, true);
+
         try {
-            System.out.print("Nhap so A: ");
-            int a = sc.nextInt();
-            System.out.print("Nhap so B: ");
-            int b = sc.nextInt();
-            
-            int tong = a + b;
-            System.out.println("Tong cua A + B la: " + tong);
-        } catch (Exception e) {
-            System.out.println("Vui long nhap so nguyen hop le!");
+            pw.print("Nhap so A: "); pw.flush();
+            int a = Integer.parseInt(br.readLine());
+
+            pw.print("Nhap so B: "); pw.flush();
+            int b = Integer.parseInt(br.readLine());
+
+            pw.println("Tong cua A + B la: " + (a + b));
+        } catch (NumberFormatException e) {
+            pw.println("Vui long nhap so nguyen hop le!");
         }
     }
 }
