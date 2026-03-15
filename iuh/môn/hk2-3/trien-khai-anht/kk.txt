@@ -1,0 +1,126 @@
+PHẦN 1: TỔNG QUAN VÀ LÝ THUYẾT
+Slide 1: Tiêu đề (Title Slide)
+
+"Chào thầy và các bạn. Hôm nay em xin thuyết trình về Module 16: Chống IDS, Firewall và Honeypot. Đây là một chủ đề cực kỳ quan trọng, giúp chúng ta hiểu cách các doanh nghiệp xây dựng hệ thống tự vệ, đồng thời phân tích những khe hở tinh vi mà Hacker sử dụng để lách luật."
+
+Slide 2: Mục tiêu / Agenda
+
+"Nội dung hôm nay sẽ đi qua 5 phần chính: Đầu tiên là hiểu về IDS và công cụ Snort. Tiếp theo là các chiêu trò né IDS của Hacker. Phần thứ ba và tư, chúng ta sẽ phân tích sâu các kiến trúc Firewall và cách giăng bẫy bằng Honeypot. Cuối cùng, hấp dẫn nhất là demo kỹ thuật bọc giao thức SSH Tunneling để vượt rào tường lửa."
+
+Slide 3: Tổng quan "Kiềng Ba Chân"
+
+"Tóm tắt nhanh vai trò của 3 hệ thống này: Firewall là anh bảo vệ giữ cửa, kiểm soát vé vào ra. IDS là hệ thống camera và còi báo động để phát hiện kẻ gian đột nhập. Còn Honeypot chính là một cái két sắt giả chứa đầy mồi nhử để câu giờ và bắt quả tang Hacker."
+
+Slide 4: Phân loại IDS
+
+(Chỉ tay về phía slide) "Đi sâu vào IDS, chúng ta có 2 loại chính: HIDS là loại cài trên từng máy cá nhân để bảo vệ cục bộ. Nhưng sức mạnh thực sự nằm ở NIDS - hệ thống bao phủ toàn mạng. Nó đóng vai trò như một người 'nghe lén thụ động', bắt được các mã độc lây lan âm thầm hoặc các hành vi dò cổng mà Firewall ở vòng ngoài thường không phát hiện được."
+
+Slide 5: Giới thiệu Snort
+
+"Và công cụ NIDS mã nguồn mở mạnh mẽ nhất thế giới chính là Snort. Snort có 4 chế độ hoạt động: Từ bắt gói tin cơ bản, lưu log, cho đến phân tích gói tin dựa trên các Rule do cộng đồng cập nhật. Đặc biệt, nếu chạy trên Linux ở chế độ Inline, Snort có thể kết hợp với Iptables để tự động chặn đứng Hacker ngay khi phát hiện."
+
+Slide 6: Kỹ thuật Né tránh của Hacker
+
+"Dù IDS mạnh đến đâu, Hacker vẫn có 'bài' để né. Thứ nhất, chúng né Anomaly Detection bằng cách tấn công cực chậm, không làm băng thông hay CPU tăng đột biến. Thứ hai, chúng đổi giao thức, ví dụ dùng UDP thay vì TCP để đánh lừa bộ lọc. Thâm độc nhất là kỹ thuật Session Splicing - chúng băm nát gói tin chứa virus ra hàng ngàn mảnh nhỏ. IDS đọc mảnh nhỏ không thấy virus nên cho qua, nhưng khi lọt vào máy nạn nhân, các mảnh này ghép lại thành virus hoàn chỉnh."
+
+PHẦN 2: KIẾN TRÚC FIREWALL VÀ HONEYPOT
+Slide 7: Mô hình Bastion Host
+
+(Chỉ tay vào hình 16.1 trên màn chiếu)
+"Mời các bạn nhìn vào sơ đồ kiến trúc Firewall cơ bản nhất: Bastion Host. Ở đây, Firewall đứng sừng sững ở giữa, cắt đôi mạng thành 2 phần: Bên trái là vùng Untrusted-zone (Internet đầy rẫy hiểm nguy). Bên phải là vùng Trusted-zone (Mạng nội bộ an toàn của nhân viên)."
+
+Slide 8: Mô hình DMZ
+
+(Chỉ tay vào hình 16.2)
+"Tuy nhiên, công ty phải có máy chủ Web, Mail cho khách truy cập. Nếu để chung với mạng nhân viên thì rất rủi ro. Nên kiến trúc thứ 2 ra đời: Vùng DMZ - Vùng phi quân sự (khối ở giữa sơ đồ). Các máy chủ công khai sẽ đặt ở đây. Dù Hacker có đánh sập Web Server ở DMZ, chúng vẫn bị Firewall chặn lại, không thể chọc sâu vào mạng nội bộ."
+
+Slide 9: Mô hình Back-to-Back
+
+(Chỉ tay vào hình 16.3)
+"Để an toàn tuyệt đối, các hệ thống lớn dùng sơ đồ Back-to-back: Dùng tận 2 lớp Firewall kẹp DMZ ở giữa. Lớp ngoài thường là Firewall phần cứng chạy cực nhanh để lọc rác. Lớp bên trong giáp mạng nội bộ là Firewall phần mềm, kiểm tra siêu kỹ. Hacker vượt qua lớp 1 sẽ kiệt sức trước lớp 2."
+
+Slide 10: Packet Filtering Firewall
+
+(Chỉ tay vào hình 16.4)
+"Về cơ chế lọc, loại cơ bản nhất là Packet Filtering hoạt động ở Tầng 3 (Network Layer) của OSI. Như hình các bạn thấy, nó chỉ kiểm tra xem gói tin đến từ địa chỉ IP nào, cổng nào. Tốc độ rất nhanh nhưng nhược điểm là không biết nội dung bên trong gói tin chứa gì."
+
+Slide 11: Circuit Level Gateway
+
+(Chỉ tay vào hình 16.5)
+"Tiến lên Tầng 5 (Session Layer), chúng ta có Circuit Level Gateway. Loại này chuyên giám sát quá trình bắt tay 3 bước của TCP. Nó giúp ngăn chặn các kết nối ảo hoặc các phiên kết nối không hợp lệ ngay từ lúc chưa truyền dữ liệu."
+
+Slide 12: Application Level Firewall
+
+(Chỉ tay vào hình 16.6)
+"Tiến bộ hơn là Application Firewall. Nó hoạt động ở tầng cao nhất - Tầng 7 (Application). Loại này rất xịn, nó soi hẳn vào Data Payload (nội dung bên trong gói tin) để tìm xem có virus hay trojan ẩn giấu hay không. Tuy nhiên, nó đòi hỏi máy khách phải cấu hình qua Proxy."
+
+Slide 13: Stateful Multilayer Inspection
+
+(Chỉ tay vào hình 16.7)
+"Ngày nay, tiêu chuẩn vàng là Stateful Multilayer Firewall. Nó bao trọn từ Layer 3 đến Layer 7. Điểm mạnh nhất là chữ 'Stateful' - nó ghi nhớ trạng thái của từng phiên kết nối liên tục, giúp chống lại các kỹ thuật giả mạo IP hay giấu cổng cực kỳ hiệu quả."
+
+Slide 14: Honeypot - Bẫy Hacker
+
+(Chỉ tay vào hình 16.8)
+"Honeypot, đúng như tên gọi 'Mật ngọt chết ruồi'. Các bạn nhìn sơ đồ, kế bên Web Server thật trong DMZ, quản trị viên dựng một máy Honeypot giả mạo mở toang các cổng. Hacker bên ngoài tưởng bở sẽ lao vào tấn công Honeypot. Chúng ta không những bảo vệ được máy thật, mà mọi thao tác của Hacker đều bị ghi nhật ký, thu thập IP để phục vụ điều tra các mạng lưới Botnet."
+
+PHẦN 3: KỸ THUẬT VƯỢT FIREWALL BẰNG TUNNELING
+Slide 15: Lý thuyết vượt Firewall
+
+"Vậy hệ thống dày đặc như thế, Hacker vượt qua bằng cách nào? Xin thưa là 'Nội ứng ngoại hợp'. Chúng gửi email chứa mã độc cho nhân viên ở vùng nội bộ. Khi nhân viên click vào, mã độc sẽ tự động kết nối ra ngoài (vì Firewall thường cho phép kết nối từ Trong ra Ngoài). Tuy nhiên, cổng để điều khiển máy từ xa như 3389 thường bị Firewall chặn ngắt. Do đó, Hacker phải dùng kỹ thuật Tunneling - bọc giao thức cấm đó vào trong một giao thức an toàn như SSH (cổng 22)."
+
+Slide 16: Demo Tunneling - Tải Cygwin
+
+(Chỉ tay vào hình 16.9)
+"Để làm được điều đó, trên máy nạn nhân, mã độc sẽ tự động tải và cài đặt phần mềm Cygwin (như hình trên màn chiếu). Phần mềm này giúp giả lập môi trường Linux ngay trên Windows để chạy các dịch vụ mạng của Hacker."
+
+Slide 17: Demo Tunneling - Chọn Package
+
+(Chỉ tay vào hình 16.10)
+"Tại bước cấu hình Select Packages, Hacker sẽ cài 2 gói quan trọng nhất là openssh và openssl. Đây chính là lõi để tạo ra cái đường hầm bí mật xuyên thủng tường lửa."
+
+Slide 18: Hoàn Tất Cài Đặt Cygwin
+
+(Chỉ tay vào hình 16.11)
+"Tiếp theo, trình cài đặt sẽ giải nén các gói này, tích hợp trực tiếp môi trường mạng Linux vào Windows của nạn nhân một cách âm thầm."
+
+Slide 19: Khởi Tạo Cấu Hình SSH
+
+(Chỉ tay vào hình 16.12)
+"Sau khi cài xong, Hacker thực thi lệnh ssh-host-config. Trình giả lập sẽ tự động sinh ra các khóa mã hóa (keys) để thiết lập một đường truyền bảo mật tuyệt đối, không ai đọc trộm được."
+
+Slide 20: Kích Hoạt Dịch Vụ SSHD
+
+(Chỉ tay vào hình 16.13)
+"Cuối cùng ở máy nạn nhân, chỉ cần gõ lệnh net start sshd trong CMD. Lập tức, máy nạn nhân trở thành một máy chủ SSH chạy ngầm, luôn mở cổng 22 chờ Hacker bước vào."
+
+Slide 21: Thiết Lập Putty
+
+(Chỉ tay vào hình 16.14)
+"Bây giờ chuyển sang máy tính ở nhà của Hacker. Hắn mở phần mềm Putty lên, nhập IP Public của máy nạn nhân và chọn Port kết nối là 22. Nhưng đây mới chỉ là vỏ bọc."
+
+Slide 22: Thiết Lập Ánh Xạ Cổng (Tunneling)
+
+(Chỉ tay vào hình 16.15)
+"Đây là lúc phép thuật xảy ra: Hacker vào mục Tunnels. Ở Source Port, điền 4899 (là cổng của phần mềm điều khiển màn hình Radmin). Destination trỏ về máy nạn nhân. Ý nghĩa của việc này là thiết lập một ống dẫn ngầm, ép dữ liệu Radmin phải chui qua cổng 22."
+
+Slide 23: Kiểm tra kết nối mạng (Netstat)
+
+(Chỉ tay vào hình 16.16)
+"Sau khi đăng nhập thành công, Hacker gõ netstat -na. Các bạn nhìn vào dòng kết quả này: Cổng 4899 của máy tính nạn nhân ở xa đã bị 'kéo' về, ánh xạ thẳng vào IP Localhost 127.0.0.1 trên chính máy của Hacker."
+
+Slide 24: Mở ứng dụng RAdmin
+
+(Chỉ tay vào hình 16.17)
+"Giờ thì quá dễ rồi. Hacker bật phần mềm RAdmin lên. Thay vì phải gõ IP thật của máy nạn nhân (Firewall sẽ chặn ngay), Hacker chỉ cần kết nối vào IP 127.0.0.1 của chính hắn."
+
+Slide 25: Kết quả chiếm quyền
+
+(Chỉ tay vào hình 16.18)
+"Và đây là kết quả! Dữ liệu từ phần mềm RAdmin chui tọt vào cái ống SSH cổng 22, đi xuyên qua Firewall một cách hoàn toàn hợp lệ và không bị chặn lại. Màn hình máy nạn nhân đã hiện ra. Hacker có thể thao tác như đang ngồi trực tiếp trước máy. Máy tính đã hoàn toàn bị kiểm soát!"
+
+Slide 26: Tổng Kết & QA
+
+"Kết luận lại qua Module 16: Việc xây dựng Firewall, IDS hay Honeypot là bắt buộc để bảo vệ doanh nghiệp. Tuy nhiên, Hacker luôn có mưu mẹo như Tunneling hay Session Splicing để bọc lót gói tin. Là những người quản trị mạng, chúng ta không chỉ lo chặn luồng vào (Inbound) mà phải kiểm soát gắt gao cả các kết nối từ bên trong đi ra (Outbound).
+
+Bài thuyết trình của em xin kết thúc tại đây. Cảm ơn thầy và các bạn đã chú ý lắng nghe. Mọi người có câu hỏi nào không ạ?"
