@@ -5,10 +5,13 @@ import java.io.FileWriter;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        // Lấy thư mục chứa Main.class (= thư mục bai3)
-        String dir = new File(Main.class.getResource("Main.class").toURI()).getParent();
+        // Lấy thư mục bin/bai3, đổi bin → src để lưu vào thư mục source
+        String binDir = new File(Main.class.getResource("Main.class").toURI()).getParent();
+        String dir = binDir.replace(File.separator + "bin" + File.separator,
+                                    File.separator + "src" + File.separator);
+        System.out.println("Luu file vao: " + dir);
 
-        // Tạo sẵn 3 file mẫu trong bai3/ để đọc
+        // Tạo sẵn 3 file mẫu để đọc
         String[] files = {
             dir + File.separator + "file11.txt",
             dir + File.separator + "file22.txt",
@@ -21,7 +24,6 @@ public class Main {
                 }
             }
         }
-        System.out.println("Da tao file mau trong: " + dir);
 
         //c1 extends Thread
         //FileTReader t1 = new FileTReader(files[0]);

@@ -4,8 +4,12 @@ import java.io.File;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        // Lấy thư mục chứa Main.class (= thư mục bai2)
-        String dir = new File(Main.class.getResource("Main.class").toURI()).getParent();
+        // Lấy thư mục bin/bai2 (nơi chứa .class)
+        String binDir = new File(Main.class.getResource("Main.class").toURI()).getParent();
+        // Đổi bin → src để lưu file vào thư mục source
+        String dir = binDir.replace(File.separator + "bin" + File.separator,
+                                    File.separator + "src" + File.separator);
+        System.out.println("Luu file vao: " + dir);
 
         //c1 extends Thread
         //FileTWrite t1 = new FileTWrite(dir + File.separator + "file1.txt");
