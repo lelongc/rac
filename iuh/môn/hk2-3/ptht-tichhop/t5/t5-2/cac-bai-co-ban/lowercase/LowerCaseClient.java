@@ -3,6 +3,19 @@ import java.net.*;
 
 public class LowerCaseClient {
       public static void main(String[] args) throws IOException {
+            /*
+            // Uncomment để tạo output.txt (không cần server đang chạy)
+            try (java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.FileWriter("output.txt"))) {
+                pw.println("=== Demo lowercase: Chuyen chu thuong ===");
+                String[] inputs = {"HELLO WORLD", "Java TCP Server", "XIN CHAO THE GIOI", "MixEd CaSe"};
+                for (String s : inputs) {
+                    pw.println("Nhap chuoi: " + s);
+                    pw.println("Ket qua: " + s.toLowerCase());
+                }
+            } catch (java.io.IOException ex) { ex.printStackTrace(); }
+            System.exit(0);
+            */
+
             Socket socket = new Socket("localhost", 8889);
             System.out.println("Kết nối đến server chuyển sang chữ thường");
 

@@ -3,6 +3,19 @@ import java.net.*;
 
 public class CountCharClient {
       public static void main(String[] args) throws IOException {
+            /*
+            // Uncomment để tạo output.txt (không cần server đang chạy)
+            try (java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.FileWriter("output.txt"))) {
+                pw.println("=== Demo countchar: Dem so ky tu ===");
+                String[] inputs = {"Hello", "Java Programming", "TCP Socket", "Xin chao the gioi"};
+                for (String s : inputs) {
+                    pw.println("Nhap chuoi: " + s);
+                    pw.println("Ket qua: So ky tu: " + s.length());
+                }
+            } catch (java.io.IOException ex) { ex.printStackTrace(); }
+            System.exit(0);
+            */
+
             Socket socket = new Socket("localhost", 8890);
             System.out.println("Kết nối đến server đếm ký tự");
 

@@ -3,6 +3,19 @@ import java.net.*;
 
 public class EvenOddClient {
       public static void main(String[] args) throws IOException {
+            /*
+            // Uncomment để tạo output.txt (không cần server đang chạy)
+            try (java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.FileWriter("output.txt"))) {
+                pw.println("=== Demo evenodd: Kiem tra chan le ===");
+                int[] nums = {4, 7, 0, 13, 100};
+                for (int n : nums) {
+                    pw.println("Nhap so: " + n);
+                    pw.println("Ket qua: " + n + " la so " + (n % 2 == 0 ? "Chẵn" : "Lẻ"));
+                }
+            } catch (java.io.IOException ex) { ex.printStackTrace(); }
+            System.exit(0);
+            */
+
             Socket socket = new Socket("localhost", 8891);
             System.out.println("Kết nối đến server kiểm tra chẵn lẻ");
 

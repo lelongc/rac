@@ -3,6 +3,19 @@ import java.net.*;
 
 public class UpperCaseClient {
       public static void main(String[] args) throws IOException {
+            /*
+            // Uncomment để tạo output.txt (không cần server đang chạy)
+            try (java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.FileWriter("output.txt"))) {
+                pw.println("=== Demo uppercase: Chuyen chu hoa ===");
+                String[] inputs = {"hello world", "java tcp server", "xin chao the gioi", "MixEd CaSe"};
+                for (String s : inputs) {
+                    pw.println("Nhap chuoi: " + s);
+                    pw.println("Ket qua: " + s.toUpperCase());
+                }
+            } catch (java.io.IOException ex) { ex.printStackTrace(); }
+            System.exit(0);
+            */
+
             Socket socket = new Socket("localhost", 8888);
             System.out.println("Kết nối đến server chuyển sang chữ hoa");
 

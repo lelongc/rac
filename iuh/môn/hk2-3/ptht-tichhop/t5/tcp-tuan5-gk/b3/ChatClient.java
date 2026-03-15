@@ -8,6 +8,21 @@ import java.util.Scanner;
 
 public class ChatClient {
     public static void main(String[] args) {
+        /*
+        // Uncomment để tạo output.txt (không cần server đang chạy)
+        try (java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.FileWriter("output.txt"))) {
+            pw.println("=== Demo b3: Chat Client-Server (IP/Port qua args) ===");
+            pw.println("Cach dung: java b3.ChatClient <ip_server> <port>");
+            pw.println("Vi du   : java b3.ChatClient 192.168.1.10 5000");
+            pw.println("[Server] Chao ban! Go /quit de thoat.");
+            pw.println("[Client] Nhap: Hello from remote!");
+            pw.println("[Server] Server: da nhan -> Hello from remote!");
+            pw.println("[Client] Nhap: /quit");
+            pw.println("[Server] Bye!");
+        } catch (java.io.IOException ex) { ex.printStackTrace(); }
+        System.exit(0);
+        */
+
         if (args.length < 2) {
             System.out.println("Cach dung: java b3.ChatClient <ip_server> <port>");
             System.out.println("Vi du   : java b3.ChatClient 192.168.1.10 5000");

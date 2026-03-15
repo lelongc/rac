@@ -8,6 +8,23 @@ import java.util.Scanner;
 
 public class DateTimeClient {
     public static void main(String[] args) {
+        /*
+        // Uncomment để tạo output.txt (không cần server đang chạy)
+        try (java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.FileWriter("output.txt"))) {
+            pw.println("=== Demo b4: DateTime Client-Server ===");
+            pw.println("[Server] MENU:\n1. Time\n2. Date\n3. Date & Time\nNhap 1/2/3 (hoac 0 de thoat)");
+            pw.println("[Client] Chon: 1");
+            pw.println("[Server] Time: " + java.time.LocalTime.now());
+            pw.println("[Client] Chon: 2");
+            pw.println("[Server] Date: " + java.time.LocalDate.now());
+            pw.println("[Client] Chon: 3");
+            pw.println("[Server] Date&Time: " + java.time.LocalDateTime.now());
+            pw.println("[Client] Chon: 0");
+            pw.println("[Server] Bye!");
+        } catch (java.io.IOException ex) { ex.printStackTrace(); }
+        System.exit(0);
+        */
+
         try (Scanner sc = new Scanner(System.in)) {
             System.out.print("Nhap IP server: ");
             String host = sc.nextLine().trim();

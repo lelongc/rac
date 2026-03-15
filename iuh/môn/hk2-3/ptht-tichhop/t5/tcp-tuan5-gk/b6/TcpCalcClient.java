@@ -11,6 +11,26 @@ public class TcpCalcClient {
         String host = "127.0.0.1";
         int port = 5000;
 
+        /*
+        // Uncomment để tạo output.txt (không cần server đang chạy)
+        try (java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.FileWriter("output.txt"))) {
+            pw.println("=== Demo b6: TCP Calc Client ===");
+            // Phep 1: Tong 1+3+5+...+(2n+1), n=4 => (n+1)^2 = 25
+            int n1 = 4;
+            long r1 = (long)(n1 + 1) * (n1 + 1);
+            pw.println("Chon: 1 (Tong 1+3+...+(2n+1)), n=" + n1 + "  =>  Ket qua = " + r1);
+            // Phep 2: Tong i*(i+1) i=1..n, n=4 => 2+6+12+20 = 40
+            int n2 = 4; long sum2 = 0;
+            for (int k = 1; k <= n2; k++) sum2 += (long)k * (k + 1);
+            pw.println("Chon: 2 (Tong 1*2+2*3+...+n*(n+1)), n=" + n2 + "  =>  Ket qua = " + sum2);
+            // Phep 3: 1-2+3-4+...+(2n+1) = n+1, n=4 => 5
+            int n3 = 4;
+            long r3 = (long)(n3 + 1);
+            pw.println("Chon: 3 (1-2+3-4+...+(2n+1)), n=" + n3 + "  =>  Ket qua = " + r3);
+        } catch (java.io.IOException ex) { ex.printStackTrace(); }
+        System.exit(0);
+        */
+
         try (Socket socket = new Socket(host, port);
              DataInputStream in = new DataInputStream(socket.getInputStream());
              DataOutputStream out = new DataOutputStream(socket.getOutputStream());

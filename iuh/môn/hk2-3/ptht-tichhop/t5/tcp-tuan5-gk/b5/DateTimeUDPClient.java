@@ -9,6 +9,20 @@ import java.util.Scanner;
 
 public class DateTimeUDPClient {
     public static void main(String[] args) {
+        /*
+        // Uncomment để tạo output.txt (không cần server đang chạy)
+        try (java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.FileWriter("output.txt"))) {
+            pw.println("=== Demo b5: DateTime UDP Client-Server ===");
+            pw.println("[Client] Chon: 1 (Time)");
+            pw.println("[Server] Time: " + java.time.LocalTime.now());
+            pw.println("[Client] Chon: 2 (Date)");
+            pw.println("[Server] Date: " + java.time.LocalDate.now());
+            pw.println("[Client] Chon: 3 (Date & Time)");
+            pw.println("[Server] Date&Time: " + java.time.LocalDateTime.now());
+        } catch (java.io.IOException ex) { ex.printStackTrace(); }
+        System.exit(0);
+        */
+
         try (Scanner sc = new Scanner(System.in);
              DatagramSocket socket = new DatagramSocket()) {
 
