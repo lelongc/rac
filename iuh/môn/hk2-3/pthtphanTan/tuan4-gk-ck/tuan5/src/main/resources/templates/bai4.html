@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bài 4: Fibonacci</title>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; padding: 20px; }
+        .card { background: white; max-width: 500px; margin: auto; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 15px; }
+        input { width: 100%; padding: 8px; box-sizing: border-box; color: #333; background-color: #fff; border: 1px solid #ccc; border-radius: 4px; }
+        button { width: 100%; padding: 10px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .result { margin-top: 20px; padding: 15px; background: #e9ecef; }
+        .sequence { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+        .num { background: #fff; padding: 5px; border: 1px solid #ddd; }
+        a { display: block; margin-top: 20px; text-decoration: none; color: #007bff; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Tính dãy Fibonacci</h2>
+        <form action="/bai4/calculate" method="post">
+            <div class="form-group">
+                <label>Nhập số phần tử (n):</label>
+                <input type="number" name="n" min="0" max="50" required>
+            </div>
+            <button type="submit">Tính toán</button>
+        </form>
+
+        <div th:if="${sequence}" class="result">
+            <p>Dãy <span th:text="${n}"></span> số Fibonacci đầu tiên:</p>
+            <div class="sequence">
+                <span class="num" th:each="num : ${sequence}" th:text="${num}"></span>
+            </div>
+        </div>
+        <div th:if="${error}" class="error" th:text="${error}"></div>
+
+        <a href="/">← Quay lại trang chủ</a>
+    </div>
+</body>
+</html>

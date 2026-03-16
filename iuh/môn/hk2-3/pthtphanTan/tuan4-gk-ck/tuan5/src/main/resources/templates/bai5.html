@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bài 5: Quy Đổi Tiền Tệ</title>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; padding: 20px; }
+        .card { background: white; max-width: 500px; margin: auto; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 15px; }
+        input, select { width: 100%; padding: 8px; box-sizing: border-box; color: #333; background-color: #fff; border: 1px solid #ccc; border-radius: 4px; }
+        button { width: 100%; padding: 10px; background: #ffc107; color: #333; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .result { margin-top: 20px; padding: 15px; background: #fff3cd; border: 1px solid #ffeeba; }
+        a { display: block; margin-top: 20px; text-decoration: none; color: #007bff; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Quy đổi tiền tệ USD - VND</h2>
+        <form action="/bai5/convert" method="post">
+            <div class="form-group">
+                <label>Nhập số tiền:</label>
+                <input type="number" step="any" name="amount" required>
+            </div>
+            <div class="form-group">
+                <label>Hướng chuyển đổi:</label>
+                <select name="direction">
+                    <option value="usd2vnd">USD sang VND (Tỷ giá 25,000)</option>
+                    <option value="vnd2usd">VND sang USD (Tỷ giá 25,000)</option>
+                </select>
+            </div>
+            <button type="submit">Chuyển đổi</button>
+        </form>
+
+        <div th:if="${to}" class="result">
+            <p><span th:text="${from}"></span> tương đương với:</p>
+            <h3 th:text="${to}"></h3>
+        </div>
+
+        <a href="/">← Quay lại trang chủ</a>
+    </div>
+</body>
+</html>
