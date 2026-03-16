@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bài 2: Tính diện tích tam giác</title>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; padding: 20px; }
+        .card { background: white; max-width: 400px; margin: auto; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; }
+        input { width: 100%; padding: 8px; box-sizing: border-box; color: #333; background-color: #fff; border: 1px solid #ccc; border-radius: 4px; }
+        button { width: 100%; padding: 10px; background: #17a2b8; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .result { margin-top: 20px; padding: 15px; background: #d1ecf1; border-left: 5px solid #17a2b8; }
+        .error { color: red; margin-top: 10px; }
+        a { display: block; margin-top: 20px; text-decoration: none; color: #007bff; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Tính diện tích tam giác</h2>
+        <form action="/bai2/calculate" method="post">
+            <div class="form-group">
+                <label>Cạnh đáy (base):</label>
+                <input type="number" step="any" name="base" required>
+            </div>
+            <div class="form-group">
+                <label>Chiều cao (height):</label>
+                <input type="number" step="any" name="height" required>
+            </div>
+            <button type="submit">Tính diện tích</button>
+        </form>
+
+        <div th:if="${area}" class="result">
+            <p>Kết quả:</p>
+            <strong>Diện tích = 0.5 * <span th:text="${base}"></span> * <span th:text="${height}"></span> = <span th:text="${area}"></span></strong>
+        </div>
+        <div th:if="${error}" class="error" th:text="${error}"></div>
+
+        <a href="/">← Quay lại trang chủ</a>
+    </div>
+</body>
+</html>
