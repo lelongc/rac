@@ -1,0 +1,5 @@
+Dong 1: Xin chao! Day la noi dung file data.txt tren server.
+Dong 2: File nay duoc doc va gui toan bo den client khi co yeu cau.
+Dong 3: Server ho tro nhieu client ket noi cung luc (moi ket noi 1 thread).
+Dong 4: Client chi can nhap ten file, server se tim va gui noi dung.
+Dong 5: Het file data.txt.
