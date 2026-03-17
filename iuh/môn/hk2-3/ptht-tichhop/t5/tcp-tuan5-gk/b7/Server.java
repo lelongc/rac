@@ -1,12 +1,13 @@
 package b7;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-
+/*
+ * Bai 7 TCP - Server
+ * Nhan file tu nhieu client, moi ket noi mot ClientHandler.
+ */
 public class Server {
     static final int PORT = 5000;
-
     public static void main(String[] args) {
         try (ServerSocket ss = new ServerSocket(PORT)) {
             System.out.println("TCP File Server dang chay port " + PORT + " ...");

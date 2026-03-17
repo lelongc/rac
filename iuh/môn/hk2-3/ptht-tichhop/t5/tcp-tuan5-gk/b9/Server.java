@@ -1,14 +1,13 @@
 package b9;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-
-// Server lưu trữ các file (vd: data.txt) trong thư mục chạy.
-// Nhiều client có thể đọc nội dung file cùng lúc.
+/*
+ * Bai 9 - Server
+ * Cho nhieu client doc noi dung file duoc luu trong package b9.
+ */
 public class Server {
     static final int PORT = 5000;
-
     public static void main(String[] args) {
         try (ServerSocket ss = new ServerSocket(PORT)) {
             System.out.println("File Server dang chay port " + PORT + " ...");
