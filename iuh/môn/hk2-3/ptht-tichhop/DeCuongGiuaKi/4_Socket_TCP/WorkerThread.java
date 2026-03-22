@@ -290,13 +290,13 @@ public class WorkerThread extends Thread {
                 */
 
                 // -------------------------------------------------------------------------------------
-                // DANG 20: BÀI 8 TUẦN 5 - NHAN PHEP TINH "OP Operant1 Operant2" (vd: "+ 100 200")
+                // DANG 20: BÀI 8 TUẦN 5 - NHAN PHEP TINH "Operant1 OP Operant2" (vd: "200 + 200")
                 // -------------------------------------------------------------------------------------
                 /*
                 try {
                     String[] parts = inputLine.trim().split("\\s+");
-                    String op = parts[0];
-                    double a = Double.parseDouble(parts[1]);
+                    double a = Double.parseDouble(parts[0]);
+                    String op = parts[1];
                     double b = Double.parseDouble(parts[2]);
                     double ans = 0;
                     if (op.equals("+")) ans = a + b;
@@ -305,7 +305,7 @@ public class WorkerThread extends Thread {
                     else if (op.equals("/")) ans = a / b;
                     result = "Ket qua: " + ans;
                 } catch (Exception e) {
-                    result = "Loi dinh dang. Input dung: '+ 100 200'";
+                    result = "Loi dinh dang. Input dung phai co khoang trang: '200 + 200'";
                 }
                 */
 
@@ -337,16 +337,27 @@ public class WorkerThread extends Thread {
                 /*
                 File outFile = new File(DIR + "client" + clientId + ".txt");
                 try (PrintWriter fileOut = new PrintWriter(new java.io.FileWriter(outFile))) {
-                    out.println("Xin chao client #" + clientId + "! Nhap tin nhan, go 'HET' de ket thuc.");
-                    if (!inputLine.equalsIgnoreCase("HET")) {
+                    
+                    if (inputLine.toUpperCase().contains("HET")) {
+                        out.println("Phat hien chu 'HET' ngay tn dau tien! Dong file.");
+                    } else {
                         fileOut.println(inputLine);
+                        out.println("Da ghi tn 1. Nhap tiep (Go 'HET' de dung):");
+                        
+                        while (true) {
+                            String msg = in.readLine();
+                            if (msg == null) break;
+                            
+                            if (msg.toUpperCase().contains("HET")) {
+                                out.println("Da nhan thong diep ngung! Luu vao: " + outFile.getName());
+                                break;
+                            }
+                            
+                            fileOut.println(msg);
+                            // TRẢ VỀ CHO CLIENT ĐỂ NÓ KHÔNG BỊ TREO CHỜ (Đồng bộ)
+                            out.println("Da ghi vao file. Xin moi nhap tiep...");
+                        }
                     }
-                    while (true) {
-                        String msg = in.readLine();
-                        if (msg == null || "HET".equalsIgnoreCase(msg)) break;
-                        fileOut.println(msg);
-                    }
-                    out.println("Da luu tin nhan vao file " + outFile.getName());
                 } catch (IOException e) {
                     out.println("Loi ghi file: " + e.getMessage());
                 }
@@ -356,7 +367,6 @@ public class WorkerThread extends Thread {
                 // -------------------------------------------------------------------------------------
                 // DANG 16: MAY TINH MINI (vd: "5 + 3" -> 8)
                 // -------------------------------------------------------------------------------------
-                /*
                 try {
                     String cleanMathStr = inputLine.trim().replaceAll("\\s+", "");
                     String operator = "";
@@ -386,7 +396,6 @@ public class WorkerThread extends Thread {
                 } catch (Exception e) {
                     result = "Loi doc bieu thuc toan hoc!";
                 }
-                */
 
                 out.println(result); // Tra ve cho client
             }

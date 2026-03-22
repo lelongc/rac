@@ -1,0 +1,79 @@
+=============================================================================
+   BI KIP VAO PHONG THI - TIM NHANH DIET GON (TU TUAN 1 TOI TUAN 6)
+=============================================================================
+Tuyet doi KHONG go lai Code dai dong tu dau. Nhin luot de, xac dinh Tuan/Dang, 
+Mo file tuong ung -> Boi den an [Ctrl + /] de mo Comment ra -> CHAY.
+
+-----------------------------------------------------------------------------
+PHAN I: BANG TRA CUU NHANH (TIM FILE -> UNCOMMENT LA XONG)
+-----------------------------------------------------------------------------
+(+) TUAN 1:
+   - Toan Console, Switch/Case (In ten, Thang, Tinh tong, Chan le) 
+     -> Mo [1_File_Folder\BaiTapTuan1_Logic.java]. Co du 5 Dang co ban.
+   - Quan Ly Vuon Thu OOP (Su tu, Ran, Khi) 
+     -> Mo [1_File_Folder\QuanLyVuonThu.java]. An Run la chay.
+   - Tim Kiem, Xoa File De Quy Folder 
+     -> Mo [1_File_Folder\ThaoTacFile.java]. De mo mau.
+
+(+) TUAN 2:
+   - Tinh Thue, Luong (OOP Phuong Tien, Nhan Vien, Cho/Meo) 
+     -> Mo [2_OOP_IOStream\Main.java]. Go comment DANG 1, DANG 2, HOAC DANG 3.
+
+(+) TUAN 3:
+   - Doc/Ghi 4 chuan Stream (InputStream, Byte Array, Scanner/PW) 
+     -> Mo [2_OOP_IOStream\BasicStream.java]. Un-comment DANG 1 den DANG 4.
+
+(+) TUAN 4:
+   - Da Luong (Thread, Writer/Reader File) 
+     -> Mo [3_BaiTapThread\Main.java]. Co du DANG 1 den DANG 3.
+   - Nguoi San Xuat & Tieu Dung (Wait/Notify Kho Hang) 
+     -> Mo [3_BaiTapThread\Main.java]. Go comment DANG 4.
+
+(+) TUAN 5:
+   - Socket Mang (Tinh Tong, Menu Gio, Toan hoc OP, IP args) 
+     -> Mo [4_Socket_TCP\WorkerThread.java]. (Keo tu DANG 1 toi DANG 20).
+   - Chat Lien Tuc TCP Server-Client (Vong lap True) 
+     -> Mo [4_Socket_TCP\Client.java]. Mo khoi "ReceiveChat".
+   - Truyen Nhay File NHI PHAN (Anh, File cai dat) 
+     -> Mo day file [4_Socket_TCP\WorkerThread.java]. Bat khoi DataInputStream.
+
+(+) TUAN 6:
+   - Nhap Domain/IP, Tra ve Thong Tin, Kiem tra IP cuc bo 
+     -> Mo [6_InetAddress_CoBan\InetLogic.java]. Go comment DANG 1 toi DANG 4. Cuoi cung an Run tệp [Main.java].
+
+-----------------------------------------------------------------------------
+PHAN II: HUONG DAN DUNG TERMINAL (CMD CUA WINDOWS/ECLIPSE) DE CHAY CO THAM SO
+-----------------------------------------------------------------------------
+Vi thu muc la "4_Socket_TCP" nhung ten ruot Package lai la "Socket_TCP_Thread", 
+ban phai danh lenh chuan de may hieu. Lam dung 3 buoc sau tai Terminal:
+
+1. Chuyen huong vao thu muc goc (DeCuongGiuaKi). Dinh dang tren CMD phai the hien nhu:
+      ...> Ptht-tichhop\DeCuongGiuaKi>
+
+2. Bien dich lenh sinh File Class (Voi lenh -d . de no giu nguyen Package ruot):
+      javac -encoding UTF-8 -d . 4_Socket_TCP/*.java
+
+3. Chay file bang JVM kem theo danh sach bien tham so args (vd IP):
+      java Socket_TCP_Thread.Client 127.0.0.1 8080
+
+-----------------------------------------------------------------------------
+PHAN III: QUY TRINH SIEU TOC KHI THI SOCKET (TUAN 5) -> DUNG CHO 80% KHI THI
+-----------------------------------------------------------------------------
+Tat ca Logic de thi Tuan 5 deu duoc tap trung o [WorkerThread.java] voi TCP
+va [UDPServer.java] doi voi UDP.
+
+CACH LAM:
+1. Doc de xem cho TCP hay UDP -> Vao thu muc tuong ung Mo file Server ra.
+2. Cuon chuot xuong vong lap [while((inputLine = in.readLine()) != null)]
+3. Ban se thay:
+   DANG 1 (Viet hoa) ... DANG 16 (Toan Mini) ... DANG 20 (OP)
+4. De ra dang nao, dung chuot BOI DEN vung comment DANG DO.
+5. Bam to hop phim [Ctrl + /] de Mo Khoa Khong Con Comment nua.
+6. Luu y vung dang khong thi (hien tai mac dinh mo la DANG 16) phai 
+   duoc [Ctrl + /] de vo hieu hoa thanh Comment Xam'. Khong duoc de 2 Dang mo song song.
+7. Chay con Server truoc. Sau do sang Client.java bam Run The La Xong.
+
+(LOI DUONG DAN TEP: Cac Code File IO Socket luon can xuat tu thu muc 
+Eclispe nen bien DIR da de san la "DeCuongGiuaKi/4_Socket_TCP/". Nho sua them 
+thut theo thu muc cha Project cua ban neu bi loi Not Found).
+=============================================================================

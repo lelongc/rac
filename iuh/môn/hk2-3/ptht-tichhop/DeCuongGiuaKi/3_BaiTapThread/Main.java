@@ -5,12 +5,41 @@ public class Main {
         System.out.println("===== CHON BAI TAP TUAN 4 THREAD (BO COMMENT DE CHAY) =====");
         
         // =========================================================================
+        // CAU HINH THU MUC LUU FILE (DE FILE KHONG BI LAC RA NGOAI KHI CHAY ECLIPSE)
+        // =========================================================================
+        String DIR = "DeCuongGiuaKi/3_BaiTapThread/";
+
+        // =========================================================================
+        // DANG 0: HUONG DAN CO BAN (TAO KHOI DONG THREAD BANG THREAD HOAC RUNNABLE)
+        // =========================================================================
+        /*
+        // Cach 1: Extends Thread (Da xay dung san class Thread con)
+        Thread t1 = new Thread() {
+            @Override
+            public void run() {
+                System.out.println("Cach 1 (Thread): Dang chay...");
+            }
+        };
+        t1.start();
+
+        // Cach 2: Implements Runnable
+        Runnable r1 = new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Cach 2 (Runnable): Dang chay...");
+            }
+        };
+        Thread t2 = new Thread(r1);
+        t2.start();
+        */
+
+        // =========================================================================
         // DANG 1 (Bai 2): Viet so ngau nhien vao 3 tap tin bang 3 Thread rieng biet
         // =========================================================================
         /*
-        FileTWriter w1 = new FileTWriter("file1.txt");
-        FileTWriter w2 = new FileTWriter("file2.txt");
-        FileTWriter w3 = new FileTWriter("file3.txt");
+        FileTWriter w1 = new FileTWriter(DIR + "file1.txt");
+        FileTWriter w2 = new FileTWriter(DIR + "file2.txt");
+        FileTWriter w3 = new FileTWriter(DIR + "file3.txt");
         w1.start(); w2.start(); w3.start();
         */
 
@@ -18,9 +47,9 @@ public class Main {
         // DANG 2 (Bai 3): Doc noi dung 3 tap tin bang 3 Thread rieng biet
         // =========================================================================
         /*
-        FileTReader r1 = new FileTReader("file1.txt");
-        FileTReader r2 = new FileTReader("file2.txt");
-        FileTReader r3 = new FileTReader("file3.txt");
+        FileTReader r1 = new FileTReader(DIR + "file1.txt");
+        FileTReader r2 = new FileTReader(DIR + "file2.txt");
+        FileTReader r3 = new FileTReader(DIR + "file3.txt");
         r1.start(); r2.start(); r3.start();
         */
 

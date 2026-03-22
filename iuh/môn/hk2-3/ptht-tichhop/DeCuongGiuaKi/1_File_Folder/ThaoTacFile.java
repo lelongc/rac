@@ -74,8 +74,8 @@ public class ThaoTacFile {
         File destFile = new File(dest);
         if (sourceFile.exists()) {
             try (FileInputStream fis = new FileInputStream(sourceFile);
-                 FileOutputStream fos = new FileOutputStream(destFile)) {
-                
+                    FileOutputStream fos = new FileOutputStream(destFile)) {
+
                 byte[] arr = new byte[1024];
                 int readNum;
                 while ((readNum = fis.read(arr)) != -1) {
@@ -97,7 +97,8 @@ public class ThaoTacFile {
         ThaoTacFile ttf = new ThaoTacFile();
         System.out.println("=== TEST CAC HAM THAO TAC FILE ===");
         // Uncomment cac dong duoi de chay thu
-        // ttf.finFile("C:\\", ".txt"); 
-        // ttf.copyFile("a.txt", "b.txt");
+        // ttf.finFile("C:\\", ".txt");
+        // ttf.copyFile("D:\\test-eclipse\\test\\src\\File_Folder\\a.txt",
+        // "D:\\test-eclipse\\test\\src\\File_Folder\\b.txt");
     }
 }
