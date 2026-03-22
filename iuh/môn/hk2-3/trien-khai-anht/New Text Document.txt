@@ -1,0 +1,4 @@
+vmnet 1 wan 
+vmnet 2 lan cho win server lan 
+1 2 cho con firewall 
+host only 

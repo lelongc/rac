@@ -1,0 +1,127 @@
+Tuyệt vời, sau một hồi "vọc" lỗi và sửa cấu hình, bài Lab của bạn giờ đã rất hoàn thiện và chuyên nghiệp. Dưới đây là bản **tổng hợp đầy đủ, chi tiết nhất** bao gồm cả các bước kỹ thuật và **phần giải thích chuyên sâu** để bạn báo cáo với thầy giáo.
+
+---
+
+# HƯỚNG DẪN TOÀN TẬP: XÂY DỰNG LAB PFSENSE & WINDOWS 10
+
+## I. TỔNG QUAN MÔ HÌNH (TOPOLOGY)
+Hệ thống này mô phỏng một mạng doanh nghiệp thực tế, nơi mọi thiết bị nội bộ đều nằm dưới sự kiểm soát của một tường lửa trung tâm.
+
+* **Mạng WAN (Cổng ngoài):** Dùng **NAT (VMnet8)**. pfSense đóng vai trò một máy khách lấy Internet từ máy thật.
+* **Mạng LAN (Nội bộ):** Dùng **Host-only (VMnet2)**, dải IP: `192.168.1.0/24`. Đây là vùng mạng bị cô lập hoàn toàn, không thể ra ngoài nếu pfSense không cho phép.
+* **pfSense (Gateway):** LAN IP: `192.168.1.1`.
+* **Windows 10 (Client):** IP tĩnh: `192.168.1.10`.
+
+
+
+---
+
+## II. GIAI ĐOẠN 1: THIẾT LẬP MẠNG ẢO (VMWARE)
+Đây là bước tạo ra các "dây cáp ảo" để nối các máy lại với nhau.
+
+1.  Mở VMware -> **Edit** -> **Virtual Network Editor**.
+2.  Bấm **Change Settings** (quyền Admin).
+3.  Bấm **Add Network...** -> Chọn **VMnet2**.
+4.  Cấu hình **VMnet2**:
+    * Chọn: **Host-only**.
+    * **QUAN TRỌNG:** **BỎ TÍCH** ô *Use local DHCP service...*.
+    > **Giải thích:** Chúng ta tắt DHCP của VMware để pfSense (hoặc quản trị viên) tự quản lý việc cấp phát IP, tránh việc máy Win10 nhận IP lung tung không đúng dải quản lý.
+    * **Subnet IP:** Gõ `192.168.1.0`.
+5.  Bấm **OK**.
+
+
+
+---
+
+## III. GIAI ĐOẠN 2: CÀI ĐẶT PFSENSE (FIREWALL)
+
+### 1. Cấu hình phần cứng
+* **Network Adapter 1:** NAT.
+* **Network Adapter 2:** VMnet2 (Host-only).
+
+### 2. Cài đặt hệ thống
+* Khởi động -> Nhấn **Enter** liên tục: **Accept** -> **Install** -> **Default keymap** -> **Auto (ZFS)**.
+* Bảng chọn ổ đĩa: Bấm **Space (Cách)** để hiện dấu sao `[*]` -> **Enter**.
+* Chọn **YES** để xóa ổ ảo -> Cài xong -> **Reboot**.
+
+### 3. Thiết lập IP Console
+Sau khi khởi động lại, tại menu số:
+1.  Bấm **2** (Set interface IP) -> **Enter**.
+2.  Bấm **2** (LAN) -> **Enter**.
+3.  Nhập IP: `192.168.1.1` -> Subnet: `24`.
+4.  Các mục Gateway/IPv6: Bấm **Enter** bỏ qua.
+5.  DHCP Server: Gõ **n** (No).
+6.  Revert to HTTP: Gõ **y** (Yes).
+
+
+
+---
+
+## IV. GIAI ĐOẠN 3: CẤU HÌNH WINDOWS 10 (CLIENT)
+
+### 1. Chỉnh Card mạng
+Chuột phải vào máy ảo Win10 -> **Settings** -> **Network Adapter** -> Chọn **Custom: VMnet2**.
+
+### 2. Đặt IP tĩnh chuyên nghiệp
+1.  Bật Win10 -> **Windows + R** -> Gõ `ncpa.cpl` -> **Enter**.
+2.  Chuột phải **Ethernet** -> **Properties** -> Nhấp đúp **IPv4**.
+3.  **Điền thông số:**
+    * **IP address:** `192.168.1.10`
+    * **Default gateway:** `192.168.1.1` (**Bắt buộc** để dẫn luồng dữ liệu về pfSense).
+    * **DNS:** `192.168.1.1` (Bắt Win10 phải hỏi tên miền qua pfSense).
+    * **Lưu ý:** Xóa sạch IPv6 để tránh lỗi "No response".
+
+
+
+---
+
+## V. GIAI ĐOẠN 4: QUẢN TRỊ VÀ CẤU HÌNH NÂNG CAO
+Truy cập `http://192.168.1.1` từ Win10.
+
+1.  **Setup Wizard:**
+    * **DNS Forwarding:** Vào `Services` -> `DNS Resolver`, tích chọn **Enable Forwarding Mode**.
+    > **Giải thích:** Bước này giúp pfSense biết đường đi hỏi các DNS quốc tế (như 8.8.8.8) để trả lời cho máy Win10. Nếu không bật, máy Win10 sẽ bị mất mạng khi xóa DNS 8.8.8.8 trên card mạng.
+2.  **Timezone:** Chọn **Asia/Ho_Chi_Minh** để nhật ký chặn (Logs) hiện đúng giờ thực tế.
+3.  **WAN Config:** Bỏ tích **Block RFC1918** để pfSense nhận Internet từ NAT VMware mượt mà hơn.
+
+
+
+---
+
+## VI. GIAI ĐOẠN 5: CHIẾN THUẬT CHẶN MẠNG (DEMO BÁO CÁO)
+
+### Kịch bản 1: Chặn bằng DNS Resolver (Đánh lừa tên miền)
+* **Cách làm:** Vào `Services` -> `DNS Resolver` -> `Host Overrides` -> Thêm `youtube.com` trỏ về `127.0.0.1`.
+* **Ưu điểm:** Cực nhanh, máy khách truy cập sẽ báo lỗi ngay lập tức.
+* **Nhược điểm:** Dễ bị lách nếu Hacker dùng IP trực tiếp hoặc Secure DNS.
+
+
+
+### Kịch bản 2: Chặn bằng Firewall Rule & Alias (Chặn tầng IP)
+* **Bước 1:** Tạo **Alias** chứa `youtube.com`. pfSense sẽ tự tìm ra hàng trăm IP của Youtube.
+* **Bước 2:** Tạo **Rule** trên LAN: **Action: Block** | **Destination: Alias Youtube**.
+* **QUAN TRỌNG:** Kéo Rule này lên **trên cùng** (TOP).
+> **Giải thích:** pfSense đọc luật từ trên xuống dưới. Nếu để luật "Cho phép" ở trên, luật "Chặn" ở dưới sẽ bị vô hiệu hóa.
+
+
+
+---
+
+## VII. XỬ LÝ SỰ CỐ "VẪN VÀO ĐƯỢC WEB"
+Nếu chặn không ăn, hãy kiểm tra 3 "thủ phạm" sau:
+1.  **Secure DNS:** Tắt tính năng "DNS bảo mật" trong cài đặt Chrome/Edge của Win10.
+2.  **DNS Cache:** Mở CMD trên Win10 gõ `ipconfig /flushdns`.
+3.  **Bằng chứng thép:** Dùng lệnh `nslookup youtube.com`. Nếu nó ra `127.0.0.1` là pfSense đã thắng. Nếu ra IP thật là Win10 đang "vượt rào" hỏi DNS bên ngoài.
+
+
+
+---
+
+## VIII. CÂU HỎI "HÓA GIẢI" THẦY GIÁO
+* **Thầy hỏi:** *"Tại sao em dùng Tracert để kiểm tra?"*
+    * **Trả lời:** *"Dạ, lệnh `tracert 8.8.8.8` cho thấy bước nhảy đầu tiên là `192.168.1.1`. Điều này chứng minh pfSense đang thực sự gác cổng, không gói tin nào của Win10 thoát ra ngoài mà không qua nó ạ."*
+* **Thầy hỏi:** *"Làm sao em biết Rule nào đang chặn gói tin?"*
+    * **Trả lời:** *"Dạ, em vào `Status` -> `System Logs` -> `Firewall`. Các dòng có dấu X đỏ kèm IP máy Win10 là minh chứng cho việc tường lửa đang thực thi nhiệm vụ chặn ạ."*
+
+---
+**Lời khuyên cuối:** Bạn nên lấy điện thoại quay lại cảnh mình gõ `ping youtube.com` bị lỗi sau khi áp Rule, đó là bằng chứng thuyết phục nhất trong bài báo cáo! Bạn có cần mình hướng dẫn cách tạo một **Trang chào (Captive Portal)** - kiểu như Wi-Fi cafe bắt đăng nhập mới cho dùng mạng không? Thầy sẽ cực kỳ ấn tượng đấy!

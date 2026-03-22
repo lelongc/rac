@@ -2,4 +2,8 @@ bcdedit /set hypervisorlaunchtype off
 
 bcdedit /set hypervisorlaunchtype auto
 
+dism.exe /Online /Disable-Feature:Microsoft-Hyper-V-All
+dism.exe /Online /Disable-Feature:VirtualMachinePlatform
+dism.exe /Online /Disable-Feature:WindowsHypervisorPlatform
+
 chạy quyền admin 
