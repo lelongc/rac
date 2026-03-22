@@ -355,9 +355,8 @@ public class WorkerThread extends Thread {
 
                 // -------------------------------------------------------------------------------------
                 // DANG 16: MAY TINH MINI (vd: "5 + 3" -> 8)
-                // MAC DINH DANG UNCOMMENT NGUYEN KHOI NAY DE CHAY DEMO
                 // -------------------------------------------------------------------------------------
-                
+                /*
                 try {
                     String cleanMathStr = inputLine.trim().replaceAll("\\s+", "");
                     String operator = "";
@@ -387,7 +386,7 @@ public class WorkerThread extends Thread {
                 } catch (Exception e) {
                     result = "Loi doc bieu thuc toan hoc!";
                 }
-                
+                */
 
                 out.println(result); // Tra ve cho client
             }

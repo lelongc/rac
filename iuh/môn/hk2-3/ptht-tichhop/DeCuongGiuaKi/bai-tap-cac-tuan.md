@@ -1,6 +1,5 @@
 tuan 1
 
-
 1
 PT HTTH – BmIT – 6/2018
 Lab1:	JAVA	Basic
@@ -484,9 +483,7 @@ public class Class_Images {
 
 }
 
-tuan 2 
-
-
+tuần 2
 
 OOP trong Java
 
@@ -551,9 +548,7 @@ YÊU CẦU
 • Mỗi loại phương tiện có cách tính thuế khác nhau
 • Viết main tạo mỗi loại phương tiện và hiển thị thông tin
 
-
-tuan 3 
-
+tuan 3
 
 Lab2: JAVA Stream
 
@@ -659,9 +654,7 @@ PT HTTH – BmIT – 8/2019
 
 Bài tập Stream: sử dụng InputStream để nhập dữ liệu cho các bài tập Tuần 1, 2
 
-
-tuan 4 
-
+tuần 4
 
 Bài 1. Cài đặt các chương trình đã được giới thiệu trong buổi học lý thuyết (2 ví dụ)
 Bài 2. Viết chương trình tạo ra một đối tượng FileTWrite kế thừa đối đối tượng Thread(hoặc cài đặt giao
@@ -695,9 +688,7 @@ Gợi ý : Thiết kế các lớp sau:
 - Lớp Demo tạo ra một kho và 2 người sản xuất, 2 người tiêu dùng thực hiện việc nhập xuất trên cùng
   một kho
 
-tuần 5 
-
-
+tuần 5
 
 UDP
 
@@ -818,9 +809,7 @@ Server:
 
 TCP
 
-
-tuần 6 
-
+tuần 6
 
 --url--
 
