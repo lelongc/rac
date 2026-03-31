@@ -1,0 +1,13 @@
+0) assign interfaces: WAN, LAN, DMZ, test lan
+1)System ➡️ General Setup.  general setup: kiểm tra cấu hình router, DNS, time zone
+2) User manager tạo các user cho phép cấu hình tường lửa mục đích riêng
+3.1) IP alias: tạo vùng cấm/cho phép
+3.2) schedule: lập lịch cấm/cho phép truy cập
+3.3) Cấu hình rule cho phép ICMP, DNS, HTTP, HTTPs
+4) Cấu hình mạng dmz
+5) Nat: public Web
+6) High Availability - multigateway
+7) High Availability - virtual IPs
+8) VPN
+9) IDS,IPS - Zabbix server & client
+10) Traffic traper...

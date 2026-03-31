@@ -53,4 +53,25 @@ public class DatabaseController {
         repository.deleteById(id);
         return "redirect:/bai6";
     }
+
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable Long id, Model model) {
+        Product product = repository.findById(id).orElse(null);
+        if (product != null) {
+            model.addAttribute("product", product);
+            return "bai6-edit";
+        }
+        return "redirect:/bai6";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateProduct(@PathVariable Long id, @RequestParam String name, @RequestParam double price) {
+        Product product = repository.findById(id).orElse(null);
+        if (product != null) {
+            product.setName(name);
+            product.setPrice(price);
+            repository.save(product);
+        }
+        return "redirect:/bai6";
+    }
 }

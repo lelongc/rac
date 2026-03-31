@@ -1,0 +1,3 @@
+khi không kết nối dmz vói lan được thì tắt interface dmz đi rồi bật lại ở interfacce dmz trên pfsense
+
+khi mà lỗi không kết nối được với pfsense ở win10 thì chắc dấu vừa cấu hình wan 

@@ -1,0 +1,156 @@
+Để SSH từ **máy thật** vào **Ubuntu DMZ** xuyên qua pfSense, ông cần làm đúng 4 bước "thần tốc" này. Đây là sơ đồ để ông dễ hình dung: 
+**Máy thật ➡️ pfSense WAN (Port 2222) ➡️ Ubuntu DMZ (Port 22)**.
+
+---
+
+### Bước 1: Chuẩn bị trên Ubuntu (Đích đến)
+Đảm bảo Ubuntu đã mở cửa để đón SSH.
+1.  **Cài SSH Server:**
+    ```bash
+    sudo apt update && sudo apt install openssh-server -y
+    ```
+2.  **Mở Firewall Ubuntu:**
+    ```bash
+    sudo ufw allow 22
+    # Hoặc tắt luôn cho nhanh
+    sudo ufw disable
+    ```
+3.  **Kiểm tra dịch vụ:** `sudo systemctl status ssh` (Phải hiện **active (running)**).
+
+---
+
+### Bước 2: "Mở khóa" cổng WAN của pfSense
+Máy thật của ông (`192.168.x.x`) là IP nội bộ, pfSense mặc định sẽ chặn nó ở cổng WAN. Nếu không làm bước này, ông sẽ bị **Connection Timed Out**.
+
+1.  Vào pfSense ➡️ **Interfaces** ➡️ **WAN**.
+2.  Kéo xuống cuối cùng, **BỎ TÍCH** 2 ô:
+    * `Block private networks and loopback addresses`
+    * `Block bogon networks`
+3.  Bấm **Save** ➡️ **Apply Changes**.
+
+
+
+---
+
+### Bước 3: Tạo NAT Port Forward (Cầu nối)
+Vì máy thật không thể ping trực tiếp `.2.10`, ta phải mượn IP WAN của pfSense làm trung gian.
+
+1.  Vào **Firewall** ➡️ **NAT** ➡️ Tab **Port Forward**.
+2.  Bấm **Add** và điền chính xác:
+    * **Interface:** `WAN`
+    * **Protocol:** `TCP`
+    * **Destination:** `WAN Address`
+    * **Destination Port Range:** Chọn `Other`, điền **`2222`** (để tránh trùng cổng 22 của chính pfSense).
+    * **Redirect Target IP:** **`192.168.2.10`** (IP của Ubuntu).
+    * **Redirect Target Port:** `22` (Cổng SSH của Ubuntu).
+    * **Filter Rule Association:** Chọn `Add associated filter rule`.
+3.  Bấm **Save** ➡️ **Apply Changes**.
+
+
+
+---
+
+### Bước 4: SSH từ máy thật (Kết quả)
+1.  **Lấy IP WAN của pfSense:** Nhìn trên Dashboard pfSense, xem dòng **WAN (em0)** là IP bao nhiêu (Ví dụ: `192.168.3.128`).
+2.  Mở **CMD** hoặc **PowerShell** trên máy thật (Windows ngoài VMware) gõ:
+    ```bash
+    ssh neko@IP_WAN_PFSENSE -p 2222
+    ```
+    *(Ví dụ: `ssh neko@192.168.3.128 -p 2222`)*
+
+---
+Để "chốt hạ" bài Lab này một cách chuyên nghiệp nhất, tui sẽ chia làm 2 phần: **Thông SSH** để ông ngồi máy thật gõ lệnh cho sướng, và **1 File Script duy nhất** để ông ném vào Ubuntu là nó tự chạy Web luôn.
+
+---
+
+
+---
+
+### PHẦN 2: FILE CẤU HÌNH TỰ ĐỘNG (NGINX AUTOMATION)
+
+Sau khi SSH vào được Ubuntu, ông chỉ cần tạo 1 file script này. Nó sẽ tự cài Nginx, tạo thư mục web, và cấu hình mọi thứ từ A-Z.
+
+**Bước 1: Tạo file script**
+```bash
+nano setup_web.sh
+```
+
+**Bước 2: Dán toàn bộ nội dung dưới đây vào:**
+*(Tui để thư mục web ở `/var/www/myweb` cho chuẩn bài nhé)*
+
+```bash
+#!/bin/bash
+
+# 1. Cập nhật và cài đặt Nginx
+sudo apt update
+sudo apt install nginx -y
+
+# 2. Tạo thư mục chứa Web của ông
+sudo mkdir -p /var/www/myweb
+sudo chown -R $USER:$USER /var/www/myweb
+
+# 3. Tạo file nội dung Web mẫu (Ông có thể sửa sau)
+echo "<html><body><h1>Chào mừng tới DMZ Server của Neko!</h1><p>Hệ thống chạy tự động hoàn toàn.</p></body></html>" > /var/www/myweb/index.html
+
+# 4. Tạo file cấu hình Nginx duy nhất
+sudo tee /etc/nginx/sites-available/myweb <<EOF
+server {
+    listen 80;
+    server_name _;
+
+    root /var/www/myweb;
+    index index.html;
+
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+}
+EOF
+
+# 5. Kích hoạt cấu hình mới và tắt cái mặc định
+sudo ln -sf /etc/nginx/sites-available/myweb /etc/nginx/sites-enabled/
+sudo rm -f /etc/nginx/sites-enabled/default
+
+# 6. Kiểm tra và khởi động lại Nginx
+sudo nginx -t
+sudo systemctl restart nginx
+
+echo "------------------------------------------"
+echo "XONG RỒI ÔNG ƠI! WEB ĐÃ CHẠY TẠI IP 192.168.2.10"
+echo "------------------------------------------"
+```
+
+**Bước 3: Chạy script này (1 giây là xong)**
+```bash
+chmod +x setup_web.sh
+./setup_web.sh
+```
+
+---
+
+### KẾT QUẢ CUỐI CÙNG
+Bây giờ ông có thể kiểm tra thành quả bằng 2 cách:
+1.  **Tại máy Win10 LAN:** Mở Chrome gõ `http://192.168.2.10`.
+2.  **Tại máy thật:** Nếu ông muốn máy thật cũng xem được Web, hãy làm thêm 1 cái **NAT Port Forward** nữa (Interface WAN, Port 8080 -> IP 192.168.2.10, Port 80).
+
+Vì ông đã thông SSH rồi, làm bước này chỉ mất 30 giây:
+
+Vào Firewall ➡️ NAT ➡️ Port Forward, bấm Add:
+
+Interface: WAN
+
+Protocol: TCP
+
+Destination: WAN Address
+
+Destination Port: HTTP (hoặc gõ số 80).
+
+Redirect Target IP: 192.168.2.10.
+
+Redirect Target Port: 80.
+
+Filter Rule Association: Add associated filter rule.
+
+Bấm Save và Apply Changes.
+
+Thử nghiệm: Mở trình duyệt máy thật, gõ http://<IP_WAN_PFSENSE>. Nếu nó hiện trang Nginx là ông xong bài 5!

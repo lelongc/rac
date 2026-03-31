@@ -1,0 +1,133 @@
+Bản nháp của ông bổ sung thêm mấy cái "trick lỏ" thực chiến chất lượng quá! Tuy nhiên, do copy qua lại nên câu chữ và các bước đang bị lộn xộn, nhảy cóc một chút (đang Bước 4 tự nhiên nhảy sang Bước 6, rồi đoạn cấu hình DMZ bị kẹp giữa phần WAN).
+
+Tui đã **"vút" lại toàn bộ văn phong, sắp xếp lại mạch logic chuẩn 100%** từ móng lên mái, không thừa không thiếu một chữ. Ông chỉ việc copy nguyên cái bản sạch đẹp này, in đậm rõ ràng, đem vào phòng thi là gõ máy cháy bàn phím luôn!
+
+---
+
+# 🏆 BÍ KÍP "THAY MÁU TOÀN TẬP" (ĐỔI IP WAN, LAN, DMZ) & TEST HỆ THỐNG
+
+**Giả định kịch bản đổi đề cực khó của thầy:**
+* **WAN (VMnet8 - NAT):** Chuyển sang dải tĩnh `172.16.0.100/24`.
+* **LAN (VMnet2):** Chuyển sang dải `10.0.1.0/24`.
+* **DMZ (VMnet4):** Chuyển sang dải `10.0.2.0/24` (IP máy Ubuntu đổi thành `10.0.2.10`).
+
+> **💡 Nguyên tắc "Bất Bại":** Làm từ gốc (VMware) ➡️ Tới nhánh (pfSense) ➡️ Tới lá (Win10/Ubuntu) ➡️ Cập nhật Luật (Rules) ➡️ Xóa rác (Clear Cache).
+
+---
+
+### BƯỚC 1: SỬA ĐƯỜNG MẠNG ẢO TRÊN VMWARE (MÁY THẬT)
+*Đây là thao tác "đổi biển tên đường" để các máy ảo nhận diện đúng dải mạng mới.*
+
+1.  Mở phần mềm VMware trên máy thật ➡️ **Edit ➡️ Virtual Network Editor** (Bấm *Change Settings* để lấy quyền Admin).
+2.  **Sửa mạng WAN (VMnet8 - NAT):**
+    * Chọn **VMnet8**. Ô *Subnet IP* nhập: **`172.16.0.0`**.
+    * **Cực kỳ quan trọng:** Bấm nút **NAT Settings...** ở giữa. Nhìn xem dòng **Gateway IP** là số mấy (thường VMware sẽ tự đổi thành **`172.16.0.2`**). **Ghi nhớ số này trong đầu.** Bấm OK.
+3.  **Sửa mạng LAN & DMZ:**
+    * Chọn **VMnet2 (Host-only):** Ô *Subnet IP* nhập **`10.0.1.0`** (Bỏ tích DHCP).
+    * Chọn **VMnet4 (Host-only):** Ô *Subnet IP* nhập **`10.0.2.0`** (Bỏ tích DHCP).
+4.  Bấm **Apply ➡️ OK** để đóng bảng.
+
+
+
+---
+
+### BƯỚC 2: SỬA IP LAN & LẤY LẠI QUYỀN ĐIỀU KHIỂN
+*Lúc này Win10 và pfSense vẫn đang "nhớ" IP cũ nên ông vẫn vào WebGUI được.*
+
+1.  Trên máy ảo Win10, vào WebGUI pfSense, chọn **Interfaces ➡️ LAN**.
+2.  Sửa *IPv4 Address* thành **`10.0.1.1`** ➡️ Bấm **Save ➡️ Apply Changes**. *(Trình duyệt sẽ xoay vòng và báo mất mạng - Hãy kệ nó!)*.
+3.  Bấm **Windows + R** trên Win10 ➡️ gõ `ncpa.cpl`.
+4.  Chuột phải vào card mạng ➡️ **Properties ➡️ IPv4**. Sửa thành:
+    * IP address: **`10.0.1.10`**
+    * Subnet mask: **`255.255.255.0`**
+    * Gateway: **`10.0.1.1`**
+    * DNS: **`10.0.1.1`**
+5.  **Refresh Card Mạng Win10:** Bấm OK lưu lại. Chuột phải vào card mạng chọn **Disable** (đợi xám đi) ➡️ Chuột phải chọn **Enable** để ép Win10 nhận dải mạng mới.
+6.  *Mở màn hình đen pfSense, gõ số `5` để **Reboot** một phát cho hệ thống dọn rác và nhận kết nối mới.*
+7.  Mở lại trình duyệt trên Win10, truy cập `http://10.0.1.1` để đăng nhập lại pfSense.
+
+---
+
+### BƯỚC 3: CẤU HÌNH IP TĨNH & GATEWAY CHO WAN
+*Phải làm kỹ bước này, nếu không pfSense sẽ có IP nhưng "mù đường" ra Internet.*
+
+1.  Trên menu dọc pfSense, chọn **Interfaces ➡️ WAN**.
+2.  Tìm dòng **IPv4 Configuration Type**, đổi từ `DHCP` sang **`Static IPv4`**.
+3.  Lăn chuột xuống mục *Static IPv4 Configuration*:
+    * **IPv4 Address:** Nhập IP tĩnh thầy yêu cầu (Ví dụ: **`172.16.0.100`**), Subnet mask kế bên chọn **`24`**.
+4.  **Khai báo Cửa ngõ (Gateway) ra Internet:**
+    * Dòng **IPv4 Upstream gateway** ➡️ Bấm nút **Add a new gateway**.
+    * **Gateway Name:** Gõ bừa (VD: `GW_VMWARE`).
+    * **Gateway IPv4:** Gõ **CHÍNH XÁC** cái số `.2` ông vừa ghi nhớ ở Bước 1 (Ví dụ: **`172.16.0.2`**).
+    * Bấm **Add**.
+5.  Lăn xuống cuối cùng, bấm **Save ➡️ Apply Changes**.
+
+
+
+---
+
+### BƯỚC 4: SỬA IP CỔNG DMZ & MÁY CHỦ UBUNTU
+
+1.  **Trên pfSense:** Vào **Interfaces ➡️ DMZ**.
+    * Sửa *IPv4 Address* thành **`10.0.2.1`**.
+    * **Trick Sốc điện card DMZ (Tránh kẹt mạng):** Kéo lên trên, **BỎ TÍCH** *Enable interface* ➡️ Save ➡️ Apply. Sau đó **TÍCH CHỌN LẠI** *Enable interface* ➡️ Save ➡️ Apply.
+2.  **Trên máy Ubuntu (Dùng màn hình đen):**
+    * Gõ: `sudo nano /etc/netplan/00-installer-config.yaml`
+    * Sửa `addresses` thành: **`[10.0.2.10/24]`**
+    * Sửa `via` (Gateway) thành: **`10.0.2.1`**
+    * Bấm **Ctrl+O** (Enter) để lưu, **Ctrl+X** để thoát.
+    * Gõ `sudo netplan apply` để nhận IP mới. *(Nếu ping không thông, hãy quay lại WebGUI pfSense dùng trick bật/tắt card DMZ ở trên 1 lần nữa).*
+
+
+
+---
+
+### BƯỚC 5: CẬP NHẬT LUẬT (NAT & FIREWALL)
+*Đổi IP xong thì phải sửa lại các bảng chỉ đường cũ.*
+
+1.  **Cập nhật Port Forward (Cho khách ngoài vào Web/SSH):**
+    * Vào **Firewall ➡️ NAT ➡️ Port Forward**.
+    * Mở các Rule SSH (2222) và Web (80) ra sửa.
+    * Mục *Redirect Target IP* ➡️ Đổi thành IP mới của Ubuntu là **`10.0.2.10`**. Bấm Save ➡️ Apply.
+2.  **Cập nhật Outbound NAT (Cho DMZ ra Internet):**
+    * Vào **Firewall ➡️ NAT ➡️ Outbound**.
+    * Sửa Rule của DMZ cũ thành dải mạng DMZ mới: **`10.0.2.0/24`**. Bấm Save ➡️ Apply.
+3.  **Cập nhật Alias (Nếu có làm bài chặn Rule):**
+    * Vào **Firewall ➡️ Aliases**, đổi IP Ubuntu bên trong thành **`10.0.2.10`**. Bấm Save ➡️ Apply.
+
+
+
+---
+
+## 🚀 QUY TRÌNH TEST "BẤT BẠI" (XÁC NHẬN THÀNH CÔNG)
+
+*Sau khi làm xong 5 bước trên, ông thực hiện đúng 4 bài test này để lấy điểm 10 tuyệt đối:*
+
+* **Bài Test 1: Thông nội bộ DMZ**
+    * **Ở đâu:** Màn hình đen Ubuntu.
+    * **Gõ lệnh:** `ping 10.0.2.1 -c 4` *(Ping đến Gateway pfSense)*.
+    * **Kết quả chuẩn:** Phải có dòng `64 bytes from 10.0.2.1...`. *(Nếu báo "Destination Host Unreachable", dùng trick tắt/bật card DMZ ở Bước 4).*
+* **Bài Test 2: Thông Internet & Phân giải tên miền (DNS)**
+    * **Ở đâu:** Màn hình đen Ubuntu.
+    * **Gõ lệnh:** `ping google.com -c 4`
+    * **Kết quả chuẩn:** Nhận IP của Google và reply ầm ầm. *(Nếu báo "Temporary failure in name resolution", kiểm tra lại Rule Firewall cổng DMZ và xem Outbound NAT Bước 5.2 đã sửa đúng chưa).*
+* **Bài Test 3: Test Web Server (Xuyên LAN sang DMZ)**
+    * **Ở đâu:** Máy ảo Win10 (LAN).
+    * **Thao tác:** Mở Chrome/Edge, gõ `http://10.0.2.10`.
+    * **Kết quả chuẩn:** Hiện dòng chữ "DMZ Neko 10 Diem" (hoặc trang web Nginx). Chứng tỏ Firewall đã cho phép luồng dữ liệu chạy xuyên vùng.
+* **Bài Test 4: Test NAT Port Forwarding (Khách từ Internet truy cập)**
+    * **Ở đâu:** Máy **Windows THẬT** (bên ngoài VMware).
+    * **Thao tác:**
+        1. Mở trình duyệt trên máy thật, gõ IP tĩnh cổng WAN: `http://172.16.0.100`. ➡️ Phải hiện trang Nginx.
+        2. Mở CMD trên máy thật gõ: `ssh neko@172.16.0.100 -p 2222`. ➡️ Phải kết nối được và đòi mật khẩu Ubuntu.
+    * **Kết quả chuẩn:** Cả Web và SSH đều vào ngon lành. *(Nếu bị "Connection Timed Out", check ngay Bước 5.1 xem Target IP chuẩn chưa, và cổng WAN có lỡ bật ô "Block private networks" không).*
+
+--- 
+
+scp -P 2222 -r "D:\yoga" neko172.16.0.100:/home/neko/
+sudo rm -rf /var/www/myweb/*
+sudo cp -r /home/neko/yoga/* /var/www/myweb/
+
+sudo chown -R www-data:www-data /var/www/myweb
+sudo chmod -R 755 /var/www/myweb
+sudo systemctl restart nginx

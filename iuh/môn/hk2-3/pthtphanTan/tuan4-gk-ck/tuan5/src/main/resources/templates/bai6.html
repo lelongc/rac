@@ -16,6 +16,8 @@
         .btn-add { background: #28a745; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; }
         .btn-delete { color: #dc3545; text-decoration: none; font-weight: bold; }
         .btn-delete:hover { border-bottom: 1px solid #dc3545; }
+        .btn-edit { color: #ffc107; text-decoration: none; font-weight: bold; margin-right: 15px; }
+        .btn-edit:hover { border-bottom: 1px solid #ffc107; }
         a { display: inline-block; margin-top: 20px; text-decoration: none; color: #007bff; }
     </style>
 </head>
@@ -46,6 +48,7 @@
                     <td th:text="${p.name}">Sản phẩm</td>
                     <td class="price" th:text="${#numbers.formatInteger(p.price, 3, 'POINT')} + ' VND'">10.000 VND</td>
                     <td>
+                        <a th:href="@{'/bai6/edit/' + ${p.id}}" class="btn-edit">Sửa</a>
                         <a th:href="@{'/bai6/delete/' + ${p.id}}" 
                            class="btn-delete" 
                            onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</a>

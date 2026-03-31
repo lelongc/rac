@@ -1,0 +1,92 @@
+Chúc mừng ông đã "về đích" thành công! Để lưu lại thành "bí kíp" chuẩn chỉnh sau này không phải mò lại, tui sẽ hệ thống hóa toàn bộ các bước "thần thánh" mà ông vừa thực hiện để nó "tự nhiên được" nhé.
+
+Dưới đây là quy trình 6 bước chuẩn từ A-Z:
+
+---
+
+### Bước 1: Tạo "Đường ống" mới trong VMware (Hạ tầng)
+Đây là bước đặt nền móng. Nếu đường ống sai thì nước (dữ liệu) không bao giờ chảy.
+1.  Mở **Virtual Network Editor** (chạy quyền Administrator).
+2.  Bấm **Add Network** ➡️ Chọn **VMnet4**.
+3.  Cấu hình VMnet4:
+    * Chọn **Host-only**.
+    * **BỎ TÍCH** "Use local DHCP service..." (để mình tự đặt IP tĩnh).
+    * **Subnet IP:** `192.168.2.0` | **Subnet Mask:** `255.255.255.0`.
+4.  Bấm **OK**.
+
+
+
+---
+
+### Bước 2: Cắm "Dây mạng" vào Máy ảo
+1.  **pfSense Settings:** Đảm bảo **Network Adapter 3** đang nối vào **Custom: VMnet4**.
+2.  **Ubuntu Settings:** Đảm bảo **Network Adapter 1** (duy nhất) đang nối vào **Custom: VMnet4**.
+> **Mẹo:** Hai máy phải "cắm chung lỗ" VMnet4 thì mới thấy nhau.
+
+---
+
+### Bước 3: Cấu hình cổng DMZ trên pfSense
+1.  Vào giao diện Web pfSense (từ Win10 LAN) ➡️ **Interfaces** ➡️ **Assignments**.
+2.  Thêm cổng mới (thường là `em2`) ➡️ Đặt tên là **DMZ**.
+3.  Vào **Interfaces** ➡️ **DMZ**:
+    * Tích chọn **Enable Interface**.
+    * IPv4 Configuration Type: **Static IPv4**.
+    * IPv4 Address: **192.168.2.1** / **24**.
+    * Bấm **Save** ➡️ **Apply Changes**.
+
+---
+
+### Bước 4: "Mở khóa" Firewall (Khúc này nãy ông làm được nè)
+Đây là nơi ông đã đổi từ `DMZ net` sang `Any` và nó chạy ngay lập tức.
+1.  Vào **Firewall** ➡️ **Rules** ➡️ Tab **DMZ**.
+2.  Bấm **Add** để tạo Rule mới:
+    * **Action:** `Pass` (Cho qua).
+    * **Protocol:** `Any` (Để vừa ping được, vừa tải dữ liệu được).
+    * **Source:** **`Any`** (Đây là "bí thuật" giúp mọi gói tin từ Ubuntu đều được chấp nhận).
+    * **Destination:** `Any`.
+3.  Bấm **Save** ➡️ **BẮT BUỘC bấm Apply Changes** (Cái nút màu vàng hiện ra trên cùng).
+
+
+
+---
+
+### Bước 5: Cài đặt IP cho Ubuntu (Netplan)
+Trên Ubuntu, ông đã sửa file `/etc/netplan/00-installer-config.yaml`:
+```yaml
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    ens33:
+      addresses:
+        - 192.168.2.10/24
+      routes:
+        - to: default
+          via: 192.168.2.1
+      nameservers:
+        addresses: [8.8.8.8, 1.1.1.1]
+```
+Gõ lệnh: `sudo netplan apply` và tắt firewall Ubuntu: `sudo ufw disable`.
+
+---
+
+### Bước 6: Cài đặt Nginx
+Khi `ping 8.8.8.8` đã thấy nhảy số ms:
+1.  `sudo apt update` (Để cập nhật danh sách gói).
+2.  `sudo apt install nginx -y` (Để tải và cài đặt Nginx).
+3.  `systemctl status nginx` (Kiểm tra xem nó đã "sống" chưa).
+
+---
+
+### Tại sao "tự nhiên được"?
+Thực ra là nhờ 3 yếu tố này kết hợp:
+1.  **Hạ tầng thông:** VMnet4 nối đúng giữa 2 máy.
+2.  **Cửa mở toang:** Rule `Source: Any` và `Protocol: Any` giúp pfSense không còn "khắt khe" với các gói tin từ Ubuntu nữa.
+3.  **Lệnh nạp đúng:** Ông đã bấm **Apply Changes**, giúp pfSense nạp ngay bộ luật mới vào hệ thống.
+
+---
+
+### Bước tiếp theo: "Show hàng" trang Web ra máy thật
+Hiện tại Nginx đã chạy, máy Win10 LAN đã vào được. Nhưng máy **Windows thật** của ông (ngoài VMware) vẫn chưa thấy được trang Web này đâu.
+
+**Ông có muốn tôi chỉ cách làm "Port Forward" trên pfSense để từ trình duyệt máy thật ông gõ IP là thấy ngay trang Web của con Ubuntu DMZ không?** Đây là bước "chốt hạ" để bài Lab của ông trở nên cực kỳ chuyên nghiệp đó!
