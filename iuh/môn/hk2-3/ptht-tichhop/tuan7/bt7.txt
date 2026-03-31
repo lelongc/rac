@@ -1,0 +1,95 @@
+Bài 1. Máy chủ RMI trả về chuỗi "Hello, World!"
+
+Mô tả. Viết một ứng dụng RMI trong đó client gọi phương thức từ server để nhận về chuỗi "Hello, World!".
+
+Yêu cầu
+
+Tạo interface chứa phương thức sayHello().
+
+Triển khai phương thức này ở server.
+
+Client gọi phương thức từ xa.
+
+
+
+Bài 2. Bài tập Tính Tổng Hai Số
+
+Mô tả. Viết ứng dụng RMI cho phép client gửi hai số nguyên a và b đến server, sau đó server trả về tổng a + b.
+
+Yêu cầu
+
+Interface chứa phương thức int add(int a, int b).
+
+Server triển khai phương thức này.
+
+Client nhập hai số từ bàn phím và gửi đến server để nhận kết quả.
+
+
+
+Bài 3. Bài tập Kiểm Tra Số Nguyên Tố
+
+Mô tả. Viết chương trình RMI giúp client kiểm tra xem một số có phải là số nguyên tố hay không.
+
+Yêu cầu
+
+Interface chứa phương thức boolean isPrime(int n).
+
+Server kiểm tra số nguyên tố và trả kết quả.
+
+Client nhập số và nhận kết quả từ server.
+
+
+
+Bài 4. Bài tập Quản Lý Danh Bạ
+
+Mô tả. Xây dựng một hệ thống quản lý danh bạ từ xa bằng RMI. Client có thể thêm, sửa, xóa và tìm kiếm liên
+
+hệ trong danh bạ lưu trên server.
+
+Yêu cầu
+
+Interface có các phương thức:
+
+void addContact(String name, String phone)
+
+String findContact(String name)
+
+boolean deleteContact(String name)
+
+Server lưu trữ danh bạ bằng HashMap<String, String>.
+
+Client nhập dữ liệu và gửiYêu cầu.
+
+
+
+Bài 5. Bài tập Chat Đơn Giản với RMI
+
+Mô tả. Tạo ứng dụng chat 1-1 giữa client và server thông qua RMI.
+
+Yêu cầu
+
+Interface có phương thức void sendMessage(String message).
+
+Server nhận tin nhắn từ client và phản hồi.
+
+Client nhập tin nhắn và hiển thị phản hồi.
+
+
+
+Bài 6. Bài tập Quản Lý Tài Khoản Ngân Hàng
+
+Mô tả. Xây dựng ứng dụng ngân hàng từ xa, cho phép client kiểm tra số dư, gửi tiền và rút tiền.
+
+Yêu cầu
+
+Interface có các phương thức:
+
+double getBalance()
+
+void deposit(double amount)
+
+boolean withdraw(double amount)
+
+Server quản lý tài khoản với số dư ban đầu.
+
+Client có thể gửi/rút tiền và kiểm tra số dư.
