@@ -1,0 +1,65 @@
+Bộ ba này chính là "linh hồn" của một quản trị viên mạng thực thụ nè ông! Làm xong 3 mục này là ông đã biến con pfSense từ một cái máy lọc đơn giản thành một hệ thống bảo mật có tư duy rồi đó.
+
+Cứ yên tâm là mấy cái này chỉ là tạo "vỏ" (Alias, Schedule) và gắn "luật" (Rules) nên không làm rớt mạng đâu. Ông làm theo trình tự này để lên hình cho đẹp nhé:
+
+---
+
+### 3.1) IP Alias: Gom nhóm để quản lý (Tạo vùng cấm/cho phép)
+Thay vì mỗi lần chặn là phải gõ từng cái IP lẻ tẻ, ông gom tụi nó vào một cái tên gọi là **Alias**.
+
+* **Cách làm:** Vào **Firewall ➡️ Aliases**.
+    1.  Bấm **Add**.
+    2.  **Name:** Gõ `MAY_BI_CHAN` (hoặc `SERVER_DMZ`).
+    3.  **Type:** Chọn `Host(s)`.
+    4.  **IP or FQDN:** Gõ IP con Ubuntu (`10.0.2.10`) hoặc các IP ông muốn gom nhóm.
+    5.  Bấm **Save ➡️ Apply Changes**.
+* **Chụp ảnh báo cáo:** Chụp cái màn hình danh sách Aliases hiện ra cái tên nhóm và danh sách IP bên trong. Cái này chứng minh ông biết cách "quy hoạch" mạng.
+
+
+
+---
+
+### 3.2) Schedule: Lập lịch (Cấm/Cho phép theo giờ)
+Cái này để "dọa" mấy đứa hay chơi game trong giờ làm việc nè.
+
+* **Cách làm:** Vào **Firewall ➡️ Schedules**.
+    1.  Bấm **Add**.
+    2.  **Schedule Name:** Gõ `GIO_LAM_VIEC`.
+    3.  **Description:** Gõ "Chặn web giờ hành chính".
+    4.  **Month:** Bấm chọn các tháng (thường là chọn hết).
+    5.  **Day:** Click chọn các ngày trong tuần (Thứ 2 đến thứ 6).
+    6.  **Time:** Ở dưới cái lịch, ông kéo chuột chọn khung giờ (VD: từ 08:00 đến 17:00).
+    7.  Bấm **Add Time** ➡️ Bấm **Save**.
+* **Chụp ảnh báo cáo:** Chụp cái bảng lịch có tô màu xanh các khung giờ ông đã chọn. Thầy nhìn vào là biết ông đã lên lịch chuẩn.
+
+
+
+---
+
+### 3.3) Cấu hình Rule (Cho phép ICMP, DNS, HTTP, HTTPS)
+Đây là bước "thả xích" cho các dịch vụ thiết yếu chạy qua. Ông nên làm ở tab **DMZ** hoặc **LAN** tùy đề bài yêu cầu nhé (tui ví dụ làm ở LAN).
+
+* **Cách làm:** Vào **Firewall ➡️ Rules ➡️ Tab LAN**.
+    * Bấm **Add (mũi tên hướng lên)** để Rule mới nằm trên cùng (ưu tiên cao nhất).
+    * Tạo lần lượt 4 Rule:
+        1.  **ICMP (Ping):** Protocol: `ICMP`, ICMP Subtype: `Any`.
+        2.  **DNS:** Protocol: `UDP` (hoặc TCP/UDP), Destination Port Range: `53`.
+        3.  **HTTP:** Protocol: `TCP`, Destination Port Range: `80`.
+        4.  **HTTPS:** Protocol: `TCP`, Destination Port Range: `443`.
+    * **Mẹo ăn điểm tuyệt đối:** Ở mỗi Rule, ông lăn xuống mục **Extra Options**, bấm nút **Display Advanced**.
+        * Ở phần **Schedule**, chọn cái `GIO_LAM_VIEC` vừa tạo ở mục 3.2.
+        * Ở phần **Source**, thay vì chọn `Any`, ông chọn `Single Host or Alias` rồi gõ cái `MAY_BI_CHAN` ở mục 3.1 vào.
+
+
+
+---
+
+### 📸 CÁCH CHỤP ẢNH "CHỐT HẠ" ĐỂ QUA MẮT THÀY:
+Sau khi làm xong bước 3.3, ông sẽ có một danh sách các dòng Rule nằm ngay ngắn. 
+
+1.  Ông hãy đảm bảo các Rule Protocol (`ICMP`, `UDP`, `TCP`) hiện rõ mồn một.
+2.  Ở cột **Schedule**, nó sẽ hiện cái biểu tượng đồng hồ nhỏ xíu (nghĩa là luật này chạy theo giờ). 
+3.  **Chụp ảnh:** Chụp toàn bộ cái bảng danh sách Rule này. 
+    * *Giải trình với thầy:* "Thưa thầy, em đã tạo Alias để gom nhóm máy, lập Schedule để quản lý thời gian, và áp dụng trực tiếp vào các Rule cho phép ICMP, DNS, Web để hệ thống bảo mật chặt chẽ nhất ạ!"
+
+Thầy mà nghe câu này là chỉ có nước ký tên cho ông 10 điểm thôi! Chụp xong chưa ông, còn mục nào nữa không?
