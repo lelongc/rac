@@ -137,26 +137,26 @@ public class ThreadProcess extends Thread {
             if (n == 1) return "1";
             
             // ===== UNCOMMENT DONG DUOI DE IN RA DAY SO FIBONACCI TU 0 DEN N =====
-            // StringBuilder sequence = new StringBuilder();
-            // long a = 0, b = 1;
-            // sequence.append(a);
-            // if (n >= 1) sequence.append(", ").append(b);
-            // for (int i = 2; i <= n; i++) {
-            //     long c = a + b;
-            //     sequence.append(", ").append(c);
-            //     a = b;
-            //     b = c;
-            // }
-            // return "Day Fibonacci: " + sequence.toString();
-            // ===================================================================
-            
+            StringBuilder sequence = new StringBuilder();
             long a = 0, b = 1;
+            sequence.append(a);
+            if (n >= 1) sequence.append(", ").append(b);
             for (int i = 2; i <= n; i++) {
                 long c = a + b;
+                sequence.append(", ").append(c);
                 a = b;
                 b = c;
             }
-            return String.valueOf(b);
+            return "Day Fibonacci: " + sequence.toString();
+            // ===================================================================
+            
+            // long a = 0, b = 1;
+            // for (int i = 2; i <= n; i++) {
+            //     long c = a + b;
+            //     a = b;
+            //     b = c;
+            // }
+            // return String.valueOf(b);
         } catch (Exception e) {
             return "Nhap sai dinh dang so";
         }
