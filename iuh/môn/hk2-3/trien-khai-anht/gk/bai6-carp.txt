@@ -1,0 +1,96 @@
+Ok, xóa bài nháp, làm lại một bản "Full HD không che" từ A đến Z cho ông! 
+
+Tui gộp toàn bộ các bước từ lúc Clone máy, đổi IP thật (LAN, WAN, DMZ, Gateway), tạo IP ảo (CARP), cho đến lúc Test thành một **Quy trình chuẩn kỹ sư**. Ông cứ in cái này ra, đem vào phòng thi gõ từ trên xuống dưới là tự động lấy 10 điểm, không trượt phát nào!
+
+Ghim chặt cái bảng IP này để không bị lú:
+> 📊 **BẢNG QUY HOẠCH IP HA (CARP)**
+> * **Mạng WAN:** Master (`172.16.0.100`) | Backup (`172.16.0.101`) | **IP ẢO: `172.16.0.111`** *(Gateway Upstream: `172.16.0.2`)*
+> * **Mạng LAN:** Master (`10.0.1.1`) | Backup (`10.0.1.2`) | **IP ẢO: `10.0.1.3`**
+> * **Mạng DMZ:** Master (`10.0.2.1`) | Backup (`10.0.2.2`) | **IP ẢO: `10.0.2.3`**
+
+Bắt đầu thực chiến!
+
+---
+
+### 🟢 GIAI ĐOẠN 1: CLONE MÁY VÀ ĐỔI IP "THẬT" (CÁCH LY MẠNG)
+
+**1. Nhân bản & Rút dây mạng:**
+* Tắt máy ảo **pfSense 1**.
+* Chuột phải pfSense 1 ➡️ **Manage ➡️ Clone** ➡️ Chọn **Create a full clone** ➡️ Đặt tên: **`pfSense 2`**.
+* **[CỰC KỲ QUAN TRỌNG]:** Khoan bật máy! Chuột phải vào **pfSense 2** ➡️ **Settings**. Bấm vào TẤT CẢ các Network Adapter (WAN, LAN, DMZ) ➡️ **BỎ TÍCH** ô **`Connected`** và **`Connect at power on`**. Bấm OK.
+* Bật máy pfSense 2 lên.
+
+**2. Đổi IP thật trên màn hình đen (pfSense 2):**
+Khi máy chạy xong hiện menu 0-16:
+* Gõ **`2`** (Set interface IP).
+* Chọn cổng **WAN** (thường số 1) ➡️ Nhập IP: **`172.16.0.101`** ➡️ Subnet: **`24`** ➡️ Upstream Gateway: Gõ **`172.16.0.2`** (Cái đuôi .2 của VMware ấy).
+* Lại gõ **`2`**. Chọn cổng **LAN** (thường số 2) ➡️ Nhập IP: **`10.0.1.2`** ➡️ Subnet: **`24`**.
+* Lại gõ **`2`**. Chọn cổng **DMZ** (thường số 3) ➡️ Nhập IP: **`10.0.2.2`** ➡️ Subnet: **`24`**.
+*(Các câu hỏi về IPv6, DHCP server cứ gõ `n` hoặc Enter cho qua).*
+
+**3. Cắm dây lại:**
+* Xong xuôi, vào lại **Settings** của pfSense 2 ➡️ **TÍCH CHỌN LẠI** tất cả các ô **`Connected`** để cắm cáp mạng.
+* Bật luôn con **pfSense 1** lên. Lúc này 2 con đã có IP khác nhau, sống hòa bình!
+
+---
+
+### 🟢 GIAI ĐOẠN 2: CHỐT LẠI GATEWAY WAN CHO PFSENSE 2 (Đề phòng lỗi)
+
+Từ máy ảo Win10, mở trình duyệt đăng nhập vào WebGUI của con số 2 (IP: `10.0.1.2`).
+1. Vào **Interfaces ➡️ WAN**.
+2. Kéo xuống phần **IPv4 Upstream gateway**.
+3. Bấm xổ xuống, chọn cái Gateway **`172.16.0.2`** (Có thể nó tên là GW_VMWARE hoặc gì đó do copy từ máy 1 sang). 
+4. Bấm **Save ➡️ Apply Changes**. 
+*(Mục này để chắc chắn con số 2 biết đường ra Internet).*
+
+---
+
+### 🟢 GIAI ĐOẠN 3: TẠO IP "ẢO" (CARP) TRÊN CẢ 2 MÁY
+
+
+
+**👉 LÀM TRÊN PFSENSE 1 (MASTER) - Đăng nhập `10.0.1.1`**
+1. Vào **Firewall ➡️ Virtual IPs ➡️ Add**.
+2. **Tạo cho LAN:** Type `CARP` | Interface `LAN` | IP: **`10.0.1.3/24`** | Pass: `pfsense` | VHID: **`1`** | **Base Skew:** **`0`**. Bấm Save.
+3. **Tạo cho DMZ:** Bấm Add. Type `CARP` | Interface `DMZ` | IP: **`10.0.2.3/24`** | Pass: `pfsense` | VHID: **`2`** | **Base Skew:** **`0`**. Bấm Save.
+4. **Tạo cho WAN:** Bấm Add. Type `CARP` | Interface `WAN` | IP: **`172.16.0.111/24`** | Pass: `pfsense` | VHID: **`3`** | **Base Skew:** **`0`**. Bấm Save ➡️ **Apply Changes**.
+
+**👉 LÀM TRÊN PFSENSE 2 (BACKUP) - Đăng nhập `10.0.1.2`**
+Làm y chang như trên, nhưng thông số **Base Skew phải đổi thành `100`**:
+1. **Tạo cho LAN:** IP: `10.0.1.3/24` | VHID: `1` | **Base Skew:** **`100`**. Save.
+2. **Tạo cho DMZ:** IP: `10.0.2.3/24` | VHID: `2` | **Base Skew:** **`100`**. Save.
+3. **Tạo cho WAN:** IP: `172.16.0.111/24` | VHID: `3` | **Base Skew:** **`100`**. Save ➡️ **Apply Changes**.
+
+---
+
+### 🟢 GIAI ĐOẠN 4: ÉP HỆ THỐNG XÀI IP ẢO (CÚ CHỐT)
+
+**1. Sửa Outbound NAT (Làm trên CẢ 2 MÁY pfSense):**
+* Vào **Firewall ➡️ NAT ➡️ Outbound**.
+* Đổi Mode sang **`Manual Outbound NAT...`** (Thủ công) ➡️ Save.
+* Ở các dòng Rule bên dưới, bấm Edit (Cây bút chì) từng dòng.
+* Tìm mục **Translation ➡️ Address**: Đổi từ `Interface Address` sang cái IP ảo **`172.16.0.111`**.
+* Bấm Save. Sửa hết các dòng rồi bấm **Apply Changes**.
+
+
+**2. Sửa Gateway cho máy con (Win10 & Ubuntu):**
+* **Win10:** Mở `ncpa.cpl` ➡️ IPv4 ➡️ Đổi Default Gateway và DNS thành IP ảo LAN: **`10.0.1.3`**. (Disable/Enable lại card mạng).
+* **Ubuntu (DMZ):** Gõ lệnh `sudo nano /etc/netplan/00-installer-config.yaml` ➡️ Sửa Gateway (`via`) thành IP ảo DMZ: **`10.0.2.3`** ➡️ Gõ `sudo netplan apply`.
+
+---
+
+### 🚀 GIAI ĐOẠN 5: BÀI TEST THẦN THÁNH LẤY 10 ĐIỂM
+
+Giờ là lúc ông biểu diễn phép thuật cho thầy xem:
+
+**Test 1: Mở bảng phong thần**
+* Đăng nhập WebGUI máy 1 và máy 2, vào **Status ➡️ CARP**.
+* Show cho thầy: "Máy 1 của em đang là **MASTER**, máy 2 đang là **BACKUP**".
+
+**Test 2: Rút ống thở máy chủ**
+* Trên Win10, mở CMD gõ lệnh: `ping 8.8.8.8 -t`. Nó đang Reply đều đặn.
+* Mở VMware, chuột phải vào máy ảo **pfSense 1 (Master) ➡️ Power Off** (Tắt cái rụp!).
+* **Kết quả:** Trên CMD Win10, lệnh ping sẽ báo `Request timed out` cỡ 1 nhịp, sau đó lập tức **Reply trở lại**. 
+* Quay sang màn hình WebGUI máy pfSense 2 (`10.0.1.2`), F5 lại trang Status CARP, nó đã tự động leo lên làm **MASTER**.
+
+Hệ thống của ông chính thức đạt cảnh giới cao nhất của đồ án mạng rồi đó! Cứ y bài này mà phang, cam đoan mượt từ đầu tới đuôi!

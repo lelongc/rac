@@ -1,0 +1,103 @@
+Á đù, "trùm cuối" thực sự xuất hiện rồi! Bài **High Availability (HA) - Multigateway** này chính là câu chốt hạ để phân loại sinh viên lấy điểm 10 tuyệt đối đó ông. 
+
+Nhưng trước khi múa phím, tui phải **đính chính nhẹ** một chút thuật ngữ để ông đi thi không bị thầy vặn vẹo:
+* **CARP (Common Address Redundancy Protocol):** Là chạy dự phòng phần cứng (Cần tới **2 máy ảo pfSense** chạy song song. Máy 1 chết thì máy 2 gánh).
+* **Multigateway (Multi-WAN):** Là chạy dự phòng đường truyền (Chỉ có **1 máy pfSense**, nhưng cắm **2 đường Internet**. Mạng Viettel đứt thì tự động nhảy sang FPT). 
+
+Dựa theo câu "thầy thêm 1 đường WAN bằng cách share network từ máy thật", thì 100% bài của ông là **Multi-WAN (Cân bằng tải / Dự phòng đường truyền)**. 
+
+Ghim chặt cái mô hình hiện tại, tui sẽ hướng dẫn ông cắm thêm đường WAN thứ 2 (WAN2) và cấu hình "nhảy mạng" tự động. Cực kỳ dễ hiểu, chiến luôn!
+
+---
+
+### BƯỚC 1: "SHARE MẠNG" TỪ MÁY THẬT (TẠO WAN 2)
+Thuật ngữ kỹ thuật của trò này là **ICS (Internet Connection Sharing)** trên Windows.
+
+1.  **Tạo ống dẫn (Trên VMware):**
+    * Vào **Virtual Network Editor**. Bấm Add Network tạo **`VMnet5`** (Chọn Host-only). 
+    * **CỰC KỲ QUAN TRỌNG:** TÍCH CHỌN ô *Connect a host virtual adapter...* (để nó tạo ra card mạng trên máy thật) và **BỎ TÍCH** ô *Use local DHCP...*. Bấm OK.
+2.  **Chia sẻ mạng (Trên máy thật):**
+    * Bấm `Windows + R` gõ `ncpa.cpl`.
+    * Tìm cái card mạng **đang có Internet** của máy thật (VD: Wi-Fi hoặc Ethernet).
+    * **Chuột phải** vào nó ➡️ **Properties** ➡️ Chuyển sang tab **Sharing**.
+    * Tích vào ô **`Allow other network users to connect...`**.
+    * Ở ô *Home networking connection* xổ xuống, ông chọn đúng cái tên **`VMware Network Adapter VMnet5`** vừa tạo. Bấm OK.
+    *(Lúc này, thằng VMnet5 đã trở thành một nhà mạng ISP thứ 2, tự động cấp IP dải `192.168.137.x` cho bất cứ ai cắm vào nó).*
+
+---
+
+### BƯỚC 2: CẮM "DÂY WAN2" VÀO PFSENSE
+1.  **Tắt (Shut down) máy ảo pfSense.**
+2.  Chuột phải máy pfSense ➡️ **Settings** ➡️ Bấm **Add...** ➡️ Chọn **Network Adapter** ➡️ Finish.
+3.  Cái Card mạng thứ 4 vừa xuất hiện, ông chỉnh nó về **`Custom (VMnet5)`**. Bấm OK.
+4.  Bật pfSense lên lại.
+
+---
+
+### BƯỚC 3: KHAI BÁO WAN2 TRÊN GIAO DIỆN PFSENSE
+Vào máy Win10, mở WebGUI của pfSense lên:
+
+1.  **Nhận diện cổng mới:**
+    * Vào **Interfaces ➡️ Assignments**.
+    * Ông sẽ thấy dòng *Available network ports* hiện ra một cái card mới (VD: `em3`). Bấm nút **Add** màu xanh lá.
+    * Nó sẽ tạo ra một cổng tên là **`OPT2`**. Bấm thẳng vào chữ `OPT2` đó để vào cấu hình.
+2.  **Cấu hình WAN2:**
+    * Tích chọn **Enable Interface**.
+    * **Description:** Đổi tên thành **`WAN2`**.
+    * **IPv4 Configuration Type:** Chọn **`DHCP`** (Vì thằng Windows máy thật sẽ tự động cấp IP cho đường này).
+    * Lăn xuống cuối bấm **Save ➡️ Apply Changes**.
+    
+
+---
+
+### BƯỚC 4: TẠO "LIÊN MINH" GATEWAY GROUP (CÚ CHỐT)
+Giờ ông có 2 đường ra Internet (WAN1 và WAN2). Ông phải gom chúng nó lại để pfSense biết cách chia bài.
+
+1.  **Khai báo "Người giám sát" (Monitor IP):**
+    * Vào **System ➡️ Routing ➡️ Gateways**. Ông sẽ thấy 2 cái Gateway (của WAN1 và WAN2).
+    * Bấm cái bút chì (Edit) cái Gateway WAN1: Dòng **Monitor IP**, gõ `8.8.8.8`. Save.
+    * Bấm Edit cái Gateway WAN2: Dòng **Monitor IP**, gõ `8.8.4.4`. Save & Apply.
+    *(Việc này bắt pfSense liên tục ping ra Google. Nếu đường nào ping xịt, nó tự hiểu là đứt cáp và gạch tên đường đó).*
+2.  **Lập nhóm (Gateway Groups):**
+    * Chuyển sang tab **Gateway Groups** ➡️ Bấm **Add**.
+    * **Group Name:** Đặt tên là `MULTI_WAN`.
+    * **Gateway Priority (Trọng số):**
+        * Nếu muốn **Cân bằng tải (Load Balancing - Cộng gộp băng thông):** Ở cả WAN1 và WAN2, ông đều chọn **`Tier 1`**.
+        * Nếu muốn **Dự phòng (Failover - WAN1 đứt mới xài WAN2):** WAN1 chọn **`Tier 1`**, WAN2 chọn **`Tier 2`**.
+    * **Trigger Level:** Chọn **`Member Down`**.
+    * Bấm **Save ➡️ Apply Changes**.
+
+---
+
+### BƯỚC 5: ÉP MẠNG LAN CHẠY QUA "LIÊN MINH"
+Đường đã xây xong, giờ ông phải bắt xe cộ (gói tin) từ mạng LAN đi qua con đường mới này.
+
+1.  Vào **Firewall ➡️ Rules ➡️ LAN**.
+2.  Tìm cái Rule "Cho phép tất cả" (Cái rule mặc định dưới cùng: *Default allow LAN to any*). Bấm Edit (cây bút chì).
+3.  Lăn xuống tít dưới cùng, bấm nút **Display Advanced**.
+4.  Kéo xuống tìm dòng **Gateway**. Mặc định nó đang là chữ `default`. Ông bấm xổ xuống và chọn cái nhóm **`MULTI_WAN`** vừa tạo.
+5.  Bấm **Save ➡️ Apply Changes**.
+
+
+
+**Xong! Trùm cuối đã bị hạ gục!** Để test, ông đứng ở máy Win10 (LAN) mở Youtube cho chạy liên tục. Sau đó, ra ngoài VMware, vào Settings của pfSense, **TẮT CÁI DẤU TÍCH `Connected`** của đường WAN1 đi (giả lập đứt cáp). Nếu video Youtube chỉ giật đúng 1 giây rồi chạy tiếp bình thường bằng đường WAN2 ➡️ Ông chính thức đạt cảnh giới 10 điểm tuyệt đối!
+
+Ông có muốn tui hướng dẫn luôn cách cấu hình phần HA (High Availability - Đồng bộ cấu hình 2 máy pfSense) lỡ đâu thầy đổi hứng hỏi sâu hơn về CARP không?
+
+
+nếu muốn dmz có mạng 
+
+🛠️ BƯỚC 1: ÉP DMZ CHẠY QUA "LIÊN MINH" MULTI-WAN
+Ông đã tạo cái nhóm MULTI_WAN rồi, giờ phải ép thằng DMZ dùng nó!
+
+Vào Firewall ➡️ Rules ➡️ DMZ.
+
+Tìm cái Rule cho phép DMZ ra Internet (thường là cái rule dưới cùng, có Source: DMZ net và Destination: Any).
+
+Bấm Edit (Cây bút chì).
+
+Lăn xuống tít dưới cùng, bấm nút Display Advanced.
+
+Kéo xuống tìm dòng Gateway. Bấm xổ xuống và chuyển từ default sang nhóm MULTI_WAN.
+
+Bấm Save ➡️ Apply Changes.

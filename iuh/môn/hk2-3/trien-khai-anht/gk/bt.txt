@@ -6,7 +6,7 @@
 3.3) Cấu hình rule cho phép ICMP, DNS, HTTP, HTTPs
 4) Cấu hình mạng dmz
 5) Nat: public Web
-6) High Availability - multigateway
+6) High Availability - multigateway - carp 
 7) High Availability - virtual IPs
 8) VPN
 9) IDS,IPS - Zabbix server & client

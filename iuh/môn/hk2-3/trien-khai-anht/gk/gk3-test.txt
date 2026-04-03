@@ -1,0 +1,63 @@
+Tuyệt vời! Tới bước này là ông đã xây xong một "pháo đài" mạng không thể công phá rồi. Để đi thi bảo vệ đồ án hay báo cáo bài Lab ăn trọn 10 điểm, ông phải thực hiện một màn "Demo" (Trình diễn) cực kỳ mượt mà. 
+
+Dưới đây là **Kịch bản Test Toàn Diện 4 Bước** để chứng minh cho thầy thấy hệ thống của ông "trâu bò" cỡ nào. 
+
+Ông hãy sắp xếp các cửa sổ trên màn hình máy tính sao cho nhìn thấy được tất cả cùng lúc nhé. Bắt đầu nào!
+
+---
+
+### 🟢 GIAI ĐOẠN CHUẨN BỊ (TRẠNG THÁI LÝ TƯỞNG)
+*Bật cả 4 máy: pfSense 1 (Master), pfSense 2 (Backup), Win10, và Ubuntu.*
+* **Trên pfSense 1:** Vào **Status ➡️ CARP** (Đảm bảo tất cả đang màu xanh lá **MASTER**).
+* **Trên pfSense 2:** Vào **Status ➡️ CARP** (Đảm bảo tất cả đang màu vàng **BACKUP**).
+* **Trên máy ảo Win10:** Mở sẵn 1 cửa sổ CMD, gõ: `ping 8.8.8.8 -t` (Để chạy liên tục).
+* **Trên máy thật (Bên ngoài VMware):** Mở 1 trình duyệt gõ IP Ảo WAN: `http://192.168.137.100` (Để sẵn trang Nginx đó, đừng tắt).
+
+---
+
+### 🚀 BÀI TEST 1: CHỨNG MINH CÂN BẰNG TẢI (MULTI-WAN FAILOVER)
+*Kịch bản: Bị máy xúc cắt đứt đường cáp quang số 1, mạng tự động nhảy sang đường số 2.*
+
+1. **Hành động:** Quay ra cửa sổ VMware, bấm chuột phải vào máy **pfSense 1 ➡️ Settings**. Ở cái Network Adapter của **WAN 1** (VMnet5), ông **BỎ TÍCH** ô *Connected* ➡️ Bấm OK.
+2. **Nghiệm thu:**
+   * Nhìn vào màn hình CMD của Win10. Dòng ping sẽ hiện `Request timed out` khoảng 1-3 dòng.
+   * Ngay sau đó, nó tự động báo `Reply from 8.8.8.8` trở lại bình thường.
+   * **Kết luận:** Win10 vẫn có mạng Internet nhờ đường WAN 2 gánh team. Tính năng Multi-WAN hoạt động hoàn hảo!
+3. **Phục hồi:** Vào Settings của pfSense 1, **TÍCH LẠI** ô *Connected* cho WAN 1 để mạng khôi phục trạng thái 2 đường truyền.
+
+---
+
+### 🚀 BÀI TEST 2: CHỨNG MINH DỰ PHÒNG HA (CARP FAILOVER) - ĐỈNH CAO!
+*Kịch bản: Đang hoạt động thì con Router Master (pfSense 1) bị sét đánh cháy đen. Con Backup (pfSense 2) tự động đứng lên gánh vác cả công ty.*
+
+1. **Hành động:** Ra ngoài VMware, bấm chuột phải vào máy **pfSense 1 ➡️ Power ➡️ Power Off** (Tắt nguồn tàn bạo, cúp điện ngang).
+2. **Nghiệm thu 1 (Mạng Nội Bộ):** * Nhìn vào CMD của máy ảo Win10. Ping tiếp tục rớt 2-3 nhịp (thời gian để con số 2 nhận ra con số 1 đã chết). 
+   * Sau đó, Ping `Reply` ầm ầm trở lại. Khách hàng nội bộ không hề biết Router đã sập.
+3. **Nghiệm thu 2 (Dịch Vụ DMZ):**
+   * Ra **máy thật** bên ngoài, bấm phím `F5` (Tải lại) trang Web `http://192.168.137.100`.
+   * Trang Nginx lập tức hiện ra. (Vì con pfSense 2 đã đỡ lấy cái IP Ảo cửa trước này và đẩy thẳng vào DMZ nhờ các Rule ông đã copy bằng tay).
+4. **Nghiệm thu 3 (Bảng Điều Khiển):**
+   * Vào WebGUI của con **pfSense 2** (Lúc này vô bằng `172.16.0.2` hay `172.16.0.100` đều được).
+   * Vào **Status ➡️ CARP**. Ông sẽ thấy toàn bộ các dòng chữ màu vàng BACKUP lúc nãy đã đồng loạt biến thành màu xanh lá **MASTER**.
+
+---
+
+### 🚀 BÀI TEST 3: CHỨNG MINH LUẬT ĐI TẮT (BYPASS RULE)
+*Kịch bản: Kiểm tra xem lệnh "ép ra Internet" của Multi-WAN có vô tình giết chết kết nối LAN sang DMZ hay không.*
+
+1. **Hành động:** Trong khi con pfSense 1 VẪN ĐANG TẮT, ông đứng trên máy ảo Win10, mở một cửa sổ CMD mới.
+2. **Gõ lệnh:** `curl http://192.168.200.10`
+3. **Nghiệm thu:** Nó xổ ra một nùi code HTML "Chào mừng...". 
+   * **Kết luận:** Luật Đi Tắt (Bypass Rule) ông để trên cùng đã phát huy tác dụng. Nó nhận diện được luồng dữ liệu đi nội bộ và không vứt ra ngoài Internet, đảm bảo LAN gọi DMZ thành công ngay cả khi hệ thống đang chạy bằng con Backup.
+
+---
+
+### 🚀 BÀI TEST 4: CHỨNG MINH SỰ PHỤC HỒI (FAILBACK)
+*Kịch bản: Thay xong Router mới, cắm điện lại, Master phải đòi lại "ngai vàng".*
+
+1. **Hành động:** Ra ngoài VMware, bật nguồn (Power On) lại con **pfSense 1**. Đợi khoảng 2-3 phút cho nó khởi động xong hẳn.
+2. **Nghiệm thu:**
+   * Vào WebGUI của pfSense 2, xem **Status ➡️ CARP**. Ông sẽ thấy nó tự động hạ mình xuống, biến lại thành màu vàng **BACKUP**.
+   * Nhìn dòng Ping trên Win10, có thể rớt 1 nhịp nhẹ lúc chuyển giao quyền lực rồi lại `Reply` như thường.
+
+Trình diễn mượt mà 4 bài test này trước mặt hội đồng, tui khẳng định luôn là không có ông thầy nào bắt bẻ được ông một lỗi nhỏ nào cả. Mọi ngóc ngách từ trong ra ngoài, từ rớt đường truyền đến chết máy chủ ông đều bao trọn gói hết rồi. Lưu kịch bản này ra file word để mai đi thi đọc cho tự tin nhé! Chúc ông thành công rực rỡ!

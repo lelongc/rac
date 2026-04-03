@@ -1,0 +1,101 @@
+Chúc mừng ông\! Đổi trình duyệt mà vô được tức là cái móng mạng của ông đã **đổ bê tông cốt thép cực kỳ vững chắc** rồi đó.
+
+Để giữ cho cái đầu luôn tỉnh táo và có tài liệu chuẩn để ôn thi, tui đã tổng hợp lại thành **"Bí Kíp 6 Bước Chốt Hạ"**. Bản hướng dẫn này lược bỏ mọi thứ rườm rà, tập trung đúng vào cốt lõi: **1 pfSense, 1 LAN, 1 DMZ, 1 WAN Share mạng**. Làm đúng trình tự này thì không bao giờ biết chữ "lỗi" là gì.
+
+Lưu ngay cái bảng IP và lộ trình này lại nhé\!
+
+-----
+
+### 📊 BẢNG QUY HOẠCH IP (KIM CHỈ NAM)
+
+| Vùng Mạng | Cổng VMware | IP pfSense | Gateway (Trạm thu phí) | IP Máy Con |
+| :--- | :--- | :--- | :--- | :--- |
+| **WAN** (Internet) | **VMnet5** *(Share mạng)* | `192.168.137.10` /24 | **`192.168.137.1`** *(IP của VMnet5 trên máy thật)* | *(Không có)* |
+| **LAN** (Nội bộ) | **VMnet2** *(Host-only)* | `172.16.0.1` /24 | **Không có (Bỏ trống)** | **Win10:** `172.16.0.10`<br>*(Trỏ GW về `172.16.0.1`)* |
+| **DMZ** (Máy chủ) | **VMnet4** *(Host-only)* | `192.168.200.1` /24 | **Không có (Bỏ trống)** | **Ubuntu:** `192.168.200.10`<br>*(Trỏ GW về `192.168.200.1`)* |
+
+-----
+
+### 🟢 BƯỚC 1: XÂY MÓNG VMWARE VÀ MÁY THẬT
+
+1.  **VMware (Virtual Network Editor):**
+      * Chỉnh Subnet VMnet2 thành `172.16.0.0` (Tắt DHCP).
+      * Chỉnh Subnet VMnet4 thành `192.168.200.0` (Tắt DHCP).
+      * Chỉnh Subnet VMnet5 thành `192.168.137.0` (Tắt DHCP).
+2.  **Máy thật (Windows):** \* Bấm `Windows + R` gõ `ncpa.cpl`.
+      * Chuột phải vào card có Internet ➡️ **Properties ➡️ Sharing**.
+      * Tích chọn Share mạng và cắm thẳng vào **VMware Network Adapter VMnet5**.
+3.  **Gắn dây máy ảo pfSense:** Cấu hình Adapter 1 (VMnet5), Adapter 2 (VMnet2), Adapter 3 (VMnet4).
+
+-----
+
+### 🟢 BƯỚC 2: ÉP IP CHO PFSENSE (TRÊN MÀN HÌNH ĐEN CONSOLE)
+
+Khởi động pfSense. Ở màn hình menu chữ trắng nền đen, gõ phím **`2`** để gán IP:
+
+1.  **WAN:** Gõ IP `192.168.137.10` ➡️ Subnet `24` ➡️ Gateway gõ **`192.168.137.1`**.
+2.  **LAN:** Gõ IP `172.16.0.1` ➡️ Subnet `24` ➡️ Gateway **Bỏ trống (Enter)** ➡️ DHCP chọn `n`.
+3.  **OPT1 (DMZ):** Gõ IP `192.168.200.1` ➡️ Subnet `24` ➡️ Gateway **Bỏ trống (Enter)**.
+
+-----
+
+### 🟢 BƯỚC 3: THIẾT LẬP MÁY CON & TẮT TƯỜNG LỬA
+
+Để LAN và DMZ nhìn thấy nhau, phải dọn dẹp các máy con trước:
+
+1.  **Máy Win10 (LAN):**
+      * Đổi IP thành `172.16.0.10`, Subnet `255.255.255.0`, Default Gateway `172.16.0.1`, DNS `8.8.8.8`.
+      * **Tắt tường lửa:** Vào Control Panel tắt Windows Defender Firewall để DMZ có thể ping ngược lại.
+2.  **Máy Ubuntu (DMZ):**
+      * Gõ `sudo nano /etc/netplan/00-installer-config.yaml`.
+      * Sửa IP thành `192.168.200.10/24`, Gateway (`via`) thành `192.168.200.1`.
+      * Gõ `sudo netplan apply`.
+
+-----
+
+### 🟢 BƯỚC 4: GỠ BẪY VÀ MỞ TƯỜNG LỬA (TRÊN WEBGUI PFSENSE)
+
+Vào Win10, mở trình duyệt gõ `http://172.16.0.1` để đăng nhập pfSense.
+
+**1. Gỡ bẫy chặn mạng Share (Cực kỳ quan trọng):**
+
+  * Vào **Interfaces ➡️ WAN**.
+  * Lăn xuống cuối cùng, **BỎ TÍCH** 2 ô: `Block private networks...` và `Block bogon networks`. ➡️ Bấm Save & Apply.
+
+**2. Mở đường LAN sang DMZ:**
+
+  * Vào **Firewall ➡️ Rules ➡️ LAN**.
+  * Add Rule mới: Action `Pass`, Protocol **`Any`**, Source `LAN net`, Destination `DMZ net`. ➡️ Bấm Save.
+
+**3. Mở đường DMZ ra Internet (để tải Nginx):**
+
+  * Vào **Firewall ➡️ Rules ➡️ DMZ** (Nếu chưa có tab này thì vào Interfaces ➡️ DMZ để Enable nó lên).
+  * Add Rule mới: Action `Pass`, Protocol `Any`, Source `DMZ net`, Destination `Any`. ➡️ Bấm Save & Apply.
+
+*(Lúc này đứng ở Ubuntu đã có Internet, gõ lệnh `sudo apt install nginx -y` để cài Web Server).*
+
+-----
+
+### 🟢 BƯỚC 5: NAT PORT FORWARD (MỞ WEB RA NGOÀI INTERNET)
+
+Để ông thầy ngồi từ máy thật (ngoài VMware) chấm điểm bài Web DMZ của ông:
+
+  * Vào **Firewall ➡️ NAT ➡️ Port Forward ➡️ Add**.
+  * Interface: `WAN`
+  * Protocol: `TCP`
+  * Destination: `WAN Address`
+  * Destination Port Range: `HTTP` (80)
+  * Redirect Target IP: **`192.168.200.10`** (IP Ubuntu).
+  * Redirect Target Port: `HTTP` (80).
+  * Lăn xuống bấm **Save ➡️ Apply Changes**.
+
+-----
+
+### 🟢 BƯỚC 6: BÀI TEST NGHIỆM THU 10 ĐIỂM
+
+1.  **Test từ Win10 (LAN):** \* Mở trình duyệt (Dùng Cửa sổ ẩn danh hoặc Internet Explorer để tránh lỗi tự thêm chữ `s`).
+      * Gõ: **`http://192.168.200.10`** ➡️ Trang Nginx hiện ra. (Web nội bộ thông).
+2.  **Test từ Máy tính thật (Nơi đang chạy VMware):**
+      * Mở trình duyệt máy thật, gõ IP của WAN pfSense: **`http://192.168.137.10`** ➡️ Trang Nginx hiện ra. (NAT Port Forward thông).
+
+Xong\! Bất cứ khi nào hệ thống bị lỗi tùm lum, ông cứ đập đi và lấy đúng cái sườn này ra ốp vào là hệ thống lại "hồi sinh" ngay tắp lự. Chúc ông mai bảo vệ đồ án/bài Lab mượt mà không tì vết nhé\!

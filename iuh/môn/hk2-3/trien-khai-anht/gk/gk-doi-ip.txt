@@ -1,0 +1,70 @@
+Hiểu ý ông 100%! Bỏ qua hết mọi lý thuyết dông dài. Đi thi thầy chỉ cho 4 dải mạng, ông lấy tờ giấy nháp ra tự "chế" thành cái bảng sau, rồi cứ y theo công thức bên dưới mà ráp số vào. Nhắm mắt làm cũng 10 điểm!
+
+Quy ước ký hiệu để điền: `[Dải WAN1]`, `[Dải WAN2]`, `[Dải LAN]`, `[Dải DMZ]`.
+
+---
+
+### 📝 BẢNG 1: DỊCH ĐỀ THI RA GIẤY NHÁP (Làm trước khi đụng máy)
+*Cách tạo IP: Lấy 3 số đầu của dải mạng thầy cho, ghép với các số đuôi chuẩn bên dưới.*
+
+| Cổng mạng | Gateway (Trạm mạng) | IP pfSense 1 (Master) | IP pfSense 2 (Backup) | 🌟 IP ẢO (VIP) | IP Máy con |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **WAN 1** | `[Dải WAN1].1` | `[Dải WAN1].10` | `[Dải WAN1].11` | 👉 **`[Dải WAN1].100`** | *(Không)* |
+| **WAN 2** | `[Dải WAN2].1` | `[Dải WAN2].2` | `[Dải WAN2].3` | *(Không làm ảo)* | *(Không)* |
+| **LAN** | *(Bỏ trống)* | `[Dải LAN].1` | `[Dải LAN].2` | 👉 **`[Dải LAN].100`** | **Win10:** `[Dải LAN].10` |
+| **DMZ** | *(Bỏ trống)* | `[Dải DMZ].1` | `[Dải DMZ].2` | 👉 **`[Dải DMZ].100`** | **Ubuntu:** `[Dải DMZ].10` |
+
+---
+
+### ⚙️ BẢNG 2: CÁC BƯỚC THỰC HÀNH "NHẮM MẮT RÁP SỐ"
+
+#### BƯỚC 1: GÁN IP TRÊN MÀN HÌNH ĐEN (Làm cho cả 2 pfSense)
+*Nhấn phím `2` và gõ chính xác các số ở Bảng 1 vào.*
+* **WAN 1:** IP `[Dải WAN1].10` (hoặc .11) ➡️ Upstream Gateway: `[Dải WAN1].1`
+* **WAN 2:** IP `[Dải WAN2].2` (hoặc .3) ➡️ Upstream Gateway: `[Dải WAN2].1`
+* **LAN:** IP `[Dải LAN].1` (hoặc .2) ➡️ Upstream Gateway: **(Bấm Enter bỏ qua)**
+* **DMZ:** IP `[Dải DMZ].1` (hoặc .2) ➡️ Upstream Gateway: **(Bấm Enter bỏ qua)**
+
+#### BƯỚC 2: THIẾT LẬP MÁY CON
+* **Win10:** IP `[Dải LAN].10` ➡️ Default Gateway: **`[Dải LAN].100`** *(Tắt Firewall Win10)*
+* **Ubuntu:** IP `[Dải DMZ].10` ➡️ Gateway (`via`): **`[Dải DMZ].100`**
+
+---
+*(Từ Bước 3 trở đi làm trên WebGUI. Cứ làm xong máy 1 thì qua máy 2 làm y chang).*
+
+#### BƯỚC 3: MỞ TƯỜNG LẠI CHO WAN & DMZ
+1. **Gỡ bẫy mạng:** Vào **Interfaces ➡️ WAN** (và **WAN 2**). Kéo xuống cùng, **BỎ TÍCH** `Block private networks...` và `Block bogon...`. (Save & Apply).
+2. **Cho DMZ ra mạng:** Vào **Firewall ➡️ Rules ➡️ DMZ**. Add Rule ➡️ Action: `Pass` / Protocol: `Any` / Source: `DMZ net` / Dest: `Any`. (Save & Apply). *(Vào Ubuntu cài Nginx ngay lúc này).*
+
+#### BƯỚC 4: TẠO IP ẢO (CARP VIP)
+Vào **Firewall ➡️ Virtual IPs ➡️ Add**. Tạo 3 cái:
+1. Interface: `WAN` ➡️ IP: **`[Dải WAN1].100`** / 24 ➡️ VHID: `1` ➡️ Password: `123`
+2. Interface: `LAN` ➡️ IP: **`[Dải LAN].100`** / 24 ➡️ VHID: `2` ➡️ Password: `123`
+3. Interface: `DMZ` ➡️ IP: **`[Dải DMZ].100`** / 24 ➡️ VHID: `3` ➡️ Password: `123`
+> *Lưu ý Base Skew: Máy 1 gõ `0`. Máy 2 gõ `100`.* (Save & Apply).
+
+
+
+#### BƯỚC 5: CÂN BẰNG TẢI (MULTI-WAN) & RULE ĐI TẮT
+1. **Tạo Group:** Vào **System ➡️ Routing ➡️ Gateway Groups ➡️ Add**. Tên `MULTI_WAN`. Chọn WAN 1 `Tier 1` và WAN 2 `Tier 1`. Trigger `Member Down`. Save.
+2. **Rule Đi Tắt (Số 1):** Vào **Firewall ➡️ Rules ➡️ LAN**. Bấm Add (Mũi tên lên). Action: `Pass` / Protocol: `Any` / Source: `LAN net` / Dest: `DMZ net` / Advanced ➡️ Gateway: **`default (*)`**. Save.
+3. **Rule Ép Mạng (Số 2):** Vẫn ở tab LAN. Sửa Rule "Default Allow LAN to any". Đổi Protocol thành `Any` / Advanced ➡️ Gateway: **`MULTI_WAN`**. (Save & Apply).
+
+
+
+#### BƯỚC 6: NAT OUTBOUND & PORT FORWARD
+1. **Ra mạng bằng IP Ảo:** Vào **Firewall ➡️ NAT ➡️ Outbound**. Chọn **Manual...** ➡️ Save. Lần lượt Edit tất cả các Rule bên dưới: Mục *Translation Address* xổ xuống chọn IP Ảo: **`[Dải WAN1].100`**.
+2. **Đưa Web ra ngoài:** Vào **Firewall ➡️ NAT ➡️ Port Forward ➡️ Add**.
+   * Interface: `WAN`
+   * Destination: **`[Dải WAN1].100 (Virtual IP)`**
+   * Dest. Port Range: `HTTP` (hoặc `8888` tùy đề)
+   * Redirect Target IP: **`[Dải DMZ].10`** (IP Ubuntu)
+   * Redirect Target Port: `HTTP` (80). (Save & Apply).
+
+#### BƯỚC 7: NAT REFLECTION & HOÀN THIỆN PFSENSE 2
+1. **Đi Vòng (Để LAN gõ được IP mặt tiền):** Vào **System ➡️ Advanced ➡️ Firewall & NAT**. Kéo xuống NAT Reflection chọn **`Pure NAT`** và **Tích 2 ô vuông** bên dưới nó. (Save).
+2. **QUAN TRỌNG TRÊN PFSENSE 2:** Vì làm thủ công không có SYNC, trên máy 2 ông BẮT BUỘC phải vào **Firewall ➡️ Rules ➡️ WAN** tự tay Add một Rule: `Pass` / Protocol `TCP` / Dest IP: **`[Dải DMZ].10`** / Port `80`.
+
+---
+
+Chỉ cần đúng tờ giấy A4 này. Thầy cho dải nào, ông ráp số vào Bảng 1 rồi cứ thế chạy từ trên xuống dưới, cam đoan hệ thống thông suốt từ trong ra ngoài, từ máy tính ảo tới máy tính thật không trượt một nhịp nào! Đi thi vác theo bản này là "trùm cuối" phòng Lab luôn ông ơi!

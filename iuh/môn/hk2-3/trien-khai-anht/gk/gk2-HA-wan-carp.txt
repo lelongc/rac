@@ -1,0 +1,72 @@
+Tuyệt vời! Ông đã qua được cái ải khó nhất là làm cho móng mạng thông suốt. Giờ nền móng đã vững, mình nâng cấp hệ thống lên "Level Kỹ Sư" với **WAN 2 (Cân bằng tải)** và **CARP (High Availability - Dự phòng)**.
+
+**Lưu ý nhỏ nhưng chí mạng:** Để làm được CARP (IP Ảo dự phòng), ông **BẮT BUỘC phải có 2 máy pfSense** (Master và Backup). 
+
+Đây là lộ trình nâng cấp từ hệ thống 1 máy hiện tại của ông lên bản Full HD 2 máy:
+
+### 🛠️ BƯỚC 1: LẮP THÊM "ĐƯỜNG MẠNG THỨ 2" (WAN 2) CHO PFSENSE 1
+*Đang có WAN 1 (Share mạng), giờ mình thêm WAN 2 (VMware NAT).*
+
+1. **Trên VMware:** Tắt pfSense 1 đi, vào Settings Add thêm 1 cái Network Adapter nữa (chọn **VMnet8 - NAT**). 
+2. **Khởi động pfSense 1, vào màn hình đen (Console):**
+   * Bấm phím **`1`** (Assign Interfaces) để nhận diện cái card WAN 2 mới thêm vào (Thường tên là `em3` hoặc `OPT2`).
+   * Bấm phím **`2`** (Set IP address) để gán IP cho nó: Gõ IP **`192.168.100.2`** ➡️ Subnet **`24`** ➡️ Gateway gõ **`192.168.100.1`**.
+3. **Vào WebGUI pfSense (từ Win10):**
+   * Vào **System ➡️ Routing ➡️ Gateways**: Đảm bảo thấy 2 cái Gateway của WAN1 và WAN2 đang màu xanh (Online).
+   * Vào tab **Gateway Groups ➡️ Add**: Đặt tên `MULTI_WAN`. Ở dưới chọn cả WAN1 và WAN2 đều là **Tier 1**. Trigger Level: `Member Down`. Bấm Save & Apply.
+   
+   * Vào **Firewall ➡️ Rules ➡️ LAN**: Sửa cái Rule dưới cùng (LAN to Any), kéo xuống **Advanced Options ➡️ Gateway**, chọn cái **`MULTI_WAN`**. (Làm y chang cho tab DMZ). Bấm Apply.
+*(Tới đây là ông đã có hệ thống 2 đường truyền Internet, đứt đường này chạy đường kia).*
+vô cái rule lan ra internet , advance - default gateway thành cái group wan 
+
+---
+
+### 🛠️ BƯỚC 2: NHÂN BẢN "ĐÀN EM" (PFSENSE 2)
+1. Tắt pfSense 1. Trên VMware, chuột phải vào máy pfSense 1 chọn **Manage ➡️ Clone** để nhân bản ra máy **pfSense 2**.
+2. **Ngắt mạng máy 2:** Trước khi bật máy 2, vào Settings của nó, **BỎ TÍCH** mục "Connected" ở tất cả 4 card mạng. (Để tránh nó tranh giành IP với máy 1).
+3. Bật pfSense 2 lên, vào màn hình đen gõ phím **`2`** để đổi đuôi IP sang số 2:
+   * **LAN:** `172.16.0.2` / GW: Bỏ trống
+   * **DMZ:** `192.168.200.2` / GW: Bỏ trống
+   * **WAN 1:** `192.168.137.11` / GW: `192.168.137.1`
+   * **WAN 2:** `192.168.100.3` / GW: `192.168.100.1`
+4. Đổi IP xong, vào lại Settings của VMware **TÍCH LẠI** "Connected" cho cả 4 card mạng của pfSense 2.
+5. Bật lại pfSense 1 chạy song song.
+
+---
+
+### 🛠️ BƯỚC 3: TẠO IP ẢO CARP (LINH HỒN CỦA DỰ PHÒNG)
+Ông mở trình duyệt trên Win10, đăng nhập vào WebGUI của pfSense 1 (`172.16.0.1`) và pfSense 2 (`172.16.0.2`) làm song song.
+
+1. **Trên pfSense 1 (Master):**
+   * Vào **Firewall ➡️ Virtual IPs ➡️ Add**.
+   * **Tạo ảo WAN 1:** Type `CARP` | Interface `WAN` | IP **`192.168.137.100`** / 24 | Password `pfsense` | VHID `1` | Base Skew **`0`**. (Save)
+   * **Tạo ảo LAN:** Type `CARP` | Interface `LAN` | IP **`172.16.0.100`** / 24 | Password `pfsense` | VHID `2` | Base Skew **`0`**. (Save)
+   * **Tạo ảo DMZ:** Type `CARP` | Interface `DMZ` | IP **`192.168.200.100`** / 24 | Password `pfsense` | VHID `3` | Base Skew **`0`**. (Save & Apply).
+   
+
+2. **Trên pfSense 2 (Backup):**
+   * Lặp lại y chang Bước 1, tạo đúng 3 cái IP đó, cùng VHID, cùng Password, nhưng chỗ **Base Skew ông gõ `100`**. (Save & Apply).
+
+---
+
+### 🛠️ BƯỚC 4: NẮN LẠI ĐƯỜNG ĐI (QUAN TRỌNG NHẤT)
+Vì IP đã đổi sang Ảo (.100), ông phải sửa lại luật, nếu không mạng sẽ rớt. **Làm cái này trên CẢ 2 MÁY PFSENSE:**
+
+1. **Sửa Outbound NAT (Để ra Internet bằng IP Ảo):**
+   * Vào **Firewall ➡️ NAT ➡️ Outbound**.
+   * Chọn **Manual Outbound NAT** ➡️ Save.
+   * Edit tất cả các Rule bên dưới: Chỗ **Translation ➡️ Address**, bấm xổ xuống chọn IP ảo WAN 1: **`192.168.137.100`**. Bấm Apply.
+2. **Sửa Port Forward (Để Web ra ngoài bằng IP Ảo):**
+   * Vào **Firewall ➡️ NAT ➡️ Port Forward**.
+   * Edit cái Rule mở port Web.
+   * Chỗ **Destination**: Chọn cái IP Ảo **`192.168.137.100 (Virtual IP)`**. Bấm Apply. này làm cho 2 bên pfsense 
+
+---
+
+### 🛠️ BƯỚC 5: CHỐT SỔ MÁY CON
+1. **Trên Win10:** Mở `ncpa.cpl`, sửa Default Gateway và DNS thành cái IP Ảo của LAN là **`172.16.0.100`**.
+2. **Trên Ubuntu:** Mở `netplan`, sửa cái Gateway (`via`) thành cái IP Ảo của DMZ là **`192.168.200.100`**. Lệnh: `sudo netplan apply`.
+
+Vậy là xong thủ tục "lên đỉnh" hệ thống! 
+* Vào **Status ➡️ CARP** trên pfSense 1 sẽ thấy nó báo xanh lá **MASTER**. 
+* Rút dây mạng con 1, Win10 vẫn lướt mạng, Ubuntu vẫn phát Web Nginx bình thường qua con số 2. Quá đỉnh cho một bài Lab! Ông ốp vào làm luôn cho nóng.

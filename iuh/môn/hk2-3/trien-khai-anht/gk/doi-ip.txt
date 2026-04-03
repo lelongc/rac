@@ -131,3 +131,104 @@ sudo cp -r /home/neko/yoga/* /var/www/myweb/
 sudo chown -R www-data:www-data /var/www/myweb
 sudo chmod -R 755 /var/www/myweb
 sudo systemctl restart nginx
+
+
+Tuyệt vời! Cái tài liệu ông vừa tổng hợp ở trên là **chuẩn không cần chỉnh**, cứ y như sách giáo khoa rồi. Đem nguyên cái đó vào phòng thi là dứt điểm gọn gàng phần Mạng cơ bản, NAT, Port Forward và Web Server.
+
+Bây giờ, tui sẽ viết tiếp cho ông phần **"Hiệp 2: Đánh boss Multi-WAN và CARP"** nối tiếp ngay sau cái đoạn copy SCP Web Nginx của ông. Mọi IP tui dùng dưới đây đều bám sát 100% cái dải IP ông vừa chốt (WAN 172, LAN 10.0.1, DMZ 10.0.2) để ông không bị rối.
+
+Ông copy nguyên cái phần dưới đây, dán nối tiếp vào file tài liệu của ông là có ngay "Bí kíp độc tôn" full 100% bài thi nhé!
+
+---
+
+# 🏆 PHẦN 2: CHINH PHỤC TRÙM CUỐI (MULTI-WAN & HA CARP)
+
+Sau khi hệ thống Web nội bộ đã chạy ngon lành, ta tiến hành nâng cấp hệ thống chống đứt cáp và chống chết máy chủ.
+
+## BÀI TẬP 1: MULTI-WAN (CÂN BẰNG TẢI 2 ĐƯỜNG TRUYỀN)
+*Mục đích: Cắm thêm đường mạng thứ 2 cho pfSense. Đứt mạng 1 thì tự nhảy sang mạng 2.*
+
+### BƯỚC 1: TẠO WAN 2 BẰNG CÁCH SHARE MẠNG TỪ MÁY THẬT
+1.  Mở **Virtual Network Editor** (Trên máy thật).
+2.  Bấm **Add Network** ➡️ Chọn **VMnet5**.
+3.  Tích chọn **Host-only** ➡️ **TÍCH CHỌN LẠI** ô `Connect a host virtual adapter to this network` ➡️ **BỎ TÍCH** ô `Use local DHCP`. Bấm OK.
+4.  Bấm `Windows + R` trên máy thật, gõ `ncpa.cpl`.
+5.  Chuột phải vào card mạng **đang có Internet** (Wi-Fi/Ethernet) ➡️ **Properties ➡️ Sharing**.
+6.  Tích vào ô *Allow other network users...* ➡️ Chọn cái mạng **VMware Network Adapter VMnet5** vừa tạo. Bấm OK.
+
+### BƯỚC 2: GẮN WAN 2 VÀO PFSENSE
+1.  Tắt máy ảo pfSense.
+2.  Vào Settings pfSense ➡️ Add ➡️ Network Adapter ➡️ Chọn **Custom: VMnet5**.
+3.  Bật pfSense lên.
+4.  Vào WebGUI pfSense ➡️ **Interfaces ➡️ Assignments**.
+5.  Bấm **Add** để nhận card mới (`OPT1`). Bấm vào nó ➡️ Tích Enable ➡️ Đổi tên thành **`WAN2`** ➡️ IPv4 Configuration Type: **`DHCP`** ➡️ Save ➡️ Apply.
+
+### BƯỚC 3: TẠO LIÊN MINH GATEWAY (CÚ CHỐT)
+1.  Vào **System ➡️ Routing ➡️ Gateways**.
+    * Edit Gateway WAN1: Dòng Monitor IP gõ `8.8.8.8`. Save.
+    * Edit Gateway WAN2: Dòng Monitor IP gõ `8.8.4.4`. Save & Apply.
+2.  Chuyển sang tab **Gateway Groups** ➡️ Bấm Add.
+    * Group Name: **`MULTI_WAN`**.
+    * Gateway Priority: WAN1 chọn `Tier 1`, WAN2 chọn `Tier 1` (Cân bằng tải) hoặc `Tier 2` (Dự phòng).
+    * Trigger Level: `Member Down`. Bấm Save ➡️ Apply.
+3.  **Ép LAN và DMZ xài liên minh mới:**
+    * Vào **Firewall ➡️ Rules ➡️ LAN**. Edit cái Rule "Default allow LAN to any" (dưới cùng). Lăn xuống chọn Display Advanced ➡️ Gateway: Xổ xuống chọn **`MULTI_WAN`**. Save.
+    * Chuyển sang tab **DMZ**. Edit Rule "Allow Any". Lăn xuống Display Advanced ➡️ Gateway: Xổ xuống chọn **`MULTI_WAN`**. Save ➡️ Apply.
+
+---
+
+## BÀI TẬP 2: HIGH AVAILABILITY (HA) - CARP
+*Mục đích: Dùng 2 máy pfSense. Máy 1 sập thì máy 2 gánh. Win10 không bị rớt mạng.*
+
+> 📊 **BẢNG QUY HOẠCH IP CARP (CẦN GHI NHỚ)**
+> * **LAN:** Máy 1 (`10.0.1.1`) | Máy 2 (`10.0.1.2`) | **IP ẢO CHUNG: `10.0.1.3`**
+> * **DMZ:** Máy 1 (`10.0.2.1`) | Máy 2 (`10.0.2.2`) | **IP ẢO CHUNG: `10.0.2.3`**
+> * **WAN:** Máy 1 (`172.16.0.100`) | Máy 2 (`172.16.0.101`) | **IP ẢO CHUNG: `172.16.0.111`**
+
+### BƯỚC 1: CLONE MÁY & CÁCH LY (CỰC KỲ QUAN TRỌNG)
+1.  Tắt máy **pfSense 1**.
+2.  Chuột phải pfSense 1 ➡️ **Manage ➡️ Clone** ➡️ Create full clone ➡️ Đặt tên: **`pfSense 2`**.
+3.  Vào Settings của **pfSense 2**: Chọn vào tất cả các card mạng (WAN, LAN, DMZ, WAN2) ➡️ **BỎ TÍCH** ô `Connected` và `Connect at power on`. Bấm OK.
+4.  Bật **pfSense 2** lên.
+
+### BƯỚC 2: ĐỔI IP CHO PFSENSE 2 (Tránh xung đột)
+Trên màn hình đen của pfSense 2, gõ **`2`** (Set interface IP):
+1.  Chọn cổng **LAN**: Đổi thành **`10.0.1.2`** / Subnet `24`.
+2.  Chọn cổng **DMZ**: Đổi thành **`10.0.2.2`** / Subnet `24`.
+3.  Chọn cổng **WAN**: Đổi thành **`172.16.0.101`** / Subnet `24` / Upstream Gateway: **`172.16.0.2`**.
+4.  Làm xong, vào lại Settings pfSense 2, **TÍCH CHỌN LẠI** ô `Connected` cho tất cả card mạng. Bật luôn **pfSense 1** lên.
+
+### BƯỚC 3: TẠO IP ẢO CARP TRÊN CẢ 2 MÁY
+
+**👉 Làm trên pfSense 1 (`10.0.1.1`):**
+1.  Vào **Firewall ➡️ Virtual IPs ➡️ Add**.
+2.  **LAN:** Type `CARP` | Interface `LAN` | Address: **`10.0.1.3/24`** | Pass: `pfsense` | VHID: `1` | Base Skew: **`0`**. (Save)
+3.  **DMZ:** Type `CARP` | Interface `DMZ` | Address: **`10.0.2.3/24`** | Pass: `pfsense` | VHID: `2` | Base Skew: **`0`**. (Save)
+4.  **WAN:** Type `CARP` | Interface `WAN` | Address: **`172.16.0.111/24`** | Pass: `pfsense` | VHID: `3` | Base Skew: **`0`**. (Save & Apply).
+
+**👉 Làm trên pfSense 2 (`10.0.1.2`):**
+Làm y chang như trên, nhưng **Base Skew điền `100`**:
+1.  **LAN:** IP `10.0.1.3/24` | VHID: `1` | Base Skew: **`100`**. (Save).
+2.  **DMZ:** IP `10.0.2.3/24` | VHID: `2` | Base Skew: **`100`**. (Save).
+3.  **WAN:** IP `172.16.0.111/24` | VHID: `3` | Base Skew: **`100`**. (Save & Apply).
+*(Mẹo: Check lại mục Interfaces > WAN xem Upstream Gateway đã là `172.16.0.2` chưa).*
+
+### BƯỚC 4: ÉP HỆ THỐNG XÀI IP ẢO (CÚ CHỐT 10 ĐIỂM)
+1.  **Chỉnh Outbound NAT (Phải làm trên CẢ 2 MÁY pfSense):**
+    * Vào **Firewall ➡️ NAT ➡️ Outbound**.
+    * Chuyển sang **`Manual Outbound NAT...`** (Thủ công) ➡️ Save.
+    * Bấm nút Edit (cây bút) vào tất cả các dòng Rule bên dưới.
+    * Mục **Translation ➡️ Address**: Đổi thành IP WAN Ảo **`172.16.0.111`**.
+    * Bấm Save. Sửa hết các dòng rồi **Apply Changes**.
+2.  **Đổi Gateway cho máy con:**
+    * **Win10:** Mở `ncpa.cpl` ➡️ Đổi Default Gateway và DNS thành IP ảo LAN: **`10.0.1.3`**. (Tắt bật lại card mạng).
+    * **Ubuntu:** Sửa file `/etc/netplan/00-installer-config.yaml` ➡️ Gateway (`via`) đổi thành IP ảo DMZ: **`10.0.2.3`** ➡️ Chạy `sudo netplan apply`.
+
+### QUY TRÌNH TEST CHO THẦY XEM
+1. Mở Win10, vào CMD gõ: `ping 8.8.8.8 -t`.
+2. Đăng nhập 2 tab pfSense, vào **Status ➡️ CARP**. Trình bày: *"Máy 1 đang là MASTER, máy 2 đang là BACKUP"*.
+3. Ra ngoài VMware, tắt phựt (Power Off) máy pfSense 1.
+4. Chỉ vào màn hình Win10: *"Thầy xem, ping chỉ rớt đúng 1 nhịp rồi chạy tiếp, máy 2 đã tự động leo lên làm MASTER để gánh mạng ạ!"*.
+
+--- 
+Hoàn hảo rồi đó ông! Bản chép tay này bao trọn từ đầu đến cuối, logic chặt chẽ, IP ăn khớp nhau 100%. Ông cứ tự tin cầm cái này vô phòng thi là quét sạch điểm của thầy!
