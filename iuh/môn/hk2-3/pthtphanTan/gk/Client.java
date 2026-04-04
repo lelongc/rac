@@ -36,6 +36,11 @@ public class Client {
              Scanner sc = new Scanner(System.in)) {
             InetAddress ip = InetAddress.getByName(HOST);
             byte[] buf = new byte[8192];
+            byte[] hello = "HELLO".getBytes(StandardCharsets.UTF_8);
+            ds.send(new DatagramPacket(hello, hello.length, ip, PORT));
+            DatagramPacket welcome = new DatagramPacket(buf, buf.length);
+            ds.receive(welcome);
+            System.out.println(new String(welcome.getData(), 0, welcome.getLength(), StandardCharsets.UTF_8));
             while (true) {
                 // NHAP DATA THEO BAI DANG UNCOMMENT O ThreadProcess.processData()\r\n                // NHOM SO: 3 4 5 | ADD 1 2 3 4 | 10 | 97 | 5,2,9,1 | 100 USD VND\r\n                // NHOM CHUOI: phat trien he thong | zebra,apple,cat | a-b-c|- | hello
                 System.out.print("> ");

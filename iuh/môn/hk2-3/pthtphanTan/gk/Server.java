@@ -28,6 +28,11 @@ public class Server {
                 DatagramPacket req = new DatagramPacket(buf, buf.length);
                 ds.receive(req);
                 String msg = new String(req.getData(), 0, req.getLength(), StandardCharsets.UTF_8);
+                if ("HELLO".equalsIgnoreCase(msg.trim())) {
+                    byte[] hi = "Send data or EXIT.".getBytes(StandardCharsets.UTF_8);
+                    ds.send(new DatagramPacket(hi, hi.length, req.getAddress(), req.getPort()));
+                    continue;
+                }
                 if ("EXIT".equalsIgnoreCase(msg.trim())) {
                     byte[] bye = "Bye".getBytes(StandardCharsets.UTF_8);
                     ds.send(new DatagramPacket(bye, bye.length, req.getAddress(), req.getPort()));
