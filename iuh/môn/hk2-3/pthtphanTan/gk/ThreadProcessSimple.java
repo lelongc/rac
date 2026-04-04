@@ -30,19 +30,19 @@ public class ThreadProcessSimple extends Thread {
     }
 
     // ====================================================================
-    // KHI THI: XOA HET CAC BAI KHONG CAN, GIU LAI BAI DANG LAM
+    // KHI THI: UNCOMMENT BAI CAN LAM, XOA CAC BAI KHAC
     // ====================================================================
     public static String processData(String data) {
         try {
             String[] a = data.trim().split("[ ,\\s]+");
             
             // ========== BAI 1: Tam giac - Input: "a b c" (vd: 3 4 5) ==========
-            if (a.length != 3) return "Nhap: a b c";
-            double x = Double.parseDouble(a[0]), y = Double.parseDouble(a[1]), z = Double.parseDouble(a[2]);
-            if (!(x > 0 && y > 0 && z > 0 && x + y > z && x + z > y && y + z > x)) return "Khong phai tam giac";
-            double p = x + y + z;
-            double s = Math.sqrt((p / 2) * (p / 2 - x) * (p / 2 - y) * (p / 2 - z));
-            return String.format("Tam giac hop le | Chu vi=%.2f | Dien tich=%.2f", p, s);
+            // if (a.length != 3) return "Nhap: a b c";
+            // double x = Double.parseDouble(a[0]), y = Double.parseDouble(a[1]), z = Double.parseDouble(a[2]);
+            // if (!(x > 0 && y > 0 && z > 0 && x + y > z && x + z > y && y + z > x)) return "Khong phai tam giac";
+            // double p = x + y + z;
+            // double s = Math.sqrt((p / 2) * (p / 2 - x) * (p / 2 - y) * (p / 2 - z));
+            // return String.format("Tam giac hop le | Chu vi=%.2f | Dien tich=%.2f", p, s);
 
             // ========== BAI 2: So phuc - Input: "op a b c d" (ADD/SUB/MUL/DIV a+bi c+di) ==========
             // if (a.length != 5) return "Nhap: op a b c d";
@@ -66,12 +66,16 @@ public class ThreadProcessSimple extends Thread {
             // if (n == 0) return "0";
             // if (n == 1) return "1";
             // long fib_a = 0, fib_b = 1;
+
+            // 1 số 
             // for (int i = 2; i <= n; i++) { long c = fib_a + fib_b; fib_a = fib_b; fib_b = c; }
             // return String.valueOf(fib_b);
-            // // Muon in day: StringBuilder seq = new StringBuilder(); seq.append(fib_a);
-            // // if (n >= 1) seq.append(", ").append(fib_b);
-            // // for (...) { ... seq.append(", ").append(c); ... }
-            // // return seq.toString();
+
+            // Muon in day:
+            // StringBuilder seq = new StringBuilder(); seq.append(fib_a);
+            // if (n >= 1) seq.append(", ").append(fib_b);
+            // for (int i = 2; i <= n; i++) { long c = fib_a + fib_b; seq.append(", ").append(c); fib_a = fib_b; fib_b = c; }
+            // return "Day Fibonacci: " + seq.toString();
 
             // ========== BAI 4: Quy doi tien te - Input: "amount from to" (100 USD VND) ==========
             // if (a.length != 3) return "Nhap: amount from to";
@@ -107,7 +111,7 @@ public class ThreadProcessSimple extends Thread {
             // for (String x : w) if (!x.isBlank()) map.put(x, map.getOrDefault(x, 0) + 1);
             // return map.toString();
 
-            // ========== BAI 9: Sap xep chuoi - Input: "zebra,apple,cat" ==========
+            // ========== BAI 9: Sap xep chuoi theo chu cai - Input: "zebra,apple,cat" ==========
             // String[] arr = data.split(",");
             // List<String> list = new ArrayList<>();
             // for (String s : arr) list.add(s.trim());
@@ -115,7 +119,7 @@ public class ThreadProcessSimple extends Thread {
             // return list.toString();
 
             // ========== BAI 10: Dao chuoi ==========
-            // return new StringBuilder(data).reverse().toString();
+            return new StringBuilder(data).reverse().toString();
 
             // ========== BAI 11: Ngat chuoi - Input: "a-b-c-d|-" ==========
             // String[] p = data.split("\\|", 2);
