@@ -1,0 +1,23 @@
+Bài 1: Sử dụng RMI, Viết chương trình tính toán sau
+
+- Client gửi 1 chuỗi phép toán gồm nhiều số phân cách nhau bởi 1 trong 4 phép toán (+, -
+
+, *, /) đến server, giả sử chuỗi phép toán không chứa các dấu ngoặc. Ví dụ chuỗi phép
+
+toán sau: 12+34-56*78/4+14-17
+
+- Server cung cấp phương thức tính giá trị biểu thức, tính kết quả và trả lại client hoặc trả thông báo lỗi nếu chuỗi
+
+phép toán không đúng định dạng.
+
+- Client xuất kết quả ra console
+
+Bài 2: Sử dụng RMI, Viết chương trình tra cứu thông tin cá nhân
+
+- Client gửi 1 số chứng minh nhân dân/căn cước công dân người VN đến server.
+
+- Server cung cấp phương thức tìm kiếm họ tên, quê quán tương ứng với số CMND/CCCD đó và gửi trả ngược lại
+
+client hoặc trả thông báo lỗi nếu không tìm thấy thông tin.
+
+- Client xuất kết quả ra console.
