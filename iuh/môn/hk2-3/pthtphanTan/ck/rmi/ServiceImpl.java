@@ -19,7 +19,7 @@ public class ServiceImpl extends UnicastRemoteObject implements IService {
             // ==========================================================
             
             // return triangleMetrics(data);      // Bai 1
-            // return complexArithmetic(data);    // Bai 2
+             return complexArithmetic(data);    // Bai 2
             // return fibonacciValue(data);       // Bai 3
             // return currencyConvert(data);      // Bai 4
             // return primeCheck(data);           // Bai 5
@@ -27,7 +27,7 @@ public class ServiceImpl extends UnicastRemoteObject implements IService {
             // return sortNumbersDesc(data);      // Bai 7
             // return wordFrequency(data);        // Bai 8
             // return sortStringsAsc(data);       // Bai 9
-            return reverseText(data);             // Bai 10 (Mac dinh)
+            // return reverseText(data);             // Bai 10 (Mac dinh)
             // return splitTextByDelimiter(data); // Bai 11
             // return gcdLcm(data);               // Bai 12
             // return solveLinearEquation(data);  // Bai 13
