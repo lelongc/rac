@@ -1,0 +1,63 @@
+Thực làm hệ thống lớn mà có nhiều máy như ông (2 con pfSense HA, 1 con pfSense VPN, 2 con máy khách) thì đến lúc test dễ bị "tẩu hỏa nhập ma" lắm. Không sao, tui sẽ làm cho ông một **"Kịch Bản Test Nghiệm Thu Từng Phần"**. 
+
+Ông cứ coi như mình là ông thầy đang đi chấm điểm. Cứ làm theo đúng 4 bài Test này, tick được hết 4 cái là ông đem bài này đi bảo vệ đồ án tự tin lấy điểm A luôn!
+
+Bật hết tất cả các máy lên (pfSense 1, 2, 3, Win10, Ubuntu DMZ, Ubuntu VPN). Sắp xếp cửa sổ cho gọn gàng rồi bắt đầu!
+
+---
+
+### 🟢 BÀI TEST 1: TEST MẠNG NỘI BỘ (TRỤ SỞ CHÍNH)
+*Mục đích: Kiểm tra xem người trong nhà có gọi được cho nhau không.*
+
+1. **Từ máy ảo Win10 (LAN - `172.16.0.10`):**
+   * Mở CMD gõ: `ping 192.168.200.10`
+   * Mở trình duyệt Web (Tab Ẩn Danh) gõ: `http://192.168.200.10`
+2. **Nghiệm thu:** Ping báo `Reply` và Web hiện ra chữ "Welcome to Nginx". 
+   👉 *Móng nhà xuất sắc!*
+
+---
+
+### 🟢 BÀI TEST 2: TEST MẶT TIỀN PUBLIC (PORT FORWARD)
+*Mục đích: Khách hàng từ ngoài Internet có truy cập được Web Server của công ty qua IP Ảo không.*
+
+1. **Từ máy tính Windows Thật (Máy bên ngoài VMware):**
+   * Mở Chrome/Edge lên.
+   * Gõ cái IP Ảo WAN của hệ thống: **`http://192.168.137.100`** *(Nhớ là .100 nha)*.
+2. **Nghiệm thu:** Trang Web Nginx đập thẳng vào mắt! 
+   👉 *Port Forward và CARP IP Ảo mặt tiền hoạt động hoàn hảo!*
+
+---
+
+### 🟢 BÀI TEST 3: TEST HẦM BÍ MẬT (VPN IPSEC)
+*Mục đích: Hai chi nhánh cách xa nhau có nói chuyện được với nhau như đang ở chung phòng không.*
+
+1. **Kiểm tra trạng thái hầm:** Vào WebGUI pfSense 1 hoặc 3 ➡️ **Status ➡️ IPsec**. Thấy trạng thái **`ESTABLISHED`** (Màu xanh).
+2. **Từ máy ảo Win10 (Trụ sở - `172.16.0.10`):**
+   * Mở CMD gõ: `ping 192.168.15.10` (Ping sang thằng Ubuntu ở chi nhánh B).
+3. **Từ máy ảo Ubuntu Clone (Chi nhánh B - `192.168.15.10`):**
+   * Gõ lệnh: `ping 172.16.0.10` *(Lưu ý: Để Win10 reply được, ông phải chắc chắn đã tắt Tường lửa - Windows Defender Firewall trên Win10 rồi nhé).*
+4. **Nghiệm thu:** Hai máy Ping thấy nhau `Reply` ầm ầm. 
+   👉 *VPN đào thành công, tắt NAT chuẩn xác!*
+
+---
+
+### 🔥 BÀI TEST 4: KỊCH BẢN TÀN KHỐC (DỰ PHÒNG HA FAILOVER)
+*Mục đích: Đỉnh cao của bài Lab. Chết Router chính, hệ thống vẫn tự động phục hồi mà không cần ai nhúng tay vào.*
+
+1. **Chuẩn bị:** Trên máy ảo **Win10**, ông mở CMD gõ lệnh ping VPN chạy liên tục: **`ping 192.168.15.10 -t`** (Cứ để cho nó chạy Reply).
+2. **Hành động (Tàn nhẫn):** Ra ngoài màn hình VMware, bấm chuột phải vào **pfSense 1 ➡️ Power ➡️ Power Off** (Cúp điện ngang hông luôn).
+3. **Nghiệm thu 1 (Đường VPN):**
+   * Nhìn vào màn hình Win10. Dòng ping sẽ bị khựng lại, báo `Request timed out` khoảng 2-4 dòng.
+   * BÙM! Dòng Ping **`Reply`** tự động chạy tiếp. (Bởi vì pfSense 2 đã nhảy lên cướp cái IP `.100` và nối lại hầm VPN thay cho con 1).
+4. **Nghiệm thu 2 (Đường Web):**
+   * Ra máy tính thật, F5 (tải lại) cái trang Web `http://192.168.137.100`. Trang Web vẫn lên bình thường!
+5. **Nghiệm thu 3 (Bảng điều khiển):**
+   * Mở trình duyệt vô WebGUI của con **pfSense 2** (`172.16.0.2`). 
+   * Vào **Status ➡️ CARP**: Thấy nó báo đang là Đại ca **MASTER**.
+   * Vào **Status ➡️ IPsec**: Thấy hầm vẫn đang **ESTABLISHED**.
+
+---
+
+Nếu ông làm mượt mà đi qua hết 4 bài Test này, tui tuyên bố ông đã "phá đảo" môn Quản trị mạng này rồi! 
+
+Lúc đi thi, thầy bảo test gì, ông cứ mở sẵn các cửa sổ như kịch bản này ra thao tác vèo vèo. Thầy nhìn màn hình Ping tự động kết nối lại khi tắt máy là tự động cho 10 điểm khỏi hỏi thêm câu nào luôn. Tự tin lên chiến đi ông!

@@ -1,0 +1,87 @@
+Ok ông, tui gom toàn bộ quy trình lại thành một bản **"Checklist Thực Chiến"** từ A đến Z cho ông dễ nhìn, dễ nhớ lúc đi thi. Cứ làm theo đúng thứ tự này, làm xong tick một phát là hầm thông, mạng chạy vèo vèo!
+
+---
+
+### 🟢 GIAI ĐOẠN 1: CHUẨN BỊ CHI NHÁNH (SITE B)
+*Khởi tạo máy móc cho Site B (Mạng `192.168.15.0`)*
+
+**1. Xử lý máy Ubuntu (Máy con Chi nhánh):**
+* Chuột phải máy Ubuntu cũ ➡️ **Manage ➡️ Clone**.
+* Cắm card mạng của nó vào **`VMnet 15`**.
+* Bật máy, gõ `sudo nano /etc/netplan/00-installer-config.yaml`. Đổi IP thành **`192.168.15.10`**, đổi Gateway (via) thành **`192.168.15.1`**. Gõ `sudo netplan apply`.
+
+**2. Tạo máy pfSense 3 (Bảo vệ Chi nhánh):**
+* Tạo máy ảo mới cài pfSense.
+* Cắm 2 card mạng: Adapter 1 vào **`VMnet 5`** (WAN), Adapter 2 vào **`VMnet 15`** (LAN).
+
+**3. Ép IP máy tính thật (Để cấu hình pfSense 3):**
+* Trên Windows thật, bấm `Windows + R`, gõ `ncpa.cpl`.
+* Chuột phải card **VMware Network Adapter VMnet15** ➡️ Properties ➡️ IPv4.
+* Đặt IP tĩnh: **`192.168.15.50`** / Subnet: **`255.255.255.0`** *(Bỏ trống toàn bộ Gateway và DNS)*.
+
+---
+
+### 🟢 GIAI ĐOẠN 2: KHAI SINH PFSENSE 3
+*Bật máy pfSense 3 lên và cấp mạng.*
+
+**1. Màn hình đen (Console):** Bấm phím `2` để gán IP:
+* **WAN:** IP **`192.168.137.20 / 24`** ➡️ Upstream Gateway: **`192.168.137.1`**
+* **LAN:** IP **`192.168.15.1 / 24`** ➡️ Upstream Gateway: **(Bỏ trống)**.
+
+**2. Gỡ Block Tường Lửa:**
+* Mở Chrome trên máy thật gõ: **`http://192.168.15.1`**
+* Bấm Next qua hết màn hình chào mừng. Vào **Interfaces ➡️ WAN**.
+* Lăn xuống cùng, **BỎ TÍCH** 2 ô `Block private networks` và `Block bogon networks`. (Save & Apply).
+
+---
+
+### 🟢 GIAI ĐOẠN 3: ĐÀO HẦM VPN (IPSEC)
+*Mở 2 Tab Chrome: Tab 1 vô pfSense 1 (`172.16.0.1` hoặc `.100`), Tab 2 vô pfSense 3 (`192.168.15.1`). Làm song song.*
+
+**1. Tạo Phase 1 (VPN ➡️ IPsec ➡️ Tunnels ➡️ Add P1):**
+* **pfSense 1:** Key `IKEv2` | Interface: 👉 **`192.168.137.100 (Virtual IP)`** | Remote GW: **`192.168.137.20`** | Pass: **`vpn123`**
+* **pfSense 3:** Key `IKEv2` | Interface: **`WAN`** | Remote GW: **`192.168.137.100`** | Pass: **`vpn123`**
+*(Lưu lại)*.
+
+**2. Tạo Phase 2 (Bấm Show Phase 2 Entries ➡️ Add P2):**
+* **pfSense 1:** Local: `LAN subnet` | Remote Network: **`192.168.15.0 / 24`**
+* **pfSense 3:** Local: `LAN subnet` | Remote Network: **`172.16.0.0 / 24`**
+*(Lưu & Apply)*.
+
+---
+
+### 🟢 GIAI ĐOẠN 4: MỞ CỬA & TẮT NAT (LÀM TRÊN CẢ 2 PFSENSE)
+
+**1. Mở cửa ngoài (Firewall ➡️ Rules ➡️ WAN):**
+* Add Rule 1: `Pass` / Protocol: **`UDP`** / Dest Port: **`500`**
+* Add Rule 2: `Pass` / Protocol: **`UDP`** / Dest Port: **`4500`**
+
+**2. Mở cửa trong hầm (Firewall ➡️ Rules ➡️ IPsec):**
+* Add Rule: `Pass` / Protocol: **`Any`** / Source: `Any` / Dest: `Any`. (Save & Apply).
+
+**3. Tắt NAT cho VPN (Firewall ➡️ NAT ➡️ Outbound):**
+* Đang ở Manual. Bấm **Add (Mũi tên Lên - Để Rule nằm trên cùng)**.
+* Tích ô: 👉 **`Do not NAT`**. Interface: **`IPsec`**.
+* **Trên pfSense 1:** Source: **`172.16.0.0/24`** ➡️ Dest: **`192.168.15.0/24`**
+* **Trên pfSense 3:** Source: **`192.168.15.0/24`** ➡️ Dest: **`172.16.0.0/24`**
+*(Lưu & Apply)*.
+
+---
+
+### 🟢 GIAI ĐOẠN 5: CHỐNG "BÓP CỔ" & NGHIỆM THU
+*Bước quan trọng nhất để Ping không bị rớt do Cân bằng tải (Làm TẠI PFSENSE 1).*
+
+**1. Tạo Rule Đi Tắt VPN (Firewall ➡️ Rules ➡️ LAN trên pfSense 1):**
+* Bấm **Add (Mũi tên Lên)** để tạo Rule nằm **TRÊN CÙNG**.
+* Action: `Pass` / Protocol: **`Any`** / Source: `LAN net`.
+* Destination: Chọn `Network` gõ **`192.168.15.0 / 24`**.
+* Advanced Options ➡️ Gateway: Chọn **`default (*)`**. (Save & Apply).
+
+**2. Kích hoạt hầm:**
+* Vào **Status ➡️ IPsec**, bấm **Connect**. Thấy chữ **`ESTABLISHED`** là ngon!
+
+**3. Test Ping (Tắt tường lửa Win10 trước khi test):**
+* Win10 (`172.16.0.10`) gõ: `ping 192.168.15.10`
+* Ubuntu (`192.168.15.10`) gõ: `ping 172.16.0.10`
+
+Thế là xong! Mọi thứ rõ ràng, rành mạch, ông cứ áp đúng quy trình này vào phòng Lab thì mười ông thầy cũng không bắt lỗi được. Chúc ông thực hành mượt mà nha!

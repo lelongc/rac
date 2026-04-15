@@ -1,6 +1,7 @@
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.nio.charset.StandardCharsets;
+package gk;
+
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class Server {
     static final int PORT = 5000;
