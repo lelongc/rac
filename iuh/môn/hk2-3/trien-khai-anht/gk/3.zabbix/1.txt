@@ -1,0 +1,115 @@
+Chào ông, đây là bản "Tổng thư viện" hướng dẫn từ A-Z. Tui đã lồng ghép thêm phần quan trọng nhất mà ông yêu cầu: **Cách thông tuyến từ máy ảo VMware ra máy Windows 10 thật** để giám sát toàn diện.
+
+---
+
+### 🌐 PHẦN 0: THÔNG TUYẾN VẬT LÝ (VMWARE ↔ WINDOWS THẬT)
+Để Zabbix (máy ảo) thấy được Win10 (máy thật), ông phải bắc một cây cầu giữa chúng.
+
+1. **Trên VMware (Máy chủ ảo hóa):**
+   * Vào menu **Edit** ➡️ **Virtual Network Editor**.
+   * Chọn **VMnet1 (Host-only)**. 
+   * Đảm bảo mục "Subnet IP" đang để dải `172.16.0.0`.
+2. **Trên Máy Windows 10 Thật:**
+   * Chuột phải vào biểu tượng mạng ➡️ **Open Network & Internet settings** ➡️ **Change adapter options**.
+   * Tìm card mạng có tên **VMware Network Adapter VMnet1**.
+   * Chuột phải chọn **Properties** ➡️ **Internet Protocol Version 4 (TCP/IPv4)**.
+   * Cấu hình IP tĩnh:
+     * **IP address:** `172.16.0.5`
+     * **Subnet mask:** `255.255.255.0`
+     * **Gateway:** `172.16.0.1` (IP LAN của pfSense)
+3. **Kiểm tra:** Mở CMD trên Win10 thật, gõ `ping 172.16.0.20` (IP Zabbix). Nếu thấy thông là "phá đảo" được lớp mạng vật lý.
+
+---
+
+### 🌐 PHẦN 1: CẤU HÌNH MẠNG CHO UBUNTU ZABBIX SERVER
+
+1. **Sửa Netplan:** `sudo nano /etc/netplan/00-installer-config.yaml`
+2. **Nội dung:** (Thụt lề 2 dấu cách, không dùng Tab)
+```yaml
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    ens33:
+      dhcp4: no
+      addresses: [- 172.16.0.20/24]
+      routes: [- to: default, via: 172.16.0.1]
+      nameservers:
+        addresses: [8.8.8.8, 8.8.4.4]
+```
+3. **Áp dụng:** `sudo netplan apply`
+
+---
+
+### 🏗️ PHẦN 2: CÀI ĐẶT ZABBIX 7.0 & DATABASE
+
+1. **Cài Repo & Packages:**
+```bash
+wget https://repo.zabbix.com/zabbix/7.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest+ubuntu22.04_all.deb
+sudo dpkg -i zabbix-release_latest+ubuntu22.04_all.deb
+sudo apt update && sudo apt install zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent mariadb-server -y
+```
+
+2. **Cấu hình MariaDB:** `sudo mariadb`
+```sql
+CREATE DATABASE zabbix CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+CREATE USER zabbix@localhost IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON zabbix.* TO zabbix@localhost;
+SET GLOBAL log_bin_trust_function_creators = 1;
+QUIT;
+```
+
+3. **Import Data & Pass:**
+* Import: `sudo zcat /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mariadb --user=zabbix --password=password zabbix`
+* Sửa Pass: `sudo nano /etc/zabbix/zabbix_server.conf` ➡️ `DBPassword=password`
+* Restart: `sudo systemctl restart zabbix-server zabbix-agent apache2 mariadb`
+
+---
+
+### 🛡️ PHẦN 3: GIÁM SÁT PFSENSE (DÙNG SNMP)
+
+1. **Trên pfSense:** Vào **Services ➡️ SNMP**.
+   * [x] Enable SNMP.
+   * Community: `public`.
+   * Modules: Tích hết (đặc biệt là **Host Resources**).
+   * **Firewall Rule:** Cho phép UDP 161 vào LAN.
+2. **Trên Zabbix (Lấy CPU/RAM chuẩn):**
+   * **OID CPU:** `.1.3.6.1.2.1.25.3.3.1.2.142` (Số cuối check bằng `snmpwalk`).
+   * **OID RAM:** `.1.3.6.1.2.1.25.2.3.1.6.1` (Sử dụng Preprocessing: **Custom multiplier 4096**, Unit: **B**).
+
+---
+
+### 💻 PHẦN 4: GIÁM SÁT WINDOWS 10 THẬT (DÙNG AGENT)
+
+1. **Cài đặt:** Tải Zabbix Agent 2 `.msi` ➡️ Cài lên Win10 thật.
+   * **Server:** `172.16.0.20`
+   * **Hostname:** `Windows10-Physical` (Phải ghi nhớ để điền vào Zabbix Web).
+2. **Firewall Windows:** Mở port **TCP 10050** (Inbound Rule).
+3. **Zabbix Web:** * **Create Host:** Tên là `Windows10-Physical`.
+   * **Template:** `Windows by Zabbix agent`.
+   * **Interface:** Agent IP `172.16.0.5`.
+
+---
+
+### 🐧 PHẦN 5: GIÁM SÁT UBUNTU DMZ (DÙNG AGENT)
+
+1. **Cài đặt:** `sudo apt install zabbix-agent -y` trên con Ubuntu DMZ.
+2. **Cấu hình:** `sudo nano /etc/zabbix/zabbix_agentd.conf`
+   * `Server=172.16.0.20`
+   * `Hostname=Ubuntu-DMZ`
+3. **Firewall:**
+   * **Ubuntu:** `sudo ufw allow 10050/tcp`
+   * **pfSense (QUAN TRỌNG):** Tạo Rule cho phép LAN (IP .20) truy cập DMZ (IP máy Ubuntu) qua port **10050**.
+4. **Zabbix Web:** Thêm Host với Template `Linux by Zabbix agent`.
+
+---
+
+### 📊 PHẦN 6: DASHBOARD TỔNG LỰC
+Sau khi 4 con (pfSense 1, 2, Win10, Ubuntu DMZ) đều hiện **ZBX/SNMP xanh lá**, hãy tạo Dashboard:
+* **Widget Gauge:** Cho CPU pfSense và Win10.
+* **Widget Graph:** Cho Băng thông cổng WAN/LAN.
+* **Widget Problem:** Để theo dõi khi nào con DMZ bị rớt mạng.
+
+
+
+Vậy là xong trọn bộ bài Lab từ card mạng ảo ra tới máy thật, từ LAN sang DMZ. Ông cứ theo đúng sườn này là nộp bài bao chuẩn!

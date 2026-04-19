@@ -1,0 +1,108 @@
+Đến được bước này thì ông xứng đáng nhận một tràng pháo tay rồi! Nhìn lại một lượt, ông đã xây dựng được một hệ thống mạng Doanh nghiệp hoàn chỉnh với độ khó cao nhất (HA + Multi-WAN + 2 loại VPN + DMZ). Thầy giáo nào nghiệm thu bài này cũng phải nể.
+
+Đây là **Kịch bản Nghiệm thu Hệ thống (Acceptance Testing Plan)** chuẩn chỉ từng milimet. Ông cứ mở hết các máy ảo lên, chuẩn bị sẵn các cửa sổ CMD và làm theo đúng thứ tự này, tích V từng mục là xong bài báo cáo:
+
+---
+
+### 🛡️ BÀI TEST 1: KIỂM TRA SỨC MẠNH LÕI (LAN & FIREWALL)
+*Mục tiêu: Đảm bảo mạng LAN đi được Internet và các luật Tường lửa (chặn Web) hoạt động đúng.*
+
+1. **Test Internet cơ bản:**
+   * Từ máy ảo **Win10 (LAN)**, mở CMD: `ping 8.8.8.8` ➡️ **(Pass: Có Reply)**.
+   * Mở trình duyệt trên Win10, vào trang `google.com` ➡️ **(Pass: Truy cập bình thường)**.
+2. **Test luật chặn Web (Nãy thấy ông có Rule chặn VnExpress/Youtube):**
+   * Mở trình duyệt Win10, gõ `vnexpress.net` hoặc `youtube.com`.
+   * ➡️ **(Pass: Web quay đều quay đều rồi báo lỗi không truy cập được. Các web khác vẫn vào bình thường)**.
+
+---
+
+### 🌐 BÀI TEST 2: KIỂM TRA KHU PHI QUÂN SỰ (DMZ)
+*Mục tiêu: Đảm bảo máy chủ Web được cô lập đúng cách và truy cập được từ bên ngoài.*
+
+1. **LAN truy cập DMZ:**
+   * Từ máy **Win10**, mở trình duyệt gõ: `http://192.168.200.10`.
+   * ➡️ **(Pass: Hiện trang web "Welcome to Nginx/Apache")**.
+2. **WAN truy cập DMZ (Test Port Forwarding):**
+   * Từ máy **Windows Thật** (Đóng vai trò người ngoài Internet), mở trình duyệt gõ IP Mặt tiền của pfSense (VD: `http://192.168.137.10` hoặc IP ảo `.100` tùy theo ông NAT port 80 cho IP nào).
+   * ➡️ **(Pass: Hiện trang web của DMZ)**.
+
+---
+
+### 👑 BÀI TEST 3: KIỂM TRA QUYỀN LỰC HA (CARP FAILOVER)
+*Mục tiêu: Đảm bảo khi sập Tường lửa chính, Tường lửa phụ gánh team mà mạng không đứt.*
+
+1. **Check trạng thái ban đầu:**
+   * Vào pfSense 1 ➡️ *Status ➡️ CARP* ➡️ **(Pass: Toàn bộ IP báo MASTER màu xanh)**.
+   * Vào pfSense 2 ➡️ *Status ➡️ CARP* ➡️ **(Pass: Toàn bộ IP báo BACKUP màu vàng)**.
+2. **"Sốc điện" hệ thống (Bài test ăn tiền nhất):**
+   * Mở CMD trên Win10, gõ lệnh ping liên tục: `ping 8.8.8.8 -t`.
+   * Ra ngoài VMware, bấm nút **Power Off (Tắt nóng) con pfSense 1**.
+   * Nhìn vào màn hình ping của Win10. Nó sẽ rớt khoảng 1-2 dòng (Request timed out), sau đó ping thông lại bình thường.
+   * Vào WebGUI của **pfSense 2** ➡️ *Status ➡️ CARP* ➡️ **(Pass: Tất cả chuyển sang MASTER màu xanh. Gánh team thành công!)**
+3. **Phục hồi:** Bật pfSense 1 lên lại, nó sẽ tự giành lại quyền MASTER.
+
+---
+
+### 🛣️ BÀI TEST 4: KIỂM TRA ĐA ĐƯỜNG TRUYỀN (MULTI-WAN)
+*Mục tiêu: Đứt cáp quang 1 thì tự nhảy sang cáp quang 2.*
+*(Lưu ý: Bật cả 2 pfSense lên lại trước khi test)*.
+
+1. **Tạo kết nối:** Trên Win10, vẫn mở CMD gõ `ping 8.8.8.8 -t`.
+2. **Cắt mạng:** Ra ngoài VMware ➡️ Chuột phải máy pfSense 1 ➡️ Settings ➡️ Chọn card mạng WAN 1 ➡️ **Bỏ tích ô "Connected"** (Giả lập hành động rút dây mạng).
+3. **Kiểm tra:**
+   * Gói tin ping trên Win10 có thể rớt vài nhịp rồi tự động nổ Reply tiếp.
+   * Vào pfSense 1 ➡️ *Status ➡️ Gateways*: WAN 1 sẽ báo màu Đỏ (Offline), mạng tự đẩy qua cửa dự phòng.
+   * ➡️ **(Pass: Rút dây mà mạng vẫn chạy là 10 điểm)**. Tích lại "Connected" để trả lại mạng.
+
+---
+
+### 🌉 BÀI TEST 5: HẦM XUYÊN QUỐC GIA (IPSEC S2S)
+*Mục tiêu: Chi nhánh A nói chuyện được với Chi nhánh B.*
+
+1. **Trạng thái:** Vào pfSense 1 ➡️ *Status ➡️ IPsec* ➡️ **(Pass: Cột Status hiện chữ `ESTABLISHED`)**.
+2. **Thông mạch:** Từ máy Win10 (LAN A - `172.16.0.10`), ping sang máy chủ ubuntu (LAN B - `192.168.15.x`).
+   * ➡️ **(Pass: Có Reply. Mạng 2 công ty đã hòa làm một)**.
+
+---
+
+### 🕵️ BÀI TEST 6: CHỐT HẠ NGƯỜI LÀM TỪ XA (OPENVPN C2S)
+*Mục tiêu: Sếp ngồi quán cà phê (máy thật) vẫn kết nối an toàn vào công ty.*
+
+1. Đứng ở máy **Windows thật**, mở OpenVPN Connect và kết nối bằng file `.ovpn` (IP mặt tiền là `.100`). ➡️ **(Pass: Connected màu xanh)**.
+2. Từ máy **Windows thật**, mở CMD gõ:
+   * `ping 172.16.0.10` (Ping máy Win10) ➡️ **(Pass: Có Reply)**.
+   * `ping 192.168.200.10` (Ping máy DMZ) ➡️ **(Pass: Có Reply)**.
+3. Test đặc quyền: Từ máy Windows thật (đang bật VPN), mở trình duyệt truy cập vào IP của Win10 hoặc pfSense nội bộ `172.16.0.1` ➡️ **(Pass: Ra được màn hình đăng nhập pfSense)**.
+
+---
+Á đù, ông test kỹ vậy là quá xuất sắc! Lòi ra ngay một chỗ "thiếu sót" cực kỳ thực tế mà 99% sinh viên làm Lab đều quên.
+
+Việc ông vào được LAN (`172.16.0.1`) chứng tỏ đường hầm VPN của ông **thành công 100%**. Còn việc không thấy DMZ (`192.168.200.10`) **KHÔNG PHẢI LỖI**, mà là do ông Bác sĩ (pfSense) quên đưa bản đồ khu DMZ cho Sếp.
+
+### 🕵️ BẢN CHẤT VẤN ĐỀ
+Lúc ông chạy cái Wizard cài OpenVPN, ở ô **Local Network**, tui chỉ dặn ông điền mạng LAN là `172.16.0.0/24`. 
+Thế là con pfSense nó chỉ thông báo cho Sếp (máy tính thật) đúng 1 câu: *"Sếp cứ chui vào hầm VPN là tới được mạng 172.16.x.x nhé!"*.
+Còn cái mạng DMZ `192.168.200.0/24` nằm ở đâu thì Sếp mù tịt, Sếp đẩy gói tin ping ra ngoài Internet nên rớt cái bịch.
+
+### 🛠️ CÁCH FIX (Mất đúng 10 giây)
+Mình chỉ cần cập nhật lại cái bản đồ trong máy chủ OpenVPN là xong:
+
+**Bước 1: Sửa máy chủ OpenVPN**
+1. Vào pfSense 1 ➡️ **VPN ➡️ OpenVPN ➡️ Servers**.
+2. Bấm vào **Cây bút chì (Edit)** để sửa cái máy chủ VPN của ông.
+3. Kéo xuống phần **Tunnel Settings**, tìm lại cái ô **`IPv4 Local network(s)`**.
+4. Lúc này nó đang là `172.16.0.0/24`. Ông gõ phẩy một cái rồi thêm mạng DMZ vào, y chang như vầy:
+   👉 **`172.16.0.0/24, 192.168.200.0/24`** *(Nhớ là dấu phẩy nhé)*.
+5. Cuộn xuống cuối bấm **Save**.
+
+**Bước 2: Sếp nhận lại Bản đồ mới**
+1. Ra ngoài máy Windows thật của ông.
+2. Bật cái phần mềm **OpenVPN Connect** lên ➡️ **Ngắt kết nối (Disconnect)** đi.
+3. Xong **Bật (Connect) lại**. (Thao tác này giúp máy tính thật nhận cái bản đồ DMZ mới từ pfSense gửi xuống).
+
+**Bước 3: Test lại liền**
+Mở CMD máy tính thật gõ:
+* `ping 192.168.200.10` 
+* Mở Web gõ `http://192.168.200.10`
+
+Tui cá là lần này nó xuyên thẳng vào khu Phi quân sự luôn! Sửa 1 phát một là bản Demo của ông đạt cảnh giới Hoàn Hảo 10/10. Làm liền đi ông!

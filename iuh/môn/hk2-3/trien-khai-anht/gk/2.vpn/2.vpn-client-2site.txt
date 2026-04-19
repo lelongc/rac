@@ -1,0 +1,163 @@
+Chúc mừng ông đã hạ gục thành công một trong những bài Lab khoai nhất của hệ thống pfSense! Việc kết hợp giữa High Availability (CARP), Multi-WAN, và OpenVPN trên môi trường ảo hóa VMware thực sự là một thử thách hạng nặng.
+
+Dưới đây là cẩm nang toàn tập, được đúc kết từ chính quá trình "chinh chiến" của ông, lưu lại ngay để làm báo cáo hoặc dùng cho các dự án thực tế sau này nhé.
+
+---
+
+### PHẦN 1: XÂY DỰNG NỀN TẢNG BẢO MẬT (CERTIFICATES)
+
+Hệ thống VPN cần các "con dấu" và "thẻ căn cước" để nhận diện máy chủ và người dùng.
+
+**1. Tạo Cục cấp phép (Certificate Authority - CA)**
+* Đi đến **System ➡️ Cert. Manager ➡️ CAs**.
+* Bấm **Add**.
+* Ô **Descriptive name**: Gõ `VPN-CA`.
+* Ô **Common Name**: Gõ `VPN-CA` (Đây là trường bắt buộc).
+* Bấm **Save**.
+
+**2. Tạo Giấy phép Máy chủ (Server Certificate)**
+* Chuyển sang tab **Certificates**.
+* Bấm **Add/Sign**.
+* Ô **Descriptive name**: Gõ `VPN-Server`.
+* Cột **Certificate Type**: Chọn `Server Certificate`.
+* Ô **Common Name**: Gõ `192.168.137.100` (IP Ảo mặt tiền).
+* Bấm **Save**.
+
+**3. Tạo Tài khoản Người dùng (User)**
+* Đi đến **System ➡️ User Manager ➡️ Users**.
+* Bấm **Add**.
+* Điền **Username** (VD: `Sep`) và **Password**.
+* Tích chọn ô **`Click to create a user certificate`**.
+* Ô **Descriptive name**: Gõ `Cert-Sep`.
+* Bấm **Save**.
+
+---
+
+### PHẦN 2: CẤU HÌNH OPENVPN BẰNG KẾ "VE SẦU THOÁT XÁC"
+
+Do lỗi giao diện của pfSense đôi khi ẩn mất IP Ảo (VIP), ta dùng Wizard để tạo khung trước, rồi nắn lại bản chất sau.
+
+**1. Chạy Wizard tạo khung**
+* Đi đến **VPN ➡️ OpenVPN ➡️ Wizards**.
+* **Type of Server**: Local User Access.
+* **CA**: Chọn `VPN-CA` ➡️ **Server Certificate**: Chọn `VPN-Server`.
+* **Interface**: Chọn tạm `WAN` (Hoặc WAN1).
+* **Tunnel Network**: Gõ `10.0.8.0/24` (Mạng đường hầm).
+* **Local Network**: Gõ `172.16.0.0/24` (Mạng LAN nội bộ muốn truy cập).
+* Next liên tục và nhớ **Tích chọn cả 2 ô Firewall Rule** ở bước cuối cùng ➡️ Finish.
+
+**2. Nắn máy chủ về đúng IP Ảo (VIP CARP)**
+* Đi đến **VPN ➡️ OpenVPN ➡️ Servers**.
+* Bấm biểu tượng **Cây bút chì (Edit)** ở máy chủ vừa tạo.
+* Kéo xuống ô **Interface**: Bấm xổ xuống và chọn đích danh **`192.168.137.100 (Virtual IP)`**.
+* Bấm **Save**.
+
+---
+
+### PHẦN 3: KIỂM TRA LẠI TƯỜNG LỬA (CỰC KỲ QUAN TRỌNG)
+
+Wizard tạo Rule tự động nhưng sẽ bị sai đích đến do mô hình của ta dùng HA (IP Ảo).
+
+**1. Chỉnh sửa Rule WAN**
+* Đi đến **Firewall ➡️ Rules ➡️ WAN**.
+* Tìm Rule có cổng **1194 (OpenVPN)** ➡️ Bấm **Edit**.
+* Mục **Destination**: Đổi từ `WAN address` thành 👉 **`Single host or alias`**.
+* Ô trống bên cạnh gõ IP Ảo: **`192.168.137.100`**.
+* Bấm **Save ➡️ Apply Changes**.
+
+**2. Mở cửa cho khách tham quan LAN**
+* Chuyển sang tab **OpenVPN** (trong mục Rules).
+* Đảm bảo có một Rule cho phép tất cả: **Action: Pass | Protocol: Any | Source: Any | Destination: Any**.
+
+---
+
+### PHẦN 4: KHẮC PHỤC LỖI "MÙ MẠNG" TRÊN VMWARE (ĐẶC SẢN SHARE MẠNG ICS)
+
+Đây là lỗi khiến LAN Win10 ra được Internet, nhưng bản thân pfSense lại báo `100% loss` khi Ping Google, dẫn đến không thể tải được Package.
+
+**Bệnh lý:** Tính năng Share mạng (ICS) từ Wi-Fi máy thật sang card VMnet4 (Host-Only) cực kỳ dễ bị "treo ngầm" khi khởi động lại máy ảo. Đồng thời pfSense hiểu nhầm đường truyền đã chết nên tự khóa cửa.
+
+**Cách khắc phục dứt điểm:**
+
+**1. "Sốc điện" lại Card mạng trên Windows thật**
+* Bấm `Windows + R`, gõ `ncpa.cpl`.
+* Chuột phải vào card Wi-Fi (đang cấp mạng) ➡️ **Properties ➡️ tab Sharing**.
+* **Bỏ Tích** ô *Allow other network users...* ➡️ Bấm OK.
+* Lặp lại thao tác, **Tích lại** ô đó và trỏ xuống đúng card **VMnet4** ➡️ Bấm OK.
+* Mở **Services (services.msc)**, tìm `VMware NAT Service` và `VMware DHCP Service` ➡️ Chuột phải chọn **Restart**.
+
+**2. Tắt Giám sát Cửa chính trên pfSense**
+* Đi đến **System ➡️ Routing ➡️ Gateways**.
+* Bấm Edit cổng **`WAN_GW`** (IP 192.168.137.1).
+* Tích chọn 2 ô: **`Disable Gateway Monitoring`** và **`Disable Gateway Monitoring Action`**.
+* Bấm **Save**.
+* Nhìn xuống dưới cùng trang, ô **Default gateway IPv4** phải chọn đích danh **`WAN_GW`**. Bấm Apply.
+
+---
+
+### PHẦN 5: TUYỆT CHIÊU TÀ ĐẠO - VƯỢT LỖI KHO ỨNG DỤNG (PFSENSE 2.4.5)
+
+Do bản 2.4.5 đã bị hãng khai tử (End of Life), kho ứng dụng trống trơn không thể tải công cụ `openvpn-client-export`. Ta phải tự tay chế tạo file `.ovpn`.
+
+**1. Lấy 4 mã khóa từ pfSense**
+* **Mã CA:** Vào *System ➡️ Cert. Manager ➡️ CAs* ➡️ Export file `.crt` của VPN-CA.
+* **Mã User Cert & Key:** Sang tab *Certificates* ➡️ Export file `.crt` và `.key` của User Sếp.
+* **Mã TLS Key:** Vào *VPN ➡️ OpenVPN ➡️ Servers* ➡️ Edit server ➡️ Copy toàn bộ đoạn text lằng ngoằng trong ô TLS Key.
+
+**2. Ráp khung file cấu hình trên Notepad**
+Mở Notepad trên máy thật, dán đoạn code sau và nhúng 4 mã khóa vừa lấy vào đúng vị trí:
+
+```text
+client
+dev tun
+proto udp
+remote 192.168.137.100 1194
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+remote-cert-tls server
+cipher AES-128-CBC
+auth SHA1
+auth-user-pass
+key-direction 1
+
+<ca>
+-----BEGIN CERTIFICATE-----
+(Dán nội dung file CA.crt vào đây)
+-----END CERTIFICATE-----
+</ca>
+
+<cert>
+-----BEGIN CERTIFICATE-----
+(Dán nội dung file User.crt vào đây)
+-----END CERTIFICATE-----
+</cert>
+
+<key>
+-----BEGIN PRIVATE KEY-----
+(Dán nội dung file User.key vào đây)
+-----END PRIVATE KEY-----
+</key>
+
+<tls-auth>
+-----BEGIN OpenVPN Static key V1-----
+(Dán đoạn text TLS Key copy từ Server vào đây)
+-----END OpenVPN Static key V1-----
+</tls-auth>
+```
+Lưu file lại với tên **`Profile_Sep.ovpn`** (Nhớ chọn Save as type là All Files).
+
+---
+
+### PHẦN 6: NGHIỆM THU TỔNG THỂ (BÀI TEST KIM CƯƠNG)
+
+**1. Kết nối**
+* Mở phần mềm **OpenVPN Connect** trên máy tính thật.
+* Kéo thả file `Profile_Sep.ovpn` vào.
+* Nhập Username và Password. Bấm Connect và chờ biểu tượng khiên xanh lá xuất hiện.
+
+**2. Bắn Ping xuyên LAN**
+* Mở CMD trên máy tính thật.
+* Gõ lệnh: **`ping 172.16.0.10`** (IP của máy Win10 nội bộ).
+* Nếu nổ **`Reply`**, hệ thống đã hoàn toàn thông suốt, Tường lửa, Định tuyến và Cân bằng tải đều hoạt động xuất sắc. Đoạn đường hầm VPN đã nối thẳng từ máy ngoài vào sâu tận trong lõi hệ thống!
