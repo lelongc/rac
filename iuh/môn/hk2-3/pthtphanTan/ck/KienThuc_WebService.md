@@ -1,312 +1,476 @@
-# KIẾN THỨC WEB SERVICE - ÔN THI CUỐI KỲ
+# KIẾN THỨC WEB SERVICE (Spring Boot REST) - ÔN THI CUỐI KỲ
 
 ---
 
 ## 1. KHÁI NIỆM WEB SERVICE
 
-**Web Service** là một hệ thống phần mềm được thiết kế để hỗ trợ giao tiếp giữa các máy tính (machine-to-machine) qua mạng Internet.
+**Web Service** là một hệ thống phần mềm hỗ trợ giao tiếp giữa các máy tính qua mạng Internet.
 
-- Web Service cho phép các ứng dụng viết bằng **các ngôn ngữ khác nhau**, chạy trên **các nền tảng khác nhau** có thể giao tiếp với nhau.
-- Giao tiếp thông qua các **giao thức chuẩn** (HTTP, SOAP, REST).
-- Web Service là nền tảng của kiến trúc **SOA (Service-Oriented Architecture)**.
-
----
-
-## 2. CÁC LOẠI WEB SERVICE
-
-### 2.1 SOAP Web Service (Simple Object Access Protocol)
-
-| Đặc điểm | Chi tiết |
-|---|---|
-| Giao thức | SOAP (dựa trên XML) |
-| Định dạng thông điệp | XML |
-| Mô tả dịch vụ | WSDL (Web Service Description Language) |
-| Đăng ký/Tra cứu | UDDI (Universal Description, Discovery and Integration) |
-| Vận chuyển | HTTP, SMTP, TCP... |
-| Ưu điểm | Chuẩn hóa cao, bảo mật tốt, hỗ trợ giao dịch phức tạp |
-| Nhược điểm | Nặng nề, XML verbose, chậm hơn REST |
-
-### 2.2 RESTful Web Service (Representational State Transfer)
-
-| Đặc điểm | Chi tiết |
-|---|---|
-| Giao thức | HTTP thuần (GET, POST, PUT, DELETE) |
-| Định dạng dữ liệu | JSON (phổ biến) hoặc XML |
-| Kiến trúc | Stateless (không lưu trạng thái) |
-| Ưu điểm | Nhẹ, nhanh, dễ phát triển, phổ biến |
-| Nhược điểm | Ít chuẩn hóa hơn SOAP, bảo mật tùy triển khai |
+- Cho phép các ứng dụng viết bằng **ngôn ngữ khác nhau**, chạy trên **nền tảng khác nhau** giao tiếp được với nhau.
+- Giao tiếp qua **giao thức chuẩn** (HTTP).
+- **RESTful Web Service**: Dùng HTTP thuần (GET, POST, PUT, DELETE), dữ liệu trả về dạng **JSON**.
 
 ---
 
-## 3. KIẾN TRÚC WEB SERVICE
+## 2. KIẾN TRÚC REST (Representational State Transfer)
 
-### 3.1 Kiến trúc SOAP Web Service
+| Đặc điểm           | Chi tiết                                                    |
+| ---------------------- | ------------------------------------------------------------ |
+| Giao thức             | HTTP thuần (GET, POST, PUT, DELETE)                         |
+| Định dạng dữ liệu | JSON (phổ biến) hoặc XML                                  |
+| Kiến trúc            | **Stateless** (Server không lưu trạng thái Client) |
+| URL                    | Mỗi tài nguyên có 1 URL riêng (endpoint)                |
+
+### Các HTTP Method:
+
+| Method           | Ý nghĩa            | Ví dụ                        |
+| ---------------- | -------------------- | ------------------------------ |
+| **GET**    | Lấy dữ liệu       | `GET /api/tinh/cong?a=3&b=5` |
+| **POST**   | Gửi dữ liệu mới  | `POST /api/tinh` + body JSON |
+| **PUT**    | Cập nhật dữ liệu | `PUT /api/tinh/1`            |
+| **DELETE** | Xóa dữ liệu       | `DELETE /api/tinh/1`         |
+
+---
+
+## 3. CẤU TRÚC PROJECT SPRING BOOT
 
 ```
-┌──────────────┐         ┌───────────────┐         ┌──────────────┐
-│  Service     │ Publish  │    UDDI       │  Find    │  Service     │
-│  Provider    │ ──────►  │  Registry     │ ◄──────  │  Requestor   │
-│  (Server)    │         │  (Danh bạ)    │         │  (Client)    │
-└──────┬───────┘         └───────────────┘         └──────┬───────┘
-       │                                                   │
-       │              Bind (Kết nối & Gọi)                 │
-       └───────────────────────────────────────────────────┘
-                    SOAP Messages (XML qua HTTP)
+project/
+├── src/main/java/com/example/demo/
+│   ├── DemoApplication.java          ← Main (khởi chạy)
+│   ├── controller/
+│   │   └── TinhToanController.java   ← REST Controller (nhận request)
+│   ├── service/
+│   │   └── TinhToanService.java      ← Logic xử lý
+│   └── model/
+│       └── KetQua.java               ← Model trả về JSON
+├── src/main/resources/
+│   └── application.properties        ← Cấu hình (port, database...)
+└── pom.xml                           ← Dependencies
 ```
 
-**3 vai trò chính:**
-1. **Service Provider (Nhà cung cấp):** Tạo và triển khai Web Service, đăng ký vào UDDI.
-2. **Service Registry (Bộ đăng ký):** Danh bạ trung tâm. Provider đăng ký dịch vụ, Requestor tra cứu.
-3. **Service Requestor (Người yêu cầu):** Tra cứu UDDI, tìm dịch vụ cần, kết nối và gọi.
+---
 
-**3 thao tác chính:**
-1. **Publish (Đăng ký):** Provider đăng ký dịch vụ vào Registry.
-2. **Find (Tìm kiếm):** Requestor tìm dịch vụ trong Registry.
-3. **Bind (Kết nối):** Requestor kết nối trực tiếp với Provider để gọi dịch vụ.
+## 4. CÁC ANNOTATION QUAN TRỌNG (THUỘC LÒNG)
 
-### 3.2 Các thành phần kỹ thuật SOAP
-
-| Thành phần | Vai trò |
-|---|---|
-| **SOAP** | Giao thức truyền thông điệp dạng XML giữa Client và Server qua HTTP |
-| **WSDL** | File XML mô tả dịch vụ: có những phương thức nào, tham số gì, kiểu dữ liệu gì, endpoint ở đâu |
-| **UDDI** | Dịch vụ danh bạ toàn cầu để đăng ký và tìm kiếm Web Service |
-| **XML** | Định dạng dữ liệu chuẩn cho thông điệp SOAP và WSDL |
+| Annotation                  | Đặt ở          | Vai trò                                              |
+| --------------------------- | ----------------- | ----------------------------------------------------- |
+| `@SpringBootApplication`  | Class main        | Đánh dấu đây là ứng dụng Spring Boot          |
+| `@RestController`         | Class controller  | Đánh dấu class là REST API (trả JSON tự động) |
+| `@RequestMapping("/api")` | Class controller  | Đặt prefix URL chung cho cả class                  |
+| `@GetMapping("/path")`    | Method            | Xử lý request HTTP GET                              |
+| `@PostMapping("/path")`   | Method            | Xử lý request HTTP POST                             |
+| `@RequestParam`           | Tham số method   | Nhận tham số từ URL query (`?a=3&b=5`)           |
+| `@PathVariable`           | Tham số method   | Nhận tham số từ URL path (`/cong/3/5`)           |
+| `@RequestBody`            | Tham số method   | Nhận dữ liệu JSON từ body request                 |
+| `@Service`                | Class service     | Đánh dấu class chứa logic nghiệp vụ             |
+| `@Autowired`              | Field/Constructor | Tự động inject (tiêm) dependency                  |
 
 ---
 
-## 4. SO SÁNH SOAP vs REST
+## 5. CODE MẪU: DỊCH VỤ TÍNH TOÁN (ĐỦ CÁC DẠNG)
 
-| Tiêu chí | SOAP | REST |
-|---|---|---|
-| Giao thức | SOAP (giao thức riêng) | HTTP thuần |
-| Định dạng | Chỉ XML | JSON, XML, Text... |
-| Tốc độ | Chậm hơn (XML nặng) | Nhanh hơn (JSON nhẹ) |
-| Độ phức tạp | Cao | Thấp |
-| Mô tả dịch vụ | WSDL (bắt buộc) | Không bắt buộc (có Swagger/OpenAPI) |
-| Trạng thái | Có thể Stateful | Stateless |
-| Bảo mật | WS-Security (mạnh) | HTTPS + OAuth (linh hoạt) |
-| Phù hợp | Enterprise, ngân hàng, bảo hiểm | Web app, mobile app, microservice |
-
----
-
-## 5. SO SÁNH WEB SERVICE vs RMI
-
-| Tiêu chí | Web Service | RMI |
-|---|---|---|
-| Ngôn ngữ | Đa ngôn ngữ (Java, C#, Python...) | Chỉ Java ↔ Java |
-| Giao thức | HTTP/SOAP/REST | TCP (JRMP) |
-| Định dạng | XML/JSON (text) | Serialized Java Objects (binary) |
-| Interoperability | Rất cao (đa nền tảng) | Chỉ JVM |
-| Hiệu năng | Chậm hơn (overhead HTTP/XML) | Nhanh hơn (binary trực tiếp) |
-| Tường lửa | Dễ vượt (dùng port 80/443) | Khó vượt (port tùy chỉnh) |
-| Sử dụng | Hệ thống mở, tích hợp đa hệ thống | Hệ thống Java nội bộ |
-
----
-
-## 6. JAX-WS: JAVA API FOR XML WEB SERVICES (SOAP)
-
-JAX-WS là API chuẩn của Java để xây dựng và sử dụng SOAP Web Service.
-
-### 6.1 Tạo Web Service (Server)
+### 5.1 File `DemoApplication.java` (Main - Khởi chạy)
 
 ```java
-import javax.jws.WebService;
-import javax.jws.WebMethod;
-import javax.xml.ws.Endpoint;
+package com.example.demo;
 
-@WebService  // Đánh dấu đây là Web Service
-public class CalculatorService {
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-    @WebMethod  // Đánh dấu đây là phương thức được expose ra ngoài
-    public int cong(int a, int b) {
+@SpringBootApplication
+public class DemoApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
+}
+```
+
+---
+
+### 5.2 File `KetQua.java` (Model - Đối tượng trả về JSON)
+
+```java
+package com.example.demo.model;
+
+public class KetQua {
+    private String phepTinh;
+    private String ketQua;
+    private String moTa;
+
+    public KetQua() {}
+
+    public KetQua(String phepTinh, String ketQua, String moTa) {
+        this.phepTinh = phepTinh;
+        this.ketQua = ketQua;
+        this.moTa = moTa;
+    }
+
+    // Getter và Setter (BẮT BUỘC để Spring chuyển sang JSON)
+    public String getPhepTinh() { return phepTinh; }
+    public void setPhepTinh(String phepTinh) { this.phepTinh = phepTinh; }
+
+    public String getKetQua() { return ketQua; }
+    public void setKetQua(String ketQua) { this.ketQua = ketQua; }
+
+    public String getMoTa() { return moTa; }
+    public void setMoTa(String moTa) { this.moTa = moTa; }
+}
+```
+
+Khi trả về từ Controller, Spring tự chuyển thành JSON:
+
+```json
+{
+    "phepTinh": "3 + 5",
+    "ketQua": "8",
+    "moTa": "Phep cong 2 so"
+}
+```
+
+---
+
+### 5.3 File `TinhToanService.java` (Service - Logic xử lý)
+
+```java
+package com.example.demo.service;
+
+import org.springframework.stereotype.Service;
+import java.util.*;
+
+@Service
+public class TinhToanService {
+
+    // Cộng 2 số
+    public double cong(double a, double b) {
         return a + b;
     }
 
-    @WebMethod
-    public int tru(int a, int b) {
+    // Trừ 2 số
+    public double tru(double a, double b) {
         return a - b;
     }
 
-    @WebMethod
-    public int nhan(int a, int b) {
+    // Nhân 2 số
+    public double nhan(double a, double b) {
         return a * b;
     }
 
-    @WebMethod
-    public double chia(int a, int b) {
+    // Chia 2 số
+    public double chia(double a, double b) {
         if (b == 0) throw new ArithmeticException("Khong the chia cho 0");
-        return (double) a / b;
+        return a / b;
     }
 
-    @WebMethod
-    public boolean kiemTraNguyenTo(int n) {
-        if (n <= 1) return false;
-        for (int i = 2; i <= Math.sqrt(n); i++) {
+    // Kiểm tra số nguyên tố
+    public boolean laSoNguyenTo(long n) {
+        if (n < 2) return false;
+        for (long i = 2; i * i <= n; i++) {
             if (n % i == 0) return false;
         }
         return true;
     }
 
-    @WebMethod
-    public long tinhGiaiThua(int n) {
+    // Giai thừa
+    public long giaiThua(int n) {
+        if (n < 0) throw new IllegalArgumentException("n phai >= 0");
         long result = 1;
         for (int i = 2; i <= n; i++) result *= i;
         return result;
     }
 
-    @WebMethod
+    // Fibonacci
+    public String fibonacci(int n) {
+        if (n < 0) return "n phai >= 0";
+        StringBuilder sb = new StringBuilder();
+        long a = 0, b = 1;
+        for (int i = 0; i <= n; i++) {
+            if (i > 0) sb.append(", ");
+            sb.append(a);
+            long c = a + b; a = b; b = c;
+        }
+        return sb.toString();
+    }
+
+    // ƯCLN - BCNN
+    public Map<String, Long> uclnBcnn(long a, long b) {
+        a = Math.abs(a); b = Math.abs(b);
+        long x = a, y = b;
+        while (y != 0) { long t = x % y; x = y; y = t; }
+        long ucln = Math.abs(x);
+        long bcnn = (a == 0 || b == 0) ? 0 : (a / ucln) * b;
+        Map<String, Long> result = new LinkedHashMap<>();
+        result.put("UCLN", ucln);
+        result.put("BCNN", bcnn);
+        return result;
+    }
+
+    // Đảo chuỗi
     public String daoChuoi(String text) {
         return new StringBuilder(text).reverse().toString();
     }
 
-    @WebMethod
-    public String sapXepTangDan(String numbers) {
+    // Sắp xếp tăng dần
+    public List<Double> sapXepTangDan(String numbers) {
         String[] parts = numbers.trim().split("[,\\s]+");
-        java.util.List<Double> list = new java.util.ArrayList<>();
+        List<Double> list = new ArrayList<>();
         for (String s : parts) list.add(Double.parseDouble(s.trim()));
-        java.util.Collections.sort(list);
-        return list.toString();
+        Collections.sort(list);
+        return list;
     }
 
-    // MAIN: Khởi động Web Service
-    public static void main(String[] args) {
-        String url = "http://localhost:8080/calculator";
-        Endpoint.publish(url, new CalculatorService());
-        System.out.println("Web Service dang chay tai: " + url);
-        System.out.println("WSDL tai: " + url + "?wsdl");
+    // Thống kê từ
+    public Map<String, Integer> thongKeTu(String text) {
+        String[] words = text.toLowerCase().trim().split("\\s+");
+        Map<String, Integer> map = new LinkedHashMap<>();
+        for (String w : words) {
+            if (!w.isBlank()) map.put(w, map.getOrDefault(w, 0) + 1);
+        }
+        return map;
+    }
+
+    // Quy đổi tiền tệ
+    public String quyDoiTienTe(double amount, String from, String to) {
+        Map<String, Double> rate = new HashMap<>();
+        rate.put("VND", 1.0);
+        rate.put("USD", 25000.0);
+        rate.put("EUR", 27000.0);
+        rate.put("JPY", 170.0);
+        from = from.toUpperCase(); to = to.toUpperCase();
+        if (!rate.containsKey(from) || !rate.containsKey(to))
+            return "Chi ho tro: VND, USD, EUR, JPY";
+        double vnd = amount * rate.get(from);
+        return String.format("%.4f %s", vnd / rate.get(to), to);
     }
 }
 ```
 
-**Giải thích:**
-- `@WebService`: Đánh dấu class là 1 Web Service.
-- `@WebMethod`: Đánh dấu phương thức được công bố (expose) cho client gọi.
-- `Endpoint.publish(url, obj)`: Triển khai Web Service tại URL chỉ định.
-- Sau khi chạy, truy cập `http://localhost:8080/calculator?wsdl` để xem mô tả WSDL.
+---
 
-### 6.2 Tạo Client gọi Web Service
+### 5.4 File `TinhToanController.java` (Controller - Nhận request)
 
-**Cách 1: Dùng wsimport (tự sinh code từ WSDL)**
+```java
+package com.example.demo.controller;
+
+import com.example.demo.model.KetQua;
+import com.example.demo.service.TinhToanService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import java.util.*;
+
+@RestController
+@RequestMapping("/api/tinh")
+public class TinhToanController {
+
+    @Autowired
+    private TinhToanService service;
+
+    // ===== PHÉP TÍNH CƠ BẢN =====
+
+    // GET http://localhost:8080/api/tinh/cong?a=3&b=5
+    @GetMapping("/cong")
+    public KetQua cong(@RequestParam double a, @RequestParam double b) {
+        double kq = service.cong(a, b);
+        return new KetQua(a + " + " + b, String.valueOf(kq), "Phep cong");
+    }
+
+    // GET http://localhost:8080/api/tinh/tru?a=10&b=3
+    @GetMapping("/tru")
+    public KetQua tru(@RequestParam double a, @RequestParam double b) {
+        double kq = service.tru(a, b);
+        return new KetQua(a + " - " + b, String.valueOf(kq), "Phep tru");
+    }
+
+    // GET http://localhost:8080/api/tinh/nhan?a=4&b=5
+    @GetMapping("/nhan")
+    public KetQua nhan(@RequestParam double a, @RequestParam double b) {
+        double kq = service.nhan(a, b);
+        return new KetQua(a + " * " + b, String.valueOf(kq), "Phep nhan");
+    }
+
+    // GET http://localhost:8080/api/tinh/chia?a=10&b=3
+    @GetMapping("/chia")
+    public KetQua chia(@RequestParam double a, @RequestParam double b) {
+        double kq = service.chia(a, b);
+        return new KetQua(a + " / " + b, String.valueOf(kq), "Phep chia");
+    }
+
+    // ===== DÙNG PathVariable (tham số trong URL) =====
+
+    // GET http://localhost:8080/api/tinh/nguyento/17
+    @GetMapping("/nguyento/{n}")
+    public KetQua nguyenTo(@PathVariable long n) {
+        boolean kq = service.laSoNguyenTo(n);
+        return new KetQua("isPrime(" + n + ")",
+                String.valueOf(kq),
+                kq ? "La so nguyen to" : "Khong phai so nguyen to");
+    }
+
+    // GET http://localhost:8080/api/tinh/giaithua/5
+    @GetMapping("/giaithua/{n}")
+    public KetQua giaiThua(@PathVariable int n) {
+        long kq = service.giaiThua(n);
+        return new KetQua(n + "!", String.valueOf(kq), "Giai thua");
+    }
+
+    // GET http://localhost:8080/api/tinh/fibonacci/10
+    @GetMapping("/fibonacci/{n}")
+    public KetQua fibonacci(@PathVariable int n) {
+        String kq = service.fibonacci(n);
+        return new KetQua("Fibonacci(" + n + ")", kq, "Day Fibonacci");
+    }
+
+    // ===== DÙNG RequestParam nhiều tham số =====
+
+    // GET http://localhost:8080/api/tinh/ucln-bcnn?a=24&b=36
+    @GetMapping("/ucln-bcnn")
+    public Map<String, Long> uclnBcnn(@RequestParam long a, @RequestParam long b) {
+        return service.uclnBcnn(a, b);
+    }
+
+    // GET http://localhost:8080/api/tinh/quidoi?amount=100&from=USD&to=VND
+    @GetMapping("/quidoi")
+    public KetQua quyDoi(@RequestParam double amount,
+                         @RequestParam String from,
+                         @RequestParam String to) {
+        String kq = service.quyDoiTienTe(amount, from, to);
+        return new KetQua(amount + " " + from + " -> " + to, kq, "Quy doi tien te");
+    }
+
+    // ===== DÙNG POST + RequestBody (nhận JSON) =====
+
+    // POST http://localhost:8080/api/tinh/daochuoi
+    // Body: { "text": "Hello World" }
+    @PostMapping("/daochuoi")
+    public KetQua daoChuoi(@RequestBody Map<String, String> body) {
+        String text = body.get("text");
+        String kq = service.daoChuoi(text);
+        return new KetQua("reverse(\"" + text + "\")", kq, "Dao chuoi");
+    }
+
+    // POST http://localhost:8080/api/tinh/sapxep
+    // Body: { "numbers": "5,2,9,1,7" }
+    @PostMapping("/sapxep")
+    public List<Double> sapXep(@RequestBody Map<String, String> body) {
+        return service.sapXepTangDan(body.get("numbers"));
+    }
+
+    // POST http://localhost:8080/api/tinh/thongke
+    // Body: { "text": "phat trien he thong phat trien" }
+    @PostMapping("/thongke")
+    public Map<String, Integer> thongKe(@RequestBody Map<String, String> body) {
+        return service.thongKeTu(body.get("text"));
+    }
+}
+```
+
+---
+
+## 6. CÁCH CHẠY VÀ TEST
+
+### 6.1 Chạy Server
+
 ```bash
-wsimport -s src -p com.client http://localhost:8080/calculator?wsdl
+mvn spring-boot:run
 ```
-Lệnh này tự động sinh ra các class Stub để client gọi:
 
-```java
-// Client tự sinh từ wsimport
-public class WebServiceClient {
-    public static void main(String[] args) {
-        // Class CalculatorServiceService và CalculatorService được sinh ra bởi wsimport
-        CalculatorServiceService service = new CalculatorServiceService();
-        CalculatorService calc = service.getCalculatorServicePort();
+Hoặc chạy `DemoApplication.java` trực tiếp trong Eclipse/IntelliJ.
 
-        // Gọi phương thức từ xa
-        System.out.println("3 + 5 = " + calc.cong(3, 5));
-        System.out.println("10 / 3 = " + calc.chia(10, 3));
-        System.out.println("17 la so nguyen to: " + calc.kiemTraNguyenTo(17));
-    }
+Server chạy tại: `http://localhost:8080`
+
+### 6.2 Test bằng trình duyệt (GET)
+
+Mở trình duyệt, gõ thẳng URL:
+
+```
+http://localhost:8080/api/tinh/cong?a=3&b=5
+http://localhost:8080/api/tinh/nguyento/17
+http://localhost:8080/api/tinh/giaithua/5
+http://localhost:8080/api/tinh/fibonacci/10
+http://localhost:8080/api/tinh/ucln-bcnn?a=24&b=36
+http://localhost:8080/api/tinh/quidoi?amount=100&from=USD&to=VND
+```
+
+### 6.3 Test bằng Postman hoặc curl (POST)
+
+```bash
+# Đảo chuỗi
+curl -X POST http://localhost:8080/api/tinh/daochuoi \
+  -H "Content-Type: application/json" \
+  -d '{"text": "Hello World"}'
+
+# Sắp xếp
+curl -X POST http://localhost:8080/api/tinh/sapxep \
+  -H "Content-Type: application/json" \
+  -d '{"numbers": "5,2,9,1,7"}'
+
+# Thống kê từ
+curl -X POST http://localhost:8080/api/tinh/thongke \
+  -H "Content-Type: application/json" \
+  -d '{"text": "phat trien he thong phat trien"}'
+```
+
+### 6.4 Kết quả JSON mẫu
+
+**GET** `/api/tinh/cong?a=3&b=5`:
+
+```json
+{
+    "phepTinh": "3.0 + 5.0",
+    "ketQua": "8.0",
+    "moTa": "Phep cong"
 }
 ```
 
-**Cách 2: Gọi trực tiếp bằng URL (không cần wsimport)**
-```java
-import javax.xml.namespace.QName;
-import javax.xml.ws.Service;
-import java.net.URL;
+**GET** `/api/tinh/nguyento/17`:
 
-public class DirectClient {
-    public static void main(String[] args) throws Exception {
-        // 1. Đường dẫn WSDL
-        URL wsdlUrl = new URL("http://localhost:8080/calculator?wsdl");
+```json
+{
+    "phepTinh": "isPrime(17)",
+    "ketQua": "true",
+    "moTa": "La so nguyen to"
+}
+```
 
-        // 2. QName xác định dịch vụ (namespace + tên service trong WSDL)
-        QName qname = new QName("http://yourpackage/", "CalculatorServiceService");
+**POST** `/api/tinh/thongke` + body `{"text": "phat trien he thong phat trien"}`:
 
-        // 3. Tạo Service proxy
-        Service service = Service.create(wsdlUrl, qname);
-
-        // 4. Lấy port (tương tự như Stub)
-        // CalculatorService ở đây là Interface mà bạn tự tạo khớp với server
-        // hoặc dùng class được sinh ra từ wsimport
-        CalculatorService calc = service.getPort(CalculatorService.class);
-
-        // 5. Gọi phương thức
-        System.out.println("Ket qua: " + calc.cong(10, 20));
-    }
+```json
+{
+    "phat": 2,
+    "trien": 2,
+    "he": 1,
+    "thong": 1
 }
 ```
 
 ---
 
-## 7. CẤU TRÚC THÔNG ĐIỆP SOAP
+## 8. SO SÁNH 3 CÔNG NGHỆ (Socket vs RMI vs Web Service)
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-
-    <!-- Header: Thông tin bổ sung (bảo mật, routing...) - TÙY CHỌN -->
-    <soap:Header>
-        <auth:token>abc123</auth:token>
-    </soap:Header>
-
-    <!-- Body: Nội dung chính (request hoặc response) - BẮT BUỘC -->
-    <soap:Body>
-        <cal:cong>
-            <a>10</a>
-            <b>20</b>
-        </cal:cong>
-    </soap:Body>
-
-</soap:Envelope>
-```
-
-| Phần | Bắt buộc | Vai trò |
-|---|---|---|
-| **Envelope** | Có | Phần tử gốc, bao bọc toàn bộ thông điệp |
-| **Header** | Không | Chứa thông tin phụ: xác thực, routing, transaction |
-| **Body** | Có | Chứa nội dung chính: tên method, tham số, kết quả |
-| **Fault** | Không | Nằm trong Body, chứa thông tin lỗi khi xử lý thất bại |
+| Tiêu chí             | Socket (TCP)     | RMI                      | Web Service (REST)                |
+| ---------------------- | ---------------- | ------------------------ | --------------------------------- |
+| Mức trừu tượng     | Thấp            | Trung bình              | Cao                               |
+| Ngôn ngữ             | Đa ngôn ngữ   | Chỉ Java                | Đa ngôn ngữ                    |
+| Giao thức             | TCP/UDP          | JRMP (TCP)               | HTTP                              |
+| Định dạng dữ liệu | Byte/Text        | Java Object              | **JSON**                    |
+| Cách gọi             | Đọc/ghi stream | Gọi hàm trực tiếp    | Gọi qua **URL endpoint**  |
+| Framework              | Không cần      | JDK built-in             | **Spring Boot**             |
+| Port                   | Tùy ý          | Tùy ý                  | **8080** (mặc định)      |
+| Test                   | Telnet/Code      | Code                     | **Trình duyệt / Postman** |
+| Phù hợp              | Chat, game       | Hệ thống Java nội bộ | **API cho mọi client**     |
 
 ---
 
-## 8. WSDL (Web Service Description Language)
+## 9. LƯU Ý KHI LÀM BÀI THI
 
-WSDL là file XML mô tả chi tiết Web Service, gồm các phần:
-
-| Phần tử WSDL | Mô tả |
-|---|---|
-| `<types>` | Định nghĩa kiểu dữ liệu (dùng XML Schema) |
-| `<message>` | Mô tả thông điệp vào/ra cho mỗi operation |
-| `<portType>` | Nhóm các operation (tương tự Interface trong Java) |
-| `<binding>` | Xác định giao thức và định dạng dữ liệu cụ thể (SOAP/HTTP) |
-| `<service>` | Xác định endpoint (URL) để gọi dịch vụ |
-
----
-
-## 9. LƯU Ý KHI LÀM BÀI THI WEB SERVICE
-
-| Lưu ý | Chi tiết |
-|---|---|
-| Annotation | `@WebService` trên class, `@WebMethod` trên phương thức. Thiếu là không expose được. |
-| Endpoint | `Endpoint.publish(url, obj)` để triển khai. URL phải đúng format `http://host:port/path`. |
-| WSDL | Sau khi Server chạy, truy cập `url?wsdl` để xem mô tả dịch vụ. |
-| Thứ tự chạy | **Server trước → Client sau** (giống RMI). |
-| Lỗi thường gặp | Sai URL, sai QName namespace, Server chưa chạy. |
-| So với RMI | Web Service dùng HTTP/XML (đa ngôn ngữ) - RMI dùng TCP/Binary (chỉ Java). |
-
----
-
-## 10. BẢNG TỔNG HỢP SO SÁNH 3 CÔNG NGHỆ PHÂN TÁN
-
-| Tiêu chí | Socket | RMI | Web Service |
-|---|---|---|---|
-| Mức trừu tượng | Thấp | Trung bình | Cao |
-| Ngôn ngữ | Đa ngôn ngữ | Chỉ Java | Đa ngôn ngữ |
-| Giao thức | TCP/UDP | JRMP (TCP) | HTTP/SOAP/REST |
-| Định dạng dữ liệu | Byte/Text | Java Object | XML/JSON |
-| Tính tương tác | Tùy triển khai | Chỉ JVM | Rất cao (chuẩn mở) |
-| Firewall | Khó (port tùy ý) | Khó | Dễ (port 80/443) |
-| Độ phức tạp cài đặt | Cao | Trung bình | Thấp (có công cụ hỗ trợ) |
-| Hiệu năng | Nhanh nhất | Nhanh | Chậm nhất |
-| Phù hợp | Game, chat, file transfer | Hệ thống Java nội bộ | Tích hợp đa hệ thống |
+| Lưu ý                            | Chi tiết                                                                                  |
+| ---------------------------------- | ------------------------------------------------------------------------------------------ |
+| `@RestController`                | PHẢI có, nếu dùng `@Controller` thì phải thêm `@ResponseBody` trên mỗi method |
+| `@GetMapping` / `@PostMapping` | GET cho lấy dữ liệu đơn giản, POST cho gửi dữ liệu phức tạp (JSON body)         |
+| `@RequestParam`                  | Nhận tham số từ `?key=value` trên URL                                                |
+| `@PathVariable`                  | Nhận tham số từ `/path/{value}` trên URL                                             |
+| `@RequestBody`                   | Nhận JSON object từ body (chỉ dùng với POST/PUT)                                      |
+| Port                               | Mặc định `8080`, đổi trong `application.properties`: `server.port=9090`         |
+| JSON tự động                    | Spring Boot tự chuyển Object → JSON khi trả về,**KHÔNG CẦN** gọi thủ công  |
+| Getter/Setter                      | Model class**BẮT BUỘC** có getter/setter để Spring serialize sang JSON          |
+| Dependency                         | Chỉ cần `spring-boot-starter-web` là đủ cho REST API                                |
