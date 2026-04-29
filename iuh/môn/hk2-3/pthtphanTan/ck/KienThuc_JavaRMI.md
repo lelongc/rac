@@ -190,47 +190,13 @@ public class RMIClient {
 
 ---
 
-## 6. MỐI LIÊN HỆ GIỮA CÁC FILE (SƠ ĐỒ NHỚ NHANH)
-
-```
-                  ┌───────────────────┐
-                  │  IService.java    │  ◄── Cả Client & Server đều cần file này
-                  │  (Interface)      │
-                  └────────┬──────────┘
-                           │ implements
-                           ▼
-┌──────────────┐    ┌──────────────────┐
-│ RMIClient    │    │ ServiceImpl.java │  ◄── Chỉ Server mới cần
-│ (lookup)     │    │ (Logic thực thi) │
-└──────┬───────┘    └────────┬─────────┘
-       │                     │ tạo instance
-       │ lookup(url)         ▼
-       │            ┌──────────────────┐
-       └──────────► │ RMIServer.java   │
-        qua mạng    │ (Registry+Bind)  │
-                    └──────────────────┘
-```
-
-**3 điều phải khớp giữa Client ↔ Server:**
+## **3 điều phải khớp giữa Client ↔ Server:**
 
 1. **IP/Hostname** (ví dụ: `localhost` hoặc `192.168.1.100`)
 2. **Port** (ví dụ: `6789`)
 3. **Tên dịch vụ** (ví dụ: `MyService`)
 
 → Sai 1 trong 3 là toàn bộ không chạy.
-
----
-
-## 7. LƯU Ý KHI LÀM BÀI THI
-
-| Lưu ý                | Chi tiết                                                                                                           |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `RemoteException`    | LUÔN phải `throws` hoặc `try-catch`. Vì giao tiếp mạng có thể lỗi bất cứ lúc nào.                  |
-| Thứ tự chạy         | **Server trước → Client sau**. Nếu Client chạy trước sẽ lỗi `Connection refused`.                  |
-| Port                   | Server và Client phải dùng cùng 1 port. Mặc định RMI dùng 1099.                                             |
-| Interface              | Phải giống HOÀN TOÀN ở cả 2 phía. Sai tên hàm = lỗi đỏ lòm.                                            |
-| `Serializable`       | Nếu truyền Object tùy chỉnh (không phải primitive/String) thì Object đó PHẢI `implements Serializable`. |
-| `bind` vs `rebind` | `bind` lỗi nếu tên đã tồn tại. `rebind` ghi đè → dùng `rebind` cho an toàn.                       |
 
 ---
 
