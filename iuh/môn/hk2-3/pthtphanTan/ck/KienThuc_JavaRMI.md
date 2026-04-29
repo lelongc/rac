@@ -1,65 +1,277 @@
-# Tổng hợp Kiến thức Java RMI (Remote Method Invocation)
-
-## 1. Khái niệm và Cách thức hoạt động
-**Remote Method Invocation (RMI)** là một cơ chế trong Java phục vụ cho việc xây dựng các hệ thống phân tán. Nó cho phép một đối tượng (Object) chạy trên một máy ảo Java (JVM) này có thể triệu gọi (invoke) các phương thức của một đối tượng chạy trên một JVM khác.
-
-### 1.1. Lớp trung gian: Stub và Skeleton
-RMI không gọi trực tiếp mà thông qua các lớp trung gian:
-- **Stub (Client-side):** Hoạt động như một gateway đại diện cho remote object phía Client.
-  - Thiết lập kết nối tới JVM từ xa.
-  - **Marshalling:** Đóng gói (serialize) các tham số.
-  - Đợi kết quả và **Unmarshalling** giá trị trả về cho người gọi.
-- **Skeleton (Server-side):** Hoạt động như gateway đại diện phía Server.
-  - Nhận incoming request.
-  - Unmarshalling tham số để gọi phương thức thực tế trên Server.
-  - Marshalling kết quả trả về cho Client.
-
-### 1.2. RMI Registry (Naming Service)
-- Là một namespace (danh bạ) nơi Server đăng ký các đối tượng từ xa với một tên gọi riêng biệt (**bind name**).
-- **Server:** Sử dụng `Naming.bind()` hoặc `Naming.rebind()` để đăng ký URL (ví dụ: `rmi://localhost:1099/MyService`).
-- **Client:** Sử dụng `Naming.lookup()` với bind name để lấy về bản sao của Stub (reference).
+# KIẾN THỨC JAVA RMI (Remote Method Invocation) - ÔN THI CUỐI KỲ
 
 ---
 
-## 2. Marshalling và Unmarshalling
-- **Marshalling:** Quá trình đóng gói dữ liệu tham số vào một thông báo để truyền qua mạng. Nếu tham số là object, nó sẽ thực hiện **Serialization**.
-- **Unmarshalling:** Quá trình giải nén thông báo để lấy lại dữ liệu thực tế. Nếu tham số là object, nó sẽ thực hiện **Deserialization**.
-- **Lưu ý:** Đây cũng là nơi phát sinh các lỗ hổng bảo mật liên quan đến Deserialization.
+## 1. KHÁI NIỆM RMI
+
+**RMI (Remote Method Invocation)** là cơ chế cho phép một đối tượng Java trên máy này có thể gọi (invoke) phương thức của một đối tượng Java đang chạy trên máy khác (JVM khác), thông qua mạng.
+
+- RMI là API bậc cao, xây dựng trên nền tảng Socket.
+- RMI cho phép truyền dữ liệu VÀ gọi phương thức giữa các máy khác nhau.
+- Việc truyền dữ liệu qua mạng được xử lý trong suốt (transparent) bởi JVM.
+- RMI hỗ trợ cơ chế callback: Server cũng có thể gọi ngược phương thức ở Client.
 
 ---
 
-## 3. Các bước xây dựng ứng dụng RMI
-1. **Định nghĩa Remote Interface:**
-   - Phải `extends Remote`.
-   - Các phương thức phải ném ra `RemoteException`.
-2. **Cài đặt triển khai (Implementation):**
-   - Thường `extends UnicastRemoteObject` và `implements` interface vừa tạo.
-3. **Cài đặt Server:**
-   - Khởi tạo Registry: `LocateRegistry.createRegistry(port)`.
-   - Đăng ký đối tượng: `Naming.rebind(url, object)`.
-4. **Cài đặt Client:**
-   - Tìm kiếm đối tượng: `(InterfaceName) Naming.lookup(url)`.
-   - Triệu gọi phương thức như một đối tượng cục bộ.
+## 2. KIẾN TRÚC RMI (3 TẦNG)
+
+**Sơ đồ tổng quan: Client → Registry → Server (bind / lookup / invoke)**
+
+![Sơ đồ kiến trúc RMI - Client, Registry, Server](image/KienThuc_JavaRMI/1777444048845.png)
+
+**Sơ đồ chi tiết: Stub (Client) ↔ Skeleton (Server) qua mạng**
+
+![Luồng Stub-Skeleton giữa Local Machine và Remote Machine](image/KienThuc_JavaRMI/1777446299120.png)
+
+### Các thành phần chính:
+
+| Thành phần                 | Vai trò                                                                                                                                      |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Interface (Remote)** | "Hợp đồng" dùng chung giữa Client và Server. Khai báo các phương thức có thể gọi từ xa.                                        |
+| **Implementation**     | Lớp triển khai logic thực sự (nằm ở Server). Kế thừa `UnicastRemoteObject` và implement Interface.                                 |
+| **RMI Server**         | Khởi tạo đối tượng Impl, tạo Registry, đăng ký (bind) dịch vụ.                                                                    |
+| **RMI Client**         | Tra cứu (lookup) dịch vụ từ Registry, gọi phương thức từ xa.                                                                         |
+| **Stub**               | Đối tượng proxy phía Client. Khi Client gọi phương thức, Stub sẽ đóng gói (marshal) tham số và gửi qua mạng.                 |
+| **Skeleton**           | Đối tượng proxy phía Server. Nhận request từ Stub, giải mã (unmarshal) tham số, gọi phương thức thật, rồi trả kết quả.     |
+| **RMI Registry**       | Bộ danh bạ (Name Service). Server đăng ký tên dịch vụ vào đây. Client tra cứu tên để lấy reference tới đối tượng từ xa. |
 
 ---
 
-## 4. Vấn đề Bảo mật và Khai thác (Security Labs)
-RMI dựa trên cơ chế Serialization nên tiềm ẩn nhiều rủi ro về **Java Deserialization Vulnerability**.
+## 3. LUỒNG HOẠT ĐỘNG CỦA RMI
 
-### 4.1. JEP 290 (Java Enhancement Process)
-Được giới thiệu từ bản **JDK 8u121**, nhằm hạn chế nguy cơ deserialization bằng cơ chế **Look Ahead Deserialization**.
-- **Serialization Filters:** Kiểm tra tên lớp (Class Name) trước khi thực hiện deserialize thực tế.
-- **Process-wide Filters:** Bộ lọc áp dụng cho toàn hệ thống thông qua tham số `-Djdk.serialFilter` hoặc file `java.security`.
-- **Custom Filters:** Dev có thể ghi đè bộ lọc để tùy chỉnh whitelist/blacklist cho từng Stream cụ thể.
+```
+1. Server tạo đối tượng Impl (đầu bếp)
+2. Server tạo Registry tại một cổng (vd: 6789)
+3. Server đăng ký (bind/rebind) đối tượng vào Registry với 1 tên (vd: "MyService")
+4. Server chờ...
 
-### 4.2. Khai thác ứng dụng (Exploit)
-- **Trước JEP 290:** Sử dụng các tool như `ysoserial` (RMIRegistryExploit, JRMPClient) để gửi malicious serialized objects nếu trong classpath của server chứa các "gadget chain" (thư viện lỗi).
-- **Sau JEP 290:** Oracle mặc định tạo ra các filter cho Registry và DGC (Distributed Garbage Collection) để chặn các gadget phổ biến. Tuy nhiên, vẫn có thể bị khai thác nếu Server cho phép truyền một Object tùy ý vào một phương thức (Method Argument type là `Object`). Khi đó, RMI server vẫn sẽ gọi `readObject()` để giải nén tham số mà không bị filter bảo vệ hoàn toàn.
+5. Client dùng Naming.lookup("rmi://host:port/MyService") để tra cứu
+6. Registry trả về Stub (proxy) cho Client
+7. Client gọi phương thức trên Stub
+8. Stub đóng gói (marshal) tham số → gửi qua mạng (TCP)
+9. Skeleton nhận → giải mã (unmarshal) tham số → gọi phương thức thật trên Impl
+10. Impl tính toán, trả kết quả cho Skeleton
+11. Skeleton đóng gói kết quả → gửi về Stub
+12. Stub giải mã → trả kết quả cho Client
+```
+
+**Tóm gọn:** Client → Stub → [Mạng] → Skeleton → Impl → Skeleton → [Mạng] → Stub → Client
 
 ---
 
-## 5. Đặc tính nổi bật
-- Là API bậc cao xây dựng trên nền tảng **Socket**.
-- Truyền dữ liệu và mã lệnh (tham số) một cách trong suốt giữa các JVM.
-- Cung cấp cơ chế **Callback** (Server gọi ngược lại phương thức ở Client).
-- Sử dụng công cụ `rmic.exe` (trong các bản Java cũ) để tạo Stub và Skeleton.
+## 4. MARSHAL & UNMARSHAL (SERIALIZATION)
+
+- **Marshal (Đóng gói):** Chuyển đổi tham số/đối tượng thành dạng byte stream để truyền qua mạng.
+  - Kiểu primitive (int, double...) → đóng gói trực tiếp.
+  - Kiểu Object → phải implements `Serializable` để serialize.
+- **Unmarshal (Giải gói):** Chuyển byte stream ngược lại thành đối tượng Java.
+
+---
+
+## 5. CÁC BƯỚC CÀI ĐẶT ỨNG DỤNG RMI (QUAN TRỌNG NHẤT - THUỘC LÒNG)
+
+### Bước 1: Tạo Interface (Hợp đồng dùng chung)
+
+```java
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+public interface IService extends Remote {
+    // Mọi phương thức PHẢI throws RemoteException
+    public String xuLyDuLieu(String data) throws RemoteException;
+}
+```
+
+**Quy tắc:**
+
+- Interface PHẢI `extends Remote`
+- Mọi phương thức PHẢI `throws RemoteException`
+- File này phải có MẶT Ở CẢ HAI PHÍA (Client và Server)
+
+---
+
+### Bước 2: Tạo lớp Implementation (Logic xử lý - chỉ nằm ở Server)
+
+```java
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
+public class ServiceImpl extends UnicastRemoteObject implements IService {
+
+    // Constructor BẮT BUỘC throws RemoteException
+    public ServiceImpl() throws RemoteException {
+        super(); // Mở cổng kết nối ngầm cho đối tượng RMI
+    }
+
+    @Override
+    public String xuLyDuLieu(String data) throws RemoteException {
+        // Logic xử lý thực tế ở đây
+        return "Kết quả: " + data.toUpperCase();
+    }
+}
+```
+
+**Quy tắc:**
+
+- PHẢI `extends UnicastRemoteObject` (để biến thành đối tượng RMI có thể giao tiếp qua mạng)
+- PHẢI `implements IService` (cam kết thực hiện đúng Interface)
+- Constructor PHẢI `throws RemoteException` và gọi `super()`
+
+---
+
+### Bước 3: Tạo RMI Server (Khởi động và đăng ký dịch vụ)
+
+```java
+import java.rmi.Naming;
+import java.rmi.registry.LocateRegistry;
+
+public class RMIServer {
+    public static void main(String[] args) {
+        try {
+            // 1. Tạo đối tượng thực thi (thuê đầu bếp)
+            IService service = new ServiceImpl();
+
+            // 2. Tạo Registry tại cổng 6789 (mở tổng đài)
+            LocateRegistry.createRegistry(6789);
+
+            // 3. Đăng ký dịch vụ với tên "MyService" (ghi vào danh bạ)
+            // Cú pháp: "rmi://[IP hoặc hostname]:[port]/[tên dịch vụ]"
+            Naming.rebind("rmi://localhost:6789/MyService", service);
+
+            System.out.println(">>> Server đã sẵn sàng trên cổng 6789!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+**Quy tắc:**
+
+- `LocateRegistry.createRegistry(port)`: Tạo bộ đăng ký tại port chỉ định
+- `Naming.rebind(url, obj)`: Đăng ký đối tượng với tên. Dùng `rebind` thay `bind` để tránh lỗi trùng tên
+- Cổng mặc định của RMI là 1099, nhưng có thể dùng cổng bất kỳ
+- **LUÔN CHẠY SERVER TRƯỚC, CLIENT SAU**
+
+---
+
+### Bước 4: Tạo RMI Client (Kết nối và gọi phương thức từ xa)
+
+```java
+import java.rmi.Naming;
+import java.util.Scanner;
+
+public class RMIClient {
+    public static void main(String[] args) {
+        try {
+            // 1. Tra cứu dịch vụ từ xa (lookup trong danh bạ)
+            IService service = (IService) Naming.lookup("rmi://localhost:6789/MyService");
+
+            // 2. Gọi phương thức từ xa (nhìn như gọi local nhưng thực ra qua mạng)
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Nhap du lieu: ");
+            String input = sc.nextLine();
+
+            String result = service.xuLyDuLieu(input);
+            System.out.println("Ket qua tu Server: " + result);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+**Quy tắc:**
+
+- `Naming.lookup(url)`: Tra cứu dịch vụ. URL phải khớp IP, Port, Tên với Server
+- Ép kiểu `(IService)` kết quả trả về từ lookup
+- Client CHỈ CẦN biết Interface, không cần biết file Impl
+
+---
+
+## 6. MỐI LIÊN HỆ GIỮA CÁC FILE (SƠ ĐỒ NHỚ NHANH)
+
+```
+                  ┌───────────────────┐
+                  │  IService.java    │  ◄── Cả Client & Server đều cần file này
+                  │  (Interface)      │
+                  └────────┬──────────┘
+                           │ implements
+                           ▼
+┌──────────────┐    ┌──────────────────┐
+│ RMIClient    │    │ ServiceImpl.java │  ◄── Chỉ Server mới cần
+│ (lookup)     │    │ (Logic thực thi) │
+└──────┬───────┘    └────────┬─────────┘
+       │                     │ tạo instance
+       │ lookup(url)         ▼
+       │            ┌──────────────────┐
+       └──────────► │ RMIServer.java   │
+        qua mạng    │ (Registry+Bind)  │
+                    └──────────────────┘
+```
+
+**3 điều phải khớp giữa Client ↔ Server:**
+
+1. **IP/Hostname** (ví dụ: `localhost` hoặc `192.168.1.100`)
+2. **Port** (ví dụ: `6789`)
+3. **Tên dịch vụ** (ví dụ: `MyService`)
+
+→ Sai 1 trong 3 là toàn bộ không chạy.
+
+---
+
+## 7. LƯU Ý KHI LÀM BÀI THI
+
+| Lưu ý                | Chi tiết                                                                                                           |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `RemoteException`    | LUÔN phải `throws` hoặc `try-catch`. Vì giao tiếp mạng có thể lỗi bất cứ lúc nào.                  |
+| Thứ tự chạy         | **Server trước → Client sau**. Nếu Client chạy trước sẽ lỗi `Connection refused`.                  |
+| Port                   | Server và Client phải dùng cùng 1 port. Mặc định RMI dùng 1099.                                             |
+| Interface              | Phải giống HOÀN TOÀN ở cả 2 phía. Sai tên hàm = lỗi đỏ lòm.                                            |
+| `Serializable`       | Nếu truyền Object tùy chỉnh (không phải primitive/String) thì Object đó PHẢI `implements Serializable`. |
+| `bind` vs `rebind` | `bind` lỗi nếu tên đã tồn tại. `rebind` ghi đè → dùng `rebind` cho an toàn.                       |
+
+---
+
+## 8. VÍ DỤ MINH HỌA: CÁC DẠNG BÀI TẬP (ĐÃ CÓ SẴN TRONG CODE)
+
+Code RMI đã có sẵn 31 dạng bài tập trong file `ServiceImpl.java` (thư mục `rmi/`).
+Chỉ cần uncomment 1 dòng return duy nhất trong hàm `xuLyDuLieu()` để chuyển dạng bài:
+
+| Bài  | Mô tả                                                      | Input ví dụ                      |
+| ----- | ------------------------------------------------------------ | ---------------------------------- |
+| 1     | Tam giác (chu vi, diện tích)                              | `3 4 5`                          |
+| 2     | Số phức (cộng/trừ/nhân/chia)                            | `ADD 1 2 3 4`                    |
+| 3     | Fibonacci                                                    | `10`                             |
+| 4     | Quy đổi tiền tệ                                          | `100 USD VND`                    |
+| 5     | Kiểm tra số nguyên tố                                    | `17`                             |
+| 6     | Sắp xếp tăng dần                                         | `5 2 9 1`                        |
+| 7     | Sắp xếp giảm dần                                         | `5 2 9 1`                        |
+| 8     | Thống kê số lượng từ                                   | `phat trien he thong phat trien` |
+| 9     | Sắp xếp chuỗi (alphabet)                                  | `zebra,apple,cat`                |
+| 10    | Đảo chuỗi                                                 | `abcde`                          |
+| 11    | Ngắt chuỗi theo dấu                                       | `a-b-c                             |
+| 12    | ƯCLN & BCNN                                                 | `24 36`                          |
+| 13    | Phương trình bậc 1                                       | `2 4`                            |
+| 14    | Phương trình bậc 2                                       | `1 -3 2`                         |
+| 15    | Tổng 1 đến N                                              | `100`                            |
+| 16    | Đếm nguyên âm/phụ âm                                   | `hello world`                    |
+| 17    | Chuẩn hóa chuỗi (Title Case)                              | `phat TRIEN he thong`            |
+| 18    | Kiểm tra Palindrome                                         | `racecar`                        |
+| 19    | Giai thừa                                                   | `5`                              |
+| 20    | Tổng chữ số                                               | `12345`                          |
+| 21-31 | Tổng danh sách, Min/Max, Chẵn lẻ, Diện tích, Chu vi... | (xem code)                         |
+
+---
+
+## 9. SO SÁNH RMI VỚI SOCKET THƯỜNG
+
+| Tiêu chí              | Socket (TCP/UDP)                        | RMI                                          |
+| ----------------------- | --------------------------------------- | -------------------------------------------- |
+| Mức độ trừu tượng | Thấp (phải tự đóng gói dữ liệu) | Cao (gọi hàm như bình thường)          |
+| Ngôn ngữ              | Đa ngôn ngữ                          | Chỉ Java ↔ Java                            |
+| Truyền dữ liệu       | Byte stream / Text                      | Object Java (Serialization)                  |
+| Cài đặt              | Phức tạp (phải tự parse)            | Đơn giản (chỉ cần Interface)            |
+| Hiệu năng             | Nhanh hơn (ít overhead)               | Chậm hơn (do serialization)                |
+| Sử dụng               | Chat, truyền file, game                | Hệ thống phân tán, ứng dụng enterprise |
