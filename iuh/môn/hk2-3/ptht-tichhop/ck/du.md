@@ -592,51 +592,83 @@ public class Client {
 5.  **Xử lý kết quả:** Duyệt qua vòng lặp của ResultSet (nếu là lệnh SELECT).
 6.  **Đóng kết nối (Close):** Đóng ResultSet, Statement, và Connection để tránh rò rỉ bộ nhớ.
 
-### 4. Đoạn mã mẫu (Code Example) JDBC với MySQL
+### 4. Mã mẫu Đầy Đủ: CRUD (Create, Read, Update, Delete)
 
-**Ví dụ: Kết nối và lấy dữ liệu (SELECT)**
-``java
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+Dưới đây là một `Class` tổng hợp đầy đủ 4 thao tác cơ bản với cơ sở dữ liệu. Nếu đi thi yêu cầu viết đoạn code cập nhật, xoá hay lấy dữ liệu, bạn chỉ cần chọn đúng hàm tương ứng để viết:
 
-public class JDBCDemo {
-    public static void main(String[] args) {
-        // 1. Thông tin kết nối (VD: MySQL)
+```java
+import java.sql.*;
+
+public class JDBC_CRUD_Thi {
+
+    // 1. Hàm dùng chung: Tạo kết nối CSDL (Luôn phải có)
+    public static Connection getConnect() throws Exception {
         String url = "jdbc:mysql://localhost:3306/ten_csdl";
         String user = "root";
         String password = "password123";
+        return DriverManager.getConnection(url, user, password);
+    }
 
-        try {
-            // 2. Tạo kết nối
-            Connection conn = DriverManager.getConnection(url, user, password);
-            System.out.println("Kết nối thành công!");
-
-            // 3. Tạo câu lệnh truy vấn an toàn bằng PreparedStatement
-            String sql = "SELECT id, ten, tuoi FROM SinhVien WHERE tuoi > ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, 18); // Gán giá trị 18 vào dấu '?' đầu tiên
-
-            // 4. Thực thi và lấy kết quả
-            ResultSet rs = pstmt.executeQuery();
-
-            // 5. Xử lý kết quả
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String ten = rs.getString("ten");
-                int tuoi = rs.getInt("tuoi");
-                System.out.println("ID: " + id + ", Tên: " + ten + ", Tuổi: " + tuoi);
-            }
-
-            // 6. Đóng tài nguyên
-            rs.close();
-            pstmt.close();
-            conn.close();
+    // 2. CREATE (Thêm mới - INSERT)
+    public static void themSinhVien(String ten, int tuoi, String nganh) {
+        String sql = "INSERT INTO SinhVien(ten, tuoi, nganh_hoc) VALUES (?, ?, ?)";
+        try (Connection conn = getConnect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
             
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            ps.setString(1, ten);
+            ps.setInt(2, tuoi);
+            ps.setString(3, nganh);
+            
+            int rows = ps.executeUpdate(); // Trả về số dòng thêm thành công
+            System.out.println("Thêm thành công: " + rows + " dòng");
+        } catch (Exception e) { e.printStackTrace(); }
+    }
+
+    // 3. READ (Đọc/Lấy dữ liệu - SELECT)
+    public static void xemSinhVien() {
+        String sql = "SELECT * FROM SinhVien WHERE nganh_hoc = ?";
+        try (Connection conn = getConnect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            ps.setString(1, "CNTT");
+            ResultSet rs = ps.executeQuery(); // SELECT phải dùng executeQuery
+            
+            while (rs.next()) {
+                System.out.println(rs.getInt("id") + " - " + rs.getString("ten"));
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+    }
+
+    // 4. UPDATE (Cập nhật - UPDATE)
+    public static void capNhatTuoi(int idSinhVien, int tuoiMoi) {
+        String sql = "UPDATE SinhVien SET tuoi = ? WHERE id = ?";
+        try (Connection conn = getConnect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            ps.setInt(1, tuoiMoi);
+            ps.setInt(2, idSinhVien);
+            
+            int rows = ps.executeUpdate(); // Trả về số dòng cập nhật thành công
+            System.out.println("Cập nhật thành công: " + rows + " dòng");
+        } catch (Exception e) { e.printStackTrace(); }
+    }
+
+    // 5. DELETE (Xóa - DELETE)
+    public static void xoaSinhVien(int idSinhVien) {
+        String sql = "DELETE FROM SinhVien WHERE id = ?";
+        try (Connection conn = getConnect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            ps.setInt(1, idSinhVien);
+            
+            int rows = ps.executeUpdate(); // Trả về số dòng xoá thành công
+            System.out.println("Xoá thành công: " + rows + " dòng");
+        } catch (Exception e) { e.printStackTrace(); }
     }
 }
-``
+```
+
+> **💡 Mẹo ghi nhớ khi làm bài thi:**
+> - SELECT thì bắt buộc dùng `executeQuery()` và phải duyệt lấy dữ liệu thông qua đối tượng `ResultSet` bằng vòng lặp `while(rs.next())`.
+> - INSERT, UPDATE, DELETE thì dùng chung một hàm là `executeUpdate()`. Hàm này sẽ trả về 1 số nguyên `int` đại diện cho số dòng đã bị thay đổi trong CSDL.
+> - Luôn sử dụng `PreparedStatement` thay vì `Statement` bằng cách đặt các dấu `?`, sau đó set tham số để code bảo mật (chống SQL Injection) và chuẩn chỉnh hơn.
