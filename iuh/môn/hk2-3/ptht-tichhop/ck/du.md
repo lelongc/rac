@@ -668,7 +668,4 @@ public class JDBC_CRUD_Thi {
 }
 ```
 
-> **💡 Mẹo ghi nhớ khi làm bài thi:**
-> - SELECT thì bắt buộc dùng `executeQuery()` và phải duyệt lấy dữ liệu thông qua đối tượng `ResultSet` bằng vòng lặp `while(rs.next())`.
-> - INSERT, UPDATE, DELETE thì dùng chung một hàm là `executeUpdate()`. Hàm này sẽ trả về 1 số nguyên `int` đại diện cho số dòng đã bị thay đổi trong CSDL.
-> - Luôn sử dụng `PreparedStatement` thay vì `Statement` bằng cách đặt các dấu `?`, sau đó set tham số để code bảo mật (chống SQL Injection) và chuẩn chỉnh hơn.
+
