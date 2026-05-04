@@ -669,3 +669,758 @@ public class JDBC_CRUD_Thi {
 ```
 
 
+---
+
+## THREAD (ĐA LUỒNG) TRONG JAVA
+
+### 1. Khái niệm
+
+*   **Process (Tiến trình):** Là một chương trình đang chạy, có không gian bộ nhớ riêng biệt.
+*   **Thread (Luồng):** Là đơn vị thực thi nhỏ nhất bên trong một Process. Nhiều Thread trong cùng một Process **chia sẻ chung bộ nhớ** (heap), giúp giao tiếp nhanh hơn nhưng cần cẩn thận về đồng bộ.
+
+**Tại sao cần Thread?**
+*   Server cần phục vụ **nhiều client cùng lúc** (ví dụ: ChatServer).
+*   Tăng hiệu suất bằng cách thực hiện nhiều tác vụ **song song**.
+*   Giữ cho giao diện người dùng không bị **đơ** khi xử lý tác vụ nặng.
+
+### 2. Hai cách tạo Thread trong Java
+
+**Cách 1: Kế thừa lớp `Thread`**
+```java
+class MyThread extends Thread {
+    @Override
+    public void run() {
+        for (int i = 0; i < 5; i++) {
+            System.out.println(Thread.currentThread().getName() + " - " + i);
+        }
+    }
+}
+
+// Sử dụng:
+MyThread t1 = new MyThread();
+t1.start(); // Gọi start(), KHÔNG gọi run() trực tiếp
+```
+
+**Cách 2: Implement interface `Runnable` (Khuyến khích dùng)**
+```java
+class MyRunnable implements Runnable {
+    @Override
+    public void run() {
+        for (int i = 0; i < 5; i++) {
+            System.out.println(Thread.currentThread().getName() + " - " + i);
+        }
+    }
+}
+
+// Sử dụng:
+Thread t2 = new Thread(new MyRunnable());
+t2.start();
+```
+
+> **💡 Khi nào dùng cách nào?**
+> - Dùng `Runnable` khi class đã `extends` lớp khác (Java không cho đa kế thừa).
+> - Dùng `Thread` khi cần override thêm các method khác của Thread.
+> - **Đi thi:** Ưu tiên viết `implements Runnable` vì linh hoạt hơn.
+
+### 3. Vòng đời của Thread (Thread Lifecycle)
+
+```
+  NEW  ──start()──▶  RUNNABLE  ──được CPU──▶  RUNNING
+                        ▲                        │
+                        │                        ▼
+                        └──notify()──  BLOCKED/WAITING  (sleep, wait, I/O)
+                                                 │
+                                                 ▼
+                                            TERMINATED (kết thúc run())
+```
+
+| Trạng thái | Mô tả |
+|---|---|
+| **NEW** | Thread vừa được tạo (`new Thread()`), chưa gọi `start()` |
+| **RUNNABLE** | Đã gọi `start()`, sẵn sàng chạy, chờ CPU cấp phát |
+| **RUNNING** | Đang thực thi mã trong `run()` |
+| **BLOCKED/WAITING** | Đang chờ tài nguyên (I/O, `sleep()`, `wait()`, `synchronized`) |
+| **TERMINATED** | Phương thức `run()` kết thúc hoặc bị dừng |
+
+### 4. Các phương thức quan trọng của Thread
+
+| Phương thức | Chức năng |
+|---|---|
+| `start()` | Khởi chạy thread (gọi `run()` trong luồng mới) |
+| `run()` | Chứa code mà thread sẽ thực thi |
+| `sleep(ms)` | Tạm dừng thread trong `ms` mili-giây |
+| `join()` | Chờ thread kết thúc rồi mới tiếp tục |
+| `isAlive()` | Kiểm tra thread còn đang chạy không |
+| `interrupt()` | Gửi tín hiệu ngắt đến thread |
+| `getName()` / `setName()` | Lấy / đặt tên thread |
+| `currentThread()` | Trả về tham chiếu đến thread hiện tại |
+
+### 5. Đồng bộ hóa (Synchronization)
+
+Khi nhiều Thread cùng truy cập **một tài nguyên chung** (biến, file, database), có thể xảy ra **Race Condition** (xung đột dữ liệu). Giải pháp: dùng từ khóa `synchronized`.
+
+**Ví dụ: Race Condition và cách khắc phục**
+```java
+class BankAccount {
+    private int balance = 1000;
+
+    // Không synchronized → có thể bị lỗi khi 2 thread rút cùng lúc
+    // public void withdraw(int amount) {
+
+    // Có synchronized → chỉ 1 thread được vào tại 1 thời điểm
+    public synchronized void withdraw(int amount) {
+        if (balance >= amount) {
+            System.out.println(Thread.currentThread().getName() + " rút " + amount);
+            balance -= amount;
+            System.out.println("Số dư còn: " + balance);
+        } else {
+            System.out.println("Không đủ tiền!");
+        }
+    }
+}
+
+// Test
+public class Main {
+    public static void main(String[] args) {
+        BankAccount acc = new BankAccount();
+        Thread t1 = new Thread(() -> acc.withdraw(800), "Nguoi1");
+        Thread t2 = new Thread(() -> acc.withdraw(800), "Nguoi2");
+        t1.start();
+        t2.start();
+    }
+}
+```
+
+> **💡 Ghi nhớ:**
+> - `synchronized` trên **method**: khóa toàn bộ method, chỉ 1 thread vào 1 lúc.
+> - `synchronized(object) { ... }`: khóa trên một đối tượng cụ thể (linh hoạt hơn).
+
+### 6. ExecutorService — Quản lý Thread Pool
+
+Thay vì tạo Thread thủ công, dùng `ExecutorService` để quản lý một nhóm Thread (Thread Pool). Đây là cách **chuyên nghiệp** và thường được hỏi trong đề thi.
+
+```java
+import java.util.concurrent.*;
+
+public class ThreadPoolDemo {
+    public static void main(String[] args) {
+        // Tạo pool với 3 thread
+        ExecutorService pool = Executors.newFixedThreadPool(3);
+
+        for (int i = 1; i <= 5; i++) {
+            final int taskId = i;
+            pool.submit(() -> {
+                System.out.println("Task " + taskId + " chạy bởi " + Thread.currentThread().getName());
+            });
+        }
+
+        pool.shutdown(); // Đóng pool sau khi hoàn thành
+    }
+}
+```
+
+### 7. Bài mẫu tổng hợp: Server TCP Đa Luồng (Socket + Thread)
+
+Đây là dạng bài **kết hợp Socket + Thread** hay ra thi nhất:
+
+```java
+import java.io.*;
+import java.net.*;
+
+public class MultiThreadServer {
+    public static void main(String[] args) throws IOException {
+        ServerSocket serverSocket = new ServerSocket(5000);
+        System.out.println("Server đang chờ...");
+
+        while (true) {
+            Socket client = serverSocket.accept();
+            // Mỗi client → 1 thread riêng
+            new Thread(new ClientHandler(client)).start();
+        }
+    }
+}
+
+class ClientHandler implements Runnable {
+    private Socket socket;
+
+    public ClientHandler(Socket socket) {
+        this.socket = socket;
+    }
+
+    @Override
+    public void run() {
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+             PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
+
+            String input;
+            while ((input = in.readLine()) != null) {
+                System.out.println("Nhận từ " + socket.getInetAddress() + ": " + input);
+                out.println("Server đã nhận: " + input);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try { socket.close(); } catch (IOException e) {}
+        }
+    }
+}
+```
+
+---
+
+## BỔ SUNG RMI: KIẾN TRÚC CHI TIẾT
+
+### Luồng hoạt động của RMI
+
+```
+  CLIENT                                    SERVER
+    │                                          │
+    │  1. Lookup("Calculator")                 │
+    │──────────────────────────▶ RMI Registry  │
+    │  2. Trả về Stub (proxy)                  │
+    │◀──────────────────────────               │
+    │                                          │
+    │  3. Gọi stub.add(3, 5)                   │
+    │──────(qua mạng)─────────▶ Skeleton       │
+    │                           │              │
+    │                           ▼              │
+    │                       Gọi obj.add(3,5)   │
+    │                           │              │
+    │  4. Trả kết quả = 8      ▼              │
+    │◀──────(qua mạng)──────── Return 8        │
+```
+
+**Các thành phần chính:**
+| Thành phần | Vai trò |
+|---|---|
+| **Remote Interface** | Định nghĩa các method có thể gọi từ xa (phải `extends Remote`) |
+| **Remote Object** | Class implement interface, chứa logic xử lý thực tế |
+| **Stub** | Proxy ở phía Client, đóng gói lời gọi gửi qua mạng |
+| **Skeleton** | Proxy ở phía Server, nhận lời gọi và chuyển đến Remote Object |
+| **RMI Registry** | Bộ đăng ký tên, giúp Client tìm được Stub theo tên dịch vụ |
+
+**3 bước triển khai RMI (ghi nhớ cho điền vào chỗ trống):**
+1. **Tạo Remote Interface** → `extends Remote`, mỗi method phải `throws RemoteException`
+2. **Tạo Remote Object (Server)** → `extends UnicastRemoteObject`, `implements Interface`, đăng ký vào `Registry`
+3. **Tạo Client** → `LocateRegistry.getRegistry()` → `registry.lookup("tên")` → Ép kiểu → Gọi method
+
+---
+
+## BỔ SUNG JDBC: CallableStatement (Gọi Stored Procedure)
+
+Ngoài `Statement` và `PreparedStatement`, còn có `CallableStatement` dùng để gọi **Stored Procedure** (thủ tục lưu sẵn) trong CSDL.
+
+```java
+// Giả sử trong MySQL có Stored Procedure:
+// CREATE PROCEDURE getSinhVienByNganh(IN nganh VARCHAR(50))
+// BEGIN
+//     SELECT * FROM SinhVien WHERE nganh_hoc = nganh;
+// END
+
+public static void goiStoredProcedure(String nganh) {
+    String sql = "{CALL getSinhVienByNganh(?)}"; // Cú pháp gọi SP
+    try (Connection conn = getConnect();
+         CallableStatement cs = conn.prepareCall(sql)) {
+        
+        cs.setString(1, nganh);
+        ResultSet rs = cs.executeQuery();
+        
+        while (rs.next()) {
+            System.out.println(rs.getInt("id") + " - " + rs.getString("ten"));
+        }
+    } catch (Exception e) { e.printStackTrace(); }
+}
+```
+
+> **💡 Phân biệt 3 loại Statement:**
+> | Loại | Khi nào dùng | Cú pháp |
+> |---|---|---|
+> | `Statement` | SQL tĩnh, đơn giản | `conn.createStatement()` |
+> | `PreparedStatement` | SQL có tham số `?` (khuyến khích) | `conn.prepareStatement(sql)` |
+> | `CallableStatement` | Gọi Stored Procedure | `conn.prepareCall("{CALL sp(?)}") ` |
+
+---
+
+## BẢNG TRA NHANH: ĐIỀN VÀO CHỖ TRỐNG
+
+Dạng đề **điền vào chỗ trống** thường hỏi tên class, method, hoặc keyword. Bảng sau liệt kê các từ khóa quan trọng nhất:
+
+### Socket
+
+| Câu hỏi thường gặp | Đáp án |
+|---|---|
+| Lớp tạo server TCP | `ServerSocket` |
+| Lớp tạo client TCP | `Socket` |
+| Method chờ client kết nối | `serverSocket.accept()` |
+| Lớp gửi/nhận UDP | `DatagramSocket` |
+| Gói tin UDP | `DatagramPacket` |
+| Lấy OutputStream để gửi | `socket.getOutputStream()` |
+| Lấy InputStream để nhận | `socket.getInputStream()` |
+| Ghi dữ liệu text | `PrintWriter` |
+| Đọc dữ liệu text | `BufferedReader` + `InputStreamReader` |
+
+### RMI
+
+| Câu hỏi thường gặp | Đáp án |
+|---|---|
+| Interface gốc phải extends | `Remote` |
+| Exception bắt buộc | `RemoteException` |
+| Lớp export remote object | `UnicastRemoteObject` |
+| Tạo registry trên server | `LocateRegistry.createRegistry(1099)` |
+| Client lấy registry | `LocateRegistry.getRegistry("host", 1099)` |
+| Đăng ký object trên server | `registry.bind("tên", stub)` hoặc `Naming.rebind(...)` |
+| Client tìm object | `registry.lookup("tên")` |
+
+### Thread
+
+| Câu hỏi thường gặp | Đáp án |
+|---|---|
+| 2 cách tạo thread | `extends Thread` hoặc `implements Runnable` |
+| Method khởi chạy thread | `thread.start()` |
+| Method chứa code thực thi | `run()` |
+| Tạm dừng thread | `Thread.sleep(ms)` |
+| Chờ thread kết thúc | `thread.join()` |
+| Từ khóa đồng bộ | `synchronized` |
+| Tạo thread pool | `Executors.newFixedThreadPool(n)` |
+
+### JDBC
+
+| Câu hỏi thường gặp | Đáp án |
+|---|---|
+| Lớp quản lý driver | `DriverManager` |
+| Tạo kết nối | `DriverManager.getConnection(url, user, pass)` |
+| Nạp driver thủ công | `Class.forName("com.mysql.cj.jdbc.Driver")` |
+| Tạo PreparedStatement | `conn.prepareStatement(sql)` |
+| Thực thi SELECT | `ps.executeQuery()` → trả về `ResultSet` |
+| Thực thi INSERT/UPDATE/DELETE | `ps.executeUpdate()` → trả về `int` |
+| Duyệt kết quả | `while (rs.next()) { ... }` |
+| Lấy giá trị cột | `rs.getString("tên_cột")`, `rs.getInt("tên_cột")` |
+| Gọi Stored Procedure | `conn.prepareCall("{CALL sp(?)}")` |
+
+---
+
+## RMI CHI TIẾT: GIẢI THÍCH TỪNG DÒNG CODE (Dạng phân tích)
+
+Phần này giúp bạn **giải thích được bất kỳ dòng code RMI nào** khi đề yêu cầu phân tích.
+
+### Ví dụ hoàn chỉnh: Kiểm tra số nguyên tố qua RMI
+
+**File 1: ICheckNumber.java (Interface — "Hợp đồng" dùng chung)**
+```java
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+public interface ICheckNumber extends Remote {
+    // extends Remote: báo cho Java biết interface này dùng qua MẠNG
+    // throws RemoteException: bắt buộc vì mạng có thể đứt bất kỳ lúc nào
+    public boolean isPrime(int n) throws RemoteException;
+}
+```
+> File này phải có MẶT Ở CẢ HAI PHÍA (Client và Server) — giống như cái MENU mà cả khách và nhà hàng đều phải có.
+
+**File 2: CheckNumberImpl.java (Implementation — "Đầu bếp" xử lý)**
+```java
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
+// extends UnicastRemoteObject: biến class thành đối tượng RMI có thể giao tiếp qua mạng TCP/IP
+// implements ICheckNumber: cam kết thực hiện đúng "hợp đồng"
+public class CheckNumberImpl extends UnicastRemoteObject implements ICheckNumber {
+
+    // Constructor BẮT BUỘC throws RemoteException và gọi super()
+    public CheckNumberImpl() throws RemoteException {
+        super(); // Mở cổng kết nối ngầm cho đối tượng RMI
+    }
+
+    @Override
+    public boolean isPrime(int n) throws RemoteException {
+        // Logic thực tế chạy trên SERVER
+        if (n <= 1) return false;
+        for (int i = 2; i <= Math.sqrt(n); i++) {
+            if (n % i == 0) return false;
+        }
+        return true;
+    }
+}
+```
+> File này CHỈ NẰM Ở SERVER. Client không cần biết ai nấu, chỉ cần biết menu (Interface).
+
+**File 3: RMIServer.java (Server — "Nhà hàng" mở cửa)**
+```java
+import java.rmi.Naming;
+import java.rmi.registry.LocateRegistry;
+
+public class RMIServer {
+    public static void main(String[] args) {
+        try {
+            // 1. Thuê đầu bếp (tạo đối tượng thực thi)
+            ICheckNumber checker = new CheckNumberImpl();
+
+            // 2. Mở tổng đài tại cổng 6789 (tạo Registry)
+            LocateRegistry.createRegistry(6789);
+
+            // 3. Ghi vào danh bạ: "PrimeChecker" → gặp ông checker
+            // Cú pháp: "rmi://[IP]:[Port]/[Tên dịch vụ]"
+            Naming.rebind("rmi://localhost:6789/PrimeChecker", checker);
+
+            System.out.println("Server đã sẵn sàng!");
+        } catch (Exception e) { e.printStackTrace(); }
+    }
+}
+```
+
+**File 4: RMIClient.java (Client — "Khách hàng" gọi món)**
+```java
+import java.rmi.Naming;
+import java.util.Scanner;
+
+public class RMIClient {
+    public static void main(String[] args) {
+        try {
+            // 1. Tra danh bạ để tìm dịch vụ (lookup)
+            // Kết quả trả về là Remote → phải ép kiểu về Interface
+            ICheckNumber checker = (ICheckNumber) Naming.lookup("rmi://localhost:6789/PrimeChecker");
+
+            // 2. Gọi hàm — nhìn như local nhưng thực ra gửi qua mạng
+            Scanner sc = new Scanner(System.in);
+            System.out.print("Nhập số: ");
+            int n = sc.nextInt();
+
+            // 3. Stub đóng gói n → gửi qua mạng → Skeleton nhận → gọi isPrime → trả kết quả
+            if (checker.isPrime(n))
+                System.out.println(n + " LÀ số nguyên tố.");
+            else
+                System.out.println(n + " KHÔNG PHẢI số nguyên tố.");
+
+        } catch (Exception e) { e.printStackTrace(); }
+    }
+}
+```
+
+### Luồng dữ liệu RMI (Dùng để phân tích/giải thích)
+
+```
+Client gọi checker.isPrime(17)
+    → Stub đóng gói (marshal) số 17 thành byte stream
+    → Gửi qua mạng TCP đến Server
+    → Skeleton nhận, giải gói (unmarshal) ra số 17
+    → Gọi CheckNumberImpl.isPrime(17) trên Server
+    → Server tính: 17 LÀ số nguyên tố → return true
+    → Skeleton đóng gói true → gửi về Client
+    → Stub nhận, trả true cho Client
+```
+
+### 3 điều PHẢI KHỚP giữa Client ↔ Server
+
+| Yếu tố | Sai thì sao? |
+|---|---|
+| **IP/Hostname** (`localhost`) | Không tìm thấy máy |
+| **Port** (`6789`) | Không vào được "nhà" |
+| **Tên dịch vụ** (`PrimeChecker`) | Vào được nhà nhưng gọi nhầm người |
+
+### So sánh RMI vs Socket
+
+| Tiêu chí | Socket (TCP/UDP) | RMI |
+|---|---|---|
+| Mức trừu tượng | Thấp (tự đóng gói dữ liệu) | Cao (gọi hàm như bình thường) |
+| Ngôn ngữ | Đa ngôn ngữ | Chỉ Java ↔ Java |
+| Truyền dữ liệu | Byte stream / Text | Object Java (Serialization) |
+| Cài đặt | Phức tạp (tự parse) | Đơn giản (chỉ cần Interface) |
+| Hiệu năng | Nhanh hơn (ít overhead) | Chậm hơn (do serialization) |
+| Sử dụng | Chat, truyền file, game | Hệ thống phân tán, enterprise |
+
+---
+
+## MẪU ĐI THI: SERVER TCP ĐA LUỒNG (Template 3 file)
+
+Đây là bộ template cực mạnh từ thư mục `exam/`. Khi đi thi, bạn chỉ cần **đổi hàm `xuLy()`** theo yêu cầu đề là xong.
+
+### Server.java (Không cần đổi gì — chạy trước)
+```java
+import java.io.*;
+import java.net.*;
+
+public class Server {
+    static final int PORT = 5000; // Đổi port theo đề
+
+    public static void main(String[] args) throws IOException {
+        try (ServerSocket ss = new ServerSocket(PORT)) {
+            System.out.println("Server chay port " + PORT);
+            int count = 0;
+            while (true) {
+                Socket client = ss.accept();
+                count++;
+                System.out.println("Client #" + count + " ket noi");
+                new Handler(client, count).start(); // Mỗi client = 1 Thread
+            }
+        }
+    }
+}
+```
+
+### Handler.java (Đổi hàm `xuLy()` theo đề)
+```java
+import java.io.*;
+import java.net.*;
+
+public class Handler extends Thread {
+    private Socket socket;
+    private int clientId;
+
+    public Handler(Socket socket, int clientId) {
+        this.socket = socket;
+        this.clientId = clientId;
+    }
+
+    @Override
+    public void run() {
+        // Dùng DataInputStream/DataOutputStream (phổ biến nhất trong thi)
+        try (Socket s = socket;
+             DataInputStream in = new DataInputStream(s.getInputStream());
+             DataOutputStream out = new DataOutputStream(s.getOutputStream())) {
+
+            while (true) {
+                String msg = in.readUTF();
+                if ("exit".equalsIgnoreCase(msg)) { out.writeUTF("Bye!"); out.flush(); break; }
+                String result = xuLy(msg);
+                out.writeUTF(result);
+                out.flush();
+            }
+        } catch (IOException e) { /* client ngắt */ }
+        System.out.println("Client #" + clientId + " ngat.");
+    }
+
+    // ★★★ ĐỔI HÀM NÀY THEO ĐỀ ★★★
+    private String xuLy(String input) {
+
+        // Chuyển HOA:
+        return input.toUpperCase();
+
+        // Chuyển thường:
+        // return input.toLowerCase();
+
+        // Đếm ký tự:
+        // return "So ky tu: " + input.length();
+
+        // Kiểm tra chẵn/lẻ:
+        // int n = Integer.parseInt(input.trim());
+        // return n + " la so " + (n % 2 == 0 ? "Chan" : "Le");
+
+        // Tổng các số (input = "1 2 3 4"):
+        // String[] parts = input.trim().split("\\s+");
+        // int sum = 0;
+        // for (String p : parts) sum += Integer.parseInt(p);
+        // return "Tong: " + sum;
+    }
+}
+```
+
+### Client.java (Không cần đổi gì — chạy sau)
+```java
+import java.io.*;
+import java.net.*;
+
+public class Client {
+    static final String HOST = "127.0.0.1";
+    static final int PORT = 5000; // Phải trùng Server
+
+    public static void main(String[] args) throws IOException {
+        try (Socket socket = new Socket(HOST, PORT);
+             DataInputStream in = new DataInputStream(socket.getInputStream());
+             DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+             BufferedReader kb = new BufferedReader(new InputStreamReader(System.in))) {
+
+            System.out.println("Ket noi thanh cong!");
+            while (true) {
+                System.out.print("Nhap ('exit' de thoat): ");
+                String input = kb.readLine();
+                out.writeUTF(input);
+                out.flush();
+                String resp = in.readUTF();
+                System.out.println("Server: " + resp);
+                if ("exit".equalsIgnoreCase(input)) break;
+            }
+        }
+    }
+}
+```
+
+### Bảng chọn nhanh khi thi
+
+| Loại đề | Đổi gì? |
+|---|---|
+| Chuyển hoa/thường | `xuLy()` → `toUpperCase()` / `toLowerCase()` |
+| Đếm ký tự/từ | `xuLy()` → `input.length()` hoặc `split("\\s+").length` |
+| Tính toán (chẵn/lẻ, tổng) | `xuLy()` → parse int rồi tính |
+| Menu (Time/Date) | Đổi sang nhận `int` bằng `in.readInt()` |
+| UDP | Đổi sang `DatagramSocket` + `DatagramPacket` |
+| OOP kế thừa | Thêm class Entity/ConA vào Handler.java |
+
+---
+
+## THREAD NÂNG CAO: PRODUCER-CONSUMER (wait/notify)
+
+Dạng bài **đồng bộ luồng** — nhiều thread cùng truy cập 1 tài nguyên chung (Kho hàng).
+
+```java
+// Kho hàng dùng chung
+class SharedKho {
+    private int sucChua, tonKho = 0;
+
+    public SharedKho(int sucChua) { this.sucChua = sucChua; }
+
+    // Nhập hàng — nếu đầy thì CHỜ
+    public synchronized void nhap(int x, String who) throws InterruptedException {
+        while (tonKho + x > sucChua) {
+            System.out.println(who + " cho (kho day)...");
+            wait(); // Nhả khóa, chờ đến khi có notify
+        }
+        tonKho += x;
+        System.out.println(who + " nhap " + x + " | ton: " + tonKho);
+        notifyAll(); // Đánh thức tất cả thread đang chờ
+    }
+
+    // Xuất hàng — nếu thiếu thì CHỜ
+    public synchronized void xuat(int x, String who) throws InterruptedException {
+        while (tonKho < x) {
+            System.out.println(who + " cho (kho thieu)...");
+            wait();
+        }
+        tonKho -= x;
+        System.out.println(who + " xuat " + x + " | ton: " + tonKho);
+        notifyAll();
+    }
+}
+
+// Test
+public class ProducerConsumerDemo {
+    public static void main(String[] args) {
+        SharedKho kho = new SharedKho(10); // Sức chứa tối đa 10
+
+        // Producer (nhập hàng)
+        new Thread(() -> {
+            try {
+                for (int i = 0; i < 5; i++) kho.nhap(3, "NhaCungCap");
+            } catch (InterruptedException e) {}
+        }).start();
+
+        // Consumer (xuất hàng)
+        new Thread(() -> {
+            try {
+                for (int i = 0; i < 5; i++) kho.xuat(2, "KhachHang");
+            } catch (InterruptedException e) {}
+        }).start();
+    }
+}
+```
+
+> **💡 Ghi nhớ cho thi:**
+> - `wait()`: Thread nhả khóa và ngủ, chờ đến khi thread khác gọi `notify()`
+> - `notify()` / `notifyAll()`: Đánh thức 1 / tất cả thread đang `wait()`
+> - `wait()` và `notify()` CHỈ được gọi bên trong block `synchronized`
+
+---
+
+## OOP KẾT HỢP SOCKET (Dạng kế thừa + truyền qua mạng)
+
+Khi đề thi yêu cầu tạo class OOP rồi gửi qua Socket:
+
+```java
+// Lớp cha
+class NhanVien {
+    String id, ten;
+    public NhanVien(String id, String ten) { this.id = id; this.ten = ten; }
+    public double tinhLuong() { return 0; }
+
+    // Parse từ chuỗi CSV gửi qua socket: "NV001,Nguyen Van A,..."
+    public static NhanVien fromCSV(String csv) {
+        String[] p = csv.split(",");
+        return new NhanVien(p[0].trim(), p[1].trim());
+    }
+
+    @Override
+    public String toString() { return id + " | " + ten + " | Luong: " + tinhLuong(); }
+}
+
+// Lớp con
+class NhanVienFullTime extends NhanVien {
+    double luongCoBan, heSo;
+
+    public NhanVienFullTime(String id, String ten, double luongCoBan, double heSo) {
+        super(id, ten);
+        this.luongCoBan = luongCoBan;
+        this.heSo = heSo;
+    }
+
+    @Override
+    public double tinhLuong() { return luongCoBan * heSo; }
+
+    // Parse: "NV001,Nguyen Van A,5000000,2.5"
+    public static NhanVienFullTime fromCSV(String csv) {
+        String[] p = csv.split(",");
+        return new NhanVienFullTime(p[0].trim(), p[1].trim(),
+                Double.parseDouble(p[2].trim()), Double.parseDouble(p[3].trim()));
+    }
+}
+```
+
+**Trong Handler.java, hàm `xuLy()` sẽ:**
+```java
+private String xuLy(String input) {
+    NhanVienFullTime nv = NhanVienFullTime.fromCSV(input);
+    return nv.toString(); // Trả về: "NV001 | Nguyen Van A | Luong: 12500000.0"
+}
+```
+
+---
+
+## RMI: 31 DẠNG BÀI ĐÃ LÀM (Tham khảo nhanh)
+
+Từ file `ServiceImpl.java` trong thư mục `rmi/`, các dạng bài RMI đã làm qua:
+
+| # | Dạng bài | Input mẫu |
+|---|---|---|
+| 1 | Tam giác (chu vi, diện tích) | `3 4 5` |
+| 2 | Số phức (cộng/trừ/nhân/chia) | `ADD 1 2 3 4` |
+| 3 | Fibonacci | `10` |
+| 4 | Quy đổi tiền tệ | `100 USD VND` |
+| 5 | Kiểm tra số nguyên tố | `17` |
+| 6-7 | Sắp xếp tăng/giảm dần | `5 2 9 1` |
+| 8 | Thống kê số lượng từ | `phat trien he thong` |
+| 9 | Sắp xếp chuỗi alphabet | `zebra,apple,cat` |
+| 10 | Đảo chuỗi | `abcde` |
+| 11 | Ngắt chuỗi theo dấu | `a-b-c` |
+| 12 | ƯCLN & BCNN | `24 36` |
+| 13-14 | Phương trình bậc 1, bậc 2 | `2 4` / `1 -3 2` |
+| 15 | Tổng 1 đến N | `100` |
+| 16 | Đếm nguyên âm/phụ âm | `hello world` |
+| 17 | Chuẩn hóa chuỗi (Title Case) | `phat TRIEN he thong` |
+| 18 | Kiểm tra Palindrome | `racecar` |
+| 19 | Giai thừa | `5` |
+| 20 | Tổng chữ số | `12345` |
+| 21-31 | Min/Max, Chẵn/Lẻ, Diện tích, Chu vi... | *(xem code)* |
+
+> **Tất cả dạng trên đều dùng chung 1 template:** Interface → Impl → Server → Client. Chỉ thay logic trong hàm `xuLyDuLieu()`.
+
+---
+
+## MARSHAL & UNMARSHAL (Serialization) — Dạng điền/phân tích
+
+| Thuật ngữ | Ý nghĩa | Ví dụ |
+|---|---|---|
+| **Marshal (Đóng gói)** | Chuyển Object/tham số → byte stream để gửi qua mạng | Client gọi `isPrime(17)` → Stub chuyển số 17 thành bytes |
+| **Unmarshal (Giải gói)** | Chuyển byte stream → Object/tham số | Skeleton nhận bytes → giải mã ra số 17 |
+| **Serializable** | Interface đánh dấu Object có thể marshal/unmarshal | `class User implements Serializable { ... }` |
+
+---
+
+## LỖI HAY GẶP KHI THI (Debug nhanh)
+
+| Lỗi | Nguyên nhân | Cách sửa |
+|---|---|---|
+| `Connection refused` | Server chưa chạy | Chạy Server TRƯỚC, Client SAU |
+| `Address already in use` | Port bị chiếm | Đổi PORT hoặc restart IDE |
+| Client treo không nhận | Thiếu `flush()` | Thêm `out.flush()` sau mỗi lần ghi |
+| `NumberFormatException` | Parse sai kiểu | Thêm `.trim()`, bọc `try/catch` |
+| `NotBoundException` (RMI) | Tên dịch vụ sai | Kiểm tra tên trong `bind()` và `lookup()` khớp nhau |
+| `ClassNotFoundException` | Thiếu Interface ở Client | Copy file Interface sang project Client |
