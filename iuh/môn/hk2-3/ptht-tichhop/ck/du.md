@@ -1,12 +1,12 @@
 # ĐỀ CƯƠNG ÔN THI: PHÁT TRIỂN HỆ THỐNG TÍCH HỢP
 
-**Nội dung thi:** Socket, RMI, Thread, DBMS (JDBC)  
-**Dạng đề:** Điền vào chỗ trống · Viết chương trình · Phân tích  
+**Nội dung thi:** Socket, RMI, Thread, DBMS (JDBC)
+**Dạng đề:** Điền vào chỗ trống · Viết chương trình · Phân tích
 **Được sử dụng:** Tài liệu giấy
 
 ## MỤC LỤC CHI TIẾT
 
-  - [MỤC LỤC](#mục-lục)
+- [MỤC LỤC](#mục-lục)
 - **[PHẦN 1: SOCKET (TCP/UDP)](#phần-1-socket-tcpudp)**
   - [CÂU 2: SO SÁNH TCP VÀ UDP](#câu-2-so-sánh-tcp-và-udp)
   - [CÂU 4: TRUYỀN THÔNG TCP SOCKET VÀ ĐA LUỒNG](#câu-4-truyền-thông-tcp-socket-và-đa-luồng)
@@ -28,7 +28,7 @@
     - [Dạng 7: Thread Buffer — Nhập số + Tính tổng (LAB 06 bài 3)](#dạng-7-thread-buffer-—-nhập-số-+-tính-tổng-lab-06-bài-3)
   - [BẢNG TRA NHANH: SOCKET (Điền vào chỗ trống)](#bảng-tra-nhanh-socket-điền-vào-chỗ-trống)
 - **[PHẦN 2: THREAD (ĐA LUỒNG)](#phần-2-thread-đa-luồng)**
-    - [7. Bài mẫu tổng hợp: Server TCP Đa Luồng (Socket + Thread)](#7.-bài-mẫu-tổng-hợp-server-tcp-đa-luồng-socket-+-thread)
+  - [7. Bài mẫu tổng hợp: Server TCP Đa Luồng (Socket + Thread)](#7.-bài-mẫu-tổng-hợp-server-tcp-đa-luồng-socket-+-thread)
   - [THREAD NÂNG CAO: PRODUCER-CONSUMER (wait/notify)](#thread-nâng-cao-producer-consumer-waitnotify)
   - [BÀI TẬP THỰC HÀNH THREAD (Từ LAB 03)](#bài-tập-thực-hành-thread-từ-lab-03)
     - [Dạng: Đọc/Ghi File Đa Luồng có Đồng Bộ Hóa](#dạng-đọcghi-file-đa-luồng-có-đồng-bộ-hóa)
@@ -38,7 +38,7 @@
     - [Luồng hoạt động của RMI](#luồng-hoạt-động-của-rmi)
   - [RMI CHI TIẾT: GIẢI THÍCH TỪNG DÒNG CODE (Dạng phân tích)](#rmi-chi-tiết-giải-thích-từng-dòng-code-dạng-phân-tích)
     - [Luồng dữ liệu RMI (Dùng để phân tích/giải thích)](#luồng-dữ-liệu-rmi-dùng-để-phân-tíchgiải-thích)
-  - [MARSHAL & UNMARSHAL (Serialization) — Dạng điền/phân tích](#marshal-&-unmarshal-serialization-—-dạng-điềnphân-tích)
+  - [MARSHAL &amp; UNMARSHAL (Serialization) — Dạng điền/phân tích](#marshal-&-unmarshal-serialization-—-dạng-điềnphân-tích)
   - [BÀI TẬP RMI MẪU: ĐẾM ĐỘ DÀI CHUỖI](#bài-tập-rmi-mẫu-đếm-độ-dài-chuỗi)
   - [RMI: 31 DẠNG BÀI ĐÃ LÀM (Tham khảo nhanh)](#rmi-31-dạng-bài-đã-làm-tham-khảo-nhanh)
   - [BÀI TẬP RMI THỰC HÀNH (Từ LAB 07)](#bài-tập-rmi-thực-hành-từ-lab-07)
@@ -58,7 +58,6 @@
 
 ---
 
-
 # PHẦN 1: SOCKET (TCP/UDP)
 
 ### a. Trình bày khái niệm socket trong giao tiếp mạng. Vai trò của socket trong việc thiết lập và quản lý kết nối mạng giữa các ứng dụng client/server. (2,0đ)
@@ -67,21 +66,23 @@
 Socket, hay còn gọi là ổ cắm mạng, là một điểm cuối (endpoint) trong kênh giao tiếp hai chiều giữa hai chương trình chạy trên mạng. Nó cung cấp một giao diện lập trình ứng dụng (API) cho phép các ứng dụng gửi và nhận dữ liệu qua mạng.
 
 **Vai trò của Socket trong Kết Nối Client/Server:**
-*   **Thiết lập Kết nối:**
-    *   **Client:** Tạo socket và sử dụng nó để kết nối đến địa chỉ và cổng của server.
-    *   **Server:** Tạo socket, liên kết nó với địa chỉ và cổng cụ thể, sau đó lắng nghe kết nối từ client.
-*   **Truyền Dữ liệu:**
-    *   Client: Gửi dữ liệu đến server thông qua socket.
-    *   Server: Nhận dữ liệu từ client thông qua socket.
-    *   Cả hai bên có thể gửi và nhận dữ liệu theo cả hai hướng.
-*   **Quản lý Kết nối:**
-    *   **Kiểm soát luồng:** Socket hỗ trợ các cơ chế kiểm soát luồng để đảm bảo dữ liệu được truyền một cách hiệu quả và tránh quá tải cho bên nhận.
-    *   **Kiểm tra lỗi:** Socket có thể phát hiện lỗi trong quá trình truyền dữ liệu và thực hiện các hành động khắc phục.
-    *   **Đóng kết nối:** Khi hoàn tất việc truyền dữ liệu, socket được đóng để giải phóng tài nguyên.
+
+* **Thiết lập Kết nối:**
+  * **Client:** Tạo socket và sử dụng nó để kết nối đến địa chỉ và cổng của server.
+  * **Server:** Tạo socket, liên kết nó với địa chỉ và cổng cụ thể, sau đó lắng nghe kết nối từ client.
+* **Truyền Dữ liệu:**
+  * Client: Gửi dữ liệu đến server thông qua socket.
+  * Server: Nhận dữ liệu từ client thông qua socket.
+  * Cả hai bên có thể gửi và nhận dữ liệu theo cả hai hướng.
+* **Quản lý Kết nối:**
+  * **Kiểm soát luồng:** Socket hỗ trợ các cơ chế kiểm soát luồng để đảm bảo dữ liệu được truyền một cách hiệu quả và tránh quá tải cho bên nhận.
+  * **Kiểm tra lỗi:** Socket có thể phát hiện lỗi trong quá trình truyền dữ liệu và thực hiện các hành động khắc phục.
+  * **Đóng kết nối:** Khi hoàn tất việc truyền dữ liệu, socket được đóng để giải phóng tài nguyên.
 
 **Các Loại Socket:**
-*   **Socket Dòng (Stream Socket):** Cung cấp luồng dữ liệu đáng tin cậy, hướng kết nối (TCP).
-*   **Socket Dữ liệu (Datagram Socket):** Cung cấp giao tiếp không kết nối, không đảm bảo độ tin cậy (UDP).
+
+* **Socket Dòng (Stream Socket):** Cung cấp luồng dữ liệu đáng tin cậy, hướng kết nối (TCP).
+* **Socket Dữ liệu (Datagram Socket):** Cung cấp giao tiếp không kết nối, không đảm bảo độ tin cậy (UDP).
 
 ## CÂU 2: SO SÁNH TCP VÀ UDP
 
@@ -89,37 +90,42 @@ Socket, hay còn gọi là ổ cắm mạng, là một điểm cuối (endpoint)
 
 **1. TCP (Transmission Control Protocol):**
 TCP là giao thức đảm bảo việc truyền tải dữ liệu một cách an toàn và có thứ tự thông qua cơ chế handshake, kiểm soát luồng, định thời.
-*   **Kết nối hướng kết nối (Connection-oriented):** Thiết lập một kết nối đáng tin cậy giữa hai máy tính trước khi truyền, đảm bảo đầy đủ và đúng thứ tự.
-*   **Kiểm soát luồng (Flow control):** Điều chỉnh tốc độ truyền để tránh quá tải cho máy nhận.
-*   **Kiểm tra lỗi (Error checking):** Phát hiện và sửa lỗi dữ liệu bị hỏng/mất.
-*   **Thích hợp cho:**
-    *   Truyền dữ liệu yêu cầu độ tin cậy cao (tải file, email, HTTP, FTP).
-    *   Ứng dụng cần đảm bảo dữ liệu truyền đầy đủ, đúng thứ tự.
+
+* **Kết nối hướng kết nối (Connection-oriented):** Thiết lập một kết nối đáng tin cậy giữa hai máy tính trước khi truyền, đảm bảo đầy đủ và đúng thứ tự.
+* **Kiểm soát luồng (Flow control):** Điều chỉnh tốc độ truyền để tránh quá tải cho máy nhận.
+* **Kiểm tra lỗi (Error checking):** Phát hiện và sửa lỗi dữ liệu bị hỏng/mất.
+* **Thích hợp cho:**
+  * Truyền dữ liệu yêu cầu độ tin cậy cao (tải file, email, HTTP, FTP).
+  * Ứng dụng cần đảm bảo dữ liệu truyền đầy đủ, đúng thứ tự.
 
 **2. UDP (User Datagram Protocol):**
 UDP tập trung vào việc truyền nhanh, hiệu quả mà không cần đảm bảo độ tin cậy. Không yêu cầu thiết lập kết nối (giảm độ trễ), không kiểm soát luồng.
-*   **Không kết nối (Connectionless):** Không thiết lập kết nối trước, các gói tin (datagram) gửi độc lập, không đảm bảo thứ tự.
-*   **Không kiểm soát luồng:** Có thể dẫn đến mất mát dữ liệu nếu máy nhận không kịp xử lý.
-*   **Kiểm tra lỗi cơ bản:** Chỉ kiểm tra lỗi cơ bản của gói tin.
-*   **Thích hợp cho:**
-    *   Truyền dữ liệu thời gian thực (streaming video, game online, VoIP).
-    *   Giao tiếp broadcast và multicast.
+
+* **Không kết nối (Connectionless):** Không thiết lập kết nối trước, các gói tin (datagram) gửi độc lập, không đảm bảo thứ tự.
+* **Không kiểm soát luồng:** Có thể dẫn đến mất mát dữ liệu nếu máy nhận không kịp xử lý.
+* **Kiểm tra lỗi cơ bản:** Chỉ kiểm tra lỗi cơ bản của gói tin.
+* **Thích hợp cho:**
+  * Truyền dữ liệu thời gian thực (streaming video, game online, VoIP).
+  * Giao tiếp broadcast và multicast.
 
 **Tình huống sử dụng điển hình:**
-*   **TCP:** Tải xuống file (đảm bảo không lỗi).
-*   **UDP:** Streaming video (nhanh chóng, chấp nhận mất một số khung hình).
-*   **UDP:** Trò chơi trực tuyến (ưu tiên tốc độ phản ứng).
-*   **UDP:** DNS (truy vấn tên miền đơn giản, yêu cầu tốc độ).
+
+* **TCP:** Tải xuống file (đảm bảo không lỗi).
+* **UDP:** Streaming video (nhanh chóng, chấp nhận mất một số khung hình).
+* **UDP:** Trò chơi trực tuyến (ưu tiên tốc độ phản ứng).
+* **UDP:** DNS (truy vấn tên miền đơn giản, yêu cầu tốc độ).
 
 **Tóm lại:**
-*   **TCP:** Độ tin cậy cao, đảm bảo dữ liệu, kiểm soát luồng (ứng dụng cần độ chính xác).
-*   **UDP:** Tốc độ cao, không đảm bảo dữ liệu (ứng dụng thời gian thực).
+
+* **TCP:** Độ tin cậy cao, đảm bảo dữ liệu, kiểm soát luồng (ứng dụng cần độ chính xác).
+* **UDP:** Tốc độ cao, không đảm bảo dữ liệu (ứng dụng thời gian thực).
 
 ## CÂU 4: TRUYỀN THÔNG TCP SOCKET VÀ ĐA LUỒNG
 
 ### a. Trình bày ngắn gọn các giai đoạn chính trong quá trình truyền thông TCP Socket. (6 điểm)
 
 **Sơ đồ truyền thông TCP:**
+
 ```mermaid
 sequenceDiagram
     participant Client
@@ -136,23 +142,24 @@ sequenceDiagram
     Server->>Client: Đóng socket
 ```
 
-
 **Giao Tiếp TCP Socket giữa Hai Host - Java:**
-1.  **Chuẩn bị:** Import thư viện `java.net.*` và `java.io.*`.
-2.  **Tạo Socket:**
-    *   Tự động sử dụng TCP (hướng kết nối).
-    *   Code: `Socket socket = new Socket("127.0.0.1", 65432);`
-3.  **Kết nối (Client):** 
-    *   Tự động thực hiện quá trình bắt tay 3 bước (3-way handshake).
-4.  **Truyền Dữ liệu:**
-    *   Gửi: Sử dụng `OutputStream` và `PrintWriter`.
-    *   Nhận: Sử dụng `InputStream` và `BufferedReader`.
-5.  **Đóng kết nối:** 
-    *   Gọi hàm `close()`. Quá trình bắt tay 4 bước diễn ra để kết thúc an toàn.
+
+1. **Chuẩn bị:** Import thư viện `java.net.*` và `java.io.*`.
+2. **Tạo Socket:**
+   * Tự động sử dụng TCP (hướng kết nối).
+   * Code: `Socket socket = new Socket("127.0.0.1", 65432);`
+3. **Kết nối (Client):**
+   * Tự động thực hiện quá trình bắt tay 3 bước (3-way handshake).
+4. **Truyền Dữ liệu:**
+   * Gửi: Sử dụng `OutputStream` và `PrintWriter`.
+   * Nhận: Sử dụng `InputStream` và `BufferedReader`.
+5. **Đóng kết nối:**
+   * Gọi hàm `close()`. Quá trình bắt tay 4 bước diễn ra để kết thúc an toàn.
 
 ### b. Code mẫu TCP cơ bản: Server trả về độ dài tin nhắn
 
 **Server.java**
+
 ```java
 import java.io.*;
 import java.net.*;
@@ -162,13 +169,13 @@ public class Server {
         final int PORT = 65432;
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             System.out.println("Server đang chạy tại port " + PORT);
-            
+          
             Socket clientSocket = serverSocket.accept();
             System.out.println("Kết nối từ: " + clientSocket.getInetAddress());
-            
+          
             try (BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                  PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) {
-                
+              
                 String message;
                 while ((message = in.readLine()) != null) {
                     System.out.println("Nhận: " + message);
@@ -184,6 +191,7 @@ public class Server {
 ```
 
 **Client.java**
+
 ```java
 import java.io.*;
 import java.net.*;
@@ -196,15 +204,15 @@ public class Client {
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader userInput = new BufferedReader(new InputStreamReader(System.in))) {
-             
+           
             System.out.println("Đã kết nối đến server " + HOST + ":" + PORT);
             System.out.print("Nhập tin nhắn: ");
             String message = userInput.readLine();
             out.println(message);  // Gửi tin nhắn đến server
-            
+          
             String response = in.readLine();
             System.out.println("Độ dài tin nhắn: " + response);
-            
+          
         } catch (IOException e) {
             System.out.println("Lỗi client: " + e.getMessage());
         }
@@ -213,7 +221,6 @@ public class Client {
 ```
 
 ### c. Xây dựng ứng dụng Chat đa luồng sử dụng TCP Socket
-
 
 **Giải thích:** `ChatServer` dùng `ServerSocket` chờ Client, khi có ai kết nối sẽ tạo một Thread `ClientHandler` mới và thêm vào tập hợp `clientWriters`. Khi nhận tin nhắn, Server duyệt `clientWriters` gửi tin cho mọi người.
 
@@ -275,17 +282,16 @@ public class ChatServer {
 }
 ```
 
-
 ---
-
-
 
 ## BÀI TẬP SOCKET CÁC DẠNG
 
 ### Dạng 1: Máy Tính Bằng TCP Socket (Bài 8)
+
 **Yêu cầu:** Gửi chuỗi dạng `+ 100 200` để Server tính kết quả.
 
 **Serverbai8.java**
+
 ```java
 import java.io.*;
 import java.net.*;
@@ -298,19 +304,19 @@ public class Serverbai8 {
                 Socket clientSocket = serverSocket.accept();
                 BufferedReader nhap = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 PrintWriter xuat = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
-                
+              
                 String yeuCau;
                 while ((yeuCau = nhap.readLine()) != null) {
                     String[] phanTu = yeuCau.split(" ");
                     if (phanTu.length != 3) {
                         xuat.println("Loi dinh dang"); continue;
                     }
-                    
+                  
                     String phepToan = phanTu[0];
                     double a = Double.parseDouble(phanTu[1]);
                     double b = Double.parseDouble(phanTu[2]);
                     double ketQua = 0;
-                    
+                  
                     switch (phepToan) {
                         case "+": ketQua = a + b; break;
                         case "-": ketQua = a - b; break;
@@ -330,6 +336,7 @@ public class Serverbai8 {
 ```
 
 **Clientbai8.java**
+
 ```java
 import java.io.*;
 import java.net.*;
@@ -346,7 +353,7 @@ public class Clientbai8 {
                 System.out.print("Nhap phep tinh (VD: 100+200): ");
                 String input = scanner.nextLine().trim();
                 if (input.equalsIgnoreCase("exit")) break;
-                
+              
                 // Format thành chuẩn OP A B
                 String yeuCau = formatString(input);
                 xuat.println(yeuCau);
@@ -354,7 +361,7 @@ public class Clientbai8 {
             }
         } catch (Exception e) {}
     }
-    
+  
     private static String formatString(String in) {
         in = in.replaceAll("\\s+", "");
         if (in.contains("+")) return "+ " + in.replace("+", " ");
@@ -367,9 +374,11 @@ public class Clientbai8 {
 ```
 
 ### Dạng 2: Menu Dịch Vụ Đếm Từ (UDP)
+
 **Yêu cầu:** Server UDP đa luồng đếm số từ / ký tự từng dòng. Client gửi kết thúc bằng dấu chấm `.`.
 
 **UDPServer.java**
+
 ```java
 import java.io.*;
 import java.net.*;
@@ -378,24 +387,24 @@ public class UDPServer {
     public static void main(String[] args) throws Exception {
         DatagramSocket serverSocket = new DatagramSocket(9771);
         System.out.println("Server tao tai cong 9771");
-        
+      
         while (true) {
             byte[] receiveData = new byte[4096];
             DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
             serverSocket.receive(receivePacket);
-            
+          
             String msg = new String(receivePacket.getData(), 0, receivePacket.getLength());
             if (msg.endsWith(".")) {
                 handleClient(msg, receivePacket.getAddress(), receivePacket.getPort(), serverSocket);
             }
         }
     }
-    
+  
     private static void handleClient(String msg, InetAddress ip, int port, DatagramSocket socket) throws Exception {
         StringBuilder response = new StringBuilder();
         String data = msg.substring(0, msg.length() - 1); // Bỏ dấu chấm
         String[] lines = data.split("\n");
-        
+      
         if (msg.startsWith("1")) {
             for (int i = 1; i < lines.length; i++) {
                 int count = lines[i].trim().split("\\s+").length;
@@ -407,7 +416,7 @@ public class UDPServer {
                 response.append("Dong ").append(i).append(" co ").append(count).append(" ky tu\n");
             }
         }
-        
+      
         byte[] sendData = response.toString().getBytes();
         socket.send(new DatagramPacket(sendData, sendData.length, ip, port));
     }
@@ -415,6 +424,7 @@ public class UDPServer {
 ```
 
 **UDPClient.java**
+
 ```java
 import java.io.*;
 import java.net.*;
@@ -425,10 +435,10 @@ public class UDPClient {
         DatagramSocket socket = new DatagramSocket();
         InetAddress ip = InetAddress.getByName("localhost");
         Scanner sc = new Scanner(System.in);
-        
+      
         System.out.print("Chon dich vu (1-Dem tu, 2-Dem ky tu): ");
         String choice = sc.nextLine();
-        
+      
         System.out.println("Nhap van ban (Ket thuc bang dau .): ");
         StringBuilder input = new StringBuilder(choice + "\n");
         String line;
@@ -436,14 +446,14 @@ public class UDPClient {
             input.append(line).append("\n");
         }
         input.append(line); // Thêm dấu chấm cuối
-        
+      
         byte[] sendData = input.toString().getBytes();
         socket.send(new DatagramPacket(sendData, sendData.length, ip, 9771));
-        
+      
         byte[] recvData = new byte[4096];
         DatagramPacket recvPacket = new DatagramPacket(recvData, recvData.length);
         socket.receive(recvPacket);
-        
+      
         System.out.println("Server phan hoi:\n" + new String(recvPacket.getData(), 0, recvPacket.getLength()));
         socket.close();
     }
@@ -453,6 +463,7 @@ public class UDPClient {
 ### Dạng 3: TCP Tính Tổng Từng Dòng
 
 **TCPServer.java (Xử lý nhiều chuỗi số nguyên)**
+
 ```java
 // Logic bên trong ClientHandler Thread
 String clientInput;
@@ -461,21 +472,23 @@ while ((clientInput = inFromClient.readLine()) != null) {
     lineNumber++; 
     int totalSum = 0; 
     boolean isEnd = clientInput.trim().endsWith(".");
-    
+  
     if(isEnd) clientInput = clientInput.substring(0, clientInput.length() - 1);
-    
+  
     String[] numbers = clientInput.split(" ");
     for (String n : numbers) {
         if (!n.isEmpty()) totalSum += Integer.parseInt(n);
     }
-    
+  
     outToClient.writeBytes("Tong dong " + lineNumber + ": " + totalSum + "\n");
     if (isEnd) break;
 }
 ```
 
 ### Dạng 4: Date/Time TCP
+
 Server nhận Menu 1, 2, 3 và trả về `SimpleDateFormat`:
+
 ```java
 // Logic DateTime Server
 switch (clientChoice) {
@@ -484,7 +497,6 @@ switch (clientChoice) {
     case "3": return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 }
 ```
-
 
 ## OOP KẾT HỢP SOCKET (Dạng kế thừa + truyền qua mạng)
 
@@ -530,6 +542,7 @@ class NhanVienFullTime extends NhanVien {
 ```
 
 **Trong Handler.java, hàm `xuLy()` sẽ:**
+
 ```java
 private String xuLy(String input) {
     NhanVienFullTime nv = NhanVienFullTime.fromCSV(input);
@@ -540,11 +553,13 @@ private String xuLy(String input) {
 ---
 
 ---
+
 ## MẪU ĐI THI: SERVER TCP ĐA LUỒNG (Template 3 file)
 
 Đây là bộ template cực mạnh từ thư mục `exam/`. Khi đi thi, bạn chỉ cần **đổi hàm `xuLy()`** theo yêu cầu đề là xong.
 
 ### Server.java (Không cần đổi gì — chạy trước)
+
 ```java
 import java.io.*;
 import java.net.*;
@@ -568,6 +583,7 @@ public class Server {
 ```
 
 ### Handler.java (Đổi hàm `xuLy()` theo đề)
+
 ```java
 import java.io.*;
 import java.net.*;
@@ -625,6 +641,7 @@ public class Handler extends Thread {
 ```
 
 ### Client.java (Không cần đổi gì — chạy sau)
+
 ```java
 import java.io.*;
 import java.net.*;
@@ -656,22 +673,23 @@ public class Client {
 
 ### Bảng chọn nhanh khi thi
 
-| Loại đề | Đổi gì? |
-|---|---|
-| Chuyển hoa/thường | `xuLy()` → `toUpperCase()` / `toLowerCase()` |
-| Đếm ký tự/từ | `xuLy()` → `input.length()` hoặc `split("\\s+").length` |
-| Tính toán (chẵn/lẻ, tổng) | `xuLy()` → parse int rồi tính |
-| Menu (Time/Date) | Đổi sang nhận `int` bằng `in.readInt()` |
-| UDP | Đổi sang `DatagramSocket` + `DatagramPacket` |
-| OOP kế thừa | Thêm class Entity/ConA vào Handler.java |
-
+| Loại đề                     | Đổi gì?                                                      |
+| ------------------------------ | --------------------------------------------------------------- |
+| Chuyển hoa/thường           | `xuLy()` → `toUpperCase()` / `toLowerCase()`             |
+| Đếm ký tự/từ              | `xuLy()` → `input.length()` hoặc `split("\\s+").length` |
+| Tính toán (chẵn/lẻ, tổng) | `xuLy()` → parse int rồi tính                              |
+| Menu (Time/Date)               | Đổi sang nhận `int` bằng `in.readInt()`                 |
+| UDP                            | Đổi sang `DatagramSocket` + `DatagramPacket`              |
+| OOP kế thừa                  | Thêm class Entity/ConA vào Handler.java                       |
 
 ## BÀI TẬP ÔN TẬP SOCKET (Từ LAB 06)
 
 ### Dạng 5: TCP Tính Giai Thừa
+
 **Yêu cầu:** Server port 6789. Client gửi số n, Server trả về n!
 
 **Handler `xuLy()`:**
+
 ```java
 private String xuLy(String input) {
     int n = Integer.parseInt(input.trim());
@@ -682,9 +700,11 @@ private String xuLy(String input) {
 ```
 
 ### Dạng 6: TCP Chuyển Hoa + Đếm Ký Tự (trả 2 kết quả)
+
 **Yêu cầu:** Client gửi chuỗi, Server trả về chuỗi viết HOA VÀ số ký tự.
 
 **Handler `xuLy()`:**
+
 ```java
 private String xuLy(String input) {
     return "Hoa: " + input.toUpperCase() + " | So ky tu: " + input.length();
@@ -692,9 +712,11 @@ private String xuLy(String input) {
 ```
 
 ### Dạng 8: TCP Dịch Số Thành Chữ (Từ LAB 04)
+
 **Yêu cầu:** Client gửi một số từ 0-9. Server trả về chữ ("Không", "Một"...). Nếu ngoài khoảng thì trả về "Không phải số nguyên".
 
 **Handler `xuLy()`:**
+
 ```java
 private String xuLy(String input) {
     try {
@@ -709,9 +731,11 @@ private String xuLy(String input) {
 ```
 
 ### Dạng 9: TCP Tính Tổng Chuỗi Ký Tự Số (Từ LAB 04)
+
 **Yêu cầu:** Client gửi số nguyên `n`. Server trả về tổng: `1 + 3 + 5 + ... + (2n+1)`
 
 **Handler `xuLy()`:**
+
 ```java
 private String xuLy(String input) {
     try {
@@ -728,15 +752,17 @@ private String xuLy(String input) {
 ```
 
 ### Dạng 10: Server Lưu Dữ Liệu Client Vào File (Từ LAB 04)
+
 **Yêu cầu:** Server nhận tin nhắn từ Client và lưu vào file (vd: `client1.txt`). Kết thúc khi client gửi "HET".
 
 **Trong `run()` của Handler (Thay vì chỉ `xuLy`):**
+
 ```java
 public void run() {
     try (DataInputStream in = new DataInputStream(socket.getInputStream());
          DataOutputStream out = new DataOutputStream(socket.getOutputStream());
          PrintWriter fileOut = new PrintWriter(new FileWriter("client_" + clientId + ".txt", true))) {
-         
+       
         while (true) {
             String msg = in.readUTF();
             if ("HET".equalsIgnoreCase(msg)) {
@@ -754,6 +780,7 @@ public void run() {
 ---
 
 ## KIẾN THỨC BỔ SUNG: JAVA STREAM (LAB 02)
+
 - **`InputStream` / `OutputStream`**: Stream dạng **byte** (đọc/ghi file nhị phân, dữ liệu thô).
   - Phương thức: `read()`, `write(int b)`
 - **`InputStreamReader`**: Chuyển từ Stream byte sang Stream ký tự.
@@ -763,8 +790,8 @@ public void run() {
 
 ---
 
-
 ### Dạng 7: Thread Buffer — Nhập số + Tính tổng (LAB 06 bài 3)
+
 **Yêu cầu:** Thread 1 nhập số vào buffer, Thread 2 lấy từ buffer tính tổng, dừng khi nhập -1.
 
 ```java
@@ -825,18 +852,17 @@ public class BufferDemo {
 
 ## BẢNG TRA NHANH: SOCKET (Điền vào chỗ trống)
 
-| Câu hỏi thường gặp | Đáp án |
-|---|---|
-| Lớp tạo server TCP | `ServerSocket` |
-| Lớp tạo client TCP | `Socket` |
-| Method chờ client kết nối | `serverSocket.accept()` |
-| Lớp gửi/nhận UDP | `DatagramSocket` |
-| Gói tin UDP | `DatagramPacket` |
-| Lấy OutputStream để gửi | `socket.getOutputStream()` |
-| Lấy InputStream để nhận | `socket.getInputStream()` |
-| Ghi dữ liệu text | `PrintWriter` |
-| Đọc dữ liệu text | `BufferedReader` + `InputStreamReader` |
-
+| Câu hỏi thường gặp      | Đáp án                                  |
+| ---------------------------- | ------------------------------------------ |
+| Lớp tạo server TCP         | `ServerSocket`                           |
+| Lớp tạo client TCP         | `Socket`                                 |
+| Method chờ client kết nối | `serverSocket.accept()`                  |
+| Lớp gửi/nhận UDP          | `DatagramSocket`                         |
+| Gói tin UDP                 | `DatagramPacket`                         |
+| Lấy OutputStream để gửi  | `socket.getOutputStream()`               |
+| Lấy InputStream để nhận  | `socket.getInputStream()`                |
+| Ghi dữ liệu text           | `PrintWriter`                            |
+| Đọc dữ liệu text         | `BufferedReader` + `InputStreamReader` |
 
 ---
 
@@ -846,17 +872,19 @@ public class BufferDemo {
 
 ### 1. Khái niệm
 
-*   **Process (Tiến trình):** Là một chương trình đang chạy, có không gian bộ nhớ riêng biệt.
-*   **Thread (Luồng):** Là đơn vị thực thi nhỏ nhất bên trong một Process. Nhiều Thread trong cùng một Process **chia sẻ chung bộ nhớ** (heap), giúp giao tiếp nhanh hơn nhưng cần cẩn thận về đồng bộ.
+* **Process (Tiến trình):** Là một chương trình đang chạy, có không gian bộ nhớ riêng biệt.
+* **Thread (Luồng):** Là đơn vị thực thi nhỏ nhất bên trong một Process. Nhiều Thread trong cùng một Process **chia sẻ chung bộ nhớ** (heap), giúp giao tiếp nhanh hơn nhưng cần cẩn thận về đồng bộ.
 
 **Tại sao cần Thread?**
-*   Server cần phục vụ **nhiều client cùng lúc** (ví dụ: ChatServer).
-*   Tăng hiệu suất bằng cách thực hiện nhiều tác vụ **song song**.
-*   Giữ cho giao diện người dùng không bị **đơ** khi xử lý tác vụ nặng.
+
+* Server cần phục vụ **nhiều client cùng lúc** (ví dụ: ChatServer).
+* Tăng hiệu suất bằng cách thực hiện nhiều tác vụ **song song**.
+* Giữ cho giao diện người dùng không bị **đơ** khi xử lý tác vụ nặng.
 
 ### 2. Hai cách tạo Thread trong Java
 
 **Cách 1: Kế thừa lớp `Thread`**
+
 ```java
 class MyThread extends Thread {
     @Override
@@ -873,6 +901,7 @@ t1.start(); // Gọi start(), KHÔNG gọi run() trực tiếp
 ```
 
 **Cách 2: Implement interface `Runnable` (Khuyến khích dùng)**
+
 ```java
 class MyRunnable implements Runnable {
     @Override
@@ -889,6 +918,7 @@ t2.start();
 ```
 
 > **💡 Khi nào dùng cách nào?**
+>
 > - Dùng `Runnable` khi class đã `extends` lớp khác (Java không cho đa kế thừa).
 > - Dùng `Thread` khi cần override thêm các method khác của Thread.
 > - **Đi thi:** Ưu tiên viết `implements Runnable` vì linh hoạt hơn.
@@ -905,32 +935,33 @@ t2.start();
                                             TERMINATED (kết thúc run())
 ```
 
-| Trạng thái | Mô tả |
-|---|---|
-| **NEW** | Thread vừa được tạo (`new Thread()`), chưa gọi `start()` |
-| **RUNNABLE** | Đã gọi `start()`, sẵn sàng chạy, chờ CPU cấp phát |
-| **RUNNING** | Đang thực thi mã trong `run()` |
-| **BLOCKED/WAITING** | Đang chờ tài nguyên (I/O, `sleep()`, `wait()`, `synchronized`) |
-| **TERMINATED** | Phương thức `run()` kết thúc hoặc bị dừng |
+| Trạng thái              | Mô tả                                                                 |
+| ------------------------- | ----------------------------------------------------------------------- |
+| **NEW**             | Thread vừa được tạo (`new Thread()`), chưa gọi `start()`     |
+| **RUNNABLE**        | Đã gọi `start()`, sẵn sàng chạy, chờ CPU cấp phát            |
+| **RUNNING**         | Đang thực thi mã trong `run()`                                     |
+| **BLOCKED/WAITING** | Đang chờ tài nguyên (I/O,`sleep()`, `wait()`, `synchronized`) |
+| **TERMINATED**      | Phương thức `run()` kết thúc hoặc bị dừng                     |
 
 ### 4. Các phương thức quan trọng của Thread
 
-| Phương thức | Chức năng |
-|---|---|
-| `start()` | Khởi chạy thread (gọi `run()` trong luồng mới) |
-| `run()` | Chứa code mà thread sẽ thực thi |
-| `sleep(ms)` | Tạm dừng thread trong `ms` mili-giây |
-| `join()` | Chờ thread kết thúc rồi mới tiếp tục |
-| `isAlive()` | Kiểm tra thread còn đang chạy không |
-| `interrupt()` | Gửi tín hiệu ngắt đến thread |
-| `getName()` / `setName()` | Lấy / đặt tên thread |
-| `currentThread()` | Trả về tham chiếu đến thread hiện tại |
+| Phương thức                | Chức năng                                           |
+| ----------------------------- | ----------------------------------------------------- |
+| `start()`                   | Khởi chạy thread (gọi `run()` trong luồng mới) |
+| `run()`                     | Chứa code mà thread sẽ thực thi                   |
+| `sleep(ms)`                 | Tạm dừng thread trong `ms` mili-giây             |
+| `join()`                    | Chờ thread kết thúc rồi mới tiếp tục           |
+| `isAlive()`                 | Kiểm tra thread còn đang chạy không              |
+| `interrupt()`               | Gửi tín hiệu ngắt đến thread                    |
+| `getName()` / `setName()` | Lấy / đặt tên thread                              |
+| `currentThread()`           | Trả về tham chiếu đến thread hiện tại          |
 
 ### 5. Đồng bộ hóa (Synchronization)
 
 Khi nhiều Thread cùng truy cập **một tài nguyên chung** (biến, file, database), có thể xảy ra **Race Condition** (xung đột dữ liệu). Giải pháp: dùng từ khóa `synchronized`.
 
 **Ví dụ: Race Condition và cách khắc phục**
+
 ```java
 class BankAccount {
     private int balance = 1000;
@@ -963,6 +994,7 @@ public class Main {
 ```
 
 > **💡 Ghi nhớ:**
+>
 > - `synchronized` trên **method**: khóa toàn bộ method, chỉ 1 thread vào 1 lúc.
 > - `synchronized(object) { ... }`: khóa trên một đối tượng cụ thể (linh hoạt hơn).
 
@@ -1037,7 +1069,6 @@ class ClientHandler implements Runnable {
 }
 ```
 
-
 ## THREAD NÂNG CAO: PRODUCER-CONSUMER (wait/notify)
 
 Dạng bài **đồng bộ luồng** — nhiều thread cùng truy cập 1 tài nguyên chung (Kho hàng).
@@ -1095,14 +1126,15 @@ public class ProducerConsumerDemo {
 ```
 
 > **💡 Ghi nhớ cho thi:**
+>
 > - `wait()`: Thread nhả khóa và ngủ, chờ đến khi thread khác gọi `notify()`
 > - `notify()` / `notifyAll()`: Đánh thức 1 / tất cả thread đang `wait()`
 > - `wait()` và `notify()` CHỈ được gọi bên trong block `synchronized`
 
-
 ## BÀI TẬP THỰC HÀNH THREAD (Từ LAB 03)
 
 ### Dạng: Đọc/Ghi File Đa Luồng có Đồng Bộ Hóa
+
 **Yêu cầu:** Tạo luồng đọc và luồng ghi cùng truy cập một file. Cần đảm bảo đồng bộ hóa (synchronization) để không bị lỗi xung đột dữ liệu.
 
 ```java
@@ -1161,20 +1193,17 @@ public class FileThreadDemo {
 
 ---
 
-
-
 ## BẢNG TRA NHANH: THREAD (Điền vào chỗ trống)
 
-| Câu hỏi thường gặp | Đáp án |
-|---|---|
-| 2 cách tạo thread | `extends Thread` hoặc `implements Runnable` |
-| Method khởi chạy thread | `thread.start()` |
-| Method chứa code thực thi | `run()` |
-| Tạm dừng thread | `Thread.sleep(ms)` |
-| Chờ thread kết thúc | `thread.join()` |
-| Từ khóa đồng bộ | `synchronized` |
-| Tạo thread pool | `Executors.newFixedThreadPool(n)` |
-
+| Câu hỏi thường gặp     | Đáp án                                        |
+| --------------------------- | ------------------------------------------------ |
+| 2 cách tạo thread         | `extends Thread` hoặc `implements Runnable` |
+| Method khởi chạy thread   | `thread.start()`                               |
+| Method chứa code thực thi | `run()`                                        |
+| Tạm dừng thread           | `Thread.sleep(ms)`                             |
+| Chờ thread kết thúc      | `thread.join()`                                |
+| Từ khóa đồng bộ        | `synchronized`                                 |
+| Tạo thread pool            | `Executors.newFixedThreadPool(n)`              |
 
 ---
 
@@ -1187,18 +1216,21 @@ public class FileThreadDemo {
 Khái niệm: RMI là công nghệ trong Java cho phép gọi các phương thức của các đối tượng đặt trên máy chủ từ các máy khác. Gồm **Stub** (client) và **Skeleton** (server).
 
 **Ưu điểm:**
-*   **Dễ sử dụng:** Đơn giản hóa phát triển, gọi phương thức từ xa như gọi cục bộ.
-*   **Mạnh mẽ:** Hỗ trợ truyền đối tượng phức tạp, đối tượng tùy chỉnh.
-*   **Hỗ trợ đa luồng:** Cho phép các client gọi đồng thời.
-*   **Tích hợp:** Nằm sẵn trong Java, dễ tích hợp với ứng dụng Java.
+
+* **Dễ sử dụng:** Đơn giản hóa phát triển, gọi phương thức từ xa như gọi cục bộ.
+* **Mạnh mẽ:** Hỗ trợ truyền đối tượng phức tạp, đối tượng tùy chỉnh.
+* **Hỗ trợ đa luồng:** Cho phép các client gọi đồng thời.
+* **Tích hợp:** Nằm sẵn trong Java, dễ tích hợp với ứng dụng Java.
 
 **Nhược điểm:**
-*   **Giới hạn trong Java:** Chỉ hoạt động giữa các ứng dụng Java, không tương thích ngôn ngữ khác.
-*   **Vấn đề tường lửa:** RMI sử dụng cổng động nên dễ bị chặn bởi Firewall.
-*   **Khả năng mở rộng:** Khó mở rộng cho ứng dụng cực lớn.
-*   **Bảo mật:** Dễ bị tấn công nếu cấu hình sai.
+
+* **Giới hạn trong Java:** Chỉ hoạt động giữa các ứng dụng Java, không tương thích ngôn ngữ khác.
+* **Vấn đề tường lửa:** RMI sử dụng cổng động nên dễ bị chặn bởi Firewall.
+* **Khả năng mở rộng:** Khó mở rộng cho ứng dụng cực lớn.
+* **Bảo mật:** Dễ bị tấn công nếu cấu hình sai.
 
 **Code Triển Khai Nhanh (Calculator):**
+
 ```java
 // 1. Remote Interface
 import java.rmi.*;
@@ -1241,6 +1273,7 @@ public class CalculatorClient {
 ### Luồng hoạt động của RMI
 
 **Sơ đồ Kiến trúc RMI:**
+
 ```mermaid
 flowchart LR
     subgraph Client_Machine [Máy Client]
@@ -1261,35 +1294,22 @@ flowchart LR
     class Network network;
 ```
 
-
 ```
-  CLIENT                                    SERVER
-    │                                          │
-    │  1. Lookup("Calculator")                 │
-    │──────────────────────────▶ RMI Registry  │
-    │  2. Trả về Stub (proxy)                  │
-    │◀──────────────────────────               │
-    │                                          │
-    │  3. Gọi stub.add(3, 5)                   │
-    │──────(qua mạng)─────────▶ Skeleton       │
-    │                           │              │
-    │                           ▼              │
-    │                       Gọi obj.add(3,5)   │
-    │                           │              │
-    │  4. Trả kết quả = 8      ▼              │
-    │◀──────(qua mạng)──────── Return 8        │
+
 ```
 
 **Các thành phần chính:**
-| Thành phần | Vai trò |
-|---|---|
+
+| Thành phần               | Vai trò                                                                  |
+| -------------------------- | ------------------------------------------------------------------------- |
 | **Remote Interface** | Định nghĩa các method có thể gọi từ xa (phải `extends Remote`) |
-| **Remote Object** | Class implement interface, chứa logic xử lý thực tế |
-| **Stub** | Proxy ở phía Client, đóng gói lời gọi gửi qua mạng |
-| **Skeleton** | Proxy ở phía Server, nhận lời gọi và chuyển đến Remote Object |
-| **RMI Registry** | Bộ đăng ký tên, giúp Client tìm được Stub theo tên dịch vụ |
+| **Remote Object**    | Class implement interface, chứa logic xử lý thực tế                  |
+| **Stub**             | Proxy ở phía Client, đóng gói lời gọi gửi qua mạng               |
+| **Skeleton**         | Proxy ở phía Server, nhận lời gọi và chuyển đến Remote Object    |
+| **RMI Registry**     | Bộ đăng ký tên, giúp Client tìm được Stub theo tên dịch vụ   |
 
 **3 bước triển khai RMI (ghi nhớ cho điền vào chỗ trống):**
+
 1. **Tạo Remote Interface** → `extends Remote`, mỗi method phải `throws RemoteException`
 2. **Tạo Remote Object (Server)** → `extends UnicastRemoteObject`, `implements Interface`, đăng ký vào `Registry`
 3. **Tạo Client** → `LocateRegistry.getRegistry()` → `registry.lookup("tên")` → Ép kiểu → Gọi method
@@ -1303,6 +1323,7 @@ Phần này giúp bạn **giải thích được bất kỳ dòng code RMI nào*
 ### Ví dụ hoàn chỉnh: Kiểm tra số nguyên tố qua RMI
 
 **File 1: ICheckNumber.java (Interface — "Hợp đồng" dùng chung)**
+
 ```java
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -1313,9 +1334,11 @@ public interface ICheckNumber extends Remote {
     public boolean isPrime(int n) throws RemoteException;
 }
 ```
+
 > File này phải có MẶT Ở CẢ HAI PHÍA (Client và Server) — giống như cái MENU mà cả khách và nhà hàng đều phải có.
 
 **File 2: CheckNumberImpl.java (Implementation — "Đầu bếp" xử lý)**
+
 ```java
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -1340,9 +1363,11 @@ public class CheckNumberImpl extends UnicastRemoteObject implements ICheckNumber
     }
 }
 ```
+
 > File này CHỈ NẰM Ở SERVER. Client không cần biết ai nấu, chỉ cần biết menu (Interface).
 
 **File 3: RMIServer.java (Server — "Nhà hàng" mở cửa)**
+
 ```java
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
@@ -1367,6 +1392,7 @@ public class RMIServer {
 ```
 
 **File 4: RMIClient.java (Client — "Khách hàng" gọi món)**
+
 ```java
 import java.rmi.Naming;
 import java.util.Scanner;
@@ -1409,38 +1435,39 @@ Client gọi checker.isPrime(17)
 
 ### 3 điều PHẢI KHỚP giữa Client ↔ Server
 
-| Yếu tố | Sai thì sao? |
-|---|---|
-| **IP/Hostname** (`localhost`) | Không tìm thấy máy |
-| **Port** (`6789`) | Không vào được "nhà" |
+| Yếu tố                                    | Sai thì sao?                               |
+| ------------------------------------------- | ------------------------------------------- |
+| **IP/Hostname** (`localhost`)       | Không tìm thấy máy                      |
+| **Port** (`6789`)                   | Không vào được "nhà"                  |
 | **Tên dịch vụ** (`PrimeChecker`) | Vào được nhà nhưng gọi nhầm người |
 
 ### So sánh RMI vs Socket
 
-| Tiêu chí | Socket (TCP/UDP) | RMI |
-|---|---|---|
+| Tiêu chí         | Socket (TCP/UDP)                  | RMI                                 |
+| ------------------ | --------------------------------- | ----------------------------------- |
 | Mức trừu tượng | Thấp (tự đóng gói dữ liệu) | Cao (gọi hàm như bình thường) |
-| Ngôn ngữ | Đa ngôn ngữ | Chỉ Java ↔ Java |
-| Truyền dữ liệu | Byte stream / Text | Object Java (Serialization) |
-| Cài đặt | Phức tạp (tự parse) | Đơn giản (chỉ cần Interface) |
-| Hiệu năng | Nhanh hơn (ít overhead) | Chậm hơn (do serialization) |
-| Sử dụng | Chat, truyền file, game | Hệ thống phân tán, enterprise |
+| Ngôn ngữ         | Đa ngôn ngữ                    | Chỉ Java ↔ Java                   |
+| Truyền dữ liệu  | Byte stream / Text                | Object Java (Serialization)         |
+| Cài đặt         | Phức tạp (tự parse)            | Đơn giản (chỉ cần Interface)   |
+| Hiệu năng        | Nhanh hơn (ít overhead)         | Chậm hơn (do serialization)       |
+| Sử dụng          | Chat, truyền file, game          | Hệ thống phân tán, enterprise   |
 
 ---
 
 ## MARSHAL & UNMARSHAL (Serialization) — Dạng điền/phân tích
 
-| Thuật ngữ | Ý nghĩa | Ví dụ |
-|---|---|---|
-| **Marshal (Đóng gói)** | Chuyển Object/tham số → byte stream để gửi qua mạng | Client gọi `isPrime(17)` → Stub chuyển số 17 thành bytes |
-| **Unmarshal (Giải gói)** | Chuyển byte stream → Object/tham số | Skeleton nhận bytes → giải mã ra số 17 |
-| **Serializable** | Interface đánh dấu Object có thể marshal/unmarshal | `class User implements Serializable { ... }` |
+| Thuật ngữ                      | Ý nghĩa                                                  | Ví dụ                                                         |
+| -------------------------------- | ---------------------------------------------------------- | --------------------------------------------------------------- |
+| **Marshal (Đóng gói)**  | Chuyển Object/tham số → byte stream để gửi qua mạng | Client gọi `isPrime(17)` → Stub chuyển số 17 thành bytes |
+| **Unmarshal (Giải gói)** | Chuyển byte stream → Object/tham số                     | Skeleton nhận bytes → giải mã ra số 17                     |
+| **Serializable**           | Interface đánh dấu Object có thể marshal/unmarshal    | `class User implements Serializable { ... }`                  |
 
 ---
 
 ## BÀI TẬP RMI MẪU: ĐẾM ĐỘ DÀI CHUỖI
 
 **1. Interface**
+
 ```java
 import java.rmi.*;
 public interface MyRemoteInterface extends Remote {
@@ -1449,6 +1476,7 @@ public interface MyRemoteInterface extends Remote {
 ```
 
 **2. Object Implementation**
+
 ```java
 import java.rmi.server.*;
 public class MyRemoteObject extends UnicastRemoteObject implements MyRemoteInterface { 
@@ -1460,6 +1488,7 @@ public class MyRemoteObject extends UnicastRemoteObject implements MyRemoteInter
 ```
 
 **3. Server**
+
 ```java
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
@@ -1475,6 +1504,7 @@ public class Server {
 ```
 
 **4. Client**
+
 ```java
 import java.rmi.Naming;
 import java.util.Scanner;
@@ -1494,27 +1524,27 @@ public class Client {
 
 Từ file `ServiceImpl.java` trong thư mục `rmi/`, các dạng bài RMI đã làm qua:
 
-| # | Dạng bài | Input mẫu |
-|---|---|---|
-| 1 | Tam giác (chu vi, diện tích) | `3 4 5` |
-| 2 | Số phức (cộng/trừ/nhân/chia) | `ADD 1 2 3 4` |
-| 3 | Fibonacci | `10` |
-| 4 | Quy đổi tiền tệ | `100 USD VND` |
-| 5 | Kiểm tra số nguyên tố | `17` |
-| 6-7 | Sắp xếp tăng/giảm dần | `5 2 9 1` |
-| 8 | Thống kê số lượng từ | `phat trien he thong` |
-| 9 | Sắp xếp chuỗi alphabet | `zebra,apple,cat` |
-| 10 | Đảo chuỗi | `abcde` |
-| 11 | Ngắt chuỗi theo dấu | `a-b-c` |
-| 12 | ƯCLN & BCNN | `24 36` |
-| 13-14 | Phương trình bậc 1, bậc 2 | `2 4` / `1 -3 2` |
-| 15 | Tổng 1 đến N | `100` |
-| 16 | Đếm nguyên âm/phụ âm | `hello world` |
-| 17 | Chuẩn hóa chuỗi (Title Case) | `phat TRIEN he thong` |
-| 18 | Kiểm tra Palindrome | `racecar` |
-| 19 | Giai thừa | `5` |
-| 20 | Tổng chữ số | `12345` |
-| 21-31 | Min/Max, Chẵn/Lẻ, Diện tích, Chu vi... | *(xem code)* |
+| #     | Dạng bài                                 | Input mẫu              |
+| ----- | ------------------------------------------ | ----------------------- |
+| 1     | Tam giác (chu vi, diện tích)            | `3 4 5`               |
+| 2     | Số phức (cộng/trừ/nhân/chia)          | `ADD 1 2 3 4`         |
+| 3     | Fibonacci                                  | `10`                  |
+| 4     | Quy đổi tiền tệ                        | `100 USD VND`         |
+| 5     | Kiểm tra số nguyên tố                  | `17`                  |
+| 6-7   | Sắp xếp tăng/giảm dần                 | `5 2 9 1`             |
+| 8     | Thống kê số lượng từ                 | `phat trien he thong` |
+| 9     | Sắp xếp chuỗi alphabet                  | `zebra,apple,cat`     |
+| 10    | Đảo chuỗi                               | `abcde`               |
+| 11    | Ngắt chuỗi theo dấu                     | `a-b-c`               |
+| 12    | ƯCLN & BCNN                               | `24 36`               |
+| 13-14 | Phương trình bậc 1, bậc 2             | `2 4` / `1 -3 2`    |
+| 15    | Tổng 1 đến N                            | `100`                 |
+| 16    | Đếm nguyên âm/phụ âm                 | `hello world`         |
+| 17    | Chuẩn hóa chuỗi (Title Case)            | `phat TRIEN he thong` |
+| 18    | Kiểm tra Palindrome                       | `racecar`             |
+| 19    | Giai thừa                                 | `5`                   |
+| 20    | Tổng chữ số                             | `12345`               |
+| 21-31 | Min/Max, Chẵn/Lẻ, Diện tích, Chu vi... | *(xem code)*          |
 
 > **Tất cả dạng trên đều dùng chung 1 template:** Interface → Impl → Server → Client. Chỉ thay logic trong hàm `xuLyDuLieu()`.
 
@@ -1525,6 +1555,7 @@ Từ file `ServiceImpl.java` trong thư mục `rmi/`, các dạng bài RMI đã 
 Tất cả đều dùng chung template: **Interface → Impl → Server → Client**. Chỉ thay Interface + logic.
 
 ### Bài RMI: Quản Lý Danh Bạ (HashMap)
+
 ```java
 // Interface
 public interface IPhoneBook extends Remote {
@@ -1545,9 +1576,11 @@ public class PhoneBookImpl extends UnicastRemoteObject implements IPhoneBook {
     public boolean deleteContact(String name) { return contacts.remove(name) != null; }
 }
 ```
+
 > **Ghi nhớ:** Dạng này hay ra vì kết hợp **RMI + Collection (HashMap)**.
 
 ### Bài RMI: Tài Khoản Ngân Hàng
+
 ```java
 public interface IBank extends Remote {
     double getBalance() throws RemoteException;
@@ -1570,6 +1603,7 @@ public class BankImpl extends UnicastRemoteObject implements IBank {
 ```
 
 ### Bài RMI: Diện Tích Hình Học
+
 ```java
 public interface IGeometry extends Remote {
     double rectangleArea(double w, double h) throws RemoteException;
@@ -1586,6 +1620,7 @@ public class GeometryImpl extends UnicastRemoteObject implements IGeometry {
 ```
 
 ### Bài RMI: Đặt Vé Máy Bay
+
 ```java
 public interface IBooking extends Remote {
     boolean bookTicket(String flight, int seats) throws RemoteException;
@@ -1617,16 +1652,15 @@ public class BookingImpl extends UnicastRemoteObject implements IBooking {
 
 ## BẢNG TRA NHANH: RMI (Điền vào chỗ trống)
 
-| Câu hỏi thường gặp | Đáp án |
-|---|---|
-| Interface gốc phải extends | `Remote` |
-| Exception bắt buộc | `RemoteException` |
-| Lớp export remote object | `UnicastRemoteObject` |
-| Tạo registry trên server | `LocateRegistry.createRegistry(1099)` |
-| Client lấy registry | `LocateRegistry.getRegistry("host", 1099)` |
+| Câu hỏi thường gặp        | Đáp án                                                    |
+| ------------------------------ | ------------------------------------------------------------ |
+| Interface gốc phải extends   | `Remote`                                                   |
+| Exception bắt buộc           | `RemoteException`                                          |
+| Lớp export remote object      | `UnicastRemoteObject`                                      |
+| Tạo registry trên server     | `LocateRegistry.createRegistry(1099)`                      |
+| Client lấy registry           | `LocateRegistry.getRegistry("host", 1099)`                 |
 | Đăng ký object trên server | `registry.bind("tên", stub)` hoặc `Naming.rebind(...)` |
-| Client tìm object | `registry.lookup("tên")` |
-
+| Client tìm object             | `registry.lookup("tên")`                                  |
 
 ---
 
@@ -1637,11 +1671,13 @@ public class BookingImpl extends UnicastRemoteObject implements IBooking {
 ## KIẾN THỨC BỔ SUNG: JDBC (JAVA DATABASE CONNECTIVITY)
 
 ### 1. Khái niệm và Vai trò của JDBC
+
 **JDBC (Java Database Connectivity)** là một API của Java dùng để kết nối và thực thi các câu lệnh truy vấn tới cơ sở dữ liệu (Database). Nó đóng vai trò như một cầu nối giúp các ứng dụng viết bằng ngôn ngữ Java có thể tương tác (thêm, sửa, xóa, truy vấn) với bất kỳ hệ quản trị cơ sở dữ liệu quan hệ nào (như MySQL, SQL Server, Oracle, PostgreSQL...).
 
 ### 2. Các thành phần chính trong kiến trúc JDBC
 
 **Sơ đồ Kiến trúc JDBC:**
+
 ```mermaid
 flowchart TD
     A[Java Application] -->|Gọi JDBC API| B(JDBC API)
@@ -1654,21 +1690,22 @@ flowchart TD
     F --> DB3[(SQLite DB)]
 ```
 
-*   **DriverManager:** Lớp quản lý danh sách các trình điều khiển cơ sở dữ liệu (Database Drivers). Nhiệm vụ của nó là nhận yêu cầu kết nối từ ứng dụng và tìm Driver phù hợp để xử lý.
-*   **Driver:** Interface xử lý việc giao tiếp cụ thể với từng loại cơ sở dữ liệu.
-*   **Connection:** Interface đại diện cho toàn bộ phiên làm việc (session) với cơ sở dữ liệu. Nó cho phép tạo ra các đối tượng thực thi câu lệnh SQL.
-*   **Statement / PreparedStatement / CallableStatement:** Dùng để gửi câu lệnh SQL tới CSDL. PreparedStatement thường được ưu tiên dùng vì nó có khả năng ngăn chặn tấn công SQL Injection và thực thi nhanh hơn.
-*   **ResultSet:** Đối tượng chứa danh sách các bản ghi (records) trả về sau khi thực hiện câu lệnh SELECT.
+* **DriverManager:** Lớp quản lý danh sách các trình điều khiển cơ sở dữ liệu (Database Drivers). Nhiệm vụ của nó là nhận yêu cầu kết nối từ ứng dụng và tìm Driver phù hợp để xử lý.
+* **Driver:** Interface xử lý việc giao tiếp cụ thể với từng loại cơ sở dữ liệu.
+* **Connection:** Interface đại diện cho toàn bộ phiên làm việc (session) với cơ sở dữ liệu. Nó cho phép tạo ra các đối tượng thực thi câu lệnh SQL.
+* **Statement / PreparedStatement / CallableStatement:** Dùng để gửi câu lệnh SQL tới CSDL. PreparedStatement thường được ưu tiên dùng vì nó có khả năng ngăn chặn tấn công SQL Injection và thực thi nhanh hơn.
+* **ResultSet:** Đối tượng chứa danh sách các bản ghi (records) trả về sau khi thực hiện câu lệnh SELECT.
 
 ### 3. Các bước cơ bản để kết nối và thao tác với Database bằng JDBC
-1.  **Nạp/Đăng ký Driver:** (Từ bản JDBC 4.0 trở đi bước này thường được tự động hóa).
-2.  **Tạo kết nối (Connection):** Sử dụng DriverManager.getConnection(URL, User, Password) để mở kết nối.
-3.  **Tạo Statement/PreparedStatement:** Dùng đối tượng Connection để khởi tạo.
-4.  **Thực thi truy vấn (Execute Query):**
-    *   Dùng executeQuery() cho lệnh SELECT (trả về đối tượng ResultSet).
-    *   Dùng executeUpdate() cho lệnh INSERT, UPDATE, DELETE (trả về số dòng bị thay đổi).
-5.  **Xử lý kết quả:** Duyệt qua vòng lặp của ResultSet (nếu là lệnh SELECT).
-6.  **Đóng kết nối (Close):** Đóng ResultSet, Statement, và Connection để tránh rò rỉ bộ nhớ.
+
+1. **Nạp/Đăng ký Driver:** (Từ bản JDBC 4.0 trở đi bước này thường được tự động hóa).
+2. **Tạo kết nối (Connection):** Sử dụng DriverManager.getConnection(URL, User, Password) để mở kết nối.
+3. **Tạo Statement/PreparedStatement:** Dùng đối tượng Connection để khởi tạo.
+4. **Thực thi truy vấn (Execute Query):**
+   * Dùng executeQuery() cho lệnh SELECT (trả về đối tượng ResultSet).
+   * Dùng executeUpdate() cho lệnh INSERT, UPDATE, DELETE (trả về số dòng bị thay đổi).
+5. **Xử lý kết quả:** Duyệt qua vòng lặp của ResultSet (nếu là lệnh SELECT).
+6. **Đóng kết nối (Close):** Đóng ResultSet, Statement, và Connection để tránh rò rỉ bộ nhớ.
 
 ### 4. Mã mẫu Đầy Đủ: CRUD (Create, Read, Update, Delete)
 
@@ -1692,11 +1729,11 @@ public class JDBC_CRUD_Thi {
         String sql = "INSERT INTO SinhVien(ten, tuoi, nganh_hoc) VALUES (?, ?, ?)";
         try (Connection conn = getConnect();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            
+          
             ps.setString(1, ten);
             ps.setInt(2, tuoi);
             ps.setString(3, nganh);
-            
+          
             int rows = ps.executeUpdate(); // Trả về số dòng thêm thành công
             System.out.println("Thêm thành công: " + rows + " dòng");
         } catch (Exception e) { e.printStackTrace(); }
@@ -1707,10 +1744,10 @@ public class JDBC_CRUD_Thi {
         String sql = "SELECT * FROM SinhVien WHERE nganh_hoc = ?";
         try (Connection conn = getConnect();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            
+          
             ps.setString(1, "CNTT");
             ResultSet rs = ps.executeQuery(); // SELECT phải dùng executeQuery
-            
+          
             while (rs.next()) {
                 System.out.println(rs.getInt("id") + " - " + rs.getString("ten"));
             }
@@ -1722,10 +1759,10 @@ public class JDBC_CRUD_Thi {
         String sql = "UPDATE SinhVien SET tuoi = ? WHERE id = ?";
         try (Connection conn = getConnect();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            
+          
             ps.setInt(1, tuoiMoi);
             ps.setInt(2, idSinhVien);
-            
+          
             int rows = ps.executeUpdate(); // Trả về số dòng cập nhật thành công
             System.out.println("Cập nhật thành công: " + rows + " dòng");
         } catch (Exception e) { e.printStackTrace(); }
@@ -1736,9 +1773,9 @@ public class JDBC_CRUD_Thi {
         String sql = "DELETE FROM SinhVien WHERE id = ?";
         try (Connection conn = getConnect();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            
+          
             ps.setInt(1, idSinhVien);
-            
+          
             int rows = ps.executeUpdate(); // Trả về số dòng xoá thành công
             System.out.println("Xoá thành công: " + rows + " dòng");
         } catch (Exception e) { e.printStackTrace(); }
@@ -1761,10 +1798,10 @@ public static void goiStoredProcedure(String nganh) {
     String sql = "{CALL getSinhVienByNganh(?)}"; // Cú pháp gọi SP
     try (Connection conn = getConnect();
          CallableStatement cs = conn.prepareCall(sql)) {
-        
+      
         cs.setString(1, nganh);
         ResultSet rs = cs.executeQuery();
-        
+      
         while (rs.next()) {
             System.out.println(rs.getInt("id") + " - " + rs.getString("ten"));
         }
@@ -1773,17 +1810,19 @@ public static void goiStoredProcedure(String nganh) {
 ```
 
 > **💡 Phân biệt 3 loại Statement:**
-> | Loại | Khi nào dùng | Cú pháp |
-> |---|---|---|
-> | `Statement` | SQL tĩnh, đơn giản | `conn.createStatement()` |
-> | `PreparedStatement` | SQL có tham số `?` (khuyến khích) | `conn.prepareStatement(sql)` |
-> | `CallableStatement` | Gọi Stored Procedure | `conn.prepareCall("{CALL sp(?)}") ` |
+>
+> | Loại                 | Khi nào dùng                          | Cú pháp                             |
+> | --------------------- | --------------------------------------- | ------------------------------------- |
+> | `Statement`         | SQL tĩnh, đơn giản                  | `conn.createStatement()`            |
+> | `PreparedStatement` | SQL có tham số `?` (khuyến khích) | `conn.prepareStatement(sql)`        |
+> | `CallableStatement` | Gọi Stored Procedure                   | `conn.prepareCall("{CALL sp(?)}") ` |
 
 ---
 
 ## BỔ SUNG JDBC: Transaction + Aggregation (Từ LAB 08)
 
 ### Transaction (Giao dịch)
+
 Khi cần thực hiện **nhiều câu lệnh INSERT/UPDATE** cùng lúc, dùng Transaction để đảm bảo **tất cả thành công** hoặc **tất cả rollback**.
 
 ```java
@@ -1812,11 +1851,13 @@ try (Connection conn = DriverManager.getConnection(URL, USER, PASS)) {
 ```
 
 > **Ghi nhớ:**
+>
 > - `conn.setAutoCommit(false)` → bắt đầu transaction
 > - `conn.commit()` → lưu tất cả thay đổi
 > - `conn.rollback()` → hủy tất cả thay đổi
 
 ### Aggregation Functions (Hàm tổng hợp)
+
 ```java
 // SUM — Tổng lương
 ResultSet rs = stmt.executeQuery("SELECT SUM(luong) AS tongLuong FROM nhanvien");
@@ -1837,28 +1878,27 @@ while (rs.next()) System.out.println(rs.getString("chuc_vu") + ": " + rs.getInt(
 
 ### So sánh 3 loại Statement
 
-| Loại | Khi nào dùng | Ưu điểm |
-|---|---|---|
-| `Statement` | SQL tĩnh, không tham số | Đơn giản |
-| `PreparedStatement` | SQL có tham số `?` | An toàn (chống SQL Injection), nhanh hơn |
-| `CallableStatement` | Gọi Stored Procedure | Tận dụng logic DB, tham số IN/OUT |
+| Loại                 | Khi nào dùng             | Ưu điểm                                  |
+| --------------------- | -------------------------- | ------------------------------------------- |
+| `Statement`         | SQL tĩnh, không tham số | Đơn giản                                 |
+| `PreparedStatement` | SQL có tham số `?`     | An toàn (chống SQL Injection), nhanh hơn |
+| `CallableStatement` | Gọi Stored Procedure      | Tận dụng logic DB, tham số IN/OUT        |
 
 ---
 
 ## BẢNG TRA NHANH: JDBC (Điền vào chỗ trống)
 
-| Câu hỏi thường gặp | Đáp án |
-|---|---|
-| Lớp quản lý driver | `DriverManager` |
-| Tạo kết nối | `DriverManager.getConnection(url, user, pass)` |
-| Nạp driver thủ công | `Class.forName("com.mysql.cj.jdbc.Driver")` |
-| Tạo PreparedStatement | `conn.prepareStatement(sql)` |
-| Thực thi SELECT | `ps.executeQuery()` → trả về `ResultSet` |
-| Thực thi INSERT/UPDATE/DELETE | `ps.executeUpdate()` → trả về `int` |
-| Duyệt kết quả | `while (rs.next()) { ... }` |
-| Lấy giá trị cột | `rs.getString("tên_cột")`, `rs.getInt("tên_cột")` |
-| Gọi Stored Procedure | `conn.prepareCall("{CALL sp(?)}")` |
-
+| Câu hỏi thường gặp        | Đáp án                                                 |
+| ------------------------------ | --------------------------------------------------------- |
+| Lớp quản lý driver          | `DriverManager`                                         |
+| Tạo kết nối                 | `DriverManager.getConnection(url, user, pass)`          |
+| Nạp driver thủ công         | `Class.forName("com.mysql.cj.jdbc.Driver")`             |
+| Tạo PreparedStatement         | `conn.prepareStatement(sql)`                            |
+| Thực thi SELECT               | `ps.executeQuery()` → trả về `ResultSet`           |
+| Thực thi INSERT/UPDATE/DELETE | `ps.executeUpdate()` → trả về `int`                |
+| Duyệt kết quả               | `while (rs.next()) { ... }`                             |
+| Lấy giá trị cột            | `rs.getString("tên_cột")`, `rs.getInt("tên_cột")` |
+| Gọi Stored Procedure          | `conn.prepareCall("{CALL sp(?)}")`                      |
 
 ---
 
@@ -1869,48 +1909,49 @@ while (rs.next()) System.out.println(rs.getString("chuc_vu") + ": " + rs.getInt(
 ### b. Cách thức hoạt động của Web Service Framework. Ưu điểm của dịch vụ web? (2 điểm)
 
 **Cách thức hoạt động:**
-1.  **Định nghĩa Web Service:** Viết mã thực thi và định nghĩa giao diện bằng WSDL (mô tả phương thức, tham số).
-2.  **Triển khai:** Khởi chạy trên Server có khả năng xử lý SOAP. Công bố file WSDL.
-3.  **Khám phá:** Client tìm kiếm qua UDDI, tải file WSDL để hiểu giao diện.
-4.  **Gọi Web Service:** Client đóng gói yêu cầu thành file XML (SOAP Request) và gửi qua mạng (HTTP).
-5.  **Xử lý yêu cầu:** Server nhận, gọi mã thực thi xử lý.
-6.  **Trả về kết quả:** Đóng gói kết quả (SOAP Response) và gửi về cho Client.
+
+1. **Định nghĩa Web Service:** Viết mã thực thi và định nghĩa giao diện bằng WSDL (mô tả phương thức, tham số).
+2. **Triển khai:** Khởi chạy trên Server có khả năng xử lý SOAP. Công bố file WSDL.
+3. **Khám phá:** Client tìm kiếm qua UDDI, tải file WSDL để hiểu giao diện.
+4. **Gọi Web Service:** Client đóng gói yêu cầu thành file XML (SOAP Request) và gửi qua mạng (HTTP).
+5. **Xử lý yêu cầu:** Server nhận, gọi mã thực thi xử lý.
+6. **Trả về kết quả:** Đóng gói kết quả (SOAP Response) và gửi về cho Client.
 
 **Ưu điểm của Web Services:**
-*   **Khả năng tương tác:** Dùng chuẩn chung (XML, SOAP, WSDL) giúp mọi ngôn ngữ đều kết nối được.
-*   **Tái sử dụng:** Dùng được cho nhiều ứng dụng khác nhau.
-*   **Khả năng mở rộng và truy cập từ xa** qua kết nối Internet tiêu chuẩn (port 80).
-*   **Đơn giản hóa tích hợp hệ thống.**
 
+* **Khả năng tương tác:** Dùng chuẩn chung (XML, SOAP, WSDL) giúp mọi ngôn ngữ đều kết nối được.
+* **Tái sử dụng:** Dùng được cho nhiều ứng dụng khác nhau.
+* **Khả năng mở rộng và truy cập từ xa** qua kết nối Internet tiêu chuẩn (port 80).
+* **Đơn giản hóa tích hợp hệ thống.**
 
 ## KIẾN THỨC BỔ SUNG
 
 ### 1. Trình bày khái niệm về Lập trình tích hợp, Hệ thống tích hợp
-*   **Lập trình tích hợp:** Là quá trình kết hợp và tương tác giữa các thành phần phần mềm hoặc các ứng dụng khác nhau để làm cho chúng hoạt động cùng nhau một cách hiệu quả.
-*   **Hệ thống tích hợp:** Là mô hình hệ thống được xây dựng để tự động hóa và quản lý quá trình kết nối, trao đổi dữ liệu liền mạch.
+
+* **Lập trình tích hợp:** Là quá trình kết hợp và tương tác giữa các thành phần phần mềm hoặc các ứng dụng khác nhau để làm cho chúng hoạt động cùng nhau một cách hiệu quả.
+* **Hệ thống tích hợp:** Là mô hình hệ thống được xây dựng để tự động hóa và quản lý quá trình kết nối, trao đổi dữ liệu liền mạch.
 
 ### 2. Đặc điểm của hệ thống Publish-Subscribe (Pub/Sub)
-*   **Giao tiếp tách rời:** Publisher và Subscriber không biết về nhau, chỉ tương tác qua Topic.
-*   **Bất đồng bộ:** Giảm độ trễ, tăng hiệu quả.
-*   **Dựa trên Topic:** Gửi và nhận tin nhắn dựa trên các chủ đề.
-*   **Một - Nhiều:** 1 Publisher gửi cho nhiều Subscriber cùng lúc.
-*   **Khả năng mở rộng tốt.**
+
+* **Giao tiếp tách rời:** Publisher và Subscriber không biết về nhau, chỉ tương tác qua Topic.
+* **Bất đồng bộ:** Giảm độ trễ, tăng hiệu quả.
+* **Dựa trên Topic:** Gửi và nhận tin nhắn dựa trên các chủ đề.
+* **Một - Nhiều:** 1 Publisher gửi cho nhiều Subscriber cùng lúc.
+* **Khả năng mở rộng tốt.**
 
 **3 Ví dụ thực tế Pub/Sub:**
-1.  **Hệ thống tin tức (Real-time news):** Đăng ký nhận tin tức thể thao, khi có tin hệ thống tự đẩy về cho ai đăng ký Topic đó.
-2.  **Theo dõi biến động chứng khoán:** Publisher liên tục cập nhật giá, người chơi chứng khoán chỉ đăng ký nghe ngóng đúng mã cổ phiếu của mình.
-3.  **Mạng IoT:** Hàng ngàn cảm biến báo nhiệt độ về Server. Các module phân tích tự đăng ký nhận data nếu nhiệt độ thay đổi.
 
+1. **Hệ thống tin tức (Real-time news):** Đăng ký nhận tin tức thể thao, khi có tin hệ thống tự đẩy về cho ai đăng ký Topic đó.
+2. **Theo dõi biến động chứng khoán:** Publisher liên tục cập nhật giá, người chơi chứng khoán chỉ đăng ký nghe ngóng đúng mã cổ phiếu của mình.
+3. **Mạng IoT:** Hàng ngàn cảm biến báo nhiệt độ về Server. Các module phân tích tự đăng ký nhận data nếu nhiệt độ thay đổi.
 
 ## LỖI HAY GẶP KHI THI (Debug nhanh)
 
-| Lỗi | Nguyên nhân | Cách sửa |
-|---|---|---|
-| `Connection refused` | Server chưa chạy | Chạy Server TRƯỚC, Client SAU |
-| `Address already in use` | Port bị chiếm | Đổi PORT hoặc restart IDE |
-| Client treo không nhận | Thiếu `flush()` | Thêm `out.flush()` sau mỗi lần ghi |
-| `NumberFormatException` | Parse sai kiểu | Thêm `.trim()`, bọc `try/catch` |
-| `NotBoundException` (RMI) | Tên dịch vụ sai | Kiểm tra tên trong `bind()` và `lookup()` khớp nhau |
-| `ClassNotFoundException` | Thiếu Interface ở Client | Copy file Interface sang project Client |
-
-
+| Lỗi                        | Nguyên nhân              | Cách sửa                                                  |
+| --------------------------- | -------------------------- | ----------------------------------------------------------- |
+| `Connection refused`      | Server chưa chạy         | Chạy Server TRƯỚC, Client SAU                            |
+| `Address already in use`  | Port bị chiếm            | Đổi PORT hoặc restart IDE                                |
+| Client treo không nhận    | Thiếu `flush()`         | Thêm `out.flush()` sau mỗi lần ghi                     |
+| `NumberFormatException`   | Parse sai kiểu            | Thêm `.trim()`, bọc `try/catch`                       |
+| `NotBoundException` (RMI) | Tên dịch vụ sai         | Kiểm tra tên trong `bind()` và `lookup()` khớp nhau |
+| `ClassNotFoundException`  | Thiếu Interface ở Client | Copy file Interface sang project Client                     |
