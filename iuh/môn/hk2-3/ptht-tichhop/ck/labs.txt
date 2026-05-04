@@ -1,0 +1,286 @@
+﻿
+============================================================
+  LAB_03_Threads.pdf
+============================================================
+THß╗░C H├ÇNH LAB 03 ΓÇô THREADs 
+ 
+B├ái 1. C├ái ─æß║╖t c├íc ch╞░╞íng tr├¼nh ─æ├ú ─æ╞░ß╗úc giß╗¢i thiß╗çu trong buß╗òi hß╗ìc l├╜ thuyß║┐t (2 v├¡ dß╗Ñ) 
+B├ái 2. Viß║┐t ch╞░╞íng tr├¼nh tß║ío ra mß╗Öt ─æß╗æi t╞░ß╗úng FileTWrite kß║┐ thß╗½a ─æß╗æi ─æß╗æi t╞░ß╗úng Thread(hoß║╖c c├ái ─æß║╖t giao 
+diß╗çn Runable), cho ph├⌐p viß║┐t mß╗Öt d├úy sß╗æ ngß║½u nhi├¬n v├áo tß║¡p tin. ─Éß╗æi t╞░ß╗úng FileTWriter c├│ thuß╗Öc t├¡nh 
+t├¬n tß║¡p tin cß║ºn viß║┐t. Viß║┐t h├ám main tß║ío ra 3 ─æß╗æi t╞░ß╗úngviß║┐t 3 tß║¡p tin chß║íy ß╗ƒ 3 tiß║┐n tr├¼nh ─æß╗ông thß╗¥i ri├¬ng 
+biß╗çt. 
+B├ái 3. Viß║┐t ch╞░╞íng tr├¼nh tß║ío ra mß╗Öt ─æß╗æi t╞░ß╗úng FileTReader kß║┐ thß╗½a ─æß╗æi ─æß╗æi t╞░ß╗úng Thread (hoß║╖c c├ái ─æß║╖t 
+Runable), cho ph├⌐p ─æß╗ìc nß╗Öi dung mß╗Öt tß║¡p tin v├á hiß╗ân thß╗ï l├¬n m├án h├¼nh. ─Éß╗æit╞░ß╗úng FileReader c├│ thuß╗Öc 
+t├¡nh t├¬n tß║¡p tin cß║ºn mß╗ƒ. Viß║┐t h├ám main tß║ío ra 3 ─æß╗æi t╞░ß╗úng ─æß╗ìc 3 tß║¡p tin chß║íy ß╗ƒ 3 tiß║┐n tr├¼nh ─æß╗ông thß╗¥i 
+ri├¬ng biß╗çt 
+B├ái 4. Viß║┐t ch╞░╞íng tr├¼nh tß║ío ra ─æß╗æi t╞░ß╗úng ─æß╗ìc tß║¡p tin, viß║┐t tß║¡p tin chß║íy ß╗ƒ tß╗½ng tiß║┐n tr├¼nhri├¬ng (c├│ xß╗¡ l├╜ ─æß╗ông 
+bß╗Ö h├│a d╞░ liß╗çu). Viß║┐t h├ám main tß║ío ra ─æß╗æi t╞░ß╗úng viß║┐t v├á ─æß╗ìc dß╗» liß╗çuvß╗¢i tß║¡p tin giß╗æng nhau. Kiß╗âm tra 
+viß╗çc ─æß╗ông bß╗Ö h├│a dß╗» liß╗çu 
+B├ái 5. Viß║┐t ch╞░╞íng tr├¼nh m├┤ phß╗Ång b├ái to├ín "Ng╞░ß╗¥i sß║ún xuß║Ñt - Ng╞░ß╗¥i ti├¬u d├╣ng", trong ─æ├│ Ng╞░ß╗¥i sß║ún xuß║Ñt sß║╜ 
+sß║ún xuß║Ñt ra mß╗Öt sß╗æ l╞░ß╗úng ngß║½u nhi├¬n n sß║ún phß║⌐m n├áo ─æ├│ rß╗ôi y├¬u cß║ºu nhß║¡p kho. Ng╞░ß╗¥i ti├¬u d├╣ng sß║╜ 
+y├¬u cß║ºu xuß║Ñt kho mß╗Öt sß╗æ l╞░ß╗úng ngß║½u nhi├¬n m sß║ún phß║⌐m n├áo ─æ├│ tß╗½ kho. Y├¬u cß║ºu nhß║¡p kho chß╗ë ─æ╞░ß╗úc 
+chß║Ñp nhß║¡n nß║┐u sß╗æ l╞░ß╗úng h├áng h├│a ─æ╞░a v├áo kh├┤ng v╞░ß╗út qu├í sß╗⌐c chß╗⌐a cß╗ºa kho, nß║┐u kh├┤ng, phß║úi chß╗¥ 
+cho ─æß║┐n khi c├│ ─æß╗º chß╗ò trß╗æng trong kho. Y├¬u cß║ºu xuß║Ñt kho chß╗ë ─æ╞░ß╗úc chß║Ñp nhß║¡n khi c├▓n ─æß╗º h├áng trong 
+kho nß║┐u kh├┤ng c┼⌐ng phß║úi chß╗¥ 
+Gß╗úi ├╜ : Thiß║┐t kß║┐ c├íc lß╗¢p sau: 
+- Lß╗¢p Kho: C├│ thuß╗Öc t├¡nh l├á sß╗⌐c chß╗⌐a, ph╞░╞íng thß╗⌐c khß╗ƒi tß║ío g├ín gi├í trß╗ï cho sß╗⌐c chß╗⌐a, c├íc ph╞░╞íng 
+thß╗⌐c xem sß╗æ l╞░ß╗úng h├áng tß╗ôn, ph╞░╞íng thß╗⌐c nhß║¡p kho, ph╞░╞íng thß╗⌐c xuß║Ñt kho. In th├┤ng b├ío mß╗ùi khi 
+nhß║¡p kho hay xuß║Ñt kho th├ánh c├┤ng 
+- Lß╗¢p Ng╞░ß╗¥i Sß║ún Xuß║Ñt l├á mß╗Öt Thread: C├│ thuß╗Öc t├¡nh l├á kho ─æß╗â nhß║¡p h├áng. Ph╞░╞íng thß╗⌐c khß╗ƒi tß║ío g├ín 
+gi├í trß╗ï cho kho nhß║¡p h├áng. Ph╞░╞íng thß╗⌐c sß║ún xuß║Ñt lß║╖p lß║íi c├┤ng viß╗çc l├á tß║ío ra n sß║ún phß║⌐m ngß║½u nhi├¬n 
+v├á chß╗¥ ─æß╗â nhß║¡p v├áo kho. 
+- Lß╗¢p Ng╞░ß╗¥i Ti├¬u D├╣ng l├á mß╗Öt Thread: C├│ thuß╗Öc t├¡nh l├á kho ─æß╗â xuß║Ñt h├áng. Ph╞░╞íng thß╗⌐c khß╗ƒi tß║ío g├ín 
+gi├í trß╗ï cho kho ─æß╗â xuß║Ñt h├áng. Ph╞░╞íng thß╗⌐c ti├¬u d├╣ng lß║╖p lß║íi c├┤ng viß╗çc l├á chß╗¥ ─æß╗â y├¬u cß║ºu xuß║Ñt m sß║ún 
+phß║⌐m tß╗½ kho. 
+- Lß╗¢p Demo tß║ío ra mß╗Öt kho v├á 2 ng╞░ß╗¥i sß║ún xuß║Ñt, 2 ng╞░ß╗¥i ti├¬u d├╣ng thß╗▒c hiß╗çn viß╗çc nhß║¡p xuß║Ñt tr├¬n c├╣ng 
+mß╗Öt kho 
+
+
+============================================================
+  LAB 06_ontap.pdf
+============================================================
+--url-- 
+1. Viß║┐t ch╞░╞íng tr├¼nh Java nhß║¡n v├áo mß╗Öt t├¬n miß╗ün (domain) tß╗½ tham sß╗æ d├▓ng lß╗çnh v├á hiß╗ân 
+thß╗ï: hostname, ─æß╗ïa chß╗ë IP 
+(Vd: java DomainInfo.java google.com) 
+2. Viß║┐t ch╞░╞íng tr├¼nh Java kiß╗âm tra mß╗Öt hostname c├│ tß╗ôn tß║íi hay kh├┤ng? Nß║┐u tß╗ôn tß║íi th├¼ 
+h├úy liß╗çt k├¬ tß║Ñt cß║ú ─æß╗ïa chß╗ë IP cß╗ºa hostname ─æ├│. 
+--Threads-- 
+3. Viß║┐t ch╞░╞íng tr├¼nh tß║ío v├╣ng nhß╗¢ ─æß╗çm l╞░u trß╗» sß╗æ nguy├¬n 
+-Thread 1: nhß║¡p sß╗æ tß╗½ b├án ph├¡m ─æ╞░a v├áo buffer. 
+-Thread 2: lß║Ñy sß╗æ tß╗½ buffer v├á t├¡nh tß╗òng c├íc sß╗æ. 
+-Ch╞░╞íng tr├¼nh dß╗½ng khi nhß║¡p sß╗æ -1 
+--Socket TCP-- 
+4. X├óy dß╗▒ng ß╗⌐ng dß╗Ñng TCP Client-Server:  
+Server lß║»ng nghe tß║íi cß╗òng 6789. Nhß║¡n mß╗Öt sß╗æ nguy├¬n n tß╗½ client. Trß║ú vß╗ü giai thß╗½a cß╗ºa n 
+Client nhß║¡n n tß╗½ b├án ph├¡m. Gß╗¡i tß╗¢i server. Nhß║¡n kß║┐t quß║ú 
+5. Sß╗¡ dß╗Ñng TCP Socket x├óy dß╗▒ng ß╗⌐ng dß╗Ñng 
+Server lß║»ng nghe tß║íi cß╗òng 6789. Nhß║¡n mß╗Öt chuß╗ùi tß╗½ client. Trß║ú vß╗ü chuß╗ùi viß║┐t hoa, sß╗æ k├╜ tß╗▒ 
+trong chuß╗ùi 
+Client nhß║¡p chuß╗ùi tß╗½ b├án ph├¡m. Gß╗¡i tß╗¢i server. Hiß╗ân thß╗ï kß║┐t quß║ú nhß║¡n ─æ╞░ß╗úc 
+ 
+
+
+============================================================
+  LAB 07_RMI.pdf
+============================================================
+THß╗░C H├ÇNH LAB 06 ΓÇô RMI 
+ 
+B├ái 1. M├íy chß╗º RMI trß║ú vß╗ü chuß╗ùi "Hello, World!" 
+M├┤ tß║ú. Viß║┐t mß╗Öt ß╗⌐ng dß╗Ñng RMI trong ─æ├│ client gß╗ìi ph╞░╞íng thß╗⌐c tß╗½ server ─æß╗â nhß║¡n vß╗ü chuß╗ùi "Hello, World!". 
+Y├¬u cß║ºu 
+Tß║ío interface chß╗⌐a ph╞░╞íng thß╗⌐c sayHello(). 
+Triß╗ân khai ph╞░╞íng thß╗⌐c n├áy ß╗ƒ server. 
+Client gß╗ìi ph╞░╞íng thß╗⌐c tß╗½ xa. 
+ 
+B├ái 2.  B├ái tß║¡p T├¡nh Tß╗òng Hai Sß╗æ 
+M├┤ tß║ú. Viß║┐t ß╗⌐ng dß╗Ñng RMI cho ph├⌐p client gß╗¡i hai sß╗æ nguy├¬n a v├á b ─æß║┐n server, sau ─æ├│ server trß║ú vß╗ü tß╗òng a + b. 
+Y├¬u cß║ºu 
+Interface chß╗⌐a ph╞░╞íng thß╗⌐c int add(int a, int b). 
+Server triß╗ân khai ph╞░╞íng thß╗⌐c n├áy. 
+Client nhß║¡p hai sß╗æ tß╗½ b├án ph├¡m v├á gß╗¡i ─æß║┐n server ─æß╗â nhß║¡n kß║┐t quß║ú. 
+ 
+B├ái 3.  B├ái tß║¡p Kiß╗âm Tra Sß╗æ Nguy├¬n Tß╗æ 
+M├┤ tß║ú. Viß║┐t ch╞░╞íng tr├¼nh RMI gi├║p client kiß╗âm tra xem mß╗Öt sß╗æ c├│ phß║úi l├á sß╗æ nguy├¬n tß╗æ hay kh├┤ng. 
+Y├¬u cß║ºu 
+Interface chß╗⌐a ph╞░╞íng thß╗⌐c boolean isPrime(int n). 
+Server kiß╗âm tra sß╗æ nguy├¬n tß╗æ v├á trß║ú kß║┐t quß║ú. 
+Client nhß║¡p sß╗æ v├á nhß║¡n kß║┐t quß║ú tß╗½ server. 
+ 
+B├ái 4.  B├ái tß║¡p Quß║ún L├╜ Danh Bß║í 
+M├┤ tß║ú. X├óy dß╗▒ng mß╗Öt hß╗ç thß╗æng quß║ún l├╜ danh bß║í tß╗½ xa bß║▒ng RMI. Client c├│ thß╗â th├¬m, sß╗¡a, x├│a v├á t├¼m kiß║┐m li├¬n 
+hß╗ç trong danh bß║í l╞░u tr├¬n server. 
+Y├¬u cß║ºu 
+Interface c├│ c├íc ph╞░╞íng thß╗⌐c:  
+void addContact(String name, String phone) 
+String findContact(String name) 
+boolean deleteContact(String name) 
+Server l╞░u trß╗» danh bß║í bß║▒ng HashMap<String, String>. 
+Client nhß║¡p dß╗» liß╗çu v├á gß╗¡iY├¬u cß║ºu. 
+ 
+B├ái 5. B├ái tß║¡p Chat ─É╞ín Giß║ún vß╗¢i RMI 
+M├┤ tß║ú. Tß║ío ß╗⌐ng dß╗Ñng chat 1-1 giß╗»a client v├á server th├┤ng qua RMI. 
+Y├¬u cß║ºu 
+Interface c├│ ph╞░╞íng thß╗⌐c void sendMessage(String message). 
+
+Server nhß║¡n tin nhß║»n tß╗½ client v├á phß║ún hß╗ôi. 
+Client nhß║¡p tin nhß║»n v├á hiß╗ân thß╗ï phß║ún hß╗ôi. 
+ 
+B├ái 6.  B├ái tß║¡p Quß║ún L├╜ T├ái Khoß║ún Ng├ón H├áng 
+M├┤ tß║ú. X├óy dß╗▒ng ß╗⌐ng dß╗Ñng ng├ón h├áng tß╗½ xa, cho ph├⌐p client kiß╗âm tra sß╗æ d╞░, gß╗¡i tiß╗ün v├á r├║t tiß╗ün. 
+Y├¬u cß║ºu 
+Interface c├│ c├íc ph╞░╞íng thß╗⌐c:  
+double getBalance() 
+void deposit(double amount) 
+boolean withdraw(double amount) 
+Server quß║ún l├╜ t├ái khoß║ún vß╗¢i sß╗æ d╞░ ban ─æß║ºu. 
+Client c├│ thß╗â gß╗¡i/r├║t tiß╗ün v├á kiß╗âm tra sß╗æ d╞░. 
+ 
+B├ái 7.  B├ái tß║¡p T├¡nh Diß╗çn T├¡ch H├¼nh Hß╗ìc 
+M├┤ tß║ú. Viß║┐t ch╞░╞íng tr├¼nh RMI gi├║p client t├¡nh diß╗çn t├¡ch h├¼nh chß╗» nhß║¡t, h├¼nh tr├▓n, h├¼nh tam gi├íc. 
+Y├¬u cß║ºu 
+Interface c├│ ph╞░╞íng thß╗⌐c:  
+double rectangleArea(double width, double height) 
+double circleArea(double radius) 
+double triangleArea(double base, double height) 
+Server thß╗▒c hiß╗çn c├íc ph├⌐p t├¡nh. 
+Client gß╗¡i th├┤ng sß╗æ v├á nhß║¡n diß╗çn t├¡ch tß╗½ server. 
+ 
+B├ái 8.  B├ái tß║¡p Hß╗ç Thß╗æng ─Éß║╖t V├⌐ M├íy Bay 
+M├┤ tß║ú. Viß║┐t ß╗⌐ng dß╗Ñng RMI quß║ún l├╜ ─æß║╖t chß╗ù v├⌐ m├íy bay tß╗½ xa. 
+Y├¬u cß║ºu 
+Interface c├│ c├íc ph╞░╞íng thß╗⌐c:  
+boolean bookTicket(String flightNumber, int seats) 
+int availableSeats(String flightNumber) 
+boolean cancelBooking(String flightNumber, int seats) 
+Server quß║ún l├╜ danh s├ích c├íc chuyß║┐n bay. 
+Client c├│ thß╗â ─æß║╖t, hß╗ºy v├⌐ v├á kiß╗âm tra sß╗æ ghß║┐ trß╗æng. 
+ 
+B├ái 9. Hß╗ç thß╗æng ─Éß║Ñu gi├í trß╗▒c tuyß║┐n (Online Auction System) 
+M├┤ tß║ú: 
+ΓÇó 
+X├óy dß╗▒ng hß╗ç thß╗æng ─æß║Ñu gi├í trß╗▒c tuyß║┐n bß║▒ng Java RMI. 
+ΓÇó 
+Ng╞░ß╗¥i d├╣ng c├│ thß╗â ─æ─âng k├╜ sß║ún phß║⌐m ─æß║Ñu gi├í v├á ─æ╞░a ra gi├í thß║ºu (bid). 
+ΓÇó 
+Server quß║ún l├╜ danh s├ích sß║ún phß║⌐m v├á gi├í thß║ºu, cß║¡p nhß║¡t gi├í cao nhß║Ñt theo thß╗¥i gian thß╗▒c. 
+
+Y├¬u cß║ºu chß╗⌐c n─âng: 
+1∩╕Å. Chß╗º sß╗ƒ hß╗»u (Seller): 
+ΓÇó 
+Th├¬m sß║ún phß║⌐m v├áo hß╗ç thß╗æng ─æß║Ñu gi├í (t├¬n sß║ún phß║⌐m, gi├í khß╗ƒi ─æiß╗âm). 
+2∩╕Å. Ng╞░ß╗¥i ─æß║Ñu gi├í (Bidder): 
+ΓÇó 
+Xem danh s├ích sß║ún phß║⌐m ─æang ─æß║Ñu gi├í. 
+ΓÇó 
+─É╞░a ra gi├í thß║ºu cao h╞ín gi├í hiß╗çn tß║íi. 
+3∩╕Å. Server (Auction Server): 
+ΓÇó 
+Quß║ún l├╜ danh s├ích sß║ún phß║⌐m & gi├í thß║ºu. 
+ΓÇó 
+Cß║¡p nhß║¡t gi├í cao nhß║Ñt cho tß╗½ng sß║ún phß║⌐m. 
+ΓÇó 
+Th├┤ng b├ío khi c├│ ng╞░ß╗¥i ─æß║╖t gi├í thß║ºu cao h╞ín. 
+ 
+
+
+============================================================
+  LAB 08_JDBC.pdf
+============================================================
+ 
+ 
+JDBC (JAVA DATABASE CONNECTION) 
+H╞»ß╗ÜNG Dß║¬N THß╗░C H├ÇNH 
+B1. Chuß║⌐n bß╗ï m├┤i tr╞░ß╗¥ng v├á thiß║┐t lß║¡p kß║┐t nß╗æi 
+- Tß║ío dß╗▒ ├ín Java mß╗¢i v├á th├¬m th╞░ viß╗çn (driver) JDBC cho SQLite (sqlite-jdbc) 
+Class.forName(ΓÇ£org.sqlite.JDBCΓÇ¥); 
+String url = ΓÇ£jdbc:sqlite:nhanvien.dbΓÇ¥; 
+Connection conn = DriverManager.getConnection(url, username, 
+passwd); 
+ 
+B2. Tß║ío ─æß╗æi t╞░ß╗úng Statement tß╗½ Connection 
+Statement stmt = conn.createStatement(); 
+ 
+B3. Thß╗▒c thi c├íc c├óu truy vß║Ñn tß╗½ c├íc Statement ─æ├ú tß║ío (hoß║╖c tß║ío mß╗¢i) 
+3.1. Tß║ío bß║úng 
+- Viß║┐t c├óu lß╗çnh SQL ─æß╗â tß║ío mß╗Öt bß║úng mß╗¢i t├¬n NhanVien vß╗¢i 
+c├íc cß╗Öt sau 
+id(INTEGER, PRIMARY KEY) 
+ten(TEXT, NOT NULL) 
+chuc_vu(TEXT) 
+String sql_create_table = ΓÇ£...ΓÇ¥ 
+- Thß╗▒c thi c├óu lß╗çnh tß║ío bß║úng: 
+stmt.executeUpdate(sql_create_table); 
+3.2. Th├¬m dß╗» liß╗çu 
+- Viß║┐t ├¡t nhß║Ñt 3 c├óu lß╗çnh sql INSERT INTO ─æß╗â th├¬m th├┤ng 
+tin cß╗ºa 3 nh├ón vi├¬n v├áo bß║úng NhanVien. 
+- Thß╗▒c 
+thi 
+c├íc 
+c├óu 
+lß╗çnh 
+INSERT 
+bß║▒ng 
+stmt.executeUpdate(slq_insert); 
+
+ 
+ 
+ 
+B4. Truy vß║Ñn v├á hiß╗ân thß╗ï dß╗» liß╗çu 
+- Viß║┐t c├óu lß╗çnh sql SELECT ─æß╗â lß║Ñy tß║Ñt cß║ú nh├ón vi├¬n (id, ten, 
+chucvu) tß╗½ bß║úng NhanVien 
+- Thß╗▒c 
+thi 
+truy 
+vß║Ñn 
+bß║▒ng 
+ResultSet 
+rs 
+= 
+stmt.executeQuery(sql_select); 
+- Duyß╗çt qua ResultSet: 
+- Sß╗¡ dß╗Ñng v├▓ng lß║╖p while(rs.next()); 
+- Lß║Ñy dß╗» liß╗çu tß╗½ng cß╗Öt bß║▒ng c├íc ph╞░╞íng thß╗⌐c: rs.getInt(ΓÇ£idΓÇ¥) v├á 
+rs.getString(ΓÇ£tenΓÇ¥) 
+- In th├┤ng tin cß╗ºa tß╗½ng nh├ón vi├¬n ra m├án h├¼nh console 
+ 
+B5. ─É├│ng kß║┐t nß╗æi v├á giß║úi ph├│ng t├ái nguy├¬n 
+- ─É├│ng c├íc t├ái nguy├¬n (theo thß╗⌐ tß╗▒ ng╞░ß╗úc lß║íi) 
+rs.close(); 
+stmt.close(); 
+conn.close(); 
+ 
+*Xß╗¼ L├¥ NGOß║áI Lß╗å 
+- Bß╗ìc to├án bß╗Ö khß╗æi code JDBC trong mß╗Öt khß╗æi try-
+catch(SQLException) ─æß╗â bß║»t v├á in ra c├íc lß╗ùi kß║┐t nß╗æi sql 
+tiß╗üm ß║⌐n 
+- Sß╗¡ dß╗Ñng khß╗æi finally ─æß╗â ─æß║úm bß║úo rß║▒ng c├íc kß║┐t nß╗æi 
+(Connection, Statement, ResultSet) lu├┤n ─æ╞░ß╗úc ─æ├│ng ngay cß║ú 
+khi xß║úy ra lß╗ùi. 
+- Sß╗¡ dß╗Ñng giao dß╗ïch (Transactions): 
+- Thß╗▒c hiß╗çn nhiß╗üu c├óu lß╗çnh INSERT hoß║╖c UPDATE trong mß╗Öt 
+giao dß╗ïch duy nhß║Ñt. 
+- Tß║»t chß║┐ ─æß╗Ö auto-commit: conn.setAutoCommit(false); 
+
+ 
+ 
+- Chß╗ë gß╗ìi conn.commit() khi tß║Ñt cß║ú c├íc thao t├íc ─æß╗üu 
+th├ánh c├┤ng, nß║┐u kh├┤ng th├¼ gß╗ìi conn.rollback() trong 
+khß╗æi catch() ─æß╗â hß╗ºy bß╗Å tß║Ñt cß║ú c├íc thay ─æß╗òi. 
+ 
+B├ÇI Tß║¼P Gß╗óI ├¥ THß╗░C H├ÇNH 
+1. Quß║ún l├╜ Danh mß╗Ñc sß║ún phß║⌐m 
+- Mß╗ƒ rß╗Öng b├ái tß║¡p NhanVien th├ánh mß╗Öt hß╗ç thß╗æng quß║ún l├╜ ho├án chß╗ënh 
+cho bß║úng SanPham (maSP, tenSP, gia, soluong) 
+- Thß╗▒c h├ánh c├íc thao t├íc: 
+- Create (Th├¬m mß╗¢i): Th├¬m ├¡t nhß║Ñt 3 sß║ún phß║⌐m. 
+- Read (Truy vß║Ñn): Liß╗çt k├¬ tß║Ñt cß║ú sß║ún phß║⌐m hoß║╖c T├¼m kiß║┐m 
+sß║ún phß║⌐m theo tenSP. 
+- Update (Cß║¡p nhß║¡t): Thay ─æß╗òi gi├í hoß║╖c sß╗æ l╞░ß╗úng cß╗ºa mß╗Öt 
+sß║ún phß║⌐m theo maSP. 
+- Delete (X├│a): X├│a mß╗Öt sß║ún phß║⌐m (theo maSP). 
+2. Sß╗¡ dß╗Ñng giao dß╗ïch (Transaction) trong cß║¡p nhß║¡t dß╗» liß╗çu 
+3. Xß╗¡ l├╜ ngoß║íi lß╗ç (Exception Handling) triß╗çt ─æß╗â 
+- Thß╗▒c hiß╗çn lß║íi B├ái tß║¡p 1 v├á ├íp dß╗Ñng khß╗æi try-catch-finally mß╗Öt 
+c├ích nghi├¬m ngß║╖t. 
+- ─Éß║úm bß║úo rß║▒ng mß╗ìi t├ái nguy├¬n JDBC (Connection, Statement, 
+ResultSet) lu├┤n ─æ╞░ß╗úc ─æ├│ng trong khß╗æi finally ─æß╗â tr├ính r├▓ rß╗ë 
+t├ái nguy├¬n (resource leakage), kß╗â cß║ú khi c├│ lß╗ùi SQLException 
+xß║úy ra. 
+4. Sß╗¡ dß╗Ñng PreparedStatement ─æß╗â t─âng c╞░ß╗¥ng bß║úo mß║¡t v├á hiß╗çu n─âng 
+5. Truy vß║Ñn dß╗» liß╗çu n├óng cao (Aggregation Functions) (t├╣y chß╗ìn bß╗ò 
+sung) 
+- Th├¬m nhiß╗üu bß║ún ghi v├áo bß║úng NhanVien vß╗¢i cß╗Öt l╞░╞íng (luong) 
+- Thß╗▒c h├ánh truy vß║Ñn sqp vß╗¢i JDBC ─æß╗â: 
+- T├¡nh tß╗òng l╞░╞íng SUM(luong) 
+
+ 
+ 
+- T├¼m mß╗⌐c l╞░╞íng trung b├¼nh AVG(luong) 
+- T├¼m nh├ón vi├¬n c├│ mß╗⌐c l╞░╞íng cao nhß║Ñt/ thß║Ñp nhß║Ñt MIN/MAX(luong) 
+- ─Éß║┐m sß╗æ l╞░ß╗úng nh├ón vi├¬n theo chß╗⌐c vß╗Ñ (COUNT v├á GROUP BY) 
+ 
+ 
+ 
+ 
+
