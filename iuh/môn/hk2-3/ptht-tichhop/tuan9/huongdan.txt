@@ -1,0 +1,138 @@
+HƯỚNG DẪN TỪ A - Z: QUẢN LÝ CỬA HÀNG VỚI JDBC & SQLITE
+Bước 1: Tải và Chuẩn bị thư viện (Driver)
+Vì Java không đi kèm sẵn trình điều khiển cho SQLite, bạn phải tự tải về:
+
+Truy cập: SQLite JDBC Releases.
+
+Tìm bản mới nhất (ví dụ: sqlite-jdbc-3.45.1.0.jar) và tải về máy.
+
+Lưu file này ở một thư mục dễ nhớ trên máy tính.
+
+Bước 2: Thiết lập dự án trên Eclipse
+Tạo Project: File > New > Java Project. Đặt tên: QuanLyHeThong.
+
+Thêm Thư viện vào Classpath:
+
+Chuột phải vào tên Project > Properties.
+
+Chọn Java Build Path (bên trái) > Thẻ Libraries.
+
+Chọn Classpath (nếu có) > Nhấn nút Add External JARs....
+
+Chọn file .jar bạn vừa tải ở Bước 1.
+
+Nhấn Apply and Close.
+
+Bước 3: Tạo các file mã nguồn
+Tạo 3 file .java trong thư mục src với nội dung như sau:
+
+File 1: SanPham.java (Lớp đối tượng)
+Java
+
+public class SanPham {
+    private int maSP;
+    private String tenSP;
+    private double gia;
+    private int soLuong;
+
+    public SanPham(int maSP, String tenSP, double gia, int soLuong) {
+        this.maSP = maSP;
+        this.tenSP = tenSP;
+        this.gia = gia;
+        this.soLuong = soLuong;
+    }
+    public int getMaSP() { return maSP; }
+    public String getTenSP() { return tenSP; }
+    public double getGia() { return gia; }
+    public int getSoLuong() { return soLuong; }
+}
+File 2: DatabaseManager.java (Xử lý DB)
+Java
+
+import java.sql.*;
+
+public class DatabaseManager {
+    private static final String URL = "jdbc:sqlite:quanly.db";
+
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(URL);
+    }
+
+    public static void initDatabase(Connection conn) throws SQLException {
+        try (Statement stmt = conn.createStatement()) {
+            // Tạo bảng Sản phẩm và Nhân viên
+            stmt.execute("CREATE TABLE IF NOT EXISTS SanPham (maSP INTEGER PRIMARY KEY, tenSP TEXT, gia REAL, soluong INTEGER)");
+            stmt.execute("CREATE TABLE IF NOT EXISTS NhanVien (id INTEGER PRIMARY KEY AUTOINCREMENT, ten TEXT, chuc_vu TEXT, luong REAL)");
+        }
+    }
+}
+File 3: MainApp.java (Chương trình chạy chính)
+Java
+
+import java.sql.*;
+
+public class MainApp {
+    public static void main(String[] args) {
+        Connection conn = null;
+        try {
+            conn = DatabaseManager.getConnection();
+            conn.setAutoCommit(false); // Bắt đầu Giao dịch (Transaction)
+            DatabaseManager.initDatabase(conn);
+
+            // 1. Thêm sản phẩm (Dùng INSERT OR IGNORE để tránh lỗi trùng ID)
+            String sqlInsert = "INSERT OR IGNORE INTO SanPham(maSP, tenSP, gia, soluong) VALUES(?,?,?,?)";
+            try (PreparedStatement pstmt = conn.prepareStatement(sqlInsert)) {
+                pstmt.setInt(1, 1); pstmt.setString(2, "Laptop Dell"); pstmt.setDouble(3, 15000); pstmt.setInt(4, 5);
+                pstmt.executeUpdate();
+            }
+
+            // 2. Thêm nhân viên mẫu để có dữ liệu thống kê
+            String sqlNV = "INSERT INTO NhanVien(ten, chuc_vu, luong) VALUES(?,?,?)";
+            try (PreparedStatement pstmt = conn.prepareStatement(sqlNV)) {
+                pstmt.setString(1, "Nguyen Van A"); pstmt.setString(2, "Dev"); pstmt.setDouble(3, 3000);
+                pstmt.executeUpdate();
+            }
+
+            // 3. Truy vấn nâng cao (SUM, AVG)
+            try (Statement stmt = conn.createStatement(); 
+                 ResultSet rs = stmt.executeQuery("SELECT SUM(luong), AVG(luong) FROM NhanVien")) {
+                if (rs.next()) {
+                    System.out.println("Tổng lương NV: " + rs.getDouble(1));
+                    System.out.println("Lương TB NV: " + rs.getDouble(2));
+                }
+            }
+
+            conn.commit(); // Lưu mọi thay đổi
+            System.out.println("[SUCCESS] Chạy thành công!");
+
+        } catch (SQLException e) {
+            System.err.println("[ERROR] Lỗi: " + e.getMessage());
+            try { if (conn != null) conn.rollback(); } catch (SQLException ex) {}
+        } finally {
+            try { if (conn != null) conn.close(); } catch (SQLException e) {}
+        }
+    }
+}
+Bước 4: Chạy và Kiểm tra kết quả
+Chuột phải vào MainApp.java > Run As > Java Application.
+
+Xem kết quả ở cửa sổ Console.
+
+Để xem bảng dữ liệu:
+
+Nhấn F5 vào tên Project trong Eclipse để thấy file quanly.db xuất hiện.
+
+Tải phần mềm DB Browser for SQLite.
+
+Mở file quanly.db bằng phần mềm đó để xem các hàng dữ liệu đã được chèn vào.
+
+Tóm tắt các điểm "sống còn" cần nhớ:
+Driver: Thiếu file .jar là code không bao giờ chạy được.
+
+Transaction: Phải có commit() ở cuối thì dữ liệu mới thực sự được ghi vào file.
+
+Primary Key: Không được chèn trùng ID (nên dùng INSERT OR IGNORE hoặc xóa file .db cũ để chạy lại sạch sẽ).
+
+Finally: Luôn luôn đóng kết nối để giải phóng tài nguyên máy tính.
+
+Giờ bạn chỉ cần làm theo đúng thứ tự này là hệ thống sẽ vận hành hoàn hảo! Bạn đã sẵn sàng để thử chạy lại toàn bộ chưa?
