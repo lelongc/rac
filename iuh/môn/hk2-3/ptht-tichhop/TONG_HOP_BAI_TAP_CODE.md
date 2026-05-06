@@ -2,7 +2,25 @@
 
 Tong hop theo **nhom bai tap (thu muc)**. Moi bai gom nhieu file lien quan.
 
-## Muc luc bai tap
+## Muc luc toan bo bai tap (Co DE BAI chi tiet)
+
+| STT | Thu Muc | De Bai / Cau Hoi Chinh |
+|-----|---------|------------------------|
+| 1 | t2/tuan2 | Viet chuong trinh OOP quan ly nhan vien, gom lop cha NhanVien va 2 lop con NhanVienVanPhong, NhanVienSanXuat; cho phep nhap thong tin va tinh luong tung loai. |
+| 2 | t2/tuan2b | Viet chuong trinh OOP PhuongTien voi lop con XeMay va Oto; tinh thue va hien thi chi tiet tung phuong tien. |
+| 3 | t3/eg | Tao 4 chuong trinh nho demo Stream (InputStream, BufferedReader, PrintWriter): doc byte, read block, readLine, write. |
+| 4 | t3/tuan1 | Thuc hanh 5 bai: in Hello, nhap ten va chao, tong 2 so, kiem tra chan le, dung tren tren thang (1-12). |
+| 5 | t3/tuan2 | Viet chuong trinh OOP NhanVien voi BufferedReader/PrintWriter; tinh luong theo loai (van phong: co ban, san xuat: so san pham × gia). |
+| 6 | t3/tuan2b | Viet chuong trinh OOP PhuongTien voi BufferedReader/PrintWriter; tinh thue xe may (5%) va oto (10%). |
+| 7 | t4/tuan4/src | Tong hop 5 bai thread: thread co ban, ghi file, doc file, producer-consumer file, producer-consumer kho. |
+| 8 | t4/tuan4/src/bai1 | Tao class extends Thread, override run(), khoi tao 4 thread voi n=1000, moi thread in tung ten n lan song song. |
+| 9 | t4/tuan4/src/bai2 | Viet FileTWrite implements Runnable, tao 3 thread ghi 10 so random vao 3 file khac nhau. |
+| 10 | t4/tuan4/src/bai3 | Viet FileTReader implements Runnable, tao 3 thread doc 3 file co san (file11.txt, file22.txt, file33.txt) song song. |
+| 11 | t4/tuan4/src/bai4 | Viet producer-consumer voi file: FileWriterThread ghi, FileReaderThread doc, dung wait/notify de dong bo. |
+| 12 | t4/tuan4/src/bai5 | Viet producer-consumer voi kho hang: 2 producer nhap, 2 consumer xuat, kho la SharedResource voi wait/notify. |
+| 13+ | t5, t6, tuan7, tuan8, tuan9 | Xem chi tiet trong phan "Muc luc chi tiet theo bai tap" o duoi |
+
+## Muc luc chi tiet theo bai tap (Tu A - Z)
 
 - [Bai tap 1: t2/tuan2 - T2 – OOP (Lập Trình Hướng Đối Tượng)](#bai-tap-001)
 - [Bai tap 2: t2/tuan2b - T2 – OOP (Lập Trình Hướng Đối Tượng)](#bai-tap-002)
@@ -60,6 +78,17 @@ Tong hop theo **nhom bai tap (thu muc)**. Moi bai gom nhieu file lien quan.
 **Tieu de bai tap:** T2 – OOP (Lập Trình Hướng Đối Tượng)
 
 **Yeu cau tom tat:** Cấu trúc thư mục t2/ ├── tuan2/     ← OOP + Scanner (nhập từng dòng đơn giản)
+
+**DE BAI / MO TA CHI TIET:**
+
+**Vấn đề**: Quản lý nhân viên với các loại khác nhau (văn phòng, sản xuất), mỗi loại có cách tính lương riêng.
+
+**Yêu cầu chi tiết**:
+- Tạo lớp cha **NhanVien** với thuộc tính: maNV (String), hoTen (String), các phương thức nhập/hiển thị
+- Tạo lớp con **NhanVienVanPhong** với luongCoBan (double) → lương = luongCoBan
+- Tạo lớp con **NhanVienSanXuat** với soSanPham (int), donGia (double) → lương = soSanPham × donGia
+- Sử dụng **kế thừa (inheritance)** để tái sử dụng code
+- Main: tạo 1 NhanVienVanPhong + 1 NhanVienSanXuat, nhập thông tin bằng Scanner.nextLine() / nextDouble(), tính lương, hiển thị kết quả
 
 ### Danh sach file
 
@@ -189,6 +218,18 @@ public class NhanVienVanPhong extends NhanVien {
 
 **Yeu cau tom tat:** Cấu trúc thư mục t2/ ├── tuan2/     ← OOP + Scanner (nhập từng dòng đơn giản)
 
+**DE BAI / MO TA CHI TIET:**
+
+**Vấn đề**: Quản lý các loại phương tiện khác nhau (xe máy, ô tô) với cách tính thuế khác nhau dựa trên giá bán.
+
+**Yêu cầu chi tiết**:
+- Tạo lớp cha **PhuongTien** với: hangSanXuat, namSanXuat, giaBan
+- Tạo lớp con **XeMay**: thuế = giaBan × 5%
+- Tạo lớp con **Oto**: thuế = giaBan × 10%
+- Sử dụng **phương thức ảo (virtual method)** để tính thuế khác nhau
+- Sử dụng **BufferedReader** hoặc hardcode dữ liệu, sử dụng **PrintWriter** để xuất kết quả
+- Main: tạo danh sách phương tiện, in thông tin từng xe + thuế phải trả
+
 ### Danh sach file
 
 - Main.java
@@ -302,6 +343,8 @@ public class XeMay extends PhuongTien {
 **Tieu de bai tap:** T3 – Stream (InputStream, BufferedReader, PrintWriter) + OOP
 
 **Yeu cau tom tat:** | File | Nội dung | Chạy |
+
+**Cau hoi de bai:** Viet cac vi du co ban ve Stream trong Java: doc byte bang InputStream, doc dong bang BufferedReader va ghi du lieu bang PrintWriter.
 
 ### Danh sach file
 
@@ -474,6 +517,8 @@ public class ex4 {
 **Tieu de bai tap:** T3 – Stream (InputStream, BufferedReader, PrintWriter) + OOP
 
 **Yeu cau tom tat:** | File | Nội dung | Chạy |
+
+**Cau hoi de bai:** Thuc hien bo bai tap nhap/xu ly co ban gom: in chuoi, nhap ten, tinh tong 2 so, kiem tra chan-le va doi so thang sang ten thang tieng Anh.
 
 ### Danh sach file
 
@@ -686,6 +731,8 @@ public class ex5 {
 
 **Yeu cau tom tat:** | File | Nội dung | Chạy |
 
+**Cau hoi de bai:** Viet chuong trinh OOP NhanVien su dung BufferedReader/PrintWriter de nhap xuat, gom nhan vien van phong va san xuat, co ham tinh luong.
+
 ### Danh sach file
 
 - Main.java
@@ -834,6 +881,8 @@ public class NhanVienVanPhong extends NhanVien {
 **Tieu de bai tap:** T3 – Stream (InputStream, BufferedReader, PrintWriter) + OOP
 
 **Yeu cau tom tat:** | File | Nội dung | Chạy |
+
+**Cau hoi de bai:** Viet chuong trinh OOP PhuongTien su dung BufferedReader/PrintWriter, gom XeMay va Oto, tinh thue theo quy tac rieng cho moi loai.
 
 ### Danh sach file
 
@@ -997,6 +1046,8 @@ public class XeMay extends PhuongTien {
 
 **Yeu cau tom tat:** Cấu trúc thư mục tuan4/ ├── bai1/   ← Thread cơ bản: extends Thread
 
+**Cau hoi de bai:** Tong hop bai tap Thread tu co ban den nang cao: tao luong, doc/ghi file song song, dong bo luong va bai toan nha san xuat - nguoi tieu dung.
+
 ### Danh sach file
 
 - module-info.java
@@ -1023,6 +1074,8 @@ module tuan4 {
 **Tieu de bai tap:** TUAN4 – Thread (5 bài tăng dần độ khó)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tuan4/ ├── bai1/   ← Thread cơ bản: extends Thread
+
+**Cau hoi de bai:** Tao chuong trinh thread co ban bang cach ke thua Thread; tao nhieu luong va cho moi luong thuc thi cong viec lap lai.
 
 ### Danh sach file
 
@@ -1095,6 +1148,8 @@ public class ThreadSimple extends Thread {
 **Tieu de bai tap:** TUAN4 – Thread (5 bài tăng dần độ khó)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tuan4/ ├── bai1/   ← Thread cơ bản: extends Thread
+
+**Cau hoi de bai:** Viet chuong trinh dung nhieu thread de ghi so ngau nhien vao nhieu file khac nhau; co the trien khai theo extends Thread hoac implements Runnable.
 
 ### Danh sach file
 
@@ -1233,6 +1288,8 @@ public class TestPath {
 **Tieu de bai tap:** TUAN4 – Thread (5 bài tăng dần độ khó)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tuan4/ ├── bai1/   ← Thread cơ bản: extends Thread
+
+**Cau hoi de bai:** Viet chuong trinh dung nhieu thread de doc dong thoi nhieu file van ban va in noi dung theo ten file tuong ung.
 
 ### Danh sach file
 
@@ -1396,6 +1453,8 @@ public class Main {
 **Tieu de bai tap:** TUAN4 – Thread (5 bài tăng dần độ khó)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tuan4/ ├── bai1/   ← Thread cơ bản: extends Thread
+
+**Cau hoi de bai:** Xay dung bai toan 1 luong ghi va 1 luong doc cung file dung wait/notify de dong bo, dam bao doc du lieu moi sau moi lan ghi.
 
 ### Danh sach file
 
@@ -1580,6 +1639,8 @@ dong so 10: 20
 
 **Yeu cau tom tat:** Cấu trúc thư mục tuan4/ ├── bai1/   ← Thread cơ bản: extends Thread
 
+**Cau hoi de bai:** Giai bai toan producer-consumer: mo phong kho hang co suc chua gioi han, nguoi san xuat nhap kho va nguoi tieu dung xuat kho co dong bo wait/notify.
+
 ### Danh sach file
 
 - Demo.java
@@ -1726,6 +1787,8 @@ public class NguoiTieuDung extends Thread {
 
 **Yeu cau tom tat:** Cấu trúc thư mục t5/ ├── FileThreadWriter.java   ← Thread ghi file
 
+**Cau hoi de bai:** Viet chuong trinh su dung da luong de ghi du lieu vao nhieu file; thread chinh tao nhieu worker, start va join de cho hoan tat.
+
 ### Danh sach file
 
 - FileThreadWriter.java
@@ -1796,6 +1859,8 @@ public class Main {
 **Tieu de bai tap:** T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)
 
 **Yeu cau tom tat:** Cấu trúc thư mục t5/ ├── FileThreadWriter.java   ← Thread ghi file
+
+**Cau hoi de bai:** Viet ung dung TCP client/server, client gui chuoi va server tra ve so ky tu cua chuoi do.
 
 ### Danh sach file
 
@@ -1936,6 +2001,8 @@ public class CountCharServer {
 **Tieu de bai tap:** T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)
 
 **Yeu cau tom tat:** Cấu trúc thư mục t5/ ├── FileThreadWriter.java   ← Thread ghi file
+
+**Cau hoi de bai:** Viet ung dung TCP client/server, client gui mot so nguyen va server tra ve ket qua chan hay le.
 
 ### Danh sach file
 
@@ -2082,6 +2149,8 @@ public class EvenOddServer {
 
 **Yeu cau tom tat:** Cấu trúc thư mục t5/ ├── FileThreadWriter.java   ← Thread ghi file
 
+**Cau hoi de bai:** Viet ung dung TCP client/server, client gui chuoi va server chuyen toan bo thanh chu thuong roi gui lai.
+
 ### Danh sach file
 
 - LowerCaseClient.java
@@ -2221,6 +2290,8 @@ public class LowerCaseServer {
 **Tieu de bai tap:** T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)
 
 **Yeu cau tom tat:** Cấu trúc thư mục t5/ ├── FileThreadWriter.java   ← Thread ghi file
+
+**Cau hoi de bai:** Viet ung dung TCP client/server, client gui day so (phan tach boi khoang trang) va server tinh tong cac so hop le.
 
 ### Danh sach file
 
@@ -2373,6 +2444,8 @@ public class SumNumbersServer {
 
 **Yeu cau tom tat:** Cấu trúc thư mục t5/ ├── FileThreadWriter.java   ← Thread ghi file
 
+**Cau hoi de bai:** Viet ung dung TCP client/server, client gui chuoi va server chuyen toan bo thanh chu hoa roi gui lai.
+
 ### Danh sach file
 
 - UpperCaseClient.java
@@ -2513,6 +2586,8 @@ public class UpperCaseServer {
 
 **Yeu cau tom tat:** Cấu trúc thư mục t5/ ├── FileThreadWriter.java   ← Thread ghi file
 
+**Cau hoi de bai:** Viet chuong trinh TCP gui-nhan co ban: client gui thong diep string, server nhan va phan hoi lai cho client.
+
 ### Danh sach file
 
 - TCPClient.java
@@ -2600,6 +2675,8 @@ public class TCPServer {
 **Tieu de bai tap:** T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)
 
 **Yeu cau tom tat:** Cấu trúc thư mục t5/ ├── FileThreadWriter.java   ← Thread ghi file
+
+**Cau hoi de bai:** Viet chuong trinh TCP su dung luong va stream du lieu dang byte/int; server in thong tin ket noi (IP/port) va echo du lieu ve client.
 
 ### Danh sach file
 
@@ -2747,6 +2824,8 @@ public class tcpServer extends Thread {
 
 **Yeu cau tom tat:** Cấu trúc thư mục t5/ ├── FileThreadWriter.java   ← Thread ghi file
 
+**Cau hoi de bai:** Viet TCP server da client: moi ket noi tao mot thread xu ly rieng; client cho phep gui nhieu dong text lien tuc den khi exit.
+
 ### Danh sach file
 
 - ClientHandlerMulti.java
@@ -2885,6 +2964,8 @@ public class TCPServerMulti {
 **Tieu de bai tap:** TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tcp-tuan5-gk/ ├── b1/   ← TCP: đọc số viết chữ (DataInputStream/DataOutputStream)
+
+**Cau hoi de bai:** Viet bai TCP: client gui ky tu so 0-9, server doi sang chu tieng Viet tuong ung va tra ve ket qua.
 
 ### Danh sach file
 
@@ -3068,6 +3149,8 @@ public class Server {
 
 **Yeu cau tom tat:** Cấu trúc thư mục tcp-tuan5-gk/ ├── b1/   ← TCP: đọc số viết chữ (DataInputStream/DataOutputStream)
 
+**Cau hoi de bai:** Viet bai TCP luu nhat ky client: server nhan nhieu dong tin nhan den khi gap "HET" va ghi vao file rieng clientX.txt.
+
 ### Danh sach file
 
 - Client.java
@@ -3212,6 +3295,8 @@ public class Server {
 **Tieu de bai tap:** TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tcp-tuan5-gk/ ├── b1/   ← TCP: đọc số viết chữ (DataInputStream/DataOutputStream)
+
+**Cau hoi de bai:** Viet bai TCP chat: server echo tin nhan, client co thread rieng de nhan du lieu song song voi viec nhap.
 
 ### Danh sach file
 
@@ -3378,6 +3463,8 @@ public class ClientHandler extends Thread {
 **Tieu de bai tap:** TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tcp-tuan5-gk/ ├── b1/   ← TCP: đọc số viết chữ (DataInputStream/DataOutputStream)
+
+**Cau hoi de bai:** Viet bai TCP chat nhu bai 2 nhung server cho phep nhan cong tu dong lenh (args).
 
 ### Danh sach file
 
@@ -3566,6 +3653,8 @@ public class ClientHandler extends Thread {
 
 **Yeu cau tom tat:** Cấu trúc thư mục tcp-tuan5-gk/ ├── b1/   ← TCP: đọc số viết chữ (DataInputStream/DataOutputStream)
 
+**Cau hoi de bai:** Viet bai TCP tra cuu ngay-gio: client gui lua chon (1 time, 2 date, 3 datetime), server tra du lieu tuong ung.
+
 ### Danh sach file
 
 - ClientHandler.java
@@ -3743,6 +3832,8 @@ public class DateTimeServer {
 
 **Yeu cau tom tat:** Cấu trúc thư mục tcp-tuan5-gk/ ├── b1/   ← TCP: đọc số viết chữ (DataInputStream/DataOutputStream)
 
+**Cau hoi de bai:** Viet bai UDP tra cuu ngay-gio tuong tu bai 4, su dung DatagramSocket/DatagramPacket de gui-nhan du lieu.
+
 ### Danh sach file
 
 - DateTimeService.java
@@ -3911,6 +4002,8 @@ public class DateTimeUDPServer {
 **Tieu de bai tap:** TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tcp-tuan5-gk/ ├── b1/   ← TCP: đọc số viết chữ (DataInputStream/DataOutputStream)
+
+**Cau hoi de bai:** Viet bai tinh toan chuoi so (co TCP va UDP): client gui choice va n, server tinh theo cong thuc quy dinh va tra ket qua.
 
 ### Danh sach file
 
@@ -4193,6 +4286,8 @@ public class UdpCalcServer {
 **Tieu de bai tap:** TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tcp-tuan5-gk/ ├── b1/   ← TCP: đọc số viết chữ (DataInputStream/DataOutputStream)
+
+**Cau hoi de bai:** Viet bai TCP gui file: client gui ten file + duong dan + kich thuoc + du lieu, server nhan va luu file roi phan hoi trang thai.
 
 ### Danh sach file
 
@@ -4501,6 +4596,8 @@ public class UdpFileServer {
 
 **Yeu cau tom tat:** Cấu trúc thư mục tcp-tuan5-gk/ ├── b1/   ← TCP: đọc số viết chữ (DataInputStream/DataOutputStream)
 
+**Cau hoi de bai:** Viet bai TCP may tinh don gian: client gui bieu thuc dang "OP so1 so2", server parse va tinh + - * /, xu ly ca loi.
+
 ### Danh sach file
 
 - Client.java
@@ -4677,6 +4774,8 @@ public class Server {
 
 **Yeu cau tom tat:** Cấu trúc thư mục tcp-tuan5-gk/ ├── b1/   ← TCP: đọc số viết chữ (DataInputStream/DataOutputStream)
 
+**Cau hoi de bai:** Viet bai TCP doc file tren server: client gui ten file, server doc noi dung file va gui tung dong cho client den khi ket thuc.
+
 ### Danh sach file
 
 - Client.java
@@ -4832,6 +4931,8 @@ public class Server {
 
 **Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
 
+**Cau hoi de bai:** Viet ung dung RMI dang tong hop, tao nhieu remote service (phep cong va xu ly chuoi), client goi ham tu xa va in ket qua.
+
 ### Danh sach file
 
 - rmiClient.java
@@ -4948,6 +5049,8 @@ public interface xulychuoi_intf extends Remote {
 
 **Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
 
+**Cau hoi de bai:** Viet chuong trinh phan giai ten mien: nhap domain va in ra hostname/IP bang InetAddress.
+
 ### Danh sach file
 
 - DomainInfo.java
@@ -4988,6 +5091,8 @@ public class DomainInfo {
 **Tieu de bai tap:** 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP
 
 **Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
+
+**Cau hoi de bai:** Viet chuong trinh kiem tra hostname co ton tai hay khong, neu co thi in danh sach dia chi IP.
 
 ### Danh sach file
 
@@ -5033,6 +5138,8 @@ public class HostnameCheck {
 **Tieu de bai tap:** 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP
 
 **Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
+
+**Cau hoi de bai:** Viet bai Producer-Consumer dung queue va wait/notify: producer nhap day so, consumer tinh tong den khi gap gia tri ket thuc -1.
 
 ### Danh sach file
 
@@ -5124,6 +5231,8 @@ public class BufferApp {
 **Tieu de bai tap:** 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP
 
 **Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
+
+**Cau hoi de bai:** Viet ung dung TCP tinh giai thua: client gui n, server tinh n! (kiem tra dau vao hop le) va tra ket qua.
 
 ### Danh sach file
 
@@ -5269,6 +5378,8 @@ public class Server {
 
 **Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
 
+**Cau hoi de bai:** Viet ung dung TCP xu ly chuoi: client gui chuoi, server tra ve chuoi viet hoa va so ky tu.
+
 ### Danh sach file
 
 - Client.java
@@ -5402,6 +5513,8 @@ public class Server {
 
 **Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
 
+**Cau hoi de bai:** Tong hop 6 bai RMI: hello world, cong 2 so, kiem tra nguyen to, quan ly danh ba, chat don gian, va quan ly tai khoan ngan hang.
+
 ### Danh sach file
 
 - bt7.txt
@@ -5516,6 +5629,8 @@ Client có thể gửi/rút tiền và kiểm tra số dư.
 
 **Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
 
+**Cau hoi de bai:** Viet bai RMI "Hello World": client goi ham sayHello() tren server va hien thi chuoi tra ve.
+
 ### Danh sach file
 
 - HelloService.java
@@ -5627,6 +5742,8 @@ public class RMIServer {
 
 **Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
 
+**Cau hoi de bai:** Viet bai RMI tinh tong 2 so nguyen: client nhap a,b, server thuc hien add(a,b) va tra ket qua.
+
 ### Danh sach file
 
 - AddClient.java
@@ -5735,6 +5852,8 @@ public class AddServiceImpl extends UnicastRemoteObject implements AddService {
 **Tieu de bai tap:** 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP
 
 **Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
+
+**Cau hoi de bai:** Viet bai RMI kiem tra so nguyen to: client gui n, server tra ve true/false va client hien thi ket luan.
 
 ### Danh sach file
 
@@ -5849,6 +5968,8 @@ public class RMIServer {
 **Tieu de bai tap:** 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP
 
 **Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
+
+**Cau hoi de bai:** Viet bai RMI quan ly danh ba: ho tro them/cap nhat, tim kiem, xoa lien he luu tren server (HashMap).
 
 ### Danh sach file
 
@@ -6013,6 +6134,8 @@ public class RMIServer {
 
 **Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
 
+**Cau hoi de bai:** Viet bai RMI chat don gian 1-1: client gui tin nhan, server xu ly va tra ve cau phan hoi phu hop.
+
 ### Danh sach file
 
 - ChatService.java
@@ -6139,6 +6262,8 @@ public class RMIServer {
 **Tieu de bai tap:** 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP
 
 **Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
+
+**Cau hoi de bai:** Viet bai RMI ngan hang: cung cap getBalance, deposit, withdraw co kiem tra hop le va dong bo du lieu.
 
 ### Danh sach file
 
@@ -6305,6 +6430,8 @@ public class RMIServer {
 
 **Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
 
+**Cau hoi de bai:** Tong hop 2 bai RMI nang cao: (1) tinh gia tri bieu thuc so hoc, (2) tra cuu thong tin ca nhan theo so ID.
+
 ### Danh sach file
 
 - kk.txt
@@ -6347,6 +6474,8 @@ client hoặc trả thông báo lỗi nếu không tìm thấy thông tin.
 **Tieu de bai tap:** 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP
 
 **Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
+
+**Cau hoi de bai:** Viet bai RMI tinh bieu thuc khong ngoac (vi du 12+34-56*78/4), dam bao uu tien * / truoc + -, tra loi ro rang khi loi dinh dang.
 
 ### Danh sach file
 
@@ -6563,6 +6692,8 @@ public class RMIServer {
 
 **Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
 
+**Cau hoi de bai:** Viet bai RMI tra cuu CMND/CCCD: client gui so giay to, server tim ho ten/que quan va tra thong bao loi neu khong tim thay.
+
 ### Danh sach file
 
 - IdentityService.java
@@ -6703,6 +6834,8 @@ public class RMIServer {
 **Tieu de bai tap:** HƯỚNG DẪN TỪ A - Z: QUẢN LÝ CỬA HÀNG VỚI JDBC & SQLITE
 
 **Yeu cau tom tat:** Tạo 3 file .java trong thư mục src với nội dung như sau:
+
+**Cau hoi de bai:** Viet ung dung JDBC voi SQLite de quan ly cua hang: ket noi CSDL, tao bang, them du lieu, truy van thong ke (SUM/AVG) va xu ly transaction.
 
 ### Danh sach file
 
