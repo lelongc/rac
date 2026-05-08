@@ -2,80 +2,159 @@
 
 Tong hop theo **nhom bai tap (thu muc)**. Moi bai gom nhieu file lien quan.
 
-## Muc luc toan bo bai tap (Co DE BAI chi tiet)
+## Đề bài đầy đủ theo file kk.md (đối chiếu với code thư mục để dò khi đi thi)
 
-| STT | Thu Muc | De Bai / Cau Hoi Chinh |
-|-----|---------|------------------------|
-| 1 | t2/tuan2 | Viet chuong trinh OOP quan ly nhan vien, gom lop cha NhanVien va 2 lop con NhanVienVanPhong, NhanVienSanXuat; cho phep nhap thong tin va tinh luong tung loai. |
-| 2 | t2/tuan2b | Viet chuong trinh OOP PhuongTien voi lop con XeMay va Oto; tinh thue va hien thi chi tiet tung phuong tien. |
-| 3 | t3/eg | Tao 4 chuong trinh nho demo Stream (InputStream, BufferedReader, PrintWriter): doc byte, read block, readLine, write. |
-| 4 | t3/tuan1 | Thuc hanh 5 bai: in Hello, nhap ten va chao, tong 2 so, kiem tra chan le, dung tren tren thang (1-12). |
-| 5 | t3/tuan2 | Viet chuong trinh OOP NhanVien voi BufferedReader/PrintWriter; tinh luong theo loai (van phong: co ban, san xuat: so san pham × gia). |
-| 6 | t3/tuan2b | Viet chuong trinh OOP PhuongTien voi BufferedReader/PrintWriter; tinh thue xe may (5%) va oto (10%). |
-| 7 | t4/tuan4/src | Tong hop 5 bai thread: thread co ban, ghi file, doc file, producer-consumer file, producer-consumer kho. |
-| 8 | t4/tuan4/src/bai1 | Tao class extends Thread, override run(), khoi tao 4 thread voi n=1000, moi thread in tung ten n lan song song. |
-| 9 | t4/tuan4/src/bai2 | Viet FileTWrite implements Runnable, tao 3 thread ghi 10 so random vao 3 file khac nhau. |
-| 10 | t4/tuan4/src/bai3 | Viet FileTReader implements Runnable, tao 3 thread doc 3 file co san (file11.txt, file22.txt, file33.txt) song song. |
-| 11 | t4/tuan4/src/bai4 | Viet producer-consumer voi file: FileWriterThread ghi, FileReaderThread doc, dung wait/notify de dong bo. |
-| 12 | t4/tuan4/src/bai5 | Viet producer-consumer voi kho hang: 2 producer nhap, 2 consumer xuat, kho la SharedResource voi wait/notify. |
-| 13+ | t5, t6, tuan7, tuan8, tuan9 | Xem chi tiet trong phan "Muc luc chi tiet theo bai tap" o duoi |
+### Tuần 1 - Java Basic (đề tổng quát)
 
-## Muc luc chi tiet theo bai tap (Tu A - Z)
+- In `Hello, World!`.
+- Nhập tên và in `Hi, I am <tên>`.
+- Nhập 2 số nguyên và in tổng.
+- Kiểm tra chẵn/lẻ.
+- Nhập tháng (1-12), in tên tháng tiếng Anh.
+- OOP mở rộng: bài quản lý động vật.
+- File/Folder: xóa, tìm, copy, đọc/ghi file (kể cả nhị phân, ảnh).
 
-- [Bai tap 1: t2/tuan2 - T2 – OOP (Lập Trình Hướng Đối Tượng)](#bai-tap-001)
-- [Bai tap 2: t2/tuan2b - T2 – OOP (Lập Trình Hướng Đối Tượng)](#bai-tap-002)
-- [Bai tap 3: t3/eg - T3 – Stream (InputStream, BufferedReader, PrintWriter) + OOP](#bai-tap-003)
-- [Bai tap 4: t3/tuan1 - T3 – Stream (InputStream, BufferedReader, PrintWriter) + OOP](#bai-tap-004)
-- [Bai tap 5: t3/tuan2 - T3 – Stream (InputStream, BufferedReader, PrintWriter) + OOP](#bai-tap-005)
-- [Bai tap 6: t3/tuan2b - T3 – Stream (InputStream, BufferedReader, PrintWriter) + OOP](#bai-tap-006)
-- [Bai tap 7: t4/tuan4/src - TUAN4 – Thread (5 bài tăng dần độ khó)](#bai-tap-007)
-- [Bai tap 8: t4/tuan4/src/bai1 - TUAN4 – Thread (5 bài tăng dần độ khó)](#bai-tap-008)
-- [Bai tap 9: t4/tuan4/src/bai2 - TUAN4 – Thread (5 bài tăng dần độ khó)](#bai-tap-009)
-- [Bai tap 10: t4/tuan4/src/bai3 - TUAN4 – Thread (5 bài tăng dần độ khó)](#bai-tap-010)
-- [Bai tap 11: t4/tuan4/src/bai4 - TUAN4 – Thread (5 bài tăng dần độ khó)](#bai-tap-011)
-- [Bai tap 12: t4/tuan4/src/bai5 - TUAN4 – Thread (5 bài tăng dần độ khó)](#bai-tap-012)
-- [Bai tap 13: t5 - T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)](#bai-tap-013)
-- [Bai tap 14: t5/t5-2/cac-bai-co-ban/countchar - T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)](#bai-tap-014)
-- [Bai tap 15: t5/t5-2/cac-bai-co-ban/evenodd - T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)](#bai-tap-015)
-- [Bai tap 16: t5/t5-2/cac-bai-co-ban/lowercase - T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)](#bai-tap-016)
-- [Bai tap 17: t5/t5-2/cac-bai-co-ban/sumnumbers - T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)](#bai-tap-017)
-- [Bai tap 18: t5/t5-2/cac-bai-co-ban/uppercase - T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)](#bai-tap-018)
-- [Bai tap 19: t5/t5-2/gui-nhan - T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)](#bai-tap-019)
-- [Bai tap 20: t5/t5-2/gui-nhan-luong - T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)](#bai-tap-020)
-- [Bai tap 21: t5/t5-2/nhieuServer-guitext - T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)](#bai-tap-021)
-- [Bai tap 22: t5/tcp-tuan5-gk/b1 - TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)](#bai-tap-022)
-- [Bai tap 23: t5/tcp-tuan5-gk/b10 - TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)](#bai-tap-023)
-- [Bai tap 24: t5/tcp-tuan5-gk/b2 - TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)](#bai-tap-024)
-- [Bai tap 25: t5/tcp-tuan5-gk/b3 - TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)](#bai-tap-025)
-- [Bai tap 26: t5/tcp-tuan5-gk/b4 - TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)](#bai-tap-026)
-- [Bai tap 27: t5/tcp-tuan5-gk/b5 - TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)](#bai-tap-027)
-- [Bai tap 28: t5/tcp-tuan5-gk/b6 - TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)](#bai-tap-028)
-- [Bai tap 29: t5/tcp-tuan5-gk/b7 - TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)](#bai-tap-029)
-- [Bai tap 30: t5/tcp-tuan5-gk/b8 - TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)](#bai-tap-030)
-- [Bai tap 31: t5/tcp-tuan5-gk/b9 - TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)](#bai-tap-031)
-- [Bai tap 32: t6-lt - 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP](#bai-tap-032)
-- [Bai tap 33: t6/bai1 - 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP](#bai-tap-033)
-- [Bai tap 34: t6/bai2 - 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP](#bai-tap-034)
-- [Bai tap 35: t6/bai3 - 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP](#bai-tap-035)
-- [Bai tap 36: t6/bai4 - 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP](#bai-tap-036)
-- [Bai tap 37: t6/bai5 - 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP](#bai-tap-037)
-- [Bai tap 38: tuan7 - 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP](#bai-tap-038)
-- [Bai tap 39: tuan7/bai1 - 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP](#bai-tap-039)
-- [Bai tap 40: tuan7/bai2 - 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP](#bai-tap-040)
-- [Bai tap 41: tuan7/bai3 - 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP](#bai-tap-041)
-- [Bai tap 42: tuan7/bai4 - 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP](#bai-tap-042)
-- [Bai tap 43: tuan7/bai5 - 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP](#bai-tap-043)
-- [Bai tap 44: tuan7/bai6 - 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP](#bai-tap-044)
-- [Bai tap 45: tuan8 - 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP](#bai-tap-045)
-- [Bai tap 46: tuan8/bai1 - 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP](#bai-tap-046)
-- [Bai tap 47: tuan8/bai2 - 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP](#bai-tap-047)
-- [Bai tap 48: tuan9 - HƯỚNG DẪN TỪ A - Z: QUẢN LÝ CỬA HÀNG VỚI JDBC & SQLITE](#bai-tap-048)
+### Tuần 2 - OOP (kế thừa, đa hình)
 
-<a id='bai-tap-001'></a>
+- Bài 1: Quản lý **NhanVien** (`NhanVien`, `NhanVienVanPhong`, `NhanVienSanXuat`), nhập/xuất và tính lương.
+- Bài 2: Quản lý **PhuongTien** (`PhuongTien`, `XeMay`, `Oto`), tính thuế theo loại.
 
-## Bai tap 1 - t2/tuan2
+### Tuần 3 - Stream (InputStream, BufferedReader, PrintWriter)
 
-**Tieu de bai tap:** T2 – OOP (Lập Trình Hướng Đối Tượng)
+- Hoàn chỉnh 4 ví dụ `InStream1`, `InStream2`, `ReadLine`, `PrintString`.
+- Áp dụng Stream cho các bài tuần 1-2 (nhập/xuất theo luồng).
+
+### Tuần 4 - Threads
+
+- Bài 1: Thread cơ bản.
+- Bài 2: `FileTWrite` ghi file bằng nhiều thread.
+- Bài 3: `FileTReader` đọc file bằng nhiều thread.
+- Bài 4: Đọc/ghi cùng file có đồng bộ hóa.
+- Bài 5: Producer-Consumer với `wait/notify`.
+
+### Tuần 5 - Socket TCP/UDP
+
+- Bài 1: Đổi số 0-9 sang chữ tiếng Việt (TCP).
+- Bài 2-3: Chat TCP (bản cơ bản và mở rộng args IP/port).
+- Bài 4-5: Date/Time với TCP rồi UDP.
+- Bài 6: Bài toán tính toán trên server (TCP/UDP).
+- Bài 7: Gửi file (TCP/UDP).
+- Bài 8: Tính toán theo khung `OP Operand1 Operand2`.
+- Bài 9: Nhiều client đọc `data.txt`.
+- Bài 10: Lưu tin nhắn từng client vào file riêng.
+
+### Tuần 6 - URL + Threads + TCP
+
+- Bài 1: Nhận domain, in hostname/IP.
+- Bài 2: Kiểm tra hostname tồn tại và liệt kê toàn bộ IP.
+- Bài 3: 2 thread + buffer số nguyên, tính tổng, dừng khi nhập `-1`.
+- Bài 4: TCP tính giai thừa.
+- Bài 5: TCP xử lý chuỗi (in hoa + đếm ký tự).
+
+### Tuần 7 - LAB 06 RMI
+
+- Bài 1: `sayHello()`.
+- Bài 2: `add(a,b)`.
+- Bài 3: `isPrime(n)`.
+- Bài 4: Danh bạ từ xa (add/find/delete).
+- Bài 5: Chat đơn giản.
+- Bài 6: Tài khoản ngân hàng (balance/deposit/withdraw).
+- Bài 7: Tính diện tích hình học.
+- Bài 8: Đặt vé máy bay.
+- Bài 9: Đấu giá trực tuyến.
+
+### Tuần 8 - RMI mở rộng (đối chiếu `tuan8/kk.txt`)
+
+- Bài 1: Client gửi chuỗi biểu thức không ngoặc (`+ - * /`), server tính và trả kết quả hoặc báo lỗi định dạng.
+- Bài 2: Client gửi CMND/CCCD, server tra cứu họ tên/quê quán và trả kết quả hoặc báo không tìm thấy.
+
+### Tuần 9 - JDBC + SQLite (đối chiếu `tuan9`)
+
+- Thiết lập SQLite JDBC, tạo kết nối DB.
+- Tạo bảng `SanPham`, `NhanVien`.
+- CRUD sản phẩm (`insert`, `update`, `delete`) bằng `PreparedStatement`.
+- Dùng transaction (`setAutoCommit(false)`, `commit`, `rollback`).
+- Truy vấn thống kê lương nhân viên (`SUM`, `AVG`, `MAX`, `MIN`).
+
+## 📑 Mục lục mới (chuẩn theo tuần -> bài -> thư mục code)
+
+### TUẦN 2 - OOP
+
+- [Bài tập 1 - TUẦN 2 - `t2/tuan2`](#bai-tap-001)
+- [Bài tập 2 - TUẦN 2 - `t2/tuan2b`](#bai-tap-002)
+
+### TUẦN 3 - Stream + OOP
+
+- [Bài tập 3 - TUẦN 3 - `t3/eg`](#bai-tap-003)
+- [Bài tập 4 - TUẦN 3 - `t3/tuan1`](#bai-tap-004)
+- [Bài tập 5 - TUẦN 3 - `t3/tuan2`](#bai-tap-005)
+- [Bài tập 6 - TUẦN 3 - `t3/tuan2b`](#bai-tap-006)
+
+### TUẦN 4 - Threads
+
+- [Bài tập 7 - TUẦN 4 - `t4/tuan4/src`](#bai-tap-007)
+- [Bài tập 8 - TUẦN 4 - `t4/tuan4/src/bai1`](#bai-tap-008)
+- [Bài tập 9 - TUẦN 4 - `t4/tuan4/src/bai2`](#bai-tap-009)
+- [Bài tập 10 - TUẦN 4 - `t4/tuan4/src/bai3`](#bai-tap-010)
+- [Bài tập 11 - TUẦN 4 - `t4/tuan4/src/bai4`](#bai-tap-011)
+- [Bài tập 12 - TUẦN 4 - `t4/tuan4/src/bai5`](#bai-tap-012)
+
+### TUẦN 5 - TCP/UDP + Socket
+
+- [Bài tập 13 - TUẦN 5 - `t5`](#bai-tap-013)
+- [Bài tập 14 - TUẦN 5 - `t5/t5-2/cac-bai-co-ban/countchar`](#bai-tap-014)
+- [Bài tập 15 - TUẦN 5 - `t5/t5-2/cac-bai-co-ban/evenodd`](#bai-tap-015)
+- [Bài tập 16 - TUẦN 5 - `t5/t5-2/cac-bai-co-ban/lowercase`](#bai-tap-016)
+- [Bài tập 17 - TUẦN 5 - `t5/t5-2/cac-bai-co-ban/sumnumbers`](#bai-tap-017)
+- [Bài tập 18 - TUẦN 5 - `t5/t5-2/cac-bai-co-ban/uppercase`](#bai-tap-018)
+- [Bài tập 19 - TUẦN 5 - `t5/t5-2/gui-nhan`](#bai-tap-019)
+- [Bài tập 20 - TUẦN 5 - `t5/t5-2/gui-nhan-luong`](#bai-tap-020)
+- [Bài tập 21 - TUẦN 5 - `t5/t5-2/nhieuServer-guitext`](#bai-tap-021)
+- [Bài tập 22 - TUẦN 5 - `t5/tcp-tuan5-gk/b1`](#bai-tap-022)
+- [Bài tập 23 - TUẦN 5 - `t5/tcp-tuan5-gk/b10`](#bai-tap-023)
+- [Bài tập 24 - TUẦN 5 - `t5/tcp-tuan5-gk/b2`](#bai-tap-024)
+- [Bài tập 25 - TUẦN 5 - `t5/tcp-tuan5-gk/b3`](#bai-tap-025)
+- [Bài tập 26 - TUẦN 5 - `t5/tcp-tuan5-gk/b4`](#bai-tap-026)
+- [Bài tập 27 - TUẦN 5 - `t5/tcp-tuan5-gk/b5`](#bai-tap-027)
+- [Bài tập 28 - TUẦN 5 - `t5/tcp-tuan5-gk/b6`](#bai-tap-028)
+- [Bài tập 29 - TUẦN 5 - `t5/tcp-tuan5-gk/b7`](#bai-tap-029)
+- [Bài tập 30 - TUẦN 5 - `t5/tcp-tuan5-gk/b8`](#bai-tap-030)
+- [Bài tập 31 - TUẦN 5 - `t5/tcp-tuan5-gk/b9`](#bai-tap-031)
+
+### TUẦN 6 - URL/Domain + Thread + TCP
+
+- [Bài tập 32 - TUẦN 6 - `t6-lt`](#bai-tap-032)
+- [Bài tập 33 - TUẦN 6 - `t6/bai1`](#bai-tap-033)
+- [Bài tập 34 - TUẦN 6 - `t6/bai2`](#bai-tap-034)
+- [Bài tập 35 - TUẦN 6 - `t6/bai3`](#bai-tap-035)
+- [Bài tập 36 - TUẦN 6 - `t6/bai4`](#bai-tap-036)
+- [Bài tập 37 - TUẦN 6 - `t6/bai5`](#bai-tap-037)
+
+### TUẦN 7 - RMI
+
+- [Bài tập 38 - TUẦN 7 - `tuan7`](#bai-tap-038)
+- [Bài tập 39 - TUẦN 7 - `tuan7/bai1`](#bai-tap-039)
+- [Bài tập 40 - TUẦN 7 - `tuan7/bai2`](#bai-tap-040)
+- [Bài tập 41 - TUẦN 7 - `tuan7/bai3`](#bai-tap-041)
+- [Bài tập 42 - TUẦN 7 - `tuan7/bai4`](#bai-tap-042)
+- [Bài tập 43 - TUẦN 7 - `tuan7/bai5`](#bai-tap-043)
+- [Bài tập 44 - TUẦN 7 - `tuan7/bai6`](#bai-tap-044)
+
+### TUẦN 8 - RMI mở rộng
+
+- [Bài tập 45 - TUẦN 8 - `tuan8`](#bai-tap-045)
+- [Bài tập 46 - TUẦN 8 - `tuan8/bai1`](#bai-tap-046)
+- [Bài tập 47 - TUẦN 8 - `tuan8/bai2`](#bai-tap-047)
+
+### TUẦN 9 - JDBC/SQLite
+
+- [Bài tập 48 - TUẦN 9 - `tuan9`](#bai-tap-048)
+
+`<a id='bai-tap-001'></a>`
+
+## Bài tập 1 - TUẦN 2 - `t2/tuan2`
+
+**Tiêu đề bài tập:** T2 – OOP (Lập Trình Hướng Đối Tượng)
 
 **Yeu cau tom tat:** Cấu trúc thư mục t2/ ├── tuan2/     ← OOP + Scanner (nhập từng dòng đơn giản)
 
@@ -84,6 +163,7 @@ Tong hop theo **nhom bai tap (thu muc)**. Moi bai gom nhieu file lien quan.
 **Vấn đề**: Quản lý nhân viên với các loại khác nhau (văn phòng, sản xuất), mỗi loại có cách tính lương riêng.
 
 **Yêu cầu chi tiết**:
+
 - Tạo lớp cha **NhanVien** với thuộc tính: maNV (String), hoTen (String), các phương thức nhập/hiển thị
 - Tạo lớp con **NhanVienVanPhong** với luongCoBan (double) → lương = luongCoBan
 - Tạo lớp con **NhanVienSanXuat** với soSanPham (int), donGia (double) → lương = soSanPham × donGia
@@ -106,19 +186,19 @@ package tuan2;
 
 public class Main {
     public static void main(String[] args) {
-       
+   
         NhanVienVanPhong nv1 = new NhanVienVanPhong();
         System.out.println("nhap nhan vien van phong");
         nv1.nhapThongTinVP();
-        
-      
+    
+  
         NhanVienSanXuat nv2 = new NhanVienSanXuat();
         System.out.println("\nnhap nhan vien san xuat");
         nv2.nhapThongTinSX();
 
-       
+   
         System.out.println("\ndanh sach nhan vien");
-        
+    
         nv1.hienThiThongTin(); 
         System.out.println(" | luong: " + nv1.tinhLuong());
 
@@ -141,7 +221,7 @@ public class NhanVien {
     String maNV;
     String hoTen;
 
-    
+  
     public void nhapThongTin() {
         Scanner sc = new Scanner(System.in);
         System.out.print("nhap ma nv: ");
@@ -210,11 +290,11 @@ public class NhanVienVanPhong extends NhanVien {
 }
 ```
 
-<a id='bai-tap-002'></a>
+`<a id='bai-tap-002'></a>`
 
-## Bai tap 2 - t2/tuan2b
+## Bài tập 2 - TUẦN 2 - `t2/tuan2b`
 
-**Tieu de bai tap:** T2 – OOP (Lập Trình Hướng Đối Tượng)
+**Tiêu đề bài tập:** T2 – OOP (Lập Trình Hướng Đối Tượng)
 
 **Yeu cau tom tat:** Cấu trúc thư mục t2/ ├── tuan2/     ← OOP + Scanner (nhập từng dòng đơn giản)
 
@@ -223,6 +303,7 @@ public class NhanVienVanPhong extends NhanVien {
 **Vấn đề**: Quản lý các loại phương tiện khác nhau (xe máy, ô tô) với cách tính thuế khác nhau dựa trên giá bán.
 
 **Yêu cầu chi tiết**:
+
 - Tạo lớp cha **PhuongTien** với: hangSanXuat, namSanXuat, giaBan
 - Tạo lớp con **XeMay**: thuế = giaBan × 5%
 - Tạo lớp con **Oto**: thuế = giaBan × 10%
@@ -246,7 +327,7 @@ package tuan2b;
 
 public class Main {
     public static void main(String[] args) {
-       
+   
         XeMay xm = new XeMay("Honda", 2026, 40000000, 125);
         System.out.println("thong tin xe may");
         xm.hienThiThongTin();
@@ -254,7 +335,7 @@ public class Main {
 
         System.out.println("\n------------------------\n");
 
-        
+    
         Oto ot = new Oto("Toyota", 2028, 800000000, 5);
         System.out.println("thong tin oto");
         ot.hienThiThongTin();
@@ -329,18 +410,18 @@ public class XeMay extends PhuongTien {
     }
 
     public double tinhThue() {
-        
+    
         return giaBan * 0.05;
     }
 }
 
 ```
 
-<a id='bai-tap-003'></a>
+`<a id='bai-tap-003'></a>`
 
-## Bai tap 3 - t3/eg
+## Bài tập 3 - TUẦN 3 - `t3/eg`
 
-**Tieu de bai tap:** T3 – Stream (InputStream, BufferedReader, PrintWriter) + OOP
+**Tiêu đề bài tập:** T3 – Stream (InputStream, BufferedReader, PrintWriter) + OOP
 
 **Yeu cau tom tat:** | File | Nội dung | Chạy |
 
@@ -365,15 +446,15 @@ import java.io.InputStream;
 
 public class ex1 {
     public static void main(String args[]) {
-        InputStream is = System.in;                            
+        InputStream is = System.in;                        
         System.out.println("nhap cac ki tu ( 'q' de thoat):");
-        
+    
         while(true) {
             try {
                 int ch = is.read();
                 if(ch == -1 || ch == 'q') break;
 
-     
+   
                 if (ch >= 32) { 
                     System.out.println("Ký tự vừa nhập: " + (char)ch);
                 }
@@ -402,16 +483,16 @@ public class ex2 {
 
         while (true) {
             try {
-                int num = is.available();        
+                int num = is.available();    
                 if (num > 0) {
                     byte[] b = new byte[num];
-                    int result = is.read(b);                          
+                    int result = is.read(b);                      
                     if (result == -1) break;
-                    
+                
                     String s = new String(b); 
                     System.out.print("ban da nhap: " + s);
                 } else {
-                    
+                
                     Thread.sleep(500); 
                     System.out.print(".");
                 }
@@ -436,26 +517,26 @@ import java.io.InputStreamReader;
 
 public class ex3 {
     public static void main(String[] args) {
-        
+    
         InputStreamReader isr = new InputStreamReader(System.in);
         BufferedReader br = new BufferedReader(isr);
-        
+    
 
         System.out.println("--- Chuong trinh doc van ban (BufferedReader) ---");
         System.out.println("Nhap noi dung (Go 'exit' hoac 'quit' de dung):");
 
         while (true) {
             try {
-                
+            
                 String line = br.readLine();
 
-               
+           
                 if (line == null || line.equalsIgnoreCase("exit") || line.equalsIgnoreCase("quit")) {
                     System.out.println("Dang thoat...");
                     break;
                 }
 
-              
+          
                 System.out.println("Ket qua: " + line);
 
             } catch (IOException ie) {
@@ -464,14 +545,14 @@ public class ex3 {
             }
         }
 
-      
+  
         try {
             br.close();
             isr.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+    
         System.out.println("Chuong trinh ket thuc.");
     }
 }
@@ -490,31 +571,31 @@ import java.io.PrintWriter;
 public class ex4 {
     public static void main(String[] args) {
         OutputStream os = System.out;
-        
-        
+    
+    
         PrintWriter pw = new PrintWriter(os, true);
 
         pw.write("This is a string using write() \r\n");
 
         pw.println("This is a line using println()");
 
-        
+    
         pw.write("Bye! Bye! (No newline here)");
 
-        
+    
         pw.flush();
 
-                                      
+                                  
         pw.close();
     }
 }
 ```
 
-<a id='bai-tap-004'></a>
+`<a id='bai-tap-004'></a>`
 
-## Bai tap 4 - t3/tuan1
+## Bài tập 4 - TUẦN 3 - `t3/tuan1`
 
-**Tieu de bai tap:** T3 – Stream (InputStream, BufferedReader, PrintWriter) + OOP
+**Tiêu đề bài tập:** T3 – Stream (InputStream, BufferedReader, PrintWriter) + OOP
 
 **Yeu cau tom tat:** | File | Nội dung | Chạy |
 
@@ -539,22 +620,22 @@ import java.io.*;
 
 public class ex1 {
     public static void main(String[] args) {
-       
+   
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         PrintWriter pw = new PrintWriter(System.out, true);
 
         try {
-           
+       
             pw.println("--- Bai 1 ---");
             pw.println("Hello, World!");
 
-          
+      
             pw.println("\n--- Bai 2 ---");
             pw.print("Nhap ten cua ban: "); pw.flush();
             String name = br.readLine();
             pw.println("Hi, I am " + name);
 
-         
+     
             pw.println("\n--- Bai 3 ---");
             pw.print("Nhap so A: "); pw.flush();
             double a = Double.parseDouble(br.readLine());
@@ -562,7 +643,7 @@ public class ex1 {
             double b = Double.parseDouble(br.readLine());
             pw.println("Tong A + B = " + (a + b));
 
-          
+      
             pw.println("\n--- Bai 4 ---");
             pw.print("Nhap mot so nguyen: "); pw.flush();
             int n = Integer.parseInt(br.readLine());
@@ -572,7 +653,7 @@ public class ex1 {
                 pw.println(n + " la so le");
             }
 
-            
+        
             pw.println("\n--- Bai 5 ---");
             pw.print("Nhap mot thang (1-12): "); pw.flush();
             int month = Integer.parseInt(br.readLine());
@@ -723,11 +804,11 @@ public class ex5 {
 }
 ```
 
-<a id='bai-tap-005'></a>
+`<a id='bai-tap-005'></a>`
 
-## Bai tap 5 - t3/tuan2
+## Bài tập 5 - TUẦN 3 - `t3/tuan2`
 
-**Tieu de bai tap:** T3 – Stream (InputStream, BufferedReader, PrintWriter) + OOP
+**Tiêu đề bài tập:** T3 – Stream (InputStream, BufferedReader, PrintWriter) + OOP
 
 **Yeu cau tom tat:** | File | Nội dung | Chạy |
 
@@ -751,10 +832,10 @@ import java.io.*;
 
 public class Main {
     public static void main(String[] args) {
-                     
+                 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        
-        
+    
+    
         PrintWriter pw = new PrintWriter(System.out, true);
 
         try {
@@ -776,7 +857,7 @@ public class Main {
         } catch (NumberFormatException e) {
             pw.println("Loi dinh dang so: Vui long nhap dung con so!");
         } finally {
-            
+        
             pw.close();
         }
     }
@@ -850,7 +931,7 @@ public class NhanVienSanXuat extends NhanVien {
 ```java
 package tuan2;
 
-           
+       
  
 import java.io.*;
 
@@ -874,11 +955,11 @@ public class NhanVienVanPhong extends NhanVien {
 }
 ```
 
-<a id='bai-tap-006'></a>
+`<a id='bai-tap-006'></a>`
 
-## Bai tap 6 - t3/tuan2b
+## Bài tập 6 - TUẦN 3 - `t3/tuan2b`
 
-**Tieu de bai tap:** T3 – Stream (InputStream, BufferedReader, PrintWriter) + OOP
+**Tiêu đề bài tập:** T3 – Stream (InputStream, BufferedReader, PrintWriter) + OOP
 
 **Yeu cau tom tat:** | File | Nội dung | Chạy |
 
@@ -902,24 +983,24 @@ import java.io.*;
 
 public class Main {
     public static void main(String[] args) {
-        
+    
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        
-        
+    
+    
         PrintWriter pw = new PrintWriter(System.out, true);
 
         try {
-          
+      
             pw.println("NHAP DU LIEU XE MAY:");
             XeMay xm = new XeMay();
             xm.nhapXeMay(br, pw);
 
-          
+      
             pw.println("\nNHAP DU LIEU O TO:");
             Oto ot = new Oto();
             ot.nhapOto(br, pw);
 
-         
+     
             pw.println("\nKET QUA QUAN LY");
             xm.hienThiThongTin(pw);
             pw.println(" ");
@@ -930,7 +1011,7 @@ public class Main {
         } catch (NumberFormatException e) {
             pw.println("Loi sai dinh dang so!");
         } finally {
-           
+       
             pw.flush();
         }
     }
@@ -990,10 +1071,10 @@ public class PhuongTien {
     public void nhapThongTin(BufferedReader br, PrintWriter pw) throws IOException {
         pw.print("Nhap hang san xuat: "); pw.flush();
         hangSanXuat = br.readLine();
-        
+    
         pw.print("Nhap nam san xuat: "); pw.flush();
         namSanXuat = Integer.parseInt(br.readLine());
-        
+    
         pw.print("Nhap gia ban: "); pw.flush();
         giaBan = Double.parseDouble(br.readLine());
     }
@@ -1038,11 +1119,11 @@ public class XeMay extends PhuongTien {
 }
 ```
 
-<a id='bai-tap-007'></a>
+`<a id='bai-tap-007'></a>`
 
-## Bai tap 7 - t4/tuan4/src
+## Bài tập 7 - TUẦN 4 - `t4/tuan4/src`
 
-**Tieu de bai tap:** TUAN4 – Thread (5 bài tăng dần độ khó)
+**Tiêu đề bài tập:** TUẦN 4 – Thread (5 bài tăng dần độ khó)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tuan4/ ├── bai1/   ← Thread cơ bản: extends Thread
 
@@ -1067,11 +1148,11 @@ module tuan4 {
 }
 ```
 
-<a id='bai-tap-008'></a>
+`<a id='bai-tap-008'></a>`
 
-## Bai tap 8 - t4/tuan4/src/bai1
+## Bài tập 8 - TUẦN 4 - `t4/tuan4/src/bai1`
 
-**Tieu de bai tap:** TUAN4 – Thread (5 bài tăng dần độ khó)
+**Tiêu đề bài tập:** TUẦN 4 – Thread (5 bài tăng dần độ khó)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tuan4/ ├── bai1/   ← Thread cơ bản: extends Thread
 
@@ -1141,11 +1222,11 @@ public class ThreadSimple extends Thread {
 }
 ```
 
-<a id='bai-tap-009'></a>
+`<a id='bai-tap-009'></a>`
 
-## Bai tap 9 - t4/tuan4/src/bai2
+## Bài tập 9 - TUẦN 4 - `t4/tuan4/src/bai2`
 
-**Tieu de bai tap:** TUAN4 – Thread (5 bài tăng dần độ khó)
+**Tiêu đề bài tập:** TUẦN 4 – Thread (5 bài tăng dần độ khó)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tuan4/ ├── bai1/   ← Thread cơ bản: extends Thread
 
@@ -1281,11 +1362,11 @@ public class TestPath {
 
 ```
 
-<a id='bai-tap-010'></a>
+`<a id='bai-tap-010'></a>`
 
-## Bai tap 10 - t4/tuan4/src/bai3
+## Bài tập 10 - TUẦN 4 - `t4/tuan4/src/bai3`
 
-**Tieu de bai tap:** TUAN4 – Thread (5 bài tăng dần độ khó)
+**Tiêu đề bài tập:** TUẦN 4 – Thread (5 bài tăng dần độ khó)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tuan4/ ├── bai1/   ← Thread cơ bản: extends Thread
 
@@ -1446,11 +1527,11 @@ public class Main {
 }
 ```
 
-<a id='bai-tap-011'></a>
+`<a id='bai-tap-011'></a>`
 
-## Bai tap 11 - t4/tuan4/src/bai4
+## Bài tập 11 - TUẦN 4 - `t4/tuan4/src/bai4`
 
-**Tieu de bai tap:** TUAN4 – Thread (5 bài tăng dần độ khó)
+**Tiêu đề bài tập:** TUẦN 4 – Thread (5 bài tăng dần độ khó)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tuan4/ ├── bai1/   ← Thread cơ bản: extends Thread
 
@@ -1631,11 +1712,11 @@ dong so 10: 20
 
 ```
 
-<a id='bai-tap-012'></a>
+`<a id='bai-tap-012'></a>`
 
-## Bai tap 12 - t4/tuan4/src/bai5
+## Bài tập 12 - TUẦN 4 - `t4/tuan4/src/bai5`
 
-**Tieu de bai tap:** TUAN4 – Thread (5 bài tăng dần độ khó)
+**Tiêu đề bài tập:** TUẦN 4 – Thread (5 bài tăng dần độ khó)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tuan4/ ├── bai1/   ← Thread cơ bản: extends Thread
 
@@ -1779,11 +1860,11 @@ public class NguoiTieuDung extends Thread {
 }
 ```
 
-<a id='bai-tap-013'></a>
+`<a id='bai-tap-013'></a>`
 
-## Bai tap 13 - t5
+## Bài tập 13 - TUẦN 5 - `t5`
 
-**Tieu de bai tap:** T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)
+**Tiêu đề bài tập:** T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)
 
 **Yeu cau tom tat:** Cấu trúc thư mục t5/ ├── FileThreadWriter.java   ← Thread ghi file
 
@@ -1838,7 +1919,7 @@ import java.net.URISyntaxException;
 public class Main {
       public static void main(String[] args) throws InterruptedException, URISyntaxException {
             String outputDir = new java.io.File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath();
-            
+        
             FileThreadWriter[] t = new FileThreadWriter[3];
             for (int i = 0; i < 3; i++) {
                   String filePath = outputDir + java.io.File.separator + "file" + (i + 1) + ".txt";
@@ -1852,11 +1933,11 @@ public class Main {
 }
 ```
 
-<a id='bai-tap-014'></a>
+`<a id='bai-tap-014'></a>`
 
-## Bai tap 14 - t5/t5-2/cac-bai-co-ban/countchar
+## Bài tập 14 - TUẦN 5 - `t5/t5-2/cac-bai-co-ban/countchar`
 
-**Tieu de bai tap:** T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)
+**Tiêu đề bài tập:** T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)
 
 **Yeu cau tom tat:** Cấu trúc thư mục t5/ ├── FileThreadWriter.java   ← Thread ghi file
 
@@ -1985,7 +2066,7 @@ public class CountCharServer {
                   Socket socket = serverSocket.accept();
                   clientCount++;
                   System.out.println("Client #" + clientCount + " kết nối!");
-                  
+              
                   CountCharHandler handler = new CountCharHandler(socket, clientCount);
                   handler.start();
             }
@@ -1994,11 +2075,11 @@ public class CountCharServer {
 
 ```
 
-<a id='bai-tap-015'></a>
+`<a id='bai-tap-015'></a>`
 
-## Bai tap 15 - t5/t5-2/cac-bai-co-ban/evenodd
+## Bài tập 15 - TUẦN 5 - `t5/t5-2/cac-bai-co-ban/evenodd`
 
-**Tieu de bai tap:** T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)
+**Tiêu đề bài tập:** T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)
 
 **Yeu cau tom tat:** Cấu trúc thư mục t5/ ├── FileThreadWriter.java   ← Thread ghi file
 
@@ -2132,7 +2213,7 @@ public class EvenOddServer {
                   Socket socket = serverSocket.accept();
                   clientCount++;
                   System.out.println("Client #" + clientCount + " kết nối!");
-                  
+              
                   EvenOddHandler handler = new EvenOddHandler(socket, clientCount);
                   handler.start();
             }
@@ -2141,11 +2222,11 @@ public class EvenOddServer {
 
 ```
 
-<a id='bai-tap-016'></a>
+`<a id='bai-tap-016'></a>`
 
-## Bai tap 16 - t5/t5-2/cac-bai-co-ban/lowercase
+## Bài tập 16 - TUẦN 5 - `t5/t5-2/cac-bai-co-ban/lowercase`
 
-**Tieu de bai tap:** T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)
+**Tiêu đề bài tập:** T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)
 
 **Yeu cau tom tat:** Cấu trúc thư mục t5/ ├── FileThreadWriter.java   ← Thread ghi file
 
@@ -2274,7 +2355,7 @@ public class LowerCaseServer {
                   Socket socket = serverSocket.accept();
                   clientCount++;
                   System.out.println("Client #" + clientCount + " kết nối!");
-                  
+              
                   LowerCaseHandler handler = new LowerCaseHandler(socket, clientCount);
                   handler.start();
             }
@@ -2283,11 +2364,11 @@ public class LowerCaseServer {
 
 ```
 
-<a id='bai-tap-017'></a>
+`<a id='bai-tap-017'></a>`
 
-## Bai tap 17 - t5/t5-2/cac-bai-co-ban/sumnumbers
+## Bài tập 17 - TUẦN 5 - `t5/t5-2/cac-bai-co-ban/sumnumbers`
 
-**Tieu de bai tap:** T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)
+**Tiêu đề bài tập:** T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)
 
 **Yeu cau tom tat:** Cấu trúc thư mục t5/ ├── FileThreadWriter.java   ← Thread ghi file
 
@@ -2427,7 +2508,7 @@ public class SumNumbersServer {
                   Socket socket = serverSocket.accept();
                   clientCount++;
                   System.out.println("Client #" + clientCount + " kết nối!");
-                  
+              
                   SumNumbersHandler handler = new SumNumbersHandler(socket, clientCount);
                   handler.start();
             }
@@ -2436,11 +2517,11 @@ public class SumNumbersServer {
 
 ```
 
-<a id='bai-tap-018'></a>
+`<a id='bai-tap-018'></a>`
 
-## Bai tap 18 - t5/t5-2/cac-bai-co-ban/uppercase
+## Bài tập 18 - TUẦN 5 - `t5/t5-2/cac-bai-co-ban/uppercase`
 
-**Tieu de bai tap:** T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)
+**Tiêu đề bài tập:** T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)
 
 **Yeu cau tom tat:** Cấu trúc thư mục t5/ ├── FileThreadWriter.java   ← Thread ghi file
 
@@ -2569,7 +2650,7 @@ public class UpperCaseServer {
                   Socket socket = serverSocket.accept();
                   clientCount++;
                   System.out.println("Client #" + clientCount + " kết nối!");
-                  
+              
                   UpperCaseHandler handler = new UpperCaseHandler(socket, clientCount);
                   handler.start();
             }
@@ -2578,11 +2659,11 @@ public class UpperCaseServer {
 
 ```
 
-<a id='bai-tap-019'></a>
+`<a id='bai-tap-019'></a>`
 
-## Bai tap 19 - t5/t5-2/gui-nhan
+## Bài tập 19 - TUẦN 5 - `t5/t5-2/gui-nhan`
 
-**Tieu de bai tap:** T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)
+**Tiêu đề bài tập:** T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)
 
 **Yeu cau tom tat:** Cấu trúc thư mục t5/ ├── FileThreadWriter.java   ← Thread ghi file
 
@@ -2668,11 +2749,11 @@ public class TCPServer {
 
 ```
 
-<a id='bai-tap-020'></a>
+`<a id='bai-tap-020'></a>`
 
-## Bai tap 20 - t5/t5-2/gui-nhan-luong
+## Bài tập 20 - TUẦN 5 - `t5/t5-2/gui-nhan-luong`
 
-**Tieu de bai tap:** T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)
+**Tiêu đề bài tập:** T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)
 
 **Yeu cau tom tat:** Cấu trúc thư mục t5/ ├── FileThreadWriter.java   ← Thread ghi file
 
@@ -2710,22 +2791,22 @@ public class serverThread extends Thread {
             System.out.println("Local Port: " + client.getLocalPort());
             System.out.println("Connect Time: " + new java.util.Date());
             System.out.println("========================");
-            
+        
             InputStream is = client.getInputStream();
             OutputStream os = client.getOutputStream();
 
             int ch = 0;
-            
+        
             while (true) {
                 ch = is.read();
                 if (ch == -1) break; 
-                
+            
                 System.out.println("client goi : " + (char)ch);
-                
-                
+            
+            
                 os.write((char)ch);
             }
-            
+        
             System.out.println("Client từ " + client.getInetAddress().getHostAddress() + " đã ngắt kết nối!");
             client.close();
         } catch (Exception e) {
@@ -2799,7 +2880,7 @@ public class tcpServer extends Thread {
             ServerSocket server = new ServerSocket(port);
             System.out.println("Server đã được tạo (port: " + port + ")");
             System.out.println("Đang chờ kết nối từ client...\n");
-            
+        
             int clientCount = 0;
             while (true) {
                 Socket client = server.accept();
@@ -2816,11 +2897,11 @@ public class tcpServer extends Thread {
 }
 ```
 
-<a id='bai-tap-021'></a>
+`<a id='bai-tap-021'></a>`
 
-## Bai tap 21 - t5/t5-2/nhieuServer-guitext
+## Bài tập 21 - TUẦN 5 - `t5/t5-2/nhieuServer-guitext`
 
-**Tieu de bai tap:** T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)
+**Tiêu đề bài tập:** T5 – Thread ghi File + Socket TCP (nhiều bài thực hành)
 
 **Yeu cau tom tat:** Cấu trúc thư mục t5/ ├── FileThreadWriter.java   ← Thread ghi file
 
@@ -2948,7 +3029,7 @@ public class TCPServerMulti {
                   Socket socket = serverSocket.accept();
                   clientCount++;
                   System.out.println("Client #" + clientCount + " kết nối!");
-                  
+              
                   ClientHandlerMulti handler = new ClientHandlerMulti(socket, clientCount);
                   handler.start();
             }
@@ -2957,11 +3038,11 @@ public class TCPServerMulti {
 
 ```
 
-<a id='bai-tap-022'></a>
+`<a id='bai-tap-022'></a>`
 
-## Bai tap 22 - t5/tcp-tuan5-gk/b1
+## Bài tập 22 - TUẦN 5 - `t5/tcp-tuan5-gk/b1`
 
-**Tieu de bai tap:** TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
+**Tiêu đề bài tập:** TCP-TUẦN 5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tcp-tuan5-gk/ ├── b1/   ← TCP: đọc số viết chữ (DataInputStream/DataOutputStream)
 
@@ -3015,7 +3096,7 @@ public class Client {
                 System.out.print("Nhap: ");
                 String s = sc.nextLine();
 
-      
+  
                 String send = s.equalsIgnoreCase("exit") ? "exit"
                         : (s.isEmpty() ? "" : String.valueOf(s.charAt(0)));
 
@@ -3084,7 +3165,7 @@ public class ClientHandler extends Thread {
                 try {
                     msg = in.readUTF(); 
                 } catch (IOException e) {
-                    
+                
                     break;
                 }
 
@@ -3141,11 +3222,11 @@ public class Server {
 }
 ```
 
-<a id='bai-tap-023'></a>
+`<a id='bai-tap-023'></a>`
 
-## Bai tap 23 - t5/tcp-tuan5-gk/b10
+## Bài tập 23 - TUẦN 5 - `t5/tcp-tuan5-gk/b10`
 
-**Tieu de bai tap:** TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
+**Tiêu đề bài tập:** TCP-TUẦN 5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tcp-tuan5-gk/ ├── b1/   ← TCP: đọc số viết chữ (DataInputStream/DataOutputStream)
 
@@ -3288,11 +3369,11 @@ public class Server {
 }
 ```
 
-<a id='bai-tap-024'></a>
+`<a id='bai-tap-024'></a>`
 
-## Bai tap 24 - t5/tcp-tuan5-gk/b2
+## Bài tập 24 - TUẦN 5 - `t5/tcp-tuan5-gk/b2`
 
-**Tieu de bai tap:** TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
+**Tiêu đề bài tập:** TCP-TUẦN 5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tcp-tuan5-gk/ ├── b1/   ← TCP: đọc số viết chữ (DataInputStream/DataOutputStream)
 
@@ -3342,7 +3423,7 @@ public class ChatClient {
              DataOutputStream out = new DataOutputStream(socket.getOutputStream());
              Scanner sc = new Scanner(System.in)) {
 
-            
+        
             new Thread(() -> {
                 try {
                     while (true) {
@@ -3354,7 +3435,7 @@ public class ChatClient {
                 }
             }).start();
 
-            
+        
             while (true) {
                 System.out.print("Nhap: ");
                 String msg = sc.nextLine();
@@ -3428,7 +3509,7 @@ public class ClientHandler extends Thread {
              DataInputStream in = new DataInputStream(s.getInputStream());
              DataOutputStream out = new DataOutputStream(s.getOutputStream())) {
 
-            
+        
             out.writeUTF("Chao ban! Go /quit de thoat.");
             out.flush();
 
@@ -3442,13 +3523,13 @@ public class ClientHandler extends Thread {
 
                 System.out.println("From client " + s.getPort() + ": " + msg);
 
-                
+            
                 out.writeUTF("Server: da nhan -> " + msg);
                 out.flush();
             }
 
         } catch (IOException e) {
-         
+     
         }
 
         System.out.println("Client disconnected: " + socket.getPort());
@@ -3456,11 +3537,11 @@ public class ClientHandler extends Thread {
 }
 ```
 
-<a id='bai-tap-025'></a>
+`<a id='bai-tap-025'></a>`
 
-## Bai tap 25 - t5/tcp-tuan5-gk/b3
+## Bài tập 25 - TUẦN 5 - `t5/tcp-tuan5-gk/b3`
 
-**Tieu de bai tap:** TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
+**Tiêu đề bài tập:** TCP-TUẦN 5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tcp-tuan5-gk/ ├── b1/   ← TCP: đọc số viết chữ (DataInputStream/DataOutputStream)
 
@@ -3523,7 +3604,7 @@ public class ChatClient {
              DataOutputStream out = new DataOutputStream(socket.getOutputStream());
              Scanner sc = new Scanner(System.in)) {
 
-            
+        
             new Thread(() -> {
                 try {
                     while (true) {
@@ -3535,7 +3616,7 @@ public class ChatClient {
                 }
             }).start();
 
-           
+       
             while (true) {
                 System.out.print("Nhap: ");
                 String msg = sc.nextLine();
@@ -3637,7 +3718,7 @@ public class ClientHandler extends Thread {
             }
 
         } catch (IOException e) {
-           
+       
         }
 
         System.out.println("Client disconnected: " + socket.getPort());
@@ -3645,11 +3726,11 @@ public class ClientHandler extends Thread {
 }
 ```
 
-<a id='bai-tap-026'></a>
+`<a id='bai-tap-026'></a>`
 
-## Bai tap 26 - t5/tcp-tuan5-gk/b4
+## Bài tập 26 - TUẦN 5 - `t5/tcp-tuan5-gk/b4`
 
-**Tieu de bai tap:** TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
+**Tiêu đề bài tập:** TCP-TUẦN 5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tcp-tuan5-gk/ ├── b1/   ← TCP: đọc số viết chữ (DataInputStream/DataOutputStream)
 
@@ -3702,7 +3783,7 @@ public class ClientHandler extends Thread {
              DataInputStream in = new DataInputStream(s.getInputStream());
              DataOutputStream out = new DataOutputStream(s.getOutputStream())) {
 
-            
+        
             out.writeUTF("MENU:\n1. Time\n2. Date\n3. Date & Time\nNhap 1/2/3 (hoac 0 de thoat)");
             out.flush();
 
@@ -3720,7 +3801,7 @@ public class ClientHandler extends Thread {
             }
 
         } catch (IOException e) {
-           
+       
         }
     }
 }
@@ -3770,7 +3851,7 @@ public class DateTimeClient {
                  DataInputStream in = new DataInputStream(socket.getInputStream());
                  DataOutputStream out = new DataOutputStream(socket.getOutputStream())) {
 
-               
+           
                 System.out.println(in.readUTF());
 
                 while (true) {
@@ -3824,11 +3905,11 @@ public class DateTimeServer {
 }
 ```
 
-<a id='bai-tap-027'></a>
+`<a id='bai-tap-027'></a>`
 
-## Bai tap 27 - t5/tcp-tuan5-gk/b5
+## Bài tập 27 - TUẦN 5 - `t5/tcp-tuan5-gk/b5`
 
-**Tieu de bai tap:** TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
+**Tiêu đề bài tập:** TCP-TUẦN 5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tcp-tuan5-gk/ ├── b1/   ← TCP: đọc số viết chữ (DataInputStream/DataOutputStream)
 
@@ -3995,11 +4076,11 @@ public class DateTimeUDPServer {
 }
 ```
 
-<a id='bai-tap-028'></a>
+`<a id='bai-tap-028'></a>`
 
-## Bai tap 28 - t5/tcp-tuan5-gk/b6
+## Bài tập 28 - TUẦN 5 - `t5/tcp-tuan5-gk/b6`
 
-**Tieu de bai tap:** TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
+**Tiêu đề bài tập:** TCP-TUẦN 5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tcp-tuan5-gk/ ├── b1/   ← TCP: đọc số viết chữ (DataInputStream/DataOutputStream)
 
@@ -4279,11 +4360,11 @@ public class UdpCalcServer {
 }
 ```
 
-<a id='bai-tap-029'></a>
+`<a id='bai-tap-029'></a>`
 
-## Bai tap 29 - t5/tcp-tuan5-gk/b7
+## Bài tập 29 - TUẦN 5 - `t5/tcp-tuan5-gk/b7`
 
-**Tieu de bai tap:** TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
+**Tiêu đề bài tập:** TCP-TUẦN 5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tcp-tuan5-gk/ ├── b1/   ← TCP: đọc số viết chữ (DataInputStream/DataOutputStream)
 
@@ -4588,11 +4669,11 @@ public class UdpFileServer {
 }
 ```
 
-<a id='bai-tap-030'></a>
+`<a id='bai-tap-030'></a>`
 
-## Bai tap 30 - t5/tcp-tuan5-gk/b8
+## Bài tập 30 - TUẦN 5 - `t5/tcp-tuan5-gk/b8`
 
-**Tieu de bai tap:** TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
+**Tiêu đề bài tập:** TCP-TUẦN 5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tcp-tuan5-gk/ ├── b1/   ← TCP: đọc số viết chữ (DataInputStream/DataOutputStream)
 
@@ -4766,11 +4847,11 @@ public class Server {
 }
 ```
 
-<a id='bai-tap-031'></a>
+`<a id='bai-tap-031'></a>`
 
-## Bai tap 31 - t5/tcp-tuan5-gk/b9
+## Bài tập 31 - TUẦN 5 - `t5/tcp-tuan5-gk/b9`
 
-**Tieu de bai tap:** TCP-TUAN5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
+**Tiêu đề bài tập:** TCP-TUẦN 5-GK – Bài Tập TCP/UDP Nâng Cao (Giữa Kì)
 
 **Yeu cau tom tat:** Cấu trúc thư mục tcp-tuan5-gk/ ├── b1/   ← TCP: đọc số viết chữ (DataInputStream/DataOutputStream)
 
@@ -4923,15 +5004,15 @@ public class Server {
 }
 ```
 
-<a id='bai-tap-032'></a>
+`<a id='bai-tap-032'></a>`
 
-## Bai tap 32 - t6-lt
+## Bài tập 32 - TUẦN 6 - `t6-lt`
 
-**Tieu de bai tap:** 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP
+**Tiêu đề bài tập:** TUẦN 6 - Tài liệu tổng hợp RMI (tham khảo)
 
-**Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
+**Yeu cau tom tat:** On tap luong xu ly RMI: dinh nghia Remote Interface, cai dat service, dang ky Registry, client lookup va goi ham tu xa.
 
-**Cau hoi de bai:** Viet ung dung RMI dang tong hop, tao nhieu remote service (phep cong va xu ly chuoi), client goi ham tu xa va in ket qua.
+**Cau hoi de bai:** Tai lieu nay dong vai tro de cuong/mau tham khao cho cac bai RMI. Muc tieu la hieu cau truc Client-Server-RMI va cach truyen tham so/nhan ket qua qua mang.
 
 ### Danh sach file
 
@@ -4954,15 +5035,15 @@ public class rmiClient {
             int result_int = stub.tong2songuyen(5, 5);
             double result_double = stub.tong2sothuc(7.7, 3.3);
             int result_3_int = stub.tong3songuyen(1, 1, 1);
-            
+        
             System.out.println(result_int);
             System.out.println(result_double);
             System.out.println(result_3_int);
-            
+        
             xulychuoi_intf stub2 = (xulychuoi_intf)Naming.lookup("rmi://localhost:1100/chuoiService");
             String result_str = stub2.noi2chuoi("phat trien", " ht th");
             System.out.println(result_str);
-            
+        
         } catch (Exception e) {
         }
     }
@@ -4985,13 +5066,13 @@ public class rmiServer {
         try {
             LocateRegistry.createRegistry(1100);
             System.out.println("Server start.....");
-            
+        
             phepCong_impl obj = new phepCong_impl();
             Naming.bind("rmi://localhost:1100/congService", obj);
-            
+        
             xulychuoi_impl obj2 = new xulychuoi_impl();
             Naming.bind("rmi://localhost:1100/chuoiService", obj2);
-            
+        
         } catch (RemoteException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -5041,15 +5122,15 @@ public interface xulychuoi_intf extends Remote {
 }
 ```
 
-<a id='bai-tap-033'></a>
+`<a id='bai-tap-033'></a>`
 
-## Bai tap 33 - t6/bai1
+## Bài tập 33 - TUẦN 6 - `t6/bai1`
 
-**Tieu de bai tap:** 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP
+**Tiêu đề bài tập:** TUẦN 6 - URL/Domain - BÀI 1
 
-**Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
+**Yeu cau tom tat:** Nhan 1 ten mien (domain) tu tham so dong lenh, hien thi host name va dia chi IP tuong ung.
 
-**Cau hoi de bai:** Viet chuong trinh phan giai ten mien: nhap domain va in ra hostname/IP bang InetAddress.
+**Cau hoi de bai:** Viet chuong trinh Java nhan vao ten mien (vi du google.com), sau do in host name va dia chi IP su dung lop InetAddress.
 
 ### Danh sach file
 
@@ -5084,15 +5165,15 @@ public class DomainInfo {
 }
 ```
 
-<a id='bai-tap-034'></a>
+`<a id='bai-tap-034'></a>`
 
-## Bai tap 34 - t6/bai2
+## Bài tập 34 - TUẦN 6 - `t6/bai2`
 
-**Tieu de bai tap:** 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP
+**Tiêu đề bài tập:** TUẦN 6 - URL/Domain - BÀI 2
 
-**Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
+**Yeu cau tom tat:** Kiem tra hostname co ton tai hay khong; neu ton tai thi liet ke tat ca dia chi IP cua hostname do.
 
-**Cau hoi de bai:** Viet chuong trinh kiem tra hostname co ton tai hay khong, neu co thi in danh sach dia chi IP.
+**Cau hoi de bai:** Viet chuong trinh Java kiem tra su ton tai cua hostname. Neu hop le, hien thi day du danh sach IP (IPv4/IPv6 neu co).
 
 ### Danh sach file
 
@@ -5131,15 +5212,15 @@ public class HostnameCheck {
 }
 ```
 
-<a id='bai-tap-035'></a>
+`<a id='bai-tap-035'></a>`
 
-## Bai tap 35 - t6/bai3
+## Bài tập 35 - TUẦN 6 - `t6/bai3`
 
-**Tieu de bai tap:** 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP
+**Tiêu đề bài tập:** TUẦN 6 - Threads/Buffer - BÀI 3
 
-**Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
+**Yeu cau tom tat:** Tao vung dem luu so nguyen voi 2 thread: thread 1 nhap so vao buffer, thread 2 lay so ra tinh tong; dung khi nhap -1.
 
-**Cau hoi de bai:** Viet bai Producer-Consumer dung queue va wait/notify: producer nhap day so, consumer tinh tong den khi gap gia tri ket thuc -1.
+**Cau hoi de bai:** Viet chuong trinh Producer-Consumer: mot thread nhap du lieu vao bo dem, mot thread xu ly tinh tong. Co dong bo hoa va dieu kien ket thuc bang gia tri -1.
 
 ### Danh sach file
 
@@ -5224,15 +5305,15 @@ public class BufferApp {
 }
 ```
 
-<a id='bai-tap-036'></a>
+`<a id='bai-tap-036'></a>`
 
-## Bai tap 36 - t6/bai4
+## Bài tập 36 - TUẦN 6 - `t6/bai4`
 
-**Tieu de bai tap:** 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP
+**Tiêu đề bài tập:** TUẦN 6 - Socket TCP - BÀI 4
 
-**Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
+**Yeu cau tom tat:** Xay dung TCP Client-Server (port 6789): client gui so nguyen n, server tra ve n! (giai thua).
 
-**Cau hoi de bai:** Viet ung dung TCP tinh giai thua: client gui n, server tinh n! (kiem tra dau vao hop le) va tra ket qua.
+**Cau hoi de bai:** Server lang nghe tai cong 6789, nhan n tu client va tra ket qua giai thua. Client nhap n tu ban phim, gui den server, nhan ket qua va hien thi.
 
 ### Danh sach file
 
@@ -5360,7 +5441,7 @@ public class Server {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("ket noi tu: " + clientSocket.getInetAddress());
 
-              
+          
                 new ClientHandler(clientSocket).start();
             }
         } catch (IOException e) {
@@ -5370,15 +5451,15 @@ public class Server {
 }
 ```
 
-<a id='bai-tap-037'></a>
+`<a id='bai-tap-037'></a>`
 
-## Bai tap 37 - t6/bai5
+## Bài tập 37 - TUẦN 6 - `t6/bai5`
 
-**Tieu de bai tap:** 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP
+**Tiêu đề bài tập:** TUẦN 6 - Socket TCP - BÀI 5
 
-**Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
+**Yeu cau tom tat:** Server TCP nhan chuoi tu client, tra ve chuoi viet hoa va tong so ky tu trong chuoi.
 
-**Cau hoi de bai:** Viet ung dung TCP xu ly chuoi: client gui chuoi, server tra ve chuoi viet hoa va so ky tu.
+**Cau hoi de bai:** Viet ung dung TCP trong do client nhap chuoi, server xu ly va phan hoi 2 thong tin: chuoi IN HOA va do dai chuoi.
 
 ### Danh sach file
 
@@ -5495,7 +5576,7 @@ public class Server {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("ket noi tu: " + clientSocket.getInetAddress());
 
-                
+            
                 new ClientHandler(clientSocket).start();
             }
         } catch (IOException e) {
@@ -5505,15 +5586,15 @@ public class Server {
 }
 ```
 
-<a id='bai-tap-038'></a>
+`<a id='bai-tap-038'></a>`
 
-## Bai tap 38 - tuan7
+## Bài tập 38 - TUẦN 7 - `tuan7`
 
-**Tieu de bai tap:** 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP
+**Tiêu đề bài tập:** TUẦN 7 - THỰC HÀNH LAB 06 RMI (Tổng hợp 9 BÀI)
 
-**Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
+**Yeu cau tom tat:** Tong hop de RMI gom 9 bai: Hello World, cong 2 so, kiem tra nguyen to, danh ba, chat, ngan hang, tinh dien tich, dat ve may bay, dau gia truc tuyen.
 
-**Cau hoi de bai:** Tong hop 6 bai RMI: hello world, cong 2 so, kiem tra nguyen to, quan ly danh ba, chat don gian, va quan ly tai khoan ngan hang.
+**Cau hoi de bai:** Hoan thanh cac bai RMI theo de: thiet ke interface, cai dat server, dang ky registry, client goi ham tu xa. Danh sach day du trong file bt7.txt (co them bai 7-8-9 theo de).
 
 ### Danh sach file
 
@@ -5621,15 +5702,15 @@ Server quản lý tài khoản với số dư ban đầu.
 Client có thể gửi/rút tiền và kiểm tra số dư.
 ```
 
-<a id='bai-tap-039'></a>
+`<a id='bai-tap-039'></a>`
 
-## Bai tap 39 - tuan7/bai1
+## Bài tập 39 - TUẦN 7 - `tuan7/bai1`
 
-**Tieu de bai tap:** 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP
+**Tiêu đề bài tập:** TUẦN 7 - RMI BÀI 1 - Hello World
 
-**Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
+**Yeu cau tom tat:** Tao interface co phuong thuc sayHello(), server cai dat va client goi tu xa de nhan chuoi \"Hello, World!\".
 
-**Cau hoi de bai:** Viet bai RMI "Hello World": client goi ham sayHello() tren server va hien thi chuoi tra ve.
+**Cau hoi de bai:** Viet ung dung RMI trong do client goi sayHello() tren server va nhan ket qua \"Hello, World!\". Hoan chinh day du interface - server - client.
 
 ### Danh sach file
 
@@ -5689,13 +5770,13 @@ import java.rmi.registry.Registry;
 public class RMIClient {
     public static void main(String[] args) {
         try {
-          
+      
             Registry registry = LocateRegistry.getRegistry("localhost", 1099);
 
-           
+       
             HelloService service = (HelloService) registry.lookup("HelloService");
 
-           
+       
             String result = service.sayHello();
             System.out.println("Server tra ve: " + result);
         } catch (Exception e) {
@@ -5720,10 +5801,10 @@ public class RMIServer {
         try {
             HelloService service = new HelloServiceImpl();
 
-           
+       
             Registry registry = LocateRegistry.createRegistry(1099);
 
-            
+        
             registry.rebind("HelloService", service);
 
             System.out.println("RMI Server dang chay...");
@@ -5734,15 +5815,15 @@ public class RMIServer {
 }
 ```
 
-<a id='bai-tap-040'></a>
+`<a id='bai-tap-040'></a>`
 
-## Bai tap 40 - tuan7/bai2
+## Bài tập 40 - TUẦN 7 - `tuan7/bai2`
 
-**Tieu de bai tap:** 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP
+**Tiêu đề bài tập:** TUẦN 7 - RMI BÀI 2 - Tính tổng 2 so
 
-**Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
+**Yeu cau tom tat:** Interface co int add(int a, int b); client nhap a,b va goi server de nhan tong.
 
-**Cau hoi de bai:** Viet bai RMI tinh tong 2 so nguyen: client nhap a,b, server thuc hien add(a,b) va tra ket qua.
+**Cau hoi de bai:** Viet bai tap RMI tinh tong 2 so nguyen: server xu ly add(a,b), client gui tham so va hien thi ket qua tra ve.
 
 ### Danh sach file
 
@@ -5845,15 +5926,15 @@ public class AddServiceImpl extends UnicastRemoteObject implements AddService {
 
 ```
 
-<a id='bai-tap-041'></a>
+`<a id='bai-tap-041'></a>`
 
-## Bai tap 41 - tuan7/bai3
+## Bài tập 41 - TUẦN 7 - `tuan7/bai3`
 
-**Tieu de bai tap:** 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP
+**Tiêu đề bài tập:** TUẦN 7 - RMI BÀI 3 - Kiểm tra so nguyen to
 
-**Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
+**Yeu cau tom tat:** Interface co boolean isPrime(int n); server kiem tra so nguyen to va tra ket qua true/false cho client.
 
-**Cau hoi de bai:** Viet bai RMI kiem tra so nguyen to: client gui n, server tra ve true/false va client hien thi ket luan.
+**Cau hoi de bai:** Viet chuong trinh RMI giup client kiem tra mot so co phai nguyen to hay khong, dua tren phuong thuc isPrime(int n).
 
 ### Danh sach file
 
@@ -5961,15 +6042,15 @@ public class RMIServer {
 }
 ```
 
-<a id='bai-tap-042'></a>
+`<a id='bai-tap-042'></a>`
 
-## Bai tap 42 - tuan7/bai4
+## Bài tập 42 - TUẦN 7 - `tuan7/bai4`
 
-**Tieu de bai tap:** 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP
+**Tiêu đề bài tập:** TUẦN 7 - RMI BÀI 4 - Quản lý danh ba
 
-**Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
+**Yeu cau tom tat:** Xay dung ContactService voi addContact, findContact, deleteContact; server luu danh ba bang HashMap<String,String>.
 
-**Cau hoi de bai:** Viet bai RMI quan ly danh ba: ho tro them/cap nhat, tim kiem, xoa lien he luu tren server (HashMap).
+**Cau hoi de bai:** Viet he thong danh ba tu xa bang RMI. Client co the them/tim/xoa lien he; du lieu duoc luu va quan ly tap trung tren server.
 
 ### Danh sach file
 
@@ -6126,15 +6207,15 @@ public class RMIServer {
 }
 ```
 
-<a id='bai-tap-043'></a>
+`<a id='bai-tap-043'></a>`
 
-## Bai tap 43 - tuan7/bai5
+## Bài tập 43 - TUẦN 7 - `tuan7/bai5`
 
-**Tieu de bai tap:** 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP
+**Tiêu đề bài tập:** TUẦN 7 - RMI BÀI 5 - Chat don gian
 
-**Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
+**Yeu cau tom tat:** Interface co sendMessage(String message); client gui tin, server nhan va phan hoi theo luong chat 1-1.
 
-**Cau hoi de bai:** Viet bai RMI chat don gian 1-1: client gui tin nhan, server xu ly va tra ve cau phan hoi phu hop.
+**Cau hoi de bai:** Tao ung dung chat don gian giua client va server qua RMI: gui/nhan thong diep va hien thi phan hoi.
 
 ### Danh sach file
 
@@ -6255,15 +6336,15 @@ public class RMIServer {
 }
 ```
 
-<a id='bai-tap-044'></a>
+`<a id='bai-tap-044'></a>`
 
-## Bai tap 44 - tuan7/bai6
+## Bài tập 44 - TUẦN 7 - `tuan7/bai6`
 
-**Tieu de bai tap:** 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP
+**Tiêu đề bài tập:** TUẦN 7 - RMI BÀI 6 - Quản lý tai khoan ngan hang
 
-**Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
+**Yeu cau tom tat:** Interface gom getBalance(), deposit(amount), withdraw(amount); server quan ly so du, client gui/rut tien va xem so du.
 
-**Cau hoi de bai:** Viet bai RMI ngan hang: cung cap getBalance, deposit, withdraw co kiem tra hop le va dong bo du lieu.
+**Cau hoi de bai:** Xay dung ung dung ngan hang tu xa bang RMI: client thuc hien gui tien, rut tien, kiem tra so du tren cung mot tai khoan do server quan ly.
 
 ### Danh sach file
 
@@ -6422,15 +6503,15 @@ public class RMIServer {
 }
 ```
 
-<a id='bai-tap-045'></a>
+`<a id='bai-tap-045'></a>`
 
-## Bai tap 45 - tuan8
+## Bài tập 45 - TUẦN 8 - `tuan8`
 
-**Tieu de bai tap:** 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP
+**Tiêu đề bài tập:** TUẦN 8 - Đề RMI mở rộng (tổng hợp từ `tuan8/kk.txt`)
 
-**Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
+**Yeu cau tom tat:** Tong hop 2 de RMI: (1) tinh bieu thuc so hoc khong ngoac, (2) tra cuu thong tin ca nhan theo CMND/CCCD.
 
-**Cau hoi de bai:** Tong hop 2 bai RMI nang cao: (1) tinh gia tri bieu thuc so hoc, (2) tra cuu thong tin ca nhan theo so ID.
+**Cau hoi de bai:** Dua tren `tuan8/kk.txt`, hoan thanh 2 bai RMI mo rong: server cung cap dich vu tinh toan/tra cuu, client gui yeu cau va nhan ket qua hoac thong bao loi.
 
 ### Danh sach file
 
@@ -6467,15 +6548,15 @@ client hoặc trả thông báo lỗi nếu không tìm thấy thông tin.
 
 ```
 
-<a id='bai-tap-046'></a>
+`<a id='bai-tap-046'></a>`
 
-## Bai tap 46 - tuan8/bai1
+## Bài tập 46 - TUẦN 8 - `tuan8/bai1`
 
-**Tieu de bai tap:** 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP
+**Tiêu đề bài tập:** TUẦN 8 - Bài mở rộng - Tính biểu thức (RMI)
 
-**Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
+**Yeu cau tom tat:** Client gui bieu thuc khong ngoac (co + - * /), server phan tich theo dung thu tu uu tien toan tu va tra ket qua.
 
-**Cau hoi de bai:** Viet bai RMI tinh bieu thuc khong ngoac (vi du 12+34-56*78/4), dam bao uu tien * / truoc + -, tra loi ro rang khi loi dinh dang.
+**Cau hoi de bai:** Bai mo rong thuc hanh: xay dung dich vu tinh bieu thuc so hoc tren mo hinh client-server (RMI), xu ly loi dinh dang dau vao ro rang.
 
 ### Danh sach file
 
@@ -6497,7 +6578,7 @@ import java.rmi.RemoteException;
 
 public interface CalcService extends Remote {
     String evaluate(String expression) throws RemoteException; 
-    
+  
 }
 ```
 
@@ -6524,7 +6605,7 @@ public class CalcServiceImpl extends UnicastRemoteObject implements CalcService 
     public String evaluate(String expression) throws RemoteException {
         try {
             double value = eval(expression);
-         
+     
             if (Math.abs(value - Math.rint(value)) < 1e-12) {
                 return String.valueOf((long) Math.rint(value));
             }
@@ -6544,7 +6625,7 @@ public class CalcServiceImpl extends UnicastRemoteObject implements CalcService 
         s = s.replaceAll("\\s+", "");
         if (s.isEmpty()) throw new IllegalArgumentException("bieu thuc rong");
 
-        
+    
         if (!Character.isDigit(s.charAt(0))) {
             throw new IllegalArgumentException("bieu thuc phai bat dau bang so");
         }
@@ -6579,7 +6660,7 @@ public class CalcServiceImpl extends UnicastRemoteObject implements CalcService 
             }
         }
 
-        
+    
         List<Double> nums2 = new ArrayList<>();
         List<Character> ops2 = new ArrayList<>();
 
@@ -6602,7 +6683,7 @@ public class CalcServiceImpl extends UnicastRemoteObject implements CalcService 
             }
         }
 
-        
+    
         double result = nums2.get(0);
         for (int k = 0; k < ops2.size(); k++) {
             char op = ops2.get(k);
@@ -6684,15 +6765,15 @@ public class RMIServer {
 }
 ```
 
-<a id='bai-tap-047'></a>
+`<a id='bai-tap-047'></a>`
 
-## Bai tap 47 - tuan8/bai2
+## Bài tập 47 - TUẦN 8 - `tuan8/bai2`
 
-**Tieu de bai tap:** 📌 NOTE GIỮA KỲ – PTHT TÍCH HỢP
+**Tiêu đề bài tập:** TUẦN 8 - Bài mở rộng - Tra cứu thông tin (RMI)
 
-**Yeu cau tom tat:** out.writeUTF("nội dung");   String s = in.readUTF();
+**Yeu cau tom tat:** Client gui so giay to (CMND/CCCD), server tim kiem trong du lieu luu tru va tra ve thong tin ho ten/que quan hoac thong bao khong tim thay.
 
-**Cau hoi de bai:** Viet bai RMI tra cuu CMND/CCCD: client gui so giay to, server tim ho ten/que quan va tra thong bao loi neu khong tim thay.
+**Cau hoi de bai:** Bai mo rong thuc hanh: xay dung dich vu tra cuu thong tin ca nhan qua mang theo so dinh danh, co xu ly truong hop khong ton tai.
 
 ### Danh sach file
 
@@ -6713,7 +6794,7 @@ import java.rmi.RemoteException;
 
 public interface IdentityService extends Remote {
     String lookup(String idNumber) throws RemoteException;
-    
+  
 }
 ```
 
@@ -6740,7 +6821,7 @@ public class IdentityServiceImpl extends UnicastRemoteObject implements Identity
     protected IdentityServiceImpl() throws RemoteException {
         super();
 
-       
+   
         db.put("012345678901", new PersonInfo("Nguyen Van A", "Ha Noi"));
         db.put("079123456789", new PersonInfo("Tran Thi B", "TP Ho Chi Minh"));
         db.put("123456789",    new PersonInfo("Le Van C", "Da Nang")); 
@@ -6753,7 +6834,7 @@ public class IdentityServiceImpl extends UnicastRemoteObject implements Identity
 
         if (id.isEmpty()) return "ERROR: id rong";
         if (!id.matches("\\d+")) return "ERROR: id chi duoc chua chu so";
-        
+    
         if (id.length() < 9 || id.length() > 12) return "ERROR: do dai id khong hop le (9-12 so)";
 
         PersonInfo info = db.get(id);
@@ -6827,15 +6908,15 @@ public class RMIServer {
 }
 ```
 
-<a id='bai-tap-048'></a>
+`<a id='bai-tap-048'></a>`
 
-## Bai tap 48 - tuan9
+## Bài tập 48 - TUẦN 9 - `tuan9`
 
-**Tieu de bai tap:** HƯỚNG DẪN TỪ A - Z: QUẢN LÝ CỬA HÀNG VỚI JDBC & SQLITE
+**Tiêu đề bài tập:** TUẦN 9 - JDBC/SQLite: Quản lý cửa hàng (A-Z)
 
-**Yeu cau tom tat:** Tạo 3 file .java trong thư mục src với nội dung như sau:
+**Yeu cau tom tat:** Thuc hanh JDBC voi SQLite theo huong dan A-Z: ket noi CSDL, tao bang, them/sua/xoa/truy van du lieu, dung PreparedStatement, transaction va xu ly ngoai le day du.
 
-**Cau hoi de bai:** Viet ung dung JDBC voi SQLite de quan ly cua hang: ket noi CSDL, tao bang, them du lieu, truy van thong ke (SUM/AVG) va xu ly transaction.
+**Cau hoi de bai:** Viet ung dung quan ly cua hang bang JDBC + SQLite: CRUD du lieu, bao cao tong hop (SUM/AVG/MIN/MAX/COUNT), dam bao dong ket noi dung cach va ho tro commit/rollback khi cap nhat nhieu buoc.
 
 ### Danh sach file
 
@@ -7079,16 +7160,16 @@ public class MainApp {
     public static void main(String[] args) {
         Connection conn = null;
         try {
-      
+  
             conn = DatabaseManager.getConnection();
-            
-          
+        
+      
             conn.setAutoCommit(false); 
 
 
             DatabaseManager.initDatabase(conn);
 
-       
+   
             DatabaseManager.insertSanPham(conn, new SanPham(1, "Laptop Dell", 15000, 5));
             DatabaseManager.insertSanPham(conn, new SanPham(2, "Macbook M3", 35000, 3));
             DatabaseManager.insertSanPham(conn, new SanPham(3, "Chuột Logi", 500, 10));
@@ -7096,7 +7177,7 @@ public class MainApp {
  
             DatabaseManager.updateSanPham(conn, 1, 14500, 4);
             DatabaseManager.deleteSanPham(conn, 3);
-      
+  
 
             System.out.println(">>> Đang thêm dữ liệu nhân viên để thống kê...");
             String sqlInsertNV = "INSERT INTO NhanVien(ten, chuc_vu, luong) VALUES(?,?,?)";
@@ -7104,7 +7185,7 @@ public class MainApp {
 
                 pstmt.setString(1, "Nguyen Van A"); pstmt.setString(2, "Dev"); pstmt.setDouble(3, 2000);
                 pstmt.executeUpdate();
-                
+            
                 pstmt.setString(1, "Tran Thi B"); pstmt.setString(2, "Manager"); pstmt.setDouble(3, 5000);
                 pstmt.executeUpdate();
             }
@@ -7117,7 +7198,7 @@ public class MainApp {
             System.out.println("\n[SUCCESS] Giao dịch hoàn tất thành công!");
 
         } catch (SQLException e) {
-     
+   
             System.err.println("[ERROR] Lỗi SQL: " + e.getMessage());
             try {
                 if (conn != null) {
@@ -7174,5 +7255,3 @@ public class SanPham {
     }
 }
 ```
-
-

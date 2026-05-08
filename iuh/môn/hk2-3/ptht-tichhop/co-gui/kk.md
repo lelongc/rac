@@ -1,419 +1,94 @@
-PtHtTh©IT-FIT (v.2026)
-OOP trong Java
-VD (Tính Kế thừa và Đa hình): Xây dựng chương trình quản lý DongVat gồm các lớp sau:
-Lớp cha DongVat
-Thuộc tính
-Phương thức
-loai (String)
-ten (String)
-inThongTin()
-an()
-tuoi(String)
-ngu()
-taoAmThanh()
-Lớp con Meo kế thừa
-Thuộc tính
-Phương thức
-leoTuong()
-Lớp con Cho
-Thuộc tính
-chay()
-GỢI Ý:
-Phương thức
-ttmk©1
-PtHtTh©IT-FIT (v.2026)
-Bài 1: Xây dựng chương trình quản lý Nhân viên gồm các lớp sau:
-Lớp cha NhanVien
-Thuộc tính
-Thuộc tính
-maNV (String)
-Phương thức
-nhapThongTin()
-hoTen (String
-hienThiThongTin()
-Lớp con NhanVienVanPhong kế thừa NhanVien
-luongCoBan (double)
-Phương thức
-tinhLuong()
-Lớp con NhanVienSanXuat kế thừa NhanVien
-Thuộc tính
-soSanPham (int)
-Phương thức
-tinhLuong()
-donGia (double)
-YÊU CẦU
-ttmk©2
-• Mỗi lớp con kế thừa lại thuộc tính chung từ NhanVien
-PtHtTh©IT-FIT (v.2026)
-• Không sử dụng đa hình (chỉ tập trung kế thừa)
-• Viết chương trình main để tạo và hiển thị thông tin từng loại nhân viên
-Bài 2: Xây dựng chương trình quản lý Phương tiện giao thông gồm các lớp sau:
-Lớp cha PhuongTien
-Thuộc tính
-hangSanXuat
-Phương thức
-hienThiThongTin()
-namSanXuat
-giaBan
-Lớp con XeMay kế thừa PhuongTien
-Thuộc tính
-dungTichXiLanh
-Phương thức
-tinhThue()
-Lớp con Oto kế thừa PhuongTien
-Thuộc tính
-soChoNgoi
-YÊU CẦU
-• Lớp con kế thừa đầy đủ thuộc tính của lớp cha
-• Mỗi loại phương tiện có cách tính thuế khác nhau
-Phương thức
-tinhThue()
-• Viết main tạo mỗi loại phương tiện và hiển thị thông tin
-ttmk©3
+tuan  1 
+
+Lab1:	JAVA	Basic
+Contents
+Bài tập cơ bản về sử dụng biến, lệnh IF/ELSE, lệnh SWITCH/CASE, vòng lặp FOR và WHILE trong Java:
+ ................................................................................................................................................................ 2
+Viết chương trình in ra màn hình “Hello, World!”. ........................................................................ 2
+Viết chương trình nhập vào tên của bạn, sau đó in ra màn hình với nội dung “Hi, I am” cộng với
+tên bạn vừa nhập. .......................................................................................................................... 2
+Viết chương trình nhập vào 2 số A và B, sau đó in ra màn hình kết quả tính tổng. ....................... 2
+Viết chương trình nhập vào một số, sau đó in ra màn hình số vừa nhập là số chẵn hay lẻ ........... 2
+Viết chương trình nhập vào một tháng trong năm, sau đó bạn in ra màn hình tháng vừa nhập
+bằng tiếng Anh ............................................................................................................................... 3
+Yêu cầu viết một chương trình để có thể giúp quản lý các vật nuôi trong vườn thú. Hiện tại,
+vườn thú có một số động vật như sư tử (lion), rắn (snake) và khỉ (monkey). Mỗi loài động vật
+đều có các thuộc tính chung bao gồm tên động vật (name) và cân nặng (weight). Người chủ
+vườn thú cần biết mỗi ngày sư tử ăn bao nhiêu thức ăn (eat), chiều dài của mỗi con rắn (length)
+và thức ăn yêu thích của khỉ. Ví dụ như sau: .................................................................................. 4
+Làm việc với File/Folder trong Java ........................................................................................................ 4
+Delete file trong Java ...................................................................................................................... 4
+Delete Folder .................................................................................................................................. 5
+Tìm kiếm File .................................................................................................................................. 6
+Copy File ......................................................................................................................................... 7
+Ghi File nhị phân ............................................................................................................................. 7
+Đọc File nhị phân ............................................................................................................................ 8
+Đọc và ghi File ảnh .......................................................................................................................... 9
+
+tuan 2
 
 
-Lab2:	JAVA	Stream
-v Stream là dòng chảy liên tục, có thứ tự của các bytes dữ liệu chảy giữa chương trình và
-thiết bị ngoại vi
-v Dùng stream có thể kết nối nhiều thiết bị ngoại vi với chương trình
-v java.io.InputStream: stream nhập
-o int read() throws IOException
-o int read(byte b[]) throws IOException
-o int read(byte b[], int offset, int len)
-v java.io.OutputStream: stream xuất
-o void write(int b) throws IOException
-o void write(byte[] b) throws IOException
-o void write(byte[] b, int offset, int len)
-v java.io.InputStreamReader: chuyển InputStream dạng byte sang InputStream dạng ký tự
-v java.io.BufferedReader: hỗ trợ việc đọc văn bản từ một InputStream dạng ký tự
-o String readLine() throws IOException: dọc dòng văn bản kế tiếp trong
-InputStream
-v java.io.PrintWriter: gởi chuỗi ra một OutputStream
-Hoàn chỉnh các ví dụ sau:
-Ex1:
-public class InStream1 {
-public static void main(String args[]) {
-InputStream is = System.in;//keyboard = system.in
-while(true) {
-try {
-int ch = is.read();
-if(ch == -1 || ch == 'q') break;
-System.out.println((char)ch);
-}catch (IOException ie) {
-System.out.println("Error: "+ie);
-}
-}
-}
-}
-Ex2:
-public class InStream2 {
-public static void main(String[] args) {
-InputStream is = System.in;
-PT HTTH – BmIT – 8/2019
-1
-2
-PT HTTH – BmIT – 8/2019
-  while(true) {
-   try {
-    int num = is.available();
-    if(num > 0) {
-     byte[] b = new byte[num];
-     int result = is.read(b);
-     if(result == -1) break;
-     String s = new String(b);
-     System.out.print(s);
-    }else {
-     System.out.println('.');
-    }
-   }catch(IOException ie) {
-    System.out.println("Error: "+ie);
-   }
-  }
- }
-}
 
-Ex3:
-public class ReadLine {
- public static void main(String[] args) {
-  InputStreamReader isr = new InputStreamReader(System.in);
-  BufferedReader br = new BufferedReader(isr);
-  while(true) {
-   try {
-    String line = br.readLine();
-    if(line != null)
-     System.out.println(line);
-   }catch(IOException ie) {
-    System.out.println("Error: "+ie);
-   }
-  }
- }
-}
+OOP trong JavaVD(Tính Kế thừa và Đa hình): Xây dựng chương trình quản lý DongVatgồm các lớp sau:Lớp cha DongVatThuộc tínhPhương thứcloai(String)inThongTin()ten (String)an()tuoi(String)ngu()taoAmThanh()Lớp con Meo kế thừa Thuộc tínhPhương thứcleoTuong()Lớp con ChoThuộc tínhPhương thứcchay()GỢI Ý:
 
-Ex4:
-public class PrintString {
- public static void main(String[] args) {
-  OutputStream os = System.out;
-  PrintWriter pw = new PrintWriter(os);
-  pw.write("this is a string \r\n");
-  pw.println("this is a line");
-  pw.write("Bye!Bye!");
-  pw.flush();
-}
-}
-Bài tập Stream: sử dụng InputStream để nhập dữ liệu cho các bài tập Tuần 1, 2
-PT HTTH – BmIT – 8/2019
-3
+PtHtTh©IT-FIT(v.2026)ttmk©2Bài 1: Xây dựng chương trình quản lý Nhân viêngồm các lớp sau:Lớp cha NhanVienThuộc tínhPhương thứcmaNV (String)nhapThongTin()hoTen (StringhienThiThongTin()Lớp con NhanVienVanPhong kế thừa NhanVienThuộc tínhPhương thứcluongCoBan (double)tinhLuong()Lớp con NhanVienSanXuat kế thừa NhanVienThuộc tínhPhương thứcsoSanPham (int)tinhLuong()donGia (double)YÊU CẦU•Mỗi lớp con kế thừa lại thuộc tính chungtừ NhanVien
+
+PtHtTh©IT-FIT(v.2026)ttmk©3•Không sử dụng đa hình (chỉ tập trung kế thừa)•Viết chương trình mainđể tạo và hiển thị thông tin từng loại nhân viênBài 2: Xây dựng chương trình quản lý Phương tiện giao thônggồmcác lớp sau:Lớp cha PhuongTienThuộc tínhPhương thứchangSanXuathienThiThongTin()namSanXuatgiaBanLớp con XeMay kế thừa PhuongTienThuộc tínhPhương thứcdungTichXiLanhtinhThue()Lớp con Oto kế thừa PhuongTienThuộc tínhPhương thứcsoChoNgoitinhThue()YÊU CẦU•Lớp con kế thừa đầy đủthuộc tính của lớp cha•Mỗi loại phương tiện có cách tính thuế khác nhau•Viết maintạo mỗi loại phương tiện và hiển thị thông tin
 
 
-TUẦN 4 (socket)
-Sinh viên thực hiện các ví dụ sau:
-TCP
+tuan 3
+
+
+Lab2: JAVA StreamvStream là dòng chảy liên tục, có thứtựcủa các bytes dữliệu chảy giữa chương trình và thiết bịngoại vivDùng stream có thểkết nối nhiều thiết bịngoại vi với chương trìnhvjava.io.InputStream: stream nhậpoint read() throws IOExceptionoint read(byte b[]) throws IOExceptionoint read(byte b[], int offset, int len)vjava.io.OutputStream: stream xuấtovoid write(int b) throws IOExceptionovoid write(byte[] b) throws IOExceptionovoid write(byte[] b, int offset, int len)vjava.io.InputStreamReader: chuyển InputStream dạng byte sang InputStream dạng ký tựvjava.io.BufferedReader: hỗtrợviệc đọc văn bản từmột InputStream dạng ký tựoString readLine() throws IOException: dọc dòng văn bản kếtiếp trong InputStreamvjava.io.PrintWriter: gởi chuỗi ra một OutputStreamHoàn chỉnh các ví dụsau:Ex1:publicclassInStream1 {publicstaticvoidmain(String args[]) {InputStream is= System.in;//keyboard = system.inwhile(true) {try{intch= is.read();if(ch== -1 || ch== 'q') break;System.out.println((char)ch);}catch(IOException ie) {System.out.println("Error: "+ie);}}}}Ex2:publicclassInStream2 {publicstaticvoidmain(String[] args) {InputStream is= System.in;
+
+2PT HTTH –BmIT –8/2019while(true) {try{intnum= is.available();if(num> 0) {byte[] b= newbyte[num];intresult= is.read(b);if(result== -1) break;String s= newString(b);System.out.print(s);}else{System.out.println('.');}}catch(IOException ie) {System.out.println("Error: "+ie);}}}}Ex3:publicclassReadLine {publicstaticvoidmain(String[] args) {InputStreamReader isr= newInputStreamReader(System.in);BufferedReader br= newBufferedReader(isr);while(true) {try{String line= br.readLine();if(line!= null)System.out.println(line);}catch(IOException ie) {System.out.println("Error: "+ie);}}}}Ex4:publicclassPrintString {publicstaticvoidmain(String[] args) {OutputStream os= System.out;PrintWriter pw= newPrintWriter(os);pw.write("this is a string \r\n");pw.println("this is a line");pw.write("Bye!Bye!");pw.flush();
+
+3PT HTTH –BmIT –8/2019}}Bài tậpStream: sửdụng InputStream đểnhập dữliệu cho các bài tậpTuần 1, 2
+
+
+tuan 4
+
+THỰC HÀNH LAB 03–THREADsBài 1.Cài đặt các chương trình đã được giới thiệu trong buổi học lý thuyết (2 ví dụ)Bài 2.Viết  chương trình  tạo  ra một  đối tượng  FileTWrite kếthừa đối đối  tượng  Thread(hoặc cài đặt  giao diện Runable), cho phép viết một dãy sốngẫu nhiên vào tập tin. Đối tượng FileTWriter có thuộc tính tên tập tin cần viết. Viết hàm main tạo ra 3 đối tượngviết 3 tập tin chạy ở3 tiến trình đồng thời riêng biệt.Bài 3.Viết  chương  trình  tạo  ra  một  đối  tượng  FileTReader  kếthừa  đối  đối  tượng  Thread(hoặc  cài  đặt Runable), cho phép đọc nội dung một tập tin và hiển thịlên màn hình. Đốitượng FileReader có thuộc tính tên tập tin cần mở. Viết hàm main tạo ra 3 đối tượng đọc3 tập tin chạy ở3 tiến trình đồng thời riêng biệtBài 4.Viết chương trình tạo ra đối tượng đọc tập tin, viết tập tin chạy ởtừng tiến trìnhriêng (có xửlý đồng bộhóa dư liệu). Viết hàm main tạo ra đối tượng viết và đọc dữliệuvới tập tin giống nhau. Kiểm tra việc đồng bộhóa dữliệuBài 5.Viết chương trình mô phỏng bài toán "Người sản xuất -Người tiêu dùng", trong đó Người sản xuất sẽsản xuất ra một sốlượng ngẫu nhiên n sản phẩm nào đó rồi yêu cầu nhập kho. Người tiêu dùng sẽyêu cầu xuất kho một sốlượng ngẫu nhiên m sản phẩm nào đó từkho. Yêu cầu nhập kho chỉđược chấp nhận nếu sốlượng hàng hóa đưa vào không vượt quá sức chứa của kho, nếu không, phải chờcho đến khi có đủchổtrống trong kho. Yêu cầu xuất kho chỉđược chấp nhận khi còn đủhàng trong kho nếu không cũng phải chờGợi ý : Thiết kếcác lớp sau:-Lớp Kho: Có thuộc tính là sức chứa, phương thức khởi tạo gán giá trịcho sức chứa, các phương thức xem sốlượng hàng tồn, phương thức nhập kho, phương thức xuất kho. In thông báo mỗi khi nhập kho hay xuất kho thành công-Lớp Người Sản Xuất là một Thread: Có thuộc tính là kho đểnhập hàng. Phương thức khởi tạo gán giá trịcho kho nhập hàng. Phương thức sản xuất lặp lại công việc là tạo ra n sản phẩm ngẫu nhiên và chờđểnhập vào kho.-Lớp Người Tiêu Dùng là một Thread: Có thuộc tính là kho đểxuất hàng. Phương thức khởi tạo gán giá trịcho kho đểxuất hàng. Phương thức tiêu dùng lặp lại công việc là chờđểyêu cầu xuất m sản phẩm từkho.-Lớp Demo tạo ra một kho và 2 người sản xuất, 2 người tiêu dùng thực hiện việc nhập xuất trên cùng một kho
+
+
+tuan 5
+
+
+Sinh viên thực hiện cácví dụsau:TCP
 
 UDP
 
-BÀI TẬP THỰC HÀNH
-Bài 1:Viết chương trình theo mô hình Client-Server sử dụng dụng Socket ở chế độ có nối kết. Trong đó :
+BÀI TẬP THỰC HÀNHBài 1: Viết chương trình theo mô hình Client-Server sửdụng dụng Socket ởchếđộcó nối kết. Trong đó :+ Server làm nhiệm vụđọc một ký tựsốtừ'0' đến '9'.( Ví dụ: nhận số0 : trảvề"không" , 1 : trảvề"một" ; ... ... 9 : trảvề"chín", nếu nhận ký tựkhác sốthì trảvề"Không phải sốnguyên" ).+ Client sẽnhập vào 1 ký tự, gửi qua Server, nhận kết quảtrảvềtừServer và thểhiện lên màn hìnhInputStream/OutStreamDataInputStream/DataOutputStreamBài 2:(gởi nhiều tn cùng lúc + nhiều client)Viết ứng dụng Chat đơn giản sửdụng Socket TCP.Yêu cầu:Xây dựng Server có thểlắng nghe kết nối từClient.Client sau khi kết nối thành công với Server có thểgởi tin nhắn (text) qua lại với ServerBài 3:Cải tiến bài trên với yêu cầu: Server và Client được cài đặt trên 2 máy khác nhau. Client sẽxác định địa chỉIP và Port dựa theo tham sốtruyền vào (args)Bài 4:Viết chương trình date/time client/server TCP theo mô tảsau-Chương trình servercung cấp các chức năng sau: Date (xem ngày hệthống), Time (xem giờhệthống), Date&Time (xem ngày giờhệthống). Các chức năng này cóthểchọn qua một menu.-Client:
 
-+ Server làm nhiệm vụ đọc một ký tự số từ '0' đến '9'.
-  ( Ví dụ : nhận số 0 : trả về "không" , 1 : trả về "một" ; ... ... 9 : trả về "chín", nếu nhận ký tự khác số thì
-  trả về "Không phải số nguyên" ).
-+ Client sẽ nhập vào 1 ký tự, gửi qua Server, nhận kết quả trả về từ Server và thể hiện lên màn hình
-  InputStream/OutStream
-  DataInputStream/ DataOutputStream
-  Bài 2: (gởi nhiều tn cùng lúc + nhiều client)
-  Viết ứng dụng Chat đơn giản sử dụng Socket TCP.
-  Yêu cầu:
-  Xây dựng Server có thể lắng nghe kết nối từ Client.
-  Client sau khi kết nối thành công với Server có thể gởi tin nhắn (text) qua lại với Server
-  Bài 3:
-  Cải tiến bài trên với yêu cầu: Server và Client được cài đặt trên 2 máy khác nhau. Client sẽ xác định địa
-  chỉ IP và Port dựa theo tham số truyền vào (args)
-  Bài 4:
-  Viết chương trình date/time client/server TCP theo mô tả sau -
-  Chương trình server cung cấp các chức năng sau: Date (xem ngày hệ thống), Time (xem giờ hệ
-  thống), Date&Time (xem ngày giờ hệ thống). Các chức năng này có thể chọn qua một menu. -
-  Client:
+1.Kết nối đến server: clientnhập địa chỉserver cung cấp dịch vụvàport trước khi kết nối 2.Nếu kết nối được thìnhập yêu cầu cần phục vụ: 1.Time 2.Date 3.Date & Time3.Client nhận trảlời của server vàin ra màn hình-Server:1.Chờkết nối từclient tại IP/port đã đăng ký2.Cung cấp menu dịch vụ3.Xửlý yêu cầu và trảkết quảcho client4.(*) Cho phép nhiều client kết nối.Bài 5: Viết chương trình date/time client/server UDP -Chương trình client cung cấp các chức năng sau: 1.Nhập địa chỉserver cung cấp dịch vụvàport2.Nhập yêu cầu cần phục vụtừbàn phím vàgửi đến server đãnhập: 1.Time2.Date3.Date & Time -Nhận trảlời của server vàin ra màn hìnhBài 6:Viết chương trình môphỏng môhình tính toán ởserver(TCP):-Server cung cấp các hàm tính toán, client gửi yêu cầu tính toán, sau đógửi tham số(giátrịcủa n) đến server đểnhận kết quảtrảvề.-Các yêu cầu tính toán gửi từclient nhưsau: 1.Tổng 1+3+5+7+...+(2n+1) 2.Tổng 1*2 + 2*3+...+n*(n+1) 3.Biểu thức 1-2+3-4+..+(2n+1) Tương tựcâu trênnhưng sửdụng giao thức UDPBài 7:Viết chương trình gửi file (TCP) Client : 1.Kết nối đến server cóđịa chỉdo người sửdụng nhập vào, 2.Người sửdụng nhập tên file cần truyền đến server 3.Người sửdụng nhập đường dẫn trên server đểchứa file 4.Truyền file đến server Tương tựcâu trên, viết chương trình gửi file (UDP)Bài 8:Viết chương trình theo mô hình Client-Server sửdụng Socket ởchếđộcó kết nối. Trong đó:-Server sẽnhận các yêu cầu là chuỗi có khuôn dạng sau:“OP Operant1 Operant2\n”
 
-1. Kết nối đến server: client nhập địa chỉ server cung cấp dịch vụ và port trước khi kết nối
-2. Nếu kết nối được thì nhập yêu cầu cần phục vụ:
-3. Time
-4. Date
-5. Date & Time -
-6. Client nhận trả lời của server và in ra màn hình
-   Server:
-7. Chờ kết nối từ client tại IP/port đã đăng ký
-8. Cung cấp menu dịch vụ
-9. Xử lý yêu cầu và trả kết quả cho client
-10. (*) Cho phép nhiều client kết nối.
-    Bài 5:Viết chương trình date/time client/server UDP  -
-    Chương trình client cung cấp các chức năng sau:
-11. Nhập địa chỉ server cung cấp dịch vụ và port
-12. Nhập yêu cầu cần phục vụ từ bàn phím và gửi đến server đã nhập:
-13. Time
-14. Date -
-15. Date & TimeNhận trả lời của server và in ra màn hình
-    Bài 6:
-    Viết chương trình mô phỏng mô hình tính toán ở server(TCP): -
-    Server cung cấp các hàm tính toán, client gửi yêu cầu tính toán, sau đó gửi tham số (giá trị của n)
-    đến server để nhận kết quả trả về. -
-    Các yêu cầu tính toán gửi từ client như sau:
-16. Tổng 1+3+5+7+...+(2n+1)
-17. Tổng 1*2 + 2*3+...+n*(n+1)
-18. Biểu thức 1-2+3-4+..+(2n+1)Tương tự câu trên nhưng sử dụng giao thức UDP
-    Bài 7:
-    Viết chương trình gửi file (TCP)Client :
-19. Kết nối đến server có địa chỉ do người sử dụng nhập vào,
-20. Người sử dụng nhập tên file cần truyền đến server
-21. Người sử dụng nhập đường dẫn trên server để chứa file
-22. Truyền file đến server
-    Tương tự câu trên, viết chương trình gửi file (UDP)
-    Bài 8:
-    Viết chương trình theo mô hình Client-Server sử dụng Socket ở chế độ có kết nối. Trong đó: -
-    Server sẽ nhận các yêu cầu là chuỗi có khuôn dạng sau:
-    “OP Operant1 Operant2\n”
-    Trong đó:
-    o OP là một ký tự chỉ phép toán muốn thực hiện: ‘+’, ‘-‘, ‘*’, ‘/’
-    o Operant1, Operant2 là đối số của phép toán
-    o Các thành phần trên cách nhau bởi 1 ký tự trắng ‘ ‘.
-    o Kết thúc yêu cầu bằng ký tự xuống dòng ‘\n’
-    Mỗi khi server nhận được một thông điệp nó sẽ thực hiện phép toán Operant1 OP Operant2
-    để cho ra kết quả, sau đó đổi kết quả thành chuỗi và gởi về client -
-    Bài 9:
-    Client cho phép người dùng nhập các phép toán muốn tính theo cách thức thông thường. Ví
-    dụ: 100+200. Client tạo ra thông điệp yêu cầu theo đúng dạng do Server qui định, mô tả về
-    phép toán muốn Server thực thi, rồi gởi sang Server, chờ nhận kết quả trả về và in ra màn
-    hình.
-    Viết chương trình Client-Server theo mô tả sau:
-    Server:  -
-    Lưu trữ tập tin data.txt (đề cho) -
-    Client  - - -
-    Bài 10:
-    Cho phép nhiều client có thể truy cập và đọc nội dung tập tin.
-    Kết nối đến server,
-    Nhập tên file cần đọc nội dung.
-    Hiển thị ra màn hình nội dung file do server trả về
-    Viết chương trình Client-Server theo mô tả sau:
-    Server: -
-    Server có chức năng lưu tin nhắn của các client vào các tập tin riêng biệt (vd client1.txt,
-    client2.txt,…) - -
-    Client: - - -
-    Thông báo bằng tin nhắn đến client khi việc lưu trữ thành công.
-    Server cho phép nhiều client có thể truy cập và gởi tin nhắn cho mình.
-    Client kết nối đến server
-    Nhập các tin nhắn gởi đến server.
-    Kết thúc tin nhắn bằng chuỗi "HET"
-    deb http://http.kali.org/kali kali-rolling main non-free contrib
-    deb http://http.kali.org/kali kali-last-snapshot main non-free contrib
-    deb http://http.kali.org/kali kali-experimental main non-free contrib
-    deb-src http://http.kali.org/kali kali-rolling main non-free contrib
-    THỰC HÀNH LAB 06 – RMI
-    Bài 1. Máy chủ RMI trả về chuỗi "Hello, World!"
-    Mô tả. Viết một ứng dụng RMI trong đó client gọi phương thức từ server để nhận về chuỗi "Hello, World!".
-    Yêu cầu
-    Tạo interface chứa phương thức sayHello().
-    Triển khai phương thức này ở server.
-    Client gọi phương thức từ xa.
-    Bài 2.  Bài tập Tính Tổng Hai Số
-    Mô tả. Viết ứng dụng RMI cho phép client gửi hai số nguyên a và b đến server, sau đó server trả về tổng a + b.
-    Yêu cầu
-    Interface chứa phương thức int add(int a, int b).
-    Server triển khai phương thức này.
-    Client nhập hai số từ bàn phím và gửi đến server để nhận kết quả.
-    Bài 3.  Bài tập Kiểm Tra Số Nguyên Tố
-    Mô tả. Viết chương trình RMI giúp client kiểm tra xem một số có phải là số nguyên tố hay không.
-    Yêu cầu
-    Interface chứa phương thức boolean isPrime(int n).
-    Server kiểm tra số nguyên tố và trả kết quả.
-    Client nhập số và nhận kết quả từ server.
-    Bài 4.  Bài tập Quản Lý Danh Bạ
-    Mô tả. Xây dựng một hệ thống quản lý danh bạ từ xa bằng RMI. Client có thể thêm, sửa, xóa và tìm kiếm liên
-    hệ trong danh bạ lưu trên server.
-    Yêu cầu
-    Interface có các phương thức:
-    void addContact(String name, String phone)
-    String findContact(String name)
-    boolean deleteContact(String name)
-    Server lưu trữ danh bạ bằng HashMap.
-    Client nhập dữ liệu và gửiYêu cầu.
-    Bài 5. Bài tập Chat Đơn Giản với RMI
-    Mô tả. Tạo ứng dụng chat 1-1 giữa client và server thông qua RMI.
-    Yêu cầu
-    Interface có phương thức void sendMessage(String message).
-    Server nhận tin nhắn từ client và phản hồi.
-    Client nhập tin nhắn và hiển thị phản hồi.
-    Bài 6.  Bài tập Quản Lý Tài Khoản Ngân Hàng
-    Mô tả. Xây dựng ứng dụng ngân hàng từ xa, cho phép client kiểm tra số dư, gửi tiền và rút tiền.
-    Yêu cầu
-    Interface có các phương thức:
-    double getBalance()
-    void deposit(double amount)
-    boolean withdraw(double amount)
-    Server quản lý tài khoản với số dư ban đầu.
-    Client có thể gửi/rút tiền và kiểm tra số dư.
-    Bài 7.  Bài tập Tính Diện Tích Hình Học
-    Mô tả. Viết chương trình RMI giúp client tính diện tích hình chữ nhật, hình tròn, hình tam giác.
-    Yêu cầu
-    Interface có phương thức:
-    double rectangleArea(double width, double height)
-    double circleArea(double radius)
-    double triangleArea(double base, double height)
-    Server thực hiện các phép tính.
-    Client gửi thông số và nhận diện tích từ server.
-    Bài 8.  Bài tập Hệ Thống Đặt Vé Máy Bay
-    Mô tả. Viết ứng dụng RMI quản lý đặt chỗ vé máy bay từ xa.
-    Yêu cầu
-    Interface có các phương thức:
-    boolean bookTicket(String flightNumber, int seats)
-    int availableSeats(String flightNumber)
-    boolean cancelBooking(String flightNumber, int seats)
-    Server quản lý danh sách các chuyến bay.
-    Client có thể đặt, hủy vé và kiểm tra số ghế trống.
-    Bài 9. Hệ thống Đấu giá trực tuyến (Online Auction System)
-    Mô tả:
-    • Xây dựng hệ thống đấu giá trực tuyến bằng Java RMI.
-    • Người dùng có thể đăng ký sản phẩm đấu giá và đưa ra giá thầu (bid).
-    • Server quản lý danh sách sản phẩm và giá thầu, cập nhật giá cao nhất theo thời gian thực.
-    Yêu cầu chức năng:
-    1
-    ️. Chủ sở hữu (Seller):
-    • Thêm sản phẩm vào hệ thống đấu giá (tên sản phẩm, giá khởi điểm).
-    2
-    ️. Người đấu giá (Bidder):
-    • Xem danh sách sản phẩm đang đấu giá.
-    • Đưa ra giá thầu cao hơn giá hiện tại.
-    3
-    ️. Server (Auction Server):
-    • Quản lý danh sách sản phẩm & giá thầu.
-    • Cập nhật giá cao nhất cho từng sản phẩm.
-    • Thông báo khi có người đặt giá thầu cao hơn.
+Trong đó: oOP là một ký tựchỉphép toán muốn thực hiện: ‘+’, ‘-‘, ‘*’, ‘/’oOperant1, Operant2 là đối sốcủa phép toánoCác thành phần trên cách nhau bởi 1 ký tựtrắng ‘ ‘.oKết thúc yêu cầu bằng ký tựxuống dòng ‘\n’Mỗi khi server nhận được một thông điệp nó sẽthực hiện phép toán Operant1 OP Operant2 đểcho ra kết quả, sau đó đổi kết quảthành chuỗi và gởi vềclient-Client cho phép người dùng nhập các phép toán muốn tính theo cách thức thông thường. Ví dụ: 100+200. Client tạo ra thông điệp yêu cầu theo đúng dạng do Server qui định, mô tảvềphép toán muốn Server thực thi, rồi gởi sang Server, chờnhận kết quảtrảvềvà in ra màn hình.Bài 9:Viết chương trình Client-Server theo mô tảsau:Server:-Lưu trữtập tin data.txt (đềcho)-Cho phép nhiều client có thểtruy cập và đọc nội dung tập tin.Client -Kết nối đến server, -Nhập tên file cần đọc nội dung. -Hiển thịra màn hình nội dung file do server trảvềBài 10:Viết chương trình Client-Server theo mô tảsau:Server:-Server có chức năng lưu tin nhắn của các client vào các tập tin riêng biệt (vd client1.txt, client2.txt,...)-Thông báo bằng tin nhắn đến client khi việc lưu trữthành công.-Server cho phép nhiều client có thểtruy cập và gởi tin nhắn cho mình.Client:-Client kết nối đến server -Nhập các tin nhắn gởi đến server. -Kết thúc tin nhắn bằng chuỗi "HET"deb http://http.kali.org/kali kali-rolling main non-free contribdeb http://http.kali.org/kali kali-last-snapshot main non-free contribdeb http://http.kali.org/kali kali-experimental main non-free contribdeb-src http://http.kali.org/kali kali-rolling main non-free contrib
 
 
+tuan 6
 
-JDBC	(JAVA	DATABASE	CONNECTION)
-HƯỚNG DẪN THỰC HÀNH
-B1. Chuẩn bị môi trường và thiết lập kết nối - Tạo dự án Java mới và thêm thư viện (driver) JDBC cho SQLite (sqlite-jdbc)
-Class.forName(“org.sqlite.JDBC”);
-String url = “jdbc:sqlite:nhanvien.db”;
-Connection conn = DriverManager.getConnection(url, username,
-passwd);
-B2. Tạo đối tượng Statement từ Connection
-Statement stmt = conn.createStatement();
-B3. Thực thi các câu truy vấn từ các Statement đã tạo (hoặc tạo mới)
-3.1. Tạo bảng - Viết câu lệnh SQL để tạo một bảng mới tên NhanVien với
-các cột sau
-id(INTEGER, PRIMARY KEY)
-ten(TEXT, NOT NULL)
-chuc_vu(TEXT)
-String sql_create_table = “...” - Thực thi câu lệnh tạo bảng:
-stmt.executeUpdate(sql_create_table);
-3.2. Thêm dữ liệu - Viết ít nhất 3 câu lệnh sql INSERT INTO để thêm thông
-tin của 3 nhân viên vào bảng NhanVien. - Thực
-thi
-các
-câu
-lệnh
-INSERT
-bằng
-stmt.executeUpdate(slq_insert);
-B4. Truy vấn và hiển thị dữ liệu - Viết câu lệnh sql SELECT để lấy tất cả nhân viên (id, ten,
-chucvu) từ bảng NhanVien - Thực
-thi
-truy
-vấn
-bằng
-ResultSet
-rs
-stmt.executeQuery(sql_select); - Duyệt qua ResultSet: - Sử dụng vòng lặp while(rs.next()); - Lấy dữ liệu từng cột bằng các phương thức: rs.getInt(“id”) và
-rs.getString(“ten”) - In thông tin của từng nhân viên ra màn hình console
-B5. Đóng kết nối và giải phóng tài nguyên - Đóng các tài nguyên (theo thứ tự ngược lại)
-rs.close();
-stmt.close();
-conn.close();
-*XỬ LÝ NGOẠI LỆ - Bọc toàn bộ khối code JDBC trong một khối try
-catch(SQLException) để bắt và in ra các lỗi kết nối sql
-tiềm ẩn - Sử dụng khối finally để đảm bảo rằng các kết nối
-(Connection, Statement, ResultSet) luôn được đóng ngay cả
-khi xảy ra lỗi. - Sử dụng giao dịch (Transactions): - Thực hiện nhiều câu lệnh INSERT hoặc UPDATE trong một
-giao dịch duy nhất. - Tắt chế độ auto-commit: conn.setAutoCommit(false);
-==============================================================================
+-url--1.ViếtchươngtrìnhJavanhậnvàomộttênmiền(domain)từthamsốdònglệnhvàhiểnthị:hostname,địachỉIP(Vd:javaDomainInfo.javagoogle.com)2.ViếtchươngtrìnhJavakiểmtramộthostnamecótồntạihaykhông?NếutồntạithìhãyliệtkêtấtcảđịachỉIPcủahostnameđó.--Threads--3.Viếtchươngtrìnhtạovùngnhớđệmlưutrữsốnguyên-Thread1:nhậpsốtừbànphímđưavàobuffer.-Thread2:lấysốtừbuffervàtínhtổngcácsố.-Chươngtrìnhdừngkhinhậpsố-1--SocketTCP--4.XâydựngứngdụngTCPClient-Server:Serverlắngnghetạicổng6789.Nhậnmộtsốnguyênntừclient.TrảvềgiaithừacủanClientnhậnntừbànphím.Gửitớiserver.Nhậnkếtquả5.SửdụngTCPSocketxâydựngứngdụngServerlắngnghetạicổng6789.Nhậnmộtchuỗitừclient.Trảvềchuỗiviếthoa,sốkýtựtrongchuỗiClientnhậpchuỗitừbànphím.Gửitớiserver.Hiểnthịkếtquảnhậnđược
 
-- Chỉ gọi conn.commit() khi tất cả các thao tác đều
-  thành công, nếu không thì gọi conn.rollback() trong
-  khối catch() để hủy bỏ tất cả các thay đổi.
-  BÀI TẬP GỢI Ý THỰC HÀNH
 
-1. Quản lý Danh mục sản phẩm - Mở rộng bài tập NhanVien thành một hệ thống quản lý hoàn chỉnh
-   cho bảng SanPham (maSP, tenSP, gia, soluong) - Thực hành các thao tác: - Create (Thêm mới): Thêm ít nhất 3 sản phẩm. - Read (Truy vấn): Liệt kê tất cả sản phẩm hoặc Tìm kiếm
-   sản phẩm theo tenSP. - Update (Cập nhật): Thay đổi giá hoặc số lượng của một
-   sản phẩm theo maSP. - Delete (Xóa): Xóa một sản phẩm (theo maSP).
-2. Sử dụng giao dịch (Transaction) trong cập nhật dữ liệu
-3. Xử lý ngoại lệ (Exception Handling) triệt để - Thực hiện lại Bài tập 1 và áp dụng khối try-catch-finally một
-   cách nghiêm ngặt. - Đảm bảo rằng mọi tài nguyên JDBC (Connection, Statement,
-   ResultSet) luôn được đóng trong khối finally để tránh rò rỉ
-   tài nguyên (resource leakage), kể cả khi có lỗi SQLException
-   xảy ra.
-4. Sử dụng PreparedStatement để tăng cường bảo mật và hiệu năng
-5. Truy vấn dữ liệu nâng cao (Aggregation Functions) (tùy chọn bổ
-   sung) - Thêm nhiều bản ghi vào bảng NhanVien với cột lương (luong) - Thực hành truy vấn sqp với JDBC để: - Tính tổng lương SUM(luong)
+tuan 7 
 
-- Tìm mức lương trung bình AVG(luong) - Tìm nhân viên có mức lương cao nhất/ thấp nhất MIN/MAX(luong) - Đếm số lượng nhân viên theo chức vụ (COUNT và GROUP BY)
+
+THỰC HÀNH LAB 06–RMIBài 1.Máy chủRMI trảvềchuỗi "Hello, World!"Mô tả. Viết một ứng dụng RMI trong đó clientgọi phương thức từserverđểnhận vềchuỗi "Hello, World!".Yêu cầuTạo interfacechứa phương thức sayHello().Triển khai phương thức này ởserver.Clientgọi phương thức từxa.Bài 2.Bài tập Tính Tổng Hai SốMô tả. Viết ứng dụng RMI cho phép client gửi hai sốnguyên avà bđến server, sau đó server trảvềtổng a + b.Yêu cầuInterface chứa phương thức int add(int a, int b).Server triển khai phương thức này.Client nhập hai sốtừbàn phím và gửi đến server đểnhận kết quả.Bài 3.Bài tập Kiểm Tra SốNguyên TốMô tả. Viết chương trình RMI giúp client kiểm tra xem một sốcó phải là sốnguyên tốhay không.Yêu cầuInterface chứa phương thức boolean isPrime(int n).Server kiểm tra sốnguyên tốvà trảkết quả.Client nhập sốvà nhận kết quảtừserver.Bài 4.Bài tập Quản Lý Danh BạMô tả. Xây dựng một hệthống quản lý danh bạtừxabằng RMI. Client có thểthêm, sửa, xóa và tìm kiếm liên hệtrong danh bạlưu trên server.Yêu cầuInterface có các phương thức: void addContact(String name, String phone)String findContact(String name)boolean deleteContact(String name)Server lưu trữdanh bạbằngHashMap<String, String>.Client nhập dữliệu và gửiYêu cầu.Bài 5.Bài tập Chat Đơn Giản với RMIMô tả. Tạo ứng dụng chat 1-1 giữa client và serverthông qua RMI.Yêu cầuInterface có phương thức void sendMessage(String message).
+
+Server nhận tin nhắn từclient và phản hồi.Client nhập tin nhắn và hiển thịphản hồi.Bài 6.Bài tập Quản Lý Tài Khoản Ngân HàngMô tả. Xây dựng ứng dụng ngân hàng từxa, cho phép client kiểm tra sốdư, gửi tiền và rút tiền.Yêu cầuInterface có các phương thức: double getBalance()void deposit(double amount)boolean withdraw(double amount)Server quản lý tài khoản với sốdư ban đầu.Client có thểgửi/rút tiền và kiểm tra sốdư.Bài 7.Bài tập Tính Diện Tích Hình HọcMô tả. Viết chương trình RMI giúpclient tính diện tích hình chữnhật, hình tròn, hình tam giác.Yêu cầuInterface có phương thức: double rectangleArea(double width, double height)double circleArea(double radius)double triangleArea(double base, double height)Server thực hiện các phép tính.Client gửi thông sốvà nhận diện tích từserver.Bài 8.Bài tập HệThống Đặt Vé Máy BayMô tả. Viết ứng dụng RMI quản lý đặt chỗvé máy bay từxa.Yêu cầuInterface có các phương thức: boolean bookTicket(String flightNumber, int seats)int availableSeats(String flightNumber)boolean cancelBooking(String flightNumber, int seats)Server quản lý danh sách các chuyến bay.Client có thểđặt, hủy vé và kiểm tra sốghếtrống.Bài 9.Hệthống Đấu giá trực tuyến (Online Auction System)Mô tả:•Xây dựng hệthống đấu giá trực tuyếnbằng Java RMI.•Người dùng có thểđăng ký sản phẩm đấu giávà đưa ra giá thầu (bid).•Server quản lý danh sách sản phẩm và giá thầu, cập nhật giá cao nhất theo thời gian thực.
+
+Yêu cầu chức năng:1️.Chủsởhữu (Seller):•Thêm sản phẩm vào hệthống đấu giá (tên sản phẩm, giá khởi điểm).2️. Người đấu giá (Bidder):•Xem danh sách sản phẩm đang đấu giá.•Đưa ra giá thầu cao hơn giá hiện tại.3️. Server (Auction Server):•Quản lý danh sách sản phẩm & giá thầu.•Cập nhật giá cao nhất cho từng sản phẩm.•Thông báo khi có người đặt giá thầu cao hơn.
+
+
+tuan 8 
+
+
+HƯỚNG DẪN THỰC HÀNHB1. Chuẩn bịmôi trường và thiết lập kết nối-Tạo dựán Java mới và thêm thư viện (driver) JDBC cho SQLite (sqlite-jdbc)Class.forName(“org.sqlite.JDBC”);String url = “jdbc:sqlite:nhanvien.db”;Connection conn = DriverManager.getConnection(url, username, passwd);B2. Tạo đối tượng Statement từConnectionStatement stmt = conn.createStatement();B3. Thực thi các câu truy vấn từcác Statement đã tạo (hoặc tạo mới)3.1. Tạo bảng-Viết câu lệnh SQL đểtạo một bảng mới tên NhanVien với các cột sauid(INTEGER, PRIMARY KEY)ten(TEXT, NOT NULL)chuc_vu(TEXT)String sql_create_table = “...”-Thực thi câu lệnh tạo bảng:stmt.executeUpdate(sql_create_table);3.2. Thêm dữliệu-Viết ít nhất 3 câu lệnh sql INSERT INTO đểthêm thông tin của 3 nhân viên vào bảng NhanVien.-Thực     thi     các     câu     lệnh     INSERT     bằng stmt.executeUpdate(slq_insert);
+
+[](http://nhanvien.db/ "http://nhanvien.db/")
+
+B4. Truy vấn và hiển thịdữliệu-Viết câu lệnh sql SELECT đểlấy tất cảnhân viên (id, ten, chucvu) từbảng NhanVien-Thực    thi    truy    vấn    bằng    ResultSet    rs    = stmt.executeQuery(sql_select);-Duyệt qua ResultSet:-Sửdụng vòng lặp while(rs.next());-Lấy   dữliệu   từng   cột   bằng   các   phương   thức:   rs.getInt(“id”)   vàrs.getString(“ten”)-In thông tin của từng nhân viên ra màn hình consoleB5. Đóng kết nối và giải phóng tài nguyên-Đóng các tài nguyên (theo thứtựngược lại)rs.close();stmt.close();conn.close();*XỬLÝ NGOẠI LỆ-Bọc toàn bộkhối code JDBC trong một khối try-catch(SQLException) đểbắt và in ra các lỗi kết nối sql tiềm ẩn-Sửdụng khối finally đểđảm bảo rằng các kết nối (Connection, Statement, ResultSet) luôn được đóng ngay cảkhi xảy ra lỗi.-Sửdụng giao dịch (Transactions):-Thực hiện nhiều câu lệnh INSERT hoặc UPDATE trong một giao dịch duy nhất.-Tắt chếđộauto-commit: conn.setAutoCommit(false);
+
+-Chỉgọi conn.commit() khi tất cảcác thao tác đều thành công, nếu không thì gọi conn.rollback() trong khối catch() đểhủy bỏtất cảcác thay đổi.BÀI TẬP GỢI Ý THỰC HÀNH1. Quản lý Danh mục sản phẩm-Mởrộng bài tập NhanVien thành một hệthống quản lý hoàn chỉnh cho bảng SanPham (maSP, tenSP, gia, soluong)-Thực hành các thao tác:-Create (Thêm mới): Thêm ít nhất 3 sản phẩm.-Read (Truy vấn): Liệt kê tất cảsản phẩm hoặc Tìm kiếm sản phẩm theo tenSP.-Update (Cập nhật): Thay đổi giá hoặc sốlượng của một sản phẩm theo maSP.-Delete (Xóa): Xóa một sản phẩm (theo maSP).2. Sửdụng giao dịch (Transaction) trong cập nhật dữliệu3. Xửlý ngoại lệ(Exception Handling) triệt để-Thực hiện lại Bài tập 1 và áp dụng khối try-catch-finally một cách nghiêm ngặt.-Đảm  bảo  rằng  mọi  tài  nguyên  JDBC  (Connection,  Statement, ResultSet) luôn được đóng trong khối finally đểtránh rò rỉtài nguyên (resource leakage), kểcảkhi có lỗi SQLException xảy ra.4. Sửdụng PreparedStatement đểtăng cường bảo mật và hiệu năng5. Truy vấn dữliệu nâng cao (Aggregation Functions) (tùy chọn bổsung)-Thêm nhiều bản ghi vào bảng NhanVien với cột lương (luong)-Thực hành truy vấn sqp với JDBC để:-Tính tổng lương SUM(luong)
+
+-Tìm mức lương trung bình AVG(luong)-Tìm nhân viên có mức lương cao nhất/ thấp nhất MIN/MAX(luong)-Đếm sốlượng nhân viên theo chức vụ(COUNT và GROUP BY)

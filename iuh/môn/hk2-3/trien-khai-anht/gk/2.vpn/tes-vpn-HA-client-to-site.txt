@@ -60,7 +60,7 @@
 *Mục tiêu: Chi nhánh A nói chuyện được với Chi nhánh B.*
 
 1. **Trạng thái:** Vào pfSense 1 ➡️ *Status ➡️ IPsec* ➡️ **(Pass: Cột Status hiện chữ `ESTABLISHED`)**.
-2. **Thông mạch:** Từ máy Win10 (LAN A - `172.16.0.10`), ping sang máy chủ ubuntu (LAN B - `192.168.15.x`).
+2. **Thông mạch:** Từ máy Win10 (LAN A - `172.16.0.10`), ping sang máy chủ ubuntu (LAN B - `192.168.15.10`).
    * ➡️ **(Pass: Có Reply. Mạng 2 công ty đã hòa làm một)**.
 
 ---
@@ -70,7 +70,7 @@
 
 1. Đứng ở máy **Windows thật**, mở OpenVPN Connect và kết nối bằng file `.ovpn` (IP mặt tiền là `.100`). ➡️ **(Pass: Connected màu xanh)**.
 2. Từ máy **Windows thật**, mở CMD gõ:
-   * `ping 172.16.0.10` (Ping máy Win10) ➡️ **(Pass: Có Reply)**.
+   * `ping 172.16.0.100` (Ping máy Win10) ➡️ **(Pass: Có Reply)**.
    * `ping 192.168.200.10` (Ping máy DMZ) ➡️ **(Pass: Có Reply)**.
 3. Test đặc quyền: Từ máy Windows thật (đang bật VPN), mở trình duyệt truy cập vào IP của Win10 hoặc pfSense nội bộ `172.16.0.1` ➡️ **(Pass: Ra được màn hình đăng nhập pfSense)**.
 
