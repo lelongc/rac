@@ -1,0 +1,390 @@
+Chào anh Lê Thanh Long, để báo cáo của anh được chỉn chu và đầy đủ theo đúng yêu cầu bảo mật của tài liệu, tôi xin gửi anh bộ lệnh hoàn chỉnh nhất cho **Router East**. Anh hãy copy từng khối lệnh này vào cửa sổ Console của Router East nhé.
+
+### BÀI 2: CẤU HÌNH BẢO MẬT ROUTER EAST (HƯỚNG DẪN CHI TIẾT)
+Bài 2. Cài đặt EVE-NG (Emulated Virtual Environment – Next Generation) 
+Sinh viên viết lệnh thực hiện cấu hình bảo mật cho Router East.  
+Toàn bộ password phải được mã hóa,  
+a) Yêu cầu password: 08092023console khi thực hiên kết nối qua interface line 
+console.  
+b) Thiết lập bảo mật mode enable có yêu cầu pass: 08092023enable và cấu hình 
+Password enable  được mã hóa là 1012enable. 
+c) Thiết lập để router có thể sử dụng dịch vụ Telnet và SSH có yêu cầu pass là: 
+Tel@ssh 
+ SSH domain là hotensv.net, Username svhk1012, password Tel1012@ssh có 
+toàn quyền. 
+ Nếu không sử dụng trong 03 phút sẽ bị ngắt kết nối. Số lần đăng nhập sai tối 
+đa là 03.
+Anh hãy thực hiện tuần tự theo các bước này để cấu hình bảo mật đúng yêu cầu:
+
+**1. Mã hóa toàn bộ password (để đảm bảo không ai đọc được mật khẩu trong file cấu hình):**
+
+```text
+East# configure terminal
+East(config)# service password-encryption
+
+```
+
+**2. Bảo mật cổng kết nối vật lý (Line Console 0):**
+
+```text
+East(config)# line console 0
+East(config-line)# password 08092023console
+East(config-line)# login
+East(config-line)# exit
+
+```
+
+**3. Bảo mật chế độ đặc quyền (Enable Mode):**
+
+```text
+East(config)# enable password 08092023enable
+East(config)# enable secret 1012enable
+
+```
+
+**4. Cấu hình dịch vụ Telnet và SSH (Truy cập từ xa):**
+
+```text
+East(config)# ip domain-name hotensv.net
+East(config)# crypto key generate rsa
+! Lưu ý: Khi được hỏi số modulus, hãy nhập 1024
+East(config)# username svhk1012 privilege 15 secret Tel1012@ssh
+East(config)# line vty 0 4
+East(config-line)# login local
+East(config-line)# password Tel@ssh
+East(config-line)# transport input ssh telnet
+East(config-line)# exit
+
+```
+
+**5. Cấu hình quản lý phiên làm việc và giới hạn đăng nhập:**
+
+```text
+East(config)# line console 0
+East(config-line)# exec-timeout 3 0
+East(config-line)# exit
+East(config)# ip ssh authentication-retries 3
+East(config)# end
+
+```
+
+**6. Lưu cấu hình vào bộ nhớ để không bị mất khi tắt máy:**
+
+```text
+East# copy running-config startup-config
+
+```
+
+---
+
+### HƯỚNG DẪN CHỤP MÀN HÌNH & GIẢI THÍCH (CHO BÁO CÁO)
+
+Sau khi gõ xong toàn bộ lệnh trên, anh hãy thực hiện 2 thao tác sau để có kết quả nộp bài:
+
+* **Chụp màn hình:** Anh gõ lệnh `show running-config` và kéo chuột lên các mục `line console 0`, `line vty 0 4` và mục mật khẩu `enable`. Chụp hình những đoạn mật khẩu đã bị mã hóa thành các ký tự lộn xộn.
+* **Giải thích (Dùng cho file báo cáo):**
+* *Yêu cầu a:* Mật khẩu `08092023console` đã được đặt cho cổng Console, lệnh `login` kích hoạt việc yêu cầu mật khẩu khi kết nối qua cổng này.
+* *Yêu cầu b:* Lệnh `enable secret` tạo lớp bảo mật mạnh hơn cho chế độ đặc quyền, mật khẩu đã được mã hóa thành `1012enable`.
+* *Yêu cầu c:* Cần có lệnh `crypto key generate rsa` để tạo khóa bảo mật cho SSH hoạt động. Dịch vụ SSH và Telnet đã được bật (`transport input ssh telnet`), sử dụng tài khoản `svhk1012` với quyền truy cập cao nhất (`privilege 15`) để đảm bảo bảo mật.
+* *Yêu cầu tự động ngắt:* Lệnh `exec-timeout 3 0` giúp thiết bị tự động ngắt kết nối sau 03 phút không hoạt động, tăng tính an toàn cho hệ thống.
+
+
+
+Anh Lê Thanh Long cứ làm theo kịch bản này là đảm bảo đầy đủ các yêu cầu của Bài 2. Có cần tôi hỗ trợ kiểm tra lại lệnh của bài nào khác nữa không anh?
+
+bài 3
+
+---
+
+### PHẦN 1: DỰNG MÔ HÌNH (THIẾT LẬP TOPOLOGY)
+
+**Bước 1: Lấy 3 con Router (West, Central, East)**
+
+1. Nhấp chuột phải vào vùng trắng -> Chọn **Node** -> Chọn **Cisco IOL**.
+2. Bảng hiện ra, anh chỉnh:
+* **Number of nodes to add:** Điền số `3`.
+* **Image:** Chọn file có chữ `L3...` (Router).
+* **Name/Prefix:** Gõ `R`.
+* **Icon:** Chọn `Router.png`.
+* **Serial portgroups:** **BẮT BUỘC ĐỔI THÀNH SỐ 1** (để có cổng Serial s1/0, s1/1 như sơ đồ).
+
+
+3. Bấm **Save**. Nhấp chuột phải vào từng con, chọn **Edit** để đổi tên lại thành **West, Central, East** cho chuẩn.
+
+**Bước 2: Lấy 3 con Switch**
+
+1. Nhấp chuột phải -> **Node** -> **Cisco IOL**.
+2. Bảng hiện ra, anh chỉnh:
+* **Number of nodes to add:** Điền số `3`.
+* **Image:** **BẮT BUỘC** chọn file có chữ `L2...` (Switch).
+* **Name/Prefix:** Gõ `SW`.
+* **Icon:** Chọn `Switch.png`.
+
+
+3. Bấm **Save**. Xếp 3 con Switch nằm dưới 3 con Router.
+
+**Bước 3: Lấy 3 con PC**
+
+1. Nhấp chuột phải -> **Node** -> Kéo xuống dưới cùng chọn **Virtual PC (VPCS)**.
+2. Bảng hiện ra chỉnh **Number of nodes to add** thành `3`. Bấm **Save**. Xếp 3 PC nằm dưới 3 Switch.
+
+**Bước 4: Nối dây mạng theo đúng sơ đồ**
+Anh kéo biểu tượng phích cắm màu cam để nối:
+
+* **Router nối nhau (Dùng cổng Serial):** * Nối West sang Central -> Chọn cổng `s1/0` cho cả hai bên.
+* Nối Central sang East -> Chọn cổng `s1/1` cho cả hai bên.
+
+
+* **Router nối xuống Switch (Dùng cổng Ethernet):**
+* West (`e0/0`) cắm xuống SW1.
+* Central (`e0/0`) cắm xuống SW2.
+* East (`e0/0`) cắm xuống SW3.
+
+
+* **Switch nối xuống PC:** Nối lần lượt SW1 xuống PC1, SW2 xuống PC2, SW3 xuống PC3.
+
+> 📸 **CHỤP MÀN HÌNH 1:** Bôi đen toàn bộ thiết bị, nhấp chuột phải chọn **Start Selected** để bật xanh lên hết. Sau đó **chụp toàn bộ sơ đồ này** để báo cáo cho yêu cầu "1) Thiết lập mô hình như hình trên".
+> ✍️ **GIẢI THÍCH (Ghi vào báo cáo):** Em đã thiết lập mô hình gồm 3 Router nối với nhau bằng cáp Serial, các mạng LAN bên dưới sử dụng Switch Layer 2 để kết nối máy tính. Do sử dụng EVE-NG IOL, cổng FastEthernet (F0/0) trong hình được thay thế bằng cổng Ethernet (e0/0) có chức năng tương đương.
+
+---
+
+### PHẦN 2: BÀI 3 - CẤU HÌNH IP VÀ KIỂM TRA KẾT NỐI
+
+Anh nhấp chuột trái vào từng thiết bị để mở cửa sổ đen (PuTTY) và gõ lệnh cấu hình IP. *(Lưu ý: Switch không cần cấu hình, cứ để nó chạy tự nhiên).*
+
+**1. Cấu hình Router West:**
+
+```text
+West> enable
+West# configure terminal
+West(config)# interface e0/0
+West(config-if)# ip address 192.168.0.1 255.255.255.0
+West(config-if)# no shutdown
+West(config-if)# exit
+West(config)# interface s1/0
+West(config-if)# ip address 10.0.0.1 255.255.255.0
+West(config-if)# no shutdown
+West(config-if)# end
+West# write memory
+! Việc dùng lệnh write memory (hoặc copy run start) rất quan trọng để lưu cấu hình IP không bị mất
+
+```
+
+**2. Cấu hình Router Central:**
+
+```text
+Central> enable
+Central# configure terminal
+Central(config)# interface e0/0
+Central(config-if)# ip address 192.168.1.1 255.255.255.0
+Central(config-if)# no shutdown
+Central(config-if)# exit
+Central(config)# interface s1/0
+Central(config-if)# ip address 10.0.0.2 255.255.255.0
+Central(config-if)# no shutdown
+Central(config-if)# exit
+Central(config)# interface s1/1
+Central(config-if)# ip address 10.0.1.1 255.255.255.0
+Central(config-if)# no shutdown
+Central(config-if)# end
+Central# write memory
+
+```
+
+**3. Cấu hình Router East:**
+
+```text
+East> enable
+East# configure terminal
+East(config)# interface e0/0
+East(config-if)# ip address 192.168.2.1 255.255.255.0
+East(config-if)# no shutdown
+East(config-if)# exit
+East(config)# interface s1/1
+East(config-if)# ip address 10.0.1.2 255.255.255.0
+East(config-if)# no shutdown
+East(config-if)# end
+East# write memory
+
+```
+
+**4. Cấu hình 3 con PC (QUAN TRỌNG: Phải gõ save để lưu lại IP nếu không khởi động lại sẽ mất):**
+
+* Mở **PC1** gõ: `ip 192.168.0.5/24 192.168.0.1` sau đó nhấn Enter, tiếp tục gõ lệnh `save`
+* Mở **PC2** gõ: `ip 192.168.1.5/24 192.168.1.1` sau đó gõ lệnh `save`
+* Mở **PC3** gõ: `ip 192.168.2.5/24 192.168.2.1` sau đó gõ lệnh `save`
+
+> 📸 **CHỤP MÀN HÌNH 2:** Tại cửa sổ Router Central, gõ lệnh `show ip interface brief` và chụp kết quả.
+> ✍️ **GIẢI THÍCH:** Bảng kết quả (Brief interfaces information) cho thấy các cổng s1/0, s1/1 và e0/0 trên Router Central đã được gán IP chính xác theo quy hoạch mạng và đều ở trạng thái "up/up" (hoạt động tốt).
+
+**5. Kiểm tra kết nối trực tiếp giữa các Router (Ping thông):**
+Tại cửa sổ **Router West**, gõ lệnh ping tới Router Central:
+```text
+West# ping 10.0.0.2
+```
+*(Nếu hiện các dấu chấm than `!!!!!` là ping thành công)*
+
+> 📸 **CHỤP MÀN HÌNH 3:** Tại cửa sổ PC1, gõ lệnh `ping 192.168.0.1` và chụp kết quả. Đồng thời chụp kết quả ping từ Router West sang Central ở trên.
+> ✍️ **GIẢI THÍCH:** Bức ảnh chứng minh yêu cầu "Các thiết bị kết nối trực tiếp có thể ping thông" đã thành công. PC1 đã gửi gói tin đi qua Switch và ping thành công đến Default Gateway của nó là Router West, đồng thời Router West cũng ping thông sang Router Central kết nối trực tiếp với nó.
+
+---
+
+### PHẦN 3: BÀI 4 - ĐỊNH TUYẾN TĨNH (STATIC ROUTING)
+
+Bây giờ ta "chỉ đường" cho các Router biết cách đi đến các mạng ở xa.
+
+**1. Mở Router West gõ:**
+
+```text
+West# configure terminal
+West(config)# ip route 10.0.1.0 255.255.255.0 10.0.0.2
+West(config)# ip route 192.168.1.0 255.255.255.0 10.0.0.2
+West(config)# ip route 192.168.2.0 255.255.255.0 10.0.0.2
+West(config)# end
+West# write memory
+
+```
+
+**2. Mở Router Central gõ:**
+
+```text
+Central# configure terminal
+Central(config)# ip route 192.168.0.0 255.255.255.0 10.0.0.1
+Central(config)# ip route 192.168.2.0 255.255.255.0 10.0.1.2
+Central(config)# end
+Central# write memory
+
+```
+
+**3. Mở Router East gõ:**
+
+```text
+East# configure terminal
+East(config)# ip route 10.0.0.0 255.255.255.0 10.0.1.1
+East(config)# ip route 192.168.0.0 255.255.255.0 10.0.1.1
+East(config)# ip route 192.168.1.0 255.255.255.0 10.0.1.1
+East(config)# end
+East# write memory
+
+```
+
+> 📸 **CHỤP MÀN HÌNH 4:** Tại Router West, gõ lệnh `show ip route` và chụp kết quả.
+> ✍️ **GIẢI THÍCH (Trả lời câu hỏi "Does it reveal something?"):** Bảng định tuyến (Routing table) tiết lộ các con đường mà Router đã học được. Chữ "C" (Connected) báo hiệu các mạng cắm trực tiếp vào Router (mạng 10.0.0.0 và 192.168.0.0). Đặc biệt, chữ "S" (Static) cho thấy Router đã được cấu hình thủ công để biết đường đi đến các mạng ở xa (ví dụ mạng 192.168.2.0) thông qua địa chỉ IP trạm kế tiếp (next-hop) là 10.0.0.2 của Router Central.
+
+> 📸 **CHỤP MÀN HÌNH 5:** 
+- Tại **Router West**, gõ lệnh: `traceroute 192.168.2.1` (kiểm tra traceroute trên Router theo yêu cầu bài)
+- Tại **PC1**, gõ lệnh `trace 192.168.2.5` và sau đó gõ `ping 192.168.2.5` (kiểm tra ping, tracert trên PC). 
+Chụp lại các kết quả này.
+
+> ✍️ **GIẢI THÍCH (Trả lời yêu cầu "See more results with ping, traceroute"):** 
+- Kết quả **Ping** thành công chứng tỏ máy PC1 ở mạng West đã có thể giao tiếp với máy PC3 ở mạng East. 
+- Lệnh **traceroute (trên Router)** và **trace (trên PC)** tiết lộ chính xác đường đi qua các trạm (hop) của gói tin: Gói tin xuất phát từ PC1 -> Đi lên Gateway West (192.168.0.1) -> Nhảy qua Central (10.0.0.2) -> Nhảy qua East (10.0.1.2) -> Cuối cùng chuyển xuống PC3 (192.168.2.5). Điều này khẳng định Static Route đã cấu hình đúng trên toàn mạng.
+
+Anh làm theo trình tự này là có ngay một file báo cáo hoàn hảo không trượt điểm nào nhé! Mắc kẹt chỗ nào anh cứ nhắn ngay.
+
+---
+
+### PHẦN 4: BÀI 5 - STATIC ROUTING + INTERNET
+
+**1. Thiết lập mô hình (Phát triển từ Bài 4):**
+- Thêm 1 Router (Cisco IOL) đặt tên là **Internet**.
+- Thêm 1 Switch (Cisco IOL L2) đặt tên là **SW7**.
+- Thêm 1 PC (VPCS) đặt tên là **C4**.
+- Nối dây:
+  + Nối cổng **Serial** từ Router **B.Building (Central)** sang Router **Internet** (Ví dụ cổng `s1/2` bên Central nối sang `s1/0` bên Internet).
+  + Nối cổng **Ethernet** (`e0/0`) từ Router **Internet** xuống Switch **SW7**.
+  + Nối từ **SW7** xuống PC **C4**.
+*(Vì đề không cung cấp IP cụ thể cho nhánh mạng mới, ta sẽ tự quy hoạch IP tiếp tục tịnh tiến: Mạng nối giữa Central và Internet là `10.0.2.0/24`. Mạng LAN của PC C4 là `192.168.3.0/24`)*
+
+> 📸 **CHỤP MÀN HÌNH 6:** Chụp toàn bộ sơ đồ mạng mới (đã nhấp Start để thiết bị bật xanh) để nộp cho yêu cầu "1) Thiết lập mô hình như hình".
+
+**2. Cấu hình IP cho các thiết bị mới và cổng mới (Nhớ lưu cấu hình):**
+
+*Tại Router B.Building (Central):* (Cấu hình thêm IP cho cổng Serial nối ra Internet)
+```text
+Central# configure terminal
+Central(config)# interface s1/2
+Central(config-if)# ip address 10.0.2.1 255.255.255.0
+Central(config-if)# no shutdown
+Central(config-if)# end
+Central# write memory
+```
+
+*Tại Router Internet:*
+```text
+Internet> enable
+Internet# configure terminal
+Internet(config)# interface s1/0
+Internet(config-if)# ip address 10.0.2.2 255.255.255.0
+Internet(config-if)# no shutdown
+Internet(config-if)# exit
+Internet(config)# interface e0/0
+Internet(config-if)# ip address 192.168.3.1 255.255.255.0
+Internet(config-if)# no shutdown
+Internet(config-if)# end
+Internet# write memory
+```
+
+*Tại PC C4:*
+```text
+C4> ip 192.168.3.5/24 192.168.3.1
+C4> save
+```
+
+**3. Cấu hình Định tuyến (Default Route hướng ra Internet và Static Route quay về nội bộ):**
+
+*Tại Router A.Building (West):* Thêm Default Route đẩy mọi gói tin lạ về Central.
+```text
+West# configure terminal
+West(config)# ip route 0.0.0.0 0.0.0.0 10.0.0.2
+West(config)# end
+West# write memory
+```
+
+*Tại Router C.Building (East):* Thêm Default Route đẩy mọi gói tin lạ về Central.
+```text
+East# configure terminal
+East(config)# ip route 0.0.0.0 0.0.0.0 10.0.1.1
+East(config)# end
+East# write memory
+```
+
+*Tại Router B.Building (Central):* Thêm Default Route đẩy các gói tin đi ra hướng Internet.
+```text
+Central# configure terminal
+Central(config)# ip route 0.0.0.0 0.0.0.0 10.0.2.2
+Central(config)# end
+Central# write memory
+```
+
+*Tại Router Internet:* Chỉ hướng đường về mạng nội bộ (Sử dụng Summary Route gộp dải IP).
+```text
+Internet# configure terminal
+Internet(config)# ip route 192.168.0.0 255.255.0.0 10.0.2.1
+Internet(config)# ip route 10.0.0.0 255.255.0.0 10.0.2.1
+Internet(config)# end
+Internet# write memory
+```
+*(Ghi chú: Lệnh định tuyến trên Router Internet là để Router này biết cách gửi gói tin trả về cho 3 mạng A, B, C)*
+
+> 📸 **CHỤP MÀN HÌNH 7:** Tại cửa sổ **PC C4**, gõ lệnh `ping 192.168.0.5` (Ping tới máy của nhánh A.Building) và chụp kết quả.
+> ✍️ **GIẢI THÍCH (Cho yêu cầu "2) Dùng Static routing định tuyến các PC ping thông"):** Kết quả ping thành công từ PC C4 (Internet) vào PC trong mạng nội bộ A.Building chứng tỏ mô hình đã liên thông toàn bộ nhờ các cấu hình định tuyến tĩnh và tuyến đường mặc định (Default Route).
+
+**4. Bảng định tuyến và Giải thích (Routing Table):**
+
+> 📸 **CHỤP MÀN HÌNH 8:** Tại cửa sổ Router **B.Building (Central)**, gõ lệnh `show ip route` và chụp kết quả.
+> ✍️ **GIẢI THÍCH (Cho yêu cầu "3) Show routing table và giải thích các thành phần?"):** 
+- Các dòng có chữ **"C"** (Connected): Là các mạng kết nối trực tiếp vào Router Central (ví dụ mạng 10.0.0.0, 10.0.1.0, 10.0.2.0). 
+- Các dòng có chữ **"S"** (Static): Là các đường đi được chỉ định thủ công bằng Static Route (như mạng 192.168.2.0 học từ Bài 4).
+- Dòng có chữ **"S*"** (Candidate Default): Dấu `*` báo hiệu đây là tuyến đường mặc định (Default Route `0.0.0.0/0`). Bất kỳ gói tin nào có địa chỉ đích không nằm trong các mạng "C" hoặc "S" hiện có sẽ được đẩy ra cổng hướng về Internet (via 10.0.2.2).
+
+**5. Đường đi của gói tin:**
+
+> 📸 **CHỤP MÀN HÌNH 9:** Tại cửa sổ **PC C4**, gõ lệnh `trace 192.168.0.5` và chụp lại kết quả.
+> ✍️ **GIẢI THÍCH (Cho yêu cầu "4) Cho biết đường đi gói tin"):** Lệnh trace (traceroute) hiển thị các trạm mà gói tin đi qua. Khi PC C4 giao tiếp với PC ở A.Building, đường đi sẽ là: 
+1. Đi lên Gateway của nó là Router Internet (192.168.3.1).
+2. Chuyển sang Router B.Building/Central (10.0.2.1).
+3. Chuyển tiếp sang Router A.Building/West (10.0.0.1).
+4. Về đến đích là máy PC trong mạng A (192.168.0.5).
+
+Hoàn thành Bài 5. Chúc anh làm báo cáo tốt!
