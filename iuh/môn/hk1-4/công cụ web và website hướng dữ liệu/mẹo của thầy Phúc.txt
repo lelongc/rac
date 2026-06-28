@@ -1,0 +1,37 @@
+farmwork java thiên về aninoneciton
+các @ có ý nghĩa là thay vì cấu hình các controller, thì các @ biến các hàm thành chức năng bắt request
+
+các biến hàm thành chức năng bắt request server
+@annotation = chú thích, khai báo để sử dụng @interface
+
+
+
+- tips for project
+
+- tổ chức dự án
+ meo:
+kinh nghiệm cá nhân
+1. tạo dự án spring boot thì có mục main ( chứa source code của dự án) trong folder này chỉ có 1 package (tên của công ty, 1 nhóm dựa án
+.com.iuh) trong pakage chứa 4 thư mục
+1.1. controller (@controler, @autowide, @getmapping, @putmaping
+1.2. model (@enity, @data, @arjsConstructor, @JSonAndEnityInfo, @colum, @id, @generante 
+1.3. Repository ( không cần code chỉ cần khai báo interface sẽ tự động bung code) @repository
+1.4. Service (@autowide, @service)
+
+gồm 5 file cấu hình,
+file 1. khai báo @còngifuretion
+file 2. @bin map với 1 cái password
+
+lớp main entrii - điểm vào của project, mọi thứ bắt đầu từ đây @springbootAction...
+Lớp cấu hình resource @configrution
+
+Resource 
+	static chứa tĩnh: css, js, image
+	template chứa: thymleaf, html
+
+Thầy chấm theo môn học
+giao diện nên tổ chứ MVC, CRUD, database có 4 -5 bảng
+chức năng theo cụm,
+shopping cart +1 điểm
+
+
