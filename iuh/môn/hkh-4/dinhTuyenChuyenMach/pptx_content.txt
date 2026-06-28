@@ -1,0 +1,567 @@
+
+--- Slide 1 ---
+ThS
+: 
+Phạm
+ Thái Khanh
+phamthaikhanh@iuh.edu.vn
+Khoa
+ CNTT- ĐH 
+Công
+ 
+Nghiệp
+ TP.HCM
+HƯỚNG DẪN CÔNG CỤ
+
+--- Slide 2 ---
+UNetLab
+EVE-NG (Emulated Virtual Environment – Next Generation)
+C
+ông cụ giả lập (emulator) mạnh nhất hiện nay. thừa hưởng các tính năng của UnetLab
+.
+EVE-NG có thể giả lập được rất nhiều loại thiết bị mạng đang được sử dụng rộng rãi, với nhiều nền tảng hệ điều hành khác nhau: 
+R
+outer/switch của Cisco (Cisco IOL hoặc IOS trên nền Dynamip Server)
+Juniper
+Firewall 
+Các thiết bị cuối 
+Đ
+ể kiểm tra thiết kế, kiểm thử
+, vận hành thệ thống thực trên nền tảng ảo hóa
+ 
+tiết kiệm chi phí
+.
+Phạm Thái Khanh
+2
+
+--- Slide 3 ---
+DOWNLOAD 
+EVE-NG
+https://www.eve-ng.net/index.php/download/
+Có
+ 
+thể
+ 
+chọn
+ EVE 
+và
+ 
+Vmware
+ free (
+nếu
+ 
+chưa
+ 
+có
+)
+Phạm Thái Khanh
+3
+
+--- Slide 4 ---
+Thiết lập Vmware – EVE-NG
+Vào Vmware -&gt; open
+Browse đến
+ 
+folder chứa 
+EVE-COMM-VM 
+-&gt; Open
+Nhập
+ tên máy ảo-&gt;
+Browse để chọn
+ nơi
+ lưu 
+máy ảo -&gt; Import
+Phạm Thái Khanh
+4
+
+--- Slide 5 ---
+Vmware-Edit Virtual Machine Settings
+Cấu hình máy ảo, 
+t
+ùy 
+cấu hình máy thật
+ thiết lập máy ảo phù hợp:
+RAM 
+CPU
+HDD
+Network
+ Adapter
+Phạm Thái Khanh
+5
+Ok và start máy ảo lên
+
+--- Slide 6 ---
+Khởi Động EVE-NG Và Thiết Lập Ban Đầu
+Sau khi máy ảo khởi động xong 
+Tài khoản/mật khẩu mặc định của EVE-NG là 
+root 
+/ 
+eve
+Nhập mật khẩu mới cho EVE-NG và xác nhận
+Phạm Thái Khanh
+6
+
+--- Slide 7 ---
+Khởi Động EVE-NG Và Thiết Lập Ban Đầu
+Đặt tên máy ảo 
+Cấu hình DNS domain mane: 
+mssvten.com
+VD 
+Phan Văn Trúng MSSV 17181921
+Phạm Thái Khanh
+7
+Tên máy ảo: EVE_Trung
+17181921trung.com
+
+--- Slide 8 ---
+Khởi Động EVE-NG Và Thiết Lập Ban Đầu
+Chọn phương thức cấu hình IP cho card mạng server ubuntu.
+DHCP (nếu lab có thể chọn dhcp cho nhanh)
+Static (nếu hệ thống thật nên chọn static vì là server)
+            (Để lựa chọn dung spacebar)
+Phạm Thái Khanh
+8
+
+--- Slide 9 ---
+Khởi Động EVE-NG Và Thiết Lập Ban Đầu
+Tiếp theo là máy chủ đồng bộ thời gian thực. (đễ trống nếu không dùng)
+Proxy Server (chúng ta kết nối trực tiếp nên để direct)
+Phạm Thái Khanh
+9
+
+--- Slide 10 ---
+Khởi Động EVE-NG Và Thiết Lập Ban Đầu
+Sau khi EVE-NG khởi động lên tài khoản và mật khẩu mặc định của EVE-NG là 
+root/eve
+Thực hiện cập nhật: 
+apt-get update
+Phạm Thái Khanh
+10
+
+--- Slide 11 ---
+Khởi Động EVE-NG Và Thiết Lập Ban Đầu
+Sau 
+khi
+ EVE-NG 
+khởi
+ 
+động
+ 
+lên
+ 
+tài
+ 
+khoản
+ 
+và
+ 
+mật
+ 
+khẩu
+ 
+mặc
+ 
+định
+ 
+của
+ EVE-NG 
+là
+ 
+root/eve
+Thực
+ 
+hiện
+ 
+cập
+ 
+nhật
+: 
+apt-get update 
+Thực
+ 
+hiện
+: 
+apt-get upgrade (
+chấp
+ 
+nhận
+ 
+hết
+)
+Phạm Thái Khanh
+11
+
+--- Slide 12 ---
+Khởi Động EVE-NG Và Thiết Lập Ban Đầu
+Đăng nhập qua web
+Phạm Thái Khanh
+12
+admin
+eve
+
+--- Slide 13 ---
+Bộ Công Cụ Windows Client Side
+Bộ công cụ
+ Windows
+ client cung cấp 
+mọi thứ cần thiết để 
+phục vụ công việc/ Lab để 
+chạy các ứng dụng telnet, vnc, wirehark, rdp
+ 
+khi 
+thực hiện 
+trên EVE-NG Nó bao gồm:
+Wireshark 3.0.6.0  installation
+UltraVNC 1.2.3.1  installation
+putty 0.73 (used as default telnet client)
+plink 0.73 (for wireshark)
+all necessary wrappers
+It will modify windows registry files for proper work
+It will save all the files on the local PC if one would like to modify for example, using SecureCRT instead of default Putty.
+Windows 8 and 10 reg files to support tabbed SecureCRT
+Auto detection of Windows version (7, 8, 10) ( x64 only supported )
+Phạm Thái Khanh
+13
+
+--- Slide 14 ---
+Bộ Công Cụ Windows Client Side
+https://www.eve-ng.net/index.php/download/
+Phạm Thái Khanh
+14
+
+--- Slide 15 ---
+Install Windows Client Side
+Install EVE-NG-Win-Client (run as admin)
+Phạm Thái Khanh
+15
+
+--- Slide 16 ---
+Giới Thiệu Về IOL
+ 
+IOL
+ là 
+I
+OS 
+O
+n 
+L
+inux
+ 
+Cisco IOS 
+là 
+I
+nternetwork 
+O
+perating 
+S
+ystem
+ 
+Đây
+ 
+là
+ 
+điểm
+ 
+khác
+ 
+nhau
+ 
+cơ
+ 
+bản
+ 
+giữa
+ 
+bản
+ Free 
+và
+ Professional/Learning. 
+Bản
+ Pro 
+không
+ 
+cần
+ 
+thêm
+ 
+các
+ IOL 
+vào
+ 
+đã
+ 
+có
+ 
+tích
+ 
+hợp
+.
+Bản
+ Pro 
+cần
+ 
+có
+ 400$.
+Có
+ 
+thể
+ 
+tạo
+ 
+và
+ 
+phân
+ 
+quyền
+ user.
+Vậy
+ 
+chúng
+ ta 
+cần
+ 
+chép
+ 
+vào
+ 
+đâu
+ 
+trong
+ EVE-NG?
+/opt/
+unetlab
+/addons/
+iol
+/bin/
+Phạm Thái Khanh
+16
+
+--- Slide 17 ---
+Giới Thiệu Về IOL
+Một số bản IOL thông dụng:
+L3-ADVENTERPRISEK9-M-15.2-M5.3.bin
+ -&gt; 
+IOL 
+đùng
+ để giả 
+lập
+ Router 
+L3-ADVENTERPRISEK9-M-15.4-2T.bin
+ -&gt; 
+IOL 
+đùng
+ để giả 
+lập
+ Router 
+L2-ADVENTERPRISEK9-M-15.2-20150703.bin 
+    
+ 
+IOL 
+đùng
+ để giả 
+lập
+ Switch L2 
+L2-ADVENTERPRISEK9-M-15.2-IRON-20151103.bin
+  
+ 
+IOL 
+đùng
+ để giả 
+lập
+ Switch L2
+Có 
+thể
+ trong 
+quá
+ trình 
+lưu lạc trong dân gian 
+mạng 
+có tên 
+file 
+khác nhau
+Phạm Thái Khanh
+17
+
+--- Slide 18 ---
+COPY VÀO EVE-NG
+Các
+ 
+bạn
+ 
+có
+ 
+nhiều
+ 
+cách
+ copy 
+vào
+ EVE-NG 
+khác
+ 
+nhau
+ 
+cách
+ 
+nào
+ 
+cũng
+ 
+được
+ 
+miễn
+ 
+các
+ 
+bạn
+ 
+thấy
+ 
+dễ
+ 
+dùng
+ 
+thuận
+ 
+lợi
+ 
+Một
+ 
+trong
+ 
+các
+ 
+cách
+ 
+là
+ 
+dùng
+ 
+công
+ 
+cụ
+ 
+WinSCP 
+FileZilla 
+cũng
+ ok 
+tất
+.  
+Phạm Thái Khanh
+18
+
+--- Slide 19 ---
+Dùng WinSCP connect vào EVE-NG
+Run WinSCP kết nối vào EVE-NG
+Phạm Thái Khanh
+19
+root
+eve
+
+--- Slide 20 ---
+Dùng WinSCP connect vào EVE-NG
+Chép
+ IOL 
+vào
+ 
+đâu
+ ?
+/opt/
+unetlab
+/addons/
+iol
+/bin
+Phạm Thái Khanh
+20
+Source
+IOL
+destination
+
+--- Slide 21 ---
+Tạo file Li vào EVE-NG
+Sau khi đã copy xong ta vào EVE-NG tạo key
+Login: root và pass:eve 
+Vào nơi lưu IOL trên EVE 
+root@eve-ng:~#
+cd 
+/opt/unetlab/addons/iol/bin
+Phạm Thái Khanh
+21
+
+--- Slide 22 ---
+Lấy License IOU và Tạo file iourc
+Vào folder: cd /opt/unetlab/addons/iol/bin
+Lệnh lis: 
+ls –l
+Để tạo key thực hiện lệnh
+	#
+python
+ CiscoIOUKeygen.py
+Phạm Thái Khanh
+22
+ 
+#echo ‘[license]
+&gt;eve-ng = 972f30267ef51616;’ &gt;&gt;iourc
+
+--- Slide 23 ---
+Dùng WinSCP connect vào EVE-NG
+Kiểm
+ 
+tra
+ license
+Nếu
+ 
+chưa
+ 
+có
+ 
+license key
+ 
+vào
+ file 
+này
+ 
+nhập
+ 
+vào
+ 
+kết
+ 
+quả
+ 
+khi
+ run 
+tạo
+ 
+ra
+ 
+và
+ 
+save
+Sau 
+đó
+ 
+thực
+ 
+hiện
+ fix permission 
+lệnh
+ 
+chmod
+(0755)
+ 
+/opt/
+unetlab
+/wrappers/
+unl_wrapper
+ –a 
+fixpermissions
+Phạm Thái Khanh
+23
+
+--- Slide 24 ---
+Tạm
+ Hoàn Thành 
+Cài
+ EVE-NG
+Phạm Thái Khanh
+24
