@@ -1,36 +1,70 @@
 import glob
 import xml.etree.ElementTree as ET
-import base64
+import sys
 
-def check_configs():
-    labs = glob.glob("/opt/unetlab/labs/*.unl")
-    print("Dang quet tat ca cac Lab de tim xem EVE-NG luu cau hinh nhu the nao...")
-    
-    found_config = False
-    for lab in labs:
-        try:
-            tree = ET.parse(lab)
-            root = tree.getroot()
-            for node in root.findall('.//node'):
-                config = node.find('config')
-                if config is not None and config.text and config.text.strip():
-                    print("\n" + "="*50)
-                    print("THAY CAU HINH TRONG LAB: {} (Node: {})".format(lab, node.get('name')))
-                    print("Thuoc tinh 'config' cua Node nay: {}".format(node.get('config')))
-                    print("="*50)
-                    print("Noi dung ben trong the <config> (500 ky tu dau tien):")
-                    raw_text = config.text.strip()
-                    print(repr(raw_text[:500]))
-                    found_config = True
-                    break # Just show one node to keep it short
-            if found_config:
-                break
-        except Exception as e:
-            pass
+def parse_lab(filepath):
+    try:
+        tree = ET.parse(filepath)
+        root = tree.getroot()
+        lab_name = root.get('name', 'Unknown Lab')
+        print("="*70)
+        print("LAB NAME: {}".format(lab_name))
+        print("FILE:     {}".format(filepath))
+        print("="*70)
+        
+        networks = {}
+        # 1. Quet tat ca cac network (Vung ket noi/Cable)
+        for net in root.findall('.//network'):
+            net_id = net.get('id')
+            net_name = net.get('name')
+            networks[net_id] = {'name': net_name, 'connected_nodes': []}
             
-    if not found_config:
-        print("\nKHONG TIM THAY cau hinh nao duoc luu trong tat ca cac file .unl!")
-        print("-> Dieu nay co nghia la ban chua an nut 'Export CFG' tren giao dien Web.")
+        # 2. Quet tat ca cac thiet bi (Nodes)
+        for node in root.findall('.//node'):
+            node_id = node.get('id')
+            node_name = node.get('name')
+            template = node.get('template')
+            left = node.get('left')
+            top = node.get('top')
+            
+            print("\n[+] Thiet bi {}: {} (Loai: {})".format(node_id, node_name, template))
+            print("    Toa do ban do: Left={}, Top={}".format(left, top))
+            
+            # Quet cac cong (Interfaces) cua thiet bi nay
+            for iface in node.findall('.//interface'):
+                if_name = iface.get('name')
+                net_id = iface.get('network_id')
+                
+                if net_id in networks:
+                    networks[net_id]['connected_nodes'].append("{} ({})".format(node_name, if_name))
+                print("    - Cong: {:<10} -> Noi vao Network ID: {}".format(if_name, net_id))
+                
+        # 3. Tong hop so do day cap (Topology Links)
+        print("\n[+] SO DO DAY CAP (TOPOLOGY LINKS):")
+        for net_id, net_info in networks.items():
+            connected = net_info['connected_nodes']
+            if len(connected) > 0:
+                print("    - Ket noi '{}' (Net ID: {}):".format(net_info['name'], net_id))
+                # Hien thi day cap tu thiet bi nay sang thiet bi kia
+                print("      => {}".format(" <---> ".join(connected)))
+                
+    except Exception as e:
+        print("Loi doc file {}: {}".format(filepath, e))
+
+def main():
+    print("CHUONG TRINH DOC SO DO MANG EVE-NG (XML PARSER)")
+    if len(sys.argv) > 1:
+        # Neu truyen vao ten file cu the (VD: python doc_lab.py /opt/unetlab/labs/bai5.unl)
+        parse_lab(sys.argv[1])
+    else:
+        # Mac dinh quet tat ca cac lab
+        labs = glob.glob("/opt/unetlab/labs/*.unl")
+        if not labs:
+            print("Khong tim thay file .unl nao trong /opt/unetlab/labs/")
+            return
+        for lab in labs:
+            parse_lab(lab)
+            print("\n")
 
 if __name__ == "__main__":
-    check_configs()
+    main()

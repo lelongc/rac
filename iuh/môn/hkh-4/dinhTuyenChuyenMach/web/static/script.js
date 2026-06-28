@@ -1,9 +1,9 @@
 const SYSTEM_PROMPT = `
 Bạn là một Chuyên gia Mạng (Network Engineer) và Trợ lý AI xuất sắc.
-Nhiệm vụ của bạn là đọc đề bài và tạo ra file cấu hình JSON đáp ứng cấu trúc của AutoEVE.
-KHÔNG in ra markdown hay giải thích. CHỈ output JSON.
+Nhiệm vụ của bạn là đọc đề bài và tạo ra file cấu hình JSON đáp ứng cấu trúc của AutoEVE, kèm theo Bảng IP.
+KHÔNG in ra markdown hay giải thích ra ngoài. CHỈ output JSON thuần túy.
 
-Cấu trúc JSON:
+Cấu trúc JSON bắt buộc:
 {
   "lab_name": "Ten_Lab_Khong_Dau",
   "nodes": [
@@ -12,24 +12,48 @@ Cấu trúc JSON:
       "type": "router" | "switch" | "vpcs",
       "left": 200, "top": 200,
       "interfaces": [
-        {"name": "e0/0", "network": "Net_1"},
-        {"name": "s1/0", "remote_node": "TenRouter2", "remote_if": "s1/1"}
+        {"name": "e0/0", "network": "Net_LAN_HQ"},
+        {"name": "s1/0", "network": "Net_HQ_Branch1"}
       ],
       "config": [
         "enable", "configure terminal", ...
       ]
     }
+  ],
+  "ip_table": [
+    {"device": "TenRouter", "interface": "e0/0", "ip": "192.168.10.1", "subnet": "255.255.255.0"}
   ]
 }
 
 Luật:
 1. "type" là "router", "switch", hoặc "vpcs".
-2. Tên cổng: "e0/0", "s1/0"...
-3. PC cổng luôn là "eth0".
-4. Ethernet phải có "network".
-5. Serial phải có "remote_node" và "remote_if".
-6. Config Router phải bọc bằng "enable", "configure terminal", và "end".
-7. Tự động chia IP và định tuyến thông minh.
+2. Tên cổng: "e0/0", "s1/0"... PC cổng luôn là "eth0".
+3. TẤT CẢ các cổng (ethernet hay serial) ĐỀU PHẢI dùng thuộc tính "network" để nối dây. Hai cổng muốn nối với nhau thì phải có CÙNG tên "network" (Ví dụ: "Net_HQ_Branch1").
+4. Config Router phải bọc bằng "enable", "configure terminal", và "end".
+5. Tự động chia IP và định tuyến thông minh. Đảm bảo 'ip_table' phải đầy đủ.
+`;
+
+const SYSTEM_PROMPT_REPORT = `
+Bạn là một Chuyên gia Mạng Máy tính xuất sắc.
+Bạn sẽ nhận được 2 nguồn dữ liệu:
+1. Đề bài & Cấu trúc mạng đã thiết kế (JSON chứa các lệnh cấu hình).
+2. OUTPUT thực tế thu được từ EVE-NG sau khi chạy cấu hình.
+
+Nhiệm vụ của bạn: VIẾT MỘT BẢN BÁO CÁO ĐỒ ÁN HOÀN CHỈNH bằng tiếng Việt, chia làm 3 PHẦN rõ rệt đúng như sau:
+
+PHẦN 1: CHẠY LỆNH CẤU HÌNH VÀ GIẢI THÍCH LỆNH
+- Lần lượt đi qua TỪNG thiết bị.
+- In ra các lệnh cấu hình (CLI) đã gán cho thiết bị đó (lấy từ dữ liệu JSON).
+- NGAY BÊN DƯỚI các lệnh đó, HÃY GIẢI THÍCH CHI TIẾT: Lệnh đặt IP này để làm gì? Lệnh định tuyến (ip route) này trỏ đi đâu và tại sao phải làm thế?
+
+PHẦN 2: CÁC LỆNH KIỂM TRA (VERIFY) VÀ GIẢI THÍCH OUTPUT
+- Trích dẫn các Output thực tế (như show ip route, show ip int brief, ping...) từ nguồn dữ liệu OUTPUT.
+- NGAY BÊN DƯỚI Output, HÃY GIẢI THÍCH ý nghĩa của nó: (Ví dụ: Thấy chữ C nghĩa là gì, S* nghĩa là gì, ping thông 5 dấu ! chứng minh điều gì).
+
+PHẦN 3: BÁO CÁO HOÀN THÀNH
+- Viết một đoạn tổng kết khẳng định hệ thống đã liên thông toàn bộ, đáp ứng đúng yêu cầu của đề bài.
+
+Tuyệt đối KHÔNG trả về JSON. Trả về văn bản định dạng Markdown rõ ràng, rành mạch.
 `;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -37,6 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const promptInput = document.getElementById('prompt');
     const generateBtn = document.getElementById('generateBtn');
     const copyBtn = document.getElementById('copyBtn');
+    const downloadTxtBtn = document.getElementById('downloadTxtBtn');
+    const downloadCsvBtn = document.getElementById('downloadCsvBtn');
     const outputCode = document.getElementById('outputCode');
     const spinner = document.getElementById('loadingSpinner');
     const btnText = document.querySelector('.btn-text');
@@ -45,6 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (savedKey) apiKeyInput.value = savedKey;
 
     let currentReport = "";
+    let finalAiReport = "";
+    let currentIpTable = [];
 
     generateBtn.addEventListener('click', async () => {
         const apiKey = apiKeyInput.value.trim();
@@ -59,14 +87,16 @@ document.addEventListener('DOMContentLoaded', () => {
         generateBtn.disabled = true;
         btnText.textContent = 'Đang tiến hành...';
         spinner.classList.remove('hidden');
-        outputCode.textContent = '[1/2] AI đang đọc đề và thiết kế mô hình mạng...';
+        outputCode.textContent = '[1/3] AI đang đọc đề và thiết kế mô hình mạng...';
+        
         copyBtn.disabled = true;
+        downloadTxtBtn.classList.add('hidden');
+        downloadCsvBtn.classList.add('hidden');
 
         try {
-            // 1. Goi AI
-            // Gọi API Gemini 3.1 Flash Lite (Siêu nhanh, rẻ và phù hợp tác vụ Agentic)
             const modelName = 'gemini-3.1-flash-lite'; 
             
+            // PHASE 1: GENERATE CONFIG
             const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -82,18 +112,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 try {
                     const errData = await response.json();
                     errMsg = errData.error?.message || response.statusText;
-                } catch(e) {
-                    errMsg = response.statusText;
-                }
-                throw new Error('Gemini API báo lỗi: ' + errMsg);
+                } catch(e) { errMsg = response.statusText; }
+                throw new Error('Gemini API (P1): ' + errMsg);
             }
             const data = await response.json();
             let rawText = data.candidates[0].content.parts[0].text;
             rawText = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();
             const jsonObj = JSON.parse(rawText);
 
-            // 2. Goi Backend
-            outputCode.textContent = "[2/2] Chuyển giao cho EVE-NG Server...\n\nĐang thực thi các bước:\n1. Upload file cấu hình\n2. Dựng sơ đồ mạng XML\n3. Tự động gọi API bật thiết bị (Power On)\n4. Chờ thiết bị khởi động (45s)...\n5. Đẩy cấu hình siêu tốc\n6. Rút trích báo cáo nghiệm thu\n\nQuá trình này mất khoảng 1.5 phút. Đừng tắt trình duyệt!";
+            currentIpTable = jsonObj.ip_table || [];
+
+            // PHASE 2: DEPLOY TO EVE-NG
+            outputCode.textContent = "[2/3] Chuyển giao cho EVE-NG Server...\n\nĐang thực thi các bước:\n1. Upload cấu hình\n2. Dựng sơ đồ XML\n3. Start thiết bị\n4. Chờ thiết bị khởi động (45s)...\n5. Đẩy cấu hình\n6. Rút trích báo cáo";
             
             const deployRes = await fetch('/api/deploy', {
                 method: 'POST',
@@ -102,13 +132,43 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             
             const deployData = await deployRes.json();
-            if (deployData.success) {
-                currentReport = deployData.report;
-                outputCode.textContent = "✅ THÀNH CÔNG RỰC RỠ!\n\n" + currentReport;
-                copyBtn.disabled = false;
-            } else {
+            if (!deployData.success) {
                 throw new Error("Lỗi Server EVE-NG: " + deployData.error);
             }
+            currentReport = deployData.report;
+
+            // PHASE 3: AI POST-EXECUTION ANALYSIS
+            outputCode.textContent = "[3/3] AI đang đọc Output thực tế và viết Báo cáo Chuyên sâu...\n\nVui lòng chờ thêm khoảng 5-10 giây...";
+            
+            const postPrompt = `== YÊU CẦU ĐỀ BÀI VÀ THIẾT KẾ ==\n${JSON.stringify(jsonObj)}\n\n== OUTPUT THỰC TẾ TỪ EVE-NG ==\n${currentReport}`;
+            
+            const reportResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    system_instruction: { parts: [{ text: SYSTEM_PROMPT_REPORT }] },
+                    contents: [{ parts: [{ text: postPrompt }] }],
+                    generationConfig: { temperature: 0.3 }
+                })
+            });
+
+            if (!reportResponse.ok) {
+                let errMsg = 'Lỗi không xác định';
+                try {
+                    const errData = await reportResponse.json();
+                    errMsg = errData.error?.message || reportResponse.statusText;
+                } catch(e) { errMsg = reportResponse.statusText; }
+                throw new Error('Gemini API (P3): ' + errMsg);
+            }
+            const reportData = await reportResponse.json();
+            finalAiReport = reportData.candidates[0].content.parts[0].text;
+
+            // FINAL: SHOW SUCCESS
+            outputCode.textContent = "✅ THÀNH CÔNG RỰC RỠ!\n\n" + currentReport;
+            copyBtn.disabled = false;
+            downloadTxtBtn.classList.remove('hidden');
+            if (currentIpTable.length > 0) downloadCsvBtn.classList.remove('hidden');
+
         } catch (error) {
             outputCode.textContent = `Lỗi hệ thống: ${error.message}`;
         } finally {
@@ -124,5 +184,35 @@ document.addEventListener('DOMContentLoaded', () => {
             copyBtn.innerHTML = '✅ Đã Copy';
             setTimeout(() => { copyBtn.innerHTML = origin; }, 2000);
         });
+    });
+
+    // Xuất file TXT (Báo cáo Phân tích AI)
+    downloadTxtBtn.addEventListener('click', () => {
+        const blob = new Blob([finalAiReport], { type: 'text/plain;charset=utf-8;' });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", "Bao_Cao_Chuyen_Sau.txt");
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    });
+
+    // Xuất file CSV (Bảng IP mở bằng Excel)
+    downloadCsvBtn.addEventListener('click', () => {
+        let csvContent = "\uFEFFThiết bị,Cổng giao tiếp,Địa chỉ IP,Subnet Mask\n";
+        currentIpTable.forEach(row => {
+            csvContent += `"${row.device || ''}","${row.interface || ''}","${row.ip || ''}","${row.subnet || ''}"\n`;
+        });
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", "Bang_Quy_Hoach_IP.csv");
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     });
 });
