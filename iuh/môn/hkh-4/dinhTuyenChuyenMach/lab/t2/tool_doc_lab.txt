@@ -1,21 +1,36 @@
-import xml.etree.ElementTree as ET
 import glob
-import os
+import xml.etree.ElementTree as ET
+import base64
 
-def dump_lab():
+def check_configs():
     labs = glob.glob("/opt/unetlab/labs/*.unl")
-    if not labs:
-        print("Khong tim thay file lab (.unl) nao.")
-        return
-        
-    latest_lab = max(labs, key=os.path.getmtime)
-    print("=========================================")
-    print("RAW XML CUA LAB MOI NHAT: " + latest_lab)
-    print("=========================================")
+    print("Dang quet tat ca cac Lab de tim xem EVE-NG luu cau hinh nhu the nao...")
     
-    with open(latest_lab, 'r') as f:
-        content = f.read()
-        print(content)
+    found_config = False
+    for lab in labs:
+        try:
+            tree = ET.parse(lab)
+            root = tree.getroot()
+            for node in root.findall('.//node'):
+                config = node.find('config')
+                if config is not None and config.text and config.text.strip():
+                    print("\n" + "="*50)
+                    print("THAY CAU HINH TRONG LAB: {} (Node: {})".format(lab, node.get('name')))
+                    print("Thuoc tinh 'config' cua Node nay: {}".format(node.get('config')))
+                    print("="*50)
+                    print("Noi dung ben trong the <config> (500 ky tu dau tien):")
+                    raw_text = config.text.strip()
+                    print(repr(raw_text[:500]))
+                    found_config = True
+                    break # Just show one node to keep it short
+            if found_config:
+                break
+        except Exception as e:
+            pass
+            
+    if not found_config:
+        print("\nKHONG TIM THAY cau hinh nao duoc luu trong tat ca cac file .unl!")
+        print("-> Dieu nay co nghia la ban chua an nut 'Export CFG' tren giao dien Web.")
 
 if __name__ == "__main__":
-    dump_lab()
+    check_configs()
