@@ -64,7 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // 1. Goi AI
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+            // Gọi API Gemini 3.1 Flash Lite (Siêu nhanh, rẻ và phù hợp tác vụ Agentic)
+            const modelName = 'gemini-3.1-flash-lite'; 
+            
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -74,7 +77,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
             });
 
-            if (!response.ok) throw new Error('Lỗi kết nối Gemini API');
+            if (!response.ok) {
+                let errMsg = 'Lỗi không xác định';
+                try {
+                    const errData = await response.json();
+                    errMsg = errData.error?.message || response.statusText;
+                } catch(e) {
+                    errMsg = response.statusText;
+                }
+                throw new Error('Gemini API báo lỗi: ' + errMsg);
+            }
             const data = await response.json();
             let rawText = data.candidates[0].content.parts[0].text;
             rawText = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();
