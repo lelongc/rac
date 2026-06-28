@@ -1,0 +1,21 @@
+import xml.etree.ElementTree as ET
+import glob
+import os
+
+def dump_lab():
+    labs = glob.glob("/opt/unetlab/labs/*.unl")
+    if not labs:
+        print("Khong tim thay file lab (.unl) nao.")
+        return
+        
+    latest_lab = max(labs, key=os.path.getmtime)
+    print("=========================================")
+    print("RAW XML CUA LAB MOI NHAT: " + latest_lab)
+    print("=========================================")
+    
+    with open(latest_lab, 'r') as f:
+        content = f.read()
+        print(content)
+
+if __name__ == "__main__":
+    dump_lab()
