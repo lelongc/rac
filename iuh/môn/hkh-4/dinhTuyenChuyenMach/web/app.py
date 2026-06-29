@@ -217,7 +217,10 @@ def index():
 def deploy():
     try:
         lab_config = request.json
-        lab_name = lab_config.get("lab_name", "Auto_Lab")
+        original_lab_name = lab_config.get("lab_name", "Auto_Lab")
+        # Ensure a completely new lab is created every time to avoid conflicts
+        lab_name = f"{original_lab_name}_{int(time.time())}"
+        lab_config["lab_name"] = lab_name
         json_str = json.dumps(lab_config, indent=2)
         print(f"RECEIVED JSON:\n{json_str}")
         
