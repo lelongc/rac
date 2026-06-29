@@ -1,6 +1,127 @@
 # BÀI 4: ĐỊNH TUYẾN RIPv2 VÀ CHUYỂN DỰ PHÒNG (FAILOVER)
 
-Quá trình cấu hình IP và RIPv2 (Câu 1 và Câu 2) đã được tự động hóa hoàn toàn thông qua Web Tool. Bây giờ, bạn chỉ cần mở các thiết bị trong EVE-NG lên, thực hiện thao tác gõ lệnh để lấy hình ảnh minh chứng và giải thích nộp báo cáo cho Câu 3, 4, 5.
+## 💻 CÂU 1 & CÂU 2: THIẾT LẬP MÔ HÌNH VÀ CẤU HÌNH RIPv2
+Dưới đây là toàn bộ mã cấu hình chuẩn xác 100% để thiết lập mạng và bật định tuyến RIPv2 cho 4 Router cùng 3 máy PC. Bạn có thể chép phần này vào báo cáo cho Câu 1 và Câu 2.
+
+**1. Router Internet:**
+```text
+enable
+configure terminal
+interface e0/0
+ip address 200.200.200.2 255.255.255.0
+no shutdown
+interface loopback 0
+ip address 8.8.8.8 255.255.255.255
+exit
+ip route 0.0.0.0 0.0.0.0 200.200.200.1
+end
+write memory
+```
+
+**2. Router R1:**
+```text
+enable
+configure terminal
+interface s1/0
+ip address 10.0.12.1 255.255.255.0
+no shutdown
+interface e0/0
+ip address 10.0.13.1 255.255.255.0
+no shutdown
+interface e0/1
+ip address 192.168.1.1 255.255.255.0
+no shutdown
+interface e0/2
+ip address 200.200.200.1 255.255.255.0
+no shutdown
+router rip
+version 2
+no auto-summary
+network 10.0.0.0
+network 192.168.1.0
+default-information originate
+exit
+ip route 0.0.0.0 0.0.0.0 200.200.200.2
+end
+write memory
+```
+
+**3. Router R2:**
+```text
+enable
+configure terminal
+interface s1/0
+ip address 10.0.12.2 255.255.255.0
+no shutdown
+interface e0/0
+ip address 10.0.24.1 255.255.255.0
+no shutdown
+router rip
+version 2
+no auto-summary
+network 10.0.0.0
+end
+write memory
+```
+
+**4. Router R3:**
+```text
+enable
+configure terminal
+interface e0/0
+ip address 10.0.13.2 255.255.255.0
+no shutdown
+interface s1/0
+ip address 10.0.34.1 255.255.255.0
+no shutdown
+interface e0/1
+ip address 192.168.3.1 255.255.255.0
+no shutdown
+router rip
+version 2
+no auto-summary
+network 10.0.0.0
+network 192.168.3.0
+end
+write memory
+```
+
+**5. Router R4:**
+```text
+enable
+configure terminal
+interface e0/0
+ip address 10.0.24.2 255.255.255.0
+no shutdown
+interface s1/0
+ip address 10.0.34.2 255.255.255.0
+no shutdown
+interface e0/1
+ip address 192.168.4.1 255.255.255.0
+no shutdown
+router rip
+version 2
+no auto-summary
+network 10.0.0.0
+network 192.168.4.0
+end
+write memory
+```
+
+**6. Cấu hình PC:**
+```text
+! VPC5
+ip 192.168.1.10 255.255.255.0 192.168.1.1
+save
+
+! VPC7
+ip 192.168.3.10 255.255.255.0 192.168.3.1
+save
+
+! VPC6
+ip 192.168.4.10 255.255.255.0 192.168.4.1
+save
+```
 
 ---
 
