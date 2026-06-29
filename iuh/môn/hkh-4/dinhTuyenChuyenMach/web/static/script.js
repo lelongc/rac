@@ -13,7 +13,7 @@ Cấu trúc JSON bắt buộc:
       "left": 200, "top": 200,
       "interfaces": [
         {"name": "e0/0", "network": "Net_LAN_HQ"},
-        {"name": "s1/0", "remote_node": "TenRouter2", "remote_if": "s1/1"}
+        {"name": "s1/0", "network": "Net_HQ_Branch1"}
       ],
       "config": [
         "enable", "configure terminal", ...
@@ -28,8 +28,8 @@ Cấu trúc JSON bắt buộc:
 Luật:
 1. "type" là "router", "switch", hoặc "vpcs".
 2. Tên cổng: "e0/0", "s1/0"... PC cổng luôn là "eth0".
-3. Ethernet phải có "network". Hai cổng nối với nhau thì phải có CÙNG tên "network". Tuyệt đối KHÔNG dùng chung 1 tên (như "LAN") cho tất cả các PC.
-4. Serial phải có "remote_node" và "remote_if".
+3. TẤT CẢ các cổng ĐỀU PHẢI dùng thuộc tính "network" để nối dây (kể cả cổng Serial s1/0 hay Ethernet). Hai cổng nối với nhau thì phải có CÙNG tên "network". QUAN TRỌNG: MỖI đoạn dây/mạng LAN riêng biệt PHẢI dùng một tên "network" KHÁC NHAU (Ví dụ: LAN_West, LAN_Central, WAN_West_Central). Tuyệt đối KHÔNG dùng chung 1 tên (như "LAN") cho tất cả các thiết bị.
+4. KHÔNG sử dụng remote_node hay remote_if. Tất cả giao tiếp nối dây đều thông qua "network".
 5. Config Router phải bọc bằng "enable", "configure terminal", và "end".
 6. Tự động chia IP và định tuyến thông minh. Đảm bảo 'ip_table' phải đầy đủ.
 7. Tính toán thuộc tính "left" và "top" hợp lý để vẽ sơ đồ EVE-NG đẹp mắt. Ví dụ:

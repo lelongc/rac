@@ -25,6 +25,12 @@ def get_interface_id(if_name):
     port = int(if_name.split('/')[1])
     return port * 16 + slot
 
+def get_eve_if_name(if_name):
+    if if_name == "eth0": return "eth0"
+    slot = int(if_name[1:].split('/')[0])
+    port = int(if_name.split('/')[1])
+    return "e{}/{}".format(slot, port)
+
 def mask_to_cidr(mask):
     try:
         return sum([bin(int(x)).count("1") for x in mask.split(".")])
@@ -37,37 +43,61 @@ def build_lab(json_file):
     nodes = data.get("nodes", [])
     ip_table = data.get("ip_table", [])
     
-    node_map = {}
+    # Collect all network endpoints
+    network_endpoints = {}
     for i, node in enumerate(nodes):
-        node["_id"] = i + 1
-        node_map[node["name"]] = node["_id"]
-        
-    network_map = {}; net_counter = 1
+        node_id = i + 1
+        for iface in node.get("interfaces", []):
+            net = iface.get("network")
+            if not net: continue
+            if net not in network_endpoints:
+                network_endpoints[net] = []
+            network_endpoints[net].append((node_id, iface["name"], get_interface_id(iface["name"])))
+    
+    # Serial pairs: 2 serial endpoints on same network -> point-to-point
+    serial_pairs = {}
+    bridge_networks = {}
+    net_counter = 1
+    
+    for net_name, endpoints in network_endpoints.items():
+        is_serial = any(ep[1].startswith("s") for ep in endpoints)
+        if is_serial and len(endpoints) == 2:
+            n1, _, i1 = endpoints[0]
+            n2, _, i2 = endpoints[1]
+            serial_pairs[(n1, i1)] = (n2, i2)
+            serial_pairs[(n2, i2)] = (n1, i1)
+        else:
+            bridge_networks[net_name] = net_counter
+            net_counter += 1
+    
     xml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\\n'
     xml += '<lab name="{}" id="{}" version="1" scripttimeout="300" lock="0">\\n  <topology>\\n    <nodes>\\n'.format(lab_name, str(uuid.uuid4()))
     
-    for node in nodes:
+    for i, node in enumerate(nodes):
+        node_id = i + 1
         ntype = node.get("type", "router")
-        image = IMG_L3 if ntype == "router" else (IMG_L2 if ntype == "switch" else "")
-        template = "iol" if ntype in ["router", "switch"] else "vpcs"
-        xml += '      <node id="{}" name="{}" type="{}" template="{}" image="{}" ethernet="1" nvram="1024" ram="1024" serial="{}" console="" delay="0" icon="{}" config="0" left="{}" top="{}">\\n'.format(
-            node["_id"], node["name"], "iol" if ntype in ["router", "switch"] else "vpcs", template, image, "1" if ntype == "router" else "0", "Router.png" if ntype == "router" else ("Switch.png" if ntype == "switch" else "Desktop.png"), node.get("left", 200), node.get("top", 200)
-        )
+        if ntype == "router":
+            xml += '      <node id="{}" name="{}" type="iol" template="iol" image="{}" ethernet="1" nvram="1024" ram="1024" serial="1" console="" delay="0" icon="Router.png" config="0" left="{}" top="{}">\\n'.format(node_id, node["name"], IMG_L3, node.get("left", 200), node.get("top", 200))
+        elif ntype == "switch":
+            xml += '      <node id="{}" name="{}" type="iol" template="iol" image="{}" ethernet="1" nvram="1024" ram="1024" serial="0" console="" delay="0" icon="Switch.png" config="0" left="{}" top="{}">\\n'.format(node_id, node["name"], IMG_L2, node.get("left", 200), node.get("top", 200))
+        elif ntype == "vpcs":
+            xml += '      <node id="{}" name="{}" type="vpcs" template="vpcs" image="vpcs" ethernet="1" delay="0" icon="Desktop.png" config="0" left="{}" top="{}">\\n'.format(node_id, node["name"], node.get("left", 200), node.get("top", 200))
+            
         for iface in node.get("interfaces", []):
             if_id = get_interface_id(iface["name"])
-            if "network" in iface:
-                if iface["network"] not in network_map:
-                    network_map[iface["network"]] = net_counter
-                    net_counter += 1
-                xml += '        <interface id="{}" name="{}" type="ethernet" network_id="{}"/>\\n'.format(if_id, iface["name"], network_map[iface["network"]])
-            elif "remote_node" in iface:
-                r_id = node_map.get(iface["remote_node"])
-                xml += '        <interface id="{}" type="serial" name="{}" remote_id="{}" remote_if="{}"/>\\n'.format(if_id, iface["name"], r_id, get_interface_id(iface["remote_if"]))
+            net = iface.get("network")
+            if not net: continue
+            
+            if (node_id, if_id) in serial_pairs:
+                rem_node, rem_if = serial_pairs[(node_id, if_id)]
+                xml += '        <interface id="{}" name="{}" type="serial" remote_id="{}" remote_if="{}"/>\\n'.format(if_id, iface["name"], rem_node, rem_if)
+            elif net in bridge_networks:
+                xml += '        <interface id="{}" name="{}" type="ethernet" network_id="{}"/>\\n'.format(if_id, iface["name"], bridge_networks[net])
         xml += '      </node>\\n'
         
     xml += '    </nodes>\\n    <networks>\\n'
-    for net_name, net_id in network_map.items():
-        xml += '      <network id="{}" type="bridge" name="{}" left="0" top="0" visibility="0"/>\\n'.format(net_id, net_name)
+    for net_name, net_id in bridge_networks.items():
+        xml += '      <network id="{}" type="bridge" name="{}" left="300" top="300" visibility="0"/>\\n'.format(net_id, net_name)
     xml += '    </networks>\\n'
     
     xml += '    <textobjects>\\n'
@@ -194,25 +224,47 @@ def deploy():
         
         print(f"Deploying Lab: {lab_name}")
         
-        sftp = client.open_sftp()
-        with sftp.file('/root/autoeve_master.py', 'w') as f: f.write(EVE_MASTER_SCRIPT)
-        with sftp.file(f'/root/{lab_name}.json', 'w') as f: f.write(json_str)
-        sftp.close()
-        
-        ssh_execute(client, f"python3 /root/autoeve_master.py build /root/{lab_name}.json")
-        
-        # Start nodes via API
+        # Delete old lab first (API + file) to force clean reload
         session = requests.Session()
         login = session.post(f"http://{EVE_IP}/api/auth/login", json={"username": EVE_API_USER, "password": EVE_API_PASS, "html5": "-1"})
         if login.status_code == 200:
+            # Stop and wipe all nodes first
             nodes_res = session.get(f"http://{EVE_IP}/api/labs/{lab_name}.unl/nodes")
             if nodes_res.status_code == 200:
                 for node_id in nodes_res.json().get("data", {}).keys():
                     session.get(f"http://{EVE_IP}/api/labs/{lab_name}.unl/nodes/{node_id}/stop")
                     session.get(f"http://{EVE_IP}/api/labs/{lab_name}.unl/nodes/{node_id}/wipe")
-                time.sleep(3)
+            # Delete the lab via API
+            session.delete(f"http://{EVE_IP}/api/labs/{lab_name}.unl")
+            time.sleep(2)
+        
+        # Also remove old file via SSH
+        ssh_execute(client, f"rm -f /opt/unetlab/labs/{lab_name}.unl")
+        
+        sftp = client.open_sftp()
+        with sftp.file('/root/autoeve_master.py', 'w') as f: f.write(EVE_MASTER_SCRIPT)
+        with sftp.file(f'/root/{lab_name}.json', 'w') as f: f.write(json_str)
+        sftp.close()
+        
+        exit_code, build_out, build_err = ssh_execute(client, f"python3 /root/autoeve_master.py build /root/{lab_name}.json")
+        print(f"BUILD exit={exit_code}")
+        if build_err: print(f"BUILD stderr: {build_err}")
+        
+        # Check if lab file was created
+        chk_code, chk_out, _ = ssh_execute(client, f"ls -la /opt/unetlab/labs/{lab_name}.unl")
+        print(f"LAB FILE: {chk_out.strip()}")
+        
+        # Re-login and start nodes on the fresh lab
+        session2 = requests.Session()
+        login2 = session2.post(f"http://{EVE_IP}/api/auth/login", json={"username": EVE_API_USER, "password": EVE_API_PASS, "html5": "-1"})
+        if login2.status_code == 200:
+            time.sleep(2)
+            nodes_res = session2.get(f"http://{EVE_IP}/api/labs/{lab_name}.unl/nodes")
+            print(f"NODES API: status={nodes_res.status_code}")
+            if nodes_res.status_code == 200:
                 for node_id in nodes_res.json().get("data", {}).keys():
-                    session.get(f"http://{EVE_IP}/api/labs/{lab_name}.unl/nodes/{node_id}/start")
+                    start_res = session2.get(f"http://{EVE_IP}/api/labs/{lab_name}.unl/nodes/{node_id}/start")
+                    print(f"  Start node {node_id}: {start_res.status_code}")
             
         # Wait for nodes to boot
         time.sleep(45)
