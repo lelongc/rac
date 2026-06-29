@@ -38,14 +38,31 @@ def build_lab(json_file):
     ip_table = data.get("ip_table", [])
     
     xml = '<?xml version="1.0" encoding="UTF-8"?>\\n'
-    xml += '<lab name="{}" id="35d7b51b-4228-40b4-93e8-5b1216d62f90" version="1" scripttimeout="300" lock="0">\\n'.format(lab_name)
+    xml += '<lab name="{}" id="{}" version="1" scripttimeout="300" lock="0">\\n'.format(lab_name, str(uuid.uuid5(uuid.NAMESPACE_DNS, lab_name)))
     xml += '  <topology>\\n    <nodes>\\n'
     
     node_map = {}
+    serial_links = {}
     for idx, node in enumerate(nodes):
-        node_map[node["name"]] = idx + 1
-        
+        node_id = idx + 1
+        node_map[node["name"]] = node_id
+        for iface in node.get("interfaces", []):
+            itype = "serial" if iface["name"].startswith("s") else "ethernet"
+            net = iface.get("network")
+            if net and itype == "serial":
+                if net not in serial_links: serial_links[net] = []
+                serial_links[net].append((node_id, get_interface_id(iface["name"])))
+                
+    serial_pairs = {}
+    for net, endpoints in serial_links.items():
+        if len(endpoints) == 2:
+            n1, i1 = endpoints[0]
+            n2, i2 = endpoints[1]
+            serial_pairs[(n1, i1)] = (n2, i2)
+            serial_pairs[(n2, i2)] = (n1, i1)
+            
     network_map = {}
+    network_types = {}
     net_counter = 1
     
     for idx, node in enumerate(nodes):
@@ -60,17 +77,22 @@ def build_lab(json_file):
             
         for iface in node.get("interfaces", []):
             if_id = get_interface_id(iface["name"])
-            if "network" in iface:
-                if iface["network"] not in network_map:
-                    network_map[iface["network"]] = net_counter
-                    net_counter += 1
-                itype = "serial" if iface["name"].startswith("s") else "ethernet"
-                xml += '        <interface id="{}" name="{}" type="{}" network_id="{}"/>\\n'.format(if_id, iface["name"], itype, network_map[iface["network"]])
+            itype = "serial" if iface["name"].startswith("s") else "ethernet"
+            net = iface.get("network")
+            if not net: continue
+            
+            if net not in network_map:
+                network_map[net] = net_counter
+                network_types[net] = itype
+                net_counter += 1
+                
+            xml += '        <interface id="{}" name="{}" type="{}" network_id="{}"/>\\n'.format(if_id, iface["name"], itype, network_map[net])
         xml += '      </node>\\n'
         
     xml += '    </nodes>\\n    <networks>\\n'
     for net_name, net_id in network_map.items():
-        xml += '      <network id="{}" type="bridge" name="{}" left="300" top="300" visibility="0"/>\\n'.format(net_id, net_name)
+        ntype = "serial" if network_types[net_name] == "serial" else "bridge"
+        xml += '      <network id="{}" type="{}" name="{}" left="300" top="300" visibility="0"/>\\n'.format(net_id, ntype, net_name)
     xml += '    </networks>\\n'
     
     xml += '    <textobjects>\\n'
@@ -189,7 +211,8 @@ def deploy():
     try:
         lab_config = request.json
         lab_name = lab_config.get("lab_name", "Auto_Lab")
-        json_str = json.dumps(lab_config)
+        json_str = json.dumps(lab_config, indent=2)
+        print(f"RECEIVED JSON:\n{json_str}")
         
         client = paramiko.SSHClient()
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -210,6 +233,10 @@ def deploy():
         if login.status_code == 200:
             nodes_res = session.get(f"http://{EVE_IP}/api/labs/{lab_name}.unl/nodes")
             if nodes_res.status_code == 200:
+                for node_id in nodes_res.json().get("data", {}).keys():
+                    session.get(f"http://{EVE_IP}/api/labs/{lab_name}.unl/nodes/{node_id}/stop")
+                    session.get(f"http://{EVE_IP}/api/labs/{lab_name}.unl/nodes/{node_id}/wipe")
+                time.sleep(3)
                 for node_id in nodes_res.json().get("data", {}).keys():
                     session.get(f"http://{EVE_IP}/api/labs/{lab_name}.unl/nodes/{node_id}/start")
             
