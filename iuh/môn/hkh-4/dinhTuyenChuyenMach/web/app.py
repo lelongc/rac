@@ -224,23 +224,27 @@ def deploy():
         
         print(f"Deploying Lab: {lab_name}")
         
-        # Delete old lab first (API + file) to force clean reload
+        # 1. Login to API
         session = requests.Session()
         login = session.post(f"http://{EVE_IP}/api/auth/login", json={"username": EVE_API_USER, "password": EVE_API_PASS, "html5": "-1"})
+        print(f"API LOGIN: {login.status_code}")
         if login.status_code == 200:
-            # Stop and wipe all nodes first
+            # 2. Stop and wipe EXISTING nodes (before we overwrite the XML)
             nodes_res = session.get(f"http://{EVE_IP}/api/labs/{lab_name}.unl/nodes")
+            print(f"GET OLD NODES: {nodes_res.status_code}")
             if nodes_res.status_code == 200:
-                for node_id in nodes_res.json().get("data", {}).keys():
-                    session.get(f"http://{EVE_IP}/api/labs/{lab_name}.unl/nodes/{node_id}/stop")
-                    session.get(f"http://{EVE_IP}/api/labs/{lab_name}.unl/nodes/{node_id}/wipe")
-            # Delete the lab via API
-            session.delete(f"http://{EVE_IP}/api/labs/{lab_name}.unl")
-            time.sleep(2)
+                old_nodes = list(nodes_res.json().get("data", {}).keys())
+                print(f"Old nodes to stop: {old_nodes}")
+                for node_id in old_nodes:
+                    r1 = session.get(f"http://{EVE_IP}/api/labs/{lab_name}.unl/nodes/{node_id}/stop")
+                    print(f"  Stop node {node_id}: {r1.status_code}")
+                time.sleep(5)
+                for node_id in old_nodes:
+                    r2 = session.get(f"http://{EVE_IP}/api/labs/{lab_name}.unl/nodes/{node_id}/wipe")
+                    print(f"  Wipe node {node_id}: {r2.status_code}")
+                time.sleep(2)
         
-        # Also remove old file via SSH
-        ssh_execute(client, f"rm -f /opt/unetlab/labs/{lab_name}.unl")
-        
+        # 3. Upload and Build new XML
         sftp = client.open_sftp()
         with sftp.file('/root/autoeve_master.py', 'w') as f: f.write(EVE_MASTER_SCRIPT)
         with sftp.file(f'/root/{lab_name}.json', 'w') as f: f.write(json_str)
@@ -250,21 +254,16 @@ def deploy():
         print(f"BUILD exit={exit_code}")
         if build_err: print(f"BUILD stderr: {build_err}")
         
-        # Check if lab file was created
-        chk_code, chk_out, _ = ssh_execute(client, f"ls -la /opt/unetlab/labs/{lab_name}.unl")
-        print(f"LAB FILE: {chk_out.strip()}")
-        
-        # Re-login and start nodes on the fresh lab
-        session2 = requests.Session()
-        login2 = session2.post(f"http://{EVE_IP}/api/auth/login", json={"username": EVE_API_USER, "password": EVE_API_PASS, "html5": "-1"})
-        if login2.status_code == 200:
-            time.sleep(2)
-            nodes_res = session2.get(f"http://{EVE_IP}/api/labs/{lab_name}.unl/nodes")
-            print(f"NODES API: status={nodes_res.status_code}")
+        # 4. Start NEW nodes
+        if login.status_code == 200:
+            nodes_res = session.get(f"http://{EVE_IP}/api/labs/{lab_name}.unl/nodes")
+            print(f"GET NEW NODES: {nodes_res.status_code}")
             if nodes_res.status_code == 200:
-                for node_id in nodes_res.json().get("data", {}).keys():
-                    start_res = session2.get(f"http://{EVE_IP}/api/labs/{lab_name}.unl/nodes/{node_id}/start")
-                    print(f"  Start node {node_id}: {start_res.status_code}")
+                new_nodes = list(nodes_res.json().get("data", {}).keys())
+                print(f"New nodes to start: {new_nodes}")
+                for node_id in new_nodes:
+                    start_res = session.get(f"http://{EVE_IP}/api/labs/{lab_name}.unl/nodes/{node_id}/start")
+                    print(f"  Start node {node_id}: {start_res.status_code} {start_res.text}")
             
         # Wait for nodes to boot
         time.sleep(45)
