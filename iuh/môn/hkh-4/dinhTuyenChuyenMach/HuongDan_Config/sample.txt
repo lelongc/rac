@@ -1,0 +1,24 @@
+Chào chuyên gia, hãy thiết kế cho tôi một hệ thống mạng Doanh nghiệp lớn với mô hình Trụ sở (HQ) và 3 Chi nhánh (Branch), kèm theo kết nối ra Internet.
+
+1. Khối Core (Kết nối các Router):
+
+Có 1 Router trung tâm tên là HQ.
+Có 3 Router chi nhánh tên là B1, B2, B3.
+Có 1 Router đóng vai trò nhà mạng tên là ISP.
+HQ nối với B1 bằng mạng 10.1.1.0/30.
+HQ nối với B2 bằng mạng 10.1.2.0/30.
+HQ nối với B3 bằng mạng 10.1.3.0/30. (Tất cả kết nối trên, HQ luôn lấy IP .1, các Branch lấy IP .2).
+HQ nối cáp ra ISP bằng mạng 113.113.113.0/30 (HQ lấy .2, ISP lấy .1).
+2. Khối Access (Mạng LAN nội bộ):
+
+Tại chi nhánh B1: Kéo dây xuống Switch1. Từ Switch1 cắm 2 dây ra PC_B1_A và PC_B1_B. Dải mạng là 192.168.10.0/24.
+Tại chi nhánh B2: Kéo dây xuống Switch2. Từ Switch2 cắm 2 dây ra PC_B2_A và PC_B2_B. Dải mạng là 192.168.20.0/24.
+Tại chi nhánh B3: Kéo dây xuống Switch3. Từ Switch3 cắm 2 dây ra PC_B3_A và PC_B3_B. Dải mạng là 192.168.30.0/24.
+Tại ISP: Kéo dây xuống một máy chủ tên là Google_Server. Dải mạng public là 8.8.8.0/24. (Router đóng vai trò Gateway luôn lấy IP đuôi .254. Các PC lấy IP từ .10 trở đi).
+3. Yêu cầu Cấu hình & Định tuyến (Rất phức tạp):
+
+Đặt IP và no shutdown đầy đủ cho toàn hệ thống.
+Tại khối nội bộ (HQ, B1, B2, B3): Cấu hình định tuyến động OSPF (Process 1, Area 0). Quảng bá tất cả các mạng nội bộ và mạng kết nối giữa HQ-Branch vào OSPF để chúng thông nhau.
+Tại HQ: Không được quảng bá mạng 113.113.113.0 vào OSPF! Thay vào đó, viết 1 Default Route trỏ ra ISP. Sau đó, dùng lệnh default-information originate trong OSPF để ép các Router B1, B2, B3 tự động học đường ra Internet.
+Tại ISP: Viết 1 đường Static Route gom chung (Summary) mạng 192.168.0.0/16 trỏ ngược về HQ để gói tin có đường chạy về.
+Mục tiêu tối thượng: Tất cả các máy tính ở các chi nhánh phải ping thành công ra Google_Server!"

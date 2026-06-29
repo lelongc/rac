@@ -23,7 +23,7 @@ def get_interface_id(if_name):
     if if_name == "eth0": return 0
     slot = int(if_name[1:].split('/')[0])
     port = int(if_name.split('/')[1])
-    return port * 16 + slot
+    return slot * 16 + port
 
 def mask_to_cidr(mask):
     try:

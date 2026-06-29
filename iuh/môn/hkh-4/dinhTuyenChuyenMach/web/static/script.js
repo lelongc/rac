@@ -56,11 +56,45 @@ PHẦN 3: BÁO CÁO HOÀN THÀNH
 Tuyệt đối KHÔNG trả về JSON. Trả về văn bản định dạng Markdown rõ ràng, rành mạch.
 `;
 
+const SYSTEM_PROMPT_ROUTING_ANALYSIS = `
+Bạn là một Chuyên gia Mạng Máy tính xuất sắc.
+Bạn sẽ nhận được 2 nguồn dữ liệu:
+1. Đề bài & Cấu trúc mạng đã thiết kế (JSON).
+2. OUTPUT thực tế thu được từ EVE-NG.
+
+Nhiệm vụ của bạn: VIẾT MỘT BẢN PHÂN TÍCH ĐỊNH TUYẾN CHUYÊN SÂU bằng tiếng Việt, tập trung trả lời 2 câu hỏi sau:
+
+1) BẢNG ĐỊNH TUYẾN (ROUTING TABLE) VÀ GIẢI THÍCH CÁC THÀNH PHẦN
+- Trích xuất bảng định tuyến (show ip route) của các Router quan trọng (đặc biệt là Dynamic Routing).
+- Giải thích chi tiết các thành phần trong bảng định tuyến đó (Ví dụ: Mã O, S, C, L nghĩa là gì? Thông số [110/20] là gì? via IP nghĩa là gì?).
+- Chứng minh rằng giao thức định tuyến động (Dynamic Routing) đã hội tụ thành công.
+
+2) ĐƯỜNG ĐI CỦA GÓI TIN (PACKET PATH)
+- Mô tả chi tiết đường đi của gói tin khi 2 PC ở 2 mạng khác nhau ping nhau (Theo yêu cầu đề bài hoặc chọn ngẫu nhiên 2 PC khác mạng).
+- Phân tích gói tin đi qua các cổng nào, địa chỉ IP Source/Destination thay đổi hay giữ nguyên, MAC address thay đổi ra sao qua mỗi Hop.
+
+Tuyệt đối KHÔNG trả về JSON. Trả về văn bản định dạng Markdown rõ ràng, chuyên nghiệp.
+`;
+
+const SYSTEM_PROMPT_CONFIG_EXPLANATION = `
+Bạn là một Chuyên gia Mạng Máy tính xuất sắc.
+Bạn sẽ nhận được Đề bài & Cấu trúc mạng đã thiết kế (JSON).
+
+Nhiệm vụ của bạn: VIẾT MỘT BẢN BÁO CÁO GIẢI THÍCH LỆNH CẤU HÌNH CHI TIẾT.
+- Lần lượt đi qua TỪNG thiết bị có trong file JSON.
+- Liệt kê toàn bộ các lệnh cấu hình (config) của thiết bị đó.
+- Ngay bên dưới mỗi khối lệnh, HÃY GIẢI THÍCH CHI TIẾT: Lệnh này để làm gì? Tại sao lại cấu hình IP/subnet này? Lệnh định tuyến này có ý nghĩa gì?
+
+Tuyệt đối KHÔNG trả về JSON. Báo cáo phải được định dạng Markdown rõ ràng, chuyên nghiệp. Không được bỏ sót bất kỳ thiết bị nào.
+`;
+
 document.addEventListener('DOMContentLoaded', () => {
     const apiKeyInput = document.getElementById('apiKey');
     const promptInput = document.getElementById('prompt');
     const generateBtn = document.getElementById('generateBtn');
     const copyBtn = document.getElementById('copyBtn');
+    const explainConfigBtn = document.getElementById('explainConfigBtn');
+    const analyzeRouteBtn = document.getElementById('analyzeRouteBtn');
     const downloadTxtBtn = document.getElementById('downloadTxtBtn');
     const downloadCsvBtn = document.getElementById('downloadCsvBtn');
     const outputCode = document.getElementById('outputCode');
@@ -73,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentReport = "";
     let finalAiReport = "";
     let currentIpTable = [];
+    let currentJsonObj = null;
 
     generateBtn.addEventListener('click', async () => {
         const apiKey = apiKeyInput.value.trim();
@@ -90,6 +125,8 @@ document.addEventListener('DOMContentLoaded', () => {
         outputCode.textContent = '[1/3] AI đang đọc đề và thiết kế mô hình mạng...';
         
         copyBtn.disabled = true;
+        explainConfigBtn.classList.add('hidden');
+        analyzeRouteBtn.classList.add('hidden');
         downloadTxtBtn.classList.add('hidden');
         downloadCsvBtn.classList.add('hidden');
 
@@ -119,6 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let rawText = data.candidates[0].content.parts[0].text;
             rawText = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();
             const jsonObj = JSON.parse(rawText);
+            currentJsonObj = jsonObj;
 
             currentIpTable = jsonObj.ip_table || [];
 
@@ -166,6 +204,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // FINAL: SHOW SUCCESS
             outputCode.textContent = "✅ THÀNH CÔNG RỰC RỠ!\n\n" + currentReport;
             copyBtn.disabled = false;
+            explainConfigBtn.classList.remove('hidden');
+            analyzeRouteBtn.classList.remove('hidden');
             downloadTxtBtn.classList.remove('hidden');
             if (currentIpTable.length > 0) downloadCsvBtn.classList.remove('hidden');
 
@@ -214,5 +254,89 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+    });
+
+    // Phân tích Định tuyến & Gói tin
+    analyzeRouteBtn.addEventListener('click', async () => {
+        const apiKey = apiKeyInput.value.trim();
+        if (!apiKey || !currentReport || !currentJsonObj) return;
+
+        const originalText = analyzeRouteBtn.innerHTML;
+        analyzeRouteBtn.innerHTML = '⏳ Đang phân tích...';
+        analyzeRouteBtn.disabled = true;
+
+        try {
+            const postPrompt = `== YÊU CẦU ĐỀ BÀI VÀ THIẾT KẾ ==\n${JSON.stringify(currentJsonObj)}\n\n== OUTPUT THỰC TẾ TỪ EVE-NG ==\n${currentReport}`;
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    system_instruction: { parts: [{ text: SYSTEM_PROMPT_ROUTING_ANALYSIS }] },
+                    contents: [{ parts: [{ text: postPrompt }] }],
+                    generationConfig: { temperature: 0.3 }
+                })
+            });
+
+            if (!response.ok) throw new Error('Lỗi API Gemini');
+            const data = await response.json();
+            const analysisReport = data.candidates[0].content.parts[0].text;
+
+            const blob = new Blob([analysisReport], { type: 'text/plain;charset=utf-8;' });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", "Phan_Tich_Dinh_Tuyen.txt");
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } catch (error) {
+            alert('Lỗi khi phân tích định tuyến: ' + error.message);
+        } finally {
+            analyzeRouteBtn.innerHTML = originalText;
+            analyzeRouteBtn.disabled = false;
+        }
+    });
+
+    // Giải thích Lệnh Config
+    explainConfigBtn.addEventListener('click', async () => {
+        const apiKey = apiKeyInput.value.trim();
+        if (!apiKey || !currentJsonObj) return;
+
+        const originalText = explainConfigBtn.innerHTML;
+        explainConfigBtn.innerHTML = '⏳ Đang phân tích...';
+        explainConfigBtn.disabled = true;
+
+        try {
+            const promptContent = `== CẤU TRÚC MẠNG VÀ LỆNH CẤU HÌNH (JSON) ==\n${JSON.stringify(currentJsonObj)}`;
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    system_instruction: { parts: [{ text: SYSTEM_PROMPT_CONFIG_EXPLANATION }] },
+                    contents: [{ parts: [{ text: promptContent }] }],
+                    generationConfig: { temperature: 0.2 }
+                })
+            });
+
+            if (!response.ok) throw new Error('Lỗi API Gemini');
+            const data = await response.json();
+            const explainReport = data.candidates[0].content.parts[0].text;
+
+            const blob = new Blob([explainReport], { type: 'text/plain;charset=utf-8;' });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", "Giai_Thich_Lenh_Config.txt");
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } catch (error) {
+            alert('Lỗi khi giải thích cấu hình: ' + error.message);
+        } finally {
+            explainConfigBtn.innerHTML = originalText;
+            explainConfigBtn.disabled = false;
+        }
     });
 });
