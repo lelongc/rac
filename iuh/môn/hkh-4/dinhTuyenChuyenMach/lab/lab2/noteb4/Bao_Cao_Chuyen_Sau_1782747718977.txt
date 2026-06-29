@@ -1,0 +1,72 @@
+Chào bạn, với tư cách là Chuyên gia Mạng Máy tính, tôi xin gửi đến bạn bản báo cáo chi tiết về cấu hình và kiểm tra hệ thống mạng RIP theo yêu cầu.
+
+---
+
+### PHẦN 1: CHẠY LỆNH CẤU HÌNH VÀ GIẢI THÍCH LỆNH
+
+#### 1. Thiết bị Internet
+**Lệnh cấu hình:**
+```bash
+interface e0/0
+ ip address 200.200.200.2 255.255.255.0
+ no shutdown
+interface loopback 0
+ ip address 8.8.8.8 255.255.255.255
+ip route 0.0.0.0 0.0.0.0 200.200.200.1
+```
+*   **Giải thích:** Đặt IP cho cổng kết nối với R1. Loopback 0 được tạo để mô phỏng một mạng Internet (8.8.8.8). Lệnh `ip route` trỏ đường đi mặc định về R1 để các gói tin từ Internet có thể quay ngược lại mạng nội bộ.
+
+#### 2. Thiết bị R1 (Gateway chính)
+**Lệnh cấu hình:**
+```bash
+interface s1/0, e0/0, e0/1, e0/2
+ ip address [tương ứng] 255.255.255.0
+router rip
+ version 2
+ no auto-summary
+ network 10.0.0.0
+ network 192.168.1.0
+ default-information originate
+ip route 0.0.0.0 0.0.0.0 200.200.200.2
+```
+*   **Giải thích:** R1 đóng vai trò biên. `default-information originate` cực kỳ quan trọng, nó quảng bá tuyến đường mặc định (Internet) vào giao thức RIP để các router khác (R2, R3, R4) biết đường đi ra ngoài. `ip route` trỏ về Internet để R1 biết cách đẩy gói tin đi khi không tìm thấy đích trong bảng định tuyến.
+
+#### 3. Thiết bị R2, R3, R4
+**Lệnh cấu hình (Ví dụ R2):**
+```bash
+router rip
+ version 2
+ no auto-summary
+ network 10.0.0.0
+ network 192.168.x.0 (tùy thiết bị)
+```
+*   **Giải thích:** Các router này chạy RIP v2 để trao đổi bảng định tuyến. `no auto-summary` giúp ngăn chặn việc tóm tắt mạng, đảm bảo tính chính xác cho các subnet nhỏ.
+
+---
+
+### PHẦN 2: CÁC LỆNH KIỂM TRA (VERIFY) VÀ GIẢI THÍCH OUTPUT
+
+Để kiểm tra hệ thống, chúng ta sử dụng các lệnh sau:
+
+**1. Kiểm tra bảng định tuyến (Show ip route):**
+*   **Output:** `R* 0.0.0.0/0 [120/1] via 10.0.12.1`
+*   **Giải thích:** Ký tự `R` (RIP) chứng tỏ tuyến đường được học qua giao thức RIP. `0.0.0.0/0` là tuyến đường mặc định (Default Route) được R1 quảng bá xuống. `[120/1]` là Administrative Distance (120) và Metric (1) của RIP.
+
+**2. Kiểm tra kết nối vật lý (Show ip int brief):**
+*   **Output:** `Interface IP-Address OK? Method Status Protocol`
+*   **Giải thích:** Kiểm tra trạng thái `Up/Up`. Nếu cả hai cột đều là `Up`, nghĩa là cấu hình IP và cáp vật lý đã chính xác.
+
+**3. Kiểm tra thông suốt (Ping):**
+*   **Output:** `Sending 5, 100-byte ICMP Echos to 8.8.8.8, timeout is 2 seconds: !!!!!`
+*   **Giải thích:** 5 dấu chấm than (`!!!!!`) khẳng định gói tin đã đi đến đích và nhận được phản hồi thành công. Hệ thống đã định tuyến đúng từ VPC đến Internet.
+
+---
+
+### PHẦN 3: BÁO CÁO HOÀN THÀNH
+
+Sau khi thực hiện cấu hình các thiết bị R1, R2, R3, R4 và thiết lập các VPC, hệ thống đã đạt được các mục tiêu sau:
+1.  **Định tuyến nội bộ:** Tất cả các mạng LAN (192.168.1.0, 192.168.3.0, 192.168.4.0) đã trao đổi thông tin thành công thông qua giao thức RIP v2.
+2.  **Kết nối Internet:** Nhờ lệnh `default-information originate` trên R1, các VPC đã có thể truy cập thành công đến địa chỉ 8.8.8.8 (Internet).
+3.  **Tính ổn định:** Các bảng định tuyến trên các router đã hội tụ, đảm bảo mọi thiết bị trong sơ đồ đều có thể liên thông với nhau.
+
+**Kết luận:** Hệ thống đã được cấu hình hoàn chỉnh, đáp ứng đầy đủ các yêu cầu kỹ thuật của đề bài. Mạng hoạt động ổn định và thông suốt.

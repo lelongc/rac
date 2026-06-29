@@ -1,0 +1,115 @@
+Chào bạn, với tư cách là một Chuyên gia Mạng Máy tính, tôi xin gửi đến bạn bản báo cáo phân tích chi tiết cấu hình cho hệ thống mạng **Network_RIP_Topology**.
+
+---
+
+### 1. Thiết bị: Internet (Router)
+**Cấu hình:**
+```text
+enable
+configure terminal
+interface e0/0
+ip address 200.200.200.2 255.255.255.0
+no shutdown
+interface loopback 0
+ip address 8.8.8.8 255.255.255.255
+exit
+ip route 0.0.0.0 0.0.0.0 200.200.200.1
+end
+```
+**Giải thích:**
+*   **Interface e0/0:** Thiết lập IP cổng WAN kết nối với R1.
+*   **Loopback 0:** Tạo một địa chỉ ảo (8.8.8.8) giả lập máy chủ DNS công cộng của Google để kiểm tra kết nối Internet.
+*   **Default Route:** Lệnh `ip route 0.0.0.0 0.0.0.0 200.200.200.1` chỉ định mọi lưu lượng không xác định sẽ được đẩy về R1 (Gateway).
+
+---
+
+### 2. Thiết bị: R1 (Router)
+**Cấu hình:**
+```text
+enable
+configure terminal
+interface s1/0, e0/0, e0/1, e0/2 (cấu hình IP và no shutdown)
+router rip
+version 2
+no auto-summary
+network 10.0.0.0
+network 192.168.1.0
+default-information originate
+exit
+ip route 0.0.0.0 0.0.0.0 200.200.200.2
+end
+```
+**Giải thích:**
+*   **RIP v2 & no auto-summary:** Sử dụng giao thức RIP phiên bản 2 để hỗ trợ VLSM và tắt tính năng tự động tóm tắt mạng, giúp định tuyến chính xác hơn.
+*   **default-information originate:** R1 sẽ quảng bá tuyến đường mặc định (Default Route) tới các router khác trong mạng RIP, cho phép các thiết bị trong mạng nội bộ truy cập ra Internet.
+*   **Static Route:** Trỏ đường đi ra Internet thông qua router "Internet" (200.200.200.2).
+
+---
+
+### 3. Thiết bị: R2 (Router)
+**Cấu hình:**
+```text
+enable
+configure terminal
+interface s1/0, e0/0 (cấu hình IP và no shutdown)
+router rip
+version 2
+no auto-summary
+network 10.0.0.0
+end
+```
+**Giải thích:**
+*   R2 đóng vai trò là router trung gian kết nối giữa R1 và R4.
+*   **Network 10.0.0.0:** Cho phép RIP chạy trên các cổng kết nối với R1 và R4, giúp trao đổi bảng định tuyến giữa các router.
+
+---
+
+### 4. Thiết bị: R3 (Router)
+**Cấu hình:**
+```text
+enable
+configure terminal
+interface e0/0, s1/0, e0/1 (cấu hình IP và no shutdown)
+router rip
+version 2
+no auto-summary
+network 10.0.0.0
+network 192.168.3.0
+end
+```
+**Giải thích:**
+*   R3 kết nối với R1, R4 và mạng LAN_7.
+*   Cấu hình `network 192.168.3.0` để quảng bá mạng LAN_7 vào bảng định tuyến RIP, cho phép các router khác biết cách gửi gói tin đến VPC7.
+
+---
+
+### 5. Thiết bị: R4 (Router)
+**Cấu hình:**
+```text
+enable
+configure terminal
+interface e0/0, s1/0, e0/1 (cấu hình IP và no shutdown)
+router rip
+version 2
+no auto-summary
+network 10.0.0.0
+network 192.168.4.0
+end
+```
+**Giải thích:**
+*   R4 kết nối với R2, R3 và mạng LAN_6.
+*   Tương tự R3, lệnh `network 192.168.4.0` giúp các router khác trong hệ thống RIP học được đường đi đến mạng LAN_6.
+
+---
+
+### 6. Các thiết bị VPC (VPC5, VPC7, VPC6)
+**Cấu hình (Ví dụ VPC5):**
+```text
+ip 192.168.1.10 255.255.255.0 192.168.1.1
+```
+**Giải thích:**
+*   **IP/Subnet:** Thiết lập địa chỉ IP tĩnh cho máy tính.
+*   **Gateway (192.168.1.1):** Đây là địa chỉ IP của cổng `e0/1` trên R1. Việc thiết lập Gateway là bắt buộc để các VPC có thể gửi dữ liệu ra ngoài mạng nội bộ (ví dụ: truy cập Internet hoặc các mạng LAN khác).
+
+---
+**Tổng kết:** Hệ thống sử dụng giao thức RIPv2 để tự động hóa việc trao đổi bảng định tuyến. R1 đóng vai trò là "biên" (Edge Router) kết nối toàn bộ hệ thống với Internet thông qua Default Route, trong khi các router khác học đường đi thông qua RIP.

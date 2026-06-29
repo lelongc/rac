@@ -1,0 +1,100 @@
+# BÀI 3: DYNAMIC ROUTING RIPng (IPv6) - LÀM TIẾP TỪ BÀI 1
+
+Nếu sơ đồ của bạn đang chạy sẵn Bài 1 (đã xanh đèn và thông mạng IPv4), bạn KHÔNG CẦN TẮT HAY XÓA GÌ CẢ. Hãy copy y chang 3 cục lệnh dưới đây dán vào 3 Router để "đắp thêm" mạng IPv6 (Dual-Stack) và bật RIPng.
+
+*(Các cổng s1/0, s1/1 đã bật sẵn từ bài 1 nên ta không cần gõ `no shutdown` nữa)*
+
+## BƯỚC 1: ĐỔ ĐỒNG LOẠT IPV6 & BẬT RIPng
+
+**1. Router West:**
+```text
+enable
+configure terminal
+ipv6 unicast-routing
+
+interface Loopback0
+ ipv6 address 2001:db8:0:10::1/64
+ ipv6 rip RIP_ZONE enable
+ exit
+
+interface Serial1/0
+ ipv6 address 2001:db8:0:12::1/64
+ ipv6 rip RIP_ZONE enable
+ exit
+ 
+end
+wr
+```
+
+**2. Router Central:**
+```text
+enable
+configure terminal
+ipv6 unicast-routing
+
+interface Serial1/0
+ ipv6 address 2001:db8:0:12::2/64
+ ipv6 rip RIP_ZONE enable
+ exit
+
+interface Serial1/1
+ ipv6 address 2001:db8:0:13::1/64
+ ipv6 rip RIP_ZONE enable
+ exit
+ 
+end
+wr
+```
+
+**3. Router East:**
+```text
+enable
+configure terminal
+ipv6 unicast-routing
+
+interface Loopback0
+ ipv6 address 2001:db8:0:14::1/64
+ ipv6 rip RIP_ZONE enable
+ exit
+
+interface Loopback1
+ ipv6 address 2001:db8:0:15::1/64
+ ipv6 rip RIP_ZONE enable
+ exit
+
+interface Serial1/1
+ ipv6 address 2001:db8:0:13::2/64
+ ipv6 rip RIP_ZONE enable
+ exit
+
+! Đề bài yêu cầu DHCPv6 cho Router East (giả lập cắm PC ở cổng e0/0)
+ipv6 dhcp pool IPV6_POOL
+ address prefix 2001:db8:0:16::/64
+ dns-server 2001:4860:4860::8888
+ domain-name svhk.net
+ exit
+
+interface Ethernet0/0
+ ipv6 address 2001:db8:0:16::1/64
+ ipv6 dhcp server IPV6_POOL
+ ipv6 nd managed-config-flag
+ ipv6 rip RIP_ZONE enable
+ exit
+
+end
+wr
+```
+
+## BƯỚC 2: LẤY KẾT QUẢ ĐỂ BÁO CÁO (Câu 4 & Câu 5)
+
+Đợi khoảng 15 giây để RIPng hội tụ, sau đó làm các bước chụp hình nộp báo cáo:
+
+**1. Trả lời Câu 4 (Show routing table, running config trên Router East):**
+* Tại East, gõ lệnh: `show ipv6 route`
+  * *Giải thích báo cáo:* Bảng định tuyến IPv6 xuất hiện các mạng có ký hiệu chữ `R` (mạng học qua RIPng, ví dụ: mạng `2001:db8:0:10::/64` của Loopback Router West). Các mạng nối trực tiếp hiển thị chữ `C` (Connected) và `L` (Local). Giao thức RIPng đã hội tụ thành công.
+* Tại East, gõ lệnh: `show running-config`
+  * *Giải thích báo cáo:* Xem và chụp lại phần có lệnh `ipv6 unicast-routing` (lệnh cốt lõi để chạy IPv6) và phần cấu hình bên trong các cổng interface (phải có lệnh `ipv6 rip RIP_ZONE enable` và `ipv6 dhcp server`).
+
+**2. Trả lời Câu 5 (Cho biết đường đi gói tin):**
+* Tại Router West, test thông mạch sang Loopback của East bằng lệnh: `traceroute ipv6 2001:db8:0:14::1`
+* *Giải thích báo cáo:* Gói tin đi từ Router West, nhảy qua trạm trung chuyển (Hop 1) là Router Central (IP: `2001:db8:0:12::2`), sau đó tới thẳng đích (Hop 2) là cổng Loopback 0 của Router East.
