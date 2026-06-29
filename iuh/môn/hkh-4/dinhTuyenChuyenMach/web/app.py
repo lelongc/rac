@@ -23,7 +23,7 @@ def get_interface_id(if_name):
     if if_name == "eth0": return 0
     slot = int(if_name[1:].split('/')[0])
     port = int(if_name.split('/')[1])
-    return slot * 16 + port
+    return port * 16 + slot
 
 def mask_to_cidr(mask):
     try:
@@ -37,62 +37,37 @@ def build_lab(json_file):
     nodes = data.get("nodes", [])
     ip_table = data.get("ip_table", [])
     
-    xml = '<?xml version="1.0" encoding="UTF-8"?>\\n'
-    xml += '<lab name="{}" id="{}" version="1" scripttimeout="300" lock="0">\\n'.format(lab_name, str(uuid.uuid5(uuid.NAMESPACE_DNS, lab_name)))
-    xml += '  <topology>\\n    <nodes>\\n'
-    
     node_map = {}
-    serial_links = {}
-    for idx, node in enumerate(nodes):
-        node_id = idx + 1
-        node_map[node["name"]] = node_id
-        for iface in node.get("interfaces", []):
-            itype = "serial" if iface["name"].startswith("s") else "ethernet"
-            net = iface.get("network")
-            if net and itype == "serial":
-                if net not in serial_links: serial_links[net] = []
-                serial_links[net].append((node_id, get_interface_id(iface["name"])))
-                
-    serial_pairs = {}
-    for net, endpoints in serial_links.items():
-        if len(endpoints) == 2:
-            n1, i1 = endpoints[0]
-            n2, i2 = endpoints[1]
-            serial_pairs[(n1, i1)] = (n2, i2)
-            serial_pairs[(n2, i2)] = (n1, i1)
-            
-    network_map = {}
-    network_types = {}
-    net_counter = 1
+    for i, node in enumerate(nodes):
+        node["_id"] = i + 1
+        node_map[node["name"]] = node["_id"]
+        
+    network_map = {}; net_counter = 1
+    xml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\\n'
+    xml += '<lab name="{}" id="{}" version="1" scripttimeout="300" lock="0">\\n  <topology>\\n    <nodes>\\n'.format(lab_name, str(uuid.uuid4()))
     
-    for idx, node in enumerate(nodes):
-        node_id = idx + 1
+    for node in nodes:
         ntype = node.get("type", "router")
-        if ntype == "router":
-            xml += '      <node id="{}" name="{}" type="iol" template="iol" image="{}" ethernet="1" nvram="1024" ram="1024" serial="1" console="" delay="0" icon="Router.png" config="0" left="{}" top="{}">\\n'.format(node_id, node["name"], IMG_L3, node.get("left", 200), node.get("top", 200))
-        elif ntype == "switch":
-            xml += '      <node id="{}" name="{}" type="iol" template="iol" image="{}" ethernet="1" nvram="1024" ram="1024" serial="0" console="" delay="0" icon="Switch.png" config="0" left="{}" top="{}">\\n'.format(node_id, node["name"], IMG_L2, node.get("left", 200), node.get("top", 200))
-        elif ntype == "vpcs":
-            xml += '      <node id="{}" name="{}" type="vpcs" template="vpcs" image="vpcs" ethernet="1" delay="0" icon="Desktop.png" config="0" left="{}" top="{}">\\n'.format(node_id, node["name"], node.get("left", 200), node.get("top", 200))
-            
+        image = IMG_L3 if ntype == "router" else (IMG_L2 if ntype == "switch" else "")
+        template = "iol" if ntype in ["router", "switch"] else "vpcs"
+        xml += '      <node id="{}" name="{}" type="{}" template="{}" image="{}" ethernet="1" nvram="1024" ram="1024" serial="{}" console="" delay="0" icon="{}" config="0" left="{}" top="{}">\\n'.format(
+            node["_id"], node["name"], "iol" if ntype in ["router", "switch"] else "vpcs", template, image, "1" if ntype == "router" else "0", "Router.png" if ntype == "router" else ("Switch.png" if ntype == "switch" else "Desktop.png"), node.get("left", 200), node.get("top", 200)
+        )
         for iface in node.get("interfaces", []):
             if_id = get_interface_id(iface["name"])
-            itype = "serial" if iface["name"].startswith("s") else "ethernet"
-            net = iface.get("network")
-            if not net: continue
-            
-            if net not in network_map:
-                network_map[net] = net_counter
-                network_types[net] = itype
-                net_counter += 1
-                
-            xml += '        <interface id="{}" name="{}" type="{}" network_id="{}"/>\\n'.format(if_id, iface["name"], itype, network_map[net])
+            if "network" in iface:
+                if iface["network"] not in network_map:
+                    network_map[iface["network"]] = net_counter
+                    net_counter += 1
+                xml += '        <interface id="{}" name="{}" type="ethernet" network_id="{}"/>\\n'.format(if_id, iface["name"], network_map[iface["network"]])
+            elif "remote_node" in iface:
+                r_id = node_map.get(iface["remote_node"])
+                xml += '        <interface id="{}" type="serial" name="{}" remote_id="{}" remote_if="{}"/>\\n'.format(if_id, iface["name"], r_id, get_interface_id(iface["remote_if"]))
         xml += '      </node>\\n'
         
     xml += '    </nodes>\\n    <networks>\\n'
     for net_name, net_id in network_map.items():
-        ntype = "serial" if network_types[net_name] == "serial" else "bridge"
-        xml += '      <network id="{}" type="{}" name="{}" left="300" top="300" visibility="0"/>\\n'.format(net_id, ntype, net_name)
+        xml += '      <network id="{}" type="bridge" name="{}" left="0" top="0" visibility="0"/>\\n'.format(net_id, net_name)
     xml += '    </networks>\\n'
     
     xml += '    <textobjects>\\n'
@@ -109,10 +84,10 @@ def build_lab(json_file):
         b64_label = base64.b64encode(label_text.encode('utf-8')).decode('utf-8')
         
         left, top = 200, 200
-        for node in nodes:
-            if node.get("name") == device_name:
-                left = int(node.get("left", 200))
-                top = int(node.get("top", 200))
+        for n in nodes:
+            if n.get("name") == device_name:
+                left = int(n.get("left", 200))
+                top = int(n.get("top", 200))
                 break
                 
         if "s" in iface_name.lower():
@@ -128,8 +103,7 @@ def build_lab(json_file):
         text_id += 1
         
     xml += '    </textobjects>\\n'
-    xml += '  </topology>\\n'
-    xml += '</lab>'
+    xml += '  </topology>\\n</lab>'
     
     out = "/opt/unetlab/labs/{}.unl".format(lab_name)
     with open(out, "w") as f: f.write(xml)
