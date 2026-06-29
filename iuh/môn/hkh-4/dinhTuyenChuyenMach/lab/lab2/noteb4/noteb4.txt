@@ -1,0 +1,46 @@
+# BÀI 4: ĐỊNH TUYẾN RIPv2 VÀ CHUYỂN DỰ PHÒNG (FAILOVER)
+
+Quá trình cấu hình IP và RIPv2 (Câu 1 và Câu 2) đã được tự động hóa hoàn toàn thông qua Web Tool. Bây giờ, bạn chỉ cần mở các thiết bị trong EVE-NG lên, thực hiện thao tác gõ lệnh để lấy hình ảnh minh chứng và giải thích nộp báo cáo cho Câu 3, 4, 5.
+
+---
+
+## 📸 CÂU 3: Show routing table và giải thích các thành phần
+**1. Thao tác chụp hình:**
+- Mở Console của **Router R1**, gõ lệnh: `show ip route`
+- Chụp lại toàn bộ màn hình kết quả trả về.
+
+**2. Giải thích chép vào báo cáo:**
+- Bảng định tuyến xuất hiện các mạng có ký tự `R` ở đầu (ví dụ: `R 192.168.3.0/24 [120/1] via 10.0.13.2`). Đây là các dải mạng mà Router R1 đã học được từ các Router khác thông qua giao thức RIP.
+- Ký tự `C` (Connected) và `L` (Local) là các mạng cắm trực tiếp vào R1.
+- Ý nghĩa thông số `[120/1]`: Số `120` là AD (Administrative Distance) mặc định của RIP. Số `1` là Metric (Hop count), nghĩa là để đến được mạng đích, gói tin chỉ cần nhảy qua đúng 1 Router trung gian nữa.
+- Dòng `Gateway of last resort is 200.200.200.2 to network 0.0.0.0` xuất hiện là nhờ lệnh `default-information originate` ta đã cấu hình, giúp báo cho toàn mạng biết đường đi ra Internet. Mạng RIPv2 đã hội tụ thành công.
+
+---
+
+## 📸 CÂU 4: Cho biết đường đi gói tin (Tracert)
+**1. Thao tác chụp hình:**
+- Mở Console của máy **VPC5**, gõ 2 lệnh sau để kiểm tra đường đi đến máy VPC7:
+  `ping 192.168.3.10` (Giả sử IP của VPC7 là .10, hãy thay đúng IP máy VPC7 của bạn)
+  `trace 192.168.3.10`
+- Chụp lại màn hình kết quả Trace.
+
+**2. Giải thích chép vào báo cáo:**
+- Gói tin xuất phát từ VPC5 ➜ R1 (Hop 1) ➜ R3 (Hop 2) ➜ Tới đích VPC7.
+- Đây là tuyến đường đi ngắn nhất (chỉ mất 1 khoảng nhảy/hop count) đi tắt qua đoạn cáp nối trực tiếp mạng `10.0.13.0` giữa R1 và R3. Giao thức RIP đã hoạt động chính xác để chọn ra con đường tối ưu nhất.
+
+---
+
+## 📸 CÂU 5: Ngắt kết nối R1 và R3 (Test Failover)
+**1. Thao tác "cắt cáp" ngắt kết nối:**
+- Ra ngoài màn hình vẽ sơ đồ EVE-NG, click chuột phải vào sợi cáp kết nối giữa **R1 (e0/0)** và **R3 (e0/0)**. Chọn **Delete** để xóa sợi dây này đi.
+- **Quan trọng:** Chờ khoảng 30 giây đến 1 phút để giao thức RIP tính toán lại đường đi mới.
+
+**2. Thao tác chụp hình và giải thích (Câu 5.a - Show routing table):**
+- Mở lại Console của **Router R1**, gõ: `show ip route`
+- *Chụp lại màn hình kết quả.*
+- **Giải thích chép vào báo cáo:** Nhìn vào dòng `R 192.168.3.0/24`, ta thấy địa chỉ IP Next-Hop đã thay đổi từ `via 10.0.13.2` sang `via 10.0.12.2` (trỏ ngược về Router R2). Số Metric cũng tăng lên thành `[120/2]`. Lý do là đường cáp tắt đã bị đứt, RIP tự động cập nhật bảng định tuyến để đi vòng qua đường R2.
+
+**3. Thao tác chụp hình và giải thích (Câu 5.b - Tracert):**
+- Mở lại Console của máy **VPC5**, gõ lại lệnh: `trace 192.168.3.10`
+- *Chụp lại màn hình.*
+- **Giải thích chép vào báo cáo:** Kết quả Trace cho thấy lộ trình đã dài hơn: `VPC5 ➜ R1 ➜ R2 ➜ R4 ➜ R3 ➜ VPC7`. Do sợi dây R1-R3 bị đứt, gói tin thông minh tự động chuyển hướng đi đường vòng qua R2 và R4 để giữ cho mạng không bị sập. Đây là minh chứng rõ ràng nhất cho tính năng hội tụ và chuyển dự phòng (Failover) của giao thức định tuyến động RIP.

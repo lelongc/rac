@@ -300,7 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (node.config && node.config.length > 0) {
                 configContent += `========== Tên thiết bị: ${node.name} (${node.type}) ==========\n`;
                 configContent += node.config.join('\n');
-                configContent += `\n\n`;
+                configContent += (node.type === "vpcs") ? "\nsave\n\n" : "\nwrite memory\n\n";
             }
         });
         const blob = new Blob([configContent], { type: 'text/plain;charset=utf-8;' });
