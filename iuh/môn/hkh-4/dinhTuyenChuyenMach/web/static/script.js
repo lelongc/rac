@@ -27,7 +27,10 @@ Cấu trúc JSON bắt buộc:
 
 Luật:
 1. "type" là "router", "switch", hoặc "vpcs".
-2. Tên cổng: "e0/0", "s1/0"... PC cổng luôn là "eth0".
+2. Tên cổng: 
+   - Giữa Router với Router: BẮT BUỘC dùng cổng Serial (ví dụ: "s1/0", "s1/1", "s1/2").
+   - Giữa Router với Switch, hoặc Switch với PC: BẮT BUỘC dùng cổng Ethernet còn trống (ví dụ: "e0/0", "e0/1", "e0/2").
+   - Cổng của PC luôn là "eth0".
 3. TẤT CẢ các cổng ĐỀU PHẢI dùng thuộc tính "network" để nối dây (kể cả cổng Serial s1/0 hay Ethernet). Hai cổng nối với nhau thì phải có CÙNG tên "network". QUAN TRỌNG: MỖI đoạn dây/mạng LAN riêng biệt PHẢI dùng một tên "network" KHÁC NHAU (Ví dụ: LAN_West, LAN_Central, WAN_West_Central). Tuyệt đối KHÔNG dùng chung 1 tên (như "LAN") cho tất cả các thiết bị.
 4. KHÔNG sử dụng remote_node hay remote_if. Tất cả giao tiếp nối dây đều thông qua "network".
 5. Config Router phải bọc bằng "enable", "configure terminal", và "end".
@@ -135,6 +138,12 @@ document.addEventListener('DOMContentLoaded', () => {
         downloadTxtBtn.classList.add('hidden');
         downloadCsvBtn.classList.add('hidden');
 
+        // RESET STATE TO AVOID MIXING OLD DATA
+        currentReport = "";
+        finalAiReport = "";
+        currentIpTable = [];
+        currentJsonObj = null;
+
         try {
             const modelName = 'gemini-3.1-flash-lite'; 
             
@@ -237,7 +246,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const link = document.createElement("a");
         const url = URL.createObjectURL(blob);
         link.setAttribute("href", url);
-        link.setAttribute("download", "Bao_Cao_Chuyen_Sau.txt");
+        const timestamp = new Date().getTime();
+        link.setAttribute("download", `Bao_Cao_Chuyen_Sau_${timestamp}.txt`);
         link.style.visibility = 'hidden';
         document.body.appendChild(link);
         link.click();
@@ -254,7 +264,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const link = document.createElement("a");
         const url = URL.createObjectURL(blob);
         link.setAttribute("href", url);
-        link.setAttribute("download", "Bang_Quy_Hoach_IP.csv");
+        const timestamp = new Date().getTime();
+        link.setAttribute("download", `Bang_Quy_Hoach_IP_${timestamp}.csv`);
         link.style.visibility = 'hidden';
         document.body.appendChild(link);
         link.click();
@@ -290,7 +301,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const link = document.createElement("a");
             const url = URL.createObjectURL(blob);
             link.setAttribute("href", url);
-            link.setAttribute("download", "Phan_Tich_Dinh_Tuyen.txt");
+            const timestamp = new Date().getTime();
+            link.setAttribute("download", `Phan_Tich_Dinh_Tuyen_${timestamp}.txt`);
             link.style.visibility = 'hidden';
             document.body.appendChild(link);
             link.click();
@@ -332,7 +344,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const link = document.createElement("a");
             const url = URL.createObjectURL(blob);
             link.setAttribute("href", url);
-            link.setAttribute("download", "Giai_Thich_Lenh_Config.txt");
+            const timestamp = new Date().getTime();
+            link.setAttribute("download", `Giai_Thich_Lenh_Config_${timestamp}.txt`);
             link.style.visibility = 'hidden';
             document.body.appendChild(link);
             link.click();

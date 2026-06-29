@@ -1,0 +1,160 @@
+Chào anh Long, sơ đồ anh vẽ trên EVE-NG cực kỳ chuẩn xác và khớp hoàn toàn với bài Lab 2 Bài 2!
+Để anh dễ theo dõi, tôi sẽ quy đổi tên theo sơ đồ của anh:
+ * **WEST** = A.Building (LAN: 222.100.100.0/25)
+ * **Central** = B.Building (LAN: 222.100.100.128/26)
+ * **East** = C.Building (LAN: 222.100.100.192/27)
+ * **R10** = Internet (Có mạng 8.8.8.8)
+Dưới đây là **Step-by-Step** bộ lệnh hoàn chỉnh dựa trên đúng các cổng e0/0, s1/0, s1/1, s1/2 mà anh đã cắm dây. Anh cứ copy và paste vào từng thiết bị nhé.
+### BƯỚC 1: CẤU HÌNH IP CHO MÁY TÍNH (PC)
+Mở Console của từng PC, anh chú ý gõ đúng Subnet Mask đặc biệt của VLSM:
+ * **pc1 (Dưới WEST - Mạng /25):**
+   ```text
+   ip 222.100.100.5 255.255.255.128 222.100.100.1
+   save
+   
+   ```
+ * **pc2 (Dưới Central - Mạng /26):**
+   ```text
+   ip 222.100.100.130 255.255.255.192 222.100.100.129
+   save
+   
+   ```
+ * **pc3 (Dưới East - Mạng /27):**
+   ```text
+   ip 222.100.100.195 255.255.255.224 222.100.100.193
+   save
+   
+   ```
+### BƯỚC 2: CẤU HÌNH IP VÀ RIPv2 CHO CÁC ROUTER
+**1. Router WEST (Có s1/0 nối với Central):**
+```text
+enable
+configure terminal
+interface e0/0
+ip address 222.100.100.1 255.255.255.128
+no shutdown
+exit
+interface s1/0
+ip address 220.100.100.33 255.255.255.252
+no shutdown
+exit
+
+router rip
+version 2
+no auto-summary
+network 222.100.100.0
+network 220.100.100.32
+exit
+wr
+
+```
+**2. Router Central (Trái tim hệ thống - Có s1/0, s1/1, s1/2):**
+```text
+enable
+configure terminal
+interface e0/0
+ip address 222.100.100.129 255.255.255.192
+no shutdown
+exit
+interface s1/0
+ip address 220.100.100.34 255.255.255.252
+no shutdown
+exit
+interface s1/1
+ip address 220.100.100.65 255.255.255.252
+no shutdown
+exit
+interface s1/2
+ip address 220.100.100.1 255.255.255.252
+no shutdown
+exit
+
+router rip
+version 2
+no auto-summary
+network 222.100.100.128
+network 220.100.100.32
+network 220.100.100.64
+exit
+wr
+
+```
+**3. Router East (Có s1/1 nối với Central):**
+```text
+enable
+configure terminal
+interface e0/0
+ip address 222.100.100.193 255.255.255.224
+no shutdown
+exit
+interface s1/1
+ip address 220.100.100.66 255.255.255.252
+no shutdown
+exit
+
+router rip
+version 2
+no auto-summary
+network 222.100.100.192
+network 220.100.100.64
+exit
+wr
+
+```
+**4. Router R10 (Đóng vai trò Internet):**
+Ta tạo một cổng ảo (Loopback) đại diện cho mạng Internet 8.8.8.8 để Test.
+```text
+enable
+configure terminal
+interface s1/0
+ip address 220.100.100.2 255.255.255.252
+no shutdown
+exit
+interface loopback 0
+ip address 8.8.8.8 255.255.255.255
+no shutdown
+exit
+
+ip route 220.100.100.0 255.255.255.0 220.100.100.1
+ip route 222.100.100.0 255.255.255.0 220.100.100.1
+wr
+
+```
+*(Giải thích: Tại R10, tôi gộp lộ trình ip route của toàn bộ mạng con /24 trỏ ngược về Central để R10 biết đường trả lời lại).*
+### BƯỚC 3: CẤU HÌNH ĐƯỜNG MẶC ĐỊNH & CHẶN EAST RA INTERNET
+Đây là phần giải quyết yêu cầu quan trọng nhất của bài Lab: **Chỉ cho phép WEST và Central ra Internet.**
+Anh mở Router **Central** lên và gõ:
+```text
+configure terminal
+
+! 1. Trỏ đường đi mặc định lên Internet và phát loa cho WEST/East biết
+ip route 0.0.0.0 0.0.0.0 220.100.100.2
+router rip
+default-information originate
+exit
+
+! 2. Viết ACL cho phép WEST và Central, chặn phần còn lại
+ip access-list standard 10
+permit 222.100.100.0 0.0.0.127
+permit 222.100.100.128 0.0.0.63
+deny any
+exit
+
+! 3. Áp dụng ACL chặn ngay tại cổng s1/2 (cửa ngõ đẩy ra R10)
+interface s1/2
+ip access-group 10 out
+exit
+wr
+
+```
+### BƯỚC 4: LẤY KẾT QUẢ ĐỂ BÁO CÁO (Câu 3 & Câu 4)
+Sau khi chạy xong, anh làm các thao tác sau để chụp hình nộp cho thầy:
+**1. Trả lời Câu 3 (Show routing table):**
+ * Trên **Central**, anh gõ: show ip route
+   * *Giải thích báo cáo:* Bảng định tuyến xuất hiện các mạng chữ C (Connected - nối trực tiếp) và chữ R (mạng học qua RIP). Đặc biệt có dòng S* 0.0.0.0/0 via 220.100.100.2 là đường Default Route hướng ra Internet mà ta vừa cấu hình.
+ * Trên **R10**, anh gõ: show ip route
+   * *Giải thích báo cáo:* Xuất hiện chữ S (Static) cho dải mạng 222.100.100.0/24 và 220.100.100.0/24, chứng tỏ Router Internet đã biết đường trả lời lại cho mạng nội bộ.
+**2. Trả lời Câu 4 (Cho biết đường đi gói tin từ WEST -> 8.8.8.8):**
+ * Tại **pc1** (Mạng WEST), anh gõ: trace 8.8.8.8 và gõ thêm ping 8.8.8.8
+   * *Giải thích báo cáo:* Gói tin đi thành công từ pc1 -> Router WEST -> Router Central -> Router R10. Lệnh ping thành công vì pc1 nằm trong danh sách được Permit.
+ * *(Anh có thể test thêm tại **pc3** mạng East bằng lệnh ping 8.8.8.8, kết quả sẽ báo lỗi Destination Unreachable vì đã bị ACL trên Central chặn lại đúng theo yêu cầu đề bài).*
