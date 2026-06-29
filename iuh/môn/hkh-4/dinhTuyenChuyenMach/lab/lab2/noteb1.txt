@@ -1,0 +1,133 @@
+Chào anh Long, nếu anh đang làm trên một bài Lab "trắng" tinh (đã Wipe sạch cấu hình hoặc mở một file mới hoàn toàn), thì chúng ta sẽ gộp luôn **2 việc vào 1 lần gõ**: Vừa đặt IP cho các cổng cho sáng đèn lên, vừa bật luôn định tuyến RIP.
+
+Anh chỉ cần copy y chang các khối lệnh dưới đây dán vào từng thiết bị là mạng sẽ thông lập tức!
+
+### BƯỚC 1: CẤU HÌNH IP VÀ RIP CHO 3 ROUTER
+
+Anh mở Console của từng Router lên và gõ tuần tự:
+
+**1. Router West:**
+
+```text
+enable
+configure terminal
+interface e0/0
+ip address 192.168.0.1 255.255.255.0
+no shutdown
+exit
+interface s1/0
+ip address 10.0.0.1 255.255.255.0
+no shutdown
+exit
+router rip
+version 1
+network 192.168.0.0
+network 10.0.0.0
+end
+wr
+
+```
+
+**2. Router Central:**
+
+```text
+enable
+configure terminal
+interface e0/0
+ip address 192.168.1.1 255.255.255.0
+no shutdown
+exit
+interface s1/0
+ip address 10.0.0.2 255.255.255.0
+no shutdown
+exit
+interface s1/1
+ip address 10.0.1.1 255.255.255.0
+no shutdown
+exit
+router rip
+version 1
+network 192.168.1.0
+network 10.0.0.0
+end
+wr
+
+```
+
+**3. Router East:**
+
+```text
+enable
+configure terminal
+interface e0/0
+ip address 192.168.2.1 255.255.255.0
+no shutdown
+exit
+interface s1/1
+ip address 10.0.1.2 255.255.255.0
+no shutdown
+exit
+router rip
+version 1
+network 192.168.2.0
+network 10.0.0.0
+end
+wr
+
+```
+
+---
+
+### BƯỚC 2: CẤU HÌNH IP CHO MÁY TÍNH (PC)
+
+Vì lab trắng nên các máy tính cũng mất IP. Anh mở 3 con PC lên và gán lại IP (đừng quên gõ lệnh `save`):
+
+* **PC1:**
+```text
+ip 192.168.0.5 24 192.168.0.1
+save
+
+```
+
+
+* **PC2:**
+```text
+ip 192.168.1.5 24 192.168.1.1
+save
+
+```
+
+
+* **PC3:**
+```text
+ip 192.168.2.5 24 192.168.2.1
+save
+
+```
+
+
+
+---
+
+### BƯỚC 3: KIỂM TRA ĐỂ CHỤP HÌNH BÁO CÁO
+
+Anh đợi khoảng 15 giây để 3 con Router trao đổi bảng định tuyến với nhau, sau đó làm 2 thao tác này để lấy hình nộp:
+
+1. **Chụp bảng định tuyến học bằng RIP:**
+Tại **Router West**, anh gõ:
+```text
+show ip route
+
+```
+
+
+*(Anh chụp lại màn hình có các dòng chữ `R` ở đầu - chứng minh Router đã tự động học được mạng của nhau).*
+2. **Chụp kết quả thông mạng:**
+Tại **PC1**, anh gõ:
+```text
+ping 192.168.2.5
+
+```
+
+
+*(Chụp kết quả báo Reply thành công là hoàn thành xuất sắc 100% Bài 1 Dynamic Routing!)*

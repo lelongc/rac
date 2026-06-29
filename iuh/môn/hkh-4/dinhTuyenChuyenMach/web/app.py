@@ -43,6 +43,9 @@ def build_lab(json_file):
     nodes = data.get("nodes", [])
     ip_table = data.get("ip_table", [])
     
+    import hashlib
+    lab_uuid = str(uuid.UUID(hashlib.md5(lab_name.encode()).hexdigest()))
+    
     # Collect all network endpoints
     network_endpoints = {}
     for i, node in enumerate(nodes):
@@ -71,7 +74,7 @@ def build_lab(json_file):
             net_counter += 1
     
     xml = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\\n'
-    xml += '<lab name="{}" id="{}" version="1" scripttimeout="300" lock="0">\\n  <topology>\\n    <nodes>\\n'.format(lab_name, str(uuid.uuid4()))
+    xml += '<lab name="{}" id="{}" version="1" scripttimeout="300" lock="0">\\n  <topology>\\n    <nodes>\\n'.format(lab_name, lab_uuid)
     
     for i, node in enumerate(nodes):
         node_id = i + 1
@@ -90,9 +93,9 @@ def build_lab(json_file):
             
             if (node_id, if_id) in serial_pairs:
                 rem_node, rem_if = serial_pairs[(node_id, if_id)]
-                xml += '        <interface id="{}" name="{}" type="serial" remote_id="{}" remote_if="{}"/>\\n'.format(if_id, iface["name"], rem_node, rem_if)
+                xml += '        <interface id="{}" name="{}" type="serial" remote_id="{}" remote_if="{}"/>\\n'.format(if_id, get_eve_if_name(iface["name"]), rem_node, rem_if)
             elif net in bridge_networks:
-                xml += '        <interface id="{}" name="{}" type="ethernet" network_id="{}"/>\\n'.format(if_id, iface["name"], bridge_networks[net])
+                xml += '        <interface id="{}" name="{}" type="ethernet" network_id="{}"/>\\n'.format(if_id, get_eve_if_name(iface["name"]), bridge_networks[net])
         xml += '      </node>\\n'
         
     xml += '    </nodes>\\n    <networks>\\n'
@@ -224,27 +227,14 @@ def deploy():
         
         print(f"Deploying Lab: {lab_name}")
         
-        # 1. Login to API
-        session = requests.Session()
-        login = session.post(f"http://{EVE_IP}/api/auth/login", json={"username": EVE_API_USER, "password": EVE_API_PASS, "html5": "-1"})
-        print(f"API LOGIN: {login.status_code}")
-        if login.status_code == 200:
-            # 2. Stop and wipe EXISTING nodes (before we overwrite the XML)
-            nodes_res = session.get(f"http://{EVE_IP}/api/labs/{lab_name}.unl/nodes")
-            print(f"GET OLD NODES: {nodes_res.status_code}")
-            if nodes_res.status_code == 200:
-                old_nodes = list(nodes_res.json().get("data", {}).keys())
-                print(f"Old nodes to stop: {old_nodes}")
-                for node_id in old_nodes:
-                    r1 = session.get(f"http://{EVE_IP}/api/labs/{lab_name}.unl/nodes/{node_id}/stop")
-                    print(f"  Stop node {node_id}: {r1.status_code}")
-                time.sleep(5)
-                for node_id in old_nodes:
-                    r2 = session.get(f"http://{EVE_IP}/api/labs/{lab_name}.unl/nodes/{node_id}/wipe")
-                    print(f"  Wipe node {node_id}: {r2.status_code}")
-                time.sleep(2)
+        # 1. Stop and wipe via SSH CLI (100% reliable)
+        print("Stopping and wiping existing nodes via CLI...")
+        ssh_execute(client, f"/opt/unetlab/wrappers/unl_wrapper -a stop -T 0 -F /opt/unetlab/labs/{lab_name}.unl")
+        time.sleep(3)
+        ssh_execute(client, f"/opt/unetlab/wrappers/unl_wrapper -a wipe -T 0 -F /opt/unetlab/labs/{lab_name}.unl")
+        time.sleep(2)
         
-        # 3. Upload and Build new XML
+        # 2. Upload and Build new XML
         sftp = client.open_sftp()
         with sftp.file('/root/autoeve_master.py', 'w') as f: f.write(EVE_MASTER_SCRIPT)
         with sftp.file(f'/root/{lab_name}.json', 'w') as f: f.write(json_str)
@@ -254,21 +244,19 @@ def deploy():
         print(f"BUILD exit={exit_code}")
         if build_err: print(f"BUILD stderr: {build_err}")
         
-        # 4. Start NEW nodes
-        if login.status_code == 200:
-            nodes_res = session.get(f"http://{EVE_IP}/api/labs/{lab_name}.unl/nodes")
-            print(f"GET NEW NODES: {nodes_res.status_code}")
-            if nodes_res.status_code == 200:
-                new_nodes = list(nodes_res.json().get("data", {}).keys())
-                print(f"New nodes to start: {new_nodes}")
-                for node_id in new_nodes:
-                    start_res = session.get(f"http://{EVE_IP}/api/labs/{lab_name}.unl/nodes/{node_id}/start")
-                    print(f"  Start node {node_id}: {start_res.status_code} {start_res.text}")
-            
+        # 3. Start nodes via CLI
+        print("Starting nodes via CLI...")
+        ssh_execute(client, f"/opt/unetlab/wrappers/unl_wrapper -a start -T 0 -F /opt/unetlab/labs/{lab_name}.unl")
+        
         # Wait for nodes to boot
         time.sleep(45)
         
         ssh_execute(client, f"python3 /root/autoeve_master.py push /root/{lab_name}.json")
+        
+        # Wait for dynamic routing protocols (like RIP) to converge
+        print("Waiting 30s for RIP convergence...")
+        time.sleep(30)
+        
         ssh_execute(client, f"python3 /root/autoeve_master.py verify /root/{lab_name}.json")
         
         _, report_text, _ = ssh_execute(client, f"cat /root/report_{lab_name}.txt")

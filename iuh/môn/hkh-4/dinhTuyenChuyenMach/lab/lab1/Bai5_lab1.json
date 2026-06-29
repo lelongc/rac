@@ -1,0 +1,119 @@
+{
+  "lab_name": "Bai5_Static_Routing",
+  "nodes": [
+    {
+      "name": "A_Building",
+      "type": "router",
+      "left": 200, "top": 400,
+      "interfaces": [
+        {"name": "s1/0", "network": "WAN_A_B"},
+        {"name": "e0/0", "network": "LAN_A"}
+      ],
+      "config": [
+        "enable", "configure terminal",
+        "interface e0/0", "ip address 192.168.0.1 255.255.255.0", "no shutdown", "exit",
+        "interface s1/0", "ip address 10.0.0.1 255.255.255.0", "no shutdown", "exit",
+        "ip route 0.0.0.0 0.0.0.0 10.0.0.2",
+        "end"
+      ]
+    },
+    {
+      "name": "B_Building",
+      "type": "router",
+      "left": 500, "top": 400,
+      "interfaces": [
+        {"name": "s1/0", "network": "WAN_A_B"},
+        {"name": "s1/1", "network": "WAN_B_C"},
+        {"name": "s1/2", "network": "WAN_B_Internet"},
+        {"name": "e0/0", "network": "LAN_B"}
+      ],
+      "config": [
+        "enable", "configure terminal",
+        "interface e0/0", "ip address 192.168.1.1 255.255.255.0", "no shutdown", "exit",
+        "interface s1/0", "ip address 10.0.0.2 255.255.255.0", "no shutdown", "exit",
+        "interface s1/1", "ip address 10.0.1.1 255.255.255.0", "no shutdown", "exit",
+        "interface s1/2", "ip address 10.0.2.1 255.255.255.0", "no shutdown", "exit",
+        "ip route 192.168.0.0 255.255.255.0 10.0.0.1",
+        "ip route 192.168.2.0 255.255.255.0 10.0.1.2",
+        "ip route 0.0.0.0 0.0.0.0 10.0.2.2",
+        "end"
+      ]
+    },
+    {
+      "name": "C_Building",
+      "type": "router",
+      "left": 800, "top": 400,
+      "interfaces": [
+        {"name": "s1/1", "network": "WAN_B_C"},
+        {"name": "e0/0", "network": "LAN_C"}
+      ],
+      "config": [
+        "enable", "configure terminal",
+        "interface e0/0", "ip address 192.168.2.1 255.255.255.0", "no shutdown", "exit",
+        "interface s1/1", "ip address 10.0.1.2 255.255.255.0", "no shutdown", "exit",
+        "ip route 0.0.0.0 0.0.0.0 10.0.1.1",
+        "end"
+      ]
+    },
+    {
+      "name": "Internet",
+      "type": "router",
+      "left": 500, "top": 100,
+      "interfaces": [
+        {"name": "s1/0", "network": "WAN_B_Internet"},
+        {"name": "e0/0", "network": "LAN_Internet"}
+      ],
+      "config": [
+        "enable", "configure terminal",
+        "interface e0/0", "ip address 192.168.3.1 255.255.255.0", "no shutdown", "exit",
+        "interface s1/0", "ip address 10.0.2.2 255.255.255.0", "no shutdown", "exit",
+        "ip route 192.168.0.0 255.255.255.0 10.0.2.1",
+        "ip route 192.168.1.0 255.255.255.0 10.0.2.1",
+        "ip route 192.168.2.0 255.255.255.0 10.0.2.1",
+        "ip route 10.0.0.0 255.255.255.0 10.0.2.1",
+        "ip route 10.0.1.0 255.255.255.0 10.0.2.1",
+        "end"
+      ]
+    },
+    {
+      "name": "SW4", "type": "switch", "left": 200, "top": 600,
+      "interfaces": [{"name": "e0/0", "network": "LAN_A"}, {"name": "e0/1", "network": "PC1_Net"}],
+      "config": []
+    },
+    {
+      "name": "SW5", "type": "switch", "left": 500, "top": 600,
+      "interfaces": [{"name": "e0/0", "network": "LAN_B"}, {"name": "e0/1", "network": "PC2_Net"}],
+      "config": []
+    },
+    {
+      "name": "SW6", "type": "switch", "left": 800, "top": 600,
+      "interfaces": [{"name": "e0/0", "network": "LAN_C"}, {"name": "e0/1", "network": "PC3_Net"}],
+      "config": []
+    },
+    {
+      "name": "SW7", "type": "switch", "left": 200, "top": 100,
+      "interfaces": [{"name": "e0/0", "network": "LAN_Internet"}, {"name": "e0/1", "network": "PC4_Net"}],
+      "config": []
+    },
+    {
+      "name": "C1", "type": "vpcs", "left": 200, "top": 800,
+      "interfaces": [{"name": "eth0", "network": "PC1_Net"}],
+      "config": ["ip 192.168.0.5 255.255.255.0 192.168.0.1", "save"]
+    },
+    {
+      "name": "C2", "type": "vpcs", "left": 500, "top": 800,
+      "interfaces": [{"name": "eth0", "network": "PC2_Net"}],
+      "config": ["ip 192.168.1.5 255.255.255.0 192.168.1.1", "save"]
+    },
+    {
+      "name": "C3", "type": "vpcs", "left": 800, "top": 800,
+      "interfaces": [{"name": "eth0", "network": "PC3_Net"}],
+      "config": ["ip 192.168.2.5 255.255.255.0 192.168.2.1", "save"]
+    },
+    {
+      "name": "C4", "type": "vpcs", "left": 50, "top": 100,
+      "interfaces": [{"name": "eth0", "network": "PC4_Net"}],
+      "config": ["ip 192.168.3.5 255.255.255.0 192.168.3.1", "save"]
+    }
+  ]
+}
