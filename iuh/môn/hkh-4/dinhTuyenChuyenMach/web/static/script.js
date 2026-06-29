@@ -34,8 +34,9 @@ Luật:
 3. TẤT CẢ các cổng ĐỀU PHẢI dùng thuộc tính "network" để nối dây (kể cả cổng Serial s1/0 hay Ethernet). Hai cổng nối với nhau thì phải có CÙNG tên "network". QUAN TRỌNG: MỖI đoạn dây/mạng LAN riêng biệt PHẢI dùng một tên "network" KHÁC NHAU (Ví dụ: LAN_West, LAN_Central, WAN_West_Central). Tuyệt đối KHÔNG dùng chung 1 tên (như "LAN") cho tất cả các thiết bị.
 4. KHÔNG sử dụng remote_node hay remote_if. Tất cả giao tiếp nối dây đều thông qua "network".
 5. Config Router phải bọc bằng "enable", "configure terminal", và "end".
-6. Tự động chia IP và định tuyến thông minh. Đảm bảo 'ip_table' phải đầy đủ.
-7. Tính toán thuộc tính "left" và "top" hợp lý để vẽ sơ đồ EVE-NG đẹp mắt. Ví dụ:
+6. ĐỐI VỚI VPCS: Bắt buộc phải có mảng "config" chứa lệnh gán IP. Ví dụ: ["ip 192.168.10.10 255.255.255.0 192.168.10.1"]
+7. Tự động chia IP và định tuyến thông minh. Đảm bảo 'ip_table' phải đầy đủ.
+8. Tính toán thuộc tính "left" và "top" hợp lý để vẽ sơ đồ EVE-NG đẹp mắt. Ví dụ:
 - Lớp Core/Router WAN xếp ở trên cùng (top: 200). Các Router xếp ngang nhau (left: 200, 500, 800).
 - Lớp Switch xếp ở giữa (top: 400), nằm ngay dưới Router quản lý nó (left tương ứng).
 - Lớp PC xếp ở dưới cùng (top: 600), nằm ngay dưới Switch.
@@ -95,6 +96,43 @@ Nhiệm vụ của bạn: VIẾT MỘT BẢN BÁO CÁO GIẢI THÍCH LỆNH CẤ
 
 Tuyệt đối KHÔNG trả về JSON. Báo cáo phải được định dạng Markdown rõ ràng, chuyên nghiệp. Không được bỏ sót bất kỳ thiết bị nào.
 `;
+async function callGeminiAPI(modelName, apiKey, systemInstruction, promptContent, temperature = 0.2, maxRetries = 3) {
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    system_instruction: { parts: [{ text: systemInstruction }] },
+                    contents: [{ parts: [{ text: promptContent }] }],
+                    generationConfig: { temperature: temperature }
+                })
+            });
+
+            if (!response.ok) {
+                if (response.status === 429 && attempt < maxRetries) {
+                    console.warn(`[Gemini] Bị rate limit (429). Đang chờ 3s trước khi thử lại lần ${attempt + 1}...`);
+                    await new Promise(r => setTimeout(r, 3000));
+                    continue;
+                }
+                
+                let errMsg = 'Lỗi không xác định';
+                try {
+                    const errData = await response.json();
+                    errMsg = errData.error?.message || response.statusText;
+                } catch(e) { errMsg = response.statusText; }
+                throw new Error(errMsg);
+            }
+            
+            const data = await response.json();
+            return data.candidates[0].content.parts[0].text;
+        } catch (error) {
+            if (attempt === maxRetries) throw error;
+            console.warn(`[Gemini] Lỗi: ${error.message}. Đang thử lại lần ${attempt + 1}...`);
+            await new Promise(r => setTimeout(r, 3000));
+        }
+    }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     const apiKeyInput = document.getElementById('apiKey');
@@ -105,6 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const analyzeRouteBtn = document.getElementById('analyzeRouteBtn');
     const downloadTxtBtn = document.getElementById('downloadTxtBtn');
     const downloadCsvBtn = document.getElementById('downloadCsvBtn');
+    const downloadConfigBtn = document.getElementById('downloadConfigBtn');
     const outputCode = document.getElementById('outputCode');
     const spinner = document.getElementById('loadingSpinner');
     const btnText = document.querySelector('.btn-text');
@@ -137,6 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
         analyzeRouteBtn.classList.add('hidden');
         downloadTxtBtn.classList.add('hidden');
         downloadCsvBtn.classList.add('hidden');
+        downloadConfigBtn.classList.add('hidden');
 
         // RESET STATE TO AVOID MIXING OLD DATA
         currentReport = "";
@@ -148,26 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const modelName = 'gemini-3.1-flash-lite'; 
             
             // PHASE 1: GENERATE CONFIG
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-                    contents: [{ parts: [{ text: promptText }] }],
-                    generationConfig: { temperature: 0.1 }
-                })
-            });
-
-            if (!response.ok) {
-                let errMsg = 'Lỗi không xác định';
-                try {
-                    const errData = await response.json();
-                    errMsg = errData.error?.message || response.statusText;
-                } catch(e) { errMsg = response.statusText; }
-                throw new Error('Gemini API (P1): ' + errMsg);
-            }
-            const data = await response.json();
-            let rawText = data.candidates[0].content.parts[0].text;
+            let rawText = await callGeminiAPI(modelName, apiKey, SYSTEM_PROMPT, promptText, 0.1);
             rawText = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();
             const jsonObj = JSON.parse(rawText);
             currentJsonObj = jsonObj;
@@ -175,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentIpTable = jsonObj.ip_table || [];
 
             // PHASE 2: DEPLOY TO EVE-NG
-            outputCode.textContent = "[2/3] Chuyển giao cho EVE-NG Server...\n\nĐang thực thi các bước:\n1. Upload cấu hình\n2. Dựng sơ đồ XML\n3. Start thiết bị\n4. Chờ thiết bị khởi động (45s)...\n5. Đẩy cấu hình\n6. Rút trích báo cáo";
+            outputCode.textContent = "[2/3] Chuyển giao cho EVE-NG Server...\n\n";
             
             const deployRes = await fetch('/api/deploy', {
                 method: 'POST',
@@ -183,37 +204,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify(jsonObj)
             });
             
-            const deployData = await deployRes.json();
-            if (!deployData.success) {
-                throw new Error("Lỗi Server EVE-NG: " + deployData.error);
+            if (!deployRes.ok) {
+                throw new Error("Lỗi Server EVE-NG: " + deployRes.statusText);
             }
-            currentReport = deployData.report;
+            
+            const reader = deployRes.body.getReader();
+            const decoder = new TextDecoder();
+            let deployOutput = "";
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                const chunk = decoder.decode(value, {stream: true});
+                deployOutput += chunk;
+                outputCode.textContent += chunk;
+                // scroll to bottom
+                outputCode.parentElement.scrollTop = outputCode.parentElement.scrollHeight;
+            }
+            
+            const delimiter = "========== BAO CAO TOAN DIEN ==========";
+            if (deployOutput.includes(delimiter)) {
+                currentReport = delimiter + deployOutput.split(delimiter)[1];
+            } else {
+                throw new Error("Triển khai thất bại, không tìm thấy báo cáo.");
+            }
 
             // PHASE 3: AI POST-EXECUTION ANALYSIS
-            outputCode.textContent = "[3/3] AI đang đọc Output thực tế và viết Báo cáo Chuyên sâu...\n\nVui lòng chờ thêm khoảng 5-10 giây...";
+            outputCode.textContent += "\n[3/3] AI đang đọc Output thực tế và viết Báo cáo Chuyên sâu...\n\nVui lòng chờ thêm khoảng 5-10 giây...";
             
             const postPrompt = `== YÊU CẦU ĐỀ BÀI VÀ THIẾT KẾ ==\n${JSON.stringify(jsonObj)}\n\n== OUTPUT THỰC TẾ TỪ EVE-NG ==\n${currentReport}`;
             
-            const reportResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    system_instruction: { parts: [{ text: SYSTEM_PROMPT_REPORT }] },
-                    contents: [{ parts: [{ text: postPrompt }] }],
-                    generationConfig: { temperature: 0.3 }
-                })
-            });
-
-            if (!reportResponse.ok) {
-                let errMsg = 'Lỗi không xác định';
-                try {
-                    const errData = await reportResponse.json();
-                    errMsg = errData.error?.message || reportResponse.statusText;
-                } catch(e) { errMsg = reportResponse.statusText; }
-                throw new Error('Gemini API (P3): ' + errMsg);
-            }
-            const reportData = await reportResponse.json();
-            finalAiReport = reportData.candidates[0].content.parts[0].text;
+            finalAiReport = await callGeminiAPI(modelName, apiKey, SYSTEM_PROMPT_REPORT, postPrompt, 0.3);
 
             // FINAL: SHOW SUCCESS
             outputCode.textContent = "✅ THÀNH CÔNG RỰC RỠ!\n\n" + currentReport;
@@ -221,6 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
             explainConfigBtn.classList.remove('hidden');
             analyzeRouteBtn.classList.remove('hidden');
             downloadTxtBtn.classList.remove('hidden');
+            downloadConfigBtn.classList.remove('hidden');
             if (currentIpTable.length > 0) downloadCsvBtn.classList.remove('hidden');
 
         } catch (error) {
@@ -271,6 +292,26 @@ document.addEventListener('DOMContentLoaded', () => {
         link.click();
         document.body.removeChild(link);
     });
+    // Xuất file cấu hình gốc (Raw config)
+    downloadConfigBtn.addEventListener('click', () => {
+        if (!currentJsonObj || !currentJsonObj.nodes) return;
+        let configContent = "========== RAW CONFIGURATION COMMANDS ==========\n\n";
+        currentJsonObj.nodes.forEach(node => {
+            if (node.config && node.config.length > 0) {
+                configContent += `========== Tên thiết bị: ${node.name} (${node.type}) ==========\n`;
+                configContent += node.config.join('\n');
+                configContent += `\n\n`;
+            }
+        });
+        const blob = new Blob([configContent], { type: 'text/plain;charset=utf-8;' });
+        const link = document.createElement("a");
+        link.setAttribute("href", URL.createObjectURL(blob));
+        link.setAttribute("download", `Cac_Lenh_Cau_Hinh_${new Date().getTime()}.txt`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    });
 
     // Phân tích Định tuyến & Gói tin
     analyzeRouteBtn.addEventListener('click', async () => {
@@ -283,19 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const postPrompt = `== YÊU CẦU ĐỀ BÀI VÀ THIẾT KẾ ==\n${JSON.stringify(currentJsonObj)}\n\n== OUTPUT THỰC TẾ TỪ EVE-NG ==\n${currentReport}`;
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    system_instruction: { parts: [{ text: SYSTEM_PROMPT_ROUTING_ANALYSIS }] },
-                    contents: [{ parts: [{ text: postPrompt }] }],
-                    generationConfig: { temperature: 0.3 }
-                })
-            });
-
-            if (!response.ok) throw new Error('Lỗi API Gemini');
-            const data = await response.json();
-            const analysisReport = data.candidates[0].content.parts[0].text;
+            const analysisReport = await callGeminiAPI('gemini-3.1-flash-lite', apiKey, SYSTEM_PROMPT_ROUTING_ANALYSIS, postPrompt, 0.3);
 
             const blob = new Blob([analysisReport], { type: 'text/plain;charset=utf-8;' });
             const link = document.createElement("a");
@@ -326,19 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const promptContent = `== CẤU TRÚC MẠNG VÀ LỆNH CẤU HÌNH (JSON) ==\n${JSON.stringify(currentJsonObj)}`;
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=${apiKey}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    system_instruction: { parts: [{ text: SYSTEM_PROMPT_CONFIG_EXPLANATION }] },
-                    contents: [{ parts: [{ text: promptContent }] }],
-                    generationConfig: { temperature: 0.2 }
-                })
-            });
-
-            if (!response.ok) throw new Error('Lỗi API Gemini');
-            const data = await response.json();
-            const explainReport = data.candidates[0].content.parts[0].text;
+            const explainReport = await callGeminiAPI('gemini-3.1-flash-lite', apiKey, SYSTEM_PROMPT_CONFIG_EXPLANATION, promptContent, 0.2);
 
             const blob = new Blob([explainReport], { type: 'text/plain;charset=utf-8;' });
             const link = document.createElement("a");

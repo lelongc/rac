@@ -53,6 +53,8 @@ def build_lab(json_file):
         for iface in node.get("interfaces", []):
             net = iface.get("network")
             if not net: continue
+            # Bỏ qua cổng ảo (loopback) vì không có dây nối vật lý, tránh lỗi get_interface_id
+            if "lo" in iface["name"].lower(): continue
             if net not in network_endpoints:
                 network_endpoints[net] = []
             network_endpoints[net].append((node_id, iface["name"], get_interface_id(iface["name"])))
@@ -87,6 +89,7 @@ def build_lab(json_file):
             xml += '      <node id="{}" name="{}" type="vpcs" template="vpcs" image="vpcs" ethernet="1" delay="0" icon="Desktop.png" config="0" left="{}" top="{}">\\n'.format(node_id, node["name"], node.get("left", 200), node.get("top", 200))
             
         for iface in node.get("interfaces", []):
+            if "lo" in iface["name"].lower(): continue
             if_id = get_interface_id(iface["name"])
             net = iface.get("network")
             if not net: continue
@@ -215,60 +218,80 @@ def index():
 
 @app.route('/api/deploy', methods=['POST'])
 def deploy():
-    try:
-        lab_config = request.json
-        original_lab_name = lab_config.get("lab_name", "Auto_Lab")
-        # Ensure a completely new lab is created every time to avoid conflicts
-        lab_name = f"{original_lab_name}_{int(time.time())}"
-        lab_config["lab_name"] = lab_name
-        json_str = json.dumps(lab_config, indent=2)
-        print(f"RECEIVED JSON:\n{json_str}")
-        
-        client = paramiko.SSHClient()
-        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        client.connect(EVE_IP, username=EVE_SSH_USER, password=EVE_SSH_PASS, timeout=10)
-        
-        print(f"Deploying Lab: {lab_name}")
-        
-        # 1. Stop and wipe via SSH CLI (100% reliable)
-        print("Stopping and wiping existing nodes via CLI...")
-        ssh_execute(client, f"/opt/unetlab/wrappers/unl_wrapper -a stop -T 0 -F /opt/unetlab/labs/{lab_name}.unl")
-        time.sleep(3)
-        ssh_execute(client, f"/opt/unetlab/wrappers/unl_wrapper -a wipe -T 0 -F /opt/unetlab/labs/{lab_name}.unl")
-        time.sleep(2)
-        
-        # 2. Upload and Build new XML
-        sftp = client.open_sftp()
-        with sftp.file('/root/autoeve_master.py', 'w') as f: f.write(EVE_MASTER_SCRIPT)
-        with sftp.file(f'/root/{lab_name}.json', 'w') as f: f.write(json_str)
-        sftp.close()
-        
-        exit_code, build_out, build_err = ssh_execute(client, f"python3 /root/autoeve_master.py build /root/{lab_name}.json")
-        print(f"BUILD exit={exit_code}")
-        if build_err: print(f"BUILD stderr: {build_err}")
-        
-        # 3. Start nodes via CLI
-        print("Starting nodes via CLI...")
-        ssh_execute(client, f"/opt/unetlab/wrappers/unl_wrapper -a start -T 0 -F /opt/unetlab/labs/{lab_name}.unl")
-        
-        # Wait for nodes to boot
-        time.sleep(45)
-        
-        ssh_execute(client, f"python3 /root/autoeve_master.py push /root/{lab_name}.json")
-        
-        # Wait for dynamic routing protocols (like RIP) to converge
-        print("Waiting 30s for RIP convergence...")
-        time.sleep(30)
-        
-        ssh_execute(client, f"python3 /root/autoeve_master.py verify /root/{lab_name}.json")
-        
-        _, report_text, _ = ssh_execute(client, f"cat /root/report_{lab_name}.txt")
-        client.close()
-        
-        return jsonify({"success": True, "report": report_text})
-        
-    except Exception as e:
-        return jsonify({"success": False, "error": str(e)})
+    lab_config = request.json
+    from flask import Response, stream_with_context
+    def generate():
+        try:
+            original_lab_name = lab_config.get("lab_name", "Auto_Lab")
+            lab_name = f"{original_lab_name}_{int(time.time())}"
+            lab_config["lab_name"] = lab_name
+            json_str = json.dumps(lab_config, indent=2)
+            
+            client = paramiko.SSHClient()
+            client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+            client.connect(EVE_IP, username=EVE_SSH_USER, password=EVE_SSH_PASS, timeout=10)
+            
+            yield f"Deploying Lab: {lab_name}\n"
+            
+            yield "Stopping and wiping existing nodes via CLI...\n"
+            ssh_execute(client, f"/opt/unetlab/wrappers/unl_wrapper -a stop -T 0 -F /opt/unetlab/labs/{lab_name}.unl")
+            time.sleep(3)
+            ssh_execute(client, f"/opt/unetlab/wrappers/unl_wrapper -a wipe -T 0 -F /opt/unetlab/labs/{lab_name}.unl")
+            time.sleep(2)
+            
+            yield "Uploading master script and topology JSON...\n"
+            sftp = client.open_sftp()
+            with sftp.file('/root/autoeve_master.py', 'w') as f: f.write(EVE_MASTER_SCRIPT)
+            with sftp.file(f'/root/{lab_name}.json', 'w') as f: f.write(json_str)
+            sftp.close()
+            
+            yield "Building EVE-NG XML...\n"
+            stdin, stdout, stderr = client.exec_command(f"python3 /root/autoeve_master.py build /root/{lab_name}.json")
+            for line in iter(stdout.readline, ""): yield line
+            for line in iter(stderr.readline, ""): yield line
+            
+            yield "Starting nodes via CLI...\n"
+            ssh_execute(client, f"/opt/unetlab/wrappers/unl_wrapper -a start -T 0 -F /opt/unetlab/labs/{lab_name}.unl")
+            
+            yield "Waiting for nodes to boot (45s) "
+            for i in range(45):
+                yield "."
+                time.sleep(1)
+            yield "\n"
+            
+            yield "Pushing IP configs and Routing...\n"
+            stdin, stdout, stderr = client.exec_command(f"python3 /root/autoeve_master.py push /root/{lab_name}.json")
+            for line in iter(stdout.readline, ""): yield line
+            
+            # Smart delay: Only wait 30s if dynamic routing (RIP/OSPF/EIGRP) is used, otherwise wait 5s for STP/interface up
+            has_dynamic = any("router rip" in c.lower() or "router ospf" in c.lower() or "router eigrp" in c.lower() for n in lab_config.get("nodes", []) for c in n.get("config", []))
+            
+            if has_dynamic:
+                yield "\nWaiting 30s for RIP/OSPF dynamic routing convergence "
+                for i in range(30):
+                    yield "."
+                    time.sleep(1)
+            else:
+                yield "\nWaiting 5s for interfaces to come up "
+                for i in range(5):
+                    yield "."
+                    time.sleep(1)
+            yield "\n"
+            
+            yield "Extracting Routing Table and Configuration reports...\n"
+            stdin, stdout, stderr = client.exec_command(f"python3 /root/autoeve_master.py verify /root/{lab_name}.json")
+            for line in iter(stdout.readline, ""): yield line
+            
+            _, report_text, _ = ssh_execute(client, f"cat /root/report_{lab_name}.txt")
+            client.close()
+            
+            yield "\n========== BAO CAO TOAN DIEN ==========\n"
+            yield report_text
+            
+        except Exception as e:
+            yield f"\nERROR: {str(e)}\n"
+            
+    return Response(stream_with_context(generate()), mimetype='text/plain')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
