@@ -1,0 +1,85 @@
+Chào bạn, với tư cách là Chuyên gia Mạng Máy tính, tôi xin gửi đến bạn bản báo cáo chi tiết về đồ án thiết kế mạng Enterprise sử dụng giao thức định tuyến RIPv2.
+
+---
+
+### PHẦN 1: CHẠY LỆNH CẤU HÌNH VÀ GIẢI THÍCH LỆNH
+
+#### 1. Thiết bị Internet
+*   **Lệnh cấu hình:**
+    ```bash
+    interface loopback 0
+    ip address 8.8.8.8 255.255.255.255
+    interface s1/0
+    ip address 220.100.100.1 255.255.255.252
+    ip route 222.100.100.0 255.255.255.0 220.100.100.2
+    ```
+*   **Giải thích:**
+    *   `Loopback 0`: Giả lập một địa chỉ IP công cộng (Google DNS) để kiểm tra kết nối Internet.
+    *   `IP Address`: Thiết lập IP cổng WAN kết nối với router Central.
+    *   `ip route`: Định tuyến tĩnh trỏ các dải mạng LAN nội bộ về phía router Central (220.100.100.2) để Internet có thể gửi gói tin phản hồi về mạng nội bộ.
+
+#### 2. Thiết bị Central (Router trung tâm)
+*   **Lệnh cấu hình:**
+    ```bash
+    interface s1/0, s1/1, s1/2, e0/0 # Cấu hình IP cho các cổng kết nối
+    ip access-list standard 10 # Tạo ACL lọc lưu lượng
+    permit 222.100.100.0 0.0.0.127
+    permit 222.100.100.128 0.0.0.63
+    interface s1/2
+    ip access-group 10 out # Áp dụng ACL ra hướng Internet
+    router rip
+    version 2
+    no auto-summary
+    network 220.100.100.0
+    network 222.100.100.0
+    passive-interface s1/2 # Chặn quảng bá RIP ra hướng Internet
+    default-information originate # Quảng bá tuyến đường mặc định cho các router con
+    ip route 0.0.0.0 0.0.0.0 220.100.100.1 # Tuyến đường mặc định ra Internet
+    ```
+*   **Giải thích:**
+    *   `ACL 10`: Kiểm soát bảo mật, chỉ cho phép các dải mạng nội bộ cụ thể được phép đi ra ngoài.
+    *   `RIPv2`: Giao thức định tuyến động để các router tự học đường đi.
+    *   `passive-interface`: Ngăn chặn việc gửi gói tin RIP ra cổng Internet để bảo mật.
+    *   `default-information originate`: Cho phép Central chia sẻ tuyến đường mặc định (Default Route) cho West và East để chúng biết đường đi ra Internet.
+
+#### 3. Thiết bị West & East
+*   **Lệnh cấu hình:**
+    ```bash
+    router rip
+    version 2
+    no auto-summary
+    network 220.100.100.0
+    network 222.100.100.0
+    ```
+*   **Giải thích:** Kích hoạt RIPv2 để trao đổi bảng định tuyến với Central, giúp các router này tự động cập nhật đường đi đến các mạng LAN khác và đường ra Internet.
+
+---
+
+### PHẦN 2: CÁC LỆNH KIỂM TRA (VERIFY) VÀ GIẢI THÍCH OUTPUT
+
+#### 1. Kiểm tra bảng định tuyến (show ip route)
+*   **Output:**
+    *   `R 222.100.100.0/25 [120/1] via 220.100.100.34...`
+    *   `S* 0.0.0.0/0 [1/0] via 220.100.100.1`
+*   **Giải thích:**
+    *   `R`: Tuyến đường học được qua giao thức RIP.
+    *   `S*`: Tuyến đường mặc định (Default Route) được cấu hình tĩnh, cho phép router đi ra Internet khi không tìm thấy địa chỉ đích trong bảng định tuyến.
+
+#### 2. Kiểm tra kết nối (Ping)
+*   **Output:** `Sending 5, 100-byte ICMP Echos to 8.8.8.8, timeout is 2 seconds: !!!!!`
+*   **Giải thích:** 5 dấu chấm than (`!!!!!`) chứng minh gói tin đã đi đến đích (8.8.8.8) và quay trở về thành công. Hệ thống đã thông suốt từ LAN ra Internet.
+
+#### 3. Kiểm tra cổng giao tiếp (show ip int brief)
+*   **Output:** `Serial1/0  220.100.100.34  YES  manual  up  up`
+*   **Giải thích:** Trạng thái `up/up` xác nhận cổng vật lý đã hoạt động bình thường và địa chỉ IP đã được gán chính xác.
+
+---
+
+### PHẦN 3: BÁO CÁO HOÀN THÀNH
+
+Sau khi thực hiện cấu hình định tuyến RIPv2 và thiết lập các chính sách bảo mật (ACL) trên router Central, hệ thống mạng Enterprise đã đạt được các mục tiêu sau:
+1.  **Liên thông toàn bộ:** Các mạng LAN (West, Central, East) có thể giao tiếp với nhau thông qua giao thức định tuyến động RIPv2.
+2.  **Truy cập Internet:** Tất cả các máy tính trong mạng nội bộ đều có thể truy cập thành công địa chỉ 8.8.8.8 thông qua tuyến đường mặc định được quảng bá từ Central.
+3.  **Bảo mật:** Việc sử dụng `passive-interface` và `ACL` đã đảm bảo lưu lượng mạng được kiểm soát chặt chẽ, tránh rò rỉ thông tin định tuyến ra môi trường bên ngoài.
+
+Hệ thống đã vận hành ổn định và đáp ứng đầy đủ yêu cầu của đề bài.

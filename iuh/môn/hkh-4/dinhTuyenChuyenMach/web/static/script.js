@@ -115,15 +115,15 @@ async function callGeminiAPI(modelName, apiKey, systemInstruction, promptContent
                     await new Promise(r => setTimeout(r, 3000));
                     continue;
                 }
-                
+
                 let errMsg = 'Lỗi không xác định';
                 try {
                     const errData = await response.json();
                     errMsg = errData.error?.message || response.statusText;
-                } catch(e) { errMsg = response.statusText; }
+                } catch (e) { errMsg = response.statusText; }
                 throw new Error(errMsg);
             }
-            
+
             const data = await response.json();
             return data.candidates[0].content.parts[0].text;
         } catch (error) {
@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btnText.textContent = 'Đang tiến hành...';
         spinner.classList.remove('hidden');
         outputCode.textContent = '[1/3] AI đang đọc đề và thiết kế mô hình mạng...';
-        
+
         copyBtn.disabled = true;
         explainConfigBtn.classList.add('hidden');
         analyzeRouteBtn.classList.add('hidden');
@@ -185,8 +185,8 @@ document.addEventListener('DOMContentLoaded', () => {
         currentJsonObj = null;
 
         try {
-            const modelName = 'gemini-3.1-flash-lite'; 
-            
+            const modelName = 'gemini-3.1-flash-lite';
+
             // PHASE 1: GENERATE CONFIG
             let rawText = await callGeminiAPI(modelName, apiKey, SYSTEM_PROMPT, promptText, 0.1);
             rawText = rawText.replace(/```json/gi, '').replace(/```/g, '').trim();
@@ -197,30 +197,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // PHASE 2: DEPLOY TO EVE-NG
             outputCode.textContent = "[2/3] Chuyển giao cho EVE-NG Server...\n\n";
-            
+
             const deployRes = await fetch('/api/deploy', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(jsonObj)
             });
-            
+
             if (!deployRes.ok) {
                 throw new Error("Lỗi Server EVE-NG: " + deployRes.statusText);
             }
-            
+
             const reader = deployRes.body.getReader();
             const decoder = new TextDecoder();
             let deployOutput = "";
             while (true) {
                 const { done, value } = await reader.read();
                 if (done) break;
-                const chunk = decoder.decode(value, {stream: true});
+                const chunk = decoder.decode(value, { stream: true });
                 deployOutput += chunk;
                 outputCode.textContent += chunk;
                 // scroll to bottom
                 outputCode.parentElement.scrollTop = outputCode.parentElement.scrollHeight;
             }
-            
+
             const delimiter = "========== BAO CAO TOAN DIEN ==========";
             if (deployOutput.includes(delimiter)) {
                 currentReport = delimiter + deployOutput.split(delimiter)[1];
@@ -230,9 +230,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // PHASE 3: AI POST-EXECUTION ANALYSIS
             outputCode.textContent += "\n[3/3] AI đang đọc Output thực tế và viết Báo cáo Chuyên sâu...\n\nVui lòng chờ thêm khoảng 5-10 giây...";
-            
+
             const postPrompt = `== YÊU CẦU ĐỀ BÀI VÀ THIẾT KẾ ==\n${JSON.stringify(jsonObj)}\n\n== OUTPUT THỰC TẾ TỪ EVE-NG ==\n${currentReport}`;
-            
+
             finalAiReport = await callGeminiAPI(modelName, apiKey, SYSTEM_PROMPT_REPORT, postPrompt, 0.3);
 
             // FINAL: SHOW SUCCESS

@@ -152,8 +152,14 @@ save
 ---
 
 ## 📸 CÂU 5: Ngắt kết nối R1 và R3 (Test Failover)
-**1. Thao tác "cắt cáp" ngắt kết nối:**
-- Ra ngoài màn hình vẽ sơ đồ EVE-NG, click chuột phải vào sợi cáp kết nối giữa **R1 (e0/0)** và **R3 (e0/0)**. Chọn **Delete** để xóa sợi dây này đi.
+**1. Thao tác "cắt cáp" ngắt kết nối (Tắt cổng mạng):**
+- Thay vì xóa dây vật lý, ta dùng dòng lệnh để tắt cổng kết nối đi sẽ chuyên nghiệp và nhanh hơn. Tại màn hình Console của Router **R1**, bạn gõ:
+```text
+R1# configure terminal
+R1(config)# interface e0/0
+R1(config-if)# shutdown
+R1(config-if)# end
+```
 - **Quan trọng:** Chờ khoảng 30 giây đến 1 phút để giao thức RIP tính toán lại đường đi mới.
 
 **2. Thao tác chụp hình và giải thích (Câu 5.a - Show routing table):**

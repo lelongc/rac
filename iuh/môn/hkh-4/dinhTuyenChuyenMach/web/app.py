@@ -164,7 +164,11 @@ def push_config(json_file):
             else:
                 tn.write(b"\\r\\n\\r\\n"); time.sleep(1)
             for cmd in cmds:
-                tn.write(cmd.encode('ascii') + b"\\r\\n"); time.sleep(0.2)
+                tn.write(cmd.encode('ascii') + b"\\r\\n")
+                if node["type"] in ["router", "switch"]:
+                    tn.read_until(b"#", timeout=1)
+                else:
+                    tn.read_until(b">", timeout=1)
             time.sleep(1)
             tn.write(b"write memory\\r\\n" if node["type"] in ["router", "switch"] else b"save\\r\\n")
             time.sleep(1); tn.close()

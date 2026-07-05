@@ -1,0 +1,57 @@
+Chào bạn, với tư cách là một Chuyên gia Mạng, tôi xin gửi đến bạn bản phân tích chuyên sâu về hệ thống mạng Enterprise sử dụng giao thức định tuyến RIPv2 dựa trên thiết kế và cấu hình bạn đã cung cấp.
+
+---
+
+### 1. BẢNG ĐỊNH TUYẾN (ROUTING TABLE) VÀ GIẢI THÍCH
+
+Để kiểm tra sự hội tụ của mạng, ta thực hiện lệnh `show ip route` trên Router **West**. Bảng định tuyến điển hình sẽ có dạng:
+
+```text
+R   222.100.100.128/26 [120/1] via 220.100.100.34, 00:00:15, Serial1/0
+R   222.100.100.192/27 [120/1] via 220.100.100.34, 00:00:15, Serial1/0
+C   222.100.100.0/25 is directly connected, Ethernet0/0
+C   220.100.100.32/30 is directly connected, Serial1/0
+```
+
+#### Giải thích các thành phần:
+*   **Mã ký tự (Route Source):**
+    *   **C (Connected):** Mạng kết nối trực tiếp với cổng vật lý của Router.
+    *   **R (RIP):** Tuyến đường học được thông qua giao thức định tuyến RIP.
+    *   **S (Static):** Tuyến đường tĩnh do quản trị viên cấu hình thủ công.
+*   **Thông số [120/1]:**
+    *   **120:** Là **Administrative Distance (AD)** của RIP. Đây là độ tin cậy của nguồn định tuyến (RIP có độ tin cậy thấp hơn OSPF là 110).
+    *   **1:** Là **Metric** (Hop count). Trong RIP, metric dựa trên số lượng Router đi qua. Giá trị 1 nghĩa là mạng đích cách Router này 1 hop.
+*   **via 220.100.100.34:** Địa chỉ IP của Next-hop (Router kế tiếp) mà gói tin cần gửi tới để đến được đích.
+*   **00:00:15:** Thời gian (timer) kể từ lần cuối cùng Router nhận được bản tin cập nhật định tuyến cho mạng này.
+
+#### Chứng minh sự hội tụ:
+Sự hội tụ (Convergence) được xác nhận khi các bảng định tuyến của **West** và **East** xuất hiện các mạng LAN của nhau thông qua ký tự **R**. Điều này chứng tỏ Router **Central** đã quảng bá thành công các mạng LAN thông qua giao thức RIPv2, và các Router đã trao đổi bảng định tuyến hoàn tất.
+
+---
+
+### 2. ĐƯỜNG ĐI CỦA GÓI TIN (PACKET PATH)
+
+Giả sử **PC_West** (IP: 222.100.100.2) gửi gói tin đến **PC_East** (IP: 222.100.100.194).
+
+#### Các chặng (Hops) của gói tin:
+1.  **PC_West -> Router West:**
+    *   Gói tin được đóng gói với Source MAC là của PC_West, Destination MAC là của cổng `e0/0` trên Router West.
+    *   IP Source: 222.100.100.2 | IP Destination: 222.100.100.194.
+2.  **Router West -> Router Central:**
+    *   Router West nhận gói tin, kiểm tra bảng định tuyến, thấy mạng đích nằm sau Router Central.
+    *   Router West thay đổi MAC nguồn thành MAC của cổng `s1/0` (West), MAC đích thành MAC của cổng `s1/0` (Central).
+    *   IP Source/Destination **giữ nguyên**.
+3.  **Router Central -> Router East:**
+    *   Router Central nhận gói tin, kiểm tra bảng định tuyến, chuyển tiếp ra cổng `s1/1`.
+    *   MAC nguồn thay đổi thành MAC của cổng `s1/1` (Central), MAC đích thành MAC của cổng `s1/0` (East).
+    *   IP Source/Destination **giữ nguyên**.
+4.  **Router East -> PC_East:**
+    *   Router East nhận gói tin, đẩy ra cổng `e0/0`.
+    *   MAC nguồn là MAC của `e0/0` (East), MAC đích là MAC của PC_East.
+    *   Gói tin đến đích thành công.
+
+#### Lưu ý quan trọng về MAC Address:
+*   **IP Address:** Luôn giữ nguyên trong suốt quá trình truyền tải từ đầu cuối đến đầu cuối (End-to-End).
+*   **MAC Address:** Thay đổi tại mỗi "Hop" (mỗi Router). Router đóng vai trò là thiết bị Layer 3, nó sẽ gỡ bỏ khung (frame) cũ, kiểm tra IP, sau đó đóng gói lại vào một khung mới với địa chỉ MAC nguồn và đích mới tương ứng với môi trường vật lý của chặng tiếp theo.
+
+**Kết luận:** Hệ thống đã được thiết kế đúng chuẩn với RIPv2, phân đoạn mạng (subnetting) chính xác và định tuyến hội tụ ổn định.

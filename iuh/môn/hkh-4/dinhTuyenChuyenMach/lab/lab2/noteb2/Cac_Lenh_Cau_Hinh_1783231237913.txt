@@ -1,0 +1,105 @@
+========== RAW CONFIGURATION COMMANDS ==========
+
+========== Tên thiết bị: Internet (router) ==========
+enable
+configure terminal
+interface loopback 0
+ip address 8.8.8.8 255.255.255.255
+exit
+interface s1/0
+ip address 220.100.100.1 255.255.255.252
+no shutdown
+exit
+ip route 222.100.100.0 255.255.255.0 220.100.100.2
+end
+write memory
+
+========== Tên thiết bị: Central (router) ==========
+enable
+configure terminal
+interface s1/0
+ip address 220.100.100.34 255.255.255.252
+no shutdown
+exit
+interface s1/1
+ip address 220.100.100.66 255.255.255.252
+no shutdown
+exit
+interface s1/2
+ip address 220.100.100.2 255.255.255.252
+no shutdown
+exit
+interface e0/0
+ip address 222.100.100.129 255.255.255.192
+no shutdown
+exit
+ip access-list standard 10
+permit 222.100.100.0 0.0.0.127
+permit 222.100.100.128 0.0.0.63
+deny any
+exit
+interface s1/2
+ip access-group 10 out
+exit
+router rip
+version 2
+no auto-summary
+network 220.100.100.0
+network 222.100.100.0
+passive-interface s1/2
+default-information originate
+exit
+ip route 0.0.0.0 0.0.0.0 220.100.100.1
+end
+write memory
+
+========== Tên thiết bị: West (router) ==========
+enable
+configure terminal
+interface s1/0
+ip address 220.100.100.33 255.255.255.252
+no shutdown
+exit
+interface e0/0
+ip address 222.100.100.1 255.255.255.128
+no shutdown
+exit
+router rip
+version 2
+no auto-summary
+network 220.100.100.0
+network 222.100.100.0
+end
+write memory
+
+========== Tên thiết bị: East (router) ==========
+enable
+configure terminal
+interface s1/0
+ip address 220.100.100.65 255.255.255.252
+no shutdown
+exit
+interface e0/0
+ip address 222.100.100.193 255.255.255.224
+no shutdown
+exit
+router rip
+version 2
+no auto-summary
+network 220.100.100.0
+network 222.100.100.0
+end
+write memory
+
+========== Tên thiết bị: PC_West (vpcs) ==========
+ip 222.100.100.2 255.255.255.128 222.100.100.1
+save
+
+========== Tên thiết bị: PC_Central (vpcs) ==========
+ip 222.100.100.130 255.255.255.192 222.100.100.129
+save
+
+========== Tên thiết bị: PC_East (vpcs) ==========
+ip 222.100.100.194 255.255.255.224 222.100.100.193
+save
+

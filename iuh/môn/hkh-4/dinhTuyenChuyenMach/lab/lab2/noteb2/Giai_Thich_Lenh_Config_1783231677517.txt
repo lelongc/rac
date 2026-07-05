@@ -1,0 +1,114 @@
+Chào bạn, với tư cách là Chuyên gia Mạng Máy tính, tôi xin gửi đến bạn bản báo cáo phân tích chi tiết cấu hình cho hệ thống mạng **Enterprise_Network_RIP**.
+
+---
+
+### 1. Thiết bị: Internet (Router)
+**Cấu hình:**
+```text
+enable
+configure terminal
+interface loopback 0
+ip address 8.8.8.8 255.255.255.255
+exit
+interface s1/0
+ip address 220.100.100.1 255.255.255.252
+no shutdown
+exit
+ip route 222.100.100.0 255.255.255.0 220.100.100.2
+end
+```
+**Giải thích:**
+*   **Loopback 0:** Tạo địa chỉ ảo 8.8.8.8 để mô phỏng một máy chủ DNS hoặc dịch vụ Internet công cộng.
+*   **Interface s1/0:** Cấu hình IP cho cổng kết nối WAN với Router Central. Subnet `/30` (255.255.255.252) là tiêu chuẩn cho kết nối điểm-điểm (Point-to-Point) nhằm tiết kiệm địa chỉ IP.
+*   **Static Route:** Lệnh `ip route 222.100.100.0 255.255.255.0 220.100.100.2` thiết lập đường đi tĩnh để Router Internet biết cách gửi dữ liệu ngược lại về mạng nội bộ của doanh nghiệp thông qua Router Central.
+
+---
+
+### 2. Thiết bị: Central (Router)
+**Cấu hình:**
+```text
+enable
+configure terminal
+interface s1/0, s1/1, s1/2, e0/0 (IP tương ứng)
+no shutdown
+ip access-list standard 10
+permit 222.100.100.0 0.0.0.127
+permit 222.100.100.128 0.0.0.63
+deny any
+exit
+interface s1/2
+ip access-group 10 out
+exit
+router rip
+version 2
+no auto-summary
+network 220.100.100.0
+network 222.100.100.0
+passive-interface s1/2
+default-information originate
+exit
+ip route 0.0.0.0 0.0.0.0 220.100.100.1
+end
+```
+**Giải thích:**
+*   **Giao diện:** Cấu hình IP cho 3 cổng WAN (kết nối West, East, Internet) và 1 cổng LAN.
+*   **Access-list 10:** Định nghĩa các dải mạng nội bộ được phép đi ra ngoài.
+*   **ip access-group 10 out:** Áp dụng bộ lọc lên cổng s1/2 (hướng ra Internet) để kiểm soát lưu lượng rời khỏi mạng doanh nghiệp.
+*   **RIP v2:** Sử dụng RIP phiên bản 2 để hỗ trợ VLSM (subnet mask không liên tục). `no auto-summary` giúp tránh việc tóm tắt mạng sai lệch.
+*   **passive-interface s1/2:** Ngăn chặn việc gửi gói tin RIP ra cổng Internet (bảo mật).
+*   **default-information originate:** Quảng bá tuyến đường mặc định (Default Route) cho các router khác trong mạng, giúp chúng biết cách đi ra Internet.
+*   **Default Route:** `ip route 0.0.0.0 0.0.0.0 220.100.100.1` trỏ mọi lưu lượng không xác định tới Router Internet.
+
+---
+
+### 3. Thiết bị: West (Router)
+**Cấu hình:**
+```text
+enable
+configure terminal
+interface s1/0 (IP 220.100.100.33/30)
+interface e0/0 (IP 222.100.100.1/25)
+no shutdown
+router rip
+version 2
+no auto-summary
+network 220.100.100.0
+network 222.100.100.0
+end
+```
+**Giải thích:**
+*   Cấu hình IP cho cổng WAN kết nối với Central và cổng LAN cho PC_West.
+*   Chạy RIP v2 để trao đổi bảng định tuyến với Router Central, giúp PC_West có thể kết nối với các mạng khác trong doanh nghiệp và Internet.
+
+---
+
+### 4. Thiết bị: East (Router)
+**Cấu hình:**
+```text
+enable
+configure terminal
+interface s1/0 (IP 220.100.100.65/30)
+interface e0/0 (IP 222.100.100.193/27)
+no shutdown
+router rip
+version 2
+no auto-summary
+network 220.100.100.0
+network 222.100.100.0
+end
+```
+**Giải thích:**
+*   Tương tự như West, Router East thiết lập kết nối WAN với Central và LAN cho PC_East.
+*   Sử dụng RIP v2 để tự động cập nhật bảng định tuyến, đảm bảo tính thông suốt cho toàn bộ hệ thống mạng.
+
+---
+
+### 5. Các thiết bị PC (PC_West, PC_Central, PC_East)
+**Cấu hình:**
+*   **PC_West:** `ip 222.100.100.2 255.255.255.128 222.100.100.1`
+*   **PC_Central:** `ip 222.100.100.130 255.255.255.192 222.100.100.129`
+*   **PC_East:** `ip 222.100.100.194 255.255.255.224 222.100.100.193`
+
+**Giải thích:**
+*   Đây là cấu hình IP tĩnh cho các máy trạm.
+*   Tham số cuối cùng (ví dụ: `222.100.100.1`) là **Default Gateway**, trỏ về địa chỉ IP của cổng LAN trên Router tương ứng. Nếu không có Gateway này, các PC sẽ không thể gửi dữ liệu ra khỏi mạng nội bộ của mình.
