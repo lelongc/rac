@@ -1,0 +1,111 @@
+Chào bạn, với tư cách là một Chuyên gia Mạng, tôi xin gửi đến bạn bản báo cáo phân tích chi tiết cấu hình cho hệ thống mạng **Ring_Topology_RIPv2** dựa trên cấu trúc JSON đã cung cấp.
+
+---
+
+### 1. Thiết bị: Internet (Router)
+**Cấu hình:**
+```bash
+enable
+configure terminal
+interface e0/0
+ip address 200.200.200.2 255.255.255.0
+no shutdown
+exit
+ip route 10.0.0.0 255.0.0.0 200.200.200.1
+ip route 192.168.0.0 255.255.0.0 200.200.200.1
+end
+```
+**Giải thích:**
+*   **Interface e0/0:** Thiết lập IP cổng kết nối ra ngoài (Gateway của mạng nội bộ).
+*   **Static Routes:** Router Internet không chạy RIP, do đó cần các lệnh `ip route` để định tuyến tĩnh về các dải mạng nội bộ (10.0.0.0/8 và 192.168.0.0/16) thông qua R1 (địa chỉ 200.200.200.1).
+
+---
+
+### 2. Thiết bị: R1 (Router)
+**Cấu hình:**
+```bash
+enable
+configure terminal
+interface e0/0, e0/1, s1/0, e0/2 (cấu hình IP tương ứng)
+router rip
+version 2
+no auto-summary
+network 192.168.1.0
+network 10.0.0.0
+default-information originate
+exit
+ip route 0.0.0.0 0.0.0.0 200.200.200.2
+end
+```
+**Giải thích:**
+*   **RIPv2:** Sử dụng phiên bản 2 để hỗ trợ VLSM và gửi thông tin subnet mask. `no auto-summary` ngăn chặn việc tự động tóm tắt mạng, đảm bảo định tuyến chính xác.
+*   **default-information originate:** Lệnh này giúp R1 quảng bá tuyến đường mặc định (Default Route) xuống các Router khác trong mạng RIP.
+*   **Static Route:** Thiết lập Default Route về phía Internet (200.200.200.2) để R1 có thể đẩy các gói tin không xác định ra ngoài mạng.
+
+---
+
+### 3. Thiết bị: R2 (Router)
+**Cấu hình:**
+```bash
+enable
+configure terminal
+interface s1/0, e0/0 (cấu hình IP tương ứng)
+router rip
+version 2
+no auto-summary
+network 10.0.0.0
+end
+```
+**Giải thích:**
+*   R2 đóng vai trò trung gian trong vòng Ring. Nó chỉ cần chạy RIP để học các tuyến đường từ R1 và R4.
+*   `network 10.0.0.0`: Kích hoạt RIP trên các cổng thuộc dải mạng 10.x.x.x để trao đổi bảng định tuyến.
+
+---
+
+### 4. Thiết bị: R3 (Router)
+**Cấu hình:**
+```bash
+enable
+configure terminal
+interface e0/0, e0/1, s1/0 (cấu hình IP tương ứng)
+router rip
+version 2
+no auto-summary
+network 192.168.3.0
+network 10.0.0.0
+end
+```
+**Giải thích:**
+*   R3 kết nối với VPC7 và các Router lân cận. Việc khai báo `network 192.168.3.0` đảm bảo mạng của VPC7 được quảng bá vào hệ thống RIP để các thiết bị khác có thể truy cập được.
+
+---
+
+### 5. Thiết bị: R4 (Router)
+**Cấu hình:**
+```bash
+enable
+configure terminal
+interface e0/0, s1/0, e0/1 (cấu hình IP tương ứng)
+router rip
+version 2
+no auto-summary
+network 192.168.4.0
+network 10.0.0.0
+end
+```
+**Giải thích:**
+*   R4 là điểm cuối của vòng Ring, kết nối với VPC6. Cấu hình tương tự R3, đảm bảo mạng nội bộ 192.168.4.0 được chia sẻ trong toàn bộ hệ thống mạng thông qua giao thức RIP.
+
+---
+
+### 6. Các thiết bị VPC (VPC5, VPC6, VPC7)
+**Cấu hình (Ví dụ VPC5):**
+```bash
+ip 192.168.1.10 255.255.255.0 192.168.1.1
+```
+**Giải thích:**
+*   **IP/Subnet:** Thiết lập địa chỉ IP tĩnh cho máy trạm.
+*   **Gateway (192.168.1.1):** Đây là địa chỉ IP của cổng R1 (e0/0). Mọi gói tin đi ra ngoài mạng nội bộ của VPC đều phải gửi qua Gateway này để Router xử lý định tuyến.
+
+---
+**Tổng kết:** Hệ thống sử dụng cấu trúc Ring với giao thức RIPv2 làm giao thức định tuyến động. R1 đóng vai trò là "cửa ngõ" (Edge Router) kết nối với Internet, trong khi các Router còn lại (R2, R3, R4) tự động cập nhật bảng định tuyến để đảm bảo tính kết nối toàn mạng.

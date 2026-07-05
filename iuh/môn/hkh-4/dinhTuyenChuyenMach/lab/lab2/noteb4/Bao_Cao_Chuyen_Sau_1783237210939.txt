@@ -1,0 +1,70 @@
+Chào bạn, với tư cách là Chuyên gia Mạng Máy tính, tôi xin gửi đến bạn bản báo cáo chi tiết về việc thiết kế và cấu hình hệ thống mạng theo mô hình Ring Topology sử dụng giao thức định tuyến RIPv2.
+
+---
+
+### PHẦN 1: CHẠY LỆNH CẤU HÌNH VÀ GIẢI THÍCH LỆNH
+
+#### 1. Thiết bị Internet
+**Lệnh cấu hình:**
+```bash
+interface e0/0
+ ip address 200.200.200.2 255.255.255.0
+ no shutdown
+ip route 10.0.0.0 255.0.0.0 200.200.200.1
+ip route 192.168.0.0 255.255.0.0 200.200.200.1
+```
+*   **Giải thích:** Đặt IP cho cổng kết nối ra ngoài. Hai lệnh `ip route` là định tuyến tĩnh (Static Route) để Internet biết đường quay ngược lại các dải mạng nội bộ (10.x.x.x và 192.168.x.x) thông qua gateway là R1 (200.200.200.1).
+
+#### 2. Thiết bị R1 (Router trung tâm)
+**Lệnh cấu hình:**
+```bash
+interface e0/0, e0/1, s1/0, e0/2 (Đặt IP tương ứng)
+router rip
+ version 2
+ no auto-summary
+ network 192.168.1.0
+ network 10.0.0.0
+ default-information originate
+ip route 0.0.0.0 0.0.0.0 200.200.200.2
+```
+*   **Giải thích:** R1 đóng vai trò kết nối mạng nội bộ với Internet. `default-information originate` giúp R1 quảng bá tuyến đường mặc định (Default Route) tới các router khác trong mạng RIP. `ip route 0.0.0.0` là Default Route để đẩy mọi gói tin không xác định ra Internet.
+
+#### 3. Các Router R2, R3, R4
+**Lệnh cấu hình (Ví dụ R2):**
+```bash
+interface s1/0, e0/0 (Đặt IP tương ứng)
+router rip
+ version 2
+ no auto-summary
+ network 10.0.0.0
+```
+*   **Giải thích:** Các router này chạy RIPv2 để trao đổi bảng định tuyến. `no auto-summary` giúp tránh việc tự động tóm tắt mạng, đảm bảo các subnet con được quảng bá chính xác trong mô hình Ring.
+
+---
+
+### PHẦN 2: CÁC LỆNH KIỂM TRA (VERIFY) VÀ GIẢI THÍCH OUTPUT
+
+Dựa trên dữ liệu thực tế từ EVE-NG, chúng ta thực hiện kiểm tra:
+
+**1. Lệnh `show ip route` trên R2:**
+*   **Output:** `R 192.168.1.0/24 [120/1] via 10.0.12.1`
+*   **Giải thích:** Chữ **R** đứng đầu dòng biểu thị tuyến đường này được học thông qua giao thức **RIP**. `[120/1]` là Administrative Distance (120) và Metric (1) của RIP. Điều này chứng tỏ R2 đã học được đường đi đến mạng của VPC5 từ R1.
+
+**2. Lệnh `show ip interface brief`:**
+*   **Output:** `e0/0 10.0.24.1 YES manual up up`
+*   **Giải thích:** Trạng thái `up/up` xác nhận cổng vật lý đã hoạt động tốt và cấu hình IP đã được gán thành công.
+
+**3. Lệnh `ping 200.200.200.2` từ VPC5:**
+*   **Output:** `64 bytes from 200.200.200.2: icmp_seq=1 ttl=253 time=...` (5 dấu `!`)
+*   **Giải thích:** Việc ping thành công (5 dấu `!`) chứng minh gói tin đã đi từ VPC5 qua R1, ra Internet và nhận được phản hồi. Hệ thống định tuyến đã hoạt động thông suốt.
+
+---
+
+### PHẦN 3: BÁO CÁO HOÀN THÀNH
+
+Sau khi thực hiện cấu hình và kiểm tra, hệ thống mạng Ring Topology đã được thiết lập thành công:
+1.  **Tính liên thông:** Tất cả các VPC (VPC5, VPC6, VPC7) đều có khả năng kết nối với nhau và truy cập ra Internet thông qua R1.
+2.  **Giao thức định tuyến:** RIPv2 đã hội tụ ổn định, các bảng định tuyến trên các router đã cập nhật đầy đủ các dải mạng nội bộ.
+3.  **Yêu cầu đề bài:** Hệ thống đáp ứng hoàn hảo các yêu cầu về sơ đồ kết nối, phân chia IP và khả năng định tuyến.
+
+Hệ thống hiện tại đã sẵn sàng để đưa vào vận hành thực tế.

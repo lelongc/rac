@@ -1,0 +1,35 @@
+# BÀI 5: TỐI ƯU HÓA ĐƯỜNG ĐI TRONG RIP (CHỌN ĐƯỜNG NGẮN NHẤT)
+
+Mô hình: Bổ sung thêm một đường link kết nối trực tiếp giữa Router West và Router East vào mô hình của Bài 1.
+Mục đích: Chứng minh giao thức định tuyến RIP sử dụng Hop Count (số trạm nhảy) làm tiêu chí chọn đường tối ưu.
+
+---
+
+## 📸 CÂU 1: Show routing table và giải thích các thành phần bảng định tuyến?
+
+**1. Thao tác chụp hình:**
+- Mở Console của **Router West**, gõ lệnh: `show ip route`
+- Chụp lại toàn bộ màn hình kết quả trả về.
+
+**2. Giải thích chép vào báo cáo:**
+- Nhìn vào bảng định tuyến, ta chú ý đến dòng mạng đích `192.168.2.0/24` (mạng LAN của PC_East). Nó được đánh dấu bằng chữ **R**, nghĩa là học được qua giao thức **RIP**.
+- Nội dung dòng tuyến đường: `R 192.168.2.0/24 [120/1] via 10.0.2.1`
+- **Giải thích ý nghĩa:**
+  - `[120/1]`: Số `120` là độ tin cậy (Administrative Distance) của RIP. Số `1` là Metric (Hop count - số chặng).
+  - `via 10.0.2.1`: Địa chỉ IP Next-hop của cổng `e0/1` trên Router East, thông qua sợi cáp nối trực tiếp mới thêm vào.
+- **Kết luận:** Khi có thêm sợi cáp nối thẳng sang East, RIP nhận thấy con đường tắt này chỉ tốn **1 Hop**, trong khi con đường cũ đi vòng qua Central tốn tới **2 Hop**. Do đặc tính của RIP luôn chọn đường có Metric (số chặng) nhỏ nhất, Router West đã cập nhật bảng định tuyến và đưa đường đi trực tiếp `via 10.0.2.1` làm đường ưu tiên. Tuyến đường cũ qua Central (vì dài hơn) nên đã bị loại bỏ.
+
+---
+
+## 📸 CÂU 2: Cho biết đường đi gói tin 192.168.0.0 <=> 192.168.2.0?
+
+**1. Thao tác chụp hình:**
+- Mở Console của máy **PC_West**, gõ lệnh kiểm tra đường đi đến PC_East: `trace 192.168.2.5`
+- Chụp lại màn hình kết quả Trace.
+
+**2. Giải thích chép vào báo cáo:**
+- Kết quả Trace cho thấy gói tin từ PC_West đi đến PC_East chỉ nhảy qua đúng 2 IP Router:
+  - Hop 1: `192.168.0.1` (Router West)
+  - Hop 2: `10.0.2.1` (Router East)
+- **Lộ trình thực tế:** `PC_West ➜ Router West ➜ Router East ➜ PC_East`.
+- **Kết luận:** Gói tin truyền đi theo một đường tắt nối thẳng hai Router, hoàn toàn đi vòng qua trạm trung chuyển Router Central. Điều này một lần nữa khẳng định và chứng minh nguyên lý hoạt động cốt lõi của giao thức RIP: Gói tin sẽ luôn luôn di chuyển theo con đường có số lượng Router trung gian (Hop count) ít nhất để đến đích.
