@@ -1,0 +1,67 @@
+========== RAW CONFIGURATION COMMANDS ==========
+
+========== Tên thiết bị: West (router) ==========
+enable
+configure terminal
+ipv6 unicast-routing
+interface e0/0
+ipv6 address 2001:db8:0:10::1/64
+ipv6 rip RIP-TEST enable
+no shutdown
+interface s1/0
+ipv6 address 2001:db8:0:12::1/64
+ipv6 rip RIP-TEST enable
+no shutdown
+ipv6 router rip RIP-TEST
+end
+write memory
+
+========== Tên thiết bị: Central (router) ==========
+enable
+configure terminal
+ipv6 unicast-routing
+interface s1/0
+ipv6 address 2001:db8:0:12::2/64
+ipv6 rip RIP-TEST enable
+no shutdown
+interface s1/1
+ipv6 address 2001:db8:0:13::1/64
+ipv6 rip RIP-TEST enable
+no shutdown
+ipv6 router rip RIP-TEST
+end
+write memory
+
+========== Tên thiết bị: East (router) ==========
+enable
+configure terminal
+ipv6 unicast-routing
+interface loopback 1
+ipv6 address 2001:db8:0:15::1/64
+ipv6 rip RIP-TEST enable
+interface s1/0
+ipv6 address 2001:db8:0:13::2/64
+ipv6 rip RIP-TEST enable
+no shutdown
+interface e0/0
+ipv6 address 2001:db8:0:14::1/64
+ipv6 rip RIP-TEST enable
+ipv6 dhcp server DHCPv6-EAST
+ipv6 nd managed-config-flag
+ipv6 nd other-config-flag
+no shutdown
+ipv6 dhcp pool DHCPv6-EAST
+dns-server 2001:4860:4860::8888
+exit
+ipv6 router rip RIP-TEST
+end
+write memory
+
+========== Tên thiết bị: PC_West (vpcs) ==========
+ip 2001:db8:0:10::10/64 2001:db8:0:10::1
+save
+
+========== Tên thiết bị: PC_East (vpcs) ==========
+ip auto
+save
+

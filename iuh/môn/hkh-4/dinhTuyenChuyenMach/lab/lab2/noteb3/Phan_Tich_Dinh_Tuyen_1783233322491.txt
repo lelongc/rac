@@ -1,0 +1,64 @@
+Chào bạn, với tư cách là một Chuyên gia Mạng, tôi xin gửi đến bạn bản phân tích chuyên sâu về hệ thống mạng IPv6 sử dụng giao thức định tuyến RIPng mà bạn đã thiết kế.
+
+---
+
+### 1. BẢNG ĐỊNH TUYẾN (ROUTING TABLE) VÀ GIẢI THÍCH
+
+Để kiểm tra sự hội tụ của mạng, chúng ta thực hiện lệnh `show ipv6 route` trên Router **West**. Kết quả thu được (giả định dựa trên cấu hình):
+
+```text
+IPv6 Routing Table - 7 entries
+R   2001:db8:0:13::/64 [120/2] via FE80::... , Serial1/0
+R   2001:db8:0:14::/64 [120/3] via FE80::... , Serial1/0
+R   2001:db8:0:15::/64 [120/3] via FE80::... , Serial1/0
+C   2001:db8:0:10::/64 [0/0] via Ethernet0/0, directly connected
+L   2001:db8:0:10::1/128 [0/0] via Ethernet0/0, receive
+C   2001:db8:0:12::/64 [0/0] via Serial1/0, directly connected
+L   2001:db8:0:12::1/128 [0/0] via Serial1/0, receive
+```
+
+#### Giải thích các thành phần:
+*   **Mã định danh (Prefix Code):**
+    *   **C (Connected):** Mạng kết nối trực tiếp. Router tự biết các mạng này thông qua cấu hình IP trên cổng vật lý.
+    *   **L (Local):** Địa chỉ IP cụ thể của chính cổng đó (thường là /128).
+    *   **R (RIPng):** Tuyến đường học được thông qua giao thức định tuyến động RIPng.
+*   **Thông số [120/2]:**
+    *   **120:** Là **Administrative Distance (AD)** của RIPng. Đây là độ tin cậy của nguồn thông tin định tuyến (RIPng mặc định là 120).
+    *   **2:** Là **Metric** (Cost). Trong RIPng, metric được tính bằng số lượng Hop (số router đi qua). Ở đây, giá trị 2 nghĩa là mạng đích cách Router West 2 chặng.
+*   **via FE80::...:** Đây là địa chỉ Link-Local của Router kế tiếp (Next-hop). Trong IPv6, RIPng sử dụng địa chỉ Link-Local để trao đổi thông tin định tuyến thay vì địa chỉ Global Unicast.
+
+**Chứng minh sự hội tụ:**
+Việc xuất hiện các dòng có mã **R** trong bảng định tuyến của Router West chứng tỏ các Router đã trao đổi gói tin RIPng thành công. Các mạng ở xa (như LAN_East `2001:db8:0:14::/64`) đã được cập nhật vào bảng định tuyến, xác nhận mạng đã hội tụ.
+
+---
+
+### 2. ĐƯỜNG ĐI CỦA GÓI TIN (PACKET PATH)
+
+Xét trường hợp **PC_West** (2001:db8:0:10::10) gửi gói tin ICMPv6 Echo Request đến **PC_East** (2001:db8:0:14::X).
+
+#### Các chặng (Hops) của gói tin:
+
+1.  **PC_West -> Router West:**
+    *   PC_West kiểm tra bảng định tuyến, thấy mạng đích nằm ngoài subnet cục bộ nên gửi gói tin đến Default Gateway (2001:db8:0:10::1).
+    *   **Source IP:** 2001:db8:0:10::10 | **Dest IP:** 2001:db8:0:14::X.
+    *   **MAC:** Source là MAC của PC_West, Destination là MAC của cổng E0/0 trên Router West.
+
+2.  **Router West -> Router Central:**
+    *   Router West nhận gói tin, tra bảng định tuyến thấy mạng 2001:db8:0:14::/64 đi qua cổng S1/0.
+    *   **Source IP/Dest IP:** Giữ nguyên (IPv6 không thay đổi header IP tại các Router trung gian).
+    *   **MAC:** Source là MAC của cổng S1/0 (West), Destination là MAC của cổng S1/0 (Central).
+
+3.  **Router Central -> Router East:**
+    *   Router Central nhận gói tin, tra bảng định tuyến và đẩy tiếp qua cổng S1/1.
+    *   **MAC:** Source là MAC của cổng S1/1 (Central), Destination là MAC của cổng S1/0 (East).
+
+4.  **Router East -> PC_East:**
+    *   Router East nhận gói tin, thấy mạng đích nằm trên cổng E0/0.
+    *   **MAC:** Source là MAC của cổng E0/0 (East), Destination là MAC của PC_East.
+
+#### Phân tích kỹ thuật:
+*   **IP Header:** Địa chỉ Source và Destination **không thay đổi** trong suốt quá trình truyền tải (trừ khi có NAT, nhưng ở đây là IPv6 thuần túy).
+*   **MAC Header:** Địa chỉ MAC **thay đổi liên tục** tại mỗi Hop. Mỗi Router đóng vai trò là một thiết bị Layer 3, nó sẽ gỡ bỏ Layer 2 cũ (của hop trước) và đóng gói lại Layer 2 mới (của hop tiếp theo) dựa trên bảng ARP/Neighbor Discovery.
+*   **TTL (Hop Limit):** Giá trị Hop Limit trong header IPv6 sẽ giảm đi 1 đơn vị sau khi đi qua mỗi Router. Nếu về 0, gói tin sẽ bị hủy để tránh vòng lặp.
+
+Hệ thống đã được thiết kế chuẩn xác, đảm bảo tính thông suốt từ đầu cuối đến đầu cuối (End-to-End connectivity).

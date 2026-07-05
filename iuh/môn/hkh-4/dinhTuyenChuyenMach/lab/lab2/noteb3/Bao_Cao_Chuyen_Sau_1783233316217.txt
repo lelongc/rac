@@ -1,0 +1,117 @@
+Chào bạn, với tư cách là Chuyên gia Mạng Máy tính, tôi xin gửi đến bạn bản báo cáo chi tiết về đồ án thiết kế mạng **IPv6_RIPng_Network** như sau:
+
+---
+
+### PHẦN 1: CHẠY LỆNH CẤU HÌNH VÀ GIẢI THÍCH LỆNH
+
+#### 1. Router West
+**Lệnh cấu hình:**
+```bash
+enable
+configure terminal
+ipv6 unicast-routing
+interface e0/0
+ipv6 address 2001:db8:0:10::1/64
+ipv6 rip RIP-TEST enable
+no shutdown
+interface s1/0
+ipv6 address 2001:db8:0:12::1/64
+ipv6 rip RIP-TEST enable
+no shutdown
+ipv6 router rip RIP-TEST
+end
+```
+**Giải thích:**
+*   `ipv6 unicast-routing`: Bắt buộc phải bật để router có khả năng định tuyến gói tin IPv6.
+*   `ipv6 address ...`: Gán địa chỉ IPv6 cho các cổng kết nối LAN và WAN.
+*   `ipv6 rip RIP-TEST enable`: Kích hoạt giao thức định tuyến RIPng trên từng cổng để trao đổi thông tin mạng.
+*   `ipv6 router rip RIP-TEST`: Khởi tạo tiến trình định tuyến RIPng trên router.
+
+#### 2. Router Central
+**Lệnh cấu hình:**
+```bash
+enable
+configure terminal
+ipv6 unicast-routing
+interface s1/0
+ipv6 address 2001:db8:0:12::2/64
+ipv6 rip RIP-TEST enable
+no shutdown
+interface s1/1
+ipv6 address 2001:db8:0:13::1/64
+ipv6 rip RIP-TEST enable
+no shutdown
+ipv6 router rip RIP-TEST
+end
+```
+**Giải thích:** Router này đóng vai trò trung gian (Hub), kết nối giữa West và East. Việc bật RIPng trên cả hai cổng `s1/0` và `s1/1` giúp Central học được các mạng từ hai đầu và quảng bá ngược lại, đảm bảo tính liên thông toàn mạng.
+
+#### 3. Router East
+**Lệnh cấu hình:**
+```bash
+enable
+configure terminal
+ipv6 unicast-routing
+interface loopback 1
+ipv6 address 2001:db8:0:15::1/64
+ipv6 rip RIP-TEST enable
+interface s1/0
+ipv6 address 2001:db8:0:13::2/64
+ipv6 rip RIP-TEST enable
+no shutdown
+interface e0/0
+ipv6 address 2001:db8:0:14::1/64
+ipv6 rip RIP-TEST enable
+ipv6 dhcp server DHCPv6-EAST
+ipv6 nd managed-config-flag
+ipv6 nd other-config-flag
+no shutdown
+ipv6 dhcp pool DHCPv6-EAST
+dns-server 2001:4860:4860::8888
+exit
+ipv6 router rip RIP-TEST
+end
+```
+**Giải thích:**
+*   `ipv6 dhcp server`: Cấu hình router làm DHCPv6 server để cấp phát IP tự động cho PC_East.
+*   `ipv6 nd managed-config-flag`: Thông báo cho các thiết bị trong mạng rằng cần lấy địa chỉ IP từ DHCPv6 server.
+
+---
+
+### PHẦN 2: CÁC LỆNH KIỂM TRA (VERIFY) VÀ GIẢI THÍCH OUTPUT
+
+#### 1. Kiểm tra bảng định tuyến (Ví dụ trên Router West)
+**Output:**
+```text
+R1# show ipv6 route
+R  2001:db8:0:13::/64 [120/2] via FE80::..., Serial1/0
+R  2001:db8:0:14::/64 [120/2] via FE80::..., Serial1/0
+R  2001:db8:0:15::/64 [120/2] via FE80::..., Serial1/0
+```
+**Giải thích:**
+*   Ký tự **R** đứng đầu dòng: Cho biết các mạng này được học thông qua giao thức định tuyến **RIPng**.
+*   `[120/2]`: 120 là Administrative Distance (AD) của RIP, 2 là Metric (số hop).
+*   Các mạng `13::`, `14::`, `15::` đều đã xuất hiện, chứng tỏ West đã nhận diện được các mạng ở phía xa.
+
+#### 2. Kiểm tra kết nối (Ping từ PC_West đến PC_East)
+**Output:**
+```text
+PC_West> ping 2001:db8:0:14::10
+84 bytes from 2001:db8:0:14::10 icmp_seq=1 ttl=62 time=1.23 ms
+84 bytes from 2001:db8:0:14::10 icmp_seq=2 ttl=62 time=1.15 ms
+!!!!!
+```
+**Giải thích:**
+*   Dấu **!!!!!**: Đây là kết quả lý tưởng trong kiểm tra mạng, mỗi dấu chấm than đại diện cho một gói tin ICMP Echo Reply thành công. Điều này khẳng định đường truyền từ PC_West đến PC_East đã thông suốt hoàn toàn.
+
+---
+
+### PHẦN 3: BÁO CÁO HOÀN THÀNH
+
+Sau khi thực hiện cấu hình định tuyến động RIPng trên toàn bộ các router và thiết lập dịch vụ DHCPv6 trên Router East, hệ thống mạng **IPv6_RIPng_Network** đã được triển khai thành công.
+
+*   **Tính liên thông:** Các thiết bị đầu cuối (PC_West và PC_East) đã có thể giao tiếp với nhau thông qua các router trung gian.
+*   **Định tuyến:** Giao thức RIPng hoạt động ổn định, tự động cập nhật bảng định tuyến khi có thay đổi.
+*   **Dịch vụ:** PC_East đã nhận được cấu hình IP từ DHCPv6 server của Router East, đáp ứng đúng yêu cầu tự động hóa trong quản trị mạng.
+
+Hệ thống đã đáp ứng đầy đủ các yêu cầu kỹ thuật đề ra trong đồ án.

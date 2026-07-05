@@ -1,0 +1,113 @@
+Chào bạn, với tư cách là một Chuyên gia Mạng Máy tính, tôi xin gửi đến bạn bản báo cáo phân tích chi tiết cấu hình cho hệ thống mạng **IPv6_RIPng_Network**.
+
+Hệ thống này sử dụng giao thức định tuyến động **RIPng** (RIP for IPv6) để trao đổi thông tin định tuyến giữa ba router: West, Central và East.
+
+---
+
+### 1. Router West
+**Cấu hình:**
+```text
+enable
+configure terminal
+ipv6 unicast-routing
+interface e0/0
+ipv6 address 2001:db8:0:10::1/64
+ipv6 rip RIP-TEST enable
+no shutdown
+interface s1/0
+ipv6 address 2001:db8:0:12::1/64
+ipv6 rip RIP-TEST enable
+no shutdown
+ipv6 router rip RIP-TEST
+end
+```
+
+**Giải thích:**
+*   `ipv6 unicast-routing`: Bắt buộc phải có để router có khả năng chuyển tiếp các gói tin IPv6.
+*   `interface e0/0 & s1/0`: Cấu hình địa chỉ IPv6 cho cổng LAN (kết nối PC_West) và cổng WAN (kết nối với Central). Subnet `/64` là tiêu chuẩn cho các mạng IPv6 để đảm bảo tính tương thích với SLAAC.
+*   `ipv6 rip RIP-TEST enable`: Kích hoạt tiến trình RIPng trên từng cổng cụ thể. Điều này cho phép router gửi và nhận các gói tin cập nhật định tuyến qua các cổng này.
+*   `ipv6 router rip RIP-TEST`: Khởi tạo tiến trình định tuyến RIPng với tên miền là "RIP-TEST".
+
+---
+
+### 2. Router Central
+**Cấu hình:**
+```text
+enable
+configure terminal
+ipv6 unicast-routing
+interface s1/0
+ipv6 address 2001:db8:0:12::2/64
+ipv6 rip RIP-TEST enable
+no shutdown
+interface s1/1
+ipv6 address 2001:db8:0:13::1/64
+ipv6 rip RIP-TEST enable
+no shutdown
+ipv6 router rip RIP-TEST
+end
+```
+
+**Giải thích:**
+*   Router này đóng vai trò trung gian (Hub). Nó kết nối hai mạng WAN (`s1/0` nối West, `s1/1` nối East).
+*   Việc cấu hình `ipv6 rip RIP-TEST enable` trên cả hai cổng giúp Central trở thành "cầu nối" định tuyến, cho phép West và East học được các mạng của nhau thông qua Central.
+
+---
+
+### 3. Router East
+**Cấu hình:**
+```text
+enable
+configure terminal
+ipv6 unicast-routing
+interface loopback 1
+ipv6 address 2001:db8:0:15::1/64
+ipv6 rip RIP-TEST enable
+interface s1/0
+ipv6 address 2001:db8:0:13::2/64
+ipv6 rip RIP-TEST enable
+no shutdown
+interface e0/0
+ipv6 address 2001:db8:0:14::1/64
+ipv6 rip RIP-TEST enable
+ipv6 dhcp server DHCPv6-EAST
+ipv6 nd managed-config-flag
+ipv6 nd other-config-flag
+no shutdown
+ipv6 dhcp pool DHCPv6-EAST
+dns-server 2001:4860:4860::8888
+exit
+ipv6 router rip RIP-TEST
+end
+```
+
+**Giải thích:**
+*   `interface loopback 1`: Tạo một giao diện ảo để mô phỏng một mạng nội bộ bổ sung, được quảng bá qua RIPng.
+*   `ipv6 dhcp server DHCPv6-EAST`: Thiết lập router làm máy chủ DHCPv6 để cấp phát địa chỉ cho PC_East.
+*   `ipv6 nd managed-config-flag` & `other-config-flag`: Các cờ này thông báo cho các thiết bị trong mạng rằng chúng cần lấy địa chỉ IPv6 từ máy chủ DHCPv6 (Stateful DHCPv6).
+*   `ipv6 dhcp pool`: Định nghĩa các thông số cấp phát, ở đây là cung cấp địa chỉ DNS của Google (2001:4860:4860::8888).
+
+---
+
+### 4. PC_West
+**Cấu hình:**
+```text
+ip 2001:db8:0:10::10/64 2001:db8:0:10::1
+```
+
+**Giải thích:**
+*   Đây là cấu hình IP tĩnh. `2001:db8:0:10::10` là địa chỉ của PC, và `2001:db8:0:10::1` là địa chỉ Gateway (cổng e0/0 của router West).
+
+---
+
+### 5. PC_East
+**Cấu hình:**
+```text
+ip auto
+```
+
+**Giải thích:**
+*   Lệnh này yêu cầu PC tự động lấy địa chỉ IPv6 thông qua cơ chế Neighbor Discovery (ND) và DHCPv6 từ router East. Nhờ các cờ `managed-config-flag` đã cấu hình ở trên, PC sẽ biết cần liên hệ với DHCPv6 server để nhận cấu hình mạng đầy đủ.
+
+---
+**Tổng kết:** Hệ thống đã được thiết lập hoàn chỉnh với định tuyến động RIPng, đảm bảo tính kết nối thông suốt từ đầu cuối (PC_West) đến đầu cuối (PC_East) thông qua các router trung gian.
