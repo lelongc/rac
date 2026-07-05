@@ -1,1 +1,33 @@
 \\H62mqv\dtcm
+
+====================================================================
+TỪ ĐIỂN PROMPT CHUẨN ĐỂ YÊU CẦU AI VIẾT "THẦN CHÚ" AUTOEVE (META-PROMPT)
+====================================================================
+
+Bất cứ khi nào bạn có bài Lab mới (Bài 6, 7, 8... OSPF, EIGRP, VLAN), bạn chỉ cần COPY toàn bộ đoạn dưới đây, dán kèm với Đề Bài và gửi vào khung chat cho tôi:
+
+--------------------------- BẮT ĐẦU COPY TỪ ĐÂY ---------------------------
+Bạn là một Chuyên gia mạng Cisco. Dựa vào Đề Bài Lab dưới đây, hãy thiết kế và xuất ra cho tôi một đoạn "Thần chú" bằng tiếng Việt thật chi tiết để tôi nạp vào Web Tool AutoEVE. 
+
+YÊU CẦU QUY CHUẨN CỦA THẦN CHÚ (Trình bày trong cặp dấu ***):
+1. Khai báo Sơ đồ (Topology): 
+- Liệt kê rõ số lượng và tên các Router, PC. 
+- LƯU Ý QUAN TRỌNG VỀ SWITCH: Nếu đề bài CHỈ test định tuyến (Routing) thì nối trực tiếp PC vào Router / Router vào Router (Không vẽ Switch). NẾU đề bài yêu cầu cấu hình tính năng của Switch (như VLAN, Trunking, VTP, STP...) thì BẮT BUỘC phải yêu cầu vẽ Switch xịn (VD: Vẽ 1 Switch tên SW1).
+
+2. Quy hoạch IP (IP Addressing): 
+- Mô tả từng đoạn mạng (LAN/WAN) dùng dải IP nào (kèm Subnet Mask/Prefix).
+- Phân bổ IP tĩnh cụ thể cho từng interface của Router và PC. Nếu PC xài DHCP thì ghi chú là "PC nhận IP qua DHCP".
+
+3. Cáp kết nối (Cabling): 
+- Ghi rõ Router nối với nhau qua cáp Ethernet hay cáp Serial.
+
+4. Giao thức định tuyến & Cấu hình (Routing & Configs): 
+- Nêu rõ loại giao thức: Static Route, RIPv1, RIPv2, OSPF, EIGRP, BGP...
+- Định tuyến động: Ghi rõ các dải mạng cần quảng bá bằng lệnh `network`.
+- Tính năng nâng cao: Ghi chú rõ yêu cầu về NAT, ACL, IPv6, Passive Interface, Default-Information Originate... nếu đề bài có yêu cầu.
+
+Hãy tự động tính toán những thông số IP bị thiếu cho hợp lý và xuất ra Thần chú hoàn hảo nhất.
+
+ĐỀ BÀI LAB / HÌNH ẢNH MÔ HÌNH LÀ: 
+[👉 BẠN DÁN ĐỀ BÀI HOẶC ẢNH CHỤP MÔ HÌNH VÀO ĐÂY 👈]
+--------------------------- KẾT THÚC COPY ---------------------------
