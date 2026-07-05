@@ -1,0 +1,109 @@
+# BÁO CÁO CHI TIẾT CẤU HÌNH MẠNG (RIP ROUTING)
+
+Chào bạn, dưới đây là bản phân tích chi tiết cấu hình cho hệ thống mạng bao gồm 3 Router (West, Central, East) và 3 máy trạm (PC) sử dụng giao thức định tuyến RIP.
+
+---
+
+## 1. Router West
+
+### Cấu hình:
+```text
+enable
+configure terminal
+interface e0/0
+ip address 192.168.0.1 255.255.255.0
+no shutdown
+interface s1/0
+ip address 10.0.0.1 255.255.255.0
+no shutdown
+interface e0/1
+ip address 10.0.2.2 255.255.255.0
+no shutdown
+router rip
+network 192.168.0.0
+network 10.0.0.0
+network 10.0.2.0
+end
+```
+
+### Giải thích:
+*   **Giao diện (Interfaces):**
+    *   `e0/0`: Cấu hình IP cổng LAN (192.168.0.1/24) làm Gateway cho PC_West.
+    *   `s1/0` & `e0/1`: Cấu hình IP cho các kết nối WAN tới Router Central và East.
+    *   `no shutdown`: Kích hoạt trạng thái hoạt động cho các cổng vật lý.
+*   **Định tuyến (RIP):**
+    *   `router rip`: Khởi tạo tiến trình định tuyến RIP.
+    *   `network ...`: Khai báo các mạng trực tiếp kết nối với Router để RIP quảng bá thông tin định tuyến đến các router lân cận, cho phép toàn mạng học được đường đi tới các subnet của nhau.
+
+---
+
+## 2. Router Central
+
+### Cấu hình:
+```text
+enable
+configure terminal
+interface e0/0
+ip address 192.168.1.1 255.255.255.0
+no shutdown
+interface s1/0
+ip address 10.0.0.2 255.255.255.0
+no shutdown
+interface s1/1
+ip address 10.0.1.1 255.255.255.0
+no shutdown
+router rip
+network 192.168.1.0
+network 10.0.0.0
+network 10.0.1.0
+end
+```
+
+### Giải thích:
+*   **Giao diện:** Tương tự West, cổng `e0/0` đóng vai trò Gateway cho mạng LAN nội bộ (192.168.1.0/24). Các cổng `s1/0` và `s1/1` kết nối với West và East.
+*   **Định tuyến:** Lệnh `network` giúp Central chia sẻ thông tin về mạng LAN của nó và các đường kết nối WAN với các router khác, đảm bảo tính hội tụ của bảng định tuyến toàn mạng.
+
+---
+
+## 3. Router East
+
+### Cấu hình:
+```text
+enable
+configure terminal
+interface e0/0
+ip address 192.168.2.1 255.255.255.0
+no shutdown
+interface s1/0
+ip address 10.0.1.2 255.255.255.0
+no shutdown
+interface e0/1
+ip address 10.0.2.1 255.255.255.0
+no shutdown
+router rip
+network 192.168.2.0
+network 10.0.1.0
+network 10.0.2.0
+end
+```
+
+### Giải thích:
+*   **Giao diện:** Cổng `e0/0` là Gateway cho mạng LAN 192.168.2.0/24. Các cổng nối tiếp/Ethernet còn lại kết nối với Central và West.
+*   **Định tuyến:** Việc cấu hình RIP tại đây giúp East nhận diện được các mạng LAN của West và Central thông qua các gói tin cập nhật định tuyến, cho phép truyền dữ liệu giữa các chi nhánh.
+
+---
+
+## 4. Các máy trạm (PC_West, PC_Central, PC_East)
+
+### Cấu hình:
+*   **PC_West:** `ip 192.168.0.5 255.255.255.0 192.168.0.1`
+*   **PC_Central:** `ip 192.168.1.5 255.255.255.0 192.168.1.1`
+*   **PC_East:** `ip 192.168.2.5 255.255.255.0 192.168.2.1`
+
+### Giải thích:
+*   **IP Address:** Gán địa chỉ IP tĩnh cho máy trạm thuộc subnet tương ứng của LAN.
+*   **Subnet Mask:** Xác định phạm vi mạng (255.255.255.0 tương đương /24).
+*   **Default Gateway:** Đây là tham số quan trọng nhất. Nó trỏ về địa chỉ IP của cổng LAN trên Router tương ứng (ví dụ: 192.168.0.1 cho PC_West). Nếu không có Gateway này, máy trạm sẽ không thể gửi dữ liệu ra ngoài mạng nội bộ để đến các chi nhánh khác.
+
+---
+**Tổng kết:** Hệ thống này sử dụng cấu trúc liên kết hình tam giác (Mesh một phần) giữa 3 Router. Giao thức RIP đảm bảo rằng nếu một đường truyền bị lỗi, các router có thể tự động cập nhật bảng định tuyến để tìm đường đi thay thế, đảm bảo tính sẵn sàng cao cho hệ thống.

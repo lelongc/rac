@@ -1,0 +1,71 @@
+========== RAW CONFIGURATION COMMANDS ==========
+
+========== Tên thiết bị: West (router) ==========
+enable
+configure terminal
+interface e0/0
+ip address 192.168.0.1 255.255.255.0
+no shutdown
+interface s1/0
+ip address 10.0.0.1 255.255.255.0
+no shutdown
+interface e0/1
+ip address 10.0.2.2 255.255.255.0
+no shutdown
+router rip
+network 192.168.0.0
+network 10.0.0.0
+network 10.0.2.0
+end
+write memory
+
+========== Tên thiết bị: Central (router) ==========
+enable
+configure terminal
+interface e0/0
+ip address 192.168.1.1 255.255.255.0
+no shutdown
+interface s1/0
+ip address 10.0.0.2 255.255.255.0
+no shutdown
+interface s1/1
+ip address 10.0.1.1 255.255.255.0
+no shutdown
+router rip
+network 192.168.1.0
+network 10.0.0.0
+network 10.0.1.0
+end
+write memory
+
+========== Tên thiết bị: East (router) ==========
+enable
+configure terminal
+interface e0/0
+ip address 192.168.2.1 255.255.255.0
+no shutdown
+interface s1/0
+ip address 10.0.1.2 255.255.255.0
+no shutdown
+interface e0/1
+ip address 10.0.2.1 255.255.255.0
+no shutdown
+router rip
+network 192.168.2.0
+network 10.0.1.0
+network 10.0.2.0
+end
+write memory
+
+========== Tên thiết bị: PC_West (vpcs) ==========
+ip 192.168.0.5 255.255.255.0 192.168.0.1
+save
+
+========== Tên thiết bị: PC_Central (vpcs) ==========
+ip 192.168.1.5 255.255.255.0 192.168.1.1
+save
+
+========== Tên thiết bị: PC_East (vpcs) ==========
+ip 192.168.2.5 255.255.255.0 192.168.2.1
+save
+

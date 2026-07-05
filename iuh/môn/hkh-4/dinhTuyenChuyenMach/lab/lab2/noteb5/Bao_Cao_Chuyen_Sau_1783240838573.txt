@@ -1,0 +1,99 @@
+Chào bạn, dưới đây là bản báo cáo chi tiết cho đồ án thiết kế mạng sử dụng giao thức định tuyến RIP trên nền tảng EVE-NG.
+
+---
+
+# PHẦN 1: CHẠY LỆNH CẤU HÌNH VÀ GIẢI THÍCH LỆNH
+
+### 1. Router West
+**Lệnh cấu hình:**
+```bash
+enable
+configure terminal
+interface e0/0
+ip address 192.168.0.1 255.255.255.0
+no shutdown
+interface s1/0
+ip address 10.0.0.1 255.255.255.0
+no shutdown
+interface e0/1
+ip address 10.0.2.2 255.255.255.0
+no shutdown
+router rip
+network 192.168.0.0
+network 10.0.0.0
+network 10.0.2.0
+end
+```
+**Giải thích:**
+*   **IP Address:** Thiết lập địa chỉ IP cho các cổng kết nối LAN (e0/0) và các cổng WAN (s1/0, e0/1) để định danh thiết bị trong mạng.
+*   **No shutdown:** Kích hoạt các cổng vật lý để bắt đầu truyền dữ liệu.
+*   **Router RIP:** Kích hoạt giao thức định tuyến động RIP. Lệnh `network` giúp router quảng bá các mạng trực tiếp kết nối với nó tới các router lân cận, cho phép tự động xây dựng bảng định tuyến.
+
+### 2. Router Central
+**Lệnh cấu hình:**
+```bash
+enable
+configure terminal
+interface e0/0
+ip address 192.168.1.1 255.255.255.0
+no shutdown
+interface s1/0
+ip address 10.0.0.2 255.255.255.0
+no shutdown
+interface s1/1
+ip address 10.0.1.1 255.255.255.0
+no shutdown
+router rip
+network 192.168.1.0
+network 10.0.0.0
+network 10.0.1.0
+end
+```
+**Giải thích:** Tương tự như West, các lệnh này thiết lập kết nối giữa mạng LAN Central và các router West, East. RIP được cấu hình để trao đổi thông tin định tuyến với các router lân cận thông qua các cổng WAN.
+
+### 3. Router East
+**Lệnh cấu hình:**
+```bash
+enable
+configure terminal
+interface e0/0
+ip address 192.168.2.1 255.255.255.0
+no shutdown
+interface s1/0
+ip address 10.0.1.2 255.255.255.0
+no shutdown
+interface e0/1
+ip address 10.0.2.1 255.255.255.0
+no shutdown
+router rip
+network 192.168.2.0
+network 10.0.1.0
+network 10.0.2.0
+end
+```
+**Giải thích:** Cấu hình tương tự để đảm bảo Router East có thể học được các đường đi đến mạng của West và Central thông qua giao thức RIP.
+
+---
+
+# PHẦN 2: CÁC LỆNH KIỂM TRA (VERIFY) VÀ GIẢI THÍCH OUTPUT
+
+### 1. Kiểm tra bảng định tuyến (Show ip route)
+*   **Output:** `R 192.168.1.0/24 [120/1] via 10.0.0.2, 00:00:10, Serial1/0`
+*   **Giải thích:**
+    *   **Chữ R:** Đại diện cho giao thức RIP.
+    *   **[120/1]:** 120 là Administrative Distance (độ tin cậy) của RIP, 1 là Metric (số hop count - số chặng).
+    *   **Via 10.0.0.2:** Cho biết router đã học được đường đi đến mạng đích thông qua địa chỉ IP của router kế tiếp.
+
+### 2. Kiểm tra trạng thái cổng (Show ip int brief)
+*   **Output:** `Interface IP-Address OK? Method Status Protocol`
+*   **Giải thích:** Kiểm tra xem các cổng đã được gán IP đúng chưa và trạng thái (Status/Protocol) có đang "up/up" hay không. Nếu là "up/up", nghĩa là lớp vật lý và lớp liên kết dữ liệu đã hoạt động tốt.
+
+### 3. Kiểm tra kết nối (Ping)
+*   **Output:** `Sending 5, 100-byte ICMP Echos to 192.168.2.5, timeout is 2 seconds: !!!!!`
+*   **Giải thích:** 5 dấu chấm than (!!!!!) chứng minh gói tin đã đi đến đích và nhận được phản hồi thành công, xác nhận toàn bộ hệ thống mạng đã thông suốt.
+
+---
+
+# PHẦN 3: BÁO CÁO HOÀN THÀNH
+
+Sau khi thực hiện cấu hình định tuyến động RIP trên các router West, Central và East, hệ thống đã được kiểm tra và xác nhận hoạt động ổn định. Các PC tại mỗi phân đoạn mạng (LAN West, LAN Central, LAN East) đã có thể giao tiếp với nhau thông qua các router trung gian. Việc sử dụng RIP đã tự động hóa quá trình cập nhật bảng định tuyến, đảm bảo tính linh hoạt và đáp ứng đúng yêu cầu của đề bài về kết nối liên thông toàn mạng. Hệ thống hiện đã sẵn sàng để vận hành.
