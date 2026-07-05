@@ -23,6 +23,7 @@ YÊU CẦU QUY CHUẨN CỦA THẦN CHÚ (Trình bày trong cặp dấu ***):
 
 4. Giao thức định tuyến & Cấu hình (Routing & Configs): 
 - Nêu rõ loại giao thức: Static Route, RIPv1, RIPv2, OSPF, EIGRP, BGP...
+- LƯU Ý QUAN TRỌNG VỀ STATIC ROUTE: Bắt buộc liệt kê các tuyến đường tĩnh CỤ THỂ đến từng mạng. TUYỆT ĐỐI KHÔNG lạm dụng Default Route (0.0.0.0) để định tuyến tắt trong mạng nội bộ, trừ khi đề bài yêu cầu chỉ đường ra mạng Internet.
 - Định tuyến động: Ghi rõ các dải mạng cần quảng bá bằng lệnh `network`.
 - Tính năng nâng cao: Ghi chú rõ yêu cầu về NAT, ACL, IPv6, Passive Interface, Default-Information Originate... nếu đề bài có yêu cầu.
 
