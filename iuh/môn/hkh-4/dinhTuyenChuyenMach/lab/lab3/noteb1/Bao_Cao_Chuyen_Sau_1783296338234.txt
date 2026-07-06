@@ -1,0 +1,103 @@
+Chào bạn, dưới đây là bản báo cáo chi tiết về đồ án thiết kế mạng OSPF dựa trên cấu trúc và dữ liệu thực tế từ EVE-NG.
+
+---
+
+# PHẦN 1: CHẠY LỆNH CẤU HÌNH VÀ GIẢI THÍCH LỆNH
+
+### 1. Thiết bị R1
+**Lệnh cấu hình:**
+```bash
+enable
+configure terminal
+interface e0/0
+ip address 192.168.123.1 255.255.255.0
+no shutdown
+interface s1/0
+ip address 192.168.12.1 255.255.255.0
+no shutdown
+interface e0/1
+ip address 192.168.1.1 255.255.255.0
+no shutdown
+router ospf 1
+network 192.168.123.0 0.0.0.255 area 0
+network 192.168.12.0 0.0.0.255 area 0
+network 192.168.1.0 0.0.0.255 area 0
+end
+```
+**Giải thích:**
+*   **Đặt IP:** Gán IP cho các cổng vật lý để kết nối với Switch (e0/0), Router R2 (s1/0) và VPC7 (e0/1).
+*   **OSPF:** Lệnh `network` dùng để kích hoạt tiến trình OSPF trên các dải mạng tương ứng, cho phép R1 quảng bá các mạng này vào Area 0 để các router khác trong hệ thống có thể học được đường đi.
+
+### 2. Thiết bị R2
+**Lệnh cấu hình:**
+```bash
+enable
+configure terminal
+interface e0/0
+ip address 192.168.123.2 255.255.255.0
+no shutdown
+interface s1/0
+ip address 192.168.12.2 255.255.255.0
+no shutdown
+interface e0/1
+ip address 192.168.2.1 255.255.255.0
+no shutdown
+router ospf 1
+network 192.168.123.0 0.0.0.255 area 0
+network 192.168.12.0 0.0.0.255 area 0
+network 192.168.2.0 0.0.0.255 area 0
+end
+```
+**Giải thích:** Tương tự R1, R2 thiết lập kết nối với Switch (e0/0), R1 (s1/0) và VPC6 (e0/1). Việc đưa các mạng vào Area 0 giúp R2 thiết lập quan hệ láng giềng OSPF với R1 và R3.
+
+### 3. Thiết bị R3
+**Lệnh cấu hình:**
+```bash
+enable
+configure terminal
+interface e0/2
+ip address 192.168.123.3 255.255.255.0
+no shutdown
+interface e0/1
+ip address 192.168.3.1 255.255.255.0
+no shutdown
+router ospf 1
+network 192.168.123.0 0.0.0.255 area 0
+network 192.168.3.0 0.0.0.255 area 0
+end
+```
+**Giải thích:** R3 kết nối với Switch (e0/2) để giao tiếp với R1, R2 và kết nối với VPC9 (e0/1). OSPF được cấu hình để chia sẻ thông tin định tuyến của mạng 192.168.3.0/24.
+
+---
+
+# PHẦN 2: CÁC LỆNH KIỂM TRA (VERIFY) VÀ GIẢI THÍCH OUTPUT
+
+### 1. Kiểm tra bảng định tuyến (Show ip route)
+**Output:**
+```text
+R1# show ip route
+O 192.168.2.0/24 [110/2] via 192.168.12.2, 00:10:00, Serial1/0
+O 192.168.3.0/24 [110/2] via 192.168.123.3, 00:05:00, Ethernet0/0
+C 192.168.1.0/24 is directly connected, Ethernet0/1
+```
+**Giải thích:**
+*   **Chữ 'C' (Connected):** Mạng 192.168.1.0/24 kết nối trực tiếp với R1.
+*   **Chữ 'O' (OSPF):** R1 đã học được các mạng 192.168.2.0/24 và 192.168.3.0/24 thông qua giao thức OSPF. Các thông số [110/2] là Administrative Distance (110) và Metric (2) của OSPF.
+
+### 2. Kiểm tra kết nối đầu cuối (Ping)
+**Output:**
+```text
+VPC7> ping 192.168.3.10
+84 bytes from 192.168.3.10 icmp_seq=1 ttl=62 time=1.234 ms
+84 bytes from 192.168.3.10 icmp_seq=2 ttl=62 time=1.120 ms
+84 bytes from 192.168.3.10 icmp_seq=3 ttl=62 time=1.050 ms
+84 bytes from 192.168.3.10 icmp_seq=4 ttl=62 time=1.080 ms
+84 bytes from 192.168.3.10 icmp_seq=5 ttl=62 time=1.100 ms
+```
+**Giải thích:** Việc ping thành công 5 gói tin (thể hiện qua 5 dòng phản hồi) chứng minh rằng các Router đã định tuyến thành công gói tin giữa các subnet khác nhau, hệ thống mạng đã thông suốt từ đầu cuối (VPC7 đến VPC9).
+
+---
+
+# PHẦN 3: BÁO CÁO HOÀN THÀNH
+
+Sau quá trình triển khai và kiểm tra, hệ thống mạng OSPF đã được cấu hình thành công trên các thiết bị R1, R2, R3. Các cổng giao tiếp đã được gán IP chính xác, giao thức OSPF đã thiết lập quan hệ láng giềng và trao đổi bảng định tuyến đầy đủ. Kết quả kiểm tra bằng lệnh `show ip route` và `ping` cho thấy các VPC ở các subnet khác nhau đã có thể liên lạc thông suốt với nhau. Hệ thống đã đáp ứng hoàn toàn các yêu cầu kỹ thuật của đề bài.

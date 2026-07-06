@@ -1,0 +1,38 @@
+# BÁO CÁO LAB 3 - BÀI 1: OSPF ĐƠN VÙNG (AREA 0)
+
+## 📸 CÂU 3: Show routing table và giải thích các thành phần
+**1. Hướng dẫn chụp hình:**
+- Mở Console của **Router R1**, gõ lệnh: `show ip route`
+- Chụp toàn bộ bảng định tuyến hiện ra. (Bạn có thể làm tương tự với R2 hoặc R3).
+
+**2. Giải thích chép vào báo cáo:**
+- Quan sát bảng định tuyến của R1, ta sẽ thấy các dòng chứa chữ **O**. Chữ **O** ở đây đại diện cho giao thức định tuyến **OSPF** (Open Shortest Path First).
+- Lấy ví dụ thực tế một dòng tuyến đường học được qua OSPF trong hình chụp của bạn: 
+  `O     192.168.2.0/24 [110/20] via 192.168.123.2, 00:27:00, Ethernet0/0`
+
+- **Giải thích chi tiết các thành phần:**
+  + `O`: Tuyến đường này được học tự động thông qua giao thức định tuyến động OSPF.
+  + `192.168.2.0/24`: Địa chỉ IP của mạng đích cần đến (Ví dụ: mạng LAN của PC VPC6).
+  + `[110/20]`: 
+    * `110` là **Administrative Distance** (Độ tin cậy) mặc định của OSPF. 
+    * `20` là **Metric / Cost** (Chi phí đường đi). Do cáp Ethernet có băng thông 10Mbps (Cost=10), đi qua 2 chặng R1-R5 và R5-R2 nên tổng Cost = 20.
+  + `via 192.168.123.2`: Địa chỉ IP của trạm kế tiếp (Next-hop) để chuyển tiếp gói tin. Ở đây OSPF đã khôn ngoan chọn đi qua ngõ 192.168.123.2 (đường Switch R5) thay vì đi qua đường Serial (192.168.12.2).
+  + `00:27:00`: Thời gian (Timers) kể từ lần cuối cùng tuyến đường này được cập nhật.
+  + `Ethernet0/0`: Gói tin sẽ được đẩy ra khỏi Router thông qua cổng cáp này để đi đến đích, hoàn toàn né con đường cáp Serial chậm chạp.
+
+
+## 📸 CÂU 4: Cho biết đường đi gói tin PC này đến PC kia?
+**1. Hướng dẫn chụp hình:**
+- Mở Console của **VPC7** (thuộc R1), gõ lệnh trace sang VPC6: 
+  `trace 192.168.2.10`
+- Chụp màn hình kết quả từng Hop (trạm nhảy) hiện ra.
+
+**2. Giải thích chép vào báo cáo:**
+- Trái ngược với giao thức RIP (đếm số trạm nhảy), giao thức OSPF là giao thức định tuyến theo trạng thái liên kết (Link-State). Nó dùng thuật toán Dijkstra để tính toán đường đi có **tổng chi phí (Cost) thấp nhất**, trong đó Cost phụ thuộc hoàn toàn vào **tốc độ băng thông (Bandwidth)** của sợi cáp.
+- **Đường đi thực tế của gói tin dựa trên kết quả Trace:** 
+  Lấy ví dụ kết quả Trace từ VPC7 sang VPC6 (`192.168.2.10`), gói tin đi qua các trạm:
+  + Hop 1: `192.168.1.1` (Đi lên cổng Gateway của Router R1).
+  + Hop 2: `192.168.123.2` (Từ R1 đi ngang qua cáp Ethernet nối vào Switch R5 để sang Router R2). Dù R1 và R2 có cáp Serial nối trực tiếp với nhau, gói tin vẫn **không thèm chọn** đi qua đường cáp Serial đó.
+  + Hop 3: `*192.168.2.10 (Destination port unreachable)` (Đã chạm đến máy đích VPC6 thành công. Thông báo báo lỗi Unreachable ở bước cuối là đặc trưng bình thường của VPCS khi trace bằng UDP).
+  *(Trường hợp từ VPC9 trace sang VPC6 cũng cho ra kết quả y hệt: nhảy qua Gateway 192.168.3.1 rồi đi vòng qua R2 bằng đường 192.168.123.2 qua Switch R5).*
+- **Kết luận:** Tại sao OSPF lại chọn đi vòng qua Switch R5? Vì cáp FastEthernet/Ethernet có băng thông 100Mbps/10Mbps (Cost rất thấp, chỉ bằng 1 hoặc 10). Trong khi cáp Serial có băng thông cực kỳ hẹp chỉ 1.544Mbps (Cost lên tới 64). OSPF đủ thông minh để chê con đường Serial "đường hẹp kẹt xe" và dồn toàn bộ gói tin đi qua con đường cao tốc Ethernet băng thông rộng. Đi qua Switch R5 chính là con đường tối ưu và nhanh nhất!

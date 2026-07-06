@@ -1,0 +1,96 @@
+# BÁO CÁO CHI TIẾT CẤU HÌNH HỆ THỐNG MẠNG OSPF
+
+Chào bạn, dưới đây là bản phân tích kỹ thuật chi tiết cho cấu trúc mạng OSPF đã thiết kế. Hệ thống bao gồm 3 Router (R1, R2, R3) chạy giao thức định tuyến OSPF Area 0 và các thiết bị đầu cuối (VPC).
+
+---
+
+## 1. Router R1
+### Cấu hình:
+```text
+enable
+configure terminal
+interface e0/0
+ip address 192.168.123.1 255.255.255.0
+no shutdown
+interface s1/0
+ip address 192.168.12.1 255.255.255.0
+no shutdown
+interface e0/1
+ip address 192.168.1.1 255.255.255.0
+no shutdown
+router ospf 1
+network 192.168.123.0 0.0.0.255 area 0
+network 192.168.12.0 0.0.0.255 area 0
+network 192.168.1.0 0.0.0.255 area 0
+end
+```
+### Giải thích:
+*   **Gán IP:** R1 được cấu hình 3 cổng. `e0/0` kết nối vào switch trung tâm, `s1/0` kết nối trực tiếp với R2, và `e0/1` làm Gateway cho VPC7. Subnet `/24` (255.255.255.0) được sử dụng để phân đoạn mạng cục bộ.
+*   **OSPF:** Lệnh `router ospf 1` khởi tạo tiến trình OSPF. Các lệnh `network` chỉ định các dải mạng mà R1 sẽ tham gia trao đổi thông tin định tuyến. `area 0` (Backbone Area) đảm bảo tính thống nhất cho toàn bộ hệ thống mạng.
+
+---
+
+## 2. Router R2
+### Cấu hình:
+```text
+enable
+configure terminal
+interface e0/0
+ip address 192.168.123.2 255.255.255.0
+no shutdown
+interface s1/0
+ip address 192.168.12.2 255.255.255.0
+no shutdown
+interface e0/1
+ip address 192.168.2.1 255.255.255.0
+no shutdown
+router ospf 1
+network 192.168.123.0 0.0.0.255 area 0
+network 192.168.12.0 0.0.0.255 area 0
+network 192.168.2.0 0.0.0.255 area 0
+end
+```
+### Giải thích:
+*   **Gán IP:** Tương tự R1, R2 đóng vai trò là nút trung gian. Cổng `s1/0` kết nối với R1, `e0/0` kết nối với switch trung tâm, và `e0/1` là Gateway cho VPC6.
+*   **OSPF:** R2 quảng bá các mạng cục bộ của nó vào Area 0. Việc sử dụng Wildcard mask `0.0.0.255` cho phép R2 nhận diện chính xác các dải mạng `/24` để thiết lập bảng định tuyến OSPF.
+
+---
+
+## 3. Router R3
+### Cấu hình:
+```text
+enable
+configure terminal
+interface e0/2
+ip address 192.168.123.3 255.255.255.0
+no shutdown
+interface e0/1
+ip address 192.168.3.1 255.255.255.0
+no shutdown
+router ospf 1
+network 192.168.123.0 0.0.0.255 area 0
+network 192.168.3.0 0.0.0.255 area 0
+end
+```
+### Giải thích:
+*   **Gán IP:** R3 kết nối vào switch trung tâm qua `e0/2` và cung cấp Gateway cho VPC9 qua `e0/1`.
+*   **OSPF:** R3 chỉ quảng bá 2 mạng trực tiếp kết nối vào Area 0. Điều này cho phép R3 học được các đường đi đến mạng của R1 và R2 thông qua switch trung tâm.
+
+---
+
+## 4. Switch R5
+### Giải thích:
+*   R5 đóng vai trò là thiết bị lớp 2 (Layer 2 Switch). Trong cấu trúc này, nó không cần cấu hình IP (đối với các lệnh CLI cơ bản) vì nó chỉ thực hiện chuyển mạch (switching) các gói tin giữa các cổng `e0/1`, `e0/2`, `e0/0` để các Router có thể giao tiếp với nhau trong cùng một phân đoạn mạng `192.168.123.0/24`.
+
+---
+
+## 5. Các thiết bị đầu cuối (VPC7, VPC6, VPC9)
+### Cấu hình:
+*   **VPC7:** `ip 192.168.1.10 255.255.255.0 192.168.1.1`
+*   **VPC6:** `ip 192.168.2.10 255.255.255.0 192.168.2.1`
+*   **VPC9:** `ip 192.168.3.10 255.255.255.0 192.168.3.1`
+
+### Giải thích:
+*   Đây là các thiết bị cuối (End-devices).
+*   **IP/Subnet:** Mỗi VPC được gán một IP tĩnh trong dải mạng tương ứng với Gateway của Router quản lý nó.
+*   **Gateway:** Địa chỉ cuối cùng trong lệnh (ví dụ: `192.168.1.1`) là địa chỉ IP của cổng Router tương ứng. Đây là bước bắt buộc để các VPC có thể gửi gói tin ra ngoài mạng cục bộ (liên mạng) thông qua OSPF.

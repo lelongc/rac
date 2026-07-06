@@ -1,0 +1,42 @@
+# BÁO CÁO LAB 3 - BÀI 2: OSPF ĐA VÙNG (MULTI-AREA OSPF)
+
+## 📸 CÂU 3: Show routing table và giải thích các thành phần?
+**1. Hướng dẫn chụp hình:**
+- Mở Console của **Router R3** (Nằm ở Area 1), gõ lệnh: `show ip route`
+- Chụp toàn bộ bảng định tuyến hiện ra. (Nên chụp R3 hoặc R4 để thấy rõ nhất sự lợi hại của OSPF đa vùng).
+
+**2. Giải thích chép vào báo cáo:**
+Điểm khác biệt lớn nhất của mô hình OSPF Đa vùng so với Đơn vùng là bảng định tuyến sẽ xuất hiện 2 ký hiệu đặc trưng: **O** và **O IA**.
+- **O (OSPF Intra-Area):** Là các tuyến đường nằm trong **cùng một vùng (Area)** với Router.
+- **O IA (OSPF Inter-Area):** Là các tuyến đường nằm ở **vùng khác (Area khác)** được học thông qua các Router biên ABR (Area Border Router).
+
+**Ví dụ phân tích bảng định tuyến thực tế:**
+*(Giải thích dựa trên một dòng định tuyến **O IA** trong bảng `show ip route` của Router R3)*
+`O IA  172.16.35.0/24 [110/138] via 10.0.1.1, 00:01:25, Serial1/0`
+- `O IA`: Tuyến đường Inter-Area (khác vùng). Router R3 (nằm ở Area 1) đã học được mạng 172.16.35.0 (nằm tuốt bên Area 2) nhờ các con Router biên ABR (R1, R2) quảng bá hộ sang.
+- `172.16.35.0/24`: Địa chỉ IP của mạng đích (thuộc Area 2 - Mạng của VPC6).
+- `[110/138]`: 
+  + `110` là Administrative Distance (Độ tin cậy mặc định của OSPF).
+  + `138` là Metric (Cost - chi phí). Bằng tổng Cost của toàn bộ các chặng cáp để đi từ R3 sang R4. 
+- `via 10.0.1.1`: Gói tin phải đi qua trạm kế tiếp là 10.0.1.1 (cổng của Router R1).
+- `Serial1/0`: Gói tin sẽ đẩy ra khỏi Router R3 thông qua cổng Serial1/0.
+
+
+## 📸 CÂU 4: Cho biết đường đi gói tin PC này đến PC kia?
+**1. Hướng dẫn chụp hình:**
+- Mở Console của **VPC5** (nằm ở Area 1), gõ lệnh trace sang VPC6 (nằm ở Area 2): 
+  `trace 172.16.35.10`
+- Chụp màn hình kết quả trace lộ trình các Hop mà gói tin nhảy qua.
+
+**2. Giải thích chép vào báo cáo:**
+Luật bất thành văn của OSPF Đa vùng là: Mọi cuộc gọi điện liên tỉnh (từ Area này sang Area khác) **BẮT BUỘC phải đi ngang qua Thủ đô (Area 0 - Backbone)**. Không có cách nào đi đường tắt!
+
+**Đường đi thực tế của gói tin từ VPC5 sang VPC6:**
+Gói tin từ VPC5 phải nhảy rào qua 5 trạm (Hop):
++ **Hop 1:** `10.0.2.1` (Từ VPC5 đi lên cổng Gateway của Router nội bộ R3 ở Area 1).
++ **Hop 2:** `10.0.1.1` (Từ R3 đi sang Router biên R1. Lúc này gói tin chính thức bước vào Area 0 - Backbone).
++ **Hop 3:** `192.168.23.2` (Từ R1 đi xuyên qua xương sống Area 0 để sang Router biên R2 của Area 2).
++ **Hop 4:** `172.16.34.4` (Từ R2 đi xuống Router nội bộ R4 của Area 2).
++ **Hop 5:** `*172.16.35.10 (Destination port unreachable)` (Gói tin chạm đích máy VPC6 thành công. Thông báo báo lỗi Unreachable ở bước cuối là đặc trưng bình thường của VPCS khi trace bằng UDP port).
+
+**Kết luận:** Gói tin đã tuân thủ tuyệt đối quy tắc của OSPF Đa Vùng: Xuất phát từ Vùng 1 -> Xuyên qua Vùng Backbone 0 -> Đi vào Vùng đích 2. Lộ trình này chứng minh cơ chế chống lặp vòng (Anti-loop) của OSPF bằng kiến trúc Hub-and-Spoke xoay quanh Area 0 hoạt động cực kỳ hoàn hảo.

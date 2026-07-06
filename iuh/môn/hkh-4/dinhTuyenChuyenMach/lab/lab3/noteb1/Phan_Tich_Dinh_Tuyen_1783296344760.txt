@@ -1,0 +1,58 @@
+Chào bạn, với tư cách là một Chuyên gia Mạng, tôi xin gửi đến bạn bản phân tích chuyên sâu về hệ thống mạng OSPF đã thiết kế.
+
+---
+
+### 1. BẢNG ĐỊNH TUYẾN (ROUTING TABLE) VÀ GIẢI THÍCH
+
+Dựa trên cấu hình OSPF Area 0, bảng định tuyến tại **R1** sẽ có dạng như sau (trích xuất tiêu biểu):
+
+```text
+R1# show ip route
+Codes: L - local, C - connected, S - static, O - OSPF
+Gateway of last resort is not set
+
+O   192.168.2.0/24 [110/20] via 192.168.12.2, 00:10:00, Serial1/0
+O   192.168.3.0/24 [110/20] via 192.168.123.3, 00:10:00, Ethernet0/0
+C   192.168.1.0/24 is directly connected, Ethernet0/1
+L   192.168.1.1/32 is directly connected, Ethernet0/1
+C   192.168.12.0/24 is directly connected, Serial1/0
+L   192.168.12.1/32 is directly connected, Serial1/0
+C   192.168.123.0/24 is directly connected, Ethernet0/0
+L   192.168.123.1/32 is directly connected, Ethernet0/0
+```
+
+#### Giải thích các thành phần:
+*   **Mã định danh (Codes):**
+    *   **C (Connected):** Mạng kết nối trực tiếp với cổng vật lý của Router.
+    *   **L (Local):** Địa chỉ IP cụ thể của cổng (Host route /32).
+    *   **O (OSPF):** Tuyến đường được học thông qua giao thức định tuyến động OSPF.
+*   **Thông số [110/20]:**
+    *   **110:** Là **Administrative Distance (AD)** của OSPF. Đây là độ tin cậy của nguồn thông tin định tuyến (OSPF mặc định là 110).
+    *   **20:** Là **Metric (Cost)**. OSPF tính toán chi phí dựa trên băng thông (Bandwidth). Giá trị càng thấp, đường đi càng ưu tiên.
+*   **via 192.168.12.2:** Địa chỉ IP của Next-hop (Router kế tiếp) mà gói tin cần gửi tới để đến được đích.
+
+#### Chứng minh sự hội tụ:
+Sự xuất hiện của các tiền tố **"O"** trong bảng định tuyến chứng tỏ R1 đã nhận được các bản tin LSA (Link State Advertisement) từ R2 và R3. Các Router đã thiết lập quan hệ láng giềng (Full Adjacency) và đồng bộ hóa cơ sở dữ liệu trạng thái liên kết (LSDB), từ đó tính toán ra đường đi ngắn nhất (SPF Algorithm).
+
+---
+
+### 2. ĐƯỜNG ĐI CỦA GÓI TIN (PACKET PATH)
+
+Xét trường hợp **VPC7 (192.168.1.10)** gửi gói tin ICMP (Ping) đến **VPC9 (192.168.3.10)**.
+
+#### Quá trình di chuyển:
+1.  **Tại VPC7:** Gói tin có IP Source: 192.168.1.10, Destination: 192.168.3.10. Vì khác mạng, VPC7 gửi gói tin đến Default Gateway (R1) thông qua địa chỉ MAC của R1 (e0/1).
+2.  **Tại R1:** 
+    *   R1 nhận khung (frame), kiểm tra bảng định tuyến, thấy mạng 192.168.3.0/24 nằm ở hướng R3 (via 192.168.123.3).
+    *   R1 đóng gói lại: **Source IP** vẫn là 192.168.1.10, **Destination IP** vẫn là 192.168.3.10.
+    *   **MAC Address:** Thay đổi. Source MAC là của R1 (e0/0), Destination MAC là của R3 (e0/2).
+3.  **Tại R3:**
+    *   R3 nhận gói tin qua cổng e0/2. Kiểm tra bảng định tuyến, thấy mạng 192.168.3.0/24 là mạng kết nối trực tiếp (Connected).
+    *   R3 chuyển gói tin ra cổng e0/1 để đến VPC9.
+    *   **MAC Address:** Source MAC là của R3 (e0/1), Destination MAC là của VPC9.
+
+#### Tổng kết thay đổi:
+*   **IP Source/Destination:** Giữ nguyên trong suốt quá trình truyền (trừ khi có NAT).
+*   **MAC Address:** Thay đổi tại mỗi "Hop" (mỗi Router). Router đóng vai trò là thiết bị Layer 3, nó sẽ tháo bỏ Frame cũ (Layer 2) và đóng gói lại Frame mới với địa chỉ MAC nguồn và đích tương ứng với phân đoạn mạng tiếp theo.
+
+**Kết luận:** Hệ thống đã được cấu hình đúng, OSPF hội tụ ổn định và gói tin được định tuyến chính xác qua các Hop dựa trên bảng định tuyến đã phân tích.
