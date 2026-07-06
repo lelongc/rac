@@ -1,0 +1,70 @@
+========== RAW CONFIGURATION COMMANDS ==========
+
+========== Tên thiết bị: R1 (router) ==========
+enable
+configure terminal
+interface s1/0
+ip address 192.168.23.1 255.255.255.0
+no shutdown
+interface s1/1
+ip address 10.0.1.1 255.255.255.0
+no shutdown
+router ospf 1
+network 192.168.23.0 0.0.0.255 area 0
+network 10.0.1.0 0.0.0.255 area 1
+end
+write memory
+
+========== Tên thiết bị: R2 (router) ==========
+enable
+configure terminal
+interface s1/0
+ip address 192.168.23.2 255.255.255.0
+no shutdown
+interface s1/1
+ip address 172.16.34.2 255.255.255.0
+no shutdown
+router ospf 1
+network 192.168.23.0 0.0.0.255 area 0
+network 172.16.34.0 0.0.0.255 area 2
+end
+write memory
+
+========== Tên thiết bị: R3 (router) ==========
+enable
+configure terminal
+interface s1/0
+ip address 10.0.1.3 255.255.255.0
+no shutdown
+interface e0/0
+ip address 10.0.2.1 255.255.255.0
+no shutdown
+router ospf 1
+network 10.0.1.0 0.0.0.255 area 1
+network 10.0.2.0 0.0.0.255 area 1
+end
+write memory
+
+========== Tên thiết bị: R4 (router) ==========
+enable
+configure terminal
+interface s1/0
+ip address 172.16.34.4 255.255.255.0
+no shutdown
+interface e0/0
+ip address 172.16.35.1 255.255.255.0
+no shutdown
+router ospf 1
+network 172.16.34.0 0.0.0.255 area 2
+network 172.16.35.0 0.0.0.255 area 2
+end
+write memory
+
+========== Tên thiết bị: VPC5 (vpcs) ==========
+ip 10.0.2.10 255.255.255.0 10.0.2.1
+save
+
+========== Tên thiết bị: VPC6 (vpcs) ==========
+ip 172.16.35.10 255.255.255.0 172.16.35.1
+save
+

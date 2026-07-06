@@ -1,0 +1,118 @@
+# BÁO CÁO CHI TIẾT CẤU HÌNH MẠNG OSPF MULTI-AREA
+
+Chào bạn, dưới đây là bản phân tích chi tiết cấu hình cho hệ thống mạng OSPF Multi-Area dựa trên cấu trúc đã cung cấp.
+
+---
+
+## 1. Router R1 (Area Border Router - ABR)
+R1 đóng vai trò là cầu nối giữa Area 0 (Backbone) và Area 1.
+
+**Cấu hình:**
+```bash
+enable
+configure terminal
+interface s1/0
+ip address 192.168.23.1 255.255.255.0
+no shutdown
+interface s1/1
+ip address 10.0.1.1 255.255.255.0
+no shutdown
+router ospf 1
+network 192.168.23.0 0.0.0.255 area 0
+network 10.0.1.0 0.0.0.255 area 1
+end
+```
+**Giải thích:**
+*   **Giao diện:** Thiết lập IP cho cổng `s1/0` (kết nối R2, thuộc Area 0) và `s1/1` (kết nối R3, thuộc Area 1). `no shutdown` để kích hoạt cổng vật lý.
+*   **OSPF:** Lệnh `network` quảng bá các dải mạng vào OSPF. R1 được cấu hình đa vùng: mạng `192.168.23.0` thuộc Area 0 (xương sống) và `10.0.1.0` thuộc Area 1. Điều này biến R1 thành một ABR (Area Border Router).
+
+---
+
+## 2. Router R2 (Area Border Router - ABR)
+R2 đóng vai trò là cầu nối giữa Area 0 (Backbone) và Area 2.
+
+**Cấu hình:**
+```bash
+enable
+configure terminal
+interface s1/0
+ip address 192.168.23.2 255.255.255.0
+no shutdown
+interface s1/1
+ip address 172.16.34.2 255.255.255.0
+no shutdown
+router ospf 1
+network 192.168.23.0 0.0.0.255 area 0
+network 172.16.34.0 0.0.0.255 area 2
+end
+```
+**Giải thích:**
+*   **Giao diện:** Cấu hình IP cho kết nối với R1 (Area 0) và R4 (Area 2).
+*   **OSPF:** R2 quảng bá mạng `192.168.23.0` vào Area 0 và `172.16.34.0` vào Area 2. R2 cũng là một ABR, chịu trách nhiệm truyền tải thông tin định tuyến giữa Area 0 và Area 2.
+
+---
+
+## 3. Router R3 (Internal Router)
+R3 nằm hoàn toàn trong Area 1.
+
+**Cấu hình:**
+```bash
+enable
+configure terminal
+interface s1/0
+ip address 10.0.1.3 255.255.255.0
+no shutdown
+interface e0/0
+ip address 10.0.2.1 255.255.255.0
+no shutdown
+router ospf 1
+network 10.0.1.0 0.0.0.255 area 1
+network 10.0.2.0 0.0.0.255 area 1
+end
+```
+**Giải thích:**
+*   **Giao diện:** `s1/0` kết nối với R1, `e0/0` kết nối với VPC5 (mạng người dùng).
+*   **OSPF:** Cả hai mạng đều thuộc Area 1. R3 là Router nội bộ (Internal Router), chỉ trao đổi thông tin định tuyến trong phạm vi Area 1.
+
+---
+
+## 4. Router R4 (Internal Router)
+R4 nằm hoàn toàn trong Area 2.
+
+**Cấu hình:**
+```bash
+enable
+configure terminal
+interface s1/0
+ip address 172.16.34.4 255.255.255.0
+no shutdown
+interface e0/0
+ip address 172.16.35.1 255.255.255.0
+no shutdown
+router ospf 1
+network 172.16.34.0 0.0.0.255 area 2
+network 172.16.35.0 0.0.0.255 area 2
+end
+```
+**Giải thích:**
+*   **Giao diện:** `s1/0` kết nối với R2, `e0/0` kết nối với VPC6.
+*   **OSPF:** Cả hai mạng đều thuộc Area 2. R4 đóng vai trò là Router nội bộ cho Area 2, cung cấp kết nối cho các thiết bị cuối trong vùng này.
+
+---
+
+## 5. Thiết bị cuối (VPC5 & VPC6)
+
+**Cấu hình VPC5:**
+```bash
+ip 10.0.2.10 255.255.255.0 10.0.2.1
+```
+*   **Giải thích:** Thiết lập IP tĩnh cho VPC5. `10.0.2.1` là địa chỉ IP của cổng `e0/0` trên R3, đóng vai trò là **Default Gateway** để VPC5 có thể gửi gói tin ra ngoài mạng nội bộ.
+
+**Cấu hình VPC6:**
+```bash
+ip 172.16.35.10 255.255.255.0 172.16.35.1
+```
+*   **Giải thích:** Thiết lập IP tĩnh cho VPC6. `172.16.35.1` là địa chỉ IP của cổng `e0/0` trên R4, đóng vai trò là **Default Gateway** cho VPC6.
+
+---
+*Báo cáo kết thúc. Hệ thống đã được thiết lập theo mô hình OSPF Multi-Area với Area 0 làm xương sống, đảm bảo tính phân cấp và khả năng mở rộng cho mạng.*

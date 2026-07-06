@@ -12,13 +12,14 @@
 
 **Ví dụ phân tích bảng định tuyến thực tế:**
 *(Giải thích dựa trên một dòng định tuyến **O IA** trong bảng `show ip route` của Router R3)*
-`O IA  172.16.35.0/24 [110/138] via 10.0.1.1, 00:01:25, Serial1/0`
+`O IA  172.16.35.0 [110/202] via 10.0.1.1, 00:07:08, Serial1/0`
 - `O IA`: Tuyến đường Inter-Area (khác vùng). Router R3 (nằm ở Area 1) đã học được mạng 172.16.35.0 (nằm tuốt bên Area 2) nhờ các con Router biên ABR (R1, R2) quảng bá hộ sang.
-- `172.16.35.0/24`: Địa chỉ IP của mạng đích (thuộc Area 2 - Mạng của VPC6).
-- `[110/138]`: 
+- `172.16.35.0`: Địa chỉ IP của mạng đích (thuộc Area 2 - Mạng của VPC6).
+- `[110/202]`: 
   + `110` là Administrative Distance (Độ tin cậy mặc định của OSPF).
-  + `138` là Metric (Cost - chi phí). Bằng tổng Cost của toàn bộ các chặng cáp để đi từ R3 sang R4. 
+  + `202` là Metric (Cost - chi phí). Bằng tổng Cost của toàn bộ các chặng cáp để đi từ R3 sang VPC6 (Area 2). 
 - `via 10.0.1.1`: Gói tin phải đi qua trạm kế tiếp là 10.0.1.1 (cổng của Router R1).
+- `00:07:08`: Thời gian tuyến đường này tồn tại trong bảng định tuyến kể từ lần cập nhật cuối.
 - `Serial1/0`: Gói tin sẽ đẩy ra khỏi Router R3 thông qua cổng Serial1/0.
 
 
