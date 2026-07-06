@@ -1,0 +1,44 @@
+# BÁO CÁO LAB 3 - BÀI 3: OSPF ĐA VÙNG NÂNG CAO
+
+## 📸 CÂU 3: Show routing table và giải thích các thành phần R1?
+**1. Hướng dẫn chụp hình:**
+- Mở Console của **Router R1**, gõ lệnh: `show ip route`
+- Chụp toàn bộ bảng định tuyến hiện ra.
+
+**2. Giải thích chép vào báo cáo:**
+Router R1 đóng vai trò là **ABR (Area Border Router)**, đứng ở ranh giới giữa Area 0 và Area 1. Bảng định tuyến của R1 sẽ rất phong phú, bao gồm các loại tuyến đường sau:
+- **C (Connected) / L (Local):** Các mạng kết nối trực tiếp với R1 (Ví dụ: mạng `10.1.1.0/24`, `192.168.1.32/28`, `192.168.1.48/28`).
+- **O (OSPF Intra-Area):** Các mạng nằm TRONG CÙNG Area với R1. R1 có mặt ở cả Area 0 và Area 1 nên nó học được các mạng nội bộ của 2 vùng này bằng chữ O.
+  + Ví dụ mạng nội bộ Area 1: `172.16.10.0/24`, `172.16.11.0/24` học từ Router BB1.
+  + Ví dụ mạng nội bộ Area 0: `192.168.1.64/28` học từ Router R2/R3.
+- **O IA (OSPF Inter-Area):** Các mạng nằm ở VÙNG KHÁC (Area 2 và Area 3) được học thông qua các ABR khác (R2 và R3).
+  + Ví dụ mạng Area 2: `172.22.2.0/24`, `172.21.21.0/24` học từ R2.
+  + Ví dụ mạng Area 3: `172.22.1.0/24`, `172.31.21.0/24` học từ R3.
+
+*Phân tích chi tiết một dòng O IA trên R1 (Ví dụ mạng 172.21.21.0):*
+`O IA     172.21.21.0 [110/138] via 192.168.1.34, 00:25:30, Serial1/1`
+- `O IA`: Tuyến đường khác vùng (Inter-Area). R1 học được mạng của PC3 (ở Area 2) do R2 quảng bá hộ sang Area 0.
+- `172.21.21.0`: Địa chỉ đích.
+- `[110/138]`: Administrative Distance (Độ ưu tiên mặc định của OSPF là 110). `138` là tổng Cost (Metric) đường đi từ R1 tới mạng đích. 
+- `via 192.168.1.34`: Phải nhảy qua trạm kế tiếp là 192.168.1.34 (Router R2).
+- `00:25:30`: Thời gian tuyến đường này tồn tại trong bảng định tuyến kể từ lần cập nhật cuối.
+- `Serial1/1`: Đẩy gói tin ra khỏi cổng Serial của R1.
+
+
+## 📸 CÂU 4: Cho biết đường đi gói tin PC 172.21.21.1 đến các PC khác?
+*(Chú ý: 172.21.21.1 chính là PC3 nằm ở Area 2)*
+
+**1. Hướng dẫn chụp hình:**
+- Mở Console của **PC3** (IP 172.21.21.1).
+- Gõ lệnh trace sang máy PC1 (IP 172.16.10.1 ở Area 1): `trace 172.16.10.1`
+- Gõ lệnh trace sang máy PC4 (IP 172.31.21.1 ở Area 3): `trace 172.31.21.1`
+- Chụp ảnh 2 kết quả trace này để chứng minh lộ trình.
+
+**2. Giải thích chép vào báo cáo:**
+**Trường hợp 1: Từ PC3 (Area 2) gửi sang PC1 (Area 1)**
+Lộ trình gói tin: PC3 -> BB2 -> R2 -> R1 -> BB1 -> PC1.
+- Giải thích: Vì đây là giao tiếp liên vùng (Inter-Area), gói tin bắt buộc phải rời khỏi Area 2 (qua BB2), đi vào Area 0 (qua R2), di chuyển trong Area 0 (đến R1), sau đó chui xuống Area 1 (qua BB1) và đến máy đích PC1. Mọi truy cập ngoại vùng đều đi ngang qua Backbone Area 0.
+
+**Trường hợp 2: Từ PC3 (Area 2) gửi sang PC4 (Area 3)**
+Lộ trình gói tin: PC3 -> BB2 -> R2 -> R3 -> BB3 -> PC4.
+- Giải thích: Mặc dù Router R2 và R3 được kết nối trực tiếp với nhau thông qua mạng LAN `192.168.1.64/28`, gói tin vẫn phải đi qua liên kết này. Liên kết giữa R2 và R3 thực chất thuộc về Area 0. Do đó, gói tin từ Area 2 vào R2 (ABR), đi ngang qua Area 0 (tới R3), rồi từ R3 (ABR) đẩy xuống Area 3 (tới BB3 và PC4). Hoạt động này hoàn toàn tuân thủ quy tắc chống Loop (chống lặp vòng) của OSPF Đa Vùng bằng kiến trúc Hub-and-Spoke.

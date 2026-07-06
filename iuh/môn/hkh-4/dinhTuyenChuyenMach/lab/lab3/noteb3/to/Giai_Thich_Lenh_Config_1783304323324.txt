@@ -1,0 +1,107 @@
+Chào bạn, với tư cách là một Chuyên gia Mạng, tôi xin gửi đến bạn bản báo cáo phân tích chi tiết cấu hình cho hệ thống mạng OSPF Multi-Area này.
+
+---
+
+### 1. Router BB1 (Backbone Boundary 1)
+**Cấu hình:**
+```text
+enable
+configure terminal
+interface s1/0
+ip address 10.1.1.1 255.255.255.0
+no shutdown
+interface e0/0
+ip address 172.16.10.254 255.255.255.0
+no shutdown
+interface e0/1
+ip address 172.16.11.254 255.255.255.0
+no shutdown
+router ospf 1
+network 10.1.1.0 0.0.0.255 area 1
+network 172.16.10.0 0.0.0.255 area 1
+network 172.16.11.0 0.0.0.255 area 1
+end
+```
+**Giải thích:**
+*   **Interfaces:** Thiết lập IP cho cổng WAN (s1/0) kết nối với R1 và hai cổng LAN (e0/0, e0/1) làm Gateway cho các thiết bị đầu cuối.
+*   **OSPF:** Đưa các mạng này vào **Area 1**. Việc sử dụng wildcard mask `0.0.0.255` cho phép router nhận diện chính xác các dải mạng /24 tương ứng.
+
+---
+
+### 2. Router R1 (Core Router)
+**Cấu hình:**
+```text
+enable
+configure terminal
+interface s1/0
+ip address 10.1.1.10 255.255.255.0
+no shutdown
+interface s1/1
+ip address 192.168.1.33 255.255.255.240
+no shutdown
+interface s1/2
+ip address 192.168.1.49 255.255.255.240
+no shutdown
+router ospf 1
+network 10.1.1.0 0.0.0.255 area 1
+network 192.168.1.32 0.0.0.15 area 0
+network 192.168.1.48 0.0.0.15 area 0
+end
+```
+**Giải thích:**
+*   **Vai trò:** R1 đóng vai trò là **Area Border Router (ABR)**.
+*   **Định tuyến:** Kết nối Area 1 (qua s1/0) với **Backbone Area 0** (qua s1/1 và s1/2). Các subnet /28 (mask 255.255.255.240) được cấu hình với wildcard `0.0.0.15` để đảm bảo tính chính xác trong bảng định tuyến OSPF.
+
+---
+
+### 3. Router R2 & R3
+**Cấu hình R2:**
+```text
+interface s1/0 (192.168.1.34/28), e0/0 (192.168.1.65/28), s1/1 (172.22.2.1/24)
+router ospf 1
+network 192.168.1.32 0.0.0.15 area 0
+network 192.168.1.64 0.0.0.15 area 0
+network 172.22.2.0 0.0.0.255 area 2
+```
+**Cấu hình R3:**
+```text
+interface s1/0 (192.168.1.50/28), e0/0 (192.168.1.66/28), s1/1 (172.22.1.1/24)
+router ospf 1
+network 192.168.1.48 0.0.0.15 area 0
+network 192.168.1.64 0.0.0.15 area 0
+network 172.22.1.0 0.0.0.255 area 3
+```
+**Giải thích:**
+*   **R2 và R3:** Đóng vai trò ABR kết nối Area 0 với Area 2 (R2) và Area 3 (R3).
+*   **Liên kết:** Cổng e0/0 của R2 và R3 kết nối với nhau (192.168.1.64/28) để tạo đường dự phòng hoặc mở rộng Backbone Area 0.
+
+---
+
+### 4. Router BB2 & BB3 (Boundary Routers)
+**Cấu hình BB2:**
+```text
+interface s1/0 (172.22.2.100/24), e0/0 (172.21.21.254/24)
+router ospf 1
+network 172.22.2.0 0.0.0.255 area 2
+network 172.21.21.0 0.0.0.255 area 2
+```
+**Cấu hình BB3:**
+```text
+interface s1/0 (172.22.1.100/24), e0/0 (172.31.21.254/24)
+router ospf 1
+network 172.22.1.0 0.0.0.255 area 3
+network 172.31.21.0 0.0.0.255 area 3
+```
+**Giải thích:**
+*   Các router này là điểm cuối của các vùng (Area 2 và Area 3), cung cấp kết nối cho các mạng LAN người dùng cuối (PC3, PC4).
+
+---
+
+### 5. Thiết bị đầu cuối (PC & Server)
+Các thiết bị này được cấu hình IP tĩnh để đảm bảo tính ổn định trong môi trường lab:
+*   **PC1/SERVER1:** IP 172.16.10.x, Gateway 172.16.10.254 (thuộc BB1).
+*   **PC2:** IP 172.16.11.1, Gateway 172.16.11.254 (thuộc BB1).
+*   **PC3:** IP 172.21.21.1, Gateway 172.21.21.254 (thuộc BB2).
+*   **PC4:** IP 172.31.21.1, Gateway 172.31.21.254 (thuộc BB3).
+
+**Tổng kết:** Cấu trúc này tuân thủ mô hình OSPF phân vùng (Multi-Area), giúp giảm thiểu lưu lượng cập nhật định tuyến (LSA) và tối ưu hóa hiệu suất mạng bằng cách cô lập các thay đổi trong từng vùng cụ thể.

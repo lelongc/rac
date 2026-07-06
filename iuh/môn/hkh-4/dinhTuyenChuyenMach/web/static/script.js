@@ -31,7 +31,7 @@ Luật:
    - Giữa Router với Router: BẮT BUỘC dùng cổng Serial (ví dụ: "s1/0", "s1/1", "s1/2").
    - Giữa Router với Switch, hoặc Switch với PC: BẮT BUỘC dùng cổng Ethernet còn trống (ví dụ: "e0/0", "e0/1", "e0/2").
    - Cổng của PC luôn là "eth0".
-3. TẤT CẢ các cổng ĐỀU PHẢI dùng thuộc tính "network" để nối dây (kể cả cổng Serial s1/0 hay Ethernet). Hai cổng nối với nhau thì phải có CÙNG tên "network". QUAN TRỌNG: MỖI đoạn dây/mạng LAN riêng biệt PHẢI dùng một tên "network" KHÁC NHAU (Ví dụ: LAN_West, LAN_Central, WAN_West_Central). Tuyệt đối KHÔNG dùng chung 1 tên (như "LAN") cho tất cả các thiết bị.
+3. TẤT CẢ các cổng ĐỀU PHẢI dùng thuộc tính "network" để nối dây (kể cả cổng Serial s1/0 hay Ethernet). Hai cổng nối với nhau thì phải có CÙNG tên "network". LƯU Ý: Nếu muốn nối cổng ra Internet/Cloud, hãy ĐẶT TÊN network là "Cloud0" (cục Cloud EVE-NG sẽ tự động cấp DHCP và NAT). QUAN TRỌNG: MỖI đoạn dây/mạng LAN riêng biệt PHẢI dùng một tên "network" KHÁC NHAU. Tuyệt đối KHÔNG dùng chung 1 tên (như "LAN") cho tất cả các thiết bị.
 4. KHÔNG sử dụng remote_node hay remote_if. Tất cả giao tiếp nối dây đều thông qua "network".
 5. Config Router phải bọc bằng "enable", "configure terminal", và "end".
 6. ĐỐI VỚI VPCS: Bắt buộc phải có mảng "config" chứa lệnh gán IP. Ví dụ: ["ip 192.168.10.10 255.255.255.0 192.168.10.1"]

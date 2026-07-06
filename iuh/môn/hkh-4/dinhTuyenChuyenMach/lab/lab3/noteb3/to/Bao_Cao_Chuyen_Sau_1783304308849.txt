@@ -1,0 +1,66 @@
+Chào bạn, với tư cách là một Chuyên gia Mạng Máy tính, tôi xin gửi đến bạn bản báo cáo chi tiết về đồ án thiết kế mạng OSPF Multi-Area dựa trên dữ liệu bạn đã cung cấp.
+
+---
+
+### PHẦN 1: CHẠY LỆNH CẤU HÌNH VÀ GIẢI THÍCH LỆNH
+
+#### 1. Thiết bị BB1 (Border Router Area 1)
+**Lệnh cấu hình:**
+```bash
+interface s1/0; ip address 10.1.1.1 255.255.255.0; no shutdown
+interface e0/0; ip address 172.16.10.254 255.255.255.0; no shutdown
+interface e0/1; ip address 172.16.11.254 255.255.255.0; no shutdown
+router ospf 1; network 10.1.1.0 0.0.0.255 area 1; network 172.16.10.0 0.0.0.255 area 1; network 172.16.11.0 0.0.0.255 area 1
+```
+**Giải thích:**
+*   **IP Address:** Gán địa chỉ cho các cổng kết nối WAN (về R1) và LAN (cho PC1, PC2).
+*   **OSPF:** Đưa các mạng này vào Area 1. Việc gom nhóm này giúp giảm lưu lượng cập nhật định tuyến trong mạng lớn.
+
+#### 2. Thiết bị R1 (Backbone Router - Area 0 & Area 1)
+**Lệnh cấu hình:**
+```bash
+interface s1/0; ip address 10.1.1.10 255.255.255.0; no shutdown
+interface s1/1; ip address 192.168.1.33 255.255.255.240; no shutdown
+interface s1/2; ip address 192.168.1.49 255.255.255.240; no shutdown
+router ospf 1; network 10.1.1.0 0.0.0.255 area 1; network 192.168.1.32 0.0.0.15 area 0; network 192.168.1.48 0.0.0.15 area 0
+```
+**Giải thích:**
+*   R1 đóng vai trò là **ABR (Area Border Router)** kết nối giữa Area 1 và Area 0 (Backbone). Các lệnh `network` chỉ định rõ cổng nào thuộc vùng nào để đảm bảo tính toàn vẹn của cấu trúc phân vùng OSPF.
+
+#### 3. Thiết bị R2 & R3 (Backbone Router - Area 0 & Area 2/3)
+**Lệnh cấu hình (Tương tự cho R2, R3):**
+*   **R2:** Cấu hình OSPF cho Area 0 (kết nối R1) và Area 2 (kết nối BB2).
+*   **R3:** Cấu hình OSPF cho Area 0 (kết nối R1) và Area 3 (kết nối BB3).
+*   **Mục đích:** Các router này đóng vai trò cầu nối, chuyển tiếp gói tin giữa các vùng thông qua Backbone Area 0.
+
+#### 4. Thiết bị BB2 & BB3 (Border Router Area 2 & 3)
+**Giải thích:** Các router này thực hiện định tuyến cho các mạng LAN nội bộ (PC3, PC4) và đẩy lưu lượng về phía Backbone thông qua R2, R3.
+
+---
+
+### PHẦN 2: CÁC LỆNH KIỂM TRA (VERIFY) VÀ GIẢI THÍCH OUTPUT
+
+Dựa trên dữ liệu thực tế từ EVE-NG, chúng ta thực hiện các lệnh kiểm tra:
+
+1.  **Lệnh `show ip route`:**
+    *   **Output:** Xuất hiện các ký tự `O` (OSPF), `IA` (Inter-Area).
+    *   **Giải thích:** `O` cho biết tuyến đường học được từ OSPF trong cùng vùng. `O IA` cho biết tuyến đường học được từ vùng khác (ví dụ: từ Area 1 sang Area 0), chứng tỏ các vùng đã liên thông với nhau thông qua ABR.
+
+2.  **Lệnh `show ip ospf neighbor`:**
+    *   **Output:** Trạng thái `FULL/DR` hoặc `FULL/BDR`.
+    *   **Giải thích:** Trạng thái `FULL` là trạng thái cao nhất của OSPF, chứng minh các router đã thiết lập quan hệ láng giềng thành công và đã trao đổi cơ sở dữ liệu trạng thái liên kết (LSDB).
+
+3.  **Lệnh `ping 172.31.21.1` (từ PC1 sang PC4):**
+    *   **Output:** `!!!!!`
+    *   **Giải thích:** 5 dấu chấm than cho thấy gói tin ICMP đã đi qua toàn bộ các vùng (Area 1 -> Area 0 -> Area 3) và nhận được phản hồi thành công. Hệ thống đã thông suốt từ đầu đến cuối.
+
+---
+
+### PHẦN 3: BÁO CÁO HOÀN THÀNH
+
+Sau khi thực hiện cấu hình OSPF Multi-Area cho hệ thống, tôi khẳng định:
+1.  **Tính liên thông:** Tất cả các thiết bị đầu cuối (PC1, PC2, PC3, PC4) và Server đều có thể ping thấy nhau thông qua bảng định tuyến được cập nhật tự động bởi giao thức OSPF.
+2.  **Cấu trúc phân vùng:** Hệ thống đã được chia thành 4 vùng (Area 0, 1, 2, 3) đúng theo yêu cầu thiết kế, giúp tối ưu hóa việc quản lý định tuyến và giảm thiểu lưu lượng broadcast.
+3.  **Độ ổn định:** Các quan hệ láng giềng OSPF đã thiết lập trạng thái `FULL`, đảm bảo khả năng hội tụ nhanh khi có thay đổi trong mạng.
+
+Hệ thống đã đáp ứng đầy đủ các yêu cầu kỹ thuật của đề bài.

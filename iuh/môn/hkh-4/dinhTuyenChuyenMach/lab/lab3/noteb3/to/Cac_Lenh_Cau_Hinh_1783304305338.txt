@@ -1,0 +1,128 @@
+========== RAW CONFIGURATION COMMANDS ==========
+
+========== Tên thiết bị: BB1 (router) ==========
+enable
+configure terminal
+interface s1/0
+ip address 10.1.1.1 255.255.255.0
+no shutdown
+interface e0/0
+ip address 172.16.10.254 255.255.255.0
+no shutdown
+interface e0/1
+ip address 172.16.11.254 255.255.255.0
+no shutdown
+router ospf 1
+network 10.1.1.0 0.0.0.255 area 1
+network 172.16.10.0 0.0.0.255 area 1
+network 172.16.11.0 0.0.0.255 area 1
+end
+write memory
+
+========== Tên thiết bị: R1 (router) ==========
+enable
+configure terminal
+interface s1/0
+ip address 10.1.1.10 255.255.255.0
+no shutdown
+interface s1/1
+ip address 192.168.1.33 255.255.255.240
+no shutdown
+interface s1/2
+ip address 192.168.1.49 255.255.255.240
+no shutdown
+router ospf 1
+network 10.1.1.0 0.0.0.255 area 1
+network 192.168.1.32 0.0.0.15 area 0
+network 192.168.1.48 0.0.0.15 area 0
+end
+write memory
+
+========== Tên thiết bị: R2 (router) ==========
+enable
+configure terminal
+interface s1/0
+ip address 192.168.1.34 255.255.255.240
+no shutdown
+interface e0/0
+ip address 192.168.1.65 255.255.255.240
+no shutdown
+interface s1/1
+ip address 172.22.2.1 255.255.255.0
+no shutdown
+router ospf 1
+network 192.168.1.32 0.0.0.15 area 0
+network 192.168.1.64 0.0.0.15 area 0
+network 172.22.2.0 0.0.0.255 area 2
+end
+write memory
+
+========== Tên thiết bị: R3 (router) ==========
+enable
+configure terminal
+interface s1/0
+ip address 192.168.1.50 255.255.255.240
+no shutdown
+interface e0/0
+ip address 192.168.1.66 255.255.255.240
+no shutdown
+interface s1/1
+ip address 172.22.1.1 255.255.255.0
+no shutdown
+router ospf 1
+network 192.168.1.48 0.0.0.15 area 0
+network 192.168.1.64 0.0.0.15 area 0
+network 172.22.1.0 0.0.0.255 area 3
+end
+write memory
+
+========== Tên thiết bị: BB2 (router) ==========
+enable
+configure terminal
+interface s1/0
+ip address 172.22.2.100 255.255.255.0
+no shutdown
+interface e0/0
+ip address 172.21.21.254 255.255.255.0
+no shutdown
+router ospf 1
+network 172.22.2.0 0.0.0.255 area 2
+network 172.21.21.0 0.0.0.255 area 2
+end
+write memory
+
+========== Tên thiết bị: BB3 (router) ==========
+enable
+configure terminal
+interface s1/0
+ip address 172.22.1.100 255.255.255.0
+no shutdown
+interface e0/0
+ip address 172.31.21.254 255.255.255.0
+no shutdown
+router ospf 1
+network 172.22.1.0 0.0.0.255 area 3
+network 172.31.21.0 0.0.0.255 area 3
+end
+write memory
+
+========== Tên thiết bị: PC1 (vpcs) ==========
+ip 172.16.10.1 255.255.255.0 172.16.10.254
+save
+
+========== Tên thiết bị: SERVER1 (vpcs) ==========
+ip 172.16.10.200 255.255.255.0 172.16.10.254
+save
+
+========== Tên thiết bị: PC2 (vpcs) ==========
+ip 172.16.11.1 255.255.255.0 172.16.11.254
+save
+
+========== Tên thiết bị: PC3 (vpcs) ==========
+ip 172.21.21.1 255.255.255.0 172.21.21.254
+save
+
+========== Tên thiết bị: PC4 (vpcs) ==========
+ip 172.31.21.1 255.255.255.0 172.31.21.254
+save
+

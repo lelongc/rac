@@ -1,0 +1,52 @@
+1. Khai báo Sơ đồ (Topology): 
+- Router (6 thiết bị): BB1, R1, R2, R3, BB2, BB3.
+- PC (5 thiết bị): PC1, SERVER1, PC2, PC3, PC4.
+- LƯU Ý QUAN TRỌNG VỀ SWITCH: Đề bài chỉ cấu hình định tuyến OSPF nên sẽ nối trực tiếp PC vào Router, không vẽ Switch (Riêng PC1 và SERVER1 thì tool sẽ tự tạo cục Bridge ảo vì có chung mạng LAN).
+
+2. Quy hoạch IP (IP Addressing): 
+- Mạng Point-to-Point (Dải 10.1.1.0/24):
+  + BB1 (s1/0): 10.1.1.1
+  + R1 (s1/0): 10.1.1.10
+- Mạng Point-to-Point (Dải 192.168.1.32/28):
+  + R1 (s1/1): 192.168.1.33
+  + R2 (s1/0): 192.168.1.34
+- Mạng Point-to-Point (Dải 192.168.1.48/28):
+  + R1 (s1/2): 192.168.1.49
+  + R3 (s1/0): 192.168.1.50
+- Mạng LAN nối R2 và R3 (Dải 192.168.1.64/28):
+  + R2 (e0/0): 192.168.1.65
+  + R3 (e0/0): 192.168.1.66
+- Mạng Point-to-Point (Dải 172.22.2.0/24):
+  + R2 (s1/1): 172.22.2.1
+  + BB2 (s1/0): 172.22.2.100
+- Mạng Point-to-Point (Dải 172.22.1.0/24):
+  + R3 (s1/1): 172.22.1.1
+  + BB3 (s1/0): 172.22.1.100
+- Mạng LAN Router-PC:
+  + Dải 172.16.10.0/24: BB1 (e0/0) 172.16.10.254, PC1 IP 172.16.10.1, SERVER1 IP 172.16.10.200.
+  + Dải 172.16.11.0/24: BB1 (e0/1) 172.16.11.254, PC2 IP 172.16.11.1.
+  + Dải 172.21.21.0/24: BB2 (e0/0) 172.21.21.254, PC3 IP 172.21.21.1.
+  + Dải 172.31.21.0/24: BB3 (e0/0) 172.31.21.254, PC4 IP 172.31.21.1.
+
+3. Cáp kết nối (Cabling): 
+- BB1 (s1/0) nối cáp Serial tới R1 (s1/0).
+- R1 (s1/1) nối cáp Serial tới R2 (s1/0).
+- R1 (s1/2) nối cáp Serial tới R3 (s1/0).
+- R2 (e0/0) nối cáp Ethernet tới R3 (e0/0).
+- R2 (s1/1) nối cáp Serial tới BB2 (s1/0).
+- R3 (s1/1) nối cáp Serial tới BB3 (s1/0).
+- BB1 (e0/0) nối cáp Ethernet tới PC1 (eth0) và SERVER1 (eth0).
+- BB1 (e0/1) nối cáp Ethernet tới PC2 (eth0).
+- BB2 (e0/0) nối cáp Ethernet tới PC3 (eth0).
+- BB3 (e0/0) nối cáp Ethernet tới PC4 (eth0).
+
+4. Giao thức định tuyến & Cấu hình (Routing & Configs): 
+- Giao thức định tuyến: OSPF (Ví dụ: router ospf 1). Định tuyến trên BB1, R1, R2, R3, BB2, BB3.
+- Khu vực (Area): Mô hình OSPF Đa Vùng.
+- Quảng bá OSPF bằng lệnh network (Nhớ tính Wildcard Mask) như sau:
+  + Trên BB1: Quảng bá mạng 10.1.1.0 (thuộc area 1), mạng 172.16.10.0 (thuộc area 1), mạng 172.16.11.0 (thuộc area 1).
+  + Trên R1: Quảng bá mạng 10.1.1.0 (thuộc area 1), mạng 192.168.1.32 (thuộc area 0), mạng 192.168.1.48 (thuộc area 0).
+  + Trên R2: Quảng bá mạng 192.168.1.32 (thuộc area 0), mạng 192.168.1.64 (thuộc area 0), mạng 172.22.2.0 (thuộc area 2).
+  + Trên R3: Quảng bá mạng 192.168.1.48 (thuộc area 0), mạng 192.168.1.64 (thuộc area 0), mạng 172.22.1.0 (thuộc area 3).
+  + Trên BB2: Quảng bá mạng 172.22.2.0 (thuộc area 2), mạng 172.21.21.0 (thuộc area 2).
+  + Trên BB3: Quảng bá mạng 172.22.1.0 (thuộc area 3), mạng 172.31.21.0 (thuộc area 3).

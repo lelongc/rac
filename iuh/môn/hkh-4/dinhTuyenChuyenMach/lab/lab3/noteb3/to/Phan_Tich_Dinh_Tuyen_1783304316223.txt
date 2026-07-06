@@ -1,0 +1,54 @@
+Chào bạn, với tư cách là một Chuyên gia Mạng, tôi xin gửi đến bạn bản phân tích chuyên sâu về hệ thống OSPF Multi-Area đã thiết kế.
+
+---
+
+### 1. BẢNG ĐỊNH TUYẾN (ROUTING TABLE) VÀ GIẢI THÍCH
+
+Để kiểm tra sự hội tụ của OSPF, chúng ta thực hiện lệnh `show ip route` trên Router **R1** (Router đóng vai trò ABR - Area Border Router).
+
+#### Bảng định tuyến mẫu trên R1:
+```text
+Gateway of last resort is not set
+O IA 172.21.21.0/24 [110/782] via 192.168.1.34, 00:15:20, Serial1/1
+O IA 172.31.21.0/24 [110/782] via 192.168.1.50, 00:15:20, Serial1/2
+C    10.1.1.0/24 is directly connected, Serial1/0
+O    172.16.10.0/24 [110/65] via 10.1.1.1, 00:15:20, Serial1/0
+O    172.16.11.0/24 [110/65] via 10.1.1.1, 00:15:20, Serial1/0
+C    192.168.1.32/28 is directly connected, Serial1/1
+C    192.168.1.48/28 is directly connected, Serial1/2
+```
+
+#### Giải thích các thành phần:
+*   **Mã nhận diện (Codes):**
+    *   **C (Connected):** Mạng kết nối trực tiếp vào cổng vật lý của Router.
+    *   **O (OSPF):** Tuyến đường học được từ giao thức OSPF trong cùng Area.
+    *   **O IA (OSPF Inter-Area):** Tuyến đường học được từ các Area khác (ví dụ: R1 học được mạng của BB2 từ Area 2).
+*   **Thông số [110/782]:**
+    *   **110:** Là **Administrative Distance (AD)** của OSPF. Đây là độ tin cậy của giao thức (OSPF mặc định là 110).
+    *   **782:** Là **Metric (Cost)**. OSPF tính toán dựa trên băng thông (Bandwidth). Giá trị này càng thấp thì đường đi càng tối ưu.
+*   **via IP:** Địa chỉ IP của Next-hop (Router kế tiếp) mà gói tin cần gửi tới để đến được đích.
+
+**Chứng minh hội tụ:** Khi các dòng `O` và `O IA` xuất hiện đầy đủ trong bảng định tuyến mà không có trạng thái "down" hay "flapping", đồng nghĩa với việc các Router đã trao đổi LSA (Link State Advertisement) thành công và xây dựng được bản đồ mạng (LSDB) thống nhất.
+
+---
+
+### 2. ĐƯỜNG ĐI CỦA GÓI TIN (PACKET PATH)
+
+Xét trường hợp **PC1 (172.16.10.1)** ping đến **PC3 (172.21.21.1)**.
+
+#### Lộ trình di chuyển:
+1.  **PC1 -> BB1:** PC1 gửi gói tin đến Default Gateway (172.16.10.254).
+2.  **BB1 -> R1:** BB1 tra bảng định tuyến, thấy mạng 172.21.21.0/24 thuộc OSPF, đẩy gói tin qua cổng s1/0 (10.1.1.10).
+3.  **R1 -> R2:** R1 là ABR, nhận thấy mạng đích nằm trong Area 2, đẩy gói tin qua cổng s1/1 (192.168.1.34).
+4.  **R2 -> BB2:** R2 đẩy gói tin qua cổng s1/1 (172.22.2.100) để đến BB2.
+5.  **BB2 -> PC3:** BB2 nhận gói tin, kiểm tra bảng định tuyến và đẩy ra cổng e0/0 (172.21.21.254) tới PC3.
+
+#### Phân tích sự thay đổi địa chỉ:
+*   **IP Source/Destination:** Trong suốt quá trình đi từ PC1 đến PC3, **IP Source (172.16.10.1)** và **IP Destination (172.21.21.1)** được giữ nguyên. Đây là đặc tính của định tuyến IP (Layer 3).
+*   **MAC Address:** Đây là điểm thay đổi quan trọng nhất tại mỗi Hop (Layer 2):
+    *   Tại mỗi Router, gói tin được đóng gói lại (Re-encapsulation).
+    *   **Source MAC:** Sẽ thay đổi thành MAC của cổng Router đang gửi đi.
+    *   **Destination MAC:** Sẽ thay đổi thành MAC của cổng Router tiếp theo (Next-hop) hoặc MAC của PC đích (khi đến chặng cuối).
+    *   *Ví dụ:* Khi BB1 gửi cho R1, Source MAC là của BB1(s1/0), Destination MAC là của R1(s1/0). Khi R1 gửi cho R2, Source MAC là của R1(s1/1), Destination MAC là của R2(s1/0).
+
+**Kết luận:** Hệ thống đã được thiết kế chuẩn xác theo mô hình OSPF Multi-Area, đảm bảo tính phân cấp và khả năng mở rộng cho mạng doanh nghiệp.

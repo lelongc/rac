@@ -1,0 +1,52 @@
+1. Khai báo Sơ đồ (Topology): 
+- Router (4 thiết bị): R1, R2, R3, R4.
+- Switch (1 thiết bị): R5 (Lưu ý: Bắt buộc tạo 1 Switch thật tên R5 để nối 3 Router với nhau).
+- PC (3 thiết bị): VPC7, VPC6, VPC9.
+
+2. Quy hoạch IP (IP Addressing): 
+- Mạng OSPF nối 3 Router thông qua Switch R5 (Dải 192.168.123.0/24):
+  + R1 (e0/0): 192.168.123.1
+  + R2 (e0/0): 192.168.123.2
+  + R3 (e0/2): 192.168.123.3
+  + (Switch R5 đóng vai trò trung chuyển Layer 2, không cần đặt IP).
+- Mạng Point-to-Point (Dải 192.168.12.0/24):
+  + R1 (s1/0): 192.168.12.1
+  + R2 (s1/0): 192.168.12.2
+- Mạng nối lên Cloud/Internet (Dải 100.100.100.0/30):
+  + R3 (e0/0): 100.100.100.1
+  + R4 (e0/1): 100.100.100.2
+  + R4 (e0/0) nối ra Internet (nhận IP DHCP). Gán network cho cổng này là "Cloud0".
+- Mạng LAN Router-PC:
+  + Dải 192.168.1.0/24: R1 (e0/1) 192.168.1.1, VPC7 IP dhcp (lệnh cấu hình là "ip dhcp").
+  + Dải 192.168.2.0/24: R2 (e0/1) 192.168.2.1, VPC6 IP dhcp (lệnh cấu hình là "ip dhcp").
+  + Dải 192.168.3.0/24: R3 (e0/1) 192.168.3.1, VPC9 IP 192.168.3.10.
+
+3. Cáp kết nối (Cabling): 
+- LƯU Ý KHI NỐI VÀO SWITCH R5: Phải coi đây là 3 sợi cáp riêng biệt (Point-to-Point). Tuyệt đối KHÔNG gán chung 1 tên mạng (network) cho các cổng này để tránh Tool đẻ ra cục Bridge ảo.
+  + Sợi 1: R1 (e0/0) nối cáp Ethernet tới Switch R5 (e0/1).
+  + Sợi 2: R2 (e0/0) nối cáp Ethernet tới Switch R5 (e0/2).
+  + Sợi 3: R3 (e0/2) nối cáp Ethernet tới Switch R5 (e0/0).
+- R1 (s1/0) nối cáp Serial tới R2 (s1/0).
+- R3 (e0/0) nối cáp Ethernet tới R4 (e0/1).
+- R1 (e0/1) nối cáp Ethernet tới VPC7 (eth0).
+- R2 (e0/1) nối cáp Ethernet tới VPC6 (eth0).
+- R3 (e0/1) nối cáp Ethernet tới VPC9 (eth0).
+
+4. Giao thức định tuyến & Cấu hình (Routing & Configs): 
+- YÊU CẦU ĐẶC BIỆT: Bắt buộc thêm các lệnh cấu hình bên dưới vào mục config của từng thiết bị.
+- Trên R4: 
+  + Cấu hình cổng nối ra Internet: `interface e0/0`, `ip address dhcp`, `no shutdown`.
+  + Định tuyến OSPF: `router ospf 1`, `network 100.100.100.0 0.0.0.3 area 0`, `default-information originate`.
+- Trên R3: 
+  + Định tuyến OSPF: `router ospf 1`, `router-id 3.3.3.3`, `network 192.168.123.0 0.0.0.255 area 0`, `network 192.168.3.0 0.0.0.255 area 0`, `network 100.100.100.0 0.0.0.3 area 0`.
+  + Cấp DHCP cho R1 và R2: `ip dhcp pool LAN_R1`, `network 192.168.1.0 255.255.255.0`, `default-router 192.168.1.1`, `ip dhcp pool LAN_R2`, `network 192.168.2.0 255.255.255.0`, `default-router 192.168.2.1`.
+  + Bật xác thực MD5: `interface e0/2`, `ip ospf authentication message-digest`, `ip ospf message-digest-key 1 md5 cisco`.
+- Trên R2: 
+  + Định tuyến OSPF: `router ospf 1`, `router-id 2.2.2.2`, `network 192.168.123.0 0.0.0.255 area 0`, `network 192.168.12.0 0.0.0.255 area 0`, `network 192.168.2.0 0.0.0.255 area 0`.
+  + Trỏ DHCP Relay: `interface e0/1`, `ip helper-address 192.168.123.3`.
+  + Bật xác thực MD5: `interface e0/0`, `ip ospf authentication message-digest`, `ip ospf message-digest-key 1 md5 cisco`.
+- Trên R1: 
+  + Định tuyến OSPF: `router ospf 1`, `router-id 1.1.1.1`, `network 192.168.123.0 0.0.0.255 area 0`, `network 192.168.12.0 0.0.0.255 area 0`, `network 192.168.1.0 0.0.0.255 area 0`.
+  + Trỏ DHCP Relay: `interface e0/1`, `ip helper-address 192.168.123.3`.
+  + Cân bằng tải (Load Balance): `interface e0/0`, `ip ospf cost 74`.
+  + Bật xác thực MD5: `interface e0/0`, `ip ospf authentication message-digest`, `ip ospf message-digest-key 1 md5 cisco`.

@@ -103,7 +103,12 @@ def build_lab(json_file):
         
     xml += '    </nodes>\\n    <networks>\\n'
     for net_name, net_id in bridge_networks.items():
-        xml += '      <network id="{}" type="bridge" name="{}" left="300" top="300" visibility="0"/>\\n'.format(net_id, net_name)
+        if net_name.lower() in ["cloud0", "pnet0"]:
+            xml += '      <network id="{}" type="pnet0" name="Cloud0" left="300" top="300" visibility="1"/>\\n'.format(net_id)
+        elif net_name.lower() in ["cloud1", "pnet1"]:
+            xml += '      <network id="{}" type="pnet1" name="Cloud1" left="300" top="300" visibility="1"/>\\n'.format(net_id)
+        else:
+            xml += '      <network id="{}" type="bridge" name="{}" left="300" top="300" visibility="0"/>\\n'.format(net_id, net_name)
     xml += '    </networks>\\n'
     
     xml += '    <textobjects>\\n'
@@ -196,7 +201,9 @@ def verify_lab(json_file):
                 tn.write(b"show running-config\\r\\n"); time.sleep(2)
                 output = out + tn.read_very_eager().decode('ascii', errors='ignore')
             else:
-                tn.write(b"\\r\\n\\r\\n"); time.sleep(0.5); tn.write(b"show ip\\r\\n"); time.sleep(1)
+                tn.write(b"\\r\\n\\r\\n"); time.sleep(0.5);
+                tn.write(b"ip dhcp\\r\\n"); time.sleep(3)
+                tn.write(b"show ip\\r\\n"); time.sleep(1)
                 output = tn.read_very_eager().decode('ascii', errors='ignore')
             tn.close()
             with open(report, "a") as f: f.write("========== {} ==========\\n{}\\n\\n".format(node["name"], output))
