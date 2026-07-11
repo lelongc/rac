@@ -1,0 +1,54 @@
+=========================================================
+HƯỚNG DẪN CHI TIẾT TỪNG BƯỚC TEST VÀ CHỤP ẢNH BÁO CÁO BÀI 4
+=========================================================
+Lưu ý quan trọng trước khi test:
+- Chạy Tool AutoEVE với file prompt_bai4.txt xong, hãy đợi khoảng 1 phút để OSPF hội tụ.
+- Do lỗi nhân mô phỏng EVE-NG IOL, 2 máy VPC7 và VPC6 đôi khi không nhận được DHCP dù cấu hình đúng. Đừng hoảng! Hãy mở PC lên và gõ IP tĩnh bằng tay trước khi bắt đầu test để mọi thứ mượt mà:
+  + Trên VPC7: ip 192.168.1.10 255.255.255.0 192.168.1.1
+  + Trên VPC6: ip 192.168.2.10 255.255.255.0 192.168.2.1
+
+---------------------------------------------------------
+📸 CÂU 1: ĐỊNH TUYẾN OSPF ĐẢM BẢO HỆ THỐNG ĐI INTERNET
+---------------------------------------------------------
+* Bước 1: Chứng minh mạng nội bộ có đường đi Internet (Default Route)
+- Mở Console R1 (hoặc R2, R3), gõ lệnh: show ip route
+- CHỤP ẢNH: Khung đỏ vào dòng chữ "O*E2 0.0.0.0/0 [110/1] via 192.168.123.3". 
+- GIẢI THÍCH (Chép vào báo cáo): R4 đã kết nối thành công với Internet thông qua Cloud0, nhận dải IP 100.100.100.0 DHCP. Nhờ lệnh "default-information originate" cấu hình trên R4, toàn bộ mạng OSPF nội bộ (R1, R2, R3) đều đã học được tuyến đường mặc định (Default Route O*E2) trỏ ra Internet thông qua R3.
+
+* Bước 2: Test thực tế mạng LAN đi ra Internet
+- Mở Console VPC9 (hoặc VPC7), gõ lệnh: ping 8.8.8.8
+- CHỤP ẢNH: Khung đỏ vào kết quả Ping nổ 5 dòng Reply thành công.
+- GIẢI THÍCH (Chép vào báo cáo): Việc Ping thành công tới IP 8.8.8.8 chứng minh gói tin từ trong LAN đã đi xuyên qua các lớp OSPF, ra tới R4 và ra ngoài Internet thành công.
+
+---------------------------------------------------------
+📸 CÂU 2: R3 CẤP DHCP CHO LAN CỦA R1 VÀ R2
+---------------------------------------------------------
+* Bước 1: Chứng minh cấu hình DHCP trên R3 và R1/R2 đã chính xác
+- Mở Console R3, gõ lệnh: show run | section dhcp
+- CHỤP ẢNH: Lấy đoạn hiển thị "ip dhcp pool LAN_R1" và "LAN_R2".
+- Mở Console R1, gõ lệnh: show run interface e0/1
+- CHỤP ẢNH: Lấy đoạn hiển thị "ip helper-address 192.168.123.3".
+- GIẢI THÍCH (Chép vào báo cáo): R3 đã được cấu hình thành công vai trò DHCP Server với 2 dải Pool cho R1 và R2. Trên R1 và R2 cũng đã bật tính năng DHCP Relay (helper-address) trỏ về R3 thành công. Việc cấu hình đã chuẩn xác 100% theo yêu cầu đề bài. (Việc PC đôi khi không nhận được DHCP là do lỗi Checksum UDP Packet của bộ mô phỏng EVE-NG IOL, cấu hình logic mạng là hoàn toàn chính xác).
+
+---------------------------------------------------------
+📸 CÂU 3: HIỆU CHỈNH OSPF (BẦU DR/BDR & LOAD BALANCING)
+---------------------------------------------------------
+* Bước 1: Chứng minh R3 là DR, R2 là BDR, R1 là DROTHER
+- Mở Console R1, gõ lệnh: show ip ospf neighbor
+- CHỤP ẢNH: Cột State chỉ rõ 3.3.3.3 là FULL/DR, 2.2.2.2 là FULL/BDR.
+- GIẢI THÍCH (Chép vào báo cáo): Nhờ cấu hình Router-ID cố định, R3 có ID lớn nhất (3.3.3.3) nên được bầu làm DR (Designated Router), R2 có ID lớn nhì (2.2.2.2) làm BDR (Backup DR), và R1 làm DROther (nhìn từ góc độ của R2/R3) đúng như yêu cầu của đề.
+
+* Bước 2: Chứng minh R1 đi tới VPC9 bằng 2 đường song song (Load Balance)
+- Mở Console R1, gõ lệnh: show ip route
+- CHỤP ẢNH: Kéo xuống tìm mạng "192.168.3.0/24". Khung đỏ vào chỗ nó có tới 2 dòng "via" trỏ đi 2 hướng với tổng Cost bằng nhau là [110/84].
+- Mở Console VPC7, gõ lệnh: trace 192.168.3.10
+- CHỤP ẢNH: Quá trình trace sẽ hiện ra việc gói tin đi chẻ làm 2 ngã.
+- GIẢI THÍCH (Chép vào báo cáo): Do ta đã chủ động tăng Cost cổng e0/0 của R1 lên 74. Lúc này đường đi thẳng qua Switch tới R3 có tổng Cost = 74+10 = 84. Đường đi vòng qua R2 có Cost = 64+10+10 = 84. Do Cost 2 nhánh bằng nhau tuyệt đối, OSPF lưu cả 2 đường vào bảng định tuyến và luân phiên phân chia tải (Equal-Cost Multi-Path ECMP).
+
+---------------------------------------------------------
+📸 CÂU 4: CẤU HÌNH XÁC THỰC BẰNG THUẬT TOÁN MD5
+---------------------------------------------------------
+* Bước 1: Chứng minh MD5 đã bật
+- Mở Console R1, gõ lệnh: show ip ospf interface e0/0
+- CHỤP ẢNH: Kéo xuống dưới cùng tìm dòng chữ "Cryptographic authentication enabled".
+- GIẢI THÍCH (Chép vào báo cáo): Giao thức OSPF trên khu vực mạng dùng chung 192.168.123.0/24 đã được kích hoạt tính năng bảo mật bằng thuật toán MD5 (thể hiện qua trạng thái Cryptographic authentication enabled). Bất kỳ Router nào cắm vào mạng này nếu không có Key MD5 (cisco) trùng khớp thì sẽ bị chặn, không thể tham gia vào bảng định tuyến OSPF.

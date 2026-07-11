@@ -1,0 +1,123 @@
+Chào bạn, với tư cách là một Chuyên gia Mạng, tôi xin gửi đến bạn bản báo cáo phân tích chi tiết cấu hình cho hệ thống mạng OSPF Multi-Area Lab này.
+
+---
+
+### 1. Thiết bị R1 (Router)
+**Cấu hình:**
+```bash
+enable
+configure terminal
+interface e0/0
+ip address 192.168.123.1 255.255.255.0
+ip ospf cost 74
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 cisco
+no shutdown
+interface s1/0
+ip address 192.168.12.1 255.255.255.0
+no shutdown
+interface e0/1
+ip address 192.168.1.1 255.255.255.0
+ip helper-address 192.168.123.3
+no shutdown
+router ospf 1
+router-id 1.1.1.1
+network 192.168.123.0 0.0.0.255 area 0
+network 192.168.12.0 0.0.0.255 area 0
+network 192.168.1.0 0.0.0.255 area 0
+end
+```
+**Giải thích:**
+*   **Giao diện:** Cấu hình IP cho 3 cổng. `e0/0` kết nối vào switch trung tâm với cơ chế bảo mật OSPF (MD5). `ip ospf cost 74` được dùng để điều hướng lưu lượng ưu tiên qua đường này.
+*   **IP Helper-address:** Chuyển tiếp các gói tin yêu cầu DHCP từ VPC7 đến R3 (nơi đặt DHCP Server).
+*   **OSPF:** Thiết lập `router-id 1.1.1.1` để định danh duy nhất. Đưa các mạng vào Area 0 (Backbone) để trao đổi bảng định tuyến.
+
+---
+
+### 2. Thiết bị R2 (Router)
+**Cấu hình:**
+```bash
+enable
+configure terminal
+interface e0/0
+ip address 192.168.123.2 255.255.255.0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 cisco
+no shutdown
+interface s1/0
+ip address 192.168.12.2 255.255.255.0
+no shutdown
+interface e0/1
+ip address 192.168.2.1 255.255.255.0
+ip helper-address 192.168.123.3
+no shutdown
+router ospf 1
+router-id 2.2.2.2
+network 192.168.123.0 0.0.0.255 area 0
+network 192.168.12.0 0.0.0.255 area 0
+network 192.168.2.0 0.0.0.255 area 0
+end
+```
+**Giải thích:**
+*   Tương tự R1, R2 đóng vai trò là router biên cho mạng LAN của VPC6.
+*   Sử dụng `ip helper-address` để trỏ về R3, đảm bảo VPC6 nhận được IP từ DHCP Server tập trung.
+*   Cấu hình OSPF đồng bộ với R1 để duy trì sự ổn định của Area 0.
+
+---
+
+### 3. Thiết bị R3 (Router - DHCP Server)
+**Cấu hình:**
+```bash
+interface e0/2
+ip address 192.168.123.3 255.255.255.0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 cisco
+no shutdown
+interface e0/0
+ip address 100.100.100.1 255.255.255.252
+no shutdown
+interface e0/1
+ip address 192.168.3.1 255.255.255.0
+no shutdown
+ip dhcp pool LAN_R1 ... (cấu hình cấp phát IP)
+ip dhcp pool LAN_R2 ... (cấu hình cấp phát IP)
+router ospf 1
+router-id 3.3.3.3
+network 192.168.123.0 0.0.0.255 area 0
+network 192.168.3.0 0.0.0.255 area 0
+network 100.100.100.0 0.0.0.3 area 0
+end
+```
+**Giải thích:**
+*   **DHCP Server:** R3 đóng vai trò trung tâm cấp phát IP cho các mạng LAN của R1 và R2 thông qua các lệnh `ip dhcp pool`.
+*   **Kết nối:** Cổng `e0/0` sử dụng subnet `/30` (255.255.255.252) để kết nối điểm-điểm với R4, tối ưu hóa địa chỉ IP.
+
+---
+
+### 4. Thiết bị R4 (Router - Gateway ra Internet)
+**Cấu hình:**
+```bash
+interface e0/1
+ip address 100.100.100.2 255.255.255.252
+no shutdown
+interface e0/0
+ip address dhcp
+no shutdown
+router ospf 1
+network 100.100.100.0 0.0.0.3 area 0
+default-information originate
+end
+```
+**Giải thích:**
+*   **Default-information originate:** Đây là lệnh quan trọng nhất. Nó quảng bá một tuyến đường mặc định (Default Route) vào trong vùng OSPF, cho phép các router khác (R1, R2, R3) biết cách gửi dữ liệu ra ngoài Internet thông qua R4.
+*   **Interface e0/0:** Nhận IP động từ nhà cung cấp dịch vụ (Cloud).
+
+---
+
+### 5. Các thiết bị khác (Switch & VPCs)
+*   **R5 (Switch):** Thiết bị lớp 2, đóng vai trò kết nối vật lý giữa R1, R2 và R3 trong cùng một phân đoạn mạng (Net_R1_S5, Net_R2_S5, Net_R3_S5).
+*   **VPC7, VPC6:** Cấu hình `ip dhcp` để tự động nhận cấu hình mạng từ R3.
+*   **VPC9:** Cấu hình IP tĩnh (`192.168.3.10`) với Gateway là `192.168.3.1` (cổng e0/1 của R3).
+
+---
+**Tổng kết:** Hệ thống được thiết kế theo mô hình OSPF tập trung, sử dụng R3 làm DHCP Server và R4 làm cổng ra Internet (Default Gateway). Việc sử dụng MD5 Authentication giúp tăng cường bảo mật cho các gói tin định tuyến OSPF.

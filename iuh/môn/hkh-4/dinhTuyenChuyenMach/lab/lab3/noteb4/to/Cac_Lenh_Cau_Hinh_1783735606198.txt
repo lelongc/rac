@@ -1,0 +1,104 @@
+========== RAW CONFIGURATION COMMANDS ==========
+
+========== Tên thiết bị: R1 (router) ==========
+enable
+configure terminal
+interface e0/0
+ip address 192.168.123.1 255.255.255.0
+ip ospf cost 74
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 cisco
+no shutdown
+interface s1/0
+ip address 192.168.12.1 255.255.255.0
+no shutdown
+interface e0/1
+ip address 192.168.1.1 255.255.255.0
+ip helper-address 192.168.123.3
+no shutdown
+router ospf 1
+router-id 1.1.1.1
+network 192.168.123.0 0.0.0.255 area 0
+network 192.168.12.0 0.0.0.255 area 0
+network 192.168.1.0 0.0.0.255 area 0
+end
+write memory
+
+========== Tên thiết bị: R2 (router) ==========
+enable
+configure terminal
+interface e0/0
+ip address 192.168.123.2 255.255.255.0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 cisco
+no shutdown
+interface s1/0
+ip address 192.168.12.2 255.255.255.0
+no shutdown
+interface e0/1
+ip address 192.168.2.1 255.255.255.0
+ip helper-address 192.168.123.3
+no shutdown
+router ospf 1
+router-id 2.2.2.2
+network 192.168.123.0 0.0.0.255 area 0
+network 192.168.12.0 0.0.0.255 area 0
+network 192.168.2.0 0.0.0.255 area 0
+end
+write memory
+
+========== Tên thiết bị: R3 (router) ==========
+enable
+configure terminal
+interface e0/2
+ip address 192.168.123.3 255.255.255.0
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 cisco
+no shutdown
+interface e0/0
+ip address 100.100.100.1 255.255.255.252
+no shutdown
+interface e0/1
+ip address 192.168.3.1 255.255.255.0
+no shutdown
+ip dhcp pool LAN_R1
+network 192.168.1.0 255.255.255.0
+default-router 192.168.1.1
+ip dhcp pool LAN_R2
+network 192.168.2.0 255.255.255.0
+default-router 192.168.2.1
+router ospf 1
+router-id 3.3.3.3
+network 192.168.123.0 0.0.0.255 area 0
+network 192.168.3.0 0.0.0.255 area 0
+network 100.100.100.0 0.0.0.3 area 0
+end
+write memory
+
+========== Tên thiết bị: R4 (router) ==========
+enable
+configure terminal
+interface e0/1
+ip address 100.100.100.2 255.255.255.252
+no shutdown
+interface e0/0
+ip address dhcp
+no shutdown
+router ospf 1
+network 100.100.100.0 0.0.0.3 area 0
+default-information originate
+end
+write memory
+
+========== Tên thiết bị: VPC7 (vpcs) ==========
+ip dhcp
+save
+
+========== Tên thiết bị: VPC6 (vpcs) ==========
+ip dhcp
+save
+
+========== Tên thiết bị: VPC9 (vpcs) ==========
+ip 192.168.3.10 255.255.255.0 192.168.3.1
+save
+

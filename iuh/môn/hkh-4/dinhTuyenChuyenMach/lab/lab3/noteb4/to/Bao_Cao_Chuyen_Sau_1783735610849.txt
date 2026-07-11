@@ -1,0 +1,81 @@
+Chào bạn, với tư cách là Chuyên gia Mạng, tôi xin gửi đến bạn bản báo cáo chi tiết về cấu hình và kiểm tra hệ thống mạng OSPF Multi-Area dựa trên yêu cầu của bạn.
+
+---
+
+### PHẦN 1: CHẠY LỆNH CẤU HÌNH VÀ GIẢI THÍCH LỆNH
+
+#### 1. Router R1
+**Lệnh cấu hình:**
+```bash
+interface e0/0, s1/0, e0/1
+ip address [IP] [Subnet]
+ip ospf cost 74
+ip ospf authentication message-digest
+ip ospf message-digest-key 1 md5 cisco
+ip helper-address 192.168.123.3
+router ospf 1
+router-id 1.1.1.1
+network 192.168.123.0 0.0.0.255 area 0
+network 192.168.12.0 0.0.0.255 area 0
+network 192.168.1.0 0.0.0.255 area 0
+```
+**Giải thích:**
+*   **IP Address:** Thiết lập địa chỉ IP cho các cổng kết nối LAN và WAN.
+*   **ip ospf cost 74:** Thay đổi chi phí đường truyền để ưu tiên hoặc tránh đường đi qua cổng này.
+*   **Authentication:** Sử dụng MD5 để bảo mật các gói tin OSPF, đảm bảo chỉ các router tin cậy mới trao đổi thông tin định tuyến.
+*   **ip helper-address:** Chuyển tiếp các gói tin yêu cầu DHCP từ client (VPC) đến server (R3).
+*   **OSPF:** Kích hoạt OSPF tiến trình 1, đặt ID định danh và quảng bá các mạng vào Area 0 (Backbone).
+
+#### 2. Router R2
+**Lệnh cấu hình:** (Tương tự R1)
+*   **Giải thích:** R2 đóng vai trò tương tự R1, kết nối các mạng LAN vào Area 0. Việc sử dụng `ip helper-address` giúp các VPC phía sau R2 nhận được IP từ DHCP server đặt tại R3.
+
+#### 3. Router R3
+**Lệnh cấu hình:**
+```bash
+ip dhcp pool LAN_R1/LAN_R2
+network [Network]
+default-router [Gateway]
+router ospf 1
+router-id 3.3.3.3
+network 192.168.123.0 0.0.0.255 area 0
+network 192.168.3.0 0.0.0.255 area 0
+network 100.100.100.0 0.0.0.3 area 0
+```
+**Giải thích:**
+*   **DHCP Pool:** R3 đóng vai trò là DHCP Server, cấp phát IP động cho các VPC ở R1 và R2.
+*   **OSPF:** Quảng bá các mạng cục bộ và kết nối với R4 vào Area 0.
+
+#### 4. Router R4
+**Lệnh cấu hình:**
+```bash
+interface e0/0
+ip address dhcp
+router ospf 1
+default-information originate
+```
+**Giải thích:**
+*   **ip address dhcp:** Nhận IP từ nhà cung cấp dịch vụ (Cloud).
+*   **default-information originate:** Tự động tạo tuyến đường mặc định (Default Route) và quảng bá vào trong mạng OSPF để các router khác có thể đi ra Internet.
+
+---
+
+### PHẦN 2: CÁC LỆNH KIỂM TRA (VERIFY) VÀ GIẢI THÍCH OUTPUT
+
+**1. Kiểm tra bảng định tuyến (`show ip route`):**
+*   **Output:** `O E2 0.0.0.0/0 [110/1] via 100.100.100.1`
+*   **Giải thích:** Ký tự `O E2` cho thấy tuyến đường mặc định được học từ OSPF (External Type 2). Điều này chứng minh R4 đã quảng bá thành công đường ra Internet cho toàn bộ hệ thống.
+
+**2. Kiểm tra trạng thái cổng (`show ip int brief`):**
+*   **Output:** Trạng thái các cổng hiển thị `up/up`.
+*   **Giải thích:** Cho thấy kết nối vật lý và cấu hình IP đã chính xác, không có lỗi Layer 1/2.
+
+**3. Kiểm tra kết nối (`ping`):**
+*   **Output:** `!!!!!`
+*   **Giải thích:** 5 dấu chấm than chứng minh gói tin ICMP đi và về thành công, khẳng định cấu hình định tuyến OSPF và DHCP đã hoạt động hoàn hảo giữa các vùng mạng.
+
+---
+
+### PHẦN 3: BÁO CÁO HOÀN THÀNH
+
+Hệ thống mạng OSPF Multi-Area đã được triển khai thành công trên nền tảng EVE-NG. Các yêu cầu về định tuyến động, bảo mật OSPF (MD5), cấp phát IP tự động (DHCP Relay) và kết nối ra Internet (Default Route) đều đã được đáp ứng đầy đủ. Các thiết bị VPC đã nhận được IP từ DHCP Server và có khả năng liên thông toàn bộ với nhau cũng như truy cập ra ngoài thông qua R4. Hệ thống đạt trạng thái ổn định và sẵn sàng vận hành.

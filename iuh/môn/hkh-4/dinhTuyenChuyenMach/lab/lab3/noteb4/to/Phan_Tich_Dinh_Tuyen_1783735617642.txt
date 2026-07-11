@@ -1,0 +1,58 @@
+Chào bạn, với tư cách là một Chuyên gia Mạng, tôi xin gửi đến bạn bản phân tích chuyên sâu về hệ thống mạng OSPF đã thiết kế.
+
+---
+
+### 1. BẢNG ĐỊNH TUYẾN (ROUTING TABLE) VÀ GIẢI THÍCH
+
+Dựa trên cấu trúc OSPF Area 0, bảng định tuyến của **R1** sẽ hiển thị như sau (đại diện):
+
+```text
+R1# show ip route
+Codes: L - local, C - connected, S - static, O - OSPF, IA - OSPF inter area
+...
+O   192.168.2.0/24 [110/2] via 192.168.12.2, 00:10:00, Serial1/0
+O   192.168.3.0/24 [110/2] via 192.168.123.3, 00:10:00, Ethernet0/0
+C   192.168.1.0/24 is directly connected, Ethernet0/1
+O*E2 0.0.0.0/0 [110/1] via 192.168.123.3, 00:05:00, Ethernet0/0
+```
+
+#### Giải thích các thành phần:
+*   **Mã ký hiệu:**
+    *   **C (Connected):** Mạng kết nối trực tiếp với Router.
+    *   **L (Local):** Địa chỉ IP cụ thể của cổng (interface) trên Router đó.
+    *   **O (OSPF):** Tuyến đường học được thông qua giao thức định tuyến OSPF.
+    *   **O*E2:** Tuyến đường mặc định (Default Route) được quảng bá vào OSPF từ một nguồn bên ngoài (External Type 2).
+*   **Thông số [110/2]:**
+    *   **110:** Là **Administrative Distance (AD)** của OSPF. Đây là độ tin cậy của nguồn thông tin định tuyến (OSPF mặc định là 110).
+    *   **2:** Là **Metric (Cost)**. OSPF tính toán dựa trên băng thông. Trong lab này, giá trị này thể hiện "chi phí" để đến đích.
+*   **via IP:** Địa chỉ IP của Next-hop (Router kế tiếp) mà gói tin cần gửi tới để đến được mạng đích.
+
+#### Chứng minh sự hội tụ:
+Sự hội tụ (Convergence) được xác nhận khi bảng định tuyến của tất cả các Router (R1, R2, R3, R4) đều chứa đầy đủ các mạng con (192.168.1.0/24, 192.168.2.0/24, 192.168.3.0/24) và trạng thái OSPF Neighbor ở trạng thái **FULL**. Việc R1 học được mạng 192.168.3.0/24 từ R3 qua OSPF chứng tỏ quá trình trao đổi LSA (Link State Advertisement) đã hoàn tất.
+
+---
+
+### 2. ĐƯỜNG ĐI CỦA GÓI TIN (PACKET PATH)
+
+Xét trường hợp **VPC7 (192.168.1.x)** ping đến **VPC9 (192.168.3.10)**.
+
+#### Phân tích từng Hop:
+1.  **VPC7 -> R1:**
+    *   VPC7 gửi gói tin đến Default Gateway (192.168.1.1).
+    *   **Source IP:** 192.168.1.x | **Dest IP:** 192.168.3.10.
+    *   **MAC:** Source MAC của VPC7, Dest MAC là MAC của cổng R1 (e0/1).
+2.  **Tại R1:**
+    *   R1 tra bảng định tuyến, thấy mạng 192.168.3.0/24 nằm sau R3 (via 192.168.123.3).
+    *   R1 đóng gói lại: **Source IP/Dest IP giữ nguyên**.
+    *   **MAC:** Source MAC là R1 (e0/0), Dest MAC là R3 (e0/2).
+3.  **Tại R3:**
+    *   R3 nhận gói tin, kiểm tra bảng định tuyến, thấy mạng 192.168.3.0/24 kết nối trực tiếp tại cổng e0/1.
+    *   R3 chuyển gói tin xuống cổng e0/1.
+    *   **MAC:** Source MAC là R3 (e0/1), Dest MAC là VPC9.
+
+#### Các thay đổi quan trọng:
+*   **IP Address:** Source và Destination IP **không bao giờ thay đổi** trong suốt quá trình truyền tải (trừ khi có NAT).
+*   **MAC Address:** **Thay đổi tại mỗi Hop**. Mỗi khi gói tin đi qua một Router, Router đó sẽ tháo lớp Header Layer 2 cũ và đóng vào lớp Header Layer 2 mới với Source MAC là cổng ra của chính nó và Dest MAC là cổng vào của thiết bị tiếp theo.
+*   **TTL (Time to Live):** Giảm đi 1 đơn vị sau mỗi lần đi qua một Router (Hop).
+
+**Kết luận:** Hệ thống đã được cấu hình OSPF thành công với xác thực MD5 (tăng tính bảo mật) và sử dụng `ip helper-address` để hỗ trợ DHCP tập trung tại R3, đảm bảo các VPC nhận được IP chính xác và định tuyến thông suốt.

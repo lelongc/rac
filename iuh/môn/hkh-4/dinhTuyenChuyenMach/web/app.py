@@ -202,7 +202,12 @@ def verify_lab(json_file):
                 output = out + tn.read_very_eager().decode('ascii', errors='ignore')
             else:
                 tn.write(b"\\r\\n\\r\\n"); time.sleep(0.5);
-                tn.write(b"ip dhcp\\r\\n"); time.sleep(3)
+                
+                # Chi chay ip dhcp tren cac PC co lenh nay trong config
+                is_dhcp = any("ip dhcp" in cmd.lower() for cmd in node.get("config", []))
+                if is_dhcp:
+                    tn.write(b"ip dhcp\\r\\n"); time.sleep(3)
+                
                 tn.write(b"show ip\\r\\n"); time.sleep(1)
                 output = tn.read_very_eager().decode('ascii', errors='ignore')
             tn.close()
