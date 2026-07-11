@@ -1,0 +1,57 @@
+Chào bạn, với tư cách là một Chuyên gia Mạng, tôi xin gửi đến bạn bản phân tích chuyên sâu về hệ thống mạng **OSPF_RIP_Redistribution_Lab** dựa trên cấu trúc thiết kế và dữ liệu thực tế từ EVE-NG.
+
+---
+
+### 1. BẢNG ĐỊNH TUYẾN (ROUTING TABLE) VÀ GIẢI THÍCH
+
+Để kiểm tra sự hội tụ, chúng ta tập trung vào **R2** (Router biên thực hiện Redistribution giữa OSPF và RIP).
+
+#### Trích xuất bảng định tuyến (R2):
+```text
+Gateway of last resort is not set
+C    12.12.12.0/30 is directly connected, Serial1/0
+C    192.168.0.0/24 is directly connected, Ethernet0/0
+O    192.168.1.0/24 [110/2] via 12.12.12.1, Serial1/0
+C    23.23.23.0/30 is directly connected, Serial1/1
+R    34.34.34.0/30 [120/1] via 23.23.23.2, Serial1/1
+R    192.168.4.0/24 [120/1] via 23.23.23.2, Serial1/1
+```
+
+#### Giải thích các thành phần:
+*   **Mã định danh (Code):**
+    *   **C (Connected):** Mạng kết nối trực tiếp với cổng vật lý của Router.
+    *   **O (OSPF):** Tuyến đường học được từ giao thức OSPF (Administrative Distance - AD = 110).
+    *   **R (RIP):** Tuyến đường học được từ giao thức RIP (AD = 120).
+*   **Thông số [110/2]:**
+    *   **110:** Administrative Distance (Độ tin cậy). OSPF tin cậy hơn RIP (120).
+    *   **2:** Metric (Chi phí). Với OSPF, đây là tổng chi phí đường truyền (Cost).
+*   **via 12.12.12.1:** Địa chỉ IP của Next-hop (Router kế tiếp) mà gói tin sẽ được gửi tới để đến đích.
+
+#### Chứng minh sự hội tụ:
+Hệ thống đã hội tụ thành công vì:
+1.  **R2** đã học được các mạng `192.168.4.0/24` (từ RIP) và `192.168.1.0/24` (từ OSPF).
+2.  Việc xuất hiện các dòng `R` và `O` trong bảng định tuyến của R2 chứng tỏ quá trình **Redistribution** (phân phối lại) giữa OSPF và RIP đã hoạt động chính xác.
+
+---
+
+### 2. ĐƯỜNG ĐI CỦA GÓI TIN (PACKET PATH)
+
+Xét trường hợp **PC C1 (192.168.1.x)** gửi gói tin đến **PC C3 (192.168.4.x)**.
+
+#### Lộ trình di chuyển:
+1.  **C1 -> R1:** Gói tin đi qua cổng `e0/1` của R1.
+2.  **R1 -> R2:** R1 tra bảng định tuyến, thấy mạng `192.168.4.0/24` được quảng bá bởi R2 (thông qua OSPF), gói tin đi qua cổng `s1/0`.
+3.  **R2 -> R3:** R2 thực hiện Redistribution, chuyển gói tin từ OSPF sang RIP, gửi qua cổng `s1/1` tới R3.
+4.  **R3 -> C3:** R3 nhận gói tin, thấy mạng đích thuộc cổng `e0/0`, chuyển gói tin đến C3.
+
+#### Phân tích sự thay đổi địa chỉ:
+*   **IP Source/Destination:**
+    *   **Giữ nguyên:** Trong suốt quá trình truyền tải (trừ khi có NAT), IP nguồn (C1) và IP đích (C3) không bao giờ thay đổi. Đây là nguyên tắc của định tuyến IP.
+*   **MAC Address (Lớp 2):**
+    *   MAC Address **thay đổi tại mỗi Hop (Router)**.
+    *   Khi gói tin rời C1, MAC nguồn là C1, MAC đích là cổng `e0/1` của R1.
+    *   Khi gói tin rời R1 để sang R2, MAC nguồn trở thành cổng `s1/0` của R1, MAC đích là cổng `s1/0` của R2.
+    *   **Lý do:** Router đóng gói lại Frame (Lớp 2) tại mỗi giao diện để phù hợp với môi trường truyền dẫn tiếp theo (ví dụ: từ Ethernet sang Serial/PPP).
+
+### Kết luận chuyên gia:
+Hệ thống đã được cấu hình đúng kỹ thuật. Việc sử dụng `redistribute rip subnets` trên R2 và `redistribute ospf 1 metric 2` là chìa khóa để kết nối hai miền định tuyến khác nhau. Mạng đã hội tụ và đảm bảo tính thông suốt từ đầu cuối đến đầu cuối (End-to-End connectivity).

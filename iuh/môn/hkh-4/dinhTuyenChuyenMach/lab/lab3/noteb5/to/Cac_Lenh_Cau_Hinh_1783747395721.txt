@@ -1,0 +1,90 @@
+========== RAW CONFIGURATION COMMANDS ==========
+
+========== Tên thiết bị: R1 (router) ==========
+enable
+configure terminal
+interface s1/0
+ip address 12.12.12.1 255.255.255.252
+no shutdown
+interface e0/1
+ip address 192.168.1.1 255.255.255.0
+no shutdown
+router ospf 1
+network 12.12.12.0 0.0.0.3 area 0
+network 192.168.1.0 0.0.0.255 area 0
+ip dhcp pool LAN_C1
+network 192.168.1.0 255.255.255.0
+default-router 192.168.1.1
+end
+write memory
+
+========== Tên thiết bị: R2 (router) ==========
+enable
+configure terminal
+interface s1/0
+ip address 12.12.12.2 255.255.255.252
+no shutdown
+interface s1/1
+ip address 23.23.23.1 255.255.255.252
+no shutdown
+interface e0/0
+ip address 192.168.0.1 255.255.255.0
+no shutdown
+router ospf 1
+network 12.12.12.0 0.0.0.3 area 0
+network 192.168.0.0 0.0.0.255 area 0
+redistribute rip subnets
+router rip
+network 23.0.0.0
+redistribute ospf 1 metric 2
+ip dhcp pool LAN_C2
+network 192.168.0.0 255.255.255.0
+default-router 192.168.0.1
+end
+write memory
+
+========== Tên thiết bị: R3 (router) ==========
+enable
+configure terminal
+interface s1/0
+ip address 23.23.23.2 255.255.255.252
+no shutdown
+interface s1/1
+ip address 34.34.34.1 255.255.255.252
+no shutdown
+interface e0/0
+ip address 192.168.4.1 255.255.255.0
+no shutdown
+router rip
+network 23.0.0.0
+network 34.0.0.0
+network 192.168.4.0
+ip dhcp pool LAN_C3
+network 192.168.4.0 255.255.255.0
+default-router 192.168.4.1
+end
+write memory
+
+========== Tên thiết bị: R4 (router) ==========
+enable
+configure terminal
+interface s1/0
+ip address 34.34.34.2 255.255.255.252
+no shutdown
+router rip
+network 34.0.0.0
+end
+write memory
+
+========== Tên thiết bị: C1 (vpcs) ==========
+ip dhcp
+save
+
+========== Tên thiết bị: C2 (vpcs) ==========
+ip dhcp
+save
+
+========== Tên thiết bị: C3 (vpcs) ==========
+ip dhcp
+save
+

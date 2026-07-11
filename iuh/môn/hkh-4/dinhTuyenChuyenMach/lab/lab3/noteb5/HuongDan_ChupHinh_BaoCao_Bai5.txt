@@ -1,0 +1,29 @@
+=========================================================
+HƯỚNG DẪN CHI TIẾT TỪNG BƯỚC TEST VÀ CHỤP ẢNH BÁO CÁO BÀI 5
+=========================================================
+Mục tiêu Bài 5: Tích hợp 2 vùng định tuyến khác biệt (OSPF và RIP) bằng kỹ thuật Redistribute trên R2.
+
+
+---------------------------------------------------------
+📸 CÂU 3: DÙNG DYNAMIC ROUTING OSPF VÀ RIP ĐỊNH TUYẾN CÁC PC PING THÔNG
+---------------------------------------------------------
+* Bước 1: Chứng minh C1 (vùng OSPF) ping thông C3 (vùng RIP)
+- Mở Console C1, gõ lệnh: ping 192.168.4.10
+- CHỤP ẢNH: Khung đỏ vào kết quả Ping nổ 5 dòng Reply thành công.
+- GIẢI THÍCH (Chép vào báo cáo): Máy C1 (thuộc vùng OSPF) đã ping thành công tới máy C3 (thuộc vùng RIP). Điều này chứng minh quá trình phân phối lại tuyến đường (Redistribute) trên R2 đã hoạt động hoàn hảo, cho phép 2 giao thức định tuyến OSPF và RIP giao tiếp được với nhau.
+
+---------------------------------------------------------
+📸 CÂU 4: SHOW ROUTING TABLE VÀ GIẢI THÍCH CÁC THÀNH PHẦN R2
+---------------------------------------------------------
+* Bước 1: Phân tích bảng định tuyến R2
+- Mở Console R2, gõ lệnh: show ip route
+- CHỤP ẢNH: Chụp toàn bộ bảng định tuyến. Khung đỏ chữ "O" ở đầu dòng mạng 192.168.1.0/24 và chữ "R" ở đầu dòng mạng 192.168.4.0/24.
+- GIẢI THÍCH (Chép vào báo cáo): R2 đóng vai trò là ASBR (Autonomous System Boundary Router) đứng giữa 2 vùng định tuyến. Bảng định tuyến R2 có chứa chữ "O" (OSPF) cho thấy nó học được dải 192.168.1.0/24 từ R1 qua giao thức OSPF. Đồng thời chứa chữ "R" (RIP) cho thấy nó học được dải 192.168.4.0/24 từ R3 qua giao thức RIP. R2 đã kết nối thành công 2 vùng này.
+
+---------------------------------------------------------
+📸 CÂU 5: THÊM 1 ROUTER (R4) DÙNG RIP VÀO R3. GIẢI THÍCH BẢNG ĐỊNH TUYẾN R4
+---------------------------------------------------------
+* Bước 1: Giải thích bảng định tuyến R4 (Router mới thêm)
+- Mở Console R4, gõ lệnh: show ip route
+- CHỤP ẢNH: Chụp toàn bộ bảng định tuyến. Khung đỏ vào dòng chữ "R" đại diện cho mạng 192.168.1.0 (vùng OSPF cũ).
+- GIẢI THÍCH (Chép vào báo cáo): Mặc dù R4 chỉ cấu hình chạy định tuyến RIP, nhưng trong bảng định tuyến của R4 xuất hiện các tuyến đường "R" (được học qua RIP) trỏ về các mạng nằm sâu bên trong vùng OSPF (như 192.168.1.0 của C1). Điều này xảy ra do R2 đã nhúng (redistribute) mạng OSPF vào gói tin RIP và gửi cho R3, sau đó R3 tiếp tục truyền gói RIP đó cho R4. Nhờ vậy, R4 hoàn toàn thấy được toàn bộ hệ thống mạng bất kể giao thức gốc ở đầu kia là gì.

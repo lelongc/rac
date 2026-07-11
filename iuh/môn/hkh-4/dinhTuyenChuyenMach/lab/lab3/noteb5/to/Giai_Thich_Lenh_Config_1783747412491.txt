@@ -1,0 +1,130 @@
+Chào bạn, với tư cách là một Chuyên gia Mạng, tôi xin gửi đến bạn bản báo cáo phân tích chi tiết cấu hình cho hệ thống mạng **OSPF_RIP_Redistribution_Lab**.
+
+Hệ thống này được thiết kế để thực hiện việc tái phân phối định tuyến (redistribution) giữa hai giao thức khác nhau là OSPF và RIP, đảm bảo tính kết nối toàn mạng.
+
+---
+
+### 1. Thiết bị R1 (Router biên OSPF)
+
+**Cấu hình:**
+```text
+enable
+configure terminal
+interface s1/0
+ip address 12.12.12.1 255.255.255.252
+no shutdown
+interface e0/1
+ip address 192.168.1.1 255.255.255.0
+no shutdown
+router ospf 1
+network 12.12.12.0 0.0.0.3 area 0
+network 192.168.1.0 0.0.0.255 area 0
+ip dhcp pool LAN_C1
+network 192.168.1.0 255.255.255.0
+default-router 192.168.1.1
+end
+```
+
+**Giải thích:**
+*   **Giao diện:** Cấu hình IP cho cổng kết nối với R2 (s1/0) và mạng LAN (e0/1). Subnet `/30` (255.255.255.252) được dùng cho kết nối point-to-point để tối ưu hóa địa chỉ IP.
+*   **OSPF:** Chạy OSPF tiến trình 1, đưa các mạng kết nối trực tiếp vào Area 0 (Backbone).
+*   **DHCP:** Cấu hình R1 làm DHCP Server để cấp phát IP tự động cho các thiết bị trong mạng LAN 192.168.1.0/24.
+
+---
+
+### 2. Thiết bị R2 (Router biên - Điểm tái phân phối)
+
+**Cấu hình:**
+```text
+enable
+configure terminal
+interface s1/0
+ip address 12.12.12.2 255.255.255.252
+no shutdown
+interface s1/1
+ip address 23.23.23.1 255.255.255.252
+no shutdown
+interface e0/0
+ip address 192.168.0.1 255.255.255.0
+no shutdown
+router ospf 1
+network 12.12.12.0 0.0.0.3 area 0
+network 192.168.0.0 0.0.0.255 area 0
+redistribute rip subnets
+router rip
+network 23.0.0.0
+redistribute ospf 1 metric 2
+ip dhcp pool LAN_C2
+network 192.168.0.0 255.255.255.0
+default-router 192.168.0.1
+end
+```
+
+**Giải thích:**
+*   **Định tuyến:** Đây là thiết bị quan trọng nhất. R2 chạy cả OSPF (với R1) và RIP (với R3).
+*   **Redistribution:**
+    *   `redistribute rip subnets`: Đưa các tuyến đường học được từ RIP vào OSPF.
+    *   `redistribute ospf 1 metric 2`: Đưa các tuyến đường OSPF vào RIP. Việc gán `metric 2` là bắt buộc vì RIP không hiểu metric của OSPF, cần gán giá trị hop-count thủ công để RIP có thể sử dụng.
+*   **DHCP:** Cấp phát IP cho mạng LAN 192.168.0.0/24.
+
+---
+
+### 3. Thiết bị R3 (Router RIP)
+
+**Cấu hình:**
+```text
+enable
+configure terminal
+interface s1/0
+ip address 23.23.23.2 255.255.255.252
+no shutdown
+interface s1/1
+ip address 34.34.34.1 255.255.255.252
+no shutdown
+interface e0/0
+ip address 192.168.4.1 255.255.255.0
+no shutdown
+router rip
+network 23.0.0.0
+network 34.0.0.0
+network 192.168.4.0
+ip dhcp pool LAN_C3
+network 192.168.4.0 255.255.255.0
+default-router 192.168.4.1
+end
+```
+
+**Giải thích:**
+*   **Định tuyến:** R3 chạy hoàn toàn giao thức RIP. Các lệnh `network` cho phép R3 gửi/nhận các bản tin cập nhật định tuyến RIP trên các cổng kết nối với R2, R4 và mạng LAN.
+*   **DHCP:** Cấp phát IP cho mạng LAN 192.168.4.0/24.
+
+---
+
+### 4. Thiết bị R4 (Router RIP cuối)
+
+**Cấu hình:**
+```text
+enable
+configure terminal
+interface s1/0
+ip address 34.34.34.2 255.255.255.252
+no shutdown
+router rip
+network 34.0.0.0
+end
+```
+
+**Giải thích:**
+*   R4 là router cuối cùng trong nhánh RIP, chỉ cần cấu hình giao diện kết nối với R3 và kích hoạt RIP trên dải mạng 34.0.0.0 để trao đổi bảng định tuyến với R3.
+
+---
+
+### 5. Các thiết bị đầu cuối (C1, C2, C3)
+
+**Cấu hình:**
+```text
+ip dhcp
+```
+
+**Giải thích:**
+*   Các thiết bị này (VPCS) được cấu hình để gửi yêu cầu DHCP Discover. Chúng sẽ nhận địa chỉ IP, Subnet Mask và Default Gateway từ các Router tương ứng (R1, R2, R3) đã được cấu hình DHCP Pool ở trên. Điều này giúp đơn giản hóa việc quản lý địa chỉ IP cho người dùng cuối.

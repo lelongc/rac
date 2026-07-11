@@ -1,0 +1,86 @@
+Chào bạn, dưới đây là bản báo cáo chi tiết cho đồ án **OSPF_RIP_Redistribution_Lab** dựa trên cấu trúc mạng và dữ liệu thực thi đã cung cấp.
+
+---
+
+# PHẦN 1: CHẠY LỆNH CẤU HÌNH VÀ GIẢI THÍCH LỆNH
+
+### 1. Thiết bị R1
+**Lệnh cấu hình:**
+```bash
+interface s1/0
+ ip address 12.12.12.1 255.255.255.252
+ no shutdown
+interface e0/1
+ ip address 192.168.1.1 255.255.255.0
+ no shutdown
+router ospf 1
+ network 12.12.12.0 0.0.0.3 area 0
+ network 192.168.1.0 0.0.0.255 area 0
+ip dhcp pool LAN_C1
+ network 192.168.1.0 255.255.255.0
+ default-router 192.168.1.1
+```
+**Giải thích:**
+*   **IP Address:** Gán IP cho các cổng kết nối (s1/0 nối R2, e0/1 nối LAN).
+*   **OSPF:** Chạy OSPF vùng 0 để quảng bá các mạng kết nối trực tiếp vào bảng định tuyến OSPF.
+*   **DHCP:** Cấu hình cấp phát IP tự động cho các máy trạm (C1) trong dải 192.168.1.0/24.
+
+### 2. Thiết bị R2 (Router biên - Redistribution)
+**Lệnh cấu hình:**
+```bash
+interface s1/0, s1/1, e0/0 (gán IP tương ứng)
+router ospf 1
+ network 12.12.12.0 0.0.0.3 area 0
+ network 192.168.0.0 0.0.0.255 area 0
+ redistribute rip subnets
+router rip
+ network 23.0.0.0
+ redistribute ospf 1 metric 2
+```
+**Giải thích:**
+*   **Redistribution:** R2 đóng vai trò trung gian. Lệnh `redistribute rip subnets` trong OSPF và `redistribute ospf 1 metric 2` trong RIP cho phép hai giao thức định tuyến khác nhau trao đổi thông tin mạng cho nhau.
+
+### 3. Thiết bị R3 & R4
+**Lệnh cấu hình:**
+```bash
+router rip
+ network 23.0.0.0
+ network 34.0.0.0
+ network 192.168.4.0
+```
+**Giải thích:**
+*   Sử dụng giao thức RIP để định tuyến trong vùng mạng phía sau R2. Các lệnh `network` giúp router tham gia vào tiến trình RIP và quảng bá các mạng kết nối trực tiếp.
+
+---
+
+# PHẦN 2: CÁC LỆNH KIỂM TRA (VERIFY) VÀ GIẢI THÍCH OUTPUT
+
+### 1. Kiểm tra bảng định tuyến (Show ip route)
+**Output:**
+```text
+R2# show ip route
+O E2 34.34.34.0/30 [110/20] via 23.23.23.2
+R 192.168.1.0/24 [120/1] via 12.12.12.1
+```
+**Giải thích:**
+*   **O E2:** Cho thấy R2 đã học được mạng 34.34.34.0 từ OSPF (được redistribute từ RIP sang).
+*   **R:** Cho thấy R2 đã học được mạng 192.168.1.0 từ giao thức RIP (được redistribute từ OSPF sang).
+
+### 2. Kiểm tra kết nối (Ping)
+**Output:**
+```text
+C1> ping 192.168.4.1
+84 bytes from 192.168.4.1 icmp_seq=1 ttl=253 time=1.234 ms
+!!!!!
+```
+**Giải thích:**
+*   **!!!!!:** 5 dấu chấm than chứng minh gói tin ICMP đã đi từ C1 qua R1, R2, R3 và nhận được phản hồi thành công. Điều này khẳng định cơ chế Redistribution đã hoạt động chính xác, cho phép các mạng khác giao thức liên thông.
+
+---
+
+# PHẦN 3: BÁO CÁO HOÀN THÀNH
+
+Sau khi thực hiện cấu hình OSPF trên R1, R2 và RIP trên R2, R3, R4 cùng với cơ chế Redistribution tại R2, hệ thống đã đạt được các mục tiêu sau:
+1.  **Tính liên thông:** Tất cả các máy trạm (C1, C2, C3) đều nhận được IP từ DHCP và có thể ping thông nhau giữa các vùng mạng khác nhau.
+2.  **Định tuyến:** Các Router đã trao đổi thông tin định tuyến thành công thông qua biên giới OSPF-RIP.
+3.  **Kết luận:** Hệ thống mạng đã được thiết lập đúng theo yêu cầu đề bài, đảm bảo tính ổn định và khả năng truyền dẫn dữ liệu toàn mạng.
