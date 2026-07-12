@@ -1,0 +1,77 @@
+=====================================================================
+# CÁC LỆNH CẤU HÌNH LAB 2 - BÀI 1 (ĐỊNH TUYẾN RIP VERSION 1)
+=====================================================================
+
+[--- MÁY TÍNH (PC) ---]
+PC1:
+ip 192.168.0.5 24 192.168.0.1
+save
+
+PC2:
+ip 192.168.1.5 24 192.168.1.1
+save
+
+PC3:
+ip 192.168.2.5 24 192.168.2.1
+save
+
+
+[--- ROUTER WEST ---]
+enable
+configure terminal
+interface e0/0
+ip address 192.168.0.1 255.255.255.0
+no shutdown
+exit
+interface s1/0
+ip address 10.0.0.1 255.255.255.0
+no shutdown
+exit
+router rip
+version 1
+network 192.168.0.0
+network 10.0.0.0
+end
+wr
+
+
+[--- ROUTER CENTRAL ---]
+enable
+configure terminal
+interface e0/0
+ip address 192.168.1.1 255.255.255.0
+no shutdown
+exit
+interface s1/0
+ip address 10.0.0.2 255.255.255.0
+no shutdown
+exit
+interface s1/1
+ip address 10.0.1.1 255.255.255.0
+no shutdown
+exit
+router rip
+version 1
+network 192.168.1.0
+network 10.0.0.0
+end
+wr
+
+
+[--- ROUTER EAST ---]
+enable
+configure terminal
+interface e0/0
+ip address 192.168.2.1 255.255.255.0
+no shutdown
+exit
+interface s1/1
+ip address 10.0.1.2 255.255.255.0
+no shutdown
+exit
+router rip
+version 1
+network 192.168.2.0
+network 10.0.0.0
+end
+wr
