@@ -19,16 +19,12 @@ no shutdown
 router ospf 1
 network 12.12.12.0 0.0.0.3 area 0
 network 192.168.1.0 0.0.0.255 area 0
-ip dhcp pool LAN_C1
-network 192.168.1.0 255.255.255.0
-default-router 192.168.1.1
 end
 ```
 
 **Giải thích:**
 *   **Giao diện:** Cấu hình IP cho cổng kết nối với R2 (s1/0) và mạng LAN (e0/1). Subnet `/30` (255.255.255.252) được dùng cho kết nối point-to-point để tối ưu hóa địa chỉ IP.
 *   **OSPF:** Chạy OSPF tiến trình 1, đưa các mạng kết nối trực tiếp vào Area 0 (Backbone).
-*   **DHCP:** Cấu hình R1 làm DHCP Server để cấp phát IP tự động cho các thiết bị trong mạng LAN 192.168.1.0/24.
 
 ---
 
@@ -54,9 +50,6 @@ redistribute rip subnets
 router rip
 network 23.0.0.0
 redistribute ospf 1 metric 2
-ip dhcp pool LAN_C2
-network 192.168.0.0 255.255.255.0
-default-router 192.168.0.1
 end
 ```
 
@@ -65,7 +58,6 @@ end
 *   **Redistribution:**
     *   `redistribute rip subnets`: Đưa các tuyến đường học được từ RIP vào OSPF.
     *   `redistribute ospf 1 metric 2`: Đưa các tuyến đường OSPF vào RIP. Việc gán `metric 2` là bắt buộc vì RIP không hiểu metric của OSPF, cần gán giá trị hop-count thủ công để RIP có thể sử dụng.
-*   **DHCP:** Cấp phát IP cho mạng LAN 192.168.0.0/24.
 
 ---
 
@@ -88,15 +80,11 @@ router rip
 network 23.0.0.0
 network 34.0.0.0
 network 192.168.4.0
-ip dhcp pool LAN_C3
-network 192.168.4.0 255.255.255.0
-default-router 192.168.4.1
 end
 ```
 
 **Giải thích:**
 *   **Định tuyến:** R3 chạy hoàn toàn giao thức RIP. Các lệnh `network` cho phép R3 gửi/nhận các bản tin cập nhật định tuyến RIP trên các cổng kết nối với R2, R4 và mạng LAN.
-*   **DHCP:** Cấp phát IP cho mạng LAN 192.168.4.0/24.
 
 ---
 
@@ -123,8 +111,10 @@ end
 
 **Cấu hình:**
 ```text
-ip dhcp
+ip 192.168.1.10 24 192.168.1.1
+ip 192.168.0.10 24 192.168.0.1
+ip 192.168.4.10 24 192.168.4.1
 ```
 
 **Giải thích:**
-*   Các thiết bị này (VPCS) được cấu hình để gửi yêu cầu DHCP Discover. Chúng sẽ nhận địa chỉ IP, Subnet Mask và Default Gateway từ các Router tương ứng (R1, R2, R3) đã được cấu hình DHCP Pool ở trên. Điều này giúp đơn giản hóa việc quản lý địa chỉ IP cho người dùng cuối.
+*   Đề bài không yêu cầu cấu hình DHCP, do đó các thiết bị đầu cuối (C1, C2, C3) được thiết lập IP tĩnh thủ công theo dải mạng tương ứng. Điều này giúp tối ưu cấu hình và tránh các lỗi cấp phát từ EVE-NG.

@@ -31,8 +31,8 @@
   + Định tuyến OSPF: `router ospf 1`, `network 12.12.12.0 0.0.0.3 area 0`, `network 192.168.1.0 0.0.0.255 area 0`.
 - Trên R2 (Biên giới OSPF-RIP - Redistribute): 
   + Định tuyến OSPF: `router ospf 1`, `network 12.12.12.0 0.0.0.3 area 0`, `network 192.168.0.0 0.0.0.255 area 0`, `redistribute rip subnets`.
-  + Định tuyến RIP: `router rip`, `network 23.0.0.0`, `redistribute ospf 1 metric 2`.
+  + Định tuyến RIP: `router rip`, `version 1`, `network 23.0.0.0`, `redistribute ospf 1 metric 2`.
 - Trên R3: 
-  + Định tuyến RIP: `router rip`, `network 23.0.0.0`, `network 34.0.0.0`, `network 192.168.4.0`.
+  + Định tuyến RIP: `router rip`, `version 1`, `network 23.0.0.0`, `network 34.0.0.0`, `network 192.168.4.0`.
 - Trên R4:
-  + Định tuyến RIP: `router rip`, `network 34.0.0.0`.
+  + Định tuyến RIP: `router rip`, `version 1`, `network 34.0.0.0`.

@@ -12,9 +12,6 @@ no shutdown
 router ospf 1
 network 12.12.12.0 0.0.0.3 area 0
 network 192.168.1.0 0.0.0.255 area 0
-ip dhcp pool LAN_C1
-network 192.168.1.0 255.255.255.0
-default-router 192.168.1.1
 end
 write memory
 
@@ -35,11 +32,9 @@ network 12.12.12.0 0.0.0.3 area 0
 network 192.168.0.0 0.0.0.255 area 0
 redistribute rip subnets
 router rip
+version 1
 network 23.0.0.0
 redistribute ospf 1 metric 2
-ip dhcp pool LAN_C2
-network 192.168.0.0 255.255.255.0
-default-router 192.168.0.1
 end
 write memory
 
@@ -56,12 +51,10 @@ interface e0/0
 ip address 192.168.4.1 255.255.255.0
 no shutdown
 router rip
+version 1
 network 23.0.0.0
 network 34.0.0.0
 network 192.168.4.0
-ip dhcp pool LAN_C3
-network 192.168.4.0 255.255.255.0
-default-router 192.168.4.1
 end
 write memory
 
@@ -72,19 +65,20 @@ interface s1/0
 ip address 34.34.34.2 255.255.255.252
 no shutdown
 router rip
+version 1
 network 34.0.0.0
 end
 write memory
 
 ========== Tên thiết bị: C1 (vpcs) ==========
-ip dhcp
+ip 192.168.1.10 24 192.168.1.1
 save
 
 ========== Tên thiết bị: C2 (vpcs) ==========
-ip dhcp
+ip 192.168.0.10 24 192.168.0.1
 save
 
 ========== Tên thiết bị: C3 (vpcs) ==========
-ip dhcp
+ip 192.168.4.10 24 192.168.4.1
 save
 
