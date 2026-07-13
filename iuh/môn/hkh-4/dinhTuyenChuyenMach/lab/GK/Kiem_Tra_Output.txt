@@ -1,0 +1,50 @@
+Dưới đây là các lệnh kiểm tra (check) đã được cập nhật theo dải IP LAN mới (sau khi fix lỗi trùng IP). 
+
+Hãy chạy lần lượt, copy kết quả (output) của từng lệnh rồi dán gửi lên đây để tôi kiểm tra tính chính xác của toàn bộ hệ thống nhé!
+
+=======================================================
+1. KIỂM TRA BẢNG ĐỊNH TUYẾN TRÊN CÁC ROUTER
+=======================================================
+Chạy lệnh này trên các Router để xem thông tin định tuyến.
+
+Trên R1 (Router trung tâm dịch chéo OSPF <=> RIP):
+show ip route
+show ip ospf neighbor
+show ip protocols
+
+Trên R2 (Khu vực OSPF):
+show ip route
+
+Trên R3 (Khu vực OSPF):
+show ip route
+
+Trên R4 (Khu vực RIP):
+show ip route
+
+Trên R5 (Khu vực RIP):
+show ip route
+
+
+=======================================================
+2. KIỂM TRA THÔNG MẠNG TOÀN DIỆN (PING GIỮA CÁC MÁY TRẠM)
+=======================================================
+(Bây giờ các dải LAN đã được tách biệt nên bạn có thể ping trực tiếp từ VPC này sang VPC khác mà không lo lỗi ARP nữa).
+
+Từ VPC2 (LAN OSPF - 192.168.20.2), ping sang vùng RIP:
+ping 192.168.40.4
+ping 192.168.50.5
+
+Từ VPC5 (LAN RIP - 192.168.50.5), ping sang vùng OSPF:
+ping 192.168.20.2
+ping 192.168.30.3
+
+
+=======================================================
+3. KIỂM TRA BẢO MẬT & SSH TRÊN R5
+=======================================================
+Kiểm tra xem khóa RSA đã được tạo thành công chưa (lệnh cuối cùng phải hiện thông tin Key thì SSH mới hoạt động được).
+
+Trên R5:
+show running-config | include username
+show running-config | include enable
+show crypto key mypubkey rsa

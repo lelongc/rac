@@ -1,0 +1,92 @@
+Đúng như tôi đã dự đoán từ trước, bạn đã "dính bẫy" cực hiểm của thầy cô rồi! 
+
+Lý do Mạng chết toàn tập (Ping Timeout) và SSH hỏng:
+1. **Lỗi trùng mạng LAN:** Cả 4 Router đều được cắm mạng `192.168.18.0/24` ở cổng e0/0. Khi VPC2 ping sang VPC4 (đều dùng IP 192.168.18.x), Router nó tưởng IP đích đang cắm trực tiếp vào mạng nội bộ của nó nên nó phát Broadcast (ARP) tìm kiếm nội bộ chứ KHÔNG BAO GIỜ đẩy gói tin đi qua Router khác! => Mạng chết đứng. Phải đổi 4 mạng LAN thành 20, 30, 40, 50.
+2. **Lỗi SSH trên R5:** Bạn nhìn kỹ lệnh `show crypto key mypubkey rsa` nó chả hiện ra cái chìa khóa (Key) nào cả. Lý do là hệ điều hành Cisco không cho phép tạo khóa mã hóa nếu tên máy vẫn là mặc định (`hostname Router`). Phải đổi tên thành R5 thì nó mới chịu cấp khóa!
+
+Dưới đây là các lệnh "thuốc giải". Bạn Copy rồi Paste thẳng vào giao diện Console đen thui của từng thiết bị tương ứng để khắc phục ngay lập tức nhé:
+
+===========================================
+TRÊN R2
+===========================================
+enable
+configure terminal
+interface e0/0
+ ip address 192.168.20.1 255.255.255.0
+ exit
+router ospf 1
+ no network 192.168.18.0 0.0.0.255 area 0
+ network 192.168.20.0 0.0.0.255 area 0
+ end
+write memory
+
+===========================================
+TRÊN R3
+===========================================
+enable
+configure terminal
+interface e0/0
+ ip address 192.168.30.1 255.255.255.0
+ exit
+router ospf 1
+ no network 192.168.18.0 0.0.0.255 area 0
+ network 192.168.30.0 0.0.0.255 area 0
+ end
+write memory
+
+===========================================
+TRÊN R4
+===========================================
+enable
+configure terminal
+interface e0/0
+ ip address 192.168.40.1 255.255.255.0
+ exit
+router rip
+ no network 192.168.18.0
+ network 192.168.40.0
+ end
+write memory
+
+===========================================
+TRÊN R5 (Sửa cả LAN và Sửa lỗi tạo khóa SSH)
+===========================================
+enable
+configure terminal
+hostname R5
+ip domain-name exam.com
+crypto key generate rsa modulus 1024
+interface e0/0
+ ip address 192.168.50.1 255.255.255.0
+ exit
+router rip
+ no network 192.168.18.0
+ network 192.168.50.0
+ end
+write memory
+
+===========================================
+TRÊN CÁC MÁY TÍNH (VPC)
+===========================================
+VPC2:
+ip 192.168.20.2 255.255.255.0 192.168.20.1
+save
+
+VPC3:
+ip 192.168.30.3 255.255.255.0 192.168.30.1
+save
+
+VPC4:
+ip 192.168.40.4 255.255.255.0 192.168.40.1
+save
+
+VPC5:
+ip 192.168.50.5 255.255.255.0 192.168.50.1
+save
+
+===========================================
+KIỂM TRA LẠI:
+===========================================
+Bây giờ từ VPC2 bạn Ping sang VPC4 thoải mái không bao giờ xịt:
+ping 192.168.40.4
+ping 192.168.50.5

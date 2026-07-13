@@ -1,0 +1,121 @@
+
+========== Tên thiết bị: R1 (router) ==========
+enable
+configure terminal
+interface s1/0
+ip address 203.12.18.1 255.255.255.0
+no shutdown
+interface s1/1
+ip address 203.14.18.1 255.255.255.0
+no shutdown
+interface s1/2
+ip address 203.15.18.1 255.255.255.0
+no shutdown
+router ospf 1
+network 203.12.18.0 0.0.0.255 area 0
+redistribute rip subnets
+router rip
+version 2
+no auto-summary
+network 203.14.18.0
+network 203.15.18.0
+redistribute ospf 1 metric 2
+end
+write memory
+
+========== Tên thiết bị: R2 (router) ==========
+enable
+configure terminal
+interface s1/0
+ip address 203.12.18.2 255.255.255.0
+no shutdown
+interface s1/1
+ip address 203.23.18.2 255.255.255.0
+no shutdown
+interface e0/0
+ip address 192.168.18.1 255.255.255.0
+no shutdown
+router ospf 1
+network 203.12.18.0 0.0.0.255 area 0
+network 203.23.18.0 0.0.0.255 area 0
+network 192.168.18.0 0.0.0.255 area 0
+end
+write memory
+
+========== Tên thiết bị: R3 (router) ==========
+enable
+configure terminal
+interface s1/1
+ip address 203.23.18.3 255.255.255.0
+no shutdown
+interface e0/0
+ip address 192.168.18.1 255.255.255.0
+no shutdown
+router ospf 1
+network 203.23.18.0 0.0.0.255 area 0
+network 192.168.18.0 0.0.0.255 area 0
+end
+write memory
+
+========== Tên thiết bị: R4 (router) ==========
+enable
+configure terminal
+interface s1/1
+ip address 203.14.18.4 255.255.255.0
+no shutdown
+interface e0/0
+ip address 192.168.18.1 255.255.255.0
+no shutdown
+router rip
+version 2
+no auto-summary
+network 203.14.18.0
+network 192.168.18.0
+end
+write memory
+
+========== Tên thiết bị: R5 (router) ==========
+enable
+configure terminal
+enable secret 19aenable
+line console 0
+password 19aconsole
+login
+exit
+username admin privilege 15 secret ssh2026
+ip domain-name exam.com
+crypto key generate rsa modulus 1024
+line vty 0 4
+login local
+transport input ssh
+exit
+interface s1/2
+ip address 203.15.18.5 255.255.255.0
+no shutdown
+interface e0/0
+ip address 192.168.18.1 255.255.255.0
+no shutdown
+router rip
+version 2
+no auto-summary
+network 203.15.18.0
+network 192.168.18.0
+end
+write memory
+
+========== Tên thiết bị: VPC2 (vpcs) ==========
+ip 192.168.18.2 255.255.255.0 192.168.18.1
+save
+
+========== Tên thiết bị: VPC3 (vpcs) ==========
+ip 192.168.18.3 255.255.255.0 192.168.18.1
+save
+
+========== Tên thiết bị: VPC4 (vpcs) ==========
+ip 192.168.18.4 255.255.255.0 192.168.18.1
+save
+
+========== Tên thiết bị: VPC5 (vpcs) ==========
+ip 192.168.18.5 255.255.255.0 192.168.18.1
+save
+

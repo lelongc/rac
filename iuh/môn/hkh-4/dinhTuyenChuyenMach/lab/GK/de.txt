@@ -1,0 +1,19 @@
+vpc2 eth0 nối e0/0 r2 mạng 192.168.18.0/24 ,
+r2 s1/0 nối s1/0 r1 mạng 203.12.18.0/24
+r2 s1/1 nối s1/1 r3 mạng 203.23.18.0/24
+r3 e0/0 nối eth0 vpc3 mạng 192.168.18.0/24
+r1 s1/2 nối r5 s1/2 mạng 203.15.18.0/24 
+r5 e0/0 nối vpc5 eth0 mạng 192.168.18.0/24
+r1 s1/1 nối r4 s1/1 mạng 203.14.18.0/24
+vpc4 eth0 nối e0/0 r4 mạng 192.168.18.0/24
+phía bên trái r1 từ s1/0 là ospf 
+phía bên phải r1 từ s1/2 là rip 
+b1/
+a/ cấu hình mạng  cá router và pc tương ứng lớp mạng 
+b/ dùng giao thức định tuyến rip thực hiện định tuyến các mạng vùng rip 
+c/ dùng giao thức định tuyến ospf thực hiện định tuyến thông các mạng vùng ospf 
+d/ thực hiện định truyến để 2 vùng ospf và rip thông mạng 
+b2/ trên r5 
+a/ đăng nhập line console có yêu cầu pass : 19aconsole 
+b/ priviledged exec mode có yêu cầu pass mã hóa 19aenable
+c/ chỉ sử dụng ssh đến r5 toàn quyền và có yêu cầu pass là ssh2026 

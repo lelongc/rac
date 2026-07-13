@@ -1,0 +1,56 @@
+1. Khai báo Sơ đồ (Topology): 
+- Router (5 thiết bị): R1, R2, R3, R4, R5.
+- VPCS (4 thiết bị): VPC2, VPC3, VPC4, VPC5.
+- Switch (4 thiết bị): SW2, SW3, SW4, SW5 (Tạo Switch ảo để nối Router với VPC).
+
+2. Quy hoạch IP (IP Addressing): 
+- Mạng nối R1 và R2 (Dải 203.12.18.0/24):
+  + R1 (s1/0): 203.12.18.1
+  + R2 (s1/0): 203.12.18.2
+- Mạng nối R2 và R3 (Dải 203.23.18.0/24):
+  + R2 (s1/1): 203.23.18.2
+  + R3 (s1/1): 203.23.18.3
+- Mạng nối R1 và R4 (Dải 203.14.18.0/24):
+  + R1 (s1/1): 203.14.18.1
+  + R4 (s1/1): 203.14.18.4
+- Mạng nối R1 và R5 (Dải 203.15.18.0/24):
+  + R1 (s1/2): 203.15.18.1
+  + R5 (s1/2): 203.15.18.5
+- Mạng LAN R2 nối VPC2 (Dải 192.168.18.0/24):
+  + R2 (e0/0): 192.168.18.1
+  + VPC2 (eth0): 192.168.18.2
+- Mạng LAN R3 nối VPC3 (Dải 192.168.18.0/24):
+  + R3 (e0/0): 192.168.18.1
+  + VPC3 (eth0): 192.168.18.3
+- Mạng LAN R4 nối VPC4 (Dải 192.168.18.0/24):
+  + R4 (e0/0): 192.168.18.1
+  + VPC4 (eth0): 192.168.18.4
+- Mạng LAN R5 nối VPC5 (Dải 192.168.18.0/24):
+  + R5 (e0/0): 192.168.18.1
+  + VPC5 (eth0): 192.168.18.5
+
+3. Cáp kết nối (Cabling): 
+- R1 (s1/0) nối cáp Serial tới R2 (s1/0).
+- R2 (s1/1) nối cáp Serial tới R3 (s1/1).
+- R1 (s1/1) nối cáp Serial tới R4 (s1/1).
+- R1 (s1/2) nối cáp Serial tới R5 (s1/2).
+- R2 (e0/0) nối cáp Ethernet tới SW2 (e0/0), SW2 (e0/1) nối tới VPC2 (eth0).
+- R3 (e0/0) nối cáp Ethernet tới SW3 (e0/0), SW3 (e0/1) nối tới VPC3 (eth0).
+- R4 (e0/0) nối cáp Ethernet tới SW4 (e0/0), SW4 (e0/1) nối tới VPC4 (eth0).
+- R5 (e0/0) nối cáp Ethernet tới SW5 (e0/0), SW5 (e0/1) nối tới VPC5 (eth0).
+
+4. Giao thức định tuyến & Cấu hình (Routing & Configs): 
+- YÊU CẦU ĐẶC BIỆT: Bắt buộc thêm các lệnh cấu hình bên dưới vào mục config của từng thiết bị.
+- Trên R1:
+  + Định tuyến OSPF: `router ospf 1`, `network 203.12.18.0 0.0.0.255 area 0`, `redistribute rip subnets`.
+  + Định tuyến RIP: `router rip`, `version 2`, `no auto-summary`, `network 203.14.18.0`, `network 203.15.18.0`, `redistribute ospf 1 metric 2`.
+- Trên R2:
+  + Định tuyến OSPF: `router ospf 1`, `network 203.12.18.0 0.0.0.255 area 0`, `network 203.23.18.0 0.0.0.255 area 0`, `network 192.168.18.0 0.0.0.255 area 0`.
+- Trên R3:
+  + Định tuyến OSPF: `router ospf 1`, `network 203.23.18.0 0.0.0.255 area 0`, `network 192.168.18.0 0.0.0.255 area 0`.
+- Trên R4:
+  + Định tuyến RIP: `router rip`, `version 2`, `no auto-summary`, `network 203.14.18.0`, `network 192.168.18.0`.
+- Trên R5:
+  + Bảo mật: `enable secret 19aenable`, `line console 0`, `password 19aconsole`, `login`, `exit`.
+  + Bảo mật SSH: `username admin privilege 15 secret ssh2026`, `ip domain-name exam.com`, `crypto key generate rsa modulus 1024`, `line vty 0 4`, `login local`, `transport input ssh`, `exit`.
+  + Định tuyến RIP: `router rip`, `version 2`, `no auto-summary`, `network 203.15.18.0`, `network 192.168.18.0`.
