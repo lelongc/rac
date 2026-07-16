@@ -1,0 +1,53 @@
+1. Khai báo Sơ đồ (Topology): 
+- Switch (4 thiết bị): Switch0, Switch1, Switch2, SW3 (SW3 là Multilayer Switch chạy Layer 3).
+- VPCS (6 thiết bị): Server0, Server1, PC0, PC_FTP, PC1, PC_BLOCKED.
+
+2. Quy hoạch IP (IP Addressing): 
+- Vùng VLAN 1 (Dải 192.168.1.0/24):
+  + SW3 SVI (Vlan 1): 192.168.1.1
+  + Server0 (eth0): 192.168.1.2. Default Gateway: 192.168.1.1
+  + Server1 (eth0): 192.168.1.3. Default Gateway: 192.168.1.1
+- Vùng VLAN 2 (Dải 172.16.2.0/24):
+  + SW3 SVI (Vlan 2): 172.16.2.1
+  + PC1 (eth0): 172.16.2.2. Default Gateway: 172.16.2.1
+  + PC_BLOCKED (eth0): 172.16.2.100. Default Gateway: 172.16.2.1
+- Vùng VLAN 3 (Dải 172.16.3.0/24):
+  + SW3 SVI (Vlan 3): 172.16.3.1
+  + PC0 (eth0): 172.16.3.2. Default Gateway: 172.16.3.1
+  + PC_FTP (eth0): 172.16.3.100. Default Gateway: 172.16.3.1
+
+3. Cáp kết nối (Cabling): 
+- Switch0 (e0/1) nối cáp Ethernet tới SW3 (e0/1).
+- Switch1 (e0/1) nối cáp Ethernet tới SW3 (e0/2).
+- Switch2 (e0/1) nối cáp Ethernet tới SW3 (e0/3).
+- Switch0 (e0/2) nối cáp Ethernet tới Server0 (eth0).
+- Switch0 (e0/3) nối cáp Ethernet tới Server1 (eth0).
+- Switch1 (e0/2) nối cáp Ethernet tới PC0 (eth0).
+- Switch1 (e0/3) nối cáp Ethernet tới PC_FTP (eth0).
+- Switch2 (e0/2) nối cáp Ethernet tới PC1 (eth0).
+- Switch2 (e0/3) nối cáp Ethernet tới PC_BLOCKED (eth0).
+
+4. Giao thức định tuyến & Cấu hình (Routing & Configs): 
+- YÊU CẦU ĐẶC BIỆT: Bắt buộc thêm các lệnh cấu hình bên dưới vào mục config của từng thiết bị.
+- Trên SW3 (Multilayer Switch):
+  + Bật định tuyến: `ip routing`.
+  + Khai báo VLAN: `vlan 2`, `exit`, `vlan 3`, `exit`.
+  + Cấu hình SVIs:
+    - Vlan 1: `interface vlan 1`, `ip address 192.168.1.1 255.255.255.0`, `no shutdown`, `exit`.
+    - Vlan 2: `interface vlan 2`, `ip address 172.16.2.1 255.255.255.0`, `no shutdown`, `exit`.
+    - Vlan 3: `interface vlan 3`, `ip address 172.16.3.1 255.255.255.0`, `no shutdown`, `exit`.
+  + Cấu hình Trunking: `interface range e0/1 - 3`, `switchport trunk encapsulation dot1q`, `switchport mode trunk`, `no shutdown`, `exit`.
+  + Định tuyến RIP: `router rip`, `version 2`, `no auto-summary`, `network 192.168.1.0`, `network 172.16.0.0`, `exit`.
+  + Cấu hình Access Control List (ACL):
+    - ACL cho VLAN 3: `ip access-list extended VLAN3_ACL`, `permit tcp host 172.16.3.100 host 192.168.1.2 eq ftp`, `permit tcp host 172.16.3.100 host 192.168.1.2 eq ftp-data`, `deny ip 172.16.3.0 0.0.0.255 host 192.168.1.2`, `permit ip any any`, `exit`.
+    - Áp dụng ACL vào VLAN 3 SVI: `interface vlan 3`, `ip access-group VLAN3_ACL in`, `exit`.
+    - ACL cho VLAN 2: `ip access-list extended VLAN2_ACL`, `deny ip host 172.16.2.100 host 192.168.1.3`, `permit ip any any`, `exit`.
+    - Áp dụng ACL vào VLAN 2 SVI: `interface vlan 2`, `ip access-group VLAN2_ACL in`, `exit`.
+- Trên Switch0:
+  + Cấu hình Trunking: `interface e0/1`, `switchport trunk encapsulation dot1q`, `switchport mode trunk`, `no shutdown`, `exit`.
+- Trên Switch1:
+  + Cấu hình Trunking: `interface e0/1`, `switchport trunk encapsulation dot1q`, `switchport mode trunk`, `no shutdown`, `exit`.
+  + Cấu hình Access Ports: `vlan 3`, `exit`, `interface range e0/2 - 3`, `switchport mode access`, `switchport access vlan 3`, `no shutdown`, `exit`.
+- Trên Switch2:
+  + Cấu hình Trunking: `interface e0/1`, `switchport trunk encapsulation dot1q`, `switchport mode trunk`, `no shutdown`, `exit`.
+  + Cấu hình Access Ports: `vlan 2`, `exit`, `interface range e0/2 - 3`, `switchport mode access`, `switchport access vlan 2`, `no shutdown`, `exit`.

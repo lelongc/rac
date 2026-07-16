@@ -1,0 +1,68 @@
+1. Khai báo Sơ đồ (Topology): 
+- Switch (3 thiết bị): SW_SERVER, SW_CL1, SW_CL2.
+- Router (2 thiết bị): R1, R2.
+- VPCS (9 thiết bị): VPC2_1, VPC3_1, VPC4_1, VPC5_1, VPC2_2, VPC3_2, VPC4_2, VPC5_2, PC7.
+
+2. Quy hoạch IP (IP Addressing): 
+- Đường mạng nối R1 và R2 (Dải 10.10.10.0/24):
+  + R1 (s1/0): 10.10.10.1
+  + R2 (s1/0): 10.10.10.2
+- Đường mạng nối R2 và PC7 (Dải 172.16.0.0/24):
+  + R2 (e0/0): 172.16.0.1
+  + PC7 (eth0): 172.16.0.7
+- Đường mạng LAN VLAN của các PC (Subnet riêng biệt cho từng VLAN):
+  + VLAN 2 (Net 192.168.2.0/24): VPC2_1 IP: 192.168.2.2, VPC2_2 IP: 192.168.2.12. Default Gateway: 192.168.2.1.
+  + VLAN 3 (Net 192.168.3.0/24): VPC3_1 IP: 192.168.3.3, VPC3_2 IP: 192.168.3.13. Default Gateway: 192.168.3.1.
+  + VLAN 4 (Net 192.168.4.0/24): VPC4_1 IP: 192.168.4.4, VPC4_2 IP: 192.168.4.14. Default Gateway: 192.168.4.1.
+  + VLAN 5 (Net 192.168.5.0/24): VPC5_1 IP: 192.168.5.5, VPC5_2 IP: 192.168.5.15. Default Gateway: 192.168.5.1.
+
+3. Cáp kết nối (Cabling): 
+- R2 (s1/0) nối cáp Serial tới R1 (s1/0).
+- R2 (e0/0) nối cáp Ethernet tới PC7 (eth0).
+- R1 (e0/0) nối cáp Ethernet tới SW_SERVER (e0/0).
+- SW_SERVER (e0/1) nối cáp Ethernet tới SW_CL1 (e0/1).
+- SW_SERVER (e0/2) nối cáp Ethernet tới SW_CL2 (e0/2).
+- SW_CL1 (e1/0) nối cáp Ethernet tới VPC2_1 (eth0).
+- SW_CL1 (e1/3) nối cáp Ethernet tới VPC3_1 (eth0).
+- SW_CL1 (e2/2) nối cáp Ethernet tới VPC4_1 (eth0).
+- SW_CL1 (e3/1) nối cáp Ethernet tới VPC5_1 (eth0).
+- SW_CL2 (e1/0) nối cáp Ethernet tới VPC2_2 (eth0).
+- SW_CL2 (e1/3) nối cáp Ethernet tới VPC3_2 (eth0).
+- SW_CL2 (e2/2) nối cáp Ethernet tới VPC4_2 (eth0).
+- SW_CL2 (e3/1) nối cáp Ethernet tới VPC5_2 (eth0).
+
+4. Giao thức định tuyến & Cấu hình (Routing & Configs): 
+- YÊU CẦU ĐẶC BIỆT: Bắt buộc thêm các lệnh cấu hình bên dưới vào mục config của từng thiết bị.
+- Trên R1 (Định tuyến Inter-VLAN - Router on a Stick):
+  + Cấu hình Subinterface cho e0/0:
+    `interface e0/0`, `no shutdown`, `exit`,
+    `interface e0/0.2`, `encapsulation dot1Q 2`, `ip address 192.168.2.1 255.255.255.0`, `exit`,
+    `interface e0/0.3`, `encapsulation dot1Q 3`, `ip address 192.168.3.1 255.255.255.0`, `exit`,
+    `interface e0/0.4`, `encapsulation dot1Q 4`, `ip address 192.168.4.1 255.255.255.0`, `exit`,
+    `interface e0/0.5`, `encapsulation dot1Q 5`, `ip address 192.168.5.1 255.255.255.0`, `exit`.
+  + Định tuyến tĩnh sang R2: `ip route 172.16.0.0 255.255.255.0 10.10.10.2`.
+- Trên R2:
+  + Cấu hình cổng: `interface e0/0`, `ip address 172.16.0.1 255.255.255.0`, `no shutdown`, `exit`.
+  + Định tuyến tĩnh về các VLAN qua R1:
+    `ip route 192.168.2.0 255.255.255.0 10.10.10.1`,
+    `ip route 192.168.3.0 255.255.255.0 10.10.10.1`,
+    `ip route 192.168.4.0 255.255.255.0 10.10.10.1`,
+    `ip route 192.168.5.0 255.255.255.0 10.10.10.1`.
+- Trên SW_SERVER:
+  + Cấu hình VTP: `vtp domain Long`, `vtp password 23630851`, `vtp version 2`, `vtp mode server`.
+  + Cấu hình Trunking (e0/0 nối Router và e0/1, e0/2 nối Client): `interface range e0/0 - 3`, `switchport trunk encapsulation dot1q`, `switchport mode trunk`, `no shutdown`, `exit`.
+  + Tạo VLAN: `vlan 2`, `name IT`, `exit`, `vlan 3`, `name IS`, `exit`, `vlan 4`, `name SE`, `exit`, `vlan 5`, `name CS`, `exit`.
+- Trên SW_CL1:
+  + Cấu hình VTP: `vtp domain Long`, `vtp password 23630851`, `vtp version 2`, `vtp mode client`.
+  + Cấu hình Trunking: `interface range e0/0 - 2`, `switchport trunk encapsulation dot1q`, `switchport mode trunk`, `no shutdown`, `exit`.
+  + Cấu hình Access VLAN 2: `interface range e1/0 - 2`, `switchport mode access`, `switchport access vlan 2`, `no shutdown`, `exit`.
+  + Cấu hình Access VLAN 3: `interface e1/3`, `switchport mode access`, `switchport access vlan 3`, `no shutdown`, `exit`, `interface range e2/0 - 1`, `switchport mode access`, `switchport access vlan 3`, `no shutdown`, `exit`.
+  + Cấu hình Access VLAN 4: `interface range e2/2 - 3`, `switchport mode access`, `switchport access vlan 4`, `no shutdown`, `exit`, `interface e3/0`, `switchport mode access`, `switchport access vlan 4`, `no shutdown`, `exit`.
+  + Cấu hình Access VLAN 5: `interface range e3/1 - 3`, `switchport mode access`, `switchport access vlan 5`, `no shutdown`, `exit`.
+- Trên SW_CL2:
+  + Cấu hình VTP: `vtp domain Long`, `vtp password 23630851`, `vtp version 2`, `vtp mode client`.
+  + Cấu hình Trunking: `interface range e0/0 - 2`, `switchport trunk encapsulation dot1q`, `switchport mode trunk`, `no shutdown`, `exit`.
+  + Cấu hình Access VLAN 2: `interface range e1/0 - 2`, `switchport mode access`, `switchport access vlan 2`, `no shutdown`, `exit`.
+  + Cấu hình Access VLAN 3: `interface e1/3`, `switchport mode access`, `switchport access vlan 3`, `no shutdown`, `exit`, `interface range e2/0 - 1`, `switchport mode access`, `switchport access vlan 3`, `no shutdown`, `exit`.
+  + Cấu hình Access VLAN 4: `interface range e2/2 - 3`, `switchport mode access`, `switchport access vlan 4`, `no shutdown`, `exit`, `interface e3/0`, `switchport mode access`, `switchport access vlan 4`, `no shutdown`, `exit`.
+  + Cấu hình Access VLAN 5: `interface range e3/1 - 3`, `switchport mode access`, `switchport access vlan 5`, `no shutdown`, `exit`.

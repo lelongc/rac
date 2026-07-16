@@ -1,0 +1,44 @@
+=====================================================================
+# HƯỚNG DẪN CHỤP HÌNH BÁO CÁO & GIẢI THÍCH KẾT QUẢ - BÀI 2 (TUẦN 5)
+=====================================================================
+
+Sau khi bạn dùng Web Tool chạy nạp cấu hình thành công cho Bài 2, hãy chạy các lệnh kiểm tra dưới đây và copy dán kết quả vào file này để hoàn thiện báo cáo nhé!
+
+---
+
+## PHẦN 1: KIỂM TRA BẢNG ĐỊNH TUYẾN TRÊN ROUTER
+
+### 📸 HÌNH 1: Bảng định tuyến trên R1 (Hiển thị các Subinterfaces và Static Route)
+- **Lệnh cần chạy:** `show ip route` trên R1.
+- **Kết quả mong đợi:** 
+  + Phải có các dòng `C` kết nối trực tiếp tương ứng với `e0/0.2`, `e0/0.3`, `e0/0.4`, `e0/0.5`.
+  + Có dòng route tĩnh `S 172.16.0.0/24 via 10.10.10.2`.
+- **Nội dung giải thích báo cáo:**
+  > *Hình ảnh bảng định tuyến của R1 cho thấy kỹ thuật Router-on-a-Stick đã hoạt động. Cổng vật lý e0/0 được chia thành 4 subinterfaces ảo làm gateway cho 4 VLAN. Router R1 học được đường đi sang dải 172.16.0.0/24 của PC7 thông qua định tuyến tĩnh chỉ sang R2.*
+
+---
+
+### 📸 HÌNH 2: Bảng định tuyến trên R2
+- **Lệnh cần chạy:** `show ip route` trên R2.
+- **Kết quả mong đợi:**
+  + Có các dòng route tĩnh `S` hướng tới `192.168.2.0/24`, `192.168.3.0/24`, `192.168.4.0/24`, `192.168.5.0/24` đi qua Next-hop `10.10.10.1`.
+- **Nội dung giải thích báo cáo:**
+  > *Bảng định tuyến của R2 hiển thị các static route trỏ về các mạng VLAN nội bộ thông qua cổng Serial của R1. Nhờ đó, R2 biết cách trả gói tin phản hồi về cho các máy trạm thuộc VLAN 2, 3, 4, 5.*
+
+---
+
+## PHẦN 2: KIỂM TRA THÔNG MẠNG TOÀN DIỆN (PING)
+
+### 📸 HÌNH 3: Ping kiểm tra giữa hai PC KHÁC VLAN (Đã có Inter-VLAN Routing)
+- **Lệnh cần chạy:** Tại VPC2_1 (VLAN 2) gõ `ping 192.168.3.3` (VPC3_1 - VLAN 3)
+- **Kết quả mong đợi:** THÀNH CÔNG (Khác với Bài 1 bị thất bại, giờ đã thông mạng nhờ R1 định tuyến).
+- **Nội dung giải thích báo cáo:**
+  > *Hình ảnh ping thành công chéo giữa VLAN 2 và VLAN 3 chứng minh kỹ thuật định tuyến liên VLAN (Inter-VLAN Routing) cấu hình trên R1 đã hoạt động hoàn hảo. Gói tin đi từ VLAN 2 lên Gateway e0/0.2 của R1, được định tuyến sang subinterface e0/0.3 rồi chuyển tiếp xuống VLAN 3.*
+
+---
+
+### 📸 HÌNH 4: Ping từ máy trạm trong VLAN ra ngoài Internet/PC độc lập
+- **Lệnh cần chạy:** Tại VPC2_1 (VLAN 2) gõ `ping 172.16.0.7` (PC7)
+- **Kết quả mong đợi:** THÀNH CÔNG.
+- **Nội dung giải thích báo cáo:**
+  > *Hình ảnh ping thành công từ máy trạm VPC2_1 thuộc VLAN 2 sang máy trạm độc lập PC7 ở vùng mạng khác (172.16.0.0/24) chứng minh toàn bộ đường truyền định tuyến tĩnh giữa R1 và R2 đã liên thông hoàn toàn.*

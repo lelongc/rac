@@ -1,0 +1,222 @@
+=====================================================================
+# CÁC LỆNH CẤU HÌNH TUẦN 5 - BÀI 2 (ROUTING VLAN / INTER-VLAN ROUTING)
+=====================================================================
+
+THÔNG TIN SINH VIÊN:
+- Tên: Long
+- MSSV: 23630851
+
+---------------------------------------------------------------------
+1. THIẾT BỊ: SW_SERVER (VTP SERVER)
+---------------------------------------------------------------------
+enable
+configure terminal
+vtp domain Long
+vtp password 23630851
+vtp version 2
+vtp mode server
+vlan 2
+ name IT
+vlan 3
+ name IS
+vlan 4
+ name SE
+vlan 5
+ name CS
+interface range e0/0 - 3
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+end
+write memory
+
+
+---------------------------------------------------------------------
+2. THIẾT BỊ: SW_CL1 (VTP CLIENT 1)
+---------------------------------------------------------------------
+enable
+configure terminal
+vtp domain Long
+vtp password 23630851
+vtp version 2
+vtp mode client
+interface range e0/0 - 2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+ exit
+interface range e1/0 - 2
+ switchport mode access
+ switchport access vlan 2
+ no shutdown
+ exit
+interface e1/3
+ switchport mode access
+ switchport access vlan 3
+ no shutdown
+ exit
+interface range e2/0 - 1
+ switchport mode access
+ switchport access vlan 3
+ no shutdown
+ exit
+interface range e2/2 - 3
+ switchport mode access
+ switchport access vlan 4
+ no shutdown
+ exit
+interface e3/0
+ switchport mode access
+ switchport access vlan 4
+ no shutdown
+ exit
+interface range e3/1 - 3
+ switchport mode access
+ switchport access vlan 5
+ no shutdown
+ end
+write memory
+
+
+---------------------------------------------------------------------
+3. THIẾT BỊ: SW_CL2 (VTP CLIENT 2)
+---------------------------------------------------------------------
+enable
+configure terminal
+vtp domain Long
+vtp password 23630851
+vtp version 2
+vtp mode client
+interface range e0/0 - 2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+ exit
+interface range e1/0 - 2
+ switchport mode access
+ switchport access vlan 2
+ no shutdown
+ exit
+interface e1/3
+ switchport mode access
+ switchport access vlan 3
+ no shutdown
+ exit
+interface range e2/0 - 1
+ switchport mode access
+ switchport access vlan 3
+ no shutdown
+ exit
+interface range e2/2 - 3
+ switchport mode access
+ switchport access vlan 4
+ no shutdown
+ exit
+interface e3/0
+ switchport mode access
+ switchport access vlan 4
+ no shutdown
+ exit
+interface range e3/1 - 3
+ switchport mode access
+ switchport access vlan 5
+ no shutdown
+ end
+write memory
+
+
+---------------------------------------------------------------------
+4. THIẾT BỊ: R1 (ROUTER ĐỊNH TUYẾN CHÉO VLAN - ROUTER ON A STICK)
+---------------------------------------------------------------------
+enable
+configure terminal
+interface s1/0
+ ip address 10.10.10.1 255.255.255.0
+ no shutdown
+ exit
+interface e0/0
+ no shutdown
+ exit
+interface e0/0.2
+ encapsulation dot1Q 2
+ ip address 192.168.2.1 255.255.255.0
+ exit
+interface e0/0.3
+ encapsulation dot1Q 3
+ ip address 192.168.3.1 255.255.255.0
+ exit
+interface e0/0.4
+ encapsulation dot1Q 4
+ ip address 192.168.4.1 255.255.255.0
+ exit
+interface e0/0.5
+ encapsulation dot1Q 5
+ ip address 192.168.5.1 255.255.255.0
+ exit
+ip route 172.16.0.0 255.255.255.0 10.10.10.2
+end
+write memory
+
+
+---------------------------------------------------------------------
+5. THIẾT BỊ: R2 (ROUTER NỐI VỚI HOST NGOÀI)
+---------------------------------------------------------------------
+enable
+configure terminal
+interface s1/0
+ ip address 10.10.10.2 255.255.255.0
+ no shutdown
+ exit
+interface e0/0
+ ip address 172.16.0.1 255.255.255.0
+ no shutdown
+ exit
+ip route 192.168.2.0 255.255.255.0 10.10.10.1
+ip route 192.168.3.0 255.255.255.0 10.10.10.1
+ip route 192.168.4.0 255.255.255.0 10.10.10.1
+ip route 192.168.5.0 255.255.255.0 10.10.10.1
+end
+write memory
+
+
+---------------------------------------------------------------------
+6. CẤU HÌNH IP TRÊN CÁC MÁY TÍNH (VPCs)
+---------------------------------------------------------------------
+Nối vào SW_CL1:
+VPC2_1:
+ip 192.168.2.2 255.255.255.0 192.168.2.1
+save
+
+VPC3_1:
+ip 192.168.3.3 255.255.255.0 192.168.3.1
+save
+
+VPC4_1:
+ip 192.168.4.4 255.255.255.0 192.168.4.1
+save
+
+VPC5_1:
+ip 192.168.5.5 255.255.255.0 192.168.5.1
+save
+
+Nối vào SW_CL2:
+VPC2_2:
+ip 192.168.2.12 255.255.255.0 192.168.2.1
+save
+
+VPC3_2:
+ip 192.168.3.13 255.255.255.0 192.168.3.1
+save
+
+VPC4_2:
+ip 192.168.4.14 255.255.255.0 192.168.4.1
+save
+
+VPC5_2:
+ip 192.168.5.15 255.255.255.0 192.168.5.1
+save
+
+Máy Host độc lập (Nối vào R2):
+PC7:
+ip 172.16.0.7 255.255.255.0 172.16.0.1
+save

@@ -1,0 +1,43 @@
+=====================================================================
+# GIẢI THÍCH CHI TIẾT CẤU HÌNH TUẦN 5 - BÀI 2 (INTER-VLAN ROUTING)
+=====================================================================
+
+Dưới đây là phần giải thích chi tiết các lệnh cấu hình mới trong Bài 2, đặc biệt tập trung vào kỹ thuật Định tuyến giữa các VLAN (Inter-VLAN Routing) qua kỹ thuật "Router on a stick".
+
+---
+
+### I. CẤU HÌNH SUBINTERFACE TRÊN ROUTER R1 (ROUTER-ON-A-STICK)
+Do Switch hoạt động ở Layer 2 nên không thể định tuyến gói tin giữa các VLAN khác nhau (mỗi VLAN là một subnet riêng: 192.168.2.0, 192.168.3.0...). Chúng ta sử dụng một cổng vật lý duy nhất của Router R1 (`e0/0`) chia thành nhiều cổng ảo (Subinterfaces) để đóng vai trò làm Gateway cho từng VLAN.
+
+*   `interface e0/0.2`:
+    *   Tạo subinterface số 2 (thường đặt trùng số với VLAN ID để dễ quản lý) trên cổng vật lý `e0/0`.
+*   `encapsulation dot1Q 2`:
+    *   Bắt buộc phải gõ lệnh này trước khi đặt IP. Lệnh này chỉ định subinterface này sẽ xử lý các gói tin được gắn thẻ (tagged) VLAN 2 theo chuẩn IEEE 802.1Q.
+*   `ip address 192.168.2.1 255.255.255.0`:
+    *   Đặt địa chỉ IP cho subinterface. IP này sẽ đóng vai trò là **Default Gateway** cho tất cả các PC thuộc VLAN 2 (`VPC2_1` và `VPC2_2`).
+*   `no shutdown` trên cổng chính (`interface e0/0`):
+    *   Cổng vật lý chính phải được bật (`no shutdown`) thì các subinterfaces ảo mới có thể hoạt động (UP). Bản thân cổng chính không cần đặt IP.
+
+---
+
+### II. ĐỊNH TUYẾN TĨNH (STATIC ROUTING)
+Hệ thống mạng hiện tại được chia thành 2 khu vực định tuyến thông qua Router R1 và R2:
+- Khu vực VLANs (phía sau R1): gồm các dải `192.168.2.0/24` đến `192.168.5.0/24`.
+- Khu vực PC7 ngoài (phía sau R2): dải mạng `172.16.0.0/24`.
+
+Để các PC trong VLAN ping được PC7, hai Router phải biết đường đi tới mạng của nhau:
+
+*   **Trên R1:**
+    *   `ip route 172.16.0.0 255.255.255.0 10.10.10.2`
+    *   *Ý nghĩa:* Khi R1 nhận gói tin gửi tới mạng `172.16.0.0/24` (IP của PC7), nó sẽ chuyển tiếp tới địa chỉ Next-hop là `10.10.10.2` (cổng s1/0 của R2).
+
+*   **Trên R2:**
+    *   `ip route 192.168.2.0 255.255.255.0 10.10.10.1` (và tương tự cho VLAN 3, 4, 5)
+    *   *Ý nghĩa:* Khi R2 nhận gói tin phản hồi hoặc gửi tới các mạng VLAN phía sau R1, nó sẽ chuyển tiếp tới Next-hop là `10.10.10.1` (cổng s1/0 của R1).
+
+---
+
+### III. SỰ THAY ĐỔI CỦA PC GATEWAY (VPC)
+- Ở Bài 1, do không có Router làm Gateway nên lệnh đặt IP trên các VPC chỉ đơn giản là: `ip 192.168.0.2 255.255.255.0` (Không có Gateway ở cuối).
+- Ở Bài 2, để truyền gói tin ra khỏi VLAN của mình (ví dụ ping sang VLAN khác hoặc ping tới PC7), các VPC bắt buộc phải khai báo IP của Default Gateway (chính là IP của subinterface tương ứng trên R1):
+  *   Ví dụ trên `VPC2_1`: `ip 192.168.2.2 255.255.255.0 192.168.2.1` (Số `192.168.2.1` ở cuối chính là Gateway).

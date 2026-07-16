@@ -1,0 +1,183 @@
+========== RAW CONFIGURATION COMMANDS ==========
+
+========== Tên thiết bị: R1 (router) ==========
+enable
+configure terminal
+interface s1/0
+ip address 10.10.10.1 255.255.255.0
+no shutdown
+exit
+interface e0/0
+no shutdown
+exit
+interface e0/0.2
+encapsulation dot1Q 2
+ip address 192.168.2.1 255.255.255.0
+exit
+interface e0/0.3
+encapsulation dot1Q 3
+ip address 192.168.3.1 255.255.255.0
+exit
+interface e0/0.4
+encapsulation dot1Q 4
+ip address 192.168.4.1 255.255.255.0
+exit
+interface e0/0.5
+encapsulation dot1Q 5
+ip address 192.168.5.1 255.255.255.0
+exit
+ip route 172.16.0.0 255.255.255.0 10.10.10.2
+end
+write memory
+
+========== Tên thiết bị: R2 (router) ==========
+enable
+configure terminal
+interface s1/0
+ip address 10.10.10.2 255.255.255.0
+no shutdown
+exit
+interface e0/0
+ip address 172.16.0.1 255.255.255.0
+no shutdown
+exit
+ip route 192.168.2.0 255.255.255.0 10.10.10.1
+ip route 192.168.3.0 255.255.255.0 10.10.10.1
+ip route 192.168.4.0 255.255.255.0 10.10.10.1
+ip route 192.168.5.0 255.255.255.0 10.10.10.1
+end
+write memory
+
+========== Tên thiết bị: SW_SERVER (switch) ==========
+enable
+configure terminal
+vtp domain Long
+vtp password 23630851
+vtp version 2
+vtp mode server
+interface range e0/0 - 3
+switchport trunk encapsulation dot1q
+switchport mode trunk
+no shutdown
+exit
+vlan 2
+name IT
+exit
+vlan 3
+name IS
+exit
+vlan 4
+name SE
+exit
+vlan 5
+name CS
+exit
+end
+write memory
+
+========== Tên thiết bị: SW_CL1 (switch) ==========
+enable
+configure terminal
+vtp domain Long
+vtp password 23630851
+vtp version 2
+vtp mode client
+interface range e0/0 - 2
+switchport trunk encapsulation dot1q
+switchport mode trunk
+no shutdown
+exit
+interface range e1/0 - 2
+switchport mode access
+switchport access vlan 2
+no shutdown
+exit
+interface e1/3
+switchport mode access
+switchport access vlan 3
+no shutdown
+exit
+interface range e2/2 - 3
+switchport mode access
+switchport access vlan 4
+no shutdown
+exit
+interface range e3/1 - 3
+switchport mode access
+switchport access vlan 5
+no shutdown
+exit
+end
+write memory
+
+========== Tên thiết bị: SW_CL2 (switch) ==========
+enable
+configure terminal
+vtp domain Long
+vtp password 23630851
+vtp version 2
+vtp mode client
+interface range e0/0 - 2
+switchport trunk encapsulation dot1q
+switchport mode trunk
+no shutdown
+exit
+interface range e1/0 - 2
+switchport mode access
+switchport access vlan 2
+no shutdown
+exit
+interface e1/3
+switchport mode access
+switchport access vlan 3
+no shutdown
+exit
+interface range e2/2 - 3
+switchport mode access
+switchport access vlan 4
+no shutdown
+exit
+interface range e3/1 - 3
+switchport mode access
+switchport access vlan 5
+no shutdown
+exit
+end
+write memory
+
+========== Tên thiết bị: VPC2_1 (vpcs) ==========
+ip 192.168.2.2 255.255.255.0 192.168.2.1
+save
+
+========== Tên thiết bị: VPC3_1 (vpcs) ==========
+ip 192.168.3.3 255.255.255.0 192.168.3.1
+save
+
+========== Tên thiết bị: VPC4_1 (vpcs) ==========
+ip 192.168.4.4 255.255.255.0 192.168.4.1
+save
+
+========== Tên thiết bị: VPC5_1 (vpcs) ==========
+ip 192.168.5.5 255.255.255.0 192.168.5.1
+save
+
+========== Tên thiết bị: VPC2_2 (vpcs) ==========
+ip 192.168.2.12 255.255.255.0 192.168.2.1
+save
+
+========== Tên thiết bị: VPC3_2 (vpcs) ==========
+ip 192.168.3.13 255.255.255.0 192.168.3.1
+save
+
+========== Tên thiết bị: VPC4_2 (vpcs) ==========
+ip 192.168.4.14 255.255.255.0 192.168.4.1
+save
+
+========== Tên thiết bị: VPC5_2 (vpcs) ==========
+ip 192.168.5.15 255.255.255.0 192.168.5.1
+save
+
+========== Tên thiết bị: PC7 (vpcs) ==========
+ip 172.16.0.7 255.255.255.0 172.16.0.1
+save
+

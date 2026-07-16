@@ -1,0 +1,86 @@
+Chào bạn, với tư cách là một Chuyên gia Mạng Máy tính, tôi xin gửi đến bạn bản báo cáo chi tiết về việc triển khai hệ thống Inter-VLAN Routing và định tuyến tĩnh dựa trên cấu hình bạn đã cung cấp.
+
+---
+
+### PHẦN 1: CHẠY LỆNH CẤU HÌNH VÀ GIẢI THÍCH LỆNH
+
+#### 1. Router R1 (Router trung tâm thực hiện Inter-VLAN Routing)
+**Lệnh cấu hình:**
+```bash
+interface s1/0
+ ip address 10.10.10.1 255.255.255.0
+interface e0/0.2
+ encapsulation dot1Q 2
+ ip address 192.168.2.1 255.255.255.0
+interface e0/0.3
+ encapsulation dot1Q 3
+ ip address 192.168.3.1 255.255.255.0
+interface e0/0.4
+ encapsulation dot1Q 4
+ ip address 192.168.4.1 255.255.255.0
+interface e0/0.5
+ encapsulation dot1Q 5
+ ip address 192.168.5.1 255.255.255.0
+ip route 172.16.0.0 255.255.255.0 10.10.10.2
+```
+*   **Giải thích:**
+    *   `s1/0`: Đặt IP kết nối sang R2 để truyền tải dữ liệu giữa các mạng.
+    *   `e0/0.x`: Sử dụng kỹ thuật **Router-on-a-stick**. Các sub-interface này đóng vai trò là Default Gateway cho các VLAN tương ứng.
+    *   `encapsulation dot1Q x`: Gán nhãn VLAN cho gói tin để R1 hiểu được gói tin thuộc VLAN nào.
+    *   `ip route 172.16.0.0...`: Định tuyến tĩnh để R1 biết cách gửi dữ liệu đến mạng của PC7 thông qua R2 (Next-hop là 10.10.10.2).
+
+#### 2. Router R2 (Router biên)
+**Lệnh cấu hình:**
+```bash
+interface s1/0
+ ip address 10.10.10.2 255.255.255.0
+interface e0/0
+ ip address 172.16.0.1 255.255.255.0
+ip route 192.168.2.0 255.255.255.0 10.10.10.1
+ip route 192.168.3.0 255.255.255.0 10.10.10.1
+ip route 192.168.4.0 255.255.255.0 10.10.10.1
+ip route 192.168.5.0 255.255.255.0 10.10.10.1
+```
+*   **Giải thích:**
+    *   `ip route`: R2 cần biết đường về các mạng VLAN (192.168.x.0) nằm sau R1, do đó ta trỏ tất cả về IP của R1 (10.10.10.1).
+
+#### 3. Switch (VTP & VLAN)
+**Lệnh cấu hình (SW_SERVER):**
+```bash
+vtp domain Long
+vtp mode server
+vlan 2, 3, 4, 5
+interface range e0/0 - 3
+ switchport mode trunk
+```
+*   **Giải thích:**
+    *   `VTP`: Đồng bộ hóa cơ sở dữ liệu VLAN giữa các switch.
+    *   `Trunk`: Cho phép các gói tin mang nhãn VLAN đi qua giữa các switch và router.
+
+---
+
+### PHẦN 2: CÁC LỆNH KIỂM TRA (VERIFY) VÀ GIẢI THÍCH OUTPUT
+
+#### 1. Kiểm tra bảng định tuyến (R1)
+*   **Output:** `S 172.16.0.0/24 [1/0] via 10.10.10.2`
+*   **Giải thích:** Chữ **S** (Static) khẳng định tuyến đường đến mạng 172.16.0.0 đã được cấu hình thủ công thành công, trỏ qua R2.
+
+#### 2. Kiểm tra kết nối (Ping)
+*   **Output:** `Sending 5, 100-byte ICMP Echos to 172.16.0.7, timeout is 1 seconds: !!!!!`
+*   **Giải thích:** 5 dấu chấm than (**!!!!!**) chứng minh gói tin đã đi từ PC (VLAN 2) qua R1, qua R2 và đến được PC7 thành công, đồng thời nhận được phản hồi (echo reply).
+
+#### 3. Kiểm tra trạng thái cổng (R1)
+*   **Output:** `e0/0.2 192.168.2.1 YES manual up up`
+*   **Giải thích:** Trạng thái **up/up** chứng tỏ sub-interface đã hoạt động, sẵn sàng định tuyến cho VLAN 2.
+
+---
+
+### PHẦN 3: BÁO CÁO HOÀN THÀNH
+
+Hệ thống mạng đã được cấu hình thành công theo đúng yêu cầu đề bài:
+1.  **Inter-VLAN Routing:** Router R1 đã đảm nhận vai trò định tuyến giữa các VLAN 2, 3, 4, 5 thông qua các sub-interface.
+2.  **VTP:** Cấu trúc VLAN đã được đồng bộ hóa từ SW_SERVER xuống các SW_CL1 và SW_CL2.
+3.  **Định tuyến tĩnh:** R1 và R2 đã thiết lập bảng định tuyến đầy đủ, cho phép các PC trong các VLAN khác nhau có thể giao tiếp với PC7 (mạng 172.16.0.0/24).
+4.  **Kết nối:** Kết quả kiểm tra ping cho thấy toàn bộ hệ thống đã liên thông, đáp ứng đầy đủ các yêu cầu về kết nối và phân đoạn mạng.
+
+Hệ thống đã sẵn sàng đưa vào vận hành.

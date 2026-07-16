@@ -1,0 +1,72 @@
+Chào bạn, với tư cách là một Chuyên gia Mạng, tôi xin gửi đến bạn bản phân tích chuyên sâu về hệ thống mạng **InterVLAN Routing** mà bạn đã thiết kế.
+
+---
+
+### 1. BẢNG ĐỊNH TUYẾN (ROUTING TABLE) VÀ GIẢI THÍCH
+
+Dựa trên cấu hình, bảng định tuyến của R1 và R2 sẽ hiển thị như sau:
+
+#### Bảng định tuyến R1 (Router trung tâm):
+```text
+Gateway of last resort is not set
+C    192.168.2.0/24 is directly connected, Ethernet0/0.2
+C    192.168.3.0/24 is directly connected, Ethernet0/0.3
+C    192.168.4.0/24 is directly connected, Ethernet0/0.4
+C    192.168.5.0/24 is directly connected, Ethernet0/0.5
+C    10.10.10.0/24 is directly connected, Serial1/0
+S    172.16.0.0/24 [1/0] via 10.10.10.2
+```
+
+#### Bảng định tuyến R2 (Router biên):
+```text
+Gateway of last resort is not set
+C    172.16.0.0/24 is directly connected, Ethernet0/0
+C    10.10.10.0/24 is directly connected, Serial1/0
+S    192.168.2.0/24 [1/0] via 10.10.10.1
+S    192.168.3.0/24 [1/0] via 10.10.10.1
+S    192.168.4.0/24 [1/0] via 10.10.10.1
+S    192.168.5.0/24 [1/0] via 10.10.10.1
+```
+
+#### Giải thích các thành phần:
+*   **Mã định danh:**
+    *   **C (Connected):** Mạng được kết nối trực tiếp vào interface của Router. Router tự động học các mạng này khi cấu hình IP cho cổng.
+    *   **S (Static):** Tuyến đường tĩnh do quản trị viên cấu hình thủ công (Static Route).
+*   **Thông số [1/0]:**
+    *   **1 (Administrative Distance - AD):** Độ tin cậy của nguồn định tuyến. Static Route có AD mặc định là 1.
+    *   **0 (Metric):** Chi phí để đến đích. Đối với Static Route, giá trị này thường là 0 vì không có thuật toán tính toán đường đi phức tạp.
+*   **via 10.10.10.x:** Địa chỉ IP của Next-hop (Router kế tiếp) mà gói tin cần gửi tới để đến được mạng đích.
+
+**Chứng minh hội tụ:** Hệ thống sử dụng định tuyến tĩnh (Static Routing). Sự "hội tụ" ở đây được xác nhận khi các bảng định tuyến đã chứa đầy đủ các mạng đích (Remote Networks) và các cổng kết nối trực tiếp (Directly Connected) ở cả hai phía R1 và R2. Không có xung đột IP và các interface đều ở trạng thái "up/up".
+
+---
+
+### 2. ĐƯỜNG ĐI CỦA GÓI TIN (PACKET PATH)
+
+Giả sử **VPC2_1 (192.168.2.2)** ping đến **PC7 (172.16.0.7)**:
+
+#### Bước 1: Từ VPC2_1 đến R1
+*   **Source IP:** 192.168.2.2 | **Dest IP:** 172.16.0.7
+*   **Source MAC:** MAC của VPC2_1 | **Dest MAC:** MAC của cổng R1 (e0/0.2).
+*   Gói tin đi qua SW_CL1 (gắn tag VLAN 2) -> SW_SERVER (trunk) -> R1.
+
+#### Bước 2: Tại R1 (Router on a Stick)
+*   R1 nhận gói tin tại sub-interface e0/0.2.
+*   R1 tra bảng định tuyến, thấy mạng 172.16.0.0/24 thuộc về Next-hop 10.10.10.2 (R2).
+*   R1 đóng gói lại gói tin:
+    *   **Source IP:** 192.168.2.2 (Giữ nguyên)
+    *   **Dest IP:** 172.16.0.7 (Giữ nguyên)
+    *   **Source MAC:** MAC cổng s1/0 của R1.
+    *   **Dest MAC:** MAC cổng s1/0 của R2.
+
+#### Bước 3: Tại R2
+*   R2 nhận gói tin tại cổng s1/0.
+*   R2 tra bảng định tuyến, thấy 172.16.0.0/24 là mạng **Connected** trên cổng e0/0.
+*   R2 chuyển gói tin ra cổng e0/0 để gửi đến PC7.
+    *   **Source MAC:** MAC cổng e0/0 của R2.
+    *   **Dest MAC:** MAC của PC7.
+
+#### Tổng kết thay đổi:
+1.  **IP Address:** Source và Destination IP **không bao giờ thay đổi** trong suốt quá trình truyền (trừ khi có NAT).
+2.  **MAC Address:** Thay đổi tại **mỗi Hop** (mỗi khi đi qua một Router). Router sẽ tháo bỏ Frame cũ (Layer 2) và đóng gói lại bằng Frame mới với địa chỉ MAC nguồn là của chính nó và MAC đích là của thiết bị kế tiếp.
+3.  **VLAN Tag:** Được thêm vào/gỡ bỏ bởi các Switch khi gói tin đi qua các đường Trunk (e0/0 của R1).
