@@ -1,0 +1,143 @@
+=====================================================================
+# HƯỚNG DẪN CHỤP HÌNH BÁO CÁO & GIẢI THÍCH KẾT QUẢ - BÀI 1 (TUẦN 5)
+=====================================================================
+
+Tài liệu này được thiết kế để bạn vừa biết cần chụp những hình ảnh nào trên EVE-NG, vừa có sẵn phần thuyết minh/giải thích chi tiết cho từng hình để dán thẳng vào file báo cáo nộp thầy cô.
+
+---
+
+## PHẦN 1: HÌNH ẢNH VÀ THUYẾT MINH TRÊN SWITCH SERVER (SW_SERVER)
+
+### 📸 HÌNH 1: Kiểm tra trạng thái VTP trên VTP Server
+- **Lệnh cần chạy:** `show vtp status`
+- **Kết quả lệnh của bạn:**
+```text
+Switch>show vtp status
+VTP Version capable             : 1 to 3
+VTP version running             : 2
+VTP Domain Name                 : Long
+VTP Pruning Mode                : Disabled
+Device ID                       : aabb.cc80.1000
+Feature VLAN:
+--------------
+VTP Operating Mode                : Server
+Maximum VLANs supported locally   : 1005
+Number of existing VLANs          : 9
+Configuration Revision            : 5
+MD5 digest                        : 0x5E 0xBC 0x6D 0xFC 0x11 0x1E 0xD5 0xBE
+                                    0xF6 0x05 0xE8 0xB5 0x41 0x69 0xE4 0xB3
+```
+- **Hướng dẫn chụp ảnh:** Chụp khoanh vùng kết quả lệnh `show vtp status` trên, đặc biệt làm nổi bật dòng `VTP Operating Mode : Server`, `VTP Domain Name : Long`, và `Configuration Revision : 5`.
+- **Nội dung giải thích ghi vào báo cáo:** 
+  > *Hình ảnh trên minh chứng SW_SERVER hoạt động đúng chế độ VTP Server với tên miền (Domain Name) là "Long", cấu hình phiên bản VTP chạy là Version 2. Chỉ số Configuration Revision hiện tại là 5 (thay đổi sau khi tạo các VLAN 2, 3, 4, 5). Mã MD5 digest dùng để đối chiếu xác thực đồng bộ giữa các Switch.*
+
+---
+
+### 📸 HÌNH 2: Bảng VLAN cơ sở dữ liệu trên SW_SERVER
+- **Lệnh cần chạy:** `show vlan brief`
+- **Kết quả lệnh của bạn:**
+```text
+Switch>show vlan brief
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Et1/0, Et1/1, Et1/2, Et1/3
+                                                Et2/0, Et2/1, Et2/2, Et2/3
+                                                Et3/0, Et3/1, Et3/2, Et3/3
+2    IT                               active
+3    IS                               active
+4    SE                               active
+5    CS                               active
+```
+- **Hướng dẫn chụp ảnh:** Chụp bảng danh sách VLAN, làm nổi bật các dòng VLAN 2, 3, 4, 5 với tên tương ứng (IT, IS, SE, CS).
+- **Nội dung giải thích ghi vào báo cáo:**
+  > *Hình ảnh bảng VLAN trên SW_SERVER cho thấy 4 VLAN mới đã được khởi tạo thành công trên Server (VLAN 2: IT, VLAN 3: IS, VLAN 4: SE, VLAN 5: CS). Vì SW_SERVER chỉ đóng vai trò trung chuyển ở lõi trung tâm nên không có cổng Access (cổng PC) nào được gán trực tiếp tại đây.*
+
+---
+
+### 📸 HÌNH 3: Trạng thái các cổng kết nối Trunking trên SW_SERVER
+- **Lệnh cần chạy:** `show interface trunk`
+- **Kết quả lệnh của bạn:**
+```text
+Switch>show interface trunk
+Port        Mode             Encapsulation  Status        Native vlan
+Et0/0       on               802.1q         trunking      1
+Et0/1       on               802.1q         trunking      1
+Et0/2       on               802.1q         trunking      1
+Et0/3       on               802.1q         trunking      1
+
+Port        Vlans allowed and active in management domain
+Et0/1       1-5
+Et0/2       1-5
+```
+- **Hướng dẫn chụp ảnh:** Chụp hiển thị trạng thái `trunking` và phần `Vlans allowed and active`.
+- **Nội dung giải thích ghi vào báo cáo:**
+  > *Bảng trạng thái đường Trunk trên SW_SERVER cho thấy các cổng kết nối xuống các Switch Client (Et0/1 và Et0/2) đang chạy ở chế độ Trunking (`Mode on`), sử dụng chuẩn đóng gói 802.1Q (`802.1q`). Các VLAN từ 1 đến 5 được phép truyền tải qua các đường trunk này.*
+
+---
+
+## PHẦN 2: HÌNH ẢNH VÀ THUYẾT MINH TRÊN SWITCH CLIENT 1 (SW_CL1)
+*(Tương tự cho SW_CL2 vì kết quả đồng bộ giống hệt nhau, bạn có thể chụp 1 trong 2 hoặc cả 2 để báo cáo dày hơn).*
+
+### 📸 HÌNH 4: Kiểm tra trạng thái đồng bộ VTP Client (SW_CL1)
+- **Lệnh cần chạy:** `show vtp status`
+- **Kết quả lệnh của bạn:**
+```text
+Switch>show vtp status
+VTP Domain Name                 : Long
+VTP Operating Mode                : Client
+Number of existing VLANs          : 9
+Configuration Revision            : 5
+MD5 digest                        : 0x5E 0xBC 0x6D 0xFC 0x11 0x1E 0xD5 0xBE
+```
+- **Hướng dẫn chụp ảnh:** Chụp khoanh vùng làm nổi bật dòng `VTP Operating Mode : Client` và `Configuration Revision : 5`.
+- **Nội dung giải thích ghi vào báo cáo:**
+  > *Hình ảnh trên minh chứng SW_CL1 đang chạy ở chế độ VTP Client. Chỉ số Configuration Revision đồng bộ trùng khớp tuyệt đối bằng 5 và mã MD5 digest trùng khớp hoàn toàn với SW_SERVER. Điều này chứng minh VTP Client đã xác thực thành công và sẵn sàng đồng bộ cơ sở dữ liệu VLAN từ Server.*
+
+---
+
+### 📸 HÌNH 5: Bảng VLAN đã đồng bộ và phân chia cổng trên VTP Client
+- **Lệnh cần chạy:** `show vlan brief`
+- **Kết quả lệnh của bạn:**
+```text
+Switch>show vlan brief
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Et0/3
+2    IT                               active    Et1/0, Et1/1, Et1/2
+3    IS                               active    Et1/3, Et2/0, Et2/1
+4    SE                               active    Et2/2, Et2/3, Et3/0
+5    CS                               active    Et3/1, Et3/2, Et3/3
+```
+- **Hướng dẫn chụp ảnh:** Chụp bảng VLAN, làm nổi bật cột VLAN ID, Name và cột Ports được phân chia.
+- **Nội dung giải thích ghi vào báo cáo:**
+  > *Bảng VLAN trên VTP Client SW_CL1 cho thấy: Dù không cấu hình tạo VLAN bằng tay tại đây, Client vẫn tự động đồng bộ đầy đủ 4 VLAN (2, 3, 4, 5) từ Server. Các cổng vật lý được phân chia chính xác vào các VLAN theo đúng yêu cầu đề bài (VLAN 2: cổng 4-6 tương ứng Et1/0-2, VLAN 3: cổng 7-9 tương ứng Et1/3-Et2/1, VLAN 4: cổng 10-12 tương ứng Et2/2-Et3/0, VLAN 5: cổng 13-15 tương ứng Et3/1-3).*
+
+---
+
+## PHẦN 3: MINH CHỨNG KẾT QUẢ PING (THÔNG MẠNG & CÁCH LY)
+
+### 📸 HÌNH 6: Kiểm tra thông mạng giữa hai PC CÙNG VLAN
+- **Lệnh cần chạy:** Tại VPC2_1 (VLAN 2) gõ `ping 192.168.0.12` (VPC2_2 - VLAN 2)
+- **Kết quả lệnh của bạn:**
+```text
+VPCS> ping 192.168.0.12
+84 bytes from 192.168.0.12 icmp_seq=1 ttl=64 time=0.495 ms
+84 bytes from 192.168.0.12 icmp_seq=2 ttl=64 time=1.043 ms
+...
+```
+- **Hướng dẫn chụp ảnh:** Chụp màn hình console của VPC2_1 có dòng ping thành công phản hồi liên tục.
+- **Nội dung giải thích ghi vào báo cáo:**
+  > *Hình ảnh kiểm tra ping thành công giữa VPC2_1 và VPC2_2 chứng minh: Các máy trạm thuộc cùng một VLAN (VLAN 2) nằm ở hai Switch vật lý khác nhau hoàn toàn có thể liên lạc thông suốt với nhau. Gói tin được gắn nhãn VLAN 2 truyền qua đường cáp Trunk thành công.*
+
+---
+
+### 📸 HÌNH 7: Kiểm tra tính năng cách ly giữa các PC KHÁC VLAN
+- **Lệnh cần chạy:** Tại VPC2_1 (VLAN 2) gõ `ping 192.168.0.3` (VPC3_1 - VLAN 3)
+- **Kết quả lệnh của bạn:**
+```text
+VPCS> ping 192.168.0.3
+host (192.168.0.3) not reachable
+```
+- **Hướng dẫn chụp ảnh:** Chụp màn hình console thông báo lỗi `host not reachable`.
+- **Nội dung giải thích ghi vào báo cáo:**
+  > *Hình ảnh trên cho thấy kết quả ping thất bại từ VPC2_1 (VLAN 2) sang VPC3_1 (VLAN 3). Điều này chứng minh tính năng bảo mật cách ly giữa các VLAN hoạt động đúng thiết kế. Do các VLAN là các broadcast domain Layer 2 riêng biệt và hệ thống không có thiết bị định tuyến Layer 3 (như Router) để chuyển tiếp gói tin, nên dữ liệu giữa các VLAN khác nhau bị chặn hoàn toàn.*

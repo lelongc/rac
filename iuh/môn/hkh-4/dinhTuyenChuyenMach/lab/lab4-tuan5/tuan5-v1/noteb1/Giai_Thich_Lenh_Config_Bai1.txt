@@ -1,0 +1,61 @@
+=====================================================================
+# GIẢI THÍCH CHI TIẾT CẤU HÌNH TUẦN 5 - BÀI 1 (VLAN & TRUNKING & VTP)
+=====================================================================
+
+Dưới đây là phần giải thích chi tiết các lệnh cấu hình đã sử dụng để giúp bạn nắm vững kiến thức phục vụ cho việc vấn đáp và thi cử.
+
+---
+
+### I. CÁC LỆNH CẤU HÌNH VTP (VLAN TRUNKING PROTOCOL)
+VTP là giao thức độc quyền của Cisco giúp đồng bộ hóa cơ sở dữ liệu VLAN giữa các Switch trong cùng một VTP Domain.
+
+*   `vtp domain TENSV`: 
+    *   Thiết lập tên miền VTP (VTP Domain) là "TENSV".
+    *   Chỉ các Switch có cùng VTP Domain mới có thể đồng bộ thông tin VLAN với nhau.
+*   `vtp password MSSV`:
+    *   Thiết lập mật khẩu bảo mật cho VTP Domain. Mật khẩu phải khớp trên tất cả các Switch tham gia đồng bộ.
+*   `vtp version 2`:
+    *   Kích hoạt VTP phiên bản 2, hỗ trợ các tính năng như Token Ring và cải thiện tính ổn định đồng bộ.
+*   `vtp mode server`:
+    *   Cấu hình Switch hoạt động ở chế độ Server.
+    *   Switch VTP Server có toàn quyền: Tạo, Xóa, Đổi tên VLAN. Các thông tin này sẽ được quảng bá xuống các Switch Client.
+*   `vtp mode client`:
+    *   Cấu hình Switch hoạt động ở chế độ Client.
+    *   Switch VTP Client chỉ nhận đồng bộ VLAN từ Server, không thể tự ý thêm, xóa hoặc sửa thông tin VLAN trên chính nó.
+
+---
+
+### II. CÁC LỆNH CẤU HÌNH TRUNKING
+Đường truyền Trunk (Trunk link) là đường truyền kết nối giữa các Switch với nhau, cho phép truyền tải dữ liệu của nhiều VLAN khác nhau trên cùng một sợi cáp vật lý.
+
+*   `switchport trunk encapsulation dot1q`:
+    *   Chỉ định phương thức đóng gói nhãn VLAN theo tiêu chuẩn IEEE 802.1Q (dot1q). Đây là tiêu chuẩn quốc tế và phổ biến nhất hiện nay.
+    *   *Lưu ý:* Lệnh này phải được gõ trước khi chuyển port sang mode trunk trên các dòng Switch hỗ trợ cả chuẩn ISL (như Cisco IOL L2).
+*   `switchport mode trunk`:
+    *   Cấu hình cổng vật lý hoạt động ở chế độ Trunking để trung chuyển dữ liệu giữa các Switch.
+
+---
+
+### III. CÁC LỆNH PHÂN CHIA VLAN VÀ GÁN CỔNG (ACCESS PORT)
+Access Port là cổng kết nối trực tiếp với thiết bị đầu cuối (PC, Laptop, Máy in), chỉ cho phép truyền tải dữ liệu của duy nhất một VLAN đã được chỉ định.
+
+*   `vlan <ID>` & `name <NAME>`:
+    *   Tạo cơ sở dữ liệu VLAN trên Server Switch (ví dụ: vlan 2, name IT).
+*   `switchport mode access`:
+    *   Chỉ định cổng hoạt động ở chế độ Access (kết nối trực tiếp PC).
+*   `switchport access vlan <ID>`:
+    *   Gán cổng đó vào VLAN chỉ định (ví dụ: vlan 2). Khi đó, các thiết bị cắm vào cổng này sẽ thuộc về VLAN 2.
+
+---
+
+### IV. CÁC LỆNH KIỂM TRA & GIẢI THÍCH TRẠNG THÁI (SHOW COMMANDS)
+Dùng để xác minh cấu hình khi giảng viên kiểm tra bài:
+
+*   `show vtp status`:
+    *   Xem trạng thái hoạt động của VTP. Cần kiểm tra: "VTP Operating Mode" (Server/Client), "VTP Domain Name" và "Configuration Revision".
+    *   *Mẹo vấn đáp:* "Configuration Revision" là số phiên bản cấu hình. Mỗi khi VTP Server thay đổi VLAN, số này sẽ tăng lên. Switch nào có số Revision cao hơn sẽ đè cấu hình lên Switch có số thấp hơn.
+*   `show vlan brief`:
+    *   Xem danh sách các VLAN đang tồn tại và các cổng vật lý tương ứng được gán vào từng VLAN.
+    *   *Mẹo vấn đáp:* Đối với VTP Client, sau khi đồng bộ, bảng `show vlan brief` sẽ tự động hiển thị đầy đủ các VLAN 2, 3, 4, 5 giống hệt như trên Server dù bạn không hề gõ lệnh tạo VLAN trên Client.
+*   `show interface trunk`:
+    *   Kiểm tra các cổng đang chạy chế độ Trunking, chuẩn đóng gói (802.1q) và danh sách các VLAN được phép truyền qua đường trunk (Vlans allowed on trunk).

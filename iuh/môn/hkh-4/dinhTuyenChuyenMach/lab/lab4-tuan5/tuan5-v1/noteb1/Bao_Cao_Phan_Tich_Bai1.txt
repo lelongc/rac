@@ -1,0 +1,65 @@
+=====================================================================
+# BÁO CÁO PHÂN TÍCH KẾT QUẢ THỰC HÀNH - BÀI 1 (TUẦN 5)
+=====================================================================
+
+Dưới đây là phần phân tích chi tiết kết quả chạy thực tế (từ các output log bạn thu được) để bạn tự tin điền vào báo cáo nộp bài và trả lời vấn đáp với giảng viên.
+
+---
+
+## 1. PHÂN TÍCH TRẠNG THÁI VTP (VLAN TRUNKING PROTOCOL)
+Từ output của lệnh `show vtp status`:
+- **VTP Domain Name**: `Long` (Đã cấu hình đúng tên miền đồng bộ).
+- **VTP Operating Mode**:
+  + `SW_SERVER` hoạt động ở chế độ **Server**.
+  + `SW_CL1` và `SW_CL2` hoạt động ở chế độ **Client**.
+- **Configuration Revision (Revision số 5)**:
+  + Cả 3 Switch đều đồng bộ chỉ số Revision là **5**.
+  + **Ý nghĩa:** Khi Server tạo 4 VLAN (2, 3, 4, 5), chỉ số Revision trên Server tăng lên 5. Nó quảng bá bản tin cập nhật VTP xuống các Switch Client. Hai Client thấy chỉ số Revision của Server cao hơn chỉ số cũ của chúng nên đã tự động cập nhật cơ sở dữ liệu VLAN.
+- **MD5 digest**: Mã hash MD5 trùng khớp tuyệt đối trên cả 3 Switch (`0x5E 0xBC 0x6D...`). Điều này chứng minh quá trình xác thực bằng VTP Password (`23630851`) diễn ra hoàn toàn chính xác.
+
+---
+
+## 2. PHÂN TÍCH ĐỒNG BỘ VLAN & PHÂN CHIA CỔNG
+Từ output của lệnh `show vlan brief`:
+- Mặc dù bạn **không gõ bất kỳ lệnh tạo VLAN nào** trên `SW_CL1` và `SW_CL2`, nhưng trong bảng của chúng đã xuất hiện đầy đủ các VLAN:
+  + `2 (IT)`
+  + `3 (IS)`
+  + `4 (SE)`
+  + `5 (CS)`
+  => Đây chính là minh chứng cho việc đồng bộ qua VTP hoạt động thành công.
+- Các cổng vật lý được gán chính xác vào các VLAN:
+  + VLAN 2: Quản lý các cổng từ `Et1/0` đến `Et1/2` (Port 4-6).
+  + VLAN 3: Quản lý các cổng từ `Et1/3` đến `Et2/1` (Port 7-9).
+  + VLAN 4: Quản lý các cổng từ `Et2/2` đến `Et3/0` (Port 10-12).
+  + VLAN 5: Quản lý các cổng từ `Et3/1` đến `Et3/3` (Port 13-15).
+
+---
+
+## 3. PHÂN TÍCH ĐƯỜNG TRUYỀN TRUNK (TRUNKING)
+Từ output của lệnh `show interface trunk`:
+- Các cổng kết nối giữa các Switch (`Et0/0`, `Et0/1`, `Et0/2`) đang chạy ở trạng thái **trunking** với chuẩn đóng gói nhãn **802.1q** (Encapsulation 802.1q).
+- Danh sách các VLAN được phép truyền qua đường trunk (`Vlans allowed on trunk`) bao gồm từ 1 đến 5. 
+- **Ý nghĩa:** Nhờ có cổng Trunk, các bản tin gán nhãn (tagged frames) của VLAN 2, 3, 4, 5 từ Switch Client mới có thể vượt qua Switch Server để truyền tới Switch Client còn lại một cách toàn vẹn.
+
+---
+
+## 4. GIẢI THÍCH KẾT QUẢ PING (TRẢ LỜI CÂU HỎI ĐỀ BÀI)
+
+### **a) Vì sao các PC cùng VLAN ping thấy nhau?**
+- **Kết quả thực tế:** 
+  + Từ `VPC2_1` (VLAN 2) ping `VPC2_2` (VLAN 2) thành công 100% (`time = 0.495 ms`).
+  + Từ `VPC5_1` (VLAN 5) ping `VPC5_2` (VLAN 5) thành công 100% (`time = 0.512 ms`).
+- **Giải thích:** 
+  + Các PC này tuy cắm ở 2 Switch khác nhau nhưng cùng thuộc một VLAN (cùng một broadcast domain Layer 2).
+  + Khi gói tin đi từ `VPC2_1` qua Switch Client 1, nó được dán nhãn (tag) VLAN 2. 
+  + Gói tin mang nhãn VLAN 2 được đi qua cổng Trunk nối lên Server rồi truyền xuống Client 2.
+  + Client 2 nhận diện nhãn VLAN 2, bóc nhãn và chuyển tiếp gói tin ra đúng cổng Access thuộc VLAN 2 để tới `VPC2_2`.
+
+### **b) Vì sao các PC khác VLAN không ping thấy nhau?**
+- **Kết quả thực tế:**
+  + Từ `VPC2_1` (VLAN 2) ping `VPC3_1` (VLAN 3) báo lỗi `host not reachable` (Thất bại).
+  + Từ `VPC5_1` (VLAN 5) ping `VPC4_1` (VLAN 4) báo lỗi `host not reachable` (Thất bại).
+- **Giải thích:**
+  + Mỗi VLAN là một miền quảng bá độc lập (Broadcast Domain) được cách ly hoàn toàn ở Layer 2.
+  + Gói tin gửi đi từ VLAN này không bao giờ có thể tự tràn sang VLAN khác ở cấp độ Switch (Layer 2).
+  + Để các PC khác VLAN giao tiếp được với nhau, bắt buộc phải có một thiết bị định tuyến Layer 3 (như Router hoặc Switch Layer 3) đứng ra làm nhiệm vụ định tuyến liên VLAN (Inter-VLAN Routing). Trong bài này không có Router nên các VLAN hoàn toàn bị cô lập với nhau.

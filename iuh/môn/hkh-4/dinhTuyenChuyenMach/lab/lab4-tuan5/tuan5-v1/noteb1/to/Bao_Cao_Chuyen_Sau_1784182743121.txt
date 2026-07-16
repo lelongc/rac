@@ -1,0 +1,71 @@
+Chào bạn, với tư cách là một Chuyên gia Mạng Máy tính, tôi xin gửi đến bạn bản báo cáo chi tiết về việc triển khai hệ thống VTP (VLAN Trunking Protocol) và phân đoạn mạng theo yêu cầu.
+
+---
+
+### PHẦN 1: CHẠY LỆNH CẤU HÌNH VÀ GIẢI THÍCH LỆNH
+
+#### 1. Thiết bị SW_SERVER (VTP Server)
+**Lệnh cấu hình:**
+```bash
+vtp domain Long
+vtp password 23630851
+vtp version 2
+vtp mode server
+interface range e0/0 - 3
+switchport trunk encapsulation dot1q
+switchport mode trunk
+no shutdown
+vlan 2, name IT
+vlan 3, name IS
+vlan 4, name SE
+vlan 5, name CS
+```
+**Giải thích:**
+*   **VTP Configuration:** Thiết lập domain "Long" và mật khẩu để đồng bộ hóa VLAN giữa các switch. Mode "server" cho phép thiết bị này tạo, xóa và sửa đổi thông tin VLAN.
+*   **Trunking:** Cấu hình các cổng e0/0-3 thành mode "trunk" để truyền tải lưu lượng của nhiều VLAN cùng lúc. Giao thức `dot1q` là chuẩn đóng gói VLAN phổ biến nhất hiện nay.
+*   **VLAN Creation:** Khai báo các VLAN (2, 3, 4, 5) để phân chia miền quảng bá (broadcast domain) cho các phòng ban.
+
+#### 2. Thiết bị SW_CL1 & SW_CL2 (VTP Clients)
+**Lệnh cấu hình:**
+```bash
+vtp domain Long
+vtp password 23630851
+vtp mode client
+interface range e0/0 - 2
+switchport trunk encapsulation dot1q
+switchport mode trunk
+interface range e1/0 - 2
+switchport mode access
+switchport access vlan 2
+... (tương tự cho các VLAN 3, 4, 5 trên các cổng tương ứng)
+```
+**Giải thích:**
+*   **VTP Client:** Chuyển sang mode "client" để tự động nhận cơ sở dữ liệu VLAN từ SW_SERVER, đảm bảo tính nhất quán trên toàn hệ thống.
+*   **Access Ports:** Cấu hình các cổng kết nối với VPC thành mode "access" và gán vào VLAN cụ thể. Điều này đảm bảo các thiết bị cuối chỉ nhận được dữ liệu thuộc VLAN của chính nó.
+
+---
+
+### PHẦN 2: CÁC LỆNH KIỂM TRA (VERIFY) VÀ GIẢI THÍCH OUTPUT
+
+#### 1. Kiểm tra trạng thái VTP
+**Output:** `show vtp status`
+*   **Giải thích:** Kiểm tra xem VTP Domain đã khớp chưa, VTP Version là bao nhiêu và Mode hiện tại là gì. Nếu "VTP Operating Mode" hiển thị đúng "Server" hoặc "Client", hệ thống đã sẵn sàng đồng bộ.
+
+#### 2. Kiểm tra VLAN Database
+**Output:** `show vlan brief`
+*   **Giải thích:** Lệnh này liệt kê tất cả các VLAN hiện có. Nếu các VLAN 2, 3, 4, 5 xuất hiện trên cả SW_CL1 và SW_CL2, chứng tỏ quá trình đồng bộ VTP đã thành công.
+
+#### 3. Kiểm tra kết nối (Ping)
+**Output:** `ping 192.168.0.12` (từ VPC2_1 sang VPC2_2)
+*   **Giải thích:** Kết quả trả về `!!!!!` chứng minh gói tin ICMP đã đi qua đường Trunk giữa các switch thành công. Việc ping thông giữa các VPC trong cùng VLAN (VLAN 2) khẳng định cấu hình Access Port và Trunking đã chính xác.
+
+---
+
+### PHẦN 3: BÁO CÁO HOÀN THÀNH
+
+Sau khi thực hiện cấu hình VTP và phân chia VLAN trên các thiết bị, hệ thống đã đạt được các mục tiêu sau:
+1.  **Tính nhất quán:** Thông tin VLAN được quản lý tập trung từ SW_SERVER và đồng bộ hoàn hảo xuống các SW_CL1, SW_CL2 thông qua giao thức VTP.
+2.  **Phân đoạn mạng:** Các VPC được đặt vào đúng VLAN theo yêu cầu (VLAN 2 cho IT, VLAN 3 cho IS, v.v.), đảm bảo tính bảo mật và giảm thiểu lưu lượng quảng bá không cần thiết.
+3.  **Liên thông:** Hệ thống đã kiểm tra thành công khả năng kết nối giữa các thiết bị cùng VLAN thông qua các cổng Trunk.
+
+Hệ thống đã được cấu hình hoàn chỉnh, đáp ứng đầy đủ các yêu cầu kỹ thuật của đề bài. Mạng hoạt động ổn định và sẵn sàng cho việc mở rộng trong tương lai.

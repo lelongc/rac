@@ -84,7 +84,7 @@ def build_lab(json_file):
         if ntype == "router":
             xml += '      <node id="{}" name="{}" type="iol" template="iol" image="{}" ethernet="1" nvram="1024" ram="1024" serial="1" console="" delay="0" icon="Router.png" config="0" left="{}" top="{}">\\n'.format(node_id, node["name"], IMG_L3, node.get("left", 200), node.get("top", 200))
         elif ntype == "switch":
-            xml += '      <node id="{}" name="{}" type="iol" template="iol" image="{}" ethernet="1" nvram="1024" ram="1024" serial="0" console="" delay="0" icon="Switch.png" config="0" left="{}" top="{}">\\n'.format(node_id, node["name"], IMG_L2, node.get("left", 200), node.get("top", 200))
+            xml += '      <node id="{}" name="{}" type="iol" template="iol" image="{}" ethernet="4" nvram="1024" ram="1024" serial="0" console="" delay="0" icon="Switch.png" config="0" left="{}" top="{}">\\n'.format(node_id, node["name"], IMG_L2, node.get("left", 200), node.get("top", 200))
         elif ntype == "vpcs":
             xml += '      <node id="{}" name="{}" type="vpcs" template="vpcs" image="vpcs" ethernet="1" delay="0" icon="Desktop.png" config="0" left="{}" top="{}">\\n'.format(node_id, node["name"], node.get("left", 200), node.get("top", 200))
             

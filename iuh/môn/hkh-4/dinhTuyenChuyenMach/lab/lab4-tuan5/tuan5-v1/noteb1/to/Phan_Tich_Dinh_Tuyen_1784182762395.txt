@@ -1,0 +1,58 @@
+Chào bạn, với tư cách là một Chuyên gia Mạng Máy tính, tôi xin gửi đến bạn bản phân tích chuyên sâu về hệ thống mạng đã thiết kế.
+
+---
+
+### 1. PHÂN TÍCH BẢNG ĐỊNH TUYẾN (ROUTING TABLE)
+
+Trong mô hình thiết kế của bạn, hệ thống sử dụng **VTP (VLAN Trunking Protocol)** để đồng bộ hóa cơ sở dữ liệu VLAN giữa các Switch. Cần lưu ý rằng đây là mô hình **Layer 2 Switching**, do đó các thiết bị Switch trong bài lab này không thực hiện định tuyến (Routing) mà thực hiện chuyển mạch dựa trên địa chỉ MAC (MAC Address Table).
+
+#### Giải thích các thành phần trong bảng định tuyến (Giả định trên Router/L3 Switch):
+Nếu bạn triển khai thêm một Router hoặc Layer 3 Switch để kết nối các VLAN, bảng định tuyến sẽ xuất hiện các ký hiệu sau:
+
+*   **C (Connected):** Mạng được kết nối trực tiếp với cổng của thiết bị.
+*   **L (Local):** Địa chỉ IP cụ thể của cổng đó (thường là /32).
+*   **S (Static):** Tuyến đường tĩnh do quản trị viên cấu hình thủ công.
+*   **O (OSPF):** Tuyến đường học được từ giao thức định tuyến động OSPF.
+*   **Thông số [110/20]:** 
+    *   **110:** Là **Administrative Distance (AD)** - độ tin cậy của nguồn định tuyến (OSPF là 110).
+    *   **20:** Là **Metric** - chi phí để đến đích (thường dựa trên băng thông).
+*   **via IP:** Địa chỉ IP của Next-hop (bước nhảy tiếp theo) mà gói tin cần gửi tới.
+
+#### Về sự hội tụ (Convergence):
+Trong bài lab này, sự "hội tụ" không nằm ở bảng định tuyến mà nằm ở **VTP Domain**. Việc các Switch (SW_CL1, SW_CL2) nhận được đầy đủ các VLAN (2, 3, 4, 5) từ SW_SERVER chứng tỏ giao thức VTP đã hội tụ thành công. Bạn có thể kiểm tra bằng lệnh: `show vtp status` và `show vlan brief`.
+
+---
+
+### 2. ĐƯỜNG ĐI CỦA GÓI TIN (PACKET PATH)
+
+Xét trường hợp **VPC2_1 (192.168.0.2)** gửi gói tin đến **VPC2_2 (192.168.0.12)**. 
+
+**Lưu ý quan trọng:** Vì tất cả các PC của bạn đều nằm trong cùng một dải mạng `192.168.0.0/24`, quá trình truyền tin sẽ diễn ra ở **Layer 2 (Data Link Layer)** thông qua cơ chế ARP và MAC Address Table.
+
+#### Các bước di chuyển của gói tin:
+
+1.  **Tại VPC2_1:** 
+    *   PC kiểm tra Destination IP (192.168.0.12) và thấy cùng mạng với mình.
+    *   PC gửi gói tin **ARP Request** để hỏi: "Ai có IP 192.168.0.12, cho tôi xin địa chỉ MAC?".
+2.  **Tại SW_CL1:**
+    *   Nhận gói tin từ cổng `e1/0` (VLAN 2).
+    *   Switch học địa chỉ MAC của VPC2_1 và lưu vào bảng MAC Address Table.
+    *   Vì đây là gói tin Broadcast (ARP), Switch đẩy gói tin ra tất cả các cổng thuộc VLAN 2 (bao gồm cả cổng Trunk `e0/0` nối sang SW_SERVER).
+3.  **Tại SW_SERVER:**
+    *   Nhận gói tin qua cổng Trunk, giữ nguyên tag VLAN 2.
+    *   Chuyển tiếp gói tin qua cổng `e0/2` sang SW_CL2.
+4.  **Tại SW_CL2:**
+    *   Nhận gói tin, kiểm tra VLAN 2.
+    *   Đẩy gói tin ra cổng `e1/0` (nơi VPC2_2 đang kết nối).
+5.  **Tại VPC2_2:**
+    *   Nhận được ARP Request, phản hồi bằng **ARP Reply** chứa địa chỉ MAC của nó.
+    *   Sau khi có MAC, gói tin dữ liệu (ICMP Echo) sẽ được gửi trực tiếp từ VPC2_1 đến VPC2_2.
+
+#### Phân tích Header:
+*   **IP Source:** 192.168.0.2 (Giữ nguyên suốt quá trình).
+*   **IP Destination:** 192.168.0.12 (Giữ nguyên suốt quá trình).
+*   **MAC Source:** Thay đổi theo từng Hop (MAC của thiết bị gửi hiện tại).
+*   **MAC Destination:** Thay đổi theo từng Hop (MAC của thiết bị nhận tiếp theo).
+*   **VLAN Tag:** Gói tin được gắn tag VLAN 2 khi đi qua các đường Trunk giữa các Switch để đảm bảo tính phân tách dữ liệu.
+
+**Kết luận:** Hệ thống của bạn đã được thiết kế đúng chuẩn VTP để quản lý VLAN tập trung. Việc truyền tin giữa các PC cùng VLAN diễn ra thông suốt nhờ cơ chế chuyển mạch Layer 2. Nếu bạn muốn các PC khác VLAN (ví dụ VLAN 2 và VLAN 3) liên lạc được với nhau, bạn cần bổ sung một **Router** hoặc **Layer 3 Switch** để thực hiện **Inter-VLAN Routing (Router-on-a-stick hoặc SVI)**.

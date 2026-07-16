@@ -1,0 +1,93 @@
+Chào bạn, với tư cách là Chuyên gia Mạng, tôi xin gửi đến bạn bản báo cáo phân tích chi tiết cấu hình hệ thống mạng **VTP_VLAN_Lab**.
+
+Hệ thống này sử dụng giao thức **VTP (VLAN Trunking Protocol)** để đồng bộ hóa cơ sở dữ liệu VLAN giữa các switch, giúp quản trị viên tập trung hóa việc quản lý VLAN.
+
+---
+
+### 1. Thiết bị: SW_SERVER (Switch đóng vai trò VTP Server)
+
+**Lệnh cấu hình:**
+```bash
+enable
+configure terminal
+vtp domain Long
+vtp password 23630851
+vtp version 2
+vtp mode server
+interface range e0/0 - 3
+switchport trunk encapsulation dot1q
+switchport mode trunk
+no shutdown
+exit
+vlan 2
+name IT
+exit
+vlan 3
+name IS
+exit
+vlan 4
+name SE
+exit
+vlan 5
+name CS
+exit
+end
+```
+
+**Giải thích:**
+*   **VTP Configuration:** Thiết lập domain là "Long", mật khẩu "23630851" và phiên bản 2 để đảm bảo tính bảo mật và tương thích. Chế độ `server` cho phép thiết bị này tạo, sửa, xóa VLAN và quảng bá thông tin đó đến các switch khác.
+*   **Trunking:** Cấu hình các cổng từ e0/0 đến e0/3 thành cổng Trunk (giao thức 802.1Q) để truyền tải lưu lượng của nhiều VLAN giữa các switch.
+*   **VLAN Database:** Khởi tạo các VLAN 2, 3, 4, 5 với các tên tương ứng (IT, IS, SE, CS). Đây là cơ sở dữ liệu sẽ được đồng bộ xuống các switch client.
+
+---
+
+### 2. Thiết bị: SW_CL1 & SW_CL2 (Switch đóng vai trò VTP Client)
+
+*Lưu ý: Cấu hình của SW_CL1 và SW_CL2 tương tự nhau về logic.*
+
+**Lệnh cấu hình (Ví dụ cho SW_CL1):**
+```bash
+enable
+configure terminal
+vtp domain Long
+vtp password 23630851
+vtp version 2
+vtp mode client
+interface range e0/0 - 2
+switchport trunk encapsulation dot1q
+switchport mode trunk
+no shutdown
+exit
+interface range e1/0 - 2
+switchport mode access
+switchport access vlan 2
+no shutdown
+exit
+... (tương tự cho các VLAN 3, 4, 5)
+end
+```
+
+**Giải thích:**
+*   **VTP Client Mode:** Thiết lập chế độ `client` giúp switch tự động nhận thông tin VLAN từ VTP Server. Switch này không thể tạo/xóa VLAN cục bộ mà phải tuân theo Server.
+*   **Access Ports:** Các cổng e1/0 đến e3/3 được cấu hình ở chế độ `access` và gán vào các VLAN cụ thể (2, 3, 4, 5). Điều này phân tách các thiết bị đầu cuối (VPC) vào các phân đoạn mạng logic khác nhau, đảm bảo tính bảo mật và giảm miền quảng bá (broadcast domain).
+
+---
+
+### 3. Thiết bị: Các VPC (Virtual PC)
+
+**Lệnh cấu hình (Ví dụ cho VPC2_1):**
+```bash
+ip 192.168.0.2 255.255.255.0
+```
+
+**Giải thích:**
+*   **Địa chỉ IP:** Thiết lập IP tĩnh cho các VPC.
+*   **Subnet Mask (255.255.255.0):** Sử dụng dải mạng `/24`. Điều này có nghĩa là các thiết bị có cùng 3 octet đầu (192.168.0.x) thuộc cùng một mạng con.
+*   **Ý nghĩa:** Các VPC được gán IP trong cùng dải mạng nhưng được đặt vào các VLAN khác nhau trên Switch. Trong cấu hình này, nếu không có thiết bị định tuyến (Router/Layer 3 Switch) thực hiện "Inter-VLAN Routing", các VPC ở các VLAN khác nhau sẽ không thể giao tiếp với nhau, đảm bảo sự cô lập về mặt logic.
+
+---
+
+### Tóm tắt kiến trúc
+1.  **Tính nhất quán:** Nhờ VTP, khi bạn thêm một VLAN mới trên `SW_SERVER`, nó sẽ tự động xuất hiện trên `SW_CL1` và `SW_CL2`.
+2.  **Phân đoạn mạng:** Hệ thống chia thành 4 VLAN (IT, IS, SE, CS), giúp tối ưu hóa lưu lượng mạng và tăng cường bảo mật bằng cách ngăn chặn các thiết bị ở các phòng ban khác nhau truy cập trực tiếp vào nhau ở Layer 2.
+3.  **Kết nối:** Các cổng Trunk đóng vai trò là "đường cao tốc" cho phép lưu lượng của tất cả các VLAN đi qua giữa các switch.
