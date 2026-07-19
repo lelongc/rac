@@ -29,7 +29,7 @@
   + Cấu hình Redistribution (Phân phối lại tuyến đường) 2 chiều để OSPF học được tuyến của RIP và ngược lại.
   + Nhận Default Route từ Internet (qua DHCP) và dùng lệnh `default-information originate` để quảng bá route này vào trong mạng nội bộ, giúp các thiết bị bên trong biết đường đi ra ngoài.
   + Thiết lập NAT Overload (PAT) cho phép mạng LAN ra Internet bằng 1 IP Public.
-
+  + **Đặc biệt (Xử lý lỗi RIP v1):** Do RIP v1 là giao thức Classful, nó không thể quảng bá mạng Lớp C (`220.220.x.x`) đi qua đường link Lớp A (`10.10.x.x`) một cách chính xác tới R1, dẫn đến R1 làm rơi gói tin ICMP phản hồi từ Internet. Để khắc phục triệt để lỗi thiết kế này của RIP v1 mà không cần nâng cấp lên v2, ta cấu hình thêm 3 đường **Static Route** trên R1 trỏ ngược về R3 (`ip route 220.220.x.0 255.255.255.0 10.10.10.2`). Điều này thể hiện khả năng Troubleshooting và hiểu sâu về giao thức định tuyến.
 **b) Cấp phát IP:**
 - Theo yêu cầu, R2 cấp IP động (DHCP) cho mạng `172.16.0.0/16`.
 - Mặc dù R3 có thể cấu hình DHCP cấp cho VLAN 20, 30, 40, nhưng để **kiểm thử chính xác** các luật ACL (chỉ chặn IP từ .1 -> .127 và từ .128 -> .254), ta phải đặt IP tĩnh cho các máy PC (ví dụ: `.10` cho nửa đầu, và `.150` cho nửa sau) thay vì để DHCP cấp ngẫu nhiên.

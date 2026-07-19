@@ -143,6 +143,11 @@ router rip
  redistribute ospf 1 metric 2
 exit
 
+! Fix lỗi định tuyến của RIPv1 (bắt buộc)
+ip route 220.220.220.0 255.255.255.0 10.10.10.2
+ip route 220.220.230.0 255.255.255.0 10.10.10.2
+ip route 220.220.240.0 255.255.255.0 10.10.10.2
+
 ! OSPF
 router ospf 1
  network 20.20.0.0 0.0.255.255 area 0
