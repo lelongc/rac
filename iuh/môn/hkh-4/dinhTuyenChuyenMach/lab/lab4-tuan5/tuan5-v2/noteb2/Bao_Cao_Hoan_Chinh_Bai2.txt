@@ -1,0 +1,82 @@
+=====================================================================
+# BÁO CÁO HOÀN CHỈNH BÀI 2 (LAB 5-6 VLAN, OSPF, RIP, ACL)
+=====================================================================
+
+---
+
+## 1. THIẾT LẬP SƠ ĐỒ VÀ MÔ TẢ ĐẤU NỐI
+**a) Đấu nối Router và Internet:**
+- **R1** là Router biên, giao tiếp với Internet (NAT) qua cổng `e0/2`.
+- **R1** kết nối với **R3** (mạng RIP) qua đường link `10.10.10.0/16` (Cổng `e0/0`).
+- **R1** kết nối với **R2** (mạng OSPF) qua đường link `20.20.20.0/16` (Cổng `e0/1`).
+- **R2** nối xuống một mạng LAN độc lập `172.16.0.0/16`.
+
+**b) Đấu nối hạ tầng Switch và chia VLAN:**
+- **R3** kết nối xuống **SW-SERVER** bằng một cổng vật lý `e0/1`, sử dụng cấu hình **Router-on-a-stick** (chia sub-interface) để định tuyến cho các VLAN bên dưới.
+- **SW-SERVER** đóng vai trò là Switch phân phối, nối xuống 2 Switch Access là **SW_CL1** và **SW_CL2** thông qua các đường Trunk (đóng gói dot1q).
+- Tại **SW_CL1** và **SW_CL2**, các cổng Access được gán vào 3 VLAN tương ứng để cắm các máy PC:
+  + **VLAN 20 (Net ID 220.220.220.0/24):** Nối C1_VL20 và C4_VL20.
+  + **VLAN 30 (Net ID 220.220.230.0/24):** Nối C2_VL30 và C5_VL30.
+  + **VLAN 40 (Net ID 220.220.240.0/24):** Nối C3_VL40 và C6_VL40.
+
+---
+
+## 2. CẤU HÌNH ĐỊNH TUYẾN VÀ CẤP PHÁT IP
+**a) Định tuyến:**
+- **R3 (Miền RIP):** Chạy giao thức RIP v1 quảng bá các mạng `10.0.0.0` và 3 dải `220.220.x.0` của các VLAN.
+- **R2 (Miền OSPF):** Chạy OSPF Process 1 quảng bá mạng `20.20.0.0` và LAN `172.16.0.0`.
+- **R1 (Router Biên - ASBR):** Chạy đồng thời cả RIP và OSPF. 
+  + Cấu hình Redistribution (Phân phối lại tuyến đường) 2 chiều để OSPF học được tuyến của RIP và ngược lại.
+  + Nhận Default Route từ Internet (qua DHCP) và dùng lệnh `default-information originate` để quảng bá route này vào trong mạng nội bộ, giúp các thiết bị bên trong biết đường đi ra ngoài.
+  + Thiết lập NAT Overload (PAT) cho phép mạng LAN ra Internet bằng 1 IP Public.
+
+**b) Cấp phát IP:**
+- Theo yêu cầu, R2 cấp IP động (DHCP) cho mạng `172.16.0.0/16`.
+- Mặc dù R3 có thể cấu hình DHCP cấp cho VLAN 20, 30, 40, nhưng để **kiểm thử chính xác** các luật ACL (chỉ chặn IP từ .1 -> .127 và từ .128 -> .254), ta phải đặt IP tĩnh cho các máy PC (ví dụ: `.10` cho nửa đầu, và `.150` cho nửa sau) thay vì để DHCP cấp ngẫu nhiên.
+
+---
+
+## 3. PHÂN TÍCH LUẬT ACCESS CONTROL LIST (ACL) TRÊN R3
+
+Để giải quyết yêu cầu bài toán, ta thiết lập 3 danh sách Extended ACL tương ứng với 3 cổng SVI (Sub-interface) của R3: `VLAN20_ACL`, `VLAN30_ACL`, và `VLAN40_ACL`.
+
+### **a) Luật cấm giữa VLAN 20 và VLAN 30:**
+- Trên `VLAN20_ACL`: 
+  `deny ip 220.220.220.0 0.0.0.255 220.220.230.0 0.0.0.255`
+- Trên `VLAN30_ACL`:
+  `deny ip 220.220.230.0 0.0.0.255 220.220.220.0 0.0.0.255`
+*(Chặn toàn bộ lưu lượng IP chéo giữa 2 dải mạng).*
+
+### **b) Các luật lọc lưu lượng chi tiết trên VLAN 20:**
+- **Cấm dải .1 -> .127 ping đến VLAN 40:**
+  `deny icmp 220.220.220.0 0.0.0.127 220.220.240.0 0.0.0.255 echo`
+  *(Sử dụng Wildcard mask `0.0.0.127` khớp chính xác dải địa chỉ từ .0 đến .127).*
+- **Cấm dải .128 trở đi telnet đến VLAN 40:**
+  `deny tcp 220.220.220.128 0.0.0.127 220.220.240.0 0.0.0.255 eq 23`
+  *(Wildcard mask `0.0.0.127` kết hợp IP mạng `.128` khớp dải địa chỉ từ .128 đến .255. Giao thức TCP port 23 là Telnet).*
+
+### **c) Cấm VLAN 40 telnet đến Router R1:**
+- R1 có 2 IP kết nối trực tiếp với R2 và R3. Ta chặn telnet đến cả hai IP này:
+  `deny tcp 220.220.240.0 0.0.0.255 host 10.10.10.1 eq 23`
+  `deny tcp 220.220.240.0 0.0.0.255 host 20.20.20.1 eq 23`
+
+### **d) Điều khiển hướng truy cập Internet:**
+- **Yêu cầu:** VLAN 20, 30 không được đi Internet nhưng VLAN 40 thì được. (Định nghĩa "Internet" là tất cả các IP nằm ngoài các dải LAN nội bộ 10.x, 20.x, 172.16.x, 220.220.x).
+- **Giải pháp trên VLAN 20 và 30:** 
+  Cho phép truy cập các mạng nội bộ trước, sau đó chốt cuối cùng bằng một lệnh cấm truy cập mọi thứ khác (Internet).
+  ```text
+  permit ip <mạng VLAN> 10.10.0.0 0.0.255.255
+  permit ip <mạng VLAN> 20.20.0.0 0.0.255.255
+  permit ip <mạng VLAN> 172.16.0.0 0.0.255.255
+  permit ip <mạng VLAN> 220.220.0.0 0.0.255.255
+  deny ip <mạng VLAN> any    (-> Chặn đi Internet)
+  ```
+- **Giải pháp trên VLAN 40:**
+  Làm tương tự nhưng chia luật cho nửa đầu bị cấm hoàn toàn Internet, và nửa sau chỉ cấm lướt Web (Port 80/443):
+  ```text
+  (Cho phép đi nội bộ giống ở trên)
+  deny ip 220.220.240.0 0.0.0.127 any  (Dải .1 -> .127 cấm hoàn toàn đi Internet)
+  deny tcp 220.220.240.128 0.0.0.127 any eq 80  (Dải .128 -> .254 cấm web HTTP)
+  deny tcp 220.220.240.128 0.0.0.127 any eq 443 (Dải .128 -> .254 cấm web HTTPS)
+  permit ip any any  (Còn lại cho phép truy cập Internet)
+  ```

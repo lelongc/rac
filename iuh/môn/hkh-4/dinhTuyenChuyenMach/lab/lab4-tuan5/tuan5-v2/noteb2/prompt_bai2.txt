@@ -1,0 +1,90 @@
+- Khởi tạo sơ đồ:
+  + R1, R2, R3: Router Cisco IOL.
+  + SW_SERVER, SW_CL1, SW_CL2: Switch Cisco IOL.
+  + C1_VL20, C2_VL30, C3_VL40: VPCS kết nối vào SW_CL1.
+  + C4_VL20, C5_VL30, C6_VL40: VPCS kết nối vào SW_CL2.
+  + C7: VPCS kết nối vào R2.
+  + Cloud1: Mạng Internet kết nối vào R1 (NAT Node).
+
+- Đấu nối:
+  + R1 (e0/0) nối R3 (e0/0).
+  + R1 (e0/1) nối R2 (e0/0).
+  + R1 (e0/2) nối Cloud1 (e0/0).
+  + R3 (e0/1) nối SW_SERVER (e0/0).
+  + SW_SERVER (e0/1) nối SW_CL1 (e0/0).
+  + SW_SERVER (e0/2) nối SW_CL2 (e0/0).
+  + SW_CL1 (e0/1) nối C1_VL20.
+  + SW_CL1 (e0/2) nối C2_VL30.
+  + SW_CL1 (e0/3) nối C3_VL40.
+  + SW_CL2 (e0/1) nối C4_VL20.
+  + SW_CL2 (e0/2) nối C5_VL30.
+  + SW_CL2 (e0/3) nối C6_VL40.
+  + R2 (e0/1) nối C7.
+
+- Cấu hình IP Address & VLAN:
+  + Trên SW_SERVER, SW_CL1, SW_CL2: Tạo VLAN 20, 30, 40. Tắt IP Routing (chạy L2).
+  + Các cổng đấu nối giữa các Switch (SW_SERVER e0/1, e0/2, e0/0 và SW_CL1 e0/0, SW_CL2 e0/0): BẮT BUỘC phải gõ lệnh "switchport trunk encapsulation dot1q" TRƯỚC lệnh "switchport mode trunk" trên TỪNG CỔNG. Tuyệt đối không được bỏ sót lệnh encapsulation này vì đây là Switch IOL.
+  + Trên SW_CL1: Gán e0/1 vào VLAN 20, e0/2 vào VLAN 30, e0/3 vào VLAN 40 (Access).
+  + Trên SW_CL2: Gán e0/1 vào VLAN 20, e0/2 vào VLAN 30, e0/3 vào VLAN 40 (Access).
+  + R1 (e0/0): 10.10.10.1 255.255.0.0
+  + R3 (e0/0): 10.10.10.2 255.255.0.0
+  + R1 (e0/1): 20.20.20.1 255.255.0.0
+  + R2 (e0/0): 20.20.20.2 255.255.0.0
+  + R1 (e0/2): ip address dhcp (Cổng ra Internet).
+  + R2 (e0/1): 172.16.0.1 255.255.0.0
+  + Trên R3 (e0/1), tạo các Sub-interface (Router-on-a-stick):
+    * e0/1.20: 220.220.220.1 255.255.255.0 (encapsulation dot1Q 20)
+    * e0/1.30: 220.220.230.1 255.255.255.0 (encapsulation dot1Q 30)
+    * e0/1.40: 220.220.240.1 255.255.255.0 (encapsulation dot1Q 40)
+    * e0/1.1: 172.16.1.1 255.255.255.0 (encapsulation dot1Q 1 native)
+
+- Cấu hình IP tĩnh cho PC (Phục vụ test ACL):
+  + C1_VL20: 220.220.220.10/24 (Thuộc dải 1-127). GW: 220.220.220.1
+  + C4_VL20: 220.220.220.150/24 (Thuộc dải 128-254). GW: 220.220.220.1
+  + C2_VL30: 220.220.230.10/24. GW: 220.220.230.1
+  + C5_VL30: 220.220.230.150/24. GW: 220.220.230.1
+  + C3_VL40: 220.220.240.10/24 (Thuộc dải 1-127). GW: 220.220.240.1
+  + C6_VL40: 220.220.240.150/24 (Thuộc dải 128-254). GW: 220.220.240.1
+  + C7: 172.16.0.10/16. GW: 172.16.0.1
+
+- Routing & NAT:
+  + Cấu hình "no ip cef" trên R1, R2, R3 để chống lỗi EVE-NG.
+  + R3: Cấu hình RIP version 1, quảng bá network 10.0.0.0, 220.220.220.0, 220.220.230.0, 220.220.240.0.
+  + R2: Cấu hình OSPF process 1 area 0, quảng bá network 20.20.0.0 0.0.255.255, network 172.16.0.0 0.0.255.255.
+  + R1: 
+    * Cấu hình RIP version 1, network 10.0.0.0.
+    * Cấu hình OSPF process 1 area 0, network 20.20.0.0 0.0.255.255.
+    * Route Redistribution: Trong router ospf 1 (redistribute rip subnets). Trong router rip (redistribute ospf 1 metric 2).
+    * Quảng bá Default Route (default-information originate) vào cả RIP và OSPF.
+  + R1 NAT: Cấu hình NAT Overload trên R1 đẩy ra e0/2 (ip nat outside), các interface e0/0 và e0/1 là ip nat inside. Cho phép toàn bộ IP nội bộ được NAT.
+
+- Access Control List (ACL) cấu hình trên R3:
+  + Trên R3, tạo Extended ACL tên VLAN20_ACL và áp vào interface e0/1.20 chiều in:
+    * deny ip 220.220.220.0 0.0.0.255 220.220.230.0 0.0.0.255
+    * deny icmp 220.220.220.0 0.0.0.127 220.220.240.0 0.0.0.255 echo
+    * deny tcp 220.220.220.128 0.0.0.127 220.220.240.0 0.0.0.255 eq 23
+    * permit ip 220.220.220.0 0.0.0.255 10.10.0.0 0.0.255.255
+    * permit ip 220.220.220.0 0.0.0.255 20.20.0.0 0.0.255.255
+    * permit ip 220.220.220.0 0.0.0.255 172.16.0.0 0.0.255.255
+    * permit ip 220.220.220.0 0.0.0.255 220.220.0.0 0.0.255.255
+    * deny ip 220.220.220.0 0.0.0.255 any
+  
+  + Trên R3, tạo Extended ACL tên VLAN30_ACL và áp vào interface e0/1.30 chiều in:
+    * deny ip 220.220.230.0 0.0.0.255 220.220.220.0 0.0.0.255
+    * permit ip 220.220.230.0 0.0.0.255 10.10.0.0 0.0.255.255
+    * permit ip 220.220.230.0 0.0.0.255 20.20.0.0 0.0.255.255
+    * permit ip 220.220.230.0 0.0.0.255 172.16.0.0 0.0.255.255
+    * permit ip 220.220.230.0 0.0.0.255 220.220.0.0 0.0.255.255
+    * deny ip 220.220.230.0 0.0.0.255 any
+
+  + Trên R3, tạo Extended ACL tên VLAN40_ACL và áp vào interface e0/1.40 chiều in:
+    * deny tcp 220.220.240.0 0.0.0.255 host 10.10.10.1 eq 23
+    * deny tcp 220.220.240.0 0.0.0.255 host 20.20.20.1 eq 23
+    * permit ip 220.220.240.0 0.0.0.255 10.10.0.0 0.0.255.255
+    * permit ip 220.220.240.0 0.0.0.255 20.20.0.0 0.0.255.255
+    * permit ip 220.220.240.0 0.0.0.255 172.16.0.0 0.0.255.255
+    * permit ip 220.220.240.0 0.0.0.255 220.220.0.0 0.0.255.255
+    * deny ip 220.220.240.0 0.0.0.127 any
+    * deny tcp 220.220.240.128 0.0.0.127 any eq 80
+    * deny tcp 220.220.240.128 0.0.0.127 any eq 443
+    * permit ip any any

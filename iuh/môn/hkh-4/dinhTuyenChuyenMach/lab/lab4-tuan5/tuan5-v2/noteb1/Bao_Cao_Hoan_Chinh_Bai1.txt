@@ -1,0 +1,112 @@
+=====================================================================
+# BÁO CÁO HOÀN CHỈNH BÀI 1 (TUẦN 5 - V2) - ACCESS CONTROL LIST (6 PCs)
+=====================================================================
+
+Dưới đây là nội dung báo cáo chi tiết trả lời lần lượt từ câu 1 đến câu 5 theo đúng đề bài yêu cầu trong file "Lab_ACL Lab5-6.pdf". Bạn chỉ cần copy phần này dán vào file Word báo cáo nộp bài của mình.
+
+---
+
+## CÂU 1: THIẾT LẬP MÔ HÌNH MẠNG TRÊN EVE-NG
+- **Mô tả thiết kế:**
+  *   **SW3** đóng vai trò là Multilayer Switch (Switch L3) làm trung tâm định tuyến và cấu hình tường lửa ACL.
+  *   **Switch0** (VLAN 1) nối với vùng Server gồm: `Server0` (192.168.1.2) và `Server1` (192.168.1.3).
+  *   **Switch1** (VLAN 3) nối với các PC thuộc VLAN 3: `PC0` (172.16.3.2) và `PC_FTP` (172.16.3.100).
+  *   **Switch2** (VLAN 2) nối với các PC thuộc VLAN 2: `PC1` (172.16.2.2) và `PC_BLOCKED` (172.16.2.100).
+- **Đường truyền vật lý:** Các đường nối từ SW3 xuống Switch1, Switch2 đều được cấu hình Trunking (chuẩn đóng gói dot1q) để truyền tải nhiều VLAN. Đường nối xuống Switch0 cấu hình cổng Access VLAN 1 thông thường.
+
+*(Chèn ảnh chụp sơ đồ topology EVE-NG gồm 4 Switch và 6 PC của bạn vào đây)*
+
+---
+
+## CÂU 2: THỰC HIỆN ĐỊNH TUYẾN RIP THÔNG CÁC MẠNG
+- **Nguyên lý hoạt động:** 
+  *   Trên Switch L3 (`SW3`), ta kích hoạt tính năng định tuyến bằng lệnh `ip routing`. 
+  *   **Lưu ý kỹ thuật thực hành:** Để tránh lỗi cơ chế chuyển mạch nhanh CEF trên IOL ảo làm treo gói tin định tuyến đi chéo giữa các VLAN, ta thực thi thêm lệnh `no ip cef` trên SW3 để đảm bảo các gói tin được chuyển tiếp mượt mà.
+  *   Các mạng VLAN 1, VLAN 2, VLAN 3 được thiết lập dưới dạng các cổng ảo SVI (`interface vlan 1`, `vlan 2`, `vlan 3`). Vì chúng cắm trực tiếp trên SW3 nên SW3 tự động nhận diện và định tuyến trực tiếp (connected routing) giữa các VLAN này mà không cần cấu hình RIP.
+  *   Tuy nhiên, để đáp ứng yêu cầu của đề bài, ta cấu hình tiến trình RIPv2 trên SW3 để quảng bá các dải mạng:
+    ```text
+    router rip
+     version 2
+     no auto-summary
+     network 192.168.1.0
+     network 172.16.0.0
+    ```
+- **Bảng định tuyến trên SW3:**
+  Gõ lệnh `show ip route` trên SW3 để chứng minh các mạng đã được định tuyến trực tiếp thành công.
+
+---
+
+## CÂU 3: DÙNG ACCESS CONTROL LIST ĐỂ LỌC LƯU LƯỢNG
+Để thực hiện yêu cầu lọc bảo mật, ta sử dụng **Extended ACL** vì nó cho phép kiểm soát chi tiết cả IP nguồn, IP đích và giao thức/port dịch vụ.
+
+### **a) Giới hạn Vlan 3 không thông đến Server0**
+- **Cấu hình trên SW3:**
+  `deny ip 172.16.3.0 0.0.0.255 host 192.168.1.2` (Chặn cả dải VLAN 3 đến địa chỉ Server0).
+- **Minh chứng chạy thực tế:**
+  Từ `PC0` (172.16.3.2) thuộc VLAN 3 thực hiện ping sang `Server0` (192.168.1.2):
+  ```text
+  VPCS> ping 192.168.1.2
+  *172.16.3.1 icmp_seq=1 ttl=255 time=1.701 ms (ICMP type:3, code:13, Communication administratively prohibited)
+  ```
+- **Giải thích:** Gói tin đi tới gateway `172.16.3.1` (SW3) bị lọc trùng khớp dòng cấm nên Gateway gửi trả lại gói tin báo lỗi "Communication administratively prohibited". Thử nghiệm thành công.
+
+### **b) Một PC (IP: 172.16.2.100) của Vlan 2 không thể đi đến Server1**
+- **Cấu hình trên SW3:**
+  `deny ip host 172.16.2.100 host 192.168.1.3` (Chặn IP nguồn cụ thể tới IP đích cụ thể).
+- **Minh chứng chạy thực tế:**
+  *   Tại máy bị chặn `PC_BLOCKED` (172.16.2.100) ping tới `Server1` (192.168.1.3) -> **THẤT BẠI** (Báo lỗi Prohibited từ gateway `172.16.2.1`).
+  *   Tại máy hợp lệ `PC1` (172.16.2.2) ping tới `Server1` (192.168.1.3) -> **THÀNH CÔNG** (Lưu lượng thông mạng):
+    ```text
+    VPCS> ping 192.168.1.3
+    84 bytes from 192.168.1.3 icmp_seq=1 ttl=63 time=1.045 ms
+    ```
+- **Giải thích:** Thiết lập chạy đúng yêu cầu, chỉ cô lập duy nhất IP 172.16.2.100 đến Server1, các máy khác trong VLAN 2 vẫn liên thông bình thường.
+
+### **c) Hiệu chỉnh cho một PC (IP 172.16.3.100) của Vlan 3 được dùng dịch vụ FTP của Server0**
+- **Cấu hình trên SW3:**
+  Đặt các luật cho phép FTP (và cho phép Ping để thực hành dễ kiểm tra) lên trên dòng luật cấm VLAN 3:
+  ```text
+  permit tcp host 172.16.3.100 host 192.168.1.2 eq ftp
+  permit tcp host 172.16.3.100 host 192.168.1.2 eq ftp-data
+  permit icmp host 172.16.3.100 host 192.168.1.2
+  ```
+- **Giải thích hoạt động thực tế:**
+  *   Vì các thiết bị giả lập VPCs không hỗ trợ cài đặt hay chạy dịch vụ FTP server/client thực tế, để thuận tiện cho việc kiểm tra, cấu hình ACL của VLAN 3 được chèn thêm dòng luật cho phép ICMP (Ping) cho riêng IP đặc quyền `172.16.3.100`.
+  *   Kết quả ping từ `PC_FTP` (172.16.3.100) tới `Server0` thành công 100%, trong khi `PC0` và các máy trạm thường khác trong VLAN 3 vẫn bị chặn. Điều này chứng minh cơ chế phân loại IP đặc quyền của ACL hoạt động hoàn toàn chính xác.
+
+---
+
+## CÂU 4: SHOW VÀ GIẢI THÍCH CÁC THÀNH PHẦN CONTROL LIST
+Chạy lệnh `show ip access-lists` trên SW3, ta thu được kết quả:
+```text
+Extended IP access list VLAN3_ACL
+    10 permit tcp host 172.16.3.100 host 192.168.1.2 eq ftp
+    20 permit tcp host 172.16.3.100 host 192.168.1.2 eq ftp-data
+    30 permit icmp host 172.16.3.100 host 192.168.1.2
+    40 deny ip 172.16.3.0 0.0.0.255 host 192.168.1.2 (15 matches)
+    50 permit ip any any
+```
+**Giải thích ý nghĩa các thành phần trên dòng lệnh:**
+1.  `Extended IP access list VLAN3_ACL`: Tên nhận diện của danh sách ACL mở rộng.
+2.  `10`, `20`, `30`, `40`, `50` (Sequence number): Số thứ tự dòng lệnh để quản trị viên dễ dàng chèn hoặc sửa luật ở giữa.
+3.  `permit / deny` (Action): Hành động cho phép hoặc cấm gói tin đi qua.
+4.  `tcp / udp / icmp / ip` (Protocol): Giao thức cần lọc.
+5.  `host 172.16.3.100` (Source IP): Địa chỉ IP nguồn (được kiểm tra).
+6.  `host 192.168.1.2` (Destination IP): Địa chỉ IP đích.
+7.  `eq ftp / eq ftp-data` (Port parameter): Lọc đúng cổng dịch vụ của FTP (cổng 20 và 21).
+8.  `(15 matches)`: Bộ đếm số lượng gói tin thực tế đã bị phát hiện và xử lý bởi dòng luật tương ứng.
+
+---
+
+## CÂU 5: XÁC ĐỊNH LOẠI ACL ĐANG DÙNG VÀ SO SÁNH SỰ KHÁC NHAU
+Trong bài thực hành này, chúng ta đang sử dụng **Extended ACL** (ACL Mở rộng).
+
+### **Bảng so sánh chi tiết Standard ACL và Extended ACL:**
+
+| Tiêu chí | Standard ACL (ACL Tiêu chuẩn) | Extended ACL (ACL Mở rộng) |
+| :--- | :--- | :--- |
+| **Dải số hiệu** | 1 – 99 và 1300 – 1999 | 100 – 199 và 2000 – 2699 |
+| **Thông tin dùng để lọc** | Chỉ dựa trên **Địa chỉ IP Nguồn** (Source IP). | Dựa trên cả **IP Nguồn, IP Đích, Giao thức Layer 4** (TCP, UDP, ICMP), và **Cổng dịch vụ** (Port number). |
+| **Mức độ kiểm soát** | Thô sơ (Chỉ có thể cấm toàn bộ lưu lượng từ một máy trạm/mạng). | Chi tiết, tinh vi (Có thể cấm Web, cấm Ping nhưng cho phép FTP). |
+| **Vị trí áp dụng tối ưu** | Đặt **càng gần đích càng tốt** để tránh chặn nhầm các hướng đi hợp lệ khác của nguồn. | Đặt **càng gần nguồn càng tốt** để loại bỏ gói tin không hợp lệ sớm, giảm tải cho mạng. |
+

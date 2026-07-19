@@ -1,0 +1,84 @@
+Chào bạn, với tư cách là một Chuyên gia Mạng, tôi xin gửi đến bạn bản báo cáo phân tích chi tiết cấu hình cho hệ thống mạng **Network_VLAN_ACL_Lab**.
+
+---
+
+### 1. Thiết bị SW3 (Core Switch/Layer 3 Switch)
+Đây là thiết bị trung tâm thực hiện định tuyến giữa các VLAN và kiểm soát truy cập.
+
+**Lệnh cấu hình:**
+```text
+enable
+configure terminal
+ip routing
+vlan 2, vlan 3
+interface vlan 1/2/3 (đặt IP và no shutdown)
+interface e0/1 (access vlan 1)
+interface range e0/2 - 3 (trunk)
+router rip (version 2, no auto-summary, network...)
+ip access-list extended VLAN3_ACL / VLAN2_ACL
+```
+
+**Giải thích:**
+*   **`ip routing`**: Kích hoạt tính năng định tuyến Layer 3 trên Switch, cho phép các VLAN khác nhau giao tiếp với nhau.
+*   **`interface vlan X`**: Tạo các cổng ảo (SVI) đóng vai trò là Gateway mặc định cho các thiết bị trong VLAN tương ứng.
+*   **`interface e0/1`**: Cấu hình cổng truy cập (Access port) cho các Server thuộc VLAN 1.
+*   **`interface range e0/2 - 3`**: Cấu hình cổng Trunk (dot1q) để truyền tải dữ liệu của nhiều VLAN giữa các Switch.
+*   **`router rip`**: Cấu hình giao thức định tuyến RIPv2 để trao đổi bảng định tuyến. `no auto-summary` giúp tránh việc tóm tắt mạng sai lệch.
+*   **`ip access-list`**: 
+    *   **VLAN3_ACL**: Cho phép PC_FTP (172.16.3.100) truy cập FTP và ICMP đến Server0, nhưng chặn các thiết bị khác trong VLAN 3 truy cập Server0.
+    *   **VLAN2_ACL**: Chặn PC_BLOCKED (172.16.2.100) truy cập Server1.
+
+---
+
+### 2. Thiết bị Switch0
+**Lệnh cấu hình:**
+```text
+interface e0/1 (access vlan 1)
+```
+**Giải thích:** Cổng e0/1 kết nối với SW3, được cấu hình là Access port thuộc VLAN 1 để đưa các Server vào cùng phân đoạn mạng với Gateway trên SW3.
+
+---
+
+### 3. Thiết bị Switch1
+**Lệnh cấu hình:**
+```text
+interface e0/1 (trunk)
+vlan 3
+interface range e0/2 - 3 (access vlan 3)
+```
+**Giải thích:** 
+*   **Trunk**: Kết nối với SW3 để truyền tải VLAN 3.
+*   **Access vlan 3**: Gán các cổng kết nối PC0 và PC_FTP vào VLAN 3, đảm bảo chúng nhận Gateway từ SVI VLAN 3 trên SW3.
+
+---
+
+### 4. Thiết bị Switch2
+**Lệnh cấu hình:**
+```text
+interface e0/1 (trunk)
+vlan 2
+interface range e0/2 - 3 (access vlan 2)
+```
+**Giải thích:** Tương tự Switch1, thiết bị này đưa PC1 và PC_BLOCKED vào VLAN 2 để cách ly lưu lượng với các VLAN khác.
+
+---
+
+### 5. Các thiết bị đầu cuối (Server0, Server1, PC0, PC_FTP, PC1, PC_BLOCKED)
+**Lệnh cấu hình (Ví dụ cho Server0):**
+```text
+ip 192.168.1.2 255.255.255.0 192.168.1.1
+```
+
+**Giải thích:**
+*   **IP Address**: Gán địa chỉ IP tĩnh cho thiết bị.
+*   **Subnet Mask**: Xác định dải mạng (255.255.255.0 là mạng lớp C).
+*   **Gateway (192.168.1.1)**: Đây là địa chỉ IP của SVI trên SW3. Việc khai báo Gateway là bắt buộc để các thiết bị có thể gửi gói tin ra ngoài mạng nội bộ (liên VLAN).
+
+---
+
+### Tóm tắt kiến trúc bảo mật:
+*   **Phân đoạn mạng (VLAN)**: Hệ thống được chia thành 3 VLAN (1, 2, 3) để tăng cường bảo mật và giảm lưu lượng quảng bá (broadcast).
+*   **Kiểm soát truy cập (ACL)**: Được áp dụng ngay tại cổng vào (inbound) của các SVI trên SW3. Điều này giúp chặn các gói tin không mong muốn ngay khi chúng vừa rời khỏi VLAN nguồn, tối ưu hóa hiệu năng xử lý của Switch.
+*   **Định tuyến**: RIPv2 đảm bảo tính tự động trong việc cập nhật đường đi giữa các mạng con.
+
+Báo cáo kết thúc. Nếu cần điều chỉnh thêm về chính sách ACL, vui lòng cho tôi biết!

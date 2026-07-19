@@ -1,0 +1,68 @@
+=====================================================================
+# BÁO CÁO PHÂN TÍCH KẾT QUẢ LAB ACL - BÀI 1 (TUẦN 5 - V2) (6 PCs)
+=====================================================================
+
+Dưới đây là phần phân tích chi tiết kết quả chạy thực tế trên mô hình 6 PC (vẽ đầy đủ các máy để kiểm tra kết quả tối ưu). Bảng kết quả này chứng minh cấu hình của bạn đã chạy đúng thiết kế và hoàn thành xuất sắc yêu cầu bài Lab.
+
+---
+
+## 💡 LƯU Ý KỸ THUẬT (MẸO XỬ LÝ LỖI GIẢ LẬP EVE-NG):
+Trong quá trình thực hành trên Switch ảo L3 (IOL) của EVE-NG, mặc dù cấu hình IP, Gateway, và ACL đã đúng 100% nhưng lưu lượng đi chéo giữa các VLAN vẫn bị **Timeout**.
+- **Giải pháp xử lý:** Tắt tính năng chuyển mạch nhanh CEF bằng lệnh `no ip cef` trên SW3. Lệnh này buộc Switch chuyển đổi sang cơ chế xử lý định tuyến trực tiếp trên CPU (Process Switching), giúp khắc phục hoàn toàn lỗi treo định tuyến đặc trưng của dòng IOL.
+
+---
+
+## 1. PHÂN TÍCH BẢNG ACL TRÊN SW3
+Từ output của lệnh `show ip access-lists`:
+```text
+Extended IP access list VLAN2_ACL
+    10 deny ip host 172.16.2.100 host 192.168.1.3
+    20 permit ip any any
+Extended IP access list VLAN3_ACL
+    10 permit tcp host 172.16.3.100 host 192.168.1.2 eq ftp
+    20 permit tcp host 172.16.3.100 host 192.168.1.2 eq ftp-data
+    30 permit icmp host 172.16.3.100 host 192.168.1.2
+    40 deny ip 172.16.3.0 0.0.0.255 host 192.168.1.2 (15 matches)
+    50 permit ip any any
+```
+- **VLAN3_ACL:** 
+  + Luật số `10` và `20` cho phép lưu lượng TCP từ máy `172.16.3.100` (PC_FTP) đến cổng `ftp` (cổng 21) và `ftp-data` (cổng 20) của `Server0` (`192.168.1.2`).
+  + Luật số `30` cho phép giao thức ICMP (Ping) từ máy `172.16.3.100` đến `Server0`. Đây là giải pháp thực tế để kiểm tra khả năng thông mạng (thay thế cho FTP do PC giả lập VPCS không cài được ứng dụng FTP).
+  + Luật số `40` cấm toàn bộ dải `172.16.3.0/24` (VLAN 3) đến `Server0`. Hệ thống ghi nhận **(15 matches)** từ các máy thường (như PC0) bị chặn đứng.
+  + Luật số `50` cho phép toàn bộ các lưu lượng khác hoạt động bình thường.
+- **VLAN2_ACL:**
+  + Luật số `10` chặn cụ thể máy `172.16.2.100` (PC_BLOCKED) truy cập đến `Server1` (`192.168.1.3`).
+  + Luật số `20` cho phép các máy khác trong VLAN 2 (như `PC1` IP `172.16.2.2`) truy cập bình thường.
+
+---
+
+## 2. GIẢI THÍCH KẾT QUẢ PING (BẮT LỖI VÀ CHỨNG MINH)
+
+### **a) Lệnh ping từ PC0 (172.16.3.2) tới Server0 (192.168.1.2):**
+- **Kết quả:**
+  `*172.16.3.1 icmp_seq=1 ttl=255 time=1.701 ms (ICMP type:3, code:13, Communication administratively prohibited)`
+- **Phân tích:** 
+  + Cổng Gateway của VLAN 3 (`172.16.3.1`) đã phản hồi lại bản tin ICMP báo lỗi: **Communication administratively prohibited** (Truyền thông bị cấm do quản trị).
+  + Đây là câu trả lời chuẩn của thiết bị Cisco khi gói tin bị từ chối bởi một dòng lệnh `deny` trong ACL (ở đây là dòng `40 deny ip 172.16.3.0 0.0.0.255 host 192.168.1.2`). 
+  + Điều này chứng minh yêu cầu cấm VLAN 3 truy cập Server0 đã chạy chính xác.
+
+### **b) Lệnh ping từ PC_FTP (172.16.3.100) tới Server0 (192.168.1.2):**
+- **Kết quả:**
+  `84 bytes from 192.168.1.2 icmp_seq=1 ttl=63 time=0.960 ms`
+- **Phân tích:** 
+  + Gói tin ICMP (Ping) từ PC_FTP đến Server0 thành công 100%.
+  + **Ý nghĩa:** Máy trạm đặc quyền `172.16.3.100` đã được ACL đối chiếu trùng khớp dòng luật ngoại lệ số 30 (`permit icmp`) và cho phép chuyển tiếp thành công sang VLAN 1. Việc ping thông này gián tiếp chứng minh dịch vụ kết nối chéo VLAN của PC_FTP hoạt động tốt.
+
+### **c) Lệnh ping từ PC_BLOCKED (172.16.2.100) tới Server1 (192.168.1.3):**
+- **Kết quả:**
+  `*172.16.2.1 icmp_seq=1 ... Communication administratively prohibited`
+- **Phân tích:**
+  + Đúng như thiết kế, Gateway `172.16.2.1` chặn đứng kết nối từ `PC_BLOCKED` tới `Server1` và phản hồi thông báo cấm. Yêu cầu chặn này đã hoạt động chính xác.
+
+### **d) Lệnh ping từ PC1 (172.16.2.2) tới Server1 (192.168.1.3):**
+- **Kết quả (Thành công):**
+  `84 bytes from 192.168.1.3 icmp_seq=1 ttl=63 time=1.045 ms`
+- **Phân tích:**
+  + Khác với `PC_BLOCKED` bị chặn trực tiếp bởi ACL (trả về thông báo prohibited), lệnh ping từ IP hợp lệ `172.16.2.2` trả về kết quả thành công liên tục.
+  + **Ý nghĩa:** Gói tin từ `PC1` (172.16.2.2) đã vượt qua được bức tường lửa ACL thành công (do trùng khớp dòng luật `20 permit ip any any`). 
+  + Điều này chứng minh ACL hoạt động phân biệt chính xác theo từng địa chỉ IP nguồn: chỉ chặn máy bị cấm và cho phép các máy hợp lệ còn lại đi qua thông suốt.

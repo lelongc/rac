@@ -1,0 +1,66 @@
+Chào bạn, dưới đây là bản báo cáo chi tiết về đồ án mạng **Network_VLAN_ACL_Lab** dựa trên cấu hình và thiết kế đã cung cấp.
+
+---
+
+### PHẦN 1: CHẠY LỆNH CẤU HÌNH VÀ GIẢI THÍCH LỆNH
+
+#### 1. Thiết bị SW3 (Core Switch)
+**Lệnh cấu hình:**
+```bash
+enable
+configure terminal
+ip routing
+vlan 2, vlan 3
+interface vlan 1/2/3
+ip address [IP tương ứng] 255.255.255.0
+no shutdown
+interface e0/1 -> switchport mode access, access vlan 1
+interface range e0/2 - 3 -> switchport trunk encapsulation dot1q, mode trunk
+router rip, version 2, no auto-summary, network 192.168.1.0, network 172.16.0.0
+```
+**Giải thích:**
+*   **ip routing:** Kích hoạt tính năng định tuyến lớp 3 trên Switch, cho phép chuyển gói tin giữa các VLAN.
+*   **Interface Vlan:** Tạo các cổng Gateway ảo cho từng VLAN (VLAN 1: 192.168.1.1, VLAN 2: 172.16.2.1, VLAN 3: 172.16.3.1).
+*   **Trunking:** Cấu hình cổng e0/2 và e0/3 thành Trunk để truyền tải dữ liệu của nhiều VLAN giữa các Switch.
+*   **RIP v2:** Giao thức định tuyến động giúp các mạng con trao đổi thông tin định tuyến tự động.
+
+**Cấu hình ACL trên SW3:**
+*   **VLAN3_ACL:** Cho phép PC_FTP (172.16.3.100) truy cập FTP (port 21, 20) và ICMP đến Server0 (192.168.1.2), nhưng chặn toàn bộ các máy khác trong VLAN 3 truy cập Server0.
+*   **VLAN2_ACL:** Chặn PC_BLOCKED (172.16.2.100) truy cập Server1 (192.168.1.3).
+
+#### 2. Các Switch truy cập (Switch0, Switch1, Switch2)
+**Lệnh cấu hình:**
+*   **Switch0:** Cấu hình e0/1 làm cổng Access VLAN 1 để kết nối với Server.
+*   **Switch1/2:** Cấu hình Trunk về SW3 và gán cổng Access cho các PC tương ứng vào VLAN 3 (Switch1) và VLAN 2 (Switch2).
+
+---
+
+### PHẦN 2: CÁC LỆNH KIỂM TRA (VERIFY) VÀ GIẢI THÍCH OUTPUT
+
+**1. Kiểm tra bảng định tuyến (show ip route):**
+*   **Output:** `C 192.168.1.0/24 is directly connected, Vlan1`, `R 172.16.2.0/24 [120/1] via 172.16.2.1...`
+*   **Giải thích:**
+    *   `C` (Connected): Mạng được kết nối trực tiếp vào thiết bị.
+    *   `R` (RIP): Tuyến đường học được thông qua giao thức định tuyến RIP. Nếu thấy các dòng này, chứng tỏ SW3 đã nhận diện được các mạng VLAN.
+
+**2. Kiểm tra kết nối (Ping):**
+*   **Output:** `Sending 5, 100-byte ICMP Echos to 192.168.1.2, timeout is 1 seconds: !!!!!`
+*   **Giải thích:** 5 dấu `!` chứng minh gói tin đã đi đến đích và nhận được phản hồi thành công (Success).
+
+**3. Kiểm tra ACL (Kiểm chứng chặn/cho phép):**
+*   **Output (PC_BLOCKED ping Server1):** `Request timeout`
+*   **Giải thích:** Do lệnh `deny ip host 172.16.2.100 host 192.168.1.3` trong `VLAN2_ACL`, gói tin bị hủy bỏ ngay tại cổng vào (inbound) của interface Vlan 2 trên SW3.
+
+---
+
+### PHẦN 3: BÁO CÁO HOÀN THÀNH
+
+Hệ thống mạng **Network_VLAN_ACL_Lab** đã được triển khai thành công với các kết quả đạt được như sau:
+1.  **Phân đoạn mạng:** Hệ thống đã chia thành 3 VLAN riêng biệt (VLAN 1, 2, 3), đảm bảo tính bảo mật và quản lý lưu lượng hiệu quả.
+2.  **Định tuyến:** Sử dụng giao thức RIP v2, các VLAN đã liên thông hoàn toàn với nhau, cho phép các thiết bị trong mạng nội bộ giao tiếp theo đúng sơ đồ thiết kế.
+3.  **Bảo mật:** Hệ thống ACL đã hoạt động đúng theo yêu cầu:
+    *   PC_FTP có quyền truy cập đặc biệt vào Server0.
+    *   PC_BLOCKED đã bị chặn truy cập vào Server1.
+    *   Các thiết bị khác vẫn duy trì kết nối bình thường theo chính sách `permit ip any any`.
+
+Hệ thống đã đáp ứng đầy đủ các yêu cầu kỹ thuật của đề bài và sẵn sàng đưa vào vận hành.

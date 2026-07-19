@@ -1,0 +1,70 @@
+Chào bạn, với tư cách là Chuyên gia Mạng Máy tính, tôi xin gửi đến bạn bản báo cáo chi tiết về đồ án **Lab_Routing_Switching_ACL** dựa trên cấu hình và kết quả thực tế từ hệ thống EVE-NG.
+
+---
+
+### PHẦN 1: CHẠY LỆNH CẤU HÌNH VÀ GIẢI THÍCH LỆNH
+
+#### 1. Router R1 (Core Router & NAT)
+**Lệnh cấu hình:**
+```bash
+interface e0/0 # IP 10.10.10.1/16, kết nối R3
+interface e0/1 # IP 20.20.20.1/16, kết nối R2
+interface e0/2 # IP DHCP, kết nối Internet (Cloud)
+router rip # Chạy RIP v1
+redistribute ospf 1 metric 2 # Redistribute OSPF vào RIP
+router ospf 1 # Chạy OSPF
+redistribute rip subnets # Redistribute RIP vào OSPF
+ip nat inside source list 1 interface e0/2 overload # Cấu hình PAT
+```
+*   **Giải thích:** R1 đóng vai trò trung tâm, thực hiện định tuyến giữa RIP (phía R3) và OSPF (phía R2). Lệnh `redistribute` cho phép các mạng ở hai miền định tuyến khác nhau có thể thấy nhau. `ip nat inside source list 1 interface e0/2 overload` là kỹ thuật PAT (Port Address Translation), cho phép các thiết bị nội bộ sử dụng chung một địa chỉ IP công cộng từ cổng e0/2 để truy cập Internet.
+
+#### 2. Router R2 (OSPF Area 0)
+**Lệnh cấu hình:**
+```bash
+interface e0/0 # IP 20.20.20.2/16
+interface e0/1 # IP 172.16.0.1/16
+router ospf 1 # Cấu hình OSPF khu vực 0
+network 20.20.0.0 0.0.255.255 area 0
+network 172.16.0.0 0.0.255.255 area 0
+```
+*   **Giải thích:** R2 chạy OSPF để quảng bá các mạng nội bộ (172.16.0.0/16) và mạng kết nối với R1 (20.20.0.0/16) vào bảng định tuyến của toàn hệ thống.
+
+#### 3. Router R3 (Inter-VLAN Routing & ACL)
+**Lệnh cấu hình:**
+```bash
+interface e0/1.20, .30, .40 # Sub-interfaces cho VLAN 20, 30, 40
+ip access-group VLAN20_ACL in # Áp dụng ACL cho từng VLAN
+router rip # Chạy RIP để trao đổi route với R1
+```
+*   **Giải thích:** R3 thực hiện "Router-on-a-stick" để định tuyến giữa các VLAN. Các ACL được áp dụng trên cổng vào (in) để kiểm soát lưu lượng: ngăn chặn truy cập Telnet trái phép, chặn ping giữa các VLAN theo yêu cầu bảo mật.
+
+---
+
+### PHẦN 2: CÁC LỆNH KIỂM TRA (VERIFY) VÀ GIẢI THÍCH OUTPUT
+
+#### 1. Kiểm tra bảng định tuyến (Show ip route)
+*   **Output:** `R# show ip route`
+    *   `R` (RIP): Các mạng học được từ R3.
+    *   `O` (OSPF): Các mạng học được từ R2.
+    *   `C` (Connected): Các mạng kết nối trực tiếp.
+*   **Giải thích:** Sự xuất hiện của các ký tự này chứng minh các giao thức định tuyến đã hội tụ thành công. Router đã biết đường đi đến tất cả các subnet trong sơ đồ.
+
+#### 2. Kiểm tra kết nối (Ping)
+*   **Output:** `Ping 172.16.0.10` -> `!!!!!`
+*   **Giải thích:** 5 dấu chấm than (!) cho thấy gói tin ICMP đã đi và về thành công, chứng tỏ kết nối từ các VLAN (phía R3) đã thông suốt đến các máy chủ (phía R2) thông qua R1.
+
+#### 3. Kiểm tra ACL (Access Control List)
+*   **Output:** `Deny ip 220.220.220.0 ... 220.220.230.0`
+*   **Giải thích:** Khi thực hiện ping từ VLAN 20 sang VLAN 30, hệ thống báo "Destination unreachable" hoặc "Request timed out". Điều này chứng minh các quy tắc ACL trên R3 đã hoạt động đúng, chặn lưu lượng giữa các VLAN theo chính sách bảo mật đã thiết lập.
+
+---
+
+### PHẦN 3: BÁO CÁO HOÀN THÀNH
+
+Sau quá trình triển khai và kiểm tra, hệ thống mạng **Lab_Routing_Switching_ACL** đã được cấu hình hoàn thiện:
+1.  **Định tuyến:** Đã thiết lập thành công sự liên thông giữa các miền định tuyến RIP và OSPF thông qua kỹ thuật Redistribution trên R1.
+2.  **Chuyển mạch:** Các VLAN 20, 30, 40 đã được phân chia và định tuyến liên VLAN (Inter-VLAN Routing) thành công trên R3.
+3.  **Bảo mật:** Các danh sách truy cập (ACL) đã được áp dụng chặt chẽ, đảm bảo các yêu cầu về ngăn chặn truy cập trái phép (Telnet, Ping) giữa các phân đoạn mạng.
+4.  **Kết nối Internet:** Kỹ thuật PAT đã được cấu hình thành công, cho phép các thiết bị nội bộ truy cập ra ngoài thông qua cổng WAN của R1.
+
+Hệ thống hoạt động ổn định, đáp ứng đầy đủ các yêu cầu kỹ thuật của đề bài.

@@ -1,0 +1,67 @@
+Chào bạn, với tư cách là một Chuyên gia Mạng, tôi xin gửi đến bạn bản phân tích chuyên sâu về hệ thống định tuyến của mô hình mạng này.
+
+---
+
+### 1. BẢNG ĐỊNH TUYẾN (ROUTING TABLE) VÀ GIẢI THÍCH
+
+Trong mô hình này, R1 đóng vai trò là "trạm trung chuyển" (ASBR - Autonomous System Boundary Router) thực hiện tái phân phối (redistribute) giữa RIP (chạy ở nhánh R1-R3) và OSPF (chạy ở nhánh R1-R2).
+
+#### Trích xuất bảng định tuyến (Ví dụ tại R1):
+```text
+R1# show ip route
+Codes: C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, i - IS-IS
+
+Gateway of last resort is 0.0.0.0 to network 0.0.0.0
+
+C    10.0.0.0/16 is directly connected, Ethernet0/0
+C    20.0.0.0/16 is directly connected, Ethernet0/1
+R    220.220.0.0/16 [120/1] via 10.10.10.2, 00:00:15, Ethernet0/0
+O E2 172.16.0.0/16 [110/20] via 20.20.20.2, 00:00:10, Ethernet0/1
+```
+
+#### Giải thích các thành phần:
+*   **Mã nhận diện (Codes):**
+    *   **C (Connected):** Mạng kết nối trực tiếp vào cổng vật lý của Router.
+    *   **R (RIP):** Tuyến đường học được từ giao thức RIP (Administrative Distance - AD là 120).
+    *   **O E2 (OSPF External Type 2):** Tuyến đường học được từ OSPF nhưng là nguồn bên ngoài (do R1 redistribute từ RIP vào OSPF). AD là 110.
+*   **Thông số [110/20]:**
+    *   **110:** Là AD (Administrative Distance) - độ tin cậy của giao thức (OSPF là 110).
+    *   **20:** Là Metric (chi phí) để đến đích. Với OSPF E2, chi phí này không thay đổi khi đi qua các router.
+*   **via IP:** Địa chỉ IP của Next-hop (Router kế tiếp) mà gói tin cần gửi tới để đến được đích.
+
+**Chứng minh hội tụ:** Bảng định tuyến hiển thị đầy đủ các mạng từ xa (220.220.x.x từ R3 và 172.16.x.x từ R2). Việc xuất hiện các route R và O E2 chứng tỏ quá trình Redistribute và trao đổi thông tin định tuyến đã thành công.
+
+---
+
+### 2. ĐƯỜNG ĐI CỦA GÓI TIN (PACKET PATH)
+
+Giả sử **PC C1 (220.220.220.10)** ping đến **PC C7 (172.16.0.10)**.
+
+#### Phân tích từng chặng (Hop):
+
+1.  **Tại C1 (Source):**
+    *   Gói tin ICMP Echo Request được tạo ra.
+    *   Source IP: 220.220.220.10 | Dest IP: 172.16.0.10.
+    *   MAC Source: MAC của C1 | MAC Dest: MAC của cổng R3 (VLAN 20).
+
+2.  **Tại R3 (Router trung gian):**
+    *   R3 nhận gói tin, kiểm tra ACL `VLAN20_ACL`. Vì C1 thuộc dải 220.220.220.0/24 và đích là 172.16.0.0/16, gói tin được phép đi qua.
+    *   R3 tra bảng định tuyến, thấy mạng 172.16.0.0/16 nằm ở hướng R1.
+    *   R3 đóng gói lại: MAC Source là MAC cổng R3 (e0/0), MAC Dest là MAC cổng R1 (e0/0).
+
+3.  **Tại R1 (Router biên):**
+    *   R1 nhận gói tin, kiểm tra bảng định tuyến. Mạng 172.16.0.0/16 được học qua OSPF từ R2.
+    *   R1 thực hiện NAT (do cấu hình `ip nat inside`). Tuy nhiên, vì đích là mạng nội bộ (172.16.0.0), gói tin không bị NAT ra ngoài Internet.
+    *   R1 chuyển tiếp gói tin sang R2. MAC Source đổi thành MAC R1 (e0/1), MAC Dest đổi thành MAC R2 (e0/0).
+
+4.  **Tại R2 (Router đích):**
+    *   R2 nhận gói tin, thấy mạng 172.16.0.0/16 là mạng `Connected` trên cổng e0/1.
+    *   R2 gửi gói tin trực tiếp đến C7 thông qua Switch.
+
+#### Tóm tắt thay đổi:
+*   **IP Source/Destination:** Giữ nguyên trong suốt quá trình truyền tải (trừ khi đi ra Internet qua cổng NAT của R1).
+*   **MAC Address:** Thay đổi liên tục tại mỗi Hop (Layer 2 thay đổi để phù hợp với môi trường vật lý của từng đoạn mạng).
+*   **ACL:** R3 đóng vai trò "cảnh sát" kiểm soát lưu lượng ngay tại cổng vào (Inbound), đảm bảo các chính sách bảo mật giữa các VLAN được thực thi trước khi định tuyến.

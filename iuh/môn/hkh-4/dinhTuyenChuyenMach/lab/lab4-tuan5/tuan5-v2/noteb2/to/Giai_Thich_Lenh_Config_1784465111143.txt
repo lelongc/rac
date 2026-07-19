@@ -1,0 +1,65 @@
+Chào bạn, với tư cách là Chuyên gia Mạng, tôi xin gửi đến bạn bản báo cáo phân tích chi tiết cấu hình cho hệ thống mạng trong đề bài.
+
+---
+
+### 1. Router R1 (Core/Edge Router)
+**Cấu hình:**
+```text
+enable, configure terminal, no ip cef, interface e0/0, ip address 10.10.10.1 255.255.0.0, ip nat inside, no shutdown, interface e0/1, ip address 20.20.20.1 255.255.0.0, ip nat inside, no shutdown, interface e0/2, ip address dhcp, ip nat outside, no shutdown, router rip, version 1, network 10.0.0.0, redistribute ospf 1 metric 2, default-information originate, router ospf 1, network 20.20.0.0 0.0.255.255 area 0, redistribute rip subnets, default-information originate, access-list 1 permit any, ip nat inside source list 1 interface e0/2 overload
+```
+**Giải thích:**
+*   **IP & NAT:** R1 đóng vai trò biên. `e0/2` nhận IP động từ ISP (Cloud), được cấu hình `ip nat outside`. Các cổng nội bộ (`e0/0`, `e0/1`) là `ip nat inside`. Lệnh `overload` (PAT) cho phép toàn bộ mạng nội bộ truy cập Internet qua một IP duy nhất của cổng `e0/2`.
+*   **Định tuyến:** R1 thực hiện **Redistribution** giữa RIP (kết nối với R3) và OSPF (kết nối với R2). `default-information originate` giúp quảng bá tuyến đường mặc định (default route) xuống các router bên dưới để chúng có thể truy cập Internet.
+
+---
+
+### 2. Router R2 (OSPF Area 0)
+**Cấu hình:**
+```text
+enable, configure terminal, no ip cef, interface e0/0, ip address 20.20.20.2 255.255.0.0, no shutdown, interface e0/1, ip address 172.16.0.1 255.255.0.0, no shutdown, router ospf 1, network 20.20.0.0 0.0.255.255 area 0, network 172.16.0.0 0.0.255.255 area 0, end
+```
+**Giải thích:**
+*   R2 nằm trong vùng OSPF Area 0, kết nối R1 với mạng nội bộ `172.16.0.0/16` (nơi đặt thiết bị C7). Việc sử dụng OSPF giúp hội tụ mạng nhanh và quản lý bảng định tuyến hiệu quả trong vùng lõi.
+
+---
+
+### 3. Router R3 (Gateway & ACL Controller)
+**Cấu hình:**
+```text
+(Các lệnh interface sub-interface, ACL, và RIP)
+```
+**Giải thích:**
+*   **Sub-interfaces:** Sử dụng `encapsulation dot1Q` để thực hiện **Router-on-a-stick**, cho phép R3 đóng vai trò Gateway cho 3 VLAN (20, 30, 40) trên cùng một cổng vật lý `e0/1`.
+*   **ACL (Access Control List):**
+    *   `VLAN20_ACL`: Chặn giao tiếp nội bộ giữa các VLAN, chặn Telnet (port 23) từ VLAN 20 sang 40, nhưng cho phép truy cập các mạng khác.
+    *   `VLAN30_ACL`: Chặn giao tiếp với VLAN 20, cho phép truy cập các mạng còn lại.
+    *   `VLAN40_ACL`: Chặn Telnet đến R1, chặn truy cập Web (80/443) từ một dải IP cụ thể trong VLAN 40.
+*   **RIP:** Chạy RIP để trao đổi bảng định tuyến với R1.
+
+---
+
+### 4. Switch (SW_SERVER, SW_CL1, SW_CL2)
+**Cấu hình:**
+```text
+(Các lệnh vlan, switchport mode trunk/access)
+```
+**Giải thích:**
+*   **SW_SERVER:** Đóng vai trò Switch trung gian, cấu hình Trunking để truyền tải dữ liệu của nhiều VLAN từ R3 xuống các Switch truy cập.
+*   **SW_CL1 & SW_CL2:** Các Switch truy cập (Access Layer).
+    *   `switchport mode access`: Gán cổng vật lý vào VLAN cụ thể (VLAN 20, 30, 40).
+    *   `switchport mode trunk`: Kết nối giữa các Switch để duy trì thông tin VLAN trên toàn hệ thống.
+*   `no ip routing`: Đảm bảo các thiết bị này hoạt động ở Layer 2 (Switch thuần túy).
+
+---
+
+### 5. Thiết bị đầu cuối (VPCS: C1 đến C7)
+**Cấu hình:**
+```text
+ip [IP] [Subnet] [Gateway]
+```
+**Giải thích:**
+*   Các thiết bị được gán IP tĩnh tương ứng với dải mạng của từng VLAN.
+*   **Gateway:** Được trỏ về IP của các sub-interface tương ứng trên R3 (đối với C1-C6) hoặc R2 (đối với C7), cho phép các thiết bị này giao tiếp liên mạng (Inter-VLAN routing) và ra Internet.
+
+---
+*Báo cáo kết thúc. Hệ thống đã được thiết kế để đảm bảo phân đoạn mạng bằng VLAN, bảo mật bằng ACL và định tuyến linh hoạt giữa các vùng mạng.*

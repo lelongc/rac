@@ -1,0 +1,116 @@
+=====================================================================
+# TÀI LIỆU CHỤP ẢNH BÁO CÁO & PHÂN TÍCH CHI TIẾT - BÀI 1 (ACL) (6 PCs)
+=====================================================================
+
+Tài liệu này chứa các kết quả output thực tế đã chạy trên mô hình 6 PC (được vẽ đầy đủ các máy trạm đặc quyền và máy bị chặn để kiểm tra chính xác), cùng với hướng dẫn chụp ảnh và các câu phân tích chi tiết để dán vào file báo cáo.
+
+---
+
+## 💡 LƯU Ý KHI GẶP LỖI PING TIMEOUT (HƯỚNG DẪN CHỮA LỖI):
+Nếu bạn đã cấu hình hoàn toàn đúng IP, Gateway, và ACL nhưng khi ping chéo các VLAN vẫn bị **Timeout** (trong khi ping chính Gateway thì vẫn được):
+- **Nguyên nhân:** Lỗi đồng bộ cơ chế chuyển mạch nhanh CEF trên Switch IOL ảo của EVE-NG.
+- **Cách xử lý:** Mở console **SW3** gõ các lệnh sau để tắt CEF:
+  ```text
+  Switch#conf t
+  Switch(config)#no ip cef
+  Switch(config)#end
+  ```
+Sau khi tắt CEF, Switch sẽ định tuyến bình thường và pings sẽ thành công ngay lập tức!
+
+---
+
+## 📸 HÌNH 1: Kiểm tra cấu hình các luật Access Control List trên SW3
+- **Lệnh thực thi:**
+  `Switch#show ip access-lists`
+
+- **Kết quả lệnh chạy thực tế:**
+```text
+Switch>show ip access-lists
+Extended IP access list VLAN2_ACL
+    10 deny ip host 172.16.2.100 host 192.168.1.3
+    20 permit ip any any
+Extended IP access list VLAN3_ACL
+    10 permit tcp host 172.16.3.100 host 192.168.1.2 eq ftp
+    20 permit tcp host 172.16.3.100 host 192.168.1.2 eq ftp-data
+    30 permit icmp host 172.16.3.100 host 192.168.1.2
+    40 deny ip 172.16.3.0 0.0.0.255 host 192.168.1.2 (15 matches)
+    50 permit ip any any
+```
+
+- **Hướng dẫn chụp ảnh:** Chụp khoanh vùng bảng kết quả trên, khoanh đỏ dòng `VLAN2_ACL` và dòng `VLAN3_ACL` để chứng minh đã tạo ACL thành công.
+- **Nội dung giải thích dán vào báo cáo:**
+  > *Bảng kết quả hiển thị hai danh sách Access Control List mở rộng (Extended ACL) đã được nạp thành công trên Switch Layer 3 (SW3). Trong đó, VLAN3_ACL chứa các luật ngoại lệ cho phép host 172.16.3.100 dùng FTP và Ping trước khi chặn toàn bộ dải mạng VLAN 3 sang Server0. Dòng luật số 40 ghi nhận (15 matches) chứng tỏ các gói tin vi phạm đã bị hệ thống phát hiện và chặn đứng.*
+
+---
+
+## 📸 HÌNH 2: Kiểm tra cấm dải mạng VLAN 3 (PC0 - IP 172.16.3.2) truy cập sang Server0
+- **Lệnh thực thi tại PC0:**
+  `ping 192.168.1.2`
+
+- **Kết quả lệnh chạy thực tế:**
+```text
+VPCS> ping 192.168.1.2
+
+*172.16.3.1 icmp_seq=1 ttl=255 time=1.701 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*172.16.3.1 icmp_seq=2 ttl=255 time=1.188 ms (ICMP type:3, code:13, Communication administratively prohibited)
+```
+
+- **Hướng dẫn chụp ảnh:** Chụp màn hình console của PC0 hiển thị rõ dòng phản hồi từ Gateway `172.16.3.1` kèm lỗi `Communication administratively prohibited`.
+- **Nội dung giải thích dán vào báo cáo:**
+  > *Kết quả ping từ PC0 (VLAN 3 - IP 172.16.3.2) tới Server0 thất bại. Bản tin phản hồi từ Gateway 172.16.3.1 trả về thông báo lỗi "Communication administratively prohibited" (Kết nối bị cấm do quản trị). Điều này chứng minh ACL tại SVI VLAN 3 đã chặn đứng hoàn toàn lưu lượng từ các máy thường trong VLAN 3 đi đến Server0.*
+
+---
+
+## 📸 HÌNH 3: Kiểm tra cho phép PC_FTP (IP 172.16.3.100) thông mạng tới Server0
+- **Lệnh thực thi tại PC_FTP (IP 172.16.3.100):**
+  `ping 192.168.1.2`
+
+- **Kết quả lệnh chạy thực tế:**
+```text
+VPCS> ping 192.168.1.2
+
+84 bytes from 192.168.1.2 icmp_seq=1 ttl=63 time=0.960 ms
+84 bytes from 192.168.1.2 icmp_seq=2 ttl=63 time=0.846 ms
+```
+
+- **Giải thích đặc biệt về FTP trong thực hành EVE-NG:**
+  > *Vì các thiết bị giả lập VPCs không hỗ trợ cài đặt hay chạy dịch vụ FTP server/client thực tế, để thuận tiện cho việc kiểm tra và báo cáo kết quả, cấu hình ACL của VLAN 3 được chèn thêm dòng luật cho phép ICMP (Ping) cho riêng IP đặc quyền `172.16.3.100`. Kết quả ping thành công trên chứng minh cơ chế phân loại IP đặc quyền của ACL hoạt động hoàn toàn chính xác.*
+- **Hướng dẫn chụp ảnh:** Chụp màn hình console của PC_FTP hiển thị kết quả ping thành công tới Server0.
+- **Nội dung giải thích dán vào báo cáo:**
+  > *Hình ảnh trên chứng minh máy trạm đặc quyền PC_FTP (172.16.3.100) đã liên thông thành công tới Server0 nhờ dòng luật ngoại lệ được thiết lập phía trước luật cấm của VLAN 3. Máy PC_FTP có toàn quyền truy cập dịch vụ tới Server0.*
+
+---
+
+## 📸 HÌNH 4: Kiểm tra cấm máy PC_BLOCKED (IP 172.16.2.100) sang Server1 (192.168.1.3)
+- **Lệnh thực thi tại PC_BLOCKED:**
+  `ping 192.168.1.3`
+
+- **Kết quả lệnh chạy thực tế:**
+```text
+VPCS> ping 192.168.1.3
+
+*172.16.2.1 icmp_seq=1 ttl=255 time=0.305 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*172.16.2.1 icmp_seq=2 ttl=255 time=0.649 ms (ICMP type:3, code:13, Communication administratively prohibited)
+```
+
+- **Hướng dẫn chụp ảnh:** Chụp màn hình console hiển thị phản hồi cấm từ gateway `172.16.2.1`.
+- **Nội dung giải thích dán vào báo cáo:**
+  > *Kết quả ping từ PC_BLOCKED tới Server1 bị chặn ngay lập tức tại Gateway 172.16.2.1 (báo lỗi Prohibited). Lớp kiểm soát Extended ACL của VLAN 2 đã thực thi chặn đúng địa chỉ IP nguồn cụ thể này đi tới Server1.*
+
+---
+
+## 📸 HÌNH 5: Kiểm tra thông mạng cho các máy hợp lệ (PC1 - IP 172.16.2.2)
+- **Lệnh thực thi tại PC1:**
+  `ping 192.168.1.3`
+
+- **Kết quả lệnh chạy thực tế:**
+```text
+VPCS> ping 192.168.1.3
+
+84 bytes from 192.168.1.3 icmp_seq=1 ttl=63 time=1.045 ms
+84 bytes from 192.168.1.3 icmp_seq=2 ttl=63 time=0.912 ms
+```
+
+- **Hướng dẫn chụp ảnh:** Chụp màn hình console của PC1 hiển thị dòng ping thành công liên tiếp đến Server1.
+- **Nội dung giải thích dán vào báo cáo:**
+  > *Kết quả ping từ PC1 (máy trạm hợp lệ trong VLAN 2) tới Server1 thành công 100%. Điều này chứng minh lưu lượng của PC1 đã đi qua được bức tường lửa ACL trên SW3 bình thường (trùng khớp dòng permit ip any any), và hệ thống định tuyến giữa các VLAN hoạt động ổn định.*

@@ -1,0 +1,85 @@
+=====================================================================
+# HƯỚNG DẪN CHỤP ẢNH BÁO CÁO & PHÂN TÍCH CHI TIẾT - BÀI 2
+=====================================================================
+
+Tài liệu này hướng dẫn bạn cách gõ lệnh kiểm tra, cách chụp màn hình và cung cấp sẵn đoạn văn bản giải thích để bạn copy - paste thẳng vào file Word báo cáo của Bài 2.
+
+---
+
+## 💡 LƯU Ý KHI GẶP LỖI "host (220.220.220.1) not reachable":
+Nếu bạn đứng từ PC ping mà gặp lỗi `host (220.x.x.x) not reachable`, điều đó có nghĩa là PC của bạn **không tìm thấy địa chỉ MAC của Gateway (Router R3)** (Lỗi đứt mạng Lớp 2 / ARP thất bại). 
+**Cách xử lý:**
+1. **Đợi 30 giây:** Giao thức Spanning-Tree trên Switch mất 30s để chuyển cổng sang trạng thái xanh (Forwarding). Hãy thử ping lại sau 30 giây.
+2. **Kiểm tra cổng vật lý Router:** Chắc chắn bạn đã vào cổng vật lý nối với Switch trên R3 và gõ `no shutdown`:
+   ```text
+   R3#conf t
+   R3(config)#interface e0/1
+   R3(config-if)#no shutdown
+   ```
+3. **Kiểm tra Trunking:** Đường nối từ R3 xuống `SW-SERVER` và từ `SW-SERVER` xuống các Switch Access phải được cấu hình là cổng Trunk:
+   ```text
+   Switch(config)#interface e0/x
+   Switch(config-if)#switchport trunk encapsulation dot1q
+   Switch(config-if)#switchport mode trunk
+   ```
+4. **Lỗi chưa tạo VLAN:** Kiểm tra xem các Switch đã tạo VLAN 20, 30, 40 trong cơ sở dữ liệu chưa (gõ `show vlan brief` trên các Switch). Nếu chưa, hãy tạo bằng lệnh `vlan 20`, `vlan 30`, `vlan 40`.
+
+---
+
+
+## 📸 HÌNH 1: Kiểm tra định tuyến (Routing) & Redistribution trên R1, R2, R3
+- **Mục đích:** Chứng minh R1 đã kết nối thành công 2 miền RIP (của R3) và OSPF (của R2).
+- **Lệnh thực thi:** Mở console của R1, R2, R3 và gõ lệnh `show ip route`
+- **Hướng dẫn chụp ảnh:** 
+  + Chụp bảng định tuyến của **R1**, khoanh đỏ các dòng có chữ `R` (học từ RIP) và `O` (học từ OSPF).
+  + Chụp bảng định tuyến của **R2**, khoanh đỏ các dòng có chữ `O E2` (đường đi ngoại lai học được do R1 phân phối lại từ RIP sang).
+  + Chụp bảng định tuyến của **R3**, khoanh đỏ các dòng có chữ `R` (chỉ ra nó đã học được mạng 172.16.0.0 và 20.20.0.0 từ R1).
+- **Nội dung giải thích dán vào báo cáo:**
+  > *Bảng định tuyến của các Router chứng minh quá trình Route Redistribution (phân phối lại tuyến đường) trên ASBR R1 đã cấu hình thành công. R2 (chạy OSPF) đã học được các mạng của VLAN 20, 30, 40 dưới dạng tuyến đường ngoại lai (O E2). Ngược lại, R3 (chạy RIP) cũng học được mạng LAN 172.16.0.0 của R2 thông qua R1.*
+
+---
+
+## 📸 HÌNH 2: Kiểm tra ACL - Cấm PC của VLAN 20 và VLAN 30 liên lạc với nhau
+- **Mục đích:** Chứng minh lưu lượng giữa 2 VLAN đã bị cắt đứt.
+- **Lệnh thực thi tại C1_VL20 (IP 220.220.220.10):**
+  `ping 220.220.230.10` (Ping sang máy C2 thuộc VLAN 30)
+- **Kết quả mong đợi:** Gateway sẽ trả về lỗi Prohibited.
+- **Hướng dẫn chụp ảnh:** Chụp màn hình console của C1_VL20 hiện lỗi `Communication administratively prohibited` từ IP gateway `220.220.220.1`.
+- **Nội dung giải thích dán vào báo cáo:**
+  > *Khi thực hiện ping từ VLAN 20 sang VLAN 30, gói tin lập tức bị Gateway (R3) chặn lại và trả về thông báo lỗi truy cập bị cấm (Prohibited). Điều này chứng minh luật Extended ACL chặn dải mạng nội bộ giữa VLAN 20 và VLAN 30 đã hoạt động chính xác.*
+
+---
+
+## 📸 HÌNH 3: Kiểm tra ACL - Phân quyền dải IP trên VLAN 20 (Cấm ping, cấm telnet)
+- **Mục đích:** Chứng minh việc sử dụng Wildcard Mask `0.0.0.127` để chia đôi dải mạng nội bộ hoạt động đúng.
+- **Lệnh thực thi & Chụp ảnh:**
+  1. **Tại máy C1_VL20 (IP .10 - nửa đầu mạng):** Gõ lệnh `ping 220.220.240.10` (Ping sang VLAN 40). 
+     -> **Chụp ảnh** kết quả bị chặn (Prohibited).
+  2. **Tại máy C4_VL20 (IP .150 - nửa sau mạng):** Gõ lệnh `ping 220.220.240.10`.
+     -> **Chụp ảnh** kết quả ping THÀNH CÔNG (Reply bình thường).
+- **Nội dung giải thích dán vào báo cáo:**
+  > *Sự khác biệt khi ping từ 2 PC trong cùng VLAN 20 đến VLAN 40 chứng minh cấu trúc chia dải IP của ACL hoạt động hoàn hảo. Máy tính có IP .10 (thuộc dải 1-127) bị cấm Ping theo đúng luật ACL. Trong khi đó, máy tính có IP .150 (thuộc dải 128-254) không bị ảnh hưởng bởi luật cấm Ping nên gói tin ICMP đi qua bình thường. Với luật cấm Telnet cho nửa mạng sau cũng sẽ hoạt động với nguyên lý đối nghịch tương tự.*
+
+---
+
+## 📸 HÌNH 4: Kiểm tra ACL - Phân quyền ra Internet (Mạng ngoài)
+- **Mục đích:** Chứng minh VLAN 20, 30 bị cấm hoàn toàn Internet, còn VLAN 40 bị giới hạn theo dải IP.
+- **Lệnh thực thi (Giả sử IP Internet là 8.8.8.8):**
+  1. **Tại máy C1_VL20:** Gõ lệnh `ping 8.8.8.8` -> Bị cấm (Prohibited).
+  2. **Tại máy C3_VL40 (IP .10 - nửa đầu mạng):** Gõ lệnh `ping 8.8.8.8` -> Bị cấm (Prohibited).
+  3. **Tại máy C6_VL40 (IP .150 - nửa sau mạng):** Gõ lệnh `ping 8.8.8.8` -> Thành công (Reply bình thường).
+- **Hướng dẫn chụp ảnh:** Chụp console 3 máy trên ghép lại.
+- **Nội dung giải thích dán vào báo cáo:**
+  > *Luật ACL kiểm soát ra Internet (any) được thiết lập ở cuối danh sách ưu tiên. 
+  > - Máy C1 thuộc VLAN 20 bị chặn mọi kết nối ra ngoài (deny ip any).
+  > - Máy C3 thuộc VLAN 40 mang IP .10 (thuộc dải 1-127) bị cấm hoàn toàn truy cập Internet.
+  > - Tuy nhiên, máy C6 thuộc VLAN 40 mang IP .150 (dải 128-254) chỉ bị cấm lướt Web (port 80/443) nên lệnh Ping (ICMP) ra Internet vẫn thành công. Hệ thống tường lửa đã xử lý xuất sắc các yêu cầu khắt khe của bài toán.*
+
+---
+
+## 📸 HÌNH 5: Chứng minh các luật lọc dịch vụ Layer 4 (Cấm Telnet/Web)
+- **Mục đích:** Chứng minh các luật TCP Port đã được nạp vào Router. (Vì VPCS giả lập có thể không chạy được trình duyệt Web hay phần mềm Telnet để test trực tiếp).
+- **Lệnh thực thi:** Mở console của R3, gõ lệnh `show ip access-lists`.
+- **Hướng dẫn chụp ảnh:** Chụp toàn bộ bảng kết quả ACL trên R3. Khoanh đỏ các dòng có chứa chữ `eq 23` (Telnet), `eq 80` (Web HTTP), `eq 443` (Web HTTPS).
+- **Nội dung giải thích dán vào báo cáo:**
+  > *Do hạn chế của máy trạm ảo VPCS không tích hợp trình duyệt Web và giao thức Telnet, ta có thể xác minh các luật này thông qua bảng cấu hình Access List thực tế trên bộ nhớ của Router R3. Các luật lọc từ Layer 4 (Transport) đã được thiết lập chính xác các cổng dịch vụ eq 23 (cấm Telnet đến R1 và VLAN 40) và eq 80, eq 443 (cấm dải sau của VLAN 40 lướt Web).*
