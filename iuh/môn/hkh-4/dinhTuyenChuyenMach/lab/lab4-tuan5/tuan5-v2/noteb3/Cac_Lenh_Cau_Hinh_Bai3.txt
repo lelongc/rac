@@ -1,0 +1,176 @@
+﻿========== CẤU HÌNH VTP & VLAN (TRÊN CÁC SWITCH) ==========
+
+! 1. Cấu hình SW_SERVER (VTP Server)
+enable
+configure terminal
+vtp domain Lab5
+vtp password 12344321
+vtp mode server
+vlan 2
+ name Lan2
+vlan 3
+ name Lan3
+exit
+! Chú ý: Bắt buộc cấu hình encapsulation dot1q trước mode trunk (Đặc thù IOL)
+interface range e0/0, e0/2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+exit
+
+! 2. Cấu hình SW_CL (VTP Client)
+enable
+configure terminal
+vtp domain Lab5
+vtp password 12344321
+vtp mode client
+! Đợi đồng bộ VLAN từ Server, sau đó gán cổng access
+interface e2/0
+ switchport mode access
+ switchport access vlan 2
+ no shutdown
+interface e3/0
+ switchport mode access
+ switchport access vlan 3
+ no shutdown
+! Cổng uplink
+interface e0/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ no shutdown
+exit
+
+========== CẤU HÌNH ĐỊNH TUYẾN, DHCP VÀ ACL ==========
+
+! 3. Cấu hình R1 (Router-on-a-stick, DHCP, RIP, ACL)
+enable
+configure terminal
+no ip cef
+
+! Cấu hình DHCP Server cho các mạng
+ip dhcp pool VLAN2
+ network 192.168.2.0 255.255.255.0
+ default-router 192.168.2.1
+ip dhcp pool VLAN3
+ network 192.168.3.0 255.255.255.0
+ default-router 192.168.3.1
+ip dhcp pool NET100
+ network 192.168.100.0 255.255.255.0
+ default-router 192.168.100.1
+
+! Access-list cho VLAN 2 (Chỉ 192.168.2.1-10 được full quyền, còn lại chỉ Web)
+ip access-list extended ACL_VLAN2
+ permit ip 192.168.2.0 0.0.0.15 host 172.16.200.2
+ permit tcp 192.168.2.0 0.0.0.255 host 172.16.200.2 eq 80
+ permit tcp 192.168.2.0 0.0.0.255 host 172.16.200.2 eq 443
+ deny ip 192.168.2.0 0.0.0.255 host 172.16.200.2
+ permit ip any any
+exit
+
+! Access-list cho VLAN 3 (Chặn 192.168.3.200 - 254 truy cập WebServer 172.16.200.130)
+ip access-list extended ACL_VLAN3
+ deny ip 192.168.3.192 0.0.0.63 host 172.16.200.130
+ permit ip any any
+exit
+
+! Giao tiếp cổng
+interface e0/1
+ ip address 192.168.100.1 255.255.255.0
+ no shutdown
+interface s1/1
+ ip address 10.0.0.1 255.255.255.248
+ no shutdown
+interface e0/0
+ no shutdown
+interface e0/0.2
+ encapsulation dot1Q 2
+ ip address 192.168.2.1 255.255.255.0
+ ip access-group ACL_VLAN2 in
+interface e0/0.3
+ encapsulation dot1Q 3
+ ip address 192.168.3.1 255.255.255.0
+ ip access-group ACL_VLAN3 in
+exit
+
+! RIPv2
+router rip
+ version 2
+ no auto-summary
+ network 192.168.100.0
+ network 192.168.2.0
+ network 192.168.3.0
+ network 10.0.0.0
+exit
+
+! 4. Cấu hình R2 (Server Gateway, RIP)
+enable
+configure terminal
+no ip cef
+interface e0/0
+ ip address 172.16.200.1 255.255.255.240
+ no shutdown
+interface e0/1
+ ip address 172.16.200.129 255.255.255.240
+ no shutdown
+interface s1/0
+ ip address 10.0.0.130 255.255.255.248
+ no shutdown
+exit
+
+router rip
+ version 2
+ no auto-summary
+ network 172.16.0.0
+ network 10.0.0.0
+exit
+
+! 5. Cấu hình R3 (NAT, Default Route, RIP)
+enable
+configure terminal
+no ip cef
+interface s1/0
+ ip address 10.0.0.2 255.255.255.248
+ ip nat inside
+ no shutdown
+interface s1/1
+ ip address 10.0.0.129 255.255.255.248
+ ip nat inside
+ no shutdown
+interface e0/0
+ ip address dhcp
+ ip nat outside
+ no shutdown
+exit
+
+access-list 1 permit any
+ip nat inside source list 1 interface e0/0 overload
+
+router rip
+ version 2
+ no auto-summary
+ network 10.0.0.0
+ default-information originate
+exit
+
+========== CẤU HÌNH CÁC MÁY TÍNH (VPCS) ==========
+
+! C_VL2
+ip dhcp
+save
+
+! C_VL3
+ip dhcp
+save
+
+! VPC_R1 (Máy nối với cổng e0/1 của R1)
+ip dhcp
+save
+
+! WebServer1 (Nối e0/0 của R2)
+ip 172.16.200.2 255.255.255.240 172.16.200.1
+save
+
+! WebServer2 (Nối e0/1 của R2)
+ip 172.16.200.130 255.255.255.240 172.16.200.129
+save
+

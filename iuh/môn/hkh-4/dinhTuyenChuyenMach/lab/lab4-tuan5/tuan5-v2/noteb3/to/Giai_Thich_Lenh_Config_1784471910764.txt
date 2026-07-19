@@ -1,0 +1,72 @@
+Chào bạn, với tư cách là Chuyên gia Mạng, tôi xin gửi đến bạn bản báo cáo phân tích chi tiết cấu hình cho hệ thống mạng "Lab_VTP_RIP_NAT" như sau:
+
+---
+
+### 1. Thiết bị R1 (Router trung tâm)
+**Cấu hình:**
+*   Sử dụng Router-on-a-stick (giao diện con e0/0.2, e0/0.3) để định tuyến giữa các VLAN.
+*   Cấu hình DHCP Server cho các dải mạng nội bộ.
+*   Chạy giao thức định tuyến RIPv2.
+*   Áp dụng ACL để kiểm soát truy cập vào các Web Server.
+
+**Giải thích:**
+*   **Sub-interfaces (e0/0.2, e0/0.3):** Sử dụng `encapsulation dot1Q` để gắn thẻ VLAN, cho phép R1 đóng vai trò là Gateway cho các VLAN 2 và 3.
+*   **DHCP Pools:** Cung cấp IP tự động cho các thiết bị trong VLAN 2, 3 và dải 192.168.100.0.
+*   **RIPv2:** `no auto-summary` giúp tránh việc tóm tắt mạng sai lệch, đảm bảo các mạng con được quảng bá chính xác.
+*   **ACL (Access Control List):** 
+    *   `ACL_VLAN2`: Hạn chế quyền truy cập vào WebServer1 (172.16.200.2). Chỉ cho phép dải nhỏ truy cập toàn quyền, các dải khác chỉ được truy cập HTTP/HTTPS, còn lại bị chặn.
+    *   `ACL_VLAN3`: Chặn một dải IP cụ thể trong VLAN 3 truy cập vào WebServer2.
+
+---
+
+### 2. Thiết bị R3 (Router biên - NAT)
+**Cấu hình:**
+*   Kết nối giữa R1 và R2.
+*   Cấu hình NAT Overload (PAT) ra ngoài Internet.
+
+**Giải thích:**
+*   **NAT Inside/Outside:** `ip nat inside` trên các cổng nối với mạng nội bộ và `ip nat outside` trên cổng e0/0 (kết nối Internet) để thực hiện chuyển đổi địa chỉ.
+*   **NAT Overload:** `ip nat inside source list 1 interface e0/0 overload` cho phép toàn bộ mạng nội bộ dùng chung 1 IP công cộng của cổng e0/0 để truy cập Internet.
+*   **Default-information originate:** Lệnh này ép R3 quảng bá một tuyến đường mặc định (Default Route) vào giao thức RIP, giúp các Router khác (R1, R2) biết đường đi ra Internet.
+
+---
+
+### 3. Thiết bị R2 (Router phân đoạn)
+**Cấu hình:**
+*   Kết nối với các WebServer thông qua các cổng e0/0 và e0/1.
+*   Chạy RIPv2 để trao đổi bảng định tuyến với R3 và R1.
+
+**Giải thích:**
+*   **IP Subnetting:** Sử dụng subnet mask `/28` (255.255.255.240) cho các cổng e0/0 và e0/1, chia nhỏ không gian địa chỉ 172.16.200.0/24 thành các phân đoạn mạng nhỏ hơn cho các server.
+*   **RIPv2:** Quảng bá các mạng 172.16.0.0 và 10.0.0.0 để đảm bảo tính thông suốt toàn mạng.
+
+---
+
+### 4. Thiết bị SW_SERVER (VTP Server)
+**Cấu hình:**
+*   Thiết lập VTP Domain và chế độ Server.
+*   Cấu hình Trunking.
+
+**Giải thích:**
+*   **VTP (VLAN Trunking Protocol):** Đóng vai trò là trung tâm quản lý VLAN cho toàn hệ thống. Mọi thay đổi về VLAN tại đây sẽ được đồng bộ xuống các Switch Client.
+*   **Trunking:** `switchport mode trunk` cho phép truyền tải dữ liệu của nhiều VLAN qua một đường vật lý duy nhất.
+
+---
+
+### 5. Thiết bị SW_CL (VTP Client)
+**Cấu hình:**
+*   Nhận thông tin VLAN từ SW_SERVER.
+*   Cấu hình Access Port cho các thiết bị đầu cuối.
+
+**Giải thích:**
+*   **VTP Client:** Tự động cập nhật danh sách VLAN từ Server, giúp quản trị viên không phải cấu hình thủ công trên từng switch.
+*   **Access Ports:** Gán cổng e2/0 vào VLAN 2 và e3/0 vào VLAN 3, đảm bảo các thiết bị đầu cuối (PC) nằm đúng phân đoạn mạng mong muốn.
+
+---
+
+### 6. Các thiết bị đầu cuối (VPCS)
+*   **C_VL2, C_VL3:** Sử dụng lệnh `ip dhcp` để tự động nhận cấu hình IP từ R1.
+*   **WebServer1, WebServer2:** Được cấu hình IP tĩnh (Static IP) để đảm bảo tính ổn định cho các dịch vụ web, với Default Gateway trỏ về cổng tương ứng trên R2.
+
+---
+*Báo cáo kết thúc. Hệ thống đã được thiết kế tối ưu cho việc quản lý VLAN tập trung, định tuyến động và bảo mật truy cập server.*

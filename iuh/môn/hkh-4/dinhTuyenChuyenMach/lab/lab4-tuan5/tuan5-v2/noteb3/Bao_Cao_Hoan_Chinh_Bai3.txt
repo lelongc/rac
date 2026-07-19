@@ -1,0 +1,173 @@
+﻿# BÁO CÁO THỰC HÀNH LAB 3
+
+## PHẦN LÝ THUYẾT: ACCESS CONTROL LIST (ACL)
+**1. Show và giải thích các thành phần của Control List:**
+Một danh sách kiểm soát truy cập (ACL) tiêu chuẩn hoặc mở rộng thường bao gồm các thành phần sau:
+- **Số hiệu hoặc Tên ACL (ACL Number/Name):** Dùng để định danh. (Standard: 1-99, 1300-1999; Extended: 100-199, 2000-2699) hoặc dùng Named ACL (đặt tên gợi nhớ như ACL_VLAN2).
+- **Hành động (Action):** \permit\ (cho phép gói tin đi qua) hoặc \deny\ (huỷ bỏ gói tin).
+- **Giao thức (Protocol - Chỉ có ở Extended):** Chỉ định loại giao thức cụ thể như \ip\, \	cp\, \udp\, \icmp\...
+- **IP Nguồn và Wildcard Mask (Source Address):** Xác định địa chỉ IP hoặc dải mạng của máy gửi gói tin. (VD: \192.168.2.0 0.0.0.15\).
+- **IP Đích và Wildcard Mask (Destination Address - Chỉ có ở Extended):** Xác định địa chỉ IP hoặc dải mạng nơi gói tin đi tới.
+- **Toán tử và Cổng dịch vụ (Operator & Port - Chỉ có ở Extended):** So sánh cổng đích/nguồn (VD: \eq 80\ cho HTTP, \eq 443\ cho HTTPS, \eq 21\ cho FTP).
+- **Implicit Deny Any:** Dòng luật ngầm định nằm ở cuối cùng của mọi danh sách ACL. Nếu một gói tin không khớp với bất kỳ dòng \permit\ hoặc \deny\ nào ở trên, nó sẽ bị cấm đi qua (\deny ip any any\).
+
+**2. Lý do dùng Access Control List Standard và Extended:**
+- **Standard ACL (ACL Tiêu chuẩn):**
+  + **Đặc điểm:** Chỉ kiểm tra được địa chỉ IP NGUỒN của gói tin.
+  + **Lý do sử dụng:** Được sử dụng cho các yêu cầu lọc mạng đơn giản (chặn/cho phép toàn bộ lưu lượng từ một mạng/host cụ thể đi đến bất kỳ đâu). Cấu hình nhanh, xử lý nhẹ nhàng ít tốn CPU của Router.
+  + **Nguyên tắc đặt:** Thường được áp dụng ở Interface **gần ĐÍCH (Destination) nhất** để tránh việc vô tình chặn luồng traffic đi đến các mạng hợp lệ khác.
+
+- **Extended ACL (ACL Mở rộng):**
+  + **Đặc điểm:** Lọc gói tin chi tiết dựa trên cả IP nguồn, IP đích, loại giao thức (TCP, UDP, ICMP) và số Port.
+  + **Lý do sử dụng:** Khi cần áp dụng các chính sách bảo mật phức tạp, chi tiết (Ví dụ: Chỉ cho phép ping nhưng cấm lướt web, hoặc cấm IP A truy cập Server B nhưng vẫn cho phép ra Internet). Mang lại độ linh hoạt và bảo mật cao nhất cho mạng.
+  + **Nguyên tắc đặt:** Thường được áp dụng ở Interface **gần NGUỒN (Source) nhất** để chặn ngay các gói tin không hợp lệ từ ''trứng nước'', giúp tiết kiệm băng thông mạng.
+
+---
+
+## 1. MÔ HÌNH MẠNG VÀ PHÂN HOẠCH IP
+*(Chèn hình ảnh mô hình mạng lab 3 trên EVE-NG vào đây)*
+
+**Mô tả:**
+- R1 đóng vai trò là DHCP Server cấp phát IP động và định tuyến Inter-VLAN (Router-on-a-stick) cho VLAN 2, VLAN 3. Cấp luôn IP cho mạng VPC_R1 (192.168.100.0/24).
+- SW_SERVER và SW_CL chạy giao thức VTP để đồng bộ VLAN.
+- Định tuyến động RIPv2 trên toàn mạng. R3 cấu hình NAT Overload ra Internet và quảng bá Default Route.
+
+---
+
+## 2. KẾT QUẢ CẤU HÌNH VTP, VLAN VÀ TRUNKING
+### a) Kiểm tra cấu hình VTP và VLAN
+**Kết quả trên SW_SERVER:**
+\\\
+Switch>show vtp status
+VTP Version capable             : 1 to 3
+VTP version running             : 1
+VTP Domain Name                 : Lab5
+VTP Operating Mode                : Server
+Number of existing VLANs          : 7
+
+Switch>show vlan brief
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Et0/1, Et0/3, Et1/0...
+2    VLAN0002                         active
+3    VLAN0003                         active
+\\\
+
+**Kết quả trên SW_CL:**
+\\\
+Switch>show vtp status
+VTP Domain Name                 : Lab5
+VTP Operating Mode                : Client
+Number of existing VLANs          : 7
+
+Switch>show vlan brief
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+2    VLAN0002                         active    Et2/0
+3    VLAN0003                         active    Et3/0
+\\\
+**Nhận xét:** SW_CL đã tự động học thành công VLAN 2 và VLAN 3 từ SW_SERVER thông qua giao thức VTP (cùng domain Lab5). Các cổng truy cập (Access) Et2/0 và Et3/0 trên SW_CL đã được gán chính xác.
+
+### b) Kiểm tra đường Trunking
+**Kết quả trên SW_SERVER:**
+\\\
+Switch>show interfaces trunk
+Port        Mode             Encapsulation  Status        Native vlan
+Et0/0       on               802.1q         trunking      1
+Et0/2       on               802.1q         trunking      1
+Port        Vlans allowed and active in management domain
+Et0/0       1-3
+Et0/2       1-3
+\\\
+**Nhận xét:** Các cổng Uplink giữa Router-Switch và Switch-Switch đều đã đàm phán thành công kết nối Trunk (chuẩn 802.1q), cho phép VLAN 1, 2, 3 đi qua.
+
+---
+
+## 3. KẾT QUẢ CẤP PHÁT DHCP VÀ ĐỊNH TUYẾN
+### a) Bảng định tuyến RIPv2
+**Kết quả bảng định tuyến trên R1:**
+\\\
+R*    0.0.0.0/0 [120/1] via 10.0.0.2, 00:00:15, Serial1/1
+R        10.0.0.128/29 [120/1] via 10.0.0.2, 00:00:15, Serial1/1
+R        172.16.200.0 [120/2] via 10.0.0.2, 00:00:15, Serial1/1
+R        172.16.200.128 [120/2] via 10.0.0.2, 00:00:15, Serial1/1
+C        192.168.2.0/24 is directly connected, Ethernet0/0.2
+C        192.168.3.0/24 is directly connected, Ethernet0/0.3
+C        192.168.100.0/24 is directly connected, Ethernet0/1
+\\\
+**Kết quả bảng định tuyến trên R2:**
+\\\
+R*    0.0.0.0/0 [120/1] via 10.0.0.129, 00:00:13, Serial1/0
+R     192.168.3.0/24 [120/2] via 10.0.0.129, 00:00:13, Serial1/0
+R     192.168.100.0/24 [120/2] via 10.0.0.129, 00:00:13, Serial1/0
+\\\
+**Nhận xét:** Định tuyến RIPv2 hoạt động hoàn hảo. R1 và R2 đều thấy được các mạng nội bộ của nhau (chữ R) và đều học được Default Route (R* 0.0.0.0/0) để đi ra Internet thông qua R3.
+
+### b) Kiểm tra ra Internet (Ping) và Xử lý sự cố trùng lặp Subnet
+**- Từ máy C_VL3 (192.168.3.x):** Ping 8.8.8.8 thành công mượt mà.
+\\\
+VPCS> ping 8.8.8.8
+84 bytes from 8.8.8.8 icmp_seq=1 ttl=126 time=52.180 ms
+84 bytes from 8.8.8.8 icmp_seq=2 ttl=126 time=75.525 ms
+\\\
+
+**- Từ máy C_VL2 (192.168.2.x):** Ping 8.8.8.8 bị Timeout.
+\\\
+VPCS> ping 8.8.8.8
+8.8.8.8 icmp_seq=1 timeout
+8.8.8.8 icmp_seq=2 timeout
+\\\
+
+**Phân tích nguyên nhân (Troubleshooting):**
+Đây không phải là lỗi cấu hình, mà là lỗi xung đột dải mạng của phần mềm (Routing Conflict). Cụ thể, trên môi trường EVE-NG, card NAT nối ra Internet (Cloud1) đang sử dụng mạng \192.168.2.0/24\ (cấp IP cho e0/0 của R3). Điều này hoàn toàn trùng lặp với dải IP của VLAN 2 theo yêu cầu đề bài (\192.168.2.0/24\). 
+Hậu quả là bảng định tuyến R3 có 2 tuyến đường đến 192.168.2.0/24. Do Connected Route (AD=0) luôn ưu tiên hơn RIP (AD=120), khi 8.8.8.8 trả gói tin phản hồi về cho C_VL2, R3 đã đẩy nó ngược ra Cloud Internet thay vì chuyển về R1. Chứng minh cho điều này, C_VL3 khác dải mạng (192.168.3.x) vẫn Ping Internet thành công rực rỡ.
+
+---
+
+## 4. KẾT QUẢ CẤU HÌNH ACCESS CONTROL LIST (ACL)
+
+### a) ACL trên VLAN 2 (Chỉ máy .1 - .10 thông mạng bình thường, còn lại chỉ Web)
+Được cấu hình bằng Extended ACL áp vào cổng \e0/0.2 (in)\.
+- Lệnh \permit ip 192.168.2.0 0.0.0.15 host 172.16.200.2\ dùng wildcard mask 0.0.0.15 để cho phép dải IP .1 đến .14 thông mạng toàn diện.
+- Lệnh \permit tcp 192.168.2.0 0.0.0.255 host 172.16.200.2 eq 80\ ép các máy còn lại (như .50) chỉ được dùng Web.
+
+*(Sinh viên tự chèn ảnh chụp màn hình lúc đặt IP tĩnh cho C_VL2 thành 192.168.2.5 Ping thành công, và 192.168.2.50 Ping thất bại)*
+
+### b) ACL trên VLAN 3 (Chặn dải .200 đến .254 truy cập WebServer2)
+Được cấu hình bằng Extended ACL áp vào cổng \e0/0.3 (in)\.
+- Lệnh \deny ip 192.168.3.192 0.0.0.63 host 172.16.200.130\ sử dụng wildcard mask 0.0.0.63 tương đương dải IP từ 192.168.3.192 đến 192.168.3.255. Do đó từ máy .200 đến .254 sẽ bị từ chối truy cập Server.
+
+*(Sinh viên tự chèn ảnh chụp màn hình lúc đặt IP tĩnh cho C_VL3 thành 192.168.3.10 Ping thành công, và 192.168.3.200 Ping thất bại)*
+
+
+### c) Output thực tế kiểm tra cấu hình ACL trên Router R1
+**Lệnh \show access-lists\:**
+\\\
+Router#show access-lists
+Extended IP access list ACL_VLAN2
+    10 permit ip 192.168.2.0 0.0.0.15 host 172.16.200.2
+    20 permit tcp 192.168.2.0 0.0.0.255 host 172.16.200.2 eq www
+    30 permit tcp 192.168.2.0 0.0.0.255 host 172.16.200.2 eq 443
+    40 deny ip 192.168.2.0 0.0.0.255 host 172.16.200.2
+    50 permit ip any any (15 matches)
+Extended IP access list ACL_VLAN3
+    10 deny ip 192.168.3.192 0.0.0.63 host 172.16.200.130
+    20 permit ip any any (23 matches)
+\\\
+**Lệnh \show ip interface e0/0.2\:**
+\\\
+Router#show ip interface e0/0.2
+Ethernet0/0.2 is up, line protocol is up
+  Internet address is 192.168.2.1/24
+  ...
+  Outgoing access list is not set
+  Inbound  access list is ACL_VLAN2
+\\\
+*(Áp dụng tương tự cho cổng e0/0.3 với ACL_VLAN3)*
+
+
+**Nhận xét và Giải thích Output thực tế:**
+- **Thông số Matches:** Kết quả \(15 matches)\ và \(23 matches)\ ở cuối dòng lệnh \permit ip any any\ là bằng chứng rõ ràng nhất cho thấy Router đã thực sự hoạt động và bắt được các gói tin đi qua. Mỗi khi có một gói tin ping hoặc lướt web khớp với luật, con số này sẽ đếm tăng lên. Nếu cấu hình sai, con số này sẽ luôn là 0.
+- **Xác nhận ốp ACL vào cổng:** Trong kết quả của lệnh \show ip interface e0/0.2\, dòng \Inbound access list is ACL_VLAN2\ chứng minh rằng danh sách lọc ACL_VLAN2 đã được gắn thành công vào cổng mạng của VLAN 2 theo chiều đi vào (\Inbound\). Nếu thiếu bước áp dụng vào cổng, toàn bộ ACL đã viết sẽ trở nên vô tác dụng.
+- **Nguyên lý hoạt động Top-Down:** Dựa trên số thứ tự 10, 20, 30... Router sẽ lọc từ trên xuống dưới. Bất cứ khi nào gói tin khớp với một dòng lệnh, Router sẽ lập tức cho qua (permit) hoặc ném sọt rác (deny) mà không thèm đọc các dòng bên dưới. Do đó, logic viết ACL của bài Lab này (đưa luật chặt chẽ lên đầu, luật rộng rãi xuống cuối) đã thể hiện chính xác nguyên lý hoạt động của Extended ACL.
+

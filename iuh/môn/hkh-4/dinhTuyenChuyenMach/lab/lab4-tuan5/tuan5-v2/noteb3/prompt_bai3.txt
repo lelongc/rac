@@ -1,0 +1,57 @@
+**LƯU Ý QUAN TRỌNG CHO NGƯỜI DÙNG: Tuyệt đối không xóa các dấu gạch đầu dòng (-, +) khi copy-paste đoạn thần chú này vào công cụ AutoEVE. Trình phân tích của hệ thống bắt buộc phải có các dấu này để hiểu cấu trúc mạng.**
+
+- Khởi tạo sơ đồ:
+  + R1, R2, R3: Router Cisco IOL.
+  + SW_SERVER, SW_CL: Switch Cisco IOL.
+  + C_VL2, C_VL3: VPCS thuộc VLAN 2 và VLAN 3.
+  + WebServer1, WebServer2: VPCS mô phỏng Web Server tại R2.
+  + VPC_R1: VPCS thuộc mạng 192.168.100.0/24.
+  + Cloud1: Mạng Internet kết nối vào R3.
+
+- Đấu nối:
+  + R1 (e0/0) nối SW_SERVER (e0/0).
+  + R1 (e0/1) nối VPC_R1.
+  + R1 (s1/1) nối R3 (s1/0).
+  + R3 (s1/1) nối R2 (s1/0).
+  + R3 (e0/0) nối Cloud1 (e0/0).
+  + R2 (e0/0) nối WebServer1.
+  + R2 (e0/1) nối WebServer2.
+  + SW_SERVER (e0/2) nối SW_CL (e0/0).
+  + SW_CL (e2/0) nối C_VL2.
+  + SW_CL (e3/0) nối C_VL3.
+
+- Cấu hình VTP & VLAN (Switch IOL):
+  + Trên tất cả các cổng Trunk của Switch: BẮT BUỘC thêm cấu hình lệnh switchport trunk encapsulation dot1q TRƯỚC lệnh switchport mode trunk.
+  + SW_SERVER: Cấu hình lệnh vtp domain Lab5, lệnh vtp password 12344321, lệnh vtp mode server. Tạo VLAN 2, VLAN 3.
+  + SW_CL: Cấu hình lệnh vtp domain Lab5, lệnh vtp password 12344321, lệnh vtp mode client.
+  + Gán cổng SW_CL (e2/0) vào VLAN 2 (mode access), e3/0 vào VLAN 3 (mode access).
+
+- Cấu hình IP Address & DHCP:
+  + R1 (e0/1): 192.168.100.1 255.255.255.0
+  + R1 (s1/1): 10.0.0.1 255.255.255.248
+  + R3 (s1/0): 10.0.0.2 255.255.255.248
+  + R3 (s1/1): 10.0.0.129 255.255.255.248
+  + R2 (s1/0): 10.0.0.130 255.255.255.248
+  + R2 (e0/0): 172.16.200.1 255.255.255.240
+  + R2 (e0/1): 172.16.200.129 255.255.255.240
+  + R3 (e0/0): Cấu hình IP động bằng lệnh ip address dhcp.
+  + VPC_R1: Cấu hình nhận IP động bằng lệnh ip dhcp.
+  + Trên R1 (e0/0): Tạo Sub-interface e0/0.2 IP 192.168.2.1 255.255.255.0 (encapsulation dot1Q 2). Tạo Sub-interface e0/0.3 IP 192.168.3.1 255.255.255.0 (encapsulation dot1Q 3).
+  + Trên R1: Cấu hình lệnh ip dhcp pool VLAN2 mạng 192.168.2.0/24 default-router 192.168.2.1. Lệnh ip dhcp pool VLAN3 mạng 192.168.3.0/24 default-router 192.168.3.1. Lệnh ip dhcp pool NET100 mạng 192.168.100.0/24 default-router 192.168.100.1.
+
+- Định tuyến RIPv2:
+  + Trên R1: Cấu hình lệnh router rip, version 2, no auto-summary, network 192.168.100.0, network 192.168.2.0, network 192.168.3.0, network 10.0.0.0.
+  + Trên R2: Cấu hình lệnh router rip, version 2, no auto-summary, network 172.16.0.0, network 10.0.0.0.
+  + Trên R3: Cấu hình lệnh router rip, version 2, no auto-summary, network 10.0.0.0, lệnh default-information originate.
+  + Trên R3: Cấu hình NAT Overload lệnh ip nat inside source list 1 interface e0/0 overload. Đặt e0/0 là ip nat outside, s1/0 và s1/1 là ip nat inside. Lệnh access-list 1 permit any.
+
+- Cấu hình ACL trên R1:
+  + Tạo ip access-list extended ACL_VLAN2 và áp vào cổng e0/0.2 bằng lệnh ip access-group ACL_VLAN2 in.
+  + Cấu hình lệnh permit ip 192.168.2.0 0.0.0.15 host 172.16.200.2
+  + Cấu hình lệnh permit tcp 192.168.2.0 0.0.0.255 host 172.16.200.2 eq 80
+  + Cấu hình lệnh permit tcp 192.168.2.0 0.0.0.255 host 172.16.200.2 eq 443
+  + Cấu hình lệnh deny ip 192.168.2.0 0.0.0.255 host 172.16.200.2
+  + Cấu hình lệnh permit ip any any
+  + Tạo ip access-list extended ACL_VLAN3 và áp vào cổng e0/0.3 bằng lệnh ip access-group ACL_VLAN3 in.
+  + Cấu hình lệnh deny ip 192.168.3.192 0.0.0.63 host 172.16.200.130
+  + Cấu hình lệnh permit ip any any

@@ -1,0 +1,57 @@
+Chào bạn, với tư cách là một Chuyên gia Mạng, tôi xin gửi đến bạn bản phân tích chuyên sâu về hệ thống mạng đã thiết kế (Lab_VTP_RIP_NAT).
+
+---
+
+### 1. BẢNG ĐỊNH TUYẾN (ROUTING TABLE) VÀ GIẢI THÍCH
+
+Để kiểm tra sự hội tụ của giao thức RIPv2, ta thực hiện lệnh `show ip route` trên Router R1. Dưới đây là cấu trúc bảng định tuyến điển hình:
+
+#### Ví dụ bảng định tuyến trên R1:
+```text
+R1# show ip route
+Codes: C - connected, S - static, R - RIP, M - mobile, B - BGP
+...
+R    172.16.200.0/28 [120/2] via 10.0.0.2, 00:00:15, Serial1/1
+R    172.16.200.128/28 [120/2] via 10.0.0.2, 00:00:15, Serial1/1
+C    192.168.2.0/24 is directly connected, Ethernet0/0.2
+C    192.168.3.0/24 is directly connected, Ethernet0/0.3
+...
+```
+
+#### Giải thích các thành phần:
+*   **Mã định danh (Code):**
+    *   **C (Connected):** Mạng được kết nối trực tiếp vào cổng vật lý/logic của Router.
+    *   **R (RIP):** Tuyến đường được học thông qua giao thức định tuyến động RIP.
+*   **Thông số [120/2]:**
+    *   **120:** Là **Administrative Distance (AD)** của RIP. Đây là độ tin cậy của nguồn thông tin định tuyến (RIP có AD=120, thấp hơn EIGRP nhưng cao hơn OSPF).
+    *   **2:** Là **Metric (Hop count)**. Đối với RIP, đây là số lượng Router (hop) mà gói tin phải đi qua để đến đích. Giá trị 2 nghĩa là đích cách R1 hai chặng.
+*   **via 10.0.0.2:** Địa chỉ IP của Next-hop (Router kế tiếp) mà gói tin sẽ được gửi tới.
+*   **00:00:15:** Thời gian (timer) kể từ lần cuối cùng Router nhận được cập nhật định tuyến cho mạng này.
+
+#### Chứng minh sự hội tụ:
+Giao thức RIPv2 đã hội tụ thành công khi các mạng ở xa (như 172.16.200.0/28) xuất hiện trong bảng định tuyến của R1 với mã **R**. Điều này xác nhận R1 đã trao đổi thông tin với R3 và R2 thành công thông qua các gói tin Update định kỳ.
+
+---
+
+### 2. ĐƯỜNG ĐI CỦA GÓI TIN (PACKET PATH)
+
+Xét trường hợp **PC (VLAN 2 - 192.168.2.x)** ping đến **WebServer1 (172.16.200.2)**.
+
+#### Quá trình di chuyển:
+1.  **Tại PC (VLAN 2):** PC kiểm tra địa chỉ đích, thấy khác mạng nên gửi gói tin đến Default Gateway là `192.168.2.1` (R1).
+2.  **Tại R1:**
+    *   R1 nhận gói tin, kiểm tra **ACL_VLAN2**. Nếu gói tin thỏa mãn các điều kiện (ví dụ: truy cập HTTP/HTTPS), R1 cho phép đi qua.
+    *   R1 tra bảng định tuyến, thấy mạng `172.16.200.0/28` nằm ở hướng `Serial1/1` (Next-hop 10.0.0.2).
+    *   R1 đóng gói lại (đổi MAC nguồn thành MAC của cổng s1/1, MAC đích thành MAC của cổng s1/0 trên R3).
+3.  **Tại R3:**
+    *   R3 nhận gói tin, kiểm tra bảng định tuyến, chuyển tiếp sang `Serial1/1` (Next-hop 10.0.0.130 - R2).
+    *   *Lưu ý:* R3 có cấu hình **NAT Inside**, nhưng vì đích đến là mạng nội bộ (172.16.200.0/28), gói tin không bị NAT ra ngoài Internet.
+4.  **Tại R2:**
+    *   R2 nhận gói tin, thấy mạng đích `172.16.200.0/28` kết nối trực tiếp tại cổng `e0/0`.
+    *   R2 gửi gói tin trực tiếp đến WebServer1.
+
+#### Phân tích địa chỉ qua mỗi Hop:
+*   **IP Source/Destination:** Trong suốt quá trình từ R1 đến R2, địa chỉ IP nguồn (192.168.2.x) và IP đích (172.16.200.2) **không thay đổi**. NAT chỉ xảy ra nếu gói tin đi ra ngoài Internet (qua cổng e0/0 của R3).
+*   **MAC Address:** Đây là thành phần thay đổi liên tục. Tại mỗi Hop (Router), Router sẽ tháo bỏ Frame cũ, kiểm tra IP đích, sau đó đóng gói Frame mới với **MAC nguồn là cổng ra của Router hiện tại** và **MAC đích là cổng vào của Router kế tiếp**.
+
+**Kết luận:** Hệ thống đã được cấu hình đúng chuẩn với VTP để quản lý VLAN, RIPv2 để định tuyến liên mạng và ACL để kiểm soát truy cập giữa các phân vùng. Gói tin đi đúng lộ trình từ PC -> R1 -> R3 -> R2 -> WebServer.

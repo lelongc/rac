@@ -80,3 +80,26 @@
   deny tcp 220.220.240.128 0.0.0.127 any eq 443 (Dải .128 -> .254 cấm web HTTPS)
   permit ip any any  (Còn lại cho phép truy cập Internet)
   ```
+
+---
+
+## 4. GIẢI THÍCH KẾT QUẢ "SHOW ACCESS-LISTS" VÀ LÝ DO DÙNG ACL
+
+### a) Giải thích các thành phần trong output `show access-lists`:
+Dựa vào hình chụp kết quả lệnh `show access-lists` trên R3, ta có thể phân tích cấu trúc của một dòng lệnh ACL bao gồm các thành phần sau:
+- **Tên/Loại ACL (Extended IP access list VLAN40_ACL):** Xác định đây là ACL Mở rộng và tên gọi của danh sách này là VLAN40_ACL.
+- **Sequence Number (10, 20, 30...):** Số thứ tự của luật. Router sẽ kiểm tra các luật theo thứ tự từ nhỏ đến lớn (từ trên xuống dưới). Khi một luật khớp, router sẽ thực thi ngay và bỏ qua các luật bên dưới.
+- **Action (permit / deny):** Hành động cho phép (permit) hoặc từ chối/vứt bỏ (deny) gói tin.
+- **Protocol (ip, tcp, icmp):** Giao thức cần lọc. `ip` đại diện cho toàn bộ bộ giao thức IP (gồm cả tcp, udp, icmp...), trong khi `tcp` hoặc `icmp` dùng để chỉ định chính xác loại lưu lượng.
+- **Source & Destination (Nguồn & Đích):** Định danh nguồn gửi và đích đến của gói tin, kết hợp với **Wildcard Mask** (như `0.0.0.255` hoặc `0.0.0.127`) để tính toán chính xác một dải IP. Các từ khóa đặc biệt như `host` (chỉ 1 IP cụ thể) hoặc `any` (bất kỳ IP nào) cũng được dùng ở đây.
+- **Port/Dịch vụ (eq telnet, eq www, eq 443):** Đối với Extended ACL, ta có thể chỉ định cổng dịch vụ ở Layer 4 (Ví dụ: `www` tương đương port 80, `443` là HTTPS).
+- **Match Counter (ví dụ: `5 matches`):** Đây là bộ đếm số lần một quy tắc được kích hoạt (có bao nhiêu gói tin đã bị chặn hoặc cho phép bởi luật này). Sự xuất hiện của thông số này trong ảnh chụp chứng minh rằng các luật ACL đang thực sự hoạt động và bắt được các gói tin test từ VPCS.
+
+### b) Lý do sử dụng Standard ACL và Extended ACL:
+- **Lý do dùng Standard ACL (ACL Tiêu chuẩn):**
+  + Chỉ lọc dựa trên **Địa chỉ IP Nguồn** (Source IP).
+  + **Sử dụng khi:** Ta có nhu cầu chặn toàn bộ hoặc cho phép toàn bộ lưu lượng xuất phát từ một máy tính / một dải mạng đi đến một nơi nào đó mà **không cần phân biệt dịch vụ** (nghĩa là cấm Ping thì cũng cấm luôn cả Web, Telnet, FTP...). Ưu điểm là cấu hình cực kỳ đơn giản, ngắn gọn và ít tiêu tốn tài nguyên xử lý (CPU) của Router.
+
+- **Lý do dùng Extended ACL (ACL Mở rộng):**
+  + Lọc chi tiết dựa trên cả **IP Nguồn, IP Đích, Giao thức (Layer 3) và Cổng dịch vụ (Layer 4)**.
+  + **Sử dụng khi:** Cần một mức độ điều khiển linh hoạt và tinh vi. Chẳng hạn như yêu cầu của Bài Lab này: *Máy IP .150 được phép Ping ra ngoài nhưng không được phép lướt Web HTTP/HTTPS*. Chỉ có Extended ACL mới can thiệp được vào các trường dữ liệu ở Layer 4 để cho phép dịch vụ này và cấm dịch vụ khác giữa cùng hai máy tính.
