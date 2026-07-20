@@ -1,11 +1,15 @@
 # ĐỀ THI CUỐI KỲ - ĐỊNH TUYẾN CHUYỂN MẠCH (DHCNTT18)
+
 # Ngày thi: T13-14, 06/11/2025 | Thời gian: 70 phút | Được sử dụng tài liệu giấy
 
 =====================================================================
 CÂU 1 (2 điểm - CLO 02): CẤU HÌNH BẢO MẬT ROUTER
-=====================================================================
+=======================================================
 
 ĐỀ BÀI:
+
+![1784504894622](image/Giai_De_Cuoi_Ky/1784504894622.png)
+
 1. Line Console yêu cầu password: 052025console
 2. Enable mode yêu cầu pass: 2710enable (mã hóa)
 3. Telnet và SSH:
@@ -13,9 +17,10 @@ CÂU 1 (2 điểm - CLO 02): CẤU HÌNH BẢO MẬT ROUTER
    b. Không sử dụng trong 02 phút -> ngắt. Đăng nhập sai tối đa 03 lần
 4. Toàn bộ password phải được mã hóa
 
----------------------------------------------------------------------
+---
+
 BÀI GIẢI CÂU 1:
----------------------------------------------------------------------
+------------------
 
 enable
 configure terminal
@@ -53,23 +58,34 @@ ip ssh authentication-retries 3
 end
 write memory
 
-GIẢI THÍCH TỪNG DÒNG:
-- hostname R1             : BẮT BUỘC đổi tên trước khi crypto key, nếu không RSA bị từ chối
-- service password-encryption : Mã hóa tất cả password plaintext (type 7)
-- enable secret           : Tự động mã hóa MD5 (type 5), mạnh hơn enable password
-- login (console)         : Kích hoạt yêu cầu nhập password khi kết nối Console
-- login local (vty)       : Xác thực bằng username/password cục bộ
-- privilege 15            : Cấp toàn quyền cho user
-- transport input ssh telnet : Cho phép cả SSH và Telnet kết nối từ xa
-- exec-timeout 2 0       : Tự động ngắt sau 2 phút 0 giây không hoạt động
-- ip ssh authentication-retries 3 : Sau 3 lần nhập sai -> khóa phiên SSH
+GIẢI THÍCH CHI TIẾT TỪNG LỆNH CẤU HÌNH:
 
+- **enable**: Chuyển từ chế độ User EXEC Mode (`Router>`) sang Privileged EXEC Mode (`Router#`) để có quyền xem cấu hình chi tiết và thực thi các lệnh kiểm tra, quản trị cao cấp.
+- **configure terminal**: Chuyển từ Privileged EXEC Mode sang chế độ cấu hình toàn cục Global Configuration Mode (`Router(config)#`), cho phép thực hiện cấu hình các thông số hệ thống của Router.
+- **hostname R1**: Thay đổi tên định danh của thiết bị từ "Router" mặc định thành "R1". Đây là **điều kiện bắt buộc** để Cisco IOS cho phép tạo cặp khóa mã hóa RSA (SSH yêu cầu Hostname và Domain Name phải khác mặc định).
+- **service password-encryption**: Bật tính năng mã hóa mật khẩu hệ thống. Lệnh này sẽ tự động mã hóa tất cả các mật khẩu dạng văn bản thuần túy (Cleartext Passwords) hiển thị trong file cấu hình thành dạng mã hóa Type 7 (vòng lặp Vigenere), giúp bảo mật thông tin khi hiển thị cấu hình qua lệnh `show running-config`.
+- **line console 0**: Truy cập vào chế độ cấu hình cổng Console vật lý số 0 (`Router(config-line)#`). Cổng Console dùng để quản trị thiết bị trực tiếp bằng cáp console cắm trực tiếp từ máy tính vào Router.
+- **password 052025console**: Đặt mật khẩu đăng nhập cho kết nối qua cổng Console là "052025console" (Mật khẩu này sẽ được mã hóa tự động thành Type 7 nhờ lệnh mã hóa ở trên).
+- **login**: Kích hoạt việc yêu cầu xác thực mật khẩu Console mỗi khi có kết nối vật lý vào cổng này. Nếu thiếu lệnh `login`, mật khẩu đã cấu hình ở trên sẽ không có tác dụng và người dùng vẫn vào thẳng Router mà không cần pass.
+- **exit**: Thoát khỏi chế độ cấu hình hiện tại (Line configuration) để quay lại chế độ cấu hình Global Configuration Mode.
+- **enable secret 2710enable**: Đặt mật khẩu bảo vệ để nâng quyền từ User EXEC lên Privileged EXEC Mode (`enable`). Mật khẩu này được mã hóa bằng thuật toán băm một chiều bảo mật cao Type 5 (thường là MD5 hoặc SHA-256), có độ ưu tiên cao hơn và ghi đè hoàn toàn lệnh `enable password` thông thường.
+- **ip domain-name ck2025.net**: Thiết lập tên miền (Domain Name) cho thiết bị là "ck2025.net". Đây là **điều kiện bắt buộc thứ hai** để tạo khóa mã hóa RSA cho dịch vụ SSH hoạt động. Tên miền đầy đủ của thiết bị sẽ là `R1.ck2025.net`.
+- **crypto key generate rsa modulus 1024**: Thực hiện tạo cặp khóa bảo mật RSA dùng để mã hóa thông tin truyền nhận trên các phiên làm việc SSH. Từ khóa `modulus 1024` chỉ định độ dài khóa là 1024 bit, đây là độ dài tối thiểu được Cisco khuyến nghị để kích hoạt giao thức SSH phiên bản v2 bảo mật cao hơn (mặc định dưới 768 bit chỉ chạy SSHv1).
+- **username user2025 privilege 15 secret Tel@ssh25**: Tạo một tài khoản quản trị cục bộ trong cơ sở dữ liệu của Router với Username là "user2025", phân quyền cấp độ cao nhất là `privilege 15` (vào thẳng chế độ đặc quyền `#` sau khi đăng nhập mà không cần nhập thêm pass enable), và mật khẩu được mã hóa Type 5 là "Tel@ssh25".
+- **line vty 0 4**: Chui vào chế độ cấu hình các cổng ảo VTY (Virtual Type Terminal) từ cổng số 0 đến số 4, cho phép tối đa 5 kết nối từ xa (Telnet/SSH) đồng thời tại một thời điểm.
+- **login local**: Yêu cầu Router sử dụng cơ sở dữ liệu User/Password cục bộ (đã tạo bằng lệnh `username` ở trên) để xác thực người dùng khi kết nối từ xa, thay vì dùng một mật khẩu chung cho đường line vty.
+- **transport input ssh telnet**: Cấu hình các cổng VTY chỉ chấp nhận các kết nối đi vào bằng hai giao thức SSH (mã hóa bảo mật) và Telnet (văn bản thuần không bảo mật).
+- **exec-timeout 2 0**: Cấu hình thời gian tự động ngắt kết nối (timeout) của phiên làm việc Console hoặc VTY sau **2 phút 0 giây** nếu không phát hiện bất kỳ thao tác gõ phím nào từ người dùng, ngăn ngừa rủi ro bị người khác dùng trộm khi người quản trị bỏ máy đi ra ngoài.
+- **ip ssh authentication-retries 3**: Giới hạn số lần nhập sai mật khẩu tối đa khi thực hiện đăng nhập từ xa qua SSH là 3 lần. Nếu nhập sai quá số lần này, Router sẽ ngắt phiên kết nối ngay lập tức.
+- **end**: Thoát nhanh từ chế độ cấu hình con bất kỳ về thẳng chế độ Privileged EXEC Mode (`Router#`).
+- **write memory**: Lưu toàn bộ các cấu hình đang chạy trong RAM (Running Configuration) vào bộ nhớ không bay hơi NVRAM (Startup Configuration) để đảm bảo cấu hình không bị mất khi Router khởi động lại hoặc mất điện. Giao tiếp tương đương lệnh `copy running-config startup-config`.
 
 =====================================================================
 CÂU 2 (6 điểm - CLO 2,3): ĐỊNH TUYẾN + ACL
-=====================================================================
+================================================
 
 ĐỀ BÀI (đọc từ sơ đồ):
+
 - Vùng RIP (trái): R2 + SwitchServer + VPC_Vlan_11 + VPC_Vlan_12
   VLAN 11: 192.168.11.0/24
   VLAN 12: 192.168.12.0/24
@@ -81,6 +97,7 @@ CÂU 2 (6 điểm - CLO 2,3): ĐỊNH TUYẾN + ACL
   R3 (e0/1): 172.16.31.0/24 (VPC)
 
 YÊU CẦU:
+
 1. (4đ) Định tuyến thông mạng: VLAN, OSPF, RIP, OSPF <-> RIP, Internet
 2. (2đ) ACL:
    a. Cho phép PC vùng OSPF truy cập FTP Server 172.16.30.10
@@ -89,9 +106,10 @@ YÊU CẦU:
 LƯU Ý ĐỀ: Router và VPC đã gán IP, VLAN Database đã tồn tại
            nhưng CHƯA định tuyến các VLAN, CHƯA gán IP vào VLAN.
 
----------------------------------------------------------------------
+---
+
 BÀI GIẢI CÂU 2:
----------------------------------------------------------------------
+------------------
 
 === 1. SwitchServer ===
 enable
@@ -198,6 +216,7 @@ Server (đã có):  ip 172.16.30.10 255.255.255.0 172.16.30.1
 === 6. ACL ===
 
 PHÂN TÍCH:
+
 - 2a: Cho phép FTP từ OSPF -> Server = permit tcp ... eq ftp, eq ftp-data
 - 2b: Cấm VLAN 11 dùng Web -> Server = deny tcp ... eq 80, eq 443
 - Extended ACL đặt GẦN NGUỒN -> Trên R1 interface s1/0 (in) lọc traffic từ RIP
@@ -217,6 +236,7 @@ end
 write memory
 
 GIẢI THÍCH LOGIC ACL:
+
 1. deny tcp 192.168.11.0 0.0.0.255 host 172.16.30.10 eq 80
    -> Chặn VLAN 11 gửi HTTP (port 80) tới Server
 2. deny tcp 192.168.11.0 0.0.0.255 host 172.16.30.10 eq 443
@@ -227,10 +247,9 @@ GIẢI THÍCH LOGIC ACL:
 LƯU Ý: Yêu cầu 2a "cho phép FTP từ OSPF" đã thỏa mãn mặc định vì
 không có luật nào chặn FTP. Dòng "permit ip any any" đã bao gồm FTP.
 
-
 =====================================================================
 CÂU 3 (2 điểm - CLO 3): GIẢI THÍCH ACL LÝ THUYẾT
-=====================================================================
+=======================================================
 
 ĐỀ BÀI 3.1:
 Cho sơ đồ: VPC2 (172.16.3.0) -> Router1 (e0/0, e0/1, e0/3) -> WebServer (172.16.4.5)
@@ -239,9 +258,10 @@ Cho sơ đồ: VPC2 (172.16.3.0) -> Router1 (e0/0, e0/1, e0/3) -> WebServer (172
   Router1(config)# interface ethernet 0/3
   Router1(config-if)# ip access-group 1 out
 
----------------------------------------------------------------------
+---
+
 BÀI GIẢI CÂU 3.1:
----------------------------------------------------------------------
+--------------------
 
 LOẠI ACL: Standard ACL (số hiệu 1, nằm trong khoảng 1-99)
 
@@ -250,22 +270,23 @@ Chỉ cho phép IP từ 172.16.3.0 đến 172.16.3.15 (16 IP) gửi gói tin
 ra cổng e0/3 hướng tới WebServer. IP khác bị chặn bởi implicit deny.
 
 PHÂN TÍCH TỪNG THÀNH PHẦN:
+
 - access-list    : Lệnh khai báo danh sách kiểm soát truy cập
 - 1              : Số hiệu ACL. Standard ACL (1-99) chỉ lọc IP nguồn
 - permit         : Hành động cho phép gói tin đi qua
 - 172.16.3.0     : Địa chỉ IP nguồn bắt đầu kiểm tra
 - 0.0.0.15       : Wildcard Mask -> cho 16 IP (từ .0 đến .15)
-                   Tính: 255.255.255.255 - 255.255.255.240 = 0.0.0.15
+  Tính: 255.255.255.255 - 255.255.255.240 = 0.0.0.15
 - interface e0/3 : Cổng áp dụng ACL (nối hướng WebServer)
 - ip access-group 1 out : Lọc gói tin đi RA (outbound) khỏi cổng e0/3
 
 IMPLICIT DENY: Cuối ACL luôn có lệnh ngầm "deny any" chặn tất cả.
 IP không thuộc dải .0-.15 sẽ bị cấm gửi dữ liệu ra e0/3.
 
+---
 
----------------------------------------------------------------------
 BÀI GIẢI CÂU 3.2:
----------------------------------------------------------------------
+--------------------
 
 ĐỀ BÀI: Dùng ACL cấu hình cho host CHỈ ĐƯỢC PHÉP truy cập Web
          trên WebServer (172.16.4.5/24).
@@ -280,6 +301,7 @@ Router1(config)# interface e0/1
 Router1(config-if)# ip access-group WEB_ONLY out
 
 GIẢI THÍCH:
+
 1. permit tcp any host 172.16.4.5 eq 80   -> Cho phép HTTP tới Server
 2. permit tcp any host 172.16.4.5 eq 443  -> Cho phép HTTPS tới Server
 3. deny ip any host 172.16.4.5            -> Cấm mọi thứ khác (ping, ftp...) tới Server
@@ -289,11 +311,12 @@ GIẢI THÍCH:
 TẠI SAO DÙNG EXTENDED? Vì Standard chỉ lọc IP nguồn, KHÔNG lọc port.
 Muốn phân biệt Web (80/443) với FTP (21) thì BẮT BUỘC dùng Extended.
 
+=====================================================================
+=====================================================================
 
-=====================================================================
-=====================================================================
-       MẪU THAY SỐ NHANH ĐI THI (CHỈ CẦN THAY GIÁ TRỊ TRONG [ ])
-=====================================================================
+MẪU THAY SỐ NHANH ĐI THI (CHỈ CẦN THAY GIÁ TRỊ TRONG [ ])
+================================================================
+
 =====================================================================
 
 === MẪU CÂU 1: BẢO MẬT ROUTER ===
@@ -324,7 +347,6 @@ ip ssh authentication-retries [SỐ_LẦN_SAI]
 end
 write memory
 
-
 === MẪU CÂU 2: SWITCH (Gán VLAN + Trunk) ===
 
 enable
@@ -341,7 +363,6 @@ interface [CỔNG_VPC_B]
  switchport access vlan [SỐ_VLAN_B]
 end
 write memory
-
 
 === MẪU CÂU 2: ROUTER-ON-A-STICK (Router có VLAN) ===
 
@@ -366,7 +387,6 @@ router rip
  network [MẠNG_SERIAL]
 end
 write memory
-
 
 === MẪU CÂU 2: R1 TRUNG TÂM (Redistribution + NAT) ===
 
@@ -402,7 +422,6 @@ router ospf 1
 end
 write memory
 
-
 === MẪU CÂU 2: ROUTER OSPF THUẦN ===
 
 enable
@@ -424,7 +443,6 @@ router ospf 1
 end
 write memory
 
-
 === MẪU ACL: CẤM DỊCH VỤ CỤ THỂ ===
 
 ip access-list extended [TÊN_ACL]
@@ -436,20 +454,18 @@ interface [CỔNG]
 end
 write memory
 
-
 === BẢNG PORT PHỔ BIẾN ===
 
-Dịch vụ     | Port | Keyword
-------------|------|--------
-HTTP (Web)  | 80   | eq 80 hoặc eq www
-HTTPS       | 443  | eq 443
-FTP Control | 21   | eq ftp
-FTP Data    | 20   | eq ftp-data
-Telnet      | 23   | eq telnet hoặc eq 23
-SSH         | 22   | eq 22
-DNS         | 53   | eq domain
-PING        | -    | Dùng "deny icmp" thay vì "deny tcp"
-
+| Dịch vụ   | Port | Keyword                               |
+| ----------- | ---- | ------------------------------------- |
+| HTTP (Web)  | 80   | eq 80 hoặc eq www                    |
+| HTTPS       | 443  | eq 443                                |
+| FTP Control | 21   | eq ftp                                |
+| FTP Data    | 20   | eq ftp-data                           |
+| Telnet      | 23   | eq telnet hoặc eq 23                 |
+| SSH         | 22   | eq 22                                 |
+| DNS         | 53   | eq domain                             |
+| PING        | -    | Dùng "deny icmp" thay vì "deny tcp" |
 
 === WILDCARD MASK NHANH ===
 
@@ -461,10 +477,10 @@ PING        | -    | Dùng "deny icmp" thay vì "deny tcp"
 1 host           : host [IP]
 Tất cả           : any
 
-
 === MẪU GIẢI THÍCH ACL (Viết vào giấy thi) ===
 
 "Đây là [Standard/Extended] ACL số [X].
+
 - Loại: [Standard chỉ lọc IP nguồn | Extended lọc IP nguồn, đích, giao thức, port].
 - Hành động: permit cho phép / deny chặn gói tin khớp điều kiện.
 - Wildcard Mask [Z]: Cho phép dải IP từ [A] đến [B] (tổng [N] IP).

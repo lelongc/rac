@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <title>Báo giá sản phẩm kccshop</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <style>
+    .list_table{border-collapse:collapse}
+    .list_table td{border:solid 1px #aaa;padding:5px;text-align:center;vertical-align:middle}
+    .cart_first_tr{background-color:#ccc}
+    BODY,DIV,FORM,SPAN,TABLE,TD{font-family:Arial,Helvetica,sans-serif;font-size:13px}
+    body{font-size:13px;padding:20px;background:#fff;display:flex;flex-direction:column;align-items:center;box-sizing:border-box}
+  </style>
+</head>
+
+<body>
+  <div class="content-print-all" style="width: 100%;background: url(https://kccshop.vn/media/lib/24-07-2021/bg_kccshop_buildpc.png) center center no-repeat fixed;float: left;">
+    <div style="width:100%;margin: 0 auto;">
+      <table width="100%">
+        <tr>
+          <td colspan="3" valign="top">
+            <img src="https://kccshop.vn/media/banner/logo_Logo%20d%C3%A0i%20Cam.png" alt="Logo" width="370" />
+          </td>
+          <td colspan="6" align="right" style="line-height: 19px;">
+            <b style="color: #e51f28;font-size: 20px;">KCCSHOP</b><br />
+            Số 1 Yên Lãng, Trung Liệt, Đống Đa, Hà Nội<br>
+            8B Lý Thường Kiệt, Phường 12, Quận 5, TP.HCM<br />
+            Hotline: 0912074444 - 0888129444
+          </td>
+        </tr>
+        <tr>
+          <td colspan="9"></td>
+        </tr>
+        <tr>
+          <td colspan="9" style="border-top: 4px double #ccc;;font-size:21px; font-weight:bold; text-align:center; padding:15px 0;">
+            BẢNG BÁO GIÁ THIẾT BỊ
+          </td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <td colspan="9"></td>
+        </tr>
+      </table>
+
+      <div style="padding: 10px;"></div>
+      <table border="1" class="list_table" width="100%" style="min-width: 850px;" >
+        <tr style="color: #ffffff; background-color:#e00;">
+          <td>STT</td>
+          <td>Mã sản phẩm</td>
+          <td colspan="3">Tên sản phẩm</td>
+          <td>Bảo hành</td>
+          <td>Số lượng</td>
+          <td>Đơn giá</td>
+          <td width="120">Thành tiền</td>
+        </tr>
+        
+        
+        
+        
+         
+        
+        
+        
+        <tr>
+          <td>1</td>
+          <td></td>
+          <td colspan="3">
+            <a href="https://kccshop.vn/cpu-intel-core-i5-13400f-tray-no-fan-up-to-4-60ghz-10-nhan-16-luong-20mb-cache-raptor-lake/" style="color:#000;">
+              <h3 style="font-size:30px;">CPU Intel Core i5-13400F Tray no fan (Up To 4.60GHz, 10 Nhân 16 Luồng, 20MB Cache, Raptor Lake) (Full VAT)</h3>
+            </a>
+            
+          </td>
+          <td>36 tháng</td>
+          <td>1</td>
+          <td>3.990.000 đ
+          </td>
+          <td>
+            3.990.000  đ
+          </td>
+        </tr>
+
+        
+         
+        
+        
+        
+        <tr>
+          <td>2</td>
+          <td></td>
+          <td colspan="3">
+            <a href="https://kccshop.vn/mainboard-gigabyte-b760m-ds3h-ax-ddr4-rev-1-0/" style="color:#000;">
+              <h3 style="font-size:30px;">Mainboard GIGABYTE B760M DS3H AX DDR4</h3>
+            </a>
+            
+          </td>
+          <td>36 tháng</td>
+          <td>1</td>
+          <td>3.310.000 đ
+          </td>
+          <td>
+            3.310.000  đ
+          </td>
+        </tr>
+
+        
+         
+        
+        
+        
+        <tr>
+          <td>3</td>
+          <td>0</td>
+          <td colspan="3">
+            <a href="https://kccshop.vn/ram-kingbank-16gb-ddr4-3600mhz-tan-nhiet-chuyen-dung-cho-pc-intel/" style="color:#000;">
+              <h3 style="font-size:30px;">Ram Kingbank 16GB DDR4 3600MHz Tản nhiệt (Chuyên dùng cho PC Intel)</h3>
+            </a>
+            
+          </td>
+          <td>36 tháng</td>
+          <td>2</td>
+          <td>2.390.000 đ
+          </td>
+          <td>
+            4.780.000  đ
+          </td>
+        </tr>
+
+        
+         
+        
+        
+        
+        <tr>
+          <td>4</td>
+          <td>0</td>
+          <td colspan="3">
+            <a href="https://kccshop.vn/o-cung-ssd-kioxia-exceria-basic-1tb-nvme-w6500-pcie-4x4-lsf10z001tg8/" style="color:#000;">
+              <h3 style="font-size:30px;">Ổ cứng SSD KIOXIA EXCERIA BASIC 1TB NVMe W6500 PCIe 4x4 (LSF10Z001TG8)</h3>
+            </a>
+            
+          </td>
+          <td>60 tháng</td>
+          <td>1</td>
+          <td>3.990.000 đ
+          </td>
+          <td>
+            3.990.000  đ
+          </td>
+        </tr>
+
+        
+         
+        
+        
+        
+        <tr>
+          <td>5</td>
+          <td></td>
+          <td colspan="3">
+            <a href="https://kccshop.vn/card-man-hinh-asus-prime-geforce-rtx-5060-ti-16gb-gddr7-oc-edition-prime-rtx5060ti-o16g/" style="color:#000;">
+              <h3 style="font-size:30px;">Card màn hình ASUS PRIME GeForce RTX 5060 Ti 16GB GDDR7 OC Edition (PRIME-RTX5060TI-O16G)</h3>
+            </a>
+            
+          </td>
+          <td>36 tháng</td>
+          <td>1</td>
+          <td>18.190.000 đ
+          </td>
+          <td>
+            18.190.000  đ
+          </td>
+        </tr>
+
+        
+         
+        
+        
+        
+        <tr>
+          <td>6</td>
+          <td>0</td>
+          <td colspan="3">
+            <a href="https://kccshop.vn/nguon-may-tinh-deepcool-pl750d-pcie5-750w-atx3-1-80-plus-bronze-r-pl750d-fc0b-eu-v2/" style="color:#000;">
+              <h3 style="font-size:30px;">Nguồn máy tính Deepcool PL750D PCIE5 750W ATX3.1 80 Plus Bronze R-PL750D-FC0B-EU-V2</h3>
+            </a>
+            
+          </td>
+          <td>60 tháng</td>
+          <td>1</td>
+          <td>1.490.000 đ
+          </td>
+          <td>
+            1.490.000  đ
+          </td>
+        </tr>
+
+        
+         
+        
+        
+        
+        <tr>
+          <td>7</td>
+          <td>0</td>
+          <td colspan="3">
+            <a href="https://kccshop.vn/vo-case-xigmatek-cloud-m-dgt-3af-en49996/" style="color:#000;">
+              <h3 style="font-size:30px;">Vỏ Case XIGMATEK CLOUD M DGT 3AF (EN49996)</h3>
+            </a>
+            
+          </td>
+          <td>12 tháng</td>
+          <td>1</td>
+          <td>1.150.000 đ
+          </td>
+          <td>
+            1.150.000  đ
+          </td>
+        </tr>
+
+        
+         
+        
+        
+        
+        <tr>
+          <td>8</td>
+          <td>0</td>
+          <td colspan="3">
+            <a href="https://kccshop.vn/man-hinh-gaming-edra-egm27q144pvs-27in-qhd-ips-144hz-1ms/" style="color:#000;">
+              <h3 style="font-size:30px;">Màn hình gaming EDra EGM27Q144PVS (27in / QHD / IPS / 144Hz / 1ms)</h3>
+            </a>
+            
+          </td>
+          <td>24 tháng</td>
+          <td>1</td>
+          <td>2.990.000 đ
+          </td>
+          <td>
+            2.990.000  đ
+          </td>
+        </tr>
+
+        
+         
+        
+        
+        
+        <tr>
+          <td>9</td>
+          <td></td>
+          <td colspan="3">
+            <a href="https://kccshop.vn/tan-nhiet-cpu-chinh-hang-deepcool-ag400-argb/" style="color:#000;">
+              <h3 style="font-size:30px;">Tản nhiệt CPU Chính Hãng Deepcool AG400 ARGB</h3>
+            </a>
+            
+          </td>
+          <td>12 tháng</td>
+          <td>1</td>
+          <td>360.000 đ
+          </td>
+          <td>
+            360.000  đ
+          </td>
+        </tr>
+
+        
+
+        <tr>
+          <td colspan="5"></td>
+          <td colspan="3" style="background:#b8cce4;">Tổng chi phí</td>
+          <td style="background:#b8cce4;">
+            40.250.000 đ
+          </td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <td colspan="8"></td>
+        </tr>
+      </table>
+    </div>
+    <p>
+      <b>Quý khách lưu ý:</b> Giá bán, khuyến mại của sản phẩm và tình trạng còn hàng có thể bị thay đổi bất cứ lúc nào mà không kịp báo trước. Mọi thông tin chi tiết xin vui lòng liên hệ Hotline : 0912074444 - Email: khanhchungcomputer@gmail.com 
+    </p>
+    <table style="text-align:center; width:100%;">
+      <tr>
+        <td colspan="8" style="font-size:21px;color: #e51f28;">CHÂN THÀNH CẢM ƠN !</td>
+      </tr>
+      <!-- <tr>
+          <td colspan="8">Để biết thêm chi tiết, vui lòng liên hệ</td>
+      </tr>
+      <tr>
+          <td colspan="8"><b>Hotline:</b> 0912074444 - 0888129444</td>
+      </tr>
+      <tr>
+          <td colspan="8"><b>Email:</b> khanhchungcomputer@gmail.com</td>
+      </tr>
+      <tr>
+          <td colspan="8"><b>Website:</b> kccshop.vn</td>
+      </tr>
+      <tr>
+          <td colspan="8"><b>FB:</b> Khánh Chung Computer - Máy Tính Đồ Họa Cao Cấp</td>
+      </tr> -->
+    </table>
+  </div>
+</body>
+
+</html>
+
