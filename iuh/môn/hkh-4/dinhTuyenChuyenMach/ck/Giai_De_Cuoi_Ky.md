@@ -86,11 +86,20 @@ CÂU 2 (6 điểm - CLO 2,3): ĐỊNH TUYẾN + ACL
 
 ĐỀ BÀI (đọc từ sơ đồ):
 
+![1784512397579](image/Giai_De_Cuoi_Ky/1784512397579.png)
+
 - Vùng RIP (trái): R2 + SwitchServer + VPC_Vlan_11 + VPC_Vlan_12
   VLAN 11: 192.168.11.0/24
   VLAN 12: 192.168.12.0/24
   R2 (s1/0) nối R1 (s1/0): mạng 228.224.11.0/30
+- R2 (s0/0) nối SwitchServer (s0/0)
+
+
+
 - R1 (trung tâm): Internet (e0/0) + Redistribution OSPF <-> RIP
+
+
+
 - Vùng OSPF (phải): R3 + VPC + LocalServerWebFile
   R1 (s1/1) nối R3 (s1/1): mạng 228.224.11.16/30
   R3 (e0/0): 172.16.30.0/24 (Server IP: 172.16.30.10)
