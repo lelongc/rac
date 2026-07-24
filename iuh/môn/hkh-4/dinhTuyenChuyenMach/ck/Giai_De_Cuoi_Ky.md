@@ -4,41 +4,47 @@
 
 =====================================================================
 =====================================================================
- BÍ KÍP TÍNH & BẢNG TRA CỨU SUBNET MASK / WILDCARD MASK (CHO ĐỀ THI)
-=====================================================================
+
+BÍ KÍP TÍNH & BẢNG TRA CỨU SUBNET MASK / WILDCARD MASK (CHO ĐỀ THI)
+==========================================================================
+
 =====================================================================
 
 ### 1. Cách tính cực nhanh không bao giờ sai:
+
 - **Subnet Mask**: Là chuỗi xác định độ rộng của dải mạng.
 - **Wildcard Mask (dùng trong OSPF và ACL)**: Là số đảo ngược của Subnet Mask.
-  👉 **Công thức tính Wildcard Mask siêu tốc**: 
+  👉 **Công thức tính Wildcard Mask siêu tốc**:
   `Wildcard Mask = 255.255.255.255 - Subnet Mask`
 
-*Ví dụ*: 
-- Với `/24` (Subnet `255.255.255.0`): 
+*Ví dụ*:
+
+- Với `/24` (Subnet `255.255.255.0`):
   Wildcard = `(255-255).(255-255).(255-255).(255-0)` = `0.0.0.255`
-- Với `/30` (Subnet `255.255.255.252`): 
+- Với `/30` (Subnet `255.255.255.252`):
   Wildcard = `(255-255).(255-255).(255-255).(255-252)` = `0.0.0.3`
 
 ---
 
 ### 2. BẢNG TRA CỨU "THẦN THÁNH" KHI ĐI THI (Chỉ cần gióng hàng, không cần tính!):
 
-| Prefix (CIDR) | Subnet Mask | Wildcard Mask | Dùng cho vị trí nào trong sơ đồ đề thi? | Số máy dùng được |
-|:---:|:---:|:---:|:---|:---:|
-| **/30** | `255.255.255.252` | `0.0.0.3` | **Nối 2 Router với nhau** (Cáp Serial `s1/0`, `s1/1`) | 2 IP (.1 và .2) |
-| **/29** | `255.255.255.248` | `0.0.0.7` | Đường nối WAN nhỏ | 6 IP |
-| **/28** | `255.255.255.240` | `0.0.0.15` | Mạng nhỏ (14 máy) hoặc dải ACL chọn 16 IP | 14 IP |
-| **/27** | `255.255.255.224` | `0.0.0.31` | Dải mạng 30 máy trạm | 30 IP |
-| **/26** | `255.255.255.192` | `0.0.0.63` | Dải mạng 62 máy trạm | 62 IP |
-| **/25** | `255.255.255.128` | `0.0.0.127` | Nửa dải mạng Lớp C (126 máy) | 126 IP |
-| **/24** | `255.255.255.0` | `0.0.0.255` | **Mạng LAN tiêu chuẩn** (VLAN, PC, Server) | 254 IP (.1 đến .254) |
-| **host 1 IP** | `255.255.255.255` | `0.0.0.0` | Chỉ định đúng 1 máy Server duy nhất trong ACL | 1 IP |
+|    Prefix (CIDR)    |     Subnet Mask     | Wildcard Mask | Dùng cho vị trí nào trong sơ đồ đề thi?                   | Số máy dùng được |
+| :-----------------: | :-----------------: | :-----------: | :----------------------------------------------------------------- | :--------------------: |
+|    **/30**    | `255.255.255.252` |  `0.0.0.3`  | **Nối 2 Router với nhau** (Cáp Serial `s1/0`, `s1/1`) |    2 IP (.1 và .2)    |
+|    **/29**    | `255.255.255.248` |  `0.0.0.7`  | Đường nối WAN nhỏ                                             |          6 IP          |
+|    **/28**    | `255.255.255.240` | `0.0.0.15` | Mạng nhỏ (14 máy) hoặc dải ACL chọn 16 IP                    |         14 IP         |
+|    **/27**    | `255.255.255.224` | `0.0.0.31` | Dải mạng 30 máy trạm                                           |         30 IP         |
+|    **/26**    | `255.255.255.192` | `0.0.0.63` | Dải mạng 62 máy trạm                                           |         62 IP         |
+|    **/25**    | `255.255.255.128` | `0.0.0.127` | Nửa dải mạng Lớp C (126 máy)                                  |         126 IP         |
+|    **/24**    |  `255.255.255.0`  | `0.0.0.255` | **Mạng LAN tiêu chuẩn** (VLAN, PC, Server)                | 254 IP (.1 đến .254) |
+| **host 1 IP** | `255.255.255.255` |  `0.0.0.0`  | Chỉ định đúng 1 máy Server duy nhất trong ACL               |          1 IP          |
 
 ---
 
 ### 3. Mẹo tính dải IP của mạng `/30` (Nối 2 Router):
+
 Mạng `/30` có bước nhảy là **4 IP** cho mỗi block: `.0`, `.4`, `.8`, `.12`, `.16`, `.20`, `.24`, `.28`, `.32`...
+
 - **Block 1 (`228.224.11.0/30`)**:
   + IP Mạng (Network ID): `228.224.11.0` (không gán cho thiết bị)
   + IP Router thứ nhất (R2): `228.224.11.1`
@@ -280,13 +286,6 @@ PHÂN TÍCH VỊ TRÍ ĐẶT ACL:
 - Extended ACL đặt **GẦN NGUỒN (Source)** -> Áp dụng tại cổng `s1/0` chiều `in` trên Router **R1**.
 
 Trên R1:
-R1> enable
-R1# configure terminal
-R1(config)# ip access-list extended ACL_SERVER
-
-! (Ghi chú: Nếu bài thi chấm theo từ ngữ tường minh của đề yêu cầu allow FTP từ OSPF, chèn 2 dòng này trước:
-! permit tcp 172.16.31.0 0.0.0.255 host 172.16.30.10 eq ftp
-! permit tcp 172.16.31.0 0.0.0.255 host 172.16.30.10 eq ftp-data)
 
 ! 2b. Cấm VLAN 11 (192.168.11.0/24) dùng Web (HTTP 80 / HTTPS 443) tới Server 172.16.30.10
 R1(config-ext-nacl)# deny tcp 192.168.11.0 0.0.0.255 host 172.16.30.10 eq 80
@@ -307,12 +306,22 @@ R1# write memory
 ### GIẢI THÍCH CHI TIẾT TỪNG DÒNG LỆNH TRONG CÂU 2:
 
 #### A. Giải thích lệnh trên SwitchServer:
-- **`switchport trunk encapsulation dot1q`**: (Bắt buộc trên IOL) Chọn chuẩn gán nhãn VLAN 802.1Q trước khi bật mode trunk, nếu thiếu lệnh này Switch sẽ từ chối chuyển sang mode trunk.
+
+- **`switchport trunk encapsulation dot1q`**: (Bắt buộc trên IOL) Chọn chuẩn gán nhãn VLAN 802.1Q trước khi bật mode trunk, nếu thiếu lệnh này SwitcR1> enable
+  R1# configure terminal
+  R1(config)# ip access-list extended ACL_SERVER
+
+! (Ghi chú: Nếu bài thi chấm theo từ ngữ tường minh của đề yêu cầu allow FTP từ OSPF, chèn 2 dòng này trước:
+! permit tcp 172.16.31.0 0.0.0.255 host 172.16.30.10 eq ftp
+! permit tcp 172.16.31.0 0.0.0.255 host 172.16.30.10 eq ftp-data)
+h sẽ từ chối chuyển sang mode trunk.
+
 - **`switchport mode trunk`**: Đưa cổng `e0/0` thành đường Trunk truyền tải dữ liệu của nhiều VLAN (VLAN 11 và VLAN 12) cùng lúc lên Router R2.
 - **`switchport mode access` & `switchport access vlan 11`**: Đặt cổng `e0/2` làm cổng Access dành riêng cho máy tính VLAN 11.
 - **`switchport access vlan 12`**: Đặt cổng `e0/1` làm cổng Access dành riêng cho máy tính VLAN 12.
 
 #### B. Giải thích lệnh trên R2 (Router-on-a-stick + RIP):
+
 - **`interface e0/0` & `no shutdown`**: Bật cổng vật lý `e0/0` lên để các sub-interface bên dưới hoạt động.
 - **`interface e0/0.11`**: Tạo cổng con ảo (sub-interface) số `.11` phục vụ định tuyến cho VLAN 11.
 - **`encapsulation dot1Q 11`**: Khai báo cổng ảo này bóc tách nhãn VLAN 11 đi qua đường Trunk.
@@ -322,6 +331,7 @@ R1# write memory
 - **`network 192.168.11.0` / `network 192.168.12.0` / `network 228.224.11.0`**: Khai báo quảng bá 3 dải mạng trực tiếp của R2 cho các Router vùng RIP biết.
 
 #### C. Giải thích lệnh trên R1 (Trung tâm - Redistribution + NAT):
+
 - **`ip nat inside`**: Khai báo các cổng nối mạng nội bộ (`s1/0` nối R2 và `s1/1` nối R3).
 - **`ip nat outside`**: Khai báo cổng `e0/0` nối ra đám mây Internet.
 - **`access-list 1 permit any` & `ip nat inside source list 1 interface e0/0 overload`**: Bật tính năng NAT Overload (PAT), biến tất cả IP riêng nội bộ thành IP công cộng trên cổng `e0/0` để ra Internet.
@@ -331,6 +341,7 @@ R1# write memory
 - **`default-information originate`**: Quảng bá đường mặc định ra Internet cho toàn bộ các Router thuộc dải RIP và OSPF.
 
 #### D. Giải thích lệnh trên R3 (OSPF):
+
 - **`interface s1/1` (`228.224.11.18 255.255.255.252`)**: IP cổng Serial nối R1. Subnet mask `/30` = `255.255.255.252`.
 - **`interface e0/0` (`172.16.30.1 255.255.255.0`)**: IP Gateway cho Server (`172.16.30.10`).
 - **`interface e0/1` (`172.16.31.1 255.255.255.0`)**: IP Gateway cho VPC vùng OSPF.
