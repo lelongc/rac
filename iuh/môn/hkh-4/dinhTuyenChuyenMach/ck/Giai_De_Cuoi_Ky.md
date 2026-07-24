@@ -1,22 +1,84 @@
-# ĐỀ THI CUỐI KỲ - ĐỊNH TUYẾN CHUYỂN MẠCH (DHCNTT18)
+📌 MỤC LỤC TRA CỨU THEO TRANG / PHẦN (BẢN CHUẨN ĐẦY ĐỦ KHI IN GIẤY THI)
+==================================================================================
 
-# Ngày thi: T13-14, 06/11/2025 | Thời gian: 70 phút | Được sử dụng tài liệu giấy
+📖 **[TRANG 1 / PHẦN 1]**: ⚡ [BÍ KÍP TRA CỨU SUBNET MASK &amp; WILDCARD MASK](#trang-1--ph%E1%BA%A7n-1-b%C3%AD-k%C3%ADp-tra-c%E1%BB%A9u-subnet-mask--wildcard-mask-vi%E1%BA%BFt-nay-kh%C3%B4ng-c%E1%BA%A7n-t%C3%ADnh)
+
+- [1. Quy tắc vàng: Khi nào dùng Subnet Mask, khi nào dùng Wildcard Mask?](#1-quy-t%E1%BA%AFc-v%C3%A0ng-khi-n%C3%A0o-d%C3%B9ng-mask-n%C3%A0o)
+- [2. Trong đề thi chỉ có 2 loại mạng chính (/30 và /24)](#2-trong-%C4%91%E1%BB%81-thi-ch%E1%BA%A3-c%C3%B3-2-lo%E1%BA%A1i-m%E1%BA%A1ng-ch%C3%ADnh-thu%E1%BB%99c-l%C3%B2ng-vi%E1%BA%BFt-lu%C3%B4n)
+- [3. Bảng tra cứu đầy đủ tất cả dải mạng từ /30 đến /24](#3-b%E1%BA%A3ng-tra-c%E1%BB%A9u-%C4%91%E1%BA%A7y-%C4%91%E1%BB%A7-t%E1%BA%A5t-c%E1%BA%A3-d%E1%BA%A3i-m%E1%BA%A1ng-t%E1%BB%AB-30-%C4%91%E1%BA%BFn-24)
+
+📖 **[TRANG 2 / PHẦN 2]**: 🔐 [CÂU 1 (2đ): CẤU HÌNH BẢO MẬT ROUTER](#trang-2--ph%E1%BA%A7n-2-c%C3%A2u-1-2-%C4%91i%E1%BB%83m---clo-02-c%E1%BA%A5u-h%C3%ACnh-b%E1%BA%A3o-m%E1%BA%ADt-router)
+
+- [Đề bài &amp; Lệnh bài giải Câu 1](#b%C3%A0i-gi%E1%BA%A3i-c%C3%A2u-1)
+- [Giải thích chi tiết từng dòng lệnh Câu 1](#gi%E1%BA%A3i-th%C3%ADch-chi-ti%E1%BA%BFt-t%E1%BB%ABng-l%E1%BB%87nh-c%E1%BA%A5u-h%C3%ACnh)
+
+📖 **[TRANG 3 / PHẦN 3]**: 🌐 [CÂU 2 (6đ): ĐỊNH TUYẾN MÔ HÌNH MẠNG + ACL](#trang-3--ph%E1%BA%A7n-3-c%C3%A2u-2-6-%C4%91i%E1%BB%83m---clo-23-%C4%91%E1%BB%8Bnh-tuy%E1%BA%BFn--acl)
+
+- [Cấu hình SwitchServer (Trunk, Access VLAN 11 &amp; 12)](#1-switchserver)
+- [Cấu hình R2 (Router-on-a-stick + RIPv2)](#2-r2-router-on-a-stick--rip)
+- [Cấu hình R1 Trung tâm (Redistribution + NAT Overload)](#3-r1-trung-t%C3%A2m---redistribution--nat)
+- [Cấu hình R3 (OSPF Area 0)](#4-r3-ospf)
+- [Cấu hình IP các VPC](#5-ip-c%C3%A1c-vpc)
+- [Cấu hình ACL (Cách 1 Gộp tại R3 e0/0 out \| Cách 2 Tách 2a &amp; 2b)](#c%C3%A1ch-1-c%E1%BA%A5u-h%C3%ACnh-g%E1%BB%99p-tr%C3%AAn-router-r3-c%E1%BB%95ng-e00-chi%E1%BB%81u-out---t%E1%BB%91i-%C6%B0u--g%E1%BB%8Dn-nh%E1%BA%A5t)
+- [Giải thích chi tiết từng dòng lệnh trong Câu 2](#gi%E1%BA%A3i-th%C3%ADch-chi-ti%E1%BA%BFt-t%E1%BB%ABng-d%C3%B2ng-l%E1%BB%87nh-trong-c%C3%A2u-2)
+
+📖 **[TRANG 4 / PHẦN 4]**: 🛡️ [CÂU 3 (2đ): GIẢI THÍCH ACL LÝ THUYẾT &amp; WEB-ONLY](#trang-4--ph%E1%BA%A7n-4-c%C3%A2u-3-2-%C4%91i%E1%BB%83m---clo-3-gi%E1%BA%A3i-th%C3%ADch-acl-l%C3%BD-thuy%E1%BA%BFt)
+
+- [Bài giải Câu 3.1 (Giải thích Standard ACL 1 &amp; e0/3 out)](#b%C3%A0i-gi%E1%BA%A3i-c%C3%A2u-31)
+- [Bài giải Câu 3.2 (Extended ACL WEB_ONLY cho WebServer 172.16.4.5)](#b%C3%A0i-gi%E1%BA%A3i-c%C3%A2u-32)
+- [Giải thích chi tiết &amp; Lý do vị trí đặt ACL](#gi%E1%BA%A3i-th%C3%ADch-chi-ti%E1%BA%BFt-l%E1%BB%87nh--v%E1%BB%8B-tr%C3%AD-%C4%91%E1%BA%B7t-acl)
+
+📖 **[TRANG 5 / PHẦN 5]**: 📋 [MẪU THAY SỐ NHANH ĐI THI (CHỈ CẦN THAY GIÁ TRỊ TRONG [ ])](#trang-5--ph%E1%BA%A7n-5-m%E1%BA%A8u-thay-s%E1%BB%91-nhanh-%C4%91i-thi-ch%E1%BA%A3-c%E1%BA%A7n-thay-gi%C3%A1-tr%E1%BB%8B-trong--)
+
+- [Mẫu Câu 1: Bảo mật Router](#m%E1%BA%ABu-c%C3%A2u-1-b%E1%BA%A3o-m%E1%BA%ADt-router)
+- [Mẫu Câu 2: Switch (VLAN + Trunk)](#m%E1%BA%ABu-c%C3%A2u-2-switch-g%C3%A1n-vlan--trunk)
+- [Mẫu Câu 2: Router-on-a-stick](#m%E1%BA%ABu-c%C3%A2u-2-router-on-a-stick-router-c%C3%B3-vlan)
+- [Mẫu Câu 2: R1 Trung tâm (Redistribution + NAT)](#m%E1%BA%ABu-c%C3%A2u-2-r1-trung-t%C3%A2m-redistribution--nat)
+- [Mẫu Câu 2: Router OSPF thuần](#m%E1%BA%ABu-c%C3%A2u-2-router-ospf-thu%E1%BA%A7n)
+- [Mẫu ACL: Cấm dịch vụ cụ thể](#m%E1%BA%ABu-acl-c%E1%BA%A5m-d%E1%BB%8Bch-v%E1%BB%A5-c%E1%BB%A5-th%E1%BB%83)
+- [Bảng Port dịch vụ phổ biến](#b%E1%BA%A3ng-port-ph%E1%BB%95-bi%E1%BA%BFn)
+- [Mẫu văn giải thích ACL chép vào giấy thi](#m%E1%BA%ABu-gi%E1%BA%A3i-th%C3%ADch-acl-vi%E1%BA%BFt-v%C3%A0o-gi%E1%BA%A5y-thi)
+
+📖 **[TRANG 6 / PHẦN 6]**: 📖 [CẨM NANG LÝ THUYẾT &amp; VẤN ĐÁP THI CỦA CÁC BÀI LAB](#trang-6--ph%E1%BA%A7n-6-c%E1%BA%A9m-nang-l%C3%BD-thuy%E1%BA%BFt--v%E1%BA%A5n-%C4%91%C3%A1p-t%E1%BB%95ng-h%E1%BB%A3p-t%E1%BB%AB-t%E1%BA%A5t-c%E1%BA%A3-c%C3%A1c-b%C3%A0i-lab-pdf)
+
+- [I. Kiến thức nền tảng thiết bị &amp; CLI Modes](#i-ki%E1%BA%BFn-th%E1%BB%A9c-n%E1%BB%81n-t%E1%BA%A3ng-thi%E1%BA%BFt-b%E1%BB%8B-m%E1%BA%A1ng--d%C3%B2ng-l%E1%BB%87nh-cli)
+- [II. Lý thuyết VLAN, VTP, Trunking &amp; Router-on-a-stick](#ii-l%C3%BD-thuy%E1%BA%BFt-vlan-vtp-trunking--router-on-a-stick)
+- [III. Lý thuyết Định tuyến động (RIPv1 vs RIPv2 vs OSPF)](#iii-l%C3%BD-thuy%E1%BA%BFt-%C4%91%E1%BB%8Bnh-tuy%E1%BA%BFn-%C4%91%E1%BB%99ng-rip--ospf)
+- [IV. Lý thuyết Route Redistribution](#iv-l%C3%BD-thuy%E1%BA%BFt-route-redistribution-d%E1%BB%8Bch-%C4%91%E1%BB%8Bnh-tuy%E1%BA%BFn-ch%C3%A9o)
+- [V. Lý thuyết ACL &amp; NAT Overload](#v-l%C3%BD-thuy%E1%BA%BFt-access-control-list-acl--nat)
+- [VI. Tổng hợp Câu hỏi Vấn đáp thường gặp](#vi-t%E1%BB%95ng-h%E1%BB%A3p-c%C3%A2u-h%E1%BB%8Fi-v%E1%BA%A5n-%C4%91%C3%A1p-th%C6%B0%E1%BB%9Dng-g%E1%BA%B7p-khi-b%E1%BA%A3o-v%E1%BB%87)
+
+📖 **[TRANG 7 / PHẦN 7]**: 📊 [BẢNG GIẢI MÃ KÝ HIỆU &amp; THÔNG SỐ TOÀN TẬP IN CISCO IOS](#trang-7--ph%E1%BA%A7n-7-b%E1%BA%A3ng-gi%E1%BA%A3i-m%C3%A3-k%C3%BD-hi%E1%BB%87u--th%C3%B4ng-s%E1%BB%91-to%C3%A0n-t%E1%BA%ADp-trong-cisco-ios)
+
+- [1. Giải mã ký hiệu bảng định tuyến (`show ip route`)](#1-b%E1%BA%A3ng-gi%E1%BA%A3i-m%C3%A3-k%C3%BD-hi%E1%BB%87u-trong-b%E1%BA%A3ng-%C4%91%E1%BB%8Bnh-tuy%E1%BA%BFn-show-ip-route)
+- [2. Giải mã ký hiệu kiểm tra `ping`](#2-b%E1%BA%A3ng-gi%E1%BA%A3i-m%C3%A3-k%C3%BD-hi%E1%BB%87u-ki%E1%BB%83m-tra-k%E1%BA%BFt-n%E1%BB%91i-ping-ping)
+- [3. Giải mã ký hiệu `traceroute`](#3-b%E1%BA%A3ng-gi%E1%BA%A3i-m%C3%A3-k%C3%BD-hi%E1%BB%87u-theo-d%C3%B5i-%C4%91C6%B0%E1%BB%9Dng-%C4%91i-traceroute-traceroute--trace)
+- [4. Giải mã trạng thái cổng mạng (`show ip interface brief`)](#4-b%E1%BA%A3ng-gi%E1%BA%A3i-m%C3%A3-tr%E1%BA%A1ng-th%C3%A1i-c%E1%BB%95ng-m%E1%BA%A1ng-show-ip-interface-brief)
+- [5. Giải mã thông số `show vtp status`](#5-b%E1%BA%A3ng-gi%E1%BA%A3i-m%C3%A3-th%C3%B4ng-s%E1%BB%91-vtp-status-show-vtp-status)
+- [6. Bảng toán tử &amp; cú pháp nâng cao ACL](#6-b%E1%BA%A3ng-to%C3%A1n-t%E1%BB%AD--c%C3%BA-ph%C3%A1p-n%C3%A2ng-cao-trong-access-control-list-acl)
+- [7. Bảng phân loại địa chỉ IP, Subnet Mask &amp; Private IP](#7-b%E1%BA%A3ng-ph%C3%A2n-lo%E1%BA%A1i-%C4%91%E1%BB%8Ba-ch%E1%BB%89-ip-subnet-mask--wildcard-mask-chu%E1%BA%A9n)
+
+=====================================================================
 
 =====================================================================
 =====================================================================
- BÍ KÍP TRA CỨU SUBNET MASK & WILDCARD MASK (VIẾT NAY KHÔNG CẦN TÍNH)
-=====================================================================
+
+[TRANG 1 / PHẦN 1]: BÍ KÍP TRA CỨU SUBNET MASK & WILDCARD MASK (VIẾT NAY KHÔNG CẦN TÍNH)
+================================================================================================
+
 =====================================================================
 
 ### 1. QUY TẮC VÀNG: KHI NÀO DÙNG MASK NÀO?
 
 👉 **CHỈ DÙNG SUBNET MASK (dạng `255.255.255.x`) TRONG CÁC LỆNH:**
+
 1. Đặt IP cổng Router / Sub-interface: `ip address 192.168.11.1 255.255.255.0`
 2. Đặt IP cổng Serial nối Router: `ip address 228.224.11.1 255.255.255.252`
 3. Đặt IP trên máy VPCS / Server: `ip 192.168.11.10 255.255.255.0 192.168.11.1`
 4. Lệnh tạo Route tĩnh: `ip route 0.0.0.0 0.0.0.0 e0/0`
 
 👉 **CHỈ DÙNG WILDCARD MASK (dạng `0.0.0.x`) TRONG CÁC LỆNH:**
+
 1. Lệnh khai báo mạng OSPF: `network 172.16.30.0 0.0.0.255 area 0`
 2. Lệnh tạo Access Control List (ACL): `access-list 1 permit 172.16.3.0 0.0.0.15`
 
@@ -25,10 +87,11 @@
 ### 2. TRONG ĐỀ THI CHỈ CÓ 2 LOẠI MẠNG CHÍNH (THUỘC LÒNG VIẾT LUÔN):
 
 - **Loại 1: Mạng `/30` (Nối 2 Router với nhau qua cáp Serial)**
+
   - Subnet Mask = **`255.255.255.252`** (dùng cho lệnh `ip address`)
   - Wildcard Mask = **`0.0.0.3`** (dùng cho lệnh `network` OSPF)
-
 - **Loại 2: Mạng `/24` (Mạng LAN, VLAN, PC, Server)**
+
   - Subnet Mask = **`255.255.255.0`** (dùng cho lệnh `ip address` và gán IP PC)
   - Wildcard Mask = **`0.0.0.255`** (dùng cho OSPF và ACL)
 
@@ -36,15 +99,15 @@
 
 ### 3. BẢNG TRA CỨU ĐẦY ĐỦ TẤT CẢ DẢI MẠNG (TỪ /30 ĐẾN /24):
 
-| Prefix (CIDR) | Subnet Mask (Gán IP / Sub-interface) | Wildcard Mask (OSPF / ACL) | Đề thi dùng ở vị trí nào? |
-|:---:|:---:|:---:|:---|
-| **/30** | `255.255.255.252` | `0.0.0.3` | **Nối 2 Router với nhau** (Serial `s1/0`, `s1/1`) |
-| **/28** | `255.255.255.240` | `0.0.0.15` | Mạng nhỏ 14 máy / Dải ACL 16 IP |
-| **/27** | `255.255.255.224` | `0.0.0.31` | Dải mạng 30 máy trạm |
-| **/26** | `255.255.255.192` | `0.0.0.63` | Dải mạng 62 máy trạm |
-| **/25** | `255.255.255.128` | `0.0.0.127` | Nửa dải mạng Class C (126 máy) |
-| **/24** | `255.255.255.0` | `0.0.0.255` | **Mạng LAN tiêu chuẩn** (VLAN, PC, Server) |
-| **host 1 IP** | `255.255.255.255` | `0.0.0.0` (hoặc từ khóa `host`) | Chỉ định đúng 1 IP Server trong ACL |
+|    Prefix (CIDR)    | Subnet Mask (Gán IP / Sub-interface) |       Wildcard Mask (OSPF / ACL)       | Đề thi dùng ở vị trí nào?                              |
+| :-----------------: | :-----------------------------------: | :------------------------------------: | :------------------------------------------------------------ |
+|    **/30**    |          `255.255.255.252`          |              `0.0.0.3`              | **Nối 2 Router với nhau** (Serial `s1/0`, `s1/1`) |
+|    **/28**    |          `255.255.255.240`          |              `0.0.0.15`              | Mạng nhỏ 14 máy / Dải ACL 16 IP                           |
+|    **/27**    |          `255.255.255.224`          |              `0.0.0.31`              | Dải mạng 30 máy trạm                                      |
+|    **/26**    |          `255.255.255.192`          |              `0.0.0.63`              | Dải mạng 62 máy trạm                                      |
+|    **/25**    |          `255.255.255.128`          |             `0.0.0.127`             | Nửa dải mạng Class C (126 máy)                            |
+|    **/24**    |           `255.255.255.0`           |             `0.0.0.255`             | **Mạng LAN tiêu chuẩn** (VLAN, PC, Server)           |
+| **host 1 IP** |          `255.255.255.255`          | `0.0.0.0` (hoặc từ khóa `host`) | Chỉ định đúng 1 IP Server trong ACL                      |
 
 ---
 
@@ -64,8 +127,12 @@ Mạng `/30` có bước nhảy là **4 IP** cho mỗi block: `.0`, `.4`, `.8`, 
   + IP Broadcast: `228.224.11.19` (không gán cho thiết bị)
 
 =====================================================================
-CÂU 1 (2 điểm - CLO 02): CẤU HÌNH BẢO MẬT ROUTER
-=======================================================
+=====================================================================
+
+[TRANG 2 / PHẦN 2]: CÂU 1 (2 ĐIỂM - CLO 02) - CẤU HÌNH BẢO MẬT ROUTER
+=============================================================================
+
+======================================================================
 
 ĐỀ BÀI:
 
@@ -142,8 +209,12 @@ GIẢI THÍCH CHI TIẾT TỪNG LỆNH CẤU HÌNH:
 - **write memory**: Lưu toàn bộ các cấu hình đang chạy trong RAM (Running Configuration) vào bộ nhớ không bay hơi NVRAM (Startup Configuration) để đảm bảo cấu hình không bị mất khi Router khởi động lại hoặc mất điện. Giao tiếp tương đương lệnh `copy running-config startup-config`.
 
 =====================================================================
-CÂU 2 (6 điểm - CLO 2,3): ĐỊNH TUYẾN + ACL
-================================================
+=====================================================================
+
+[TRANG 3 / PHẦN 3]: CÂU 2 (6 ĐIỂM - CLO 2,3) - ĐỊNH TUYẾN MÔ HÌNH MẠNG + ACL
+======================================================================================
+
+=====================================================================
 
 ĐỀ BÀI (đọc từ sơ đồ):
 
@@ -289,10 +360,12 @@ LocalServer> save
 === 6. ACL ===
 
 ### ÔN LẠI QUY TẮC BEST PRACTICE ĐẶT ACL (CISCO CCNA):
+
 - **Extended ACL** → Ưu tiên đặt **GẦN NGUỒN** (tiêu hủy gói sớm, tiết kiệm băng thông WAN).
 - **Standard ACL** → Đặt **GẦN ĐÍCH** (tránh chặn nhầm vì chỉ lọc IP nguồn).
 
 ### ĐỌC LẠI ĐỀ BÀI NGUYÊN VĂN:
+
 - **2a**: *"Cho phép các PC trong vùng OSPF có thể truy cập vào **FTP** Server có IP: 172.16.30.10/24."*
 - **2b**: *"Cấm **Vlan 11** dùng dịch vụ **Web** trên Server: 172.16.30.10/24."*
 
@@ -313,22 +386,28 @@ LUỒNG 2b (Web từ VLAN 11 → Server):
 ### VỊ TRÍ ĐẶT ACL — PHÂN TÍCH BEST PRACTICE:
 
 **Phương án 1 — Áp ở R1 (s1/0 in hoặc s1/1 out)** (theo đúng best practice "gần nguồn"):
+
 - ✅ Chặn được VLAN 11 dùng Web (2b): Gói tin từ VLAN 11 đi qua R1 → OK.
 - ❌ **KHÔNG chặn/cho phép được FTP từ PC vùng OSPF (2a)**: Vì gói FTP đi NỘI BỘ trong R3, KHÔNG BAO GIỜ chạy qua R1! → Lệnh trên R1 vô tác dụng với yêu cầu 2a!
 
 **Phương án 2 — Áp ở R3 (e0/0 out)** (gần đích = gần Server):
+
 - ✅ Chặn được VLAN 11 dùng Web (2b): Gói từ VLAN 11 cuối cùng cũng phải đi RA cổng e0/0 của R3 → bị ACL chặn tại đây.
 - ✅ **Cho phép được FTP từ PC vùng OSPF (2a)**: Gói FTP đi nội bộ trong R3 và RA cổng e0/0 → ACL kiểm tra và cho phép.
 - ✅ **1 bộ ACL duy nhất** kiểm soát trọn vẹn mọi nguồn truy cập vào Server.
 
 ### KẾT LUẬN:
+
 > **Trong bài thi này, Best Practice "Extended ACL gần nguồn" KHÔNG áp dụng được vì 2 yêu cầu ACL có 2 nguồn khác nhau (VPC OSPF nội bộ R3 và VLAN 11 từ RIP).**
 > **Vị trí DUY NHẤT đáp ứng CẢ 2 yêu cầu đồng thời là: Router R3, cổng e0/0, chiều out (ngay trước cửa Server).**
 > Đây KHÔNG phải vi phạm best practice — đây là trường hợp ngoại lệ hợp lý mà CCNA cũng chấp nhận: khi nguồn đến từ nhiều hướng khác nhau, ta đặt ACL tại điểm hội tụ chung (convergence point) gần đích.
 
 ---
+
 ### CÁCH 1: CẤU HÌNH GỘP TRÊN ROUTER R3 (CỔNG e0/0 CHIỀU OUT) — TỐI ƯU & GỌN NHẤT
+
 ---
+
 *Áp 1 bộ Extended ACL duy nhất tại cổng nối Server `172.16.30.10` để kiểm soát tất cả các nguồn dữ liệu đi vào Server:*
 
 R3> enable
@@ -354,10 +433,13 @@ R3(config)# end
 R3# write memory
 
 ---
+
 ### CÁCH 2: TÁCH RIÊNG CÂU 2A VÀ CÂU 2B THEO CHUẨN BEST PRACTICE (GẦN NGUỒN NHẤT)
+
 ---
 
 #### CÂU 2A: Cho phép các PC trong vùng OSPF truy cập FTP Server (172.16.30.10)
+
 - **Vị trí chuẩn Best Practice**: Đặt tại cổng **`e0/1` chiều `IN` trên Router R3** (gần nguồn PC vùng OSPF nhất).
 
 ```text
@@ -381,9 +463,11 @@ R3# write memory
 ```
 
 #### CÂU 2B: Cấm VLAN 11 (192.168.11.0/24) dùng dịch vụ Web trên Server (172.16.30.10)
+
 - **Vị trí chuẩn Best Practice**: Đặt tại cổng **`e0/0.11` chiều `IN` trên Router R2** (gần nguồn VLAN 11 nhất) *HOẶC* tại cổng **`s1/0` chiều `IN` trên Router R1**.
 
 *Option B1: Cấu hình trên R2 (gần VLAN 11 nhất)*
+
 ```text
 R2> enable
 R2# configure terminal
@@ -405,6 +489,7 @@ R2# write memory
 ```
 
 *Option B2: Cấu hình trên R1 (Cổng vào từ phía RIP s1/0)*
+
 ```text
 R1> enable
 R1# configure terminal
@@ -424,21 +509,23 @@ R1# write memory
 
 ### GIẢI THÍCH CHI TIẾT TỪNG DÒNG LỆNH ACL CÂU 2:
 
-| STT | Lệnh | Ý nghĩa |
-|:---:|:---|:---|
-| 1 | `ip access-list extended ACL_SERVER` | Tạo Extended ACL đặt tên là `ACL_SERVER`. Extended = lọc được IP nguồn + IP đích + Port/dịch vụ. |
-| 2 | `permit tcp 172.16.31.0 0.0.0.255 host 172.16.30.10 eq ftp` | Cho phép giao thức TCP từ dải IP nguồn `172.16.31.0/24` (VPC vùng OSPF, wildcard `0.0.0.255`) đến đúng 1 máy đích `172.16.30.10` (từ khóa `host` = wildcard `0.0.0.0`) trên port **21** (FTP điều khiển). |
-| 3 | `permit tcp ... eq ftp-data` | Tương tự dòng trên nhưng cho port **20** (FTP truyền dữ liệu). FTP cần cả 2 port 20+21 để hoạt động. |
-| 4 | `deny tcp 192.168.11.0 0.0.0.255 host 172.16.30.10 eq 80` | Cấm TCP từ dải IP nguồn `192.168.11.0/24` (VLAN 11) đến Server trên port **80** (HTTP/Web). |
-| 5 | `deny tcp ... eq 443` | Cấm VLAN 11 truy cập port **443** (HTTPS/Web bảo mật) tới Server. |
-| 6 | `permit ip any any` | Cho phép tất cả lưu lượng còn lại đi qua. Nếu thiếu dòng này, implicit deny sẽ chặn toàn bộ traffic khác (ping, Internet, VLAN 12...). |
-| 7 | `interface e0/0` + `ip access-group ACL_SERVER out` | Áp ACL vào cổng `e0/0` của R3 (cổng nối Server) theo chiều **out** (lọc gói khi đi RA khỏi Router vào Server). |
+| STT | Lệnh                                                         | Ý nghĩa                                                                                                                                                                                                                                   |
+| :-: | :------------------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+|  1  | `ip access-list extended ACL_SERVER`                        | Tạo Extended ACL đặt tên là`ACL_SERVER`. Extended = lọc được IP nguồn + IP đích + Port/dịch vụ.                                                                                                                             |
+|  2  | `permit tcp 172.16.31.0 0.0.0.255 host 172.16.30.10 eq ftp` | Cho phép giao thức TCP từ dải IP nguồn`172.16.31.0/24` (VPC vùng OSPF, wildcard `0.0.0.255`) đến đúng 1 máy đích `172.16.30.10` (từ khóa `host` = wildcard `0.0.0.0`) trên port **21** (FTP điều khiển). |
+|  3  | `permit tcp ... eq ftp-data`                                | Tương tự dòng trên nhưng cho port**20** (FTP truyền dữ liệu). FTP cần cả 2 port 20+21 để hoạt động.                                                                                                                   |
+|  4  | `deny tcp 192.168.11.0 0.0.0.255 host 172.16.30.10 eq 80`   | Cấm TCP từ dải IP nguồn`192.168.11.0/24` (VLAN 11) đến Server trên port **80** (HTTP/Web).                                                                                                                                   |
+|  5  | `deny tcp ... eq 443`                                       | Cấm VLAN 11 truy cập port**443** (HTTPS/Web bảo mật) tới Server.                                                                                                                                                                 |
+|  6  | `permit ip any any`                                         | Cho phép tất cả lưu lượng còn lại đi qua. Nếu thiếu dòng này, implicit deny sẽ chặn toàn bộ traffic khác (ping, Internet, VLAN 12...).                                                                                    |
+|  7  | `interface e0/0` + `ip access-group ACL_SERVER out`       | Áp ACL vào cổng`e0/0` của R3 (cổng nối Server) theo chiều **out** (lọc gói khi đi RA khỏi Router vào Server).                                                                                                           |
 
 ### TẠI SAO CẦN CẢ `eq ftp` VÀ `eq ftp-data`?
+
 - FTP dùng **2 port**: Port **21** (kênh điều khiển - gửi lệnh `USER`, `PASS`, `LIST`, `RETR`) và Port **20** (kênh truyền dữ liệu - gửi/nhận file thực tế).
 - Nếu chỉ permit port 21 mà quên port 20 → người dùng đăng nhập FTP được nhưng KHÔNG tải file được!
 
 ### TỪ KHÓA `host` TRONG ACL LÀ GÌ?
+
 - `host 172.16.30.10` là viết tắt của `172.16.30.10 0.0.0.0` (wildcard toàn số 0 = chỉ đúng 1 IP duy nhất).
 - Hai cách viết sau là **HOÀN TOÀN GIỐNG NHAU**:
   + `deny tcp 192.168.11.0 0.0.0.255 host 172.16.30.10 eq 80`
@@ -449,12 +536,14 @@ R1# write memory
 ### GIẢI THÍCH CHI TIẾT TỪNG DÒNG LỆNH CẤU HÌNH ĐỊNH TUYẾN CÂU 2:
 
 #### A. Giải thích lệnh trên SwitchServer:
+
 - **`switchport trunk encapsulation dot1q`**: (Bắt buộc trên IOL) Chọn chuẩn gán nhãn VLAN 802.1Q trước khi bật mode trunk, nếu thiếu lệnh này Switch sẽ từ chối chuyển sang mode trunk.
 - **`switchport mode trunk`**: Đưa cổng `e0/0` thành đường Trunk truyền tải dữ liệu của nhiều VLAN (VLAN 11 và VLAN 12) cùng lúc lên Router R2.
 - **`switchport mode access` & `switchport access vlan 11`**: Đặt cổng `e0/2` làm cổng Access dành riêng cho máy tính VLAN 11.
 - **`switchport access vlan 12`**: Đặt cổng `e0/1` làm cổng Access dành riêng cho máy tính VLAN 12.
 
 #### B. Giải thích lệnh trên R2 (Router-on-a-stick + RIP):
+
 - **`interface e0/0` & `no shutdown`**: Bật cổng vật lý `e0/0` lên để các sub-interface bên dưới hoạt động.
 - **`interface e0/0.11`**: Tạo cổng con ảo (sub-interface) số `.11` phục vụ định tuyến cho VLAN 11.
 - **`encapsulation dot1Q 11`**: Khai báo cổng ảo này bóc tách nhãn VLAN 11 đi qua đường Trunk.
@@ -464,6 +553,7 @@ R1# write memory
 - **`network 192.168.11.0` / `network 192.168.12.0` / `network 228.224.11.0`**: Khai báo quảng bá 3 dải mạng trực tiếp của R2 cho các Router vùng RIP biết.
 
 #### C. Giải thích lệnh trên R1 (Trung tâm - Redistribution + NAT):
+
 - **`ip nat inside`**: Khai báo các cổng nối mạng nội bộ (`s1/0` nối R2 và `s1/1` nối R3).
 - **`ip nat outside`**: Khai báo cổng `e0/0` nối ra đám mây Internet.
 - **`access-list 1 permit any` & `ip nat inside source list 1 interface e0/0 overload`**: Bật tính năng NAT Overload (PAT), biến tất cả IP riêng nội bộ thành IP công cộng trên cổng `e0/0` để ra Internet.
@@ -473,6 +563,7 @@ R1# write memory
 - **`default-information originate`**: Quảng bá đường mặc định ra Internet cho toàn bộ các Router thuộc dải RIP và OSPF.
 
 #### D. Giải thích lệnh trên R3 (OSPF):
+
 - **`interface s1/1` (`228.224.11.18 255.255.255.252`)**: IP cổng Serial nối R1. Subnet mask `/30` = `255.255.255.252`.
 - **`interface e0/0` (`172.16.30.1 255.255.255.0`)**: IP Gateway cho Server (`172.16.30.10`).
 - **`interface e0/1` (`172.16.31.1 255.255.255.0`)**: IP Gateway cho VPC vùng OSPF.
@@ -480,8 +571,12 @@ R1# write memory
 - **`network 172.16.30.0 0.0.0.255 area 0`**: Quảng bá dải mạng LAN Server `/24` vào Area 0. Wildcard Mask của `/24` là `0.0.0.255`.
 
 =====================================================================
-CÂU 3 (2 điểm - CLO 3): GIẢI THÍCH ACL LÝ THUYẾT
-=======================================================
+=====================================================================
+
+[TRANG 4 / PHẦN 4]: CÂU 3 (2 ĐIỂM - CLO 3) - GIẢI THÍCH ACL LÝ THUYẾT & WEB-ONLY
+========================================================================================
+
+======================================================================
 
 ![1784887722474](image/Giai_De_Cuoi_Ky/1784887722474.png)
 
@@ -559,8 +654,8 @@ TẠI SAO DÙNG EXTENDED ACL VÀ ÁP VÀO CỔNG `e0/1 out` (GẦN ĐÍCH)?
 =====================================================================
 =====================================================================
 
-MẪU THAY SỐ NHANH ĐI THI (CHỈ CẦN THAY GIÁ TRỊ TRONG [ ])
-================================================================
+[TRANG 5 / PHẦN 5]: MẪU THAY SỐ NHANH ĐI THI (CHỈ CẦN THAY GIÁ TRỊ TRONG [ ])
+=====================================================================================
 
 =====================================================================
 
@@ -739,8 +834,8 @@ Tất cả           : any
 =====================================================================
 =====================================================================
 
-CẨM NANG LÝ THUYẾT & VẤN ĐÁP TỔNG HỢP TỪ TẤT CẢ CÁC BÀI LAB (PDF)
-==============================================================================
+[TRANG 6 / PHẦN 6]: CẨM NANG LÝ THUYẾT & VẤN ĐÁP TỔNG HỢP LAB (PDF)
+============================================================================
 
 =====================================================================
 
@@ -935,7 +1030,13 @@ CẨM NANG LÝ THUYẾT & VẤN ĐÁP TỔNG HỢP TỪ TẤT CẢ CÁC BÀI LAB
 
 > **Trả lời**: Switch IOL hỗ trợ nhiều chuẩn đóng gói Trunk (cả ISL của Cisco và dot1q chuẩn chung). Khi chưa chỉ định chuẩn đóng gói (`encapsulation dot1q`), Switch từ chối chuyển cổng sang chế độ `mode trunk`.
 
----
+=====================================================================
+=====================================================================
+
+[TRANG 7 / PHẦN 7]: BẢNG GIẢI MÃ KÝ HIỆU & THÔNG SỐ TOÀN TẬP CISCO IOS
+================================================================================
+
+=====================================================================
 
 ## VII. BẢNG GIẢI MÃ KÝ HIỆU & THÔNG SỐ TOÀN TẬP TRONG CISCO IOS
 
