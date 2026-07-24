@@ -281,47 +281,173 @@ LocalServer> save
 
 === 6. ACL ===
 
-PHÂN TÍCH VỊ TRÍ ĐẶT ACL:
+### ÔN LẠI QUY TẮC BEST PRACTICE ĐẶT ACL (CISCO CCNA):
+- **Extended ACL** → Ưu tiên đặt **GẦN NGUỒN** (tiêu hủy gói sớm, tiết kiệm băng thông WAN).
+- **Standard ACL** → Đặt **GẦN ĐÍCH** (tránh chặn nhầm vì chỉ lọc IP nguồn).
 
-- Extended ACL đặt **GẦN NGUỒN (Source)** -> Áp dụng tại cổng `s1/0` chiều `in` trên Router **R1**.
+### ĐỌC LẠI ĐỀ BÀI NGUYÊN VĂN:
+- **2a**: *"Cho phép các PC trong vùng OSPF có thể truy cập vào **FTP** Server có IP: 172.16.30.10/24."*
+- **2b**: *"Cấm **Vlan 11** dùng dịch vụ **Web** trên Server: 172.16.30.10/24."*
 
-Trên R1:
+→ Cần phân biệt **dịch vụ** (FTP port 20/21 vs Web port 80/443) → **BẮT BUỘC dùng Extended ACL** (Standard ACL chỉ lọc IP, không phân biệt port/dịch vụ).
 
-! 2b. Cấm VLAN 11 (192.168.11.0/24) dùng Web (HTTP 80 / HTTPS 443) tới Server 172.16.30.10
+### PHÂN TÍCH LUỒNG DỮ LIỆU TRÊN SƠ ĐỒ ĐỀ THI:
+
+```
+LUỒNG 2a (FTP từ PC vùng OSPF → Server):
+  VPC (172.16.31.10) --[e0/1]--> R3 --[e0/0]--> Server (172.16.30.10)
+  ⚠️ Gói tin này chạy NỘI BỘ trong R3, KHÔNG đi qua R1 hay R2!
+
+LUỒNG 2b (Web từ VLAN 11 → Server):
+  VPC_Vlan11 (192.168.11.10) --> SwitchServer --> R2 --[s1/0]--> R1 --[s1/1]--> R3 --[e0/0]--> Server
+  Gói tin đi qua 3 Router: R2 → R1 → R3
+```
+
+### VỊ TRÍ ĐẶT ACL — PHÂN TÍCH BEST PRACTICE:
+
+**Phương án 1 — Áp ở R1 (s1/0 in hoặc s1/1 out)** (theo đúng best practice "gần nguồn"):
+- ✅ Chặn được VLAN 11 dùng Web (2b): Gói tin từ VLAN 11 đi qua R1 → OK.
+- ❌ **KHÔNG chặn/cho phép được FTP từ PC vùng OSPF (2a)**: Vì gói FTP đi NỘI BỘ trong R3, KHÔNG BAO GIỜ chạy qua R1! → Lệnh trên R1 vô tác dụng với yêu cầu 2a!
+
+**Phương án 2 — Áp ở R3 (e0/0 out)** (gần đích = gần Server):
+- ✅ Chặn được VLAN 11 dùng Web (2b): Gói từ VLAN 11 cuối cùng cũng phải đi RA cổng e0/0 của R3 → bị ACL chặn tại đây.
+- ✅ **Cho phép được FTP từ PC vùng OSPF (2a)**: Gói FTP đi nội bộ trong R3 và RA cổng e0/0 → ACL kiểm tra và cho phép.
+- ✅ **1 bộ ACL duy nhất** kiểm soát trọn vẹn mọi nguồn truy cập vào Server.
+
+### KẾT LUẬN:
+> **Trong bài thi này, Best Practice "Extended ACL gần nguồn" KHÔNG áp dụng được vì 2 yêu cầu ACL có 2 nguồn khác nhau (VPC OSPF nội bộ R3 và VLAN 11 từ RIP).**
+> **Vị trí DUY NHẤT đáp ứng CẢ 2 yêu cầu đồng thời là: Router R3, cổng e0/0, chiều out (ngay trước cửa Server).**
+> Đây KHÔNG phải vi phạm best practice — đây là trường hợp ngoại lệ hợp lý mà CCNA cũng chấp nhận: khi nguồn đến từ nhiều hướng khác nhau, ta đặt ACL tại điểm hội tụ chung (convergence point) gần đích.
+
+---
+### CÁCH 1: CẤU HÌNH GỘP TRÊN ROUTER R3 (CỔNG e0/0 CHIỀU OUT) — TỐI ƯU & GỌN NHẤT
+---
+*Áp 1 bộ Extended ACL duy nhất tại cổng nối Server `172.16.30.10` để kiểm soát tất cả các nguồn dữ liệu đi vào Server:*
+
+R3> enable
+R3# configure terminal
+R3(config)# ip access-list extended ACL_SERVER
+
+! 2a. Cho phép các PC vùng OSPF (172.16.31.0/24) truy cập FTP tới Server 172.16.30.10
+R3(config-ext-nacl)# permit tcp 172.16.31.0 0.0.0.255 host 172.16.30.10 eq ftp
+R3(config-ext-nacl)# permit tcp 172.16.31.0 0.0.0.255 host 172.16.30.10 eq ftp-data
+
+! 2b. Cấm VLAN 11 (192.168.11.0/24) dùng dịch vụ Web tới Server 172.16.30.10
+R3(config-ext-nacl)# deny tcp 192.168.11.0 0.0.0.255 host 172.16.30.10 eq 80
+R3(config-ext-nacl)# deny tcp 192.168.11.0 0.0.0.255 host 172.16.30.10 eq 443
+
+! Cho phép tất cả lưu lượng còn lại đi qua bình thường
+R3(config-ext-nacl)# permit ip any any
+
+R3(config-ext-nacl)# exit
+R3(config)# interface e0/0
+R3(config-if)# ip access-group ACL_SERVER out
+R3(config-if)# exit
+R3(config)# end
+R3# write memory
+
+---
+### CÁCH 2: TÁCH RIÊNG CÂU 2A VÀ CÂU 2B THEO CHUẨN BEST PRACTICE (GẦN NGUỒN NHẤT)
+---
+
+#### CÂU 2A: Cho phép các PC trong vùng OSPF truy cập FTP Server (172.16.30.10)
+- **Vị trí chuẩn Best Practice**: Đặt tại cổng **`e0/1` chiều `IN` trên Router R3** (gần nguồn PC vùng OSPF nhất).
+
+```text
+R3> enable
+R3# configure terminal
+R3(config)# ip access-list extended ALLOW_OSPF_FTP
+
+! Cho phép OSPF PC (172.16.31.0/24) truy cập FTP (port 21) và FTP-Data (port 20) tới Server 172.16.30.10
+R3(config-ext-nacl)# permit tcp 172.16.31.0 0.0.0.255 host 172.16.30.10 eq ftp
+R3(config-ext-nacl)# permit tcp 172.16.31.0 0.0.0.255 host 172.16.30.10 eq ftp-data
+
+! Cho phép OSPF PC đi tới các địa chỉ khác bình thường
+R3(config-ext-nacl)# permit ip any any
+R3(config-ext-nacl)# exit
+
+R3(config)# interface e0/1
+R3(config-if)# ip access-group ALLOW_OSPF_FTP in
+R3(config-if)# exit
+R3(config)# end
+R3# write memory
+```
+
+#### CÂU 2B: Cấm VLAN 11 (192.168.11.0/24) dùng dịch vụ Web trên Server (172.16.30.10)
+- **Vị trí chuẩn Best Practice**: Đặt tại cổng **`e0/0.11` chiều `IN` trên Router R2** (gần nguồn VLAN 11 nhất) *HOẶC* tại cổng **`s1/0` chiều `IN` trên Router R1**.
+
+*Option B1: Cấu hình trên R2 (gần VLAN 11 nhất)*
+```text
+R2> enable
+R2# configure terminal
+R2(config)# ip access-list extended BLOCK_VLAN11_WEB
+
+! Cấm VLAN 11 truy cập HTTP (80) & HTTPS (443) tới Server 172.16.30.10
+R2(config-ext-nacl)# deny tcp 192.168.11.0 0.0.0.255 host 172.16.30.10 eq 80
+R2(config-ext-nacl)# deny tcp 192.168.11.0 0.0.0.255 host 172.16.30.10 eq 443
+
+! Cho phép tất cả các lưu lượng còn lại của VLAN 11 đi qua
+R2(config-ext-nacl)# permit ip any any
+R2(config-ext-nacl)# exit
+
+R2(config)# interface e0/0.11
+R2(config-subif)# ip access-group BLOCK_VLAN11_WEB in
+R2(config-subif)# exit
+R2(config)# end
+R2# write memory
+```
+
+*Option B2: Cấu hình trên R1 (Cổng vào từ phía RIP s1/0)*
+```text
+R1> enable
+R1# configure terminal
+R1(config)# ip access-list extended BLOCK_VLAN11_WEB
 R1(config-ext-nacl)# deny tcp 192.168.11.0 0.0.0.255 host 172.16.30.10 eq 80
 R1(config-ext-nacl)# deny tcp 192.168.11.0 0.0.0.255 host 172.16.30.10 eq 443
-
-! 2a. Cho phép tất cả lưu lượng còn lại đi qua (đã bao gồm FTP từ OSPF, ping, Internet)
 R1(config-ext-nacl)# permit ip any any
-
 R1(config-ext-nacl)# exit
 R1(config)# interface s1/0
-R1(config-if)# ip access-group ACL_SERVER in
+R1(config-if)# ip access-group BLOCK_VLAN11_WEB in
 R1(config-if)# exit
 R1(config)# end
 R1# write memory
+```
 
 ---
 
-### GIẢI THÍCH CHI TIẾT TỪNG DÒNG LỆNH TRONG CÂU 2:
+### GIẢI THÍCH CHI TIẾT TỪNG DÒNG LỆNH ACL CÂU 2:
+
+| STT | Lệnh | Ý nghĩa |
+|:---:|:---|:---|
+| 1 | `ip access-list extended ACL_SERVER` | Tạo Extended ACL đặt tên là `ACL_SERVER`. Extended = lọc được IP nguồn + IP đích + Port/dịch vụ. |
+| 2 | `permit tcp 172.16.31.0 0.0.0.255 host 172.16.30.10 eq ftp` | Cho phép giao thức TCP từ dải IP nguồn `172.16.31.0/24` (VPC vùng OSPF, wildcard `0.0.0.255`) đến đúng 1 máy đích `172.16.30.10` (từ khóa `host` = wildcard `0.0.0.0`) trên port **21** (FTP điều khiển). |
+| 3 | `permit tcp ... eq ftp-data` | Tương tự dòng trên nhưng cho port **20** (FTP truyền dữ liệu). FTP cần cả 2 port 20+21 để hoạt động. |
+| 4 | `deny tcp 192.168.11.0 0.0.0.255 host 172.16.30.10 eq 80` | Cấm TCP từ dải IP nguồn `192.168.11.0/24` (VLAN 11) đến Server trên port **80** (HTTP/Web). |
+| 5 | `deny tcp ... eq 443` | Cấm VLAN 11 truy cập port **443** (HTTPS/Web bảo mật) tới Server. |
+| 6 | `permit ip any any` | Cho phép tất cả lưu lượng còn lại đi qua. Nếu thiếu dòng này, implicit deny sẽ chặn toàn bộ traffic khác (ping, Internet, VLAN 12...). |
+| 7 | `interface e0/0` + `ip access-group ACL_SERVER out` | Áp ACL vào cổng `e0/0` của R3 (cổng nối Server) theo chiều **out** (lọc gói khi đi RA khỏi Router vào Server). |
+
+### TẠI SAO CẦN CẢ `eq ftp` VÀ `eq ftp-data`?
+- FTP dùng **2 port**: Port **21** (kênh điều khiển - gửi lệnh `USER`, `PASS`, `LIST`, `RETR`) và Port **20** (kênh truyền dữ liệu - gửi/nhận file thực tế).
+- Nếu chỉ permit port 21 mà quên port 20 → người dùng đăng nhập FTP được nhưng KHÔNG tải file được!
+
+### TỪ KHÓA `host` TRONG ACL LÀ GÌ?
+- `host 172.16.30.10` là viết tắt của `172.16.30.10 0.0.0.0` (wildcard toàn số 0 = chỉ đúng 1 IP duy nhất).
+- Hai cách viết sau là **HOÀN TOÀN GIỐNG NHAU**:
+  + `deny tcp 192.168.11.0 0.0.0.255 host 172.16.30.10 eq 80`
+  + `deny tcp 192.168.11.0 0.0.0.255 172.16.30.10 0.0.0.0 eq 80`
+
+---
+
+### GIẢI THÍCH CHI TIẾT TỪNG DÒNG LỆNH CẤU HÌNH ĐỊNH TUYẾN CÂU 2:
 
 #### A. Giải thích lệnh trên SwitchServer:
-
-- **`switchport trunk encapsulation dot1q`**: (Bắt buộc trên IOL) Chọn chuẩn gán nhãn VLAN 802.1Q trước khi bật mode trunk, nếu thiếu lệnh này SwitcR1> enable
-  R1# configure terminal
-  R1(config)# ip access-list extended ACL_SERVER
-
-! (Ghi chú: Nếu bài thi chấm theo từ ngữ tường minh của đề yêu cầu allow FTP từ OSPF, chèn 2 dòng này trước:
-! permit tcp 172.16.31.0 0.0.0.255 host 172.16.30.10 eq ftp
-! permit tcp 172.16.31.0 0.0.0.255 host 172.16.30.10 eq ftp-data)
-h sẽ từ chối chuyển sang mode trunk.
-
+- **`switchport trunk encapsulation dot1q`**: (Bắt buộc trên IOL) Chọn chuẩn gán nhãn VLAN 802.1Q trước khi bật mode trunk, nếu thiếu lệnh này Switch sẽ từ chối chuyển sang mode trunk.
 - **`switchport mode trunk`**: Đưa cổng `e0/0` thành đường Trunk truyền tải dữ liệu của nhiều VLAN (VLAN 11 và VLAN 12) cùng lúc lên Router R2.
 - **`switchport mode access` & `switchport access vlan 11`**: Đặt cổng `e0/2` làm cổng Access dành riêng cho máy tính VLAN 11.
 - **`switchport access vlan 12`**: Đặt cổng `e0/1` làm cổng Access dành riêng cho máy tính VLAN 12.
 
 #### B. Giải thích lệnh trên R2 (Router-on-a-stick + RIP):
-
 - **`interface e0/0` & `no shutdown`**: Bật cổng vật lý `e0/0` lên để các sub-interface bên dưới hoạt động.
 - **`interface e0/0.11`**: Tạo cổng con ảo (sub-interface) số `.11` phục vụ định tuyến cho VLAN 11.
 - **`encapsulation dot1Q 11`**: Khai báo cổng ảo này bóc tách nhãn VLAN 11 đi qua đường Trunk.
@@ -331,7 +457,6 @@ h sẽ từ chối chuyển sang mode trunk.
 - **`network 192.168.11.0` / `network 192.168.12.0` / `network 228.224.11.0`**: Khai báo quảng bá 3 dải mạng trực tiếp của R2 cho các Router vùng RIP biết.
 
 #### C. Giải thích lệnh trên R1 (Trung tâm - Redistribution + NAT):
-
 - **`ip nat inside`**: Khai báo các cổng nối mạng nội bộ (`s1/0` nối R2 và `s1/1` nối R3).
 - **`ip nat outside`**: Khai báo cổng `e0/0` nối ra đám mây Internet.
 - **`access-list 1 permit any` & `ip nat inside source list 1 interface e0/0 overload`**: Bật tính năng NAT Overload (PAT), biến tất cả IP riêng nội bộ thành IP công cộng trên cổng `e0/0` để ra Internet.
@@ -341,7 +466,6 @@ h sẽ từ chối chuyển sang mode trunk.
 - **`default-information originate`**: Quảng bá đường mặc định ra Internet cho toàn bộ các Router thuộc dải RIP và OSPF.
 
 #### D. Giải thích lệnh trên R3 (OSPF):
-
 - **`interface s1/1` (`228.224.11.18 255.255.255.252`)**: IP cổng Serial nối R1. Subnet mask `/30` = `255.255.255.252`.
 - **`interface e0/0` (`172.16.30.1 255.255.255.0`)**: IP Gateway cho Server (`172.16.30.10`).
 - **`interface e0/1` (`172.16.31.1 255.255.255.0`)**: IP Gateway cho VPC vùng OSPF.
