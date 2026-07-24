@@ -683,3 +683,126 @@ Tất cả           : any
 
 **Q5: Tại sao cổng Trunk trên Switch IOL bắt buộc phải gõ `switchport trunk encapsulation dot1q` trước khi gõ `switchport mode trunk`?**
 > **Trả lời**: Switch IOL hỗ trợ nhiều chuẩn đóng gói Trunk (cả ISL của Cisco và dot1q chuẩn chung). Khi chưa chỉ định chuẩn đóng gói (`encapsulation dot1q`), Switch từ chối chuyển cổng sang chế độ `mode trunk`.
+
+---
+
+## VII. BẢNG GIẢI MÃ KÝ HIỆU & THÔNG SỐ TOÀN TẬP TRONG CISCO IOS
+
+### 1. Bảng giải mã Ký hiệu trong Bảng định tuyến (`show ip route`)
+Khi chạy lệnh `show ip route`, Cisco IOS sử dụng các mã ký hiệu ở đầu mỗi dòng để cho biết nguồn gốc tuyến đường:
+
+| Mã ký hiệu | Tên đầy đủ | Độ ưu tiên (AD) | Ý nghĩa & Giải thích chi tiết |
+|------------|------------|-----------------|--------------------------------|
+| **C** | Directly Connected | **0** | Mạng cắm dây trực tiếp vào cổng vật lý/ảo của Router. |
+| **L** | Local | **0** | Địa chỉ IP chính xác của cổng mạng Router (luôn mang Subnet Mask `/32` với IPv4 hoặc `/128` với IPv6). |
+| **S** | Static Route | **1** | Tuyến đường tĩnh do quản trị viên cấu hình thủ công (`ip route`). |
+| **S\*** | Candidate Default Route | **1** | Tuyến đường mặc định tĩnh (`ip route 0.0.0.0 0.0.0.0`), là "lối thoát hiểm" dẫn ra Internet hoặc Router tuyến trên. |
+| **R** | RIP | **120** | Tuyến đường học tự động từ giao thức RIP (Routing Information Protocol). Metric = Số hop (Router đi qua). |
+| **O** | OSPF Intra-Area | **110** | Tuyến đường học từ giao thức OSPF thuộc **cùng một vùng (Area)**. Metric = Cost. |
+| **O IA** | OSPF Inter-Area | **110** | Tuyến đường học từ OSPF thuộc **vùng khác (Inter-Area)** nhưng cùng thuộc hệ thống OSPF. |
+| **O E1** | OSPF External Type 1 | **110** | Tuyến đường học từ bên ngoài OSPF (redistribute). Metric = Cost gốc từ ngoài + Cost đường đi nội bộ. |
+| **O E2** | OSPF External Type 2 | **110** | Tuyến đường học từ bên ngoài OSPF (Mặc định). Metric = Cost gốc từ ngoài không thay đổi. |
+| **O\*E2** | OSPF Default External | **110** | Tuyến đường mặc định ra Internet được phát tán tự động qua OSPF nhờ lệnh `default-information originate`. |
+| **D** | EIGRP | **90** | Tuyến đường học từ giao thức EIGRP nội bộ. |
+| **D EX** | EIGRP External | **170** | Tuyến đường học từ bên ngoài tiêm vào EIGRP. |
+| **B** | BGP | **20 (eBGP) / 200 (iBGP)** | Tuyến đường học từ giao thức định tuyến liên vùng BGP (Border Gateway Protocol). |
+
+**Cú pháp một dòng Route đầy đủ:**
+```text
+R    192.168.4.0/24 [120/2] via 10.0.0.2, 00:00:15, Ethernet0/0
+│    └──────┬─────┘ └─┬──┘     └───┬────┘  └───┬────┘  └───┬─────┘
+│           │         │            │           │           └─ Cổng xuất gói tin của Router này
+│           │         │            │           └─ Thời gian cập nhật gần nhất (15 giây trước)
+│           │         │            └─ Địa chỉ IP của Router trạm tiếp theo (Next-hop)
+│           │         └─ [AD = 120 / Metric = 2 Hop]
+│           └─ Mạng đích và Subnet Mask
+└─ Ký hiệu giao thức (RIP)
+```
+
+---
+
+### 2. Bảng giải mã Ký hiệu Kiểm tra Kết nối Ping (`ping`)
+Khi thực hiện ping từ Router hoặc VPCS, kết quả hiển thị các ký hiệu sau:
+
+| Ký hiệu | Tên đầy đủ | Ý nghĩa & Nguyên nhân kỹ thuật |
+|---------|------------|--------------------------------|
+| **!** | Success | **Thành công**: Gói ICMP Echo Request đã gửi đi và nhận được phản hồi ICMP Echo Reply từ máy đích. |
+| **.** | Timed Out | **Hết thời gian chờ**: Router gửi gói đi nhưng không nhận được phản hồi sau thời gian chờ (mặc định 2s). <br> *Nguyên nhân*: Đứt cáp, máy đích tắt nguồn, sai Gateway, không có tuyến đường quay về, hoặc bị Firewall/ACL chặn. |
+| **U** | Destination Unreachable | **Không tới được đích**: Router trung gian trên đường đi trả về bản tin ICMP Type 3 báo rằng nó không có tuyến đường đi tới IP đích trong bảng định tuyến. |
+| **C** | Congestion Experienced | **Nghẽn mạng**: Gói tin đi qua tuyến đường bị nghẽn nghiêm trọng. |
+| **I** | User Interrupt | **Hủy lệnh thủ công**: Người dùng nhấn tổ hợp phím `Ctrl + Shift + 6` để dừng quá trình ping. |
+| **N** | Network Unreachable | Mạng đích bị gián đoạn hoàn toàn. |
+| **P** | Protocol Unreachable | Giao thức truyền tải bị thiết bị đích từ chối. |
+
+---
+
+### 3. Bảng giải mã Ký hiệu Theo dõi Đường đi Traceroute (`traceroute` / `trace`)
+Lệnh `traceroute` (gõ trên Router) hoặc `trace` (gõ trên VPCS) hiển thị các ký hiệu phản hồi tại từng trạm (Hop):
+
+| Ký hiệu | Ý nghĩa |
+|---------|---------|
+| **[IP] [Time]** | Hiện IP của Router trạm đó và thời gian phản hồi (ms) → Gói tin đi qua trạm này bình thường. |
+| **\*** | **Timeout tại trạm đó**: Trạm đó không phản hồi bản tin ICMP Time Exceeded (do cấm ICMP hoặc nghẽn). |
+| **!H** | **Host Unreachable**: Máy trạm cuối không liên lạc được. |
+| **!N** | **Network Unreachable**: Mạng tại trạm đó không tìm thấy tuyến đi tiếp. |
+| **!P** | **Protocol Unreachable**: Giao thức bị từ chối tại trạm. |
+| **!A** | **Administratively Prohibited**: Gói tin bị **chặn bởi Access Control List (ACL)** tại trạm đó! |
+| **!T** | **Time-to-Live Exceeded**: Phát hiện vòng lặp định tuyến (Routing Loop). |
+
+---
+
+### 4. Bảng giải mã Trạng thái Cổng Mạng (`show ip interface brief`)
+Lệnh `show ip interface brief` hiển thị 2 cột trạng thái quan trọng: **Status (Layer 1)** và **Protocol (Layer 2)**.
+
+| Status (L1) | Protocol (L2) | Trạng thái thực tế | Nguyên nhân & Cách khắc phục |
+|-------------|---------------|-------------------|-----------------------------|
+| **up** | **up** | **Hoạt động hoàn hảo** | Cả cáp vật lý và giao thức đóng gói đều đúng. |
+| **administratively down** | **down** | **Cổng đang bị khóa** | Cổng bị tắt thủ công bằng lệnh `shutdown`. <br> *Cách fix*: Chui vào cổng gõ `no shutdown`. |
+| **down** | **down** | **Lỗi vật lý (Layer 1)** | Chưa cắm cáp, hỏng cáp, tuột dây, hoặc thiết bị đầu đối diện bị tắt nguồn. |
+| **up** | **down** | **Lỗi giao thức (Layer 2)** | Đã cắm cáp nhưng sai thông số Layer 2. <br> *Nguyên nhân*: Sai chuẩn đóng gói (`encapsulation`), sai `clock rate` trên dây Serial, chưa gán `encapsulation dot1q` cho Sub-interface, hoặc lệch Native VLAN giữa 2 đầu Trunk. |
+
+---
+
+### 5. Bảng giải mã Thông số VTP Status (`show vtp status`)
+Lệnh `show vtp status` trên Switch hiển thị các thông số đồng bộ VLAN:
+
+| Thông số | Ý nghĩa & Quy tắc |
+|----------|-------------------|
+| **VTP Operating Mode** | Chế độ VTP đang chạy (`Server`, `Client`, hoặc `Transparent`). |
+| **VTP Domain Name** | Tên vùng VTP (ví dụ `Lab5`). Tất cả Switch muốn đồng bộ VLAN phải cùng chung tên Domain này. |
+| **Configuration Revision** | **Số phiên bản hiệu chỉnh cấu hình VTP**: Mỗi khi có thao tác tạo, sửa, xóa VLAN trên VTP Server, số này sẽ tự động đếm **+1**. <br> *Quy tắc*: Switch nào nhận được bản tin VTP có số `Configuration Revision` **lớn hơn** số hiện tại của nó thì sẽ **ghi đè toàn bộ danh sách VLAN** của nó theo danh sách mới! |
+| **Maximum VLANs Supported** | Số lượng VLAN tối đa Switch hỗ trợ (thường là 1005). |
+| **MD5 Digest** | Mã băm MD5 kiểm tra tính toàn vẹn của dữ liệu VTP giữa các Switch. |
+
+---
+
+### 6. Bảng toán tử & cú pháp nâng cao trong Access Control List (ACL)
+Khi cấu hình Extended ACL, các toán tử sau được dùng để so sánh số Port hoặc chọn địa chỉ IP:
+
+| Toán tử / Từ khóa | Tên đầy đủ | Ý nghĩa & Ví dụ |
+|-------------------|------------|------------------|
+| **eq** | Equal | Bằng đúng số port. <br> *Ví dụ*: `eq 80` (HTTP), `eq 443` (HTTPS), `eq ftp` (Port 21). |
+| **gt** | Greater Than | Lớn hơn số port. <br> *Ví dụ*: `gt 1023` (Lọc các cổng ứng dụng động Ephemeral Ports). |
+| **lt** | Less Than | Nhỏ hơn số port. <br> *Ví dụ*: `lt 1024` (Lọc tất cả các cổng nổi tiếng Well-Known Ports). |
+| **neq** | Not Equal | Khác số port chỉ định. |
+| **range** | Port Range | Nằm trong dải port từ [Port_Đầu] đến [Port_Cuối]. <br> *Ví dụ*: `range 80 443`. |
+| **host [IP]** | Single Host | Đại diện cho **duy nhất 1 địa chỉ IP**. Tương đương việc gõ `[IP] 0.0.0.0`. <br> *Ví dụ*: `host 172.16.30.10`. |
+| **any** | Any Address | Đại diện cho **tất cả các địa chỉ IP** trên thế giới. Tương đương `0.0.0.0 255.255.255.255`. |
+
+---
+
+### 7. Bảng Phân loại Địa chỉ IP, Subnet Mask & Wildcard Mask Chuẩn
+Bảng tra cứu phân lớp địa chỉ IP và các dải IP riêng (Private IP):
+
+| Lớp IP (Class) | Dải địa chỉ IP | Subnet Mask mặc định | Wildcard Mask mặc định |
+|----------------|----------------|----------------------|------------------------|
+| **Class A** | `1.0.0.0` – `126.255.255.255` | `255.0.0.0` (`/8`) | `0.255.255.255` |
+| **Class B** | `128.0.0.0` – `191.255.255.255` | `255.255.0.0` (`/16`) | `0.0.255.255` |
+| **Class C** | `192.0.0.0` – `223.255.255.255` | `255.255.255.0` (`/24`) | `0.0.0.255` |
+
+**Dải địa chỉ IP Dùng riêng (Private IP - Dùng trong mạng nội bộ LAN, không định tuyến ra Internet công cộng):**
+- **Class A Private**: `10.0.0.0` – `10.255.255.255` (`10.0.0.0/8`)
+- **Class B Private**: `172.16.0.0` – `172.31.255.255` (`172.16.0.0/12`)
+- **Class C Private**: `192.168.0.0` – `192.168.255.255` (`192.168.0.0/16`)
+- **Loopback Test Address**: `127.0.0.1` (Địa chỉ tự kiểm tra card mạng máy cục bộ).
+
