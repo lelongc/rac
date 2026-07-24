@@ -233,37 +233,31 @@ LocalServer> save
 
 === 6. ACL ===
 
-PHÂN TÍCH:
-
-- 2a: Cho phép FTP từ OSPF -> Server = permit tcp ... eq ftp, eq ftp-data
-- 2b: Cấm VLAN 11 dùng Web -> Server = deny tcp ... eq 80, eq 443
-- Extended ACL đặt GẦN NGUỒN -> Trên R1 interface s1/0 (in) lọc traffic từ RIP
+PHÂN TÍCH VỊ TRÍ ĐẶT ACL:
+- Extended ACL đặt **GẦN NGUỒN (Source)** -> Áp dụng tại cổng `s1/0` chiều `in` trên Router **R1**.
 
 Trên R1:
 R1> enable
 R1# configure terminal
 R1(config)# ip access-list extended ACL_SERVER
+
+! (Ghi chú: Nếu bài thi chấm theo từ ngữ tường minh của đề yêu cầu allow FTP từ OSPF, chèn 2 dòng này trước:
+! permit tcp 172.16.31.0 0.0.0.255 host 172.16.30.10 eq ftp
+! permit tcp 172.16.31.0 0.0.0.255 host 172.16.30.10 eq ftp-data)
+
+! 2b. Cấm VLAN 11 (192.168.11.0/24) dùng Web (HTTP 80 / HTTPS 443) tới Server 172.16.30.10
 R1(config-ext-nacl)# deny tcp 192.168.11.0 0.0.0.255 host 172.16.30.10 eq 80
 R1(config-ext-nacl)# deny tcp 192.168.11.0 0.0.0.255 host 172.16.30.10 eq 443
+
+! 2a. Cho phép tất cả lưu lượng còn lại đi qua (đã bao gồm FTP từ OSPF, ping, Internet)
 R1(config-ext-nacl)# permit ip any any
+
 R1(config-ext-nacl)# exit
 R1(config)# interface s1/0
 R1(config-if)# ip access-group ACL_SERVER in
 R1(config-if)# exit
 R1(config)# end
 R1# write memory
-
-GIẢI THÍCH LOGIC ACL:
-
-1. deny tcp 192.168.11.0 0.0.0.255 host 172.16.30.10 eq 80
-   -> Chặn VLAN 11 gửi HTTP (port 80) tới Server
-2. deny tcp 192.168.11.0 0.0.0.255 host 172.16.30.10 eq 443
-   -> Chặn VLAN 11 gửi HTTPS (port 443) tới Server
-3. permit ip any any
-   -> Cho tất cả còn lại đi qua (gồm FTP từ OSPF, ping, Internet)
-
-LƯU Ý: Yêu cầu 2a "cho phép FTP từ OSPF" đã thỏa mãn mặc định vì
-không có luật nào chặn FTP. Dòng "permit ip any any" đã bao gồm FTP.
 
 =====================================================================
 CÂU 3 (2 điểm - CLO 3): GIẢI THÍCH ACL LÝ THUYẾT
