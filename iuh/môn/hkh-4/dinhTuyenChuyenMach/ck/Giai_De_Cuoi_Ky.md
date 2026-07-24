@@ -93,13 +93,7 @@ CÂU 2 (6 điểm - CLO 2,3): ĐỊNH TUYẾN + ACL
   VLAN 12: 192.168.12.0/24
   R2 (s1/0) nối R1 (s1/0): mạng 228.224.11.0/30
 - R2 (s0/0) nối SwitchServer (s0/0)
-
-
-
 - R1 (trung tâm): Internet (e0/0) + Redistribution OSPF <-> RIP
-
-
-
 - Vùng OSPF (phải): R3 + VPC + LocalServerWebFile
   R1 (s1/1) nối R3 (s1/1): mạng 228.224.11.16/30
   R3 (e0/0): 172.16.30.0/24 (Server IP: 172.16.30.10)
@@ -234,6 +228,7 @@ LocalServer> save
 === 6. ACL ===
 
 PHÂN TÍCH VỊ TRÍ ĐẶT ACL:
+
 - Extended ACL đặt **GẦN NGUỒN (Source)** -> Áp dụng tại cổng `s1/0` chiều `in` trên Router **R1**.
 
 Trên R1:
@@ -263,6 +258,8 @@ R1# write memory
 CÂU 3 (2 điểm - CLO 3): GIẢI THÍCH ACL LÝ THUYẾT
 =======================================================
 
+![1784887722474](image/Giai_De_Cuoi_Ky/1784887722474.png)
+
 ĐỀ BÀI 3.1:
 Cho sơ đồ: VPC2 (172.16.3.0) -> Router1 (e0/0, e0/1, e0/3) -> WebServer (172.16.4.5)
 
@@ -278,22 +275,20 @@ BÀI GIẢI CÂU 3.1:
 LOẠI ACL: Standard ACL (số hiệu 1, nằm trong khoảng 1-99)
 
 CÔNG DỤNG: Lọc lưu lượng dựa trên ĐỊA CHỈ IP NGUỒN.
-Chỉ cho phép IP từ 172.16.3.0 đến 172.16.3.15 (16 IP) gửi gói tin
-ra cổng e0/3 hướng tới WebServer. IP khác bị chặn bởi implicit deny.
+Chỉ cho phép các máy có IP nguồn từ 172.16.3.0 đến 172.16.3.15 (tổng 16 IP) được phép gửi dữ liệu đi RA cổng e0/3 (hướng ra đám mây / mạng Net 172.16.0.0). Tất cả các IP nguồn khác sẽ bị chặn bởi luật ngầm deny any.
 
 PHÂN TÍCH TỪNG THÀNH PHẦN:
 
 - access-list    : Lệnh khai báo danh sách kiểm soát truy cập
-- 1              : Số hiệu ACL. Standard ACL (1-99) chỉ lọc IP nguồn
+- 1              : Số hiệu ACL. Standard ACL (1-99) chỉ lọc theo IP nguồn
 - permit         : Hành động cho phép gói tin đi qua
 - 172.16.3.0     : Địa chỉ IP nguồn bắt đầu kiểm tra
-- 0.0.0.15       : Wildcard Mask -> cho 16 IP (từ .0 đến .15)
-  Tính: 255.255.255.255 - 255.255.255.240 = 0.0.0.15
-- interface e0/3 : Cổng áp dụng ACL (nối hướng WebServer)
-- ip access-group 1 out : Lọc gói tin đi RA (outbound) khỏi cổng e0/3
+- 0.0.0.15       : Wildcard Mask -> Cho phép 16 IP nguồn (từ .0 đến .15)
+  Tính toán: 255.255.255.255 - 255.255.255.240 = 0.0.0.15
+- interface ethernet 0/3 : Cổng áp dụng ACL (cổng nối hướng ra đám mây Net 172.16.0.0)
+- ip access-group 1 out : Lọc các gói tin đi RA (outbound) khỏi cổng e0/3
 
-IMPLICIT DENY: Cuối ACL luôn có lệnh ngầm "deny any" chặn tất cả.
-IP không thuộc dải .0-.15 sẽ bị cấm gửi dữ liệu ra e0/3.
+IMPLICIT DENY: Cuối ACL luôn có lệnh ngầm "deny any" chặn tất cả. Các IP nguồn KHÔNG thuộc dải .0 đến .15 khi muốn gửi dữ liệu ra cổng e0/3 sẽ bị chặn hoàn toàn.
 
 ---
 
@@ -503,21 +498,24 @@ Tất cả           : any
 - Áp dụng: Cổng [e0/X] chiều [in = vào / out = ra].
 - Implicit Deny: Cuối ACL luôn có lệnh ngầm deny any chặn mọi gói tin không khớp."
 
+=====================================================================
+=====================================================================
 
-=====================================================================
-=====================================================================
-  CẨM NANG LÝ THUYẾT & VẤN ĐÁP TỔNG HỢP TỪ TẤT CẢ CÁC BÀI LAB (PDF)
-=====================================================================
+CẨM NANG LÝ THUYẾT & VẤN ĐÁP TỔNG HỢP TỪ TẤT CẢ CÁC BÀI LAB (PDF)
+==============================================================================
+
 =====================================================================
 
 ## I. KIẾN THỨC NỀN TẢNG THIẾT BỊ MẠNG & DÒNG LỆNH (CLI)
 
 ### 1. Phân biệt Router, Switch Layer 2, Switch Layer 3 (Multilayer Switch)
+
 - **Router**: Thiết bị định tuyến ở Layer 3 (Network Layer). Kết nối các dải mạng IP khác nhau (Inter-network). Router định tuyến gói tin dựa trên địa chỉ IP đích (Destination IP) trong IP Header.
 - **Switch Layer 2**: Thiết bị chuyển mạch ở Layer 2 (Data Link Layer). Chuyển tiếp khung dữ liệu (Ethernet Frame) trong cùng một dải mạng LAN dựa trên địa chỉ MAC (MAC Address Table). Không có tính năng định tuyến IP (phải gõ `no ip routing`).
 - **Switch Layer 3 (Multilayer Switch - ví dụ SW3 trong Lab 5)**: Hỗ trợ cả chức năng Layer 2 (Switching) và Layer 3 (Routing). Cho phép tạo các Interface ảo đại diện cho VLAN (SVI - Switch Virtual Interface) và thực hiện định tuyến Inter-VLAN tốc độ cao trực tiếp trên Switch mà không cần Router ngoài (khi bật lệnh `ip routing`).
 
 ### 2. Các chế độ dòng lệnh Cisco CLI (CLI Modes) & Chuyển đổi
+
 - **User EXEC Mode (`Router>`)**: Chế độ người dùng cơ bản, chỉ xem được một số thông tin hạn chế, không chỉnh sửa được cấu hình.
 - **Privileged EXEC Mode (`Router#`)**: Chế độ đặc quyền. Cho phép thực thi tất cả các lệnh kiểm tra (`show`), chẩn đoán (`ping`, `traceroute`), lưu cấu hình (`write memory`), debug. Gõ lệnh `enable` từ User mode để vào.
 - **Global Configuration Mode (`Router(config)#`)**: Chế độ cấu hình toàn cục. Cho phép thay đổi thông số hệ thống (hostname, domain, routing, password, ACL). Gõ `configure terminal` từ Privileged mode để vào.
@@ -527,11 +525,13 @@ Tất cả           : any
 - **Router Configuration Mode (`Router(config-router)#`)**: Cấu hình giao thức định tuyến động. Gõ `router rip` hoặc `router ospf 1`.
 
 ### 3. Sự khác nhau giữa `enable password` và `enable secret`
+
 - **`enable password`**: Đặt mật khẩu truy cập chế độ `#` lưu dưới dạng chữ thuần (Cleartext/Type 7). Dễ bị đọc trộm khi xem `show running-config`.
-- **`enable secret`**: Đặt mật khẩu truy cập chế độ `#` sử dụng thuật toán băm một chiều bảo mật cao (Type 5 - MD5/SHA-256). 
+- **`enable secret`**: Đặt mật khẩu truy cập chế độ `#` sử dụng thuật toán băm một chiều bảo mật cao (Type 5 - MD5/SHA-256).
 - **Quy tắc ưu tiên**: Khi cả 2 lệnh cùng tồn tại, Cisco IOS luôn ưu tiên và bắt buộc sử dụng mật khẩu của `enable secret`.
 
 ### 4. Cơ chế hoạt động của `service password-encryption`
+
 - Mặc định, các mật khẩu như `line console` hay `line vty` hiển thị dạng văn bản thuần.
 - Lệnh `service password-encryption` bật tính năng tự động biến đổi tất cả mật khẩu văn bản thuần trong file cấu hình thành chuỗi mã hóa Type 7 (Vigenere cipher). Ngăn chặn người ngoài nhìn trộm màn hình khi xem `show running-config`.
 
@@ -540,6 +540,7 @@ Tất cả           : any
 ## II. LÝ THUYẾT VLAN, VTP, TRUNKING & ROUTER-ON-A-STICK
 
 ### 1. VLAN (Virtual Local Area Network) là gì? Tại sao phải chia VLAN?
+
 - **Khái niệm**: VLAN là kỹ thuật chia một Switch vật lý thành nhiều mạng LAN ảo độc lập về mặt logic. Các máy trong cùng VLAN có thể giao tiếp trực tiếp ở Layer 2. Các máy khác VLAN muốn giao tiếp bắt buộc phải đi qua thiết bị Layer 3 (Router/L3 Switch).
 - **Lợi ích**:
   + **Bảo mật**: Cách ly lưu lượng giữa các phòng ban (ví dụ VLAN 11 Kế toán không soi được VLAN 12 Nhân sự).
@@ -547,10 +548,12 @@ Tất cả           : any
   + **Quản lý linh hoạt**: Phân chia mạng theo chức năng công việc thay vì vị trí địa lý.
 
 ### 2. Phân biệt Cổng Access và Cổng Trunk
+
 - **Access Port**: Cổng thuộc về **duy nhất 1 VLAN**. Dùng để nối Switch xuống các thiết bị cuối (PC, Server, Printer). Khung dữ liệu đi qua cổng Access là **Untagged** (không mang nhãn VLAN ID).
 - **Trunk Port**: Cổng cho phép **nhiều VLAN cùng đi qua trên một sợi cáp vật lý**. Dùng để nối giữa Switch với Switch, hoặc Switch với Router. Khung dữ liệu đi qua đường Trunk bắt buộc phải được đóng gói nhãn (Tagged) theo chuẩn **IEEE 802.1Q (dot1q)**.
 
 ### 3. Giao thức VTP (VLAN Trunking Protocol)
+
 - **Công dụng**: Giúp đồng bộ cấu hình VLAN (tạo/xóa/sửa tên VLAN) tự động từ một Switch trung tâm (VTP Server) sang các Switch khác (VTP Client) qua đường Trunk, tránh phải cấu hình thủ công trên từng Switch.
 - **Các chế độ (VTP Modes)**:
   + **Server Mode**: Có quyền tạo/sửa/xóa VLAN và quảng bá thông tin VLAN cho các Switch khác. Lưu VLAN vào NVRAM.
@@ -559,6 +562,7 @@ Tất cả           : any
 - **Điều kiện đồng bộ VTP**: Các Switch phải cùng **VTP Domain**, cùng **VTP Password**, và kết nối với nhau bằng đường **Trunk**.
 
 ### 4. Cơ chế Router-on-a-stick (Định tuyến Inter-VLAN bằng Sub-interface)
+
 - **Khái niệm**: Sử dụng một cổng vật lý duy nhất của Router (ví dụ `e0/0`) chia thành nhiều cổng ảo (Sub-interface: `e0/0.11`, `e0/0.12`), mỗi cổng ảo đóng vai trò là Default Gateway cho một VLAN.
 - **Cú pháp bắt buộc**:
   ```text
@@ -572,17 +576,19 @@ Tất cả           : any
 ## III. LÝ THUYẾT ĐỊNH TUYẾN ĐỘNG (RIP & OSPF)
 
 ### 1. Bảng so sánh RIPv1 vs RIPv2 vs OSPF
-| Tiêu chí | RIP version 1 | RIP version 2 | OSPF (Open Shortest Path First) |
-|----------|---------------|---------------|--------------------------------|
-| **Loại thuật toán** | Distance Vector (Hop Count) | Distance Vector (Hop Count) | Link-State (Dijkstra SPF) |
-| **Metric (Độ đo)** | Số hop (Số Router qua). Max = 15 | Số hop. Max = 15 | Cost = 10^8 / Bandwidth |
-| **Phân loại IP** | Classful (Không gửi Subnet Mask) | Classless (Có gửi Subnet Mask) | Classless (Hỗ trợ VLSM/CIDR) |
-| **Auto-summary** | Mặc định tự gộp mạng | Mặc định gộp → Phải `no auto-summary` | Không tự động gộp |
-| **Administrative Distance (AD)** | 120 | 120 | 110 |
-| **Thời gian gửi cập nhật** | 30 giây (Broadcast 255.255.255.255) | 30 giây (Multicast 224.0.0.9) | Khi có thay đổi (Multicast 224.0.0.5 / 224.0.0.6) |
-| **Xác thực bảo mật** | Không hỗ trợ | Hỗ trợ Plaintext & MD5 | Hỗ trợ Plaintext & MD5 |
+
+| Tiêu chí                             | RIP version 1                        | RIP version 2                                | OSPF (Open Shortest Path First)                      |
+| -------------------------------------- | ------------------------------------ | -------------------------------------------- | ---------------------------------------------------- |
+| **Loại thuật toán**           | Distance Vector (Hop Count)          | Distance Vector (Hop Count)                  | Link-State (Dijkstra SPF)                            |
+| **Metric (Độ đo)**            | Số hop (Số Router qua). Max = 15   | Số hop. Max = 15                            | Cost = 10^8 / Bandwidth                              |
+| **Phân loại IP**               | Classful (Không gửi Subnet Mask)   | Classless (Có gửi Subnet Mask)             | Classless (Hỗ trợ VLSM/CIDR)                       |
+| **Auto-summary**                 | Mặc định tự gộp mạng           | Mặc định gộp → Phải`no auto-summary` | Không tự động gộp                               |
+| **Administrative Distance (AD)** | 120                                  | 120                                          | 110                                                  |
+| **Thời gian gửi cập nhật**   | 30 giây (Broadcast 255.255.255.255) | 30 giây (Multicast 224.0.0.9)               | Khi có thay đổi (Multicast 224.0.0.5 / 224.0.0.6) |
+| **Xác thực bảo mật**         | Không hỗ trợ                      | Hỗ trợ Plaintext & MD5                     | Hỗ trợ Plaintext & MD5                             |
 
 ### 2. Tại sao OSPF lại ưu tiên hơn RIP trong bảng định tuyến? (Khái niệm AD)
+
 - **AD (Administrative Distance)**: Là chỉ số đo lường độ tin cậy của giao thức định tuyến. **AD càng nhỏ = Càng đáng tin cậy = Càng được ưu tiên**.
 - Bảng giá trị AD tiêu chuẩn:
   + Connected (Cắm trực tiếp): **0**
@@ -592,10 +598,12 @@ Tất cả           : any
 - Nếu Router học cùng một mạng đích từ cả OSPF (AD=110) và RIP (AD=120), Router sẽ **luôn chọn đường đi của OSPF** đưa vào bảng định tuyến.
 
 ### 3. Tại sao RIPv2 phải có lệnh `no auto-summary`?
+
 - Mặc định, RIP tự động gộp các mạng con (Subnet) về dải mạng gốc theo chuẩn Classful (A, B, C). Ví dụ `192.168.11.0/24` và `192.168.12.0/24` sẽ bị gộp thành `192.168.0.0/16`.
 - Điều này gây sai lệch đường đi khi các mạng con nằm ở nhiều hướng Router khác nhau. Lệnh `no auto-summary` bắt buộc RIPv2 giữ nguyên Subnet Mask chính xác khi quảng bá.
 
 ### 4. Các khái niệm quan trọng trong OSPF
+
 - **Area 0 (Backbone Area)**: Vùng trung tâm bắt buộc. Tất cả các Area khác (Area 1, Area 2...) muốn trao đổi dữ liệu với nhau bắt buộc phải nối trực tiếp vào Area 0.
 - **ABR (Area Border Router)**: Router nằm ở ranh giới giữa 2 vùng (có 1 cổng thuộc Area 0 và cổng khác thuộc Area khác).
 - **ASBR (Autonomous System Boundary Router)**: Router ranh giới kết nối mạng OSPF với một mạng chạy giao thức khác (ví dụ OSPF ↔ RIP hoặc Internet).
@@ -612,10 +620,12 @@ Tất cả           : any
 ## IV. LÝ THUYẾT ROUTE REDISTRIBUTION (DỊCH ĐỊNH TUYẾN CHÉO)
 
 ### 1. Route Redistribution là gì? Tại sao phải dùng?
+
 - **Khái niệm**: Là kỹ thuật cho phép một Router (ASBR - như R1 trong đề thi) lấy các tuyến đường học từ giao thức định tuyến này (ví dụ RIP) tiêm/chuyển sang cho giao thức định tuyến khác (ví dụ OSPF) và ngược lại.
 - **Lý do**: Khi hai vùng mạng sử dụng 2 giao thức định tuyến khác nhau (RIP và OSPF), nếu không có Redistribution thì hai vùng mạng hoàn toàn "mù" về nhau và không thể ping thông.
 
 ### 2. Cú pháp Redistribution chuẩn trong Cisco IOS
+
 - **Tiêm OSPF vào RIP (trên R1)**:
   ```text
   router rip
@@ -632,18 +642,21 @@ Tất cả           : any
 ## V. LÝ THUYẾT ACCESS CONTROL LIST (ACL) & NAT
 
 ### 1. Phân biệt Standard ACL và Extended ACL
-| Tiêu chí | Standard ACL | Extended ACL |
-|----------|--------------|--------------|
-| **Dải số hiệu** | 1 - 99 và 1300 - 1999 | 100 - 199 và 2000 - 2699 |
-| **Yếu tố kiểm tra** | Chỉ kiểm tra **Địa chỉ IP NGUỒN** | Kiểm tra **IP Nguồn, IP Đích, Giao thức (TCP/UDP/ICMP), Cổng dịch vụ (Port)** |
-| **Độ linh hoạt** | Thấp (Chỉ chặn hoặc cho phép toàn bộ traffic từ IP đó) | Rất cao (Có thể chặn Web nhưng cho phép FTP/Ping) |
-| **Vị trí đặt tối ưu** | Đặt **gần ĐÍCH (Destination)** nhất có thể | Đặt **gần NGUỒN (Source)** nhất có thể để chặn sớm |
+
+| Tiêu chí                        | Standard ACL                                                     | Extended ACL                                                                               |
+| --------------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| **Dải số hiệu**          | 1 - 99 và 1300 - 1999                                           | 100 - 199 và 2000 - 2699                                                                  |
+| **Yếu tố kiểm tra**      | Chỉ kiểm tra**Địa chỉ IP NGUỒN**                     | Kiểm tra**IP Nguồn, IP Đích, Giao thức (TCP/UDP/ICMP), Cổng dịch vụ (Port)** |
+| **Độ linh hoạt**         | Thấp (Chỉ chặn hoặc cho phép toàn bộ traffic từ IP đó) | Rất cao (Có thể chặn Web nhưng cho phép FTP/Ping)                                    |
+| **Vị trí đặt tối ưu** | Đặt**gần ĐÍCH (Destination)** nhất có thể          | Đặt**gần NGUỒN (Source)** nhất có thể để chặn sớm                         |
 
 ### 2. Quy tắc hoạt động của ACL (Top-Down Processing & Implicit Deny)
+
 - **Top-Down (Từ trên xuống dưới)**: Router so sánh gói tin với các dòng luật ACL từ trên xuống theo thứ tự số hiệu (10, 20, 30...). Khi gói tin khớp (match) với một dòng luật, Router thực hiện ngay hành động (`permit` hoặc `deny`) và **DỪNG LẠI**, không kiểm tra các dòng bên dưới nữa.
 - **Implicit Deny Any (Từ chối ngầm định ở cuối)**: Ở cuối BẤT KỲ danh sách ACL nào cũng luôn có một dòng lệnh ẩn `deny ip any any`. Nếu gói tin không khớp với tất cả các dòng trên, nó sẽ bị tiêu hủy. **Do đó, nếu đã có dòng `deny`, bắt buộc phải có `permit ip any any` ở cuối để cho phép các traffic hợp lệ khác đi qua**.
 
 ### 3. NAT Overload (PAT - Port Address Translation)
+
 - **Công dụng**: Cho phép hàng trăm máy tính trong mạng LAN nội bộ (dùng IP riêng - Private IP) dùng chung **duy nhất 1 địa chỉ IP công cộng (Public IP)** trên cổng WAN của Router để truy cập Internet cùng lúc.
 - **Cách phân biệt luồng dữ liệu**: NAT Overload gắn thêm số Cổng nguồn (Source Port) riêng biệt cho từng kết nối của mỗi máy trạm.
 - **Cú pháp cơ bản**:
@@ -661,21 +674,27 @@ Tất cả           : any
 ## VI. TỔNG HỢP CÂU HỎI VẤN ĐÁP THƯỜNG GẶP KHI BẢO VỆ
 
 **Q1: Tại sao gõ lệnh `crypto key generate rsa` trên Router lại bị báo lỗi?**
+
 > **Trả lời**: Do chưa đổi Hostname (thiết bị vẫn giữ tên mặc định là `Router`) hoặc chưa khai báo `ip domain-name`. Cisco IOS bắt buộc phải có cả Hostname khác mặc định và Domain Name thì mới tạo được chìa khóa RSA cho SSH.
 
 **Q2: Lệnh `no ip cef` dùng để làm gì trong EVE-NG?**
+
 > **Trả lời**: CEF (Cisco Express Forwarding) là cơ chế chuyển tiếp gói tin tốc độ cao bằng phần cứng của Cisco. Trên môi trường giả lập IOL/EVE-NG, CEF hay bị lỗi làm Router không chịu chuyển tiếp gói tin giữa các VLAN (dẫn đến timeout khi ping). Lệnh `no ip cef` tắt tính năng này để Router dùng cơ sở chuyển tiếp truyền thống, xử lý dứt điểm lỗi rớt mạng trong EVE-NG.
 
 **Q3: Ký hiệu `O*E2` trong bảng định tuyến `show ip route` nghĩa là gì?**
-> **Trả lời**: 
+
+> **Trả lời**:
+>
 > - **O**: Học qua giao thức OSPF.
 > - *****: Tuyến đường mặc định (Candidate Default Route - `0.0.0.0/0`).
 > - **E2 (External Type 2)**: Tuyến đường được nhận từ bên ngoài vùng OSPF (do lệnh `default-information originate` hoặc `redistribute` quảng bá vào), có Metric cố định không tăng theo quãng đường đi.
 
 **Q4: Làm sao để kiểm tra một ACL có đang thực sự hoạt động và chặn gói tin hay không?**
+
 > **Trả lời**: Gõ lệnh `show access-lists` trên Router. Ở cuối mỗi dòng luật sẽ hiển thị số đếm gói tin đã khớp `(X matches)`. Nếu số `matches` tăng lên sau khi thực hiện ping/truy cập dịch vụ, chứng tỏ ACL hoạt động chính xác.
 
 **Q5: Tại sao cổng Trunk trên Switch IOL bắt buộc phải gõ `switchport trunk encapsulation dot1q` trước khi gõ `switchport mode trunk`?**
+
 > **Trả lời**: Switch IOL hỗ trợ nhiều chuẩn đóng gói Trunk (cả ISL của Cisco và dot1q chuẩn chung). Khi chưa chỉ định chuẩn đóng gói (`encapsulation dot1q`), Switch từ chối chuyển cổng sang chế độ `mode trunk`.
 
 ---
@@ -683,25 +702,27 @@ Tất cả           : any
 ## VII. BẢNG GIẢI MÃ KÝ HIỆU & THÔNG SỐ TOÀN TẬP TRONG CISCO IOS
 
 ### 1. Bảng giải mã Ký hiệu trong Bảng định tuyến (`show ip route`)
+
 Khi chạy lệnh `show ip route`, Cisco IOS sử dụng các mã ký hiệu ở đầu mỗi dòng để cho biết nguồn gốc tuyến đường:
 
-| Mã ký hiệu | Tên đầy đủ | Độ ưu tiên (AD) | Ý nghĩa & Giải thích chi tiết |
-|------------|------------|-----------------|--------------------------------|
-| **C** | Directly Connected | **0** | Mạng cắm dây trực tiếp vào cổng vật lý/ảo của Router. |
-| **L** | Local | **0** | Địa chỉ IP chính xác của cổng mạng Router (luôn mang Subnet Mask `/32` với IPv4 hoặc `/128` với IPv6). |
-| **S** | Static Route | **1** | Tuyến đường tĩnh do quản trị viên cấu hình thủ công (`ip route`). |
-| **S\*** | Candidate Default Route | **1** | Tuyến đường mặc định tĩnh (`ip route 0.0.0.0 0.0.0.0`), là "lối thoát hiểm" dẫn ra Internet hoặc Router tuyến trên. |
-| **R** | RIP | **120** | Tuyến đường học tự động từ giao thức RIP (Routing Information Protocol). Metric = Số hop (Router đi qua). |
-| **O** | OSPF Intra-Area | **110** | Tuyến đường học từ giao thức OSPF thuộc **cùng một vùng (Area)**. Metric = Cost. |
-| **O IA** | OSPF Inter-Area | **110** | Tuyến đường học từ OSPF thuộc **vùng khác (Inter-Area)** nhưng cùng thuộc hệ thống OSPF. |
-| **O E1** | OSPF External Type 1 | **110** | Tuyến đường học từ bên ngoài OSPF (redistribute). Metric = Cost gốc từ ngoài + Cost đường đi nội bộ. |
-| **O E2** | OSPF External Type 2 | **110** | Tuyến đường học từ bên ngoài OSPF (Mặc định). Metric = Cost gốc từ ngoài không thay đổi. |
-| **O\*E2** | OSPF Default External | **110** | Tuyến đường mặc định ra Internet được phát tán tự động qua OSPF nhờ lệnh `default-information originate`. |
-| **D** | EIGRP | **90** | Tuyến đường học từ giao thức EIGRP nội bộ. |
-| **D EX** | EIGRP External | **170** | Tuyến đường học từ bên ngoài tiêm vào EIGRP. |
-| **B** | BGP | **20 (eBGP) / 200 (iBGP)** | Tuyến đường học từ giao thức định tuyến liên vùng BGP (Border Gateway Protocol). |
+| Mã ký hiệu   | Tên đầy đủ         | Độ ưu tiên (AD)              | Ý nghĩa & Giải thích chi tiết                                                                                                    |
+| --------------- | ----------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| **C**     | Directly Connected      | **0**                      | Mạng cắm dây trực tiếp vào cổng vật lý/ảo của Router.                                                                      |
+| **L**     | Local                   | **0**                      | Địa chỉ IP chính xác của cổng mạng Router (luôn mang Subnet Mask`/32` với IPv4 hoặc `/128` với IPv6).                 |
+| **S**     | Static Route            | **1**                      | Tuyến đường tĩnh do quản trị viên cấu hình thủ công (`ip route`).                                                       |
+| **S\***   | Candidate Default Route | **1**                      | Tuyến đường mặc định tĩnh (`ip route 0.0.0.0 0.0.0.0`), là "lối thoát hiểm" dẫn ra Internet hoặc Router tuyến trên. |
+| **R**     | RIP                     | **120**                    | Tuyến đường học tự động từ giao thức RIP (Routing Information Protocol). Metric = Số hop (Router đi qua).                 |
+| **O**     | OSPF Intra-Area         | **110**                    | Tuyến đường học từ giao thức OSPF thuộc**cùng một vùng (Area)**. Metric = Cost.                                      |
+| **O IA**  | OSPF Inter-Area         | **110**                    | Tuyến đường học từ OSPF thuộc**vùng khác (Inter-Area)** nhưng cùng thuộc hệ thống OSPF.                           |
+| **O E1**  | OSPF External Type 1    | **110**                    | Tuyến đường học từ bên ngoài OSPF (redistribute). Metric = Cost gốc từ ngoài + Cost đường đi nội bộ.                 |
+| **O E2**  | OSPF External Type 2    | **110**                    | Tuyến đường học từ bên ngoài OSPF (Mặc định). Metric = Cost gốc từ ngoài không thay đổi.                             |
+| **O\*E2** | OSPF Default External   | **110**                    | Tuyến đường mặc định ra Internet được phát tán tự động qua OSPF nhờ lệnh`default-information originate`.           |
+| **D**     | EIGRP                   | **90**                     | Tuyến đường học từ giao thức EIGRP nội bộ.                                                                                   |
+| **D EX**  | EIGRP External          | **170**                    | Tuyến đường học từ bên ngoài tiêm vào EIGRP.                                                                                |
+| **B**     | BGP                     | **20 (eBGP) / 200 (iBGP)** | Tuyến đường học từ giao thức định tuyến liên vùng BGP (Border Gateway Protocol).                                          |
 
 **Cú pháp một dòng Route đầy đủ:**
+
 ```text
 R    192.168.4.0/24 [120/2] via 10.0.0.2, 00:00:15, Ethernet0/0
 │    └──────┬─────┘ └─┬──┘     └───┬────┘  └───┬────┘  └───┬─────┘
@@ -716,87 +737,93 @@ R    192.168.4.0/24 [120/2] via 10.0.0.2, 00:00:15, Ethernet0/0
 ---
 
 ### 2. Bảng giải mã Ký hiệu Kiểm tra Kết nối Ping (`ping`)
+
 Khi thực hiện ping từ Router hoặc VPCS, kết quả hiển thị các ký hiệu sau:
 
-| Ký hiệu | Tên đầy đủ | Ý nghĩa & Nguyên nhân kỹ thuật |
-|---------|------------|--------------------------------|
-| **!** | Success | **Thành công**: Gói ICMP Echo Request đã gửi đi và nhận được phản hồi ICMP Echo Reply từ máy đích. |
-| **.** | Timed Out | **Hết thời gian chờ**: Router gửi gói đi nhưng không nhận được phản hồi sau thời gian chờ (mặc định 2s). <br> *Nguyên nhân*: Đứt cáp, máy đích tắt nguồn, sai Gateway, không có tuyến đường quay về, hoặc bị Firewall/ACL chặn. |
-| **U** | Destination Unreachable | **Không tới được đích**: Router trung gian trên đường đi trả về bản tin ICMP Type 3 báo rằng nó không có tuyến đường đi tới IP đích trong bảng định tuyến. |
-| **C** | Congestion Experienced | **Nghẽn mạng**: Gói tin đi qua tuyến đường bị nghẽn nghiêm trọng. |
-| **I** | User Interrupt | **Hủy lệnh thủ công**: Người dùng nhấn tổ hợp phím `Ctrl + Shift + 6` để dừng quá trình ping. |
-| **N** | Network Unreachable | Mạng đích bị gián đoạn hoàn toàn. |
-| **P** | Protocol Unreachable | Giao thức truyền tải bị thiết bị đích từ chối. |
+| Ký hiệu   | Tên đầy đủ         | Ý nghĩa & Nguyên nhân kỹ thuật                                                                                                                                                                                                                                       |
+| ----------- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **!** | Success                 | **Thành công**: Gói ICMP Echo Request đã gửi đi và nhận được phản hồi ICMP Echo Reply từ máy đích.                                                                                                                                                 |
+| **.** | Timed Out               | **Hết thời gian chờ**: Router gửi gói đi nhưng không nhận được phản hồi sau thời gian chờ (mặc định 2s).  *Nguyên nhân*: Đứt cáp, máy đích tắt nguồn, sai Gateway, không có tuyến đường quay về, hoặc bị Firewall/ACL chặn. |
+| **U** | Destination Unreachable | **Không tới được đích**: Router trung gian trên đường đi trả về bản tin ICMP Type 3 báo rằng nó không có tuyến đường đi tới IP đích trong bảng định tuyến.                                                                           |
+| **C** | Congestion Experienced  | **Nghẽn mạng**: Gói tin đi qua tuyến đường bị nghẽn nghiêm trọng.                                                                                                                                                                                        |
+| **I** | User Interrupt          | **Hủy lệnh thủ công**: Người dùng nhấn tổ hợp phím `Ctrl + Shift + 6` để dừng quá trình ping.                                                                                                                                                      |
+| **N** | Network Unreachable     | Mạng đích bị gián đoạn hoàn toàn.                                                                                                                                                                                                                                 |
+| **P** | Protocol Unreachable    | Giao thức truyền tải bị thiết bị đích từ chối.                                                                                                                                                                                                                   |
 
 ---
 
 ### 3. Bảng giải mã Ký hiệu Theo dõi Đường đi Traceroute (`traceroute` / `trace`)
+
 Lệnh `traceroute` (gõ trên Router) hoặc `trace` (gõ trên VPCS) hiển thị các ký hiệu phản hồi tại từng trạm (Hop):
 
-| Ký hiệu | Ý nghĩa |
-|---------|---------|
-| **[IP] [Time]** | Hiện IP của Router trạm đó và thời gian phản hồi (ms) → Gói tin đi qua trạm này bình thường. |
-| **\*** | **Timeout tại trạm đó**: Trạm đó không phản hồi bản tin ICMP Time Exceeded (do cấm ICMP hoặc nghẽn). |
-| **!H** | **Host Unreachable**: Máy trạm cuối không liên lạc được. |
-| **!N** | **Network Unreachable**: Mạng tại trạm đó không tìm thấy tuyến đi tiếp. |
-| **!P** | **Protocol Unreachable**: Giao thức bị từ chối tại trạm. |
-| **!A** | **Administratively Prohibited**: Gói tin bị **chặn bởi Access Control List (ACL)** tại trạm đó! |
-| **!T** | **Time-to-Live Exceeded**: Phát hiện vòng lặp định tuyến (Routing Loop). |
+| Ký hiệu             | Ý nghĩa                                                                                                                |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| **[IP] [Time]** | Hiện IP của Router trạm đó và thời gian phản hồi (ms) → Gói tin đi qua trạm này bình thường.            |
+| **\***          | **Timeout tại trạm đó**: Trạm đó không phản hồi bản tin ICMP Time Exceeded (do cấm ICMP hoặc nghẽn). |
+| **!H**          | **Host Unreachable**: Máy trạm cuối không liên lạc được.                                                  |
+| **!N**          | **Network Unreachable**: Mạng tại trạm đó không tìm thấy tuyến đi tiếp.                                 |
+| **!P**          | **Protocol Unreachable**: Giao thức bị từ chối tại trạm.                                                     |
+| **!A**          | **Administratively Prohibited**: Gói tin bị **chặn bởi Access Control List (ACL)** tại trạm đó!      |
+| **!T**          | **Time-to-Live Exceeded**: Phát hiện vòng lặp định tuyến (Routing Loop).                                    |
 
 ---
 
 ### 4. Bảng giải mã Trạng thái Cổng Mạng (`show ip interface brief`)
+
 Lệnh `show ip interface brief` hiển thị 2 cột trạng thái quan trọng: **Status (Layer 1)** và **Protocol (Layer 2)**.
 
-| Status (L1) | Protocol (L2) | Trạng thái thực tế | Nguyên nhân & Cách khắc phục |
-|-------------|---------------|-------------------|-----------------------------|
-| **up** | **up** | **Hoạt động hoàn hảo** | Cả cáp vật lý và giao thức đóng gói đều đúng. |
-| **administratively down** | **down** | **Cổng đang bị khóa** | Cổng bị tắt thủ công bằng lệnh `shutdown`. <br> *Cách fix*: Chui vào cổng gõ `no shutdown`. |
-| **down** | **down** | **Lỗi vật lý (Layer 1)** | Chưa cắm cáp, hỏng cáp, tuột dây, hoặc thiết bị đầu đối diện bị tắt nguồn. |
-| **up** | **down** | **Lỗi giao thức (Layer 2)** | Đã cắm cáp nhưng sai thông số Layer 2. <br> *Nguyên nhân*: Sai chuẩn đóng gói (`encapsulation`), sai `clock rate` trên dây Serial, chưa gán `encapsulation dot1q` cho Sub-interface, hoặc lệch Native VLAN giữa 2 đầu Trunk. |
+| Status (L1)                     | Protocol (L2)  | Trạng thái thực tế              | Nguyên nhân & Cách khắc phục                                                                                                                                                                                                                    |
+| ------------------------------- | -------------- | ----------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **up**                    | **up**   | **Hoạt động hoàn hảo**   | Cả cáp vật lý và giao thức đóng gói đều đúng.                                                                                                                                                                                           |
+| **administratively down** | **down** | **Cổng đang bị khóa**     | Cổng bị tắt thủ công bằng lệnh`shutdown`.  *Cách fix*: Chui vào cổng gõ `no shutdown`.                                                                                                                                              |
+| **down**                  | **down** | **Lỗi vật lý (Layer 1)**   | Chưa cắm cáp, hỏng cáp, tuột dây, hoặc thiết bị đầu đối diện bị tắt nguồn.                                                                                                                                                         |
+| **up**                    | **down** | **Lỗi giao thức (Layer 2)** | Đã cắm cáp nhưng sai thông số Layer 2.*Nguyên nhân*: Sai chuẩn đóng gói (`encapsulation`), sai `clock rate` trên dây Serial, chưa gán `encapsulation dot1q` cho Sub-interface, hoặc lệch Native VLAN giữa 2 đầu Trunk. |
 
 ---
 
 ### 5. Bảng giải mã Thông số VTP Status (`show vtp status`)
+
 Lệnh `show vtp status` trên Switch hiển thị các thông số đồng bộ VLAN:
 
-| Thông số | Ý nghĩa & Quy tắc |
-|----------|-------------------|
-| **VTP Operating Mode** | Chế độ VTP đang chạy (`Server`, `Client`, hoặc `Transparent`). |
-| **VTP Domain Name** | Tên vùng VTP (ví dụ `Lab5`). Tất cả Switch muốn đồng bộ VLAN phải cùng chung tên Domain này. |
-| **Configuration Revision** | **Số phiên bản hiệu chỉnh cấu hình VTP**: Mỗi khi có thao tác tạo, sửa, xóa VLAN trên VTP Server, số này sẽ tự động đếm **+1**. <br> *Quy tắc*: Switch nào nhận được bản tin VTP có số `Configuration Revision` **lớn hơn** số hiện tại của nó thì sẽ **ghi đè toàn bộ danh sách VLAN** của nó theo danh sách mới! |
-| **Maximum VLANs Supported** | Số lượng VLAN tối đa Switch hỗ trợ (thường là 1005). |
-| **MD5 Digest** | Mã băm MD5 kiểm tra tính toàn vẹn của dữ liệu VTP giữa các Switch. |
+| Thông số                        | Ý nghĩa & Quy tắc                                                                                                                                                                                                                                                                                                                                                                        |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **VTP Operating Mode**      | Chế độ VTP đang chạy (`Server`, `Client`, hoặc `Transparent`).                                                                                                                                                                                                                                                                                                                  |
+| **VTP Domain Name**         | Tên vùng VTP (ví dụ`Lab5`). Tất cả Switch muốn đồng bộ VLAN phải cùng chung tên Domain này.                                                                                                                                                                                                                                                                                 |
+| **Configuration Revision**  | **Số phiên bản hiệu chỉnh cấu hình VTP**: Mỗi khi có thao tác tạo, sửa, xóa VLAN trên VTP Server, số này sẽ tự động đếm **+1**.  *Quy tắc*: Switch nào nhận được bản tin VTP có số `Configuration Revision` **lớn hơn** số hiện tại của nó thì sẽ **ghi đè toàn bộ danh sách VLAN** của nó theo danh sách mới! |
+| **Maximum VLANs Supported** | Số lượng VLAN tối đa Switch hỗ trợ (thường là 1005).                                                                                                                                                                                                                                                                                                                              |
+| **MD5 Digest**              | Mã băm MD5 kiểm tra tính toàn vẹn của dữ liệu VTP giữa các Switch.                                                                                                                                                                                                                                                                                                               |
 
 ---
 
 ### 6. Bảng toán tử & cú pháp nâng cao trong Access Control List (ACL)
+
 Khi cấu hình Extended ACL, các toán tử sau được dùng để so sánh số Port hoặc chọn địa chỉ IP:
 
-| Toán tử / Từ khóa | Tên đầy đủ | Ý nghĩa & Ví dụ |
-|-------------------|------------|------------------|
-| **eq** | Equal | Bằng đúng số port. <br> *Ví dụ*: `eq 80` (HTTP), `eq 443` (HTTPS), `eq ftp` (Port 21). |
-| **gt** | Greater Than | Lớn hơn số port. <br> *Ví dụ*: `gt 1023` (Lọc các cổng ứng dụng động Ephemeral Ports). |
-| **lt** | Less Than | Nhỏ hơn số port. <br> *Ví dụ*: `lt 1024` (Lọc tất cả các cổng nổi tiếng Well-Known Ports). |
-| **neq** | Not Equal | Khác số port chỉ định. |
-| **range** | Port Range | Nằm trong dải port từ [Port_Đầu] đến [Port_Cuối]. <br> *Ví dụ*: `range 80 443`. |
-| **host [IP]** | Single Host | Đại diện cho **duy nhất 1 địa chỉ IP**. Tương đương việc gõ `[IP] 0.0.0.0`. <br> *Ví dụ*: `host 172.16.30.10`. |
-| **any** | Any Address | Đại diện cho **tất cả các địa chỉ IP** trên thế giới. Tương đương `0.0.0.0 255.255.255.255`. |
+| Toán tử / Từ khóa | Tên đầy đủ | Ý nghĩa & Ví dụ                                                                                                                   |
+| --------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| **eq**          | Equal           | Bằng đúng số port.*Ví dụ*: `eq 80` (HTTP), `eq 443` (HTTPS), `eq ftp` (Port 21).                                        |
+| **gt**          | Greater Than    | Lớn hơn số port.*Ví dụ*: `gt 1023` (Lọc các cổng ứng dụng động Ephemeral Ports).                                      |
+| **lt**          | Less Than       | Nhỏ hơn số port.*Ví dụ*: `lt 1024` (Lọc tất cả các cổng nổi tiếng Well-Known Ports).                                  |
+| **neq**         | Not Equal       | Khác số port chỉ định.                                                                                                           |
+| **range**       | Port Range      | Nằm trong dải port từ [Port_Đầu] đến [Port_Cuối].*Ví dụ*: `range 80 443`.                                               |
+| **host [IP]**   | Single Host     | Đại diện cho**duy nhất 1 địa chỉ IP**. Tương đương việc gõ `[IP] 0.0.0.0`.  *Ví dụ*: `host 172.16.30.10`. |
+| **any**         | Any Address     | Đại diện cho**tất cả các địa chỉ IP** trên thế giới. Tương đương `0.0.0.0 255.255.255.255`.                  |
 
 ---
 
 ### 7. Bảng Phân loại Địa chỉ IP, Subnet Mask & Wildcard Mask Chuẩn
+
 Bảng tra cứu phân lớp địa chỉ IP và các dải IP riêng (Private IP):
 
-| Lớp IP (Class) | Dải địa chỉ IP | Subnet Mask mặc định | Wildcard Mask mặc định |
-|----------------|----------------|----------------------|------------------------|
-| **Class A** | `1.0.0.0` – `126.255.255.255` | `255.0.0.0` (`/8`) | `0.255.255.255` |
-| **Class B** | `128.0.0.0` – `191.255.255.255` | `255.255.0.0` (`/16`) | `0.0.255.255` |
-| **Class C** | `192.0.0.0` – `223.255.255.255` | `255.255.255.0` (`/24`) | `0.0.0.255` |
+| Lớp IP (Class)   | Dải địa chỉ IP                   | Subnet Mask mặc định     | Wildcard Mask mặc định |
+| ----------------- | ------------------------------------ | --------------------------- | ------------------------- |
+| **Class A** | `1.0.0.0` – `126.255.255.255`   | `255.0.0.0` (`/8`)      | `0.255.255.255`         |
+| **Class B** | `128.0.0.0` – `191.255.255.255` | `255.255.0.0` (`/16`)   | `0.0.255.255`           |
+| **Class C** | `192.0.0.0` – `223.255.255.255` | `255.255.255.0` (`/24`) | `0.0.0.255`             |
 
 **Dải địa chỉ IP Dùng riêng (Private IP - Dùng trong mạng nội bộ LAN, không định tuyến ra Internet công cộng):**
+
 - **Class A Private**: `10.0.0.0` – `10.255.255.255` (`10.0.0.0/8`)
 - **Class B Private**: `172.16.0.0` – `172.31.255.255` (`172.16.0.0/12`)
 - **Class C Private**: `192.168.0.0` – `192.168.255.255` (`192.168.0.0/16`)
 - **Loopback Test Address**: `127.0.0.1` (Địa chỉ tự kiểm tra card mạng máy cục bộ).
-
