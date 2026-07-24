@@ -3,6 +3,54 @@
 # Ngày thi: T13-14, 06/11/2025 | Thời gian: 70 phút | Được sử dụng tài liệu giấy
 
 =====================================================================
+=====================================================================
+ BÍ KÍP TÍNH & BẢNG TRA CỨU SUBNET MASK / WILDCARD MASK (CHO ĐỀ THI)
+=====================================================================
+=====================================================================
+
+### 1. Cách tính cực nhanh không bao giờ sai:
+- **Subnet Mask**: Là chuỗi xác định độ rộng của dải mạng.
+- **Wildcard Mask (dùng trong OSPF và ACL)**: Là số đảo ngược của Subnet Mask.
+  👉 **Công thức tính Wildcard Mask siêu tốc**: 
+  `Wildcard Mask = 255.255.255.255 - Subnet Mask`
+
+*Ví dụ*: 
+- Với `/24` (Subnet `255.255.255.0`): 
+  Wildcard = `(255-255).(255-255).(255-255).(255-0)` = `0.0.0.255`
+- Với `/30` (Subnet `255.255.255.252`): 
+  Wildcard = `(255-255).(255-255).(255-255).(255-252)` = `0.0.0.3`
+
+---
+
+### 2. BẢNG TRA CỨU "THẦN THÁNH" KHI ĐI THI (Chỉ cần gióng hàng, không cần tính!):
+
+| Prefix (CIDR) | Subnet Mask | Wildcard Mask | Dùng cho vị trí nào trong sơ đồ đề thi? | Số máy dùng được |
+|:---:|:---:|:---:|:---|:---:|
+| **/30** | `255.255.255.252` | `0.0.0.3` | **Nối 2 Router với nhau** (Cáp Serial `s1/0`, `s1/1`) | 2 IP (.1 và .2) |
+| **/29** | `255.255.255.248` | `0.0.0.7` | Đường nối WAN nhỏ | 6 IP |
+| **/28** | `255.255.255.240` | `0.0.0.15` | Mạng nhỏ (14 máy) hoặc dải ACL chọn 16 IP | 14 IP |
+| **/27** | `255.255.255.224` | `0.0.0.31` | Dải mạng 30 máy trạm | 30 IP |
+| **/26** | `255.255.255.192` | `0.0.0.63` | Dải mạng 62 máy trạm | 62 IP |
+| **/25** | `255.255.255.128` | `0.0.0.127` | Nửa dải mạng Lớp C (126 máy) | 126 IP |
+| **/24** | `255.255.255.0` | `0.0.0.255` | **Mạng LAN tiêu chuẩn** (VLAN, PC, Server) | 254 IP (.1 đến .254) |
+| **host 1 IP** | `255.255.255.255` | `0.0.0.0` | Chỉ định đúng 1 máy Server duy nhất trong ACL | 1 IP |
+
+---
+
+### 3. Mẹo tính dải IP của mạng `/30` (Nối 2 Router):
+Mạng `/30` có bước nhảy là **4 IP** cho mỗi block: `.0`, `.4`, `.8`, `.12`, `.16`, `.20`, `.24`, `.28`, `.32`...
+- **Block 1 (`228.224.11.0/30`)**:
+  + IP Mạng (Network ID): `228.224.11.0` (không gán cho thiết bị)
+  + IP Router thứ nhất (R2): `228.224.11.1`
+  + IP Router thứ hai (R1): `228.224.11.2`
+  + IP Broadcast: `228.224.11.3` (không gán cho thiết bị)
+- **Block 5 (`228.224.11.16/30`)**:
+  + IP Mạng (Network ID): `228.224.11.16` (không gán cho thiết bị)
+  + IP Router thứ nhất (R1): `228.224.11.17`
+  + IP Router thứ hai (R3): `228.224.11.18`
+  + IP Broadcast: `228.224.11.19` (không gán cho thiết bị)
+
+=====================================================================
 CÂU 1 (2 điểm - CLO 02): CẤU HÌNH BẢO MẬT ROUTER
 =======================================================
 
@@ -254,6 +302,41 @@ R1(config-if)# exit
 R1(config)# end
 R1# write memory
 
+---
+
+### GIẢI THÍCH CHI TIẾT TỪNG DÒNG LỆNH TRONG CÂU 2:
+
+#### A. Giải thích lệnh trên SwitchServer:
+- **`switchport trunk encapsulation dot1q`**: (Bắt buộc trên IOL) Chọn chuẩn gán nhãn VLAN 802.1Q trước khi bật mode trunk, nếu thiếu lệnh này Switch sẽ từ chối chuyển sang mode trunk.
+- **`switchport mode trunk`**: Đưa cổng `e0/0` thành đường Trunk truyền tải dữ liệu của nhiều VLAN (VLAN 11 và VLAN 12) cùng lúc lên Router R2.
+- **`switchport mode access` & `switchport access vlan 11`**: Đặt cổng `e0/2` làm cổng Access dành riêng cho máy tính VLAN 11.
+- **`switchport access vlan 12`**: Đặt cổng `e0/1` làm cổng Access dành riêng cho máy tính VLAN 12.
+
+#### B. Giải thích lệnh trên R2 (Router-on-a-stick + RIP):
+- **`interface e0/0` & `no shutdown`**: Bật cổng vật lý `e0/0` lên để các sub-interface bên dưới hoạt động.
+- **`interface e0/0.11`**: Tạo cổng con ảo (sub-interface) số `.11` phục vụ định tuyến cho VLAN 11.
+- **`encapsulation dot1Q 11`**: Khai báo cổng ảo này bóc tách nhãn VLAN 11 đi qua đường Trunk.
+- **`ip address 192.168.11.1 255.255.255.0`**: Đặt địa chỉ IP Gateway cho các máy trạm VLAN 11 (`192.168.11.1/24`).
+- **`interface s1/0` & `ip address 228.224.11.1 255.255.255.252`**: Đặt IP cho cổng Serial nối R1. Dải IP `/30` có Subnet Mask chuẩn là `255.255.255.252`.
+- **`router rip` / `version 2` / `no auto-summary`**: Kích hoạt giao thức định tuyến RIPv2 và cấm tự động gộp mạng con.
+- **`network 192.168.11.0` / `network 192.168.12.0` / `network 228.224.11.0`**: Khai báo quảng bá 3 dải mạng trực tiếp của R2 cho các Router vùng RIP biết.
+
+#### C. Giải thích lệnh trên R1 (Trung tâm - Redistribution + NAT):
+- **`ip nat inside`**: Khai báo các cổng nối mạng nội bộ (`s1/0` nối R2 và `s1/1` nối R3).
+- **`ip nat outside`**: Khai báo cổng `e0/0` nối ra đám mây Internet.
+- **`access-list 1 permit any` & `ip nat inside source list 1 interface e0/0 overload`**: Bật tính năng NAT Overload (PAT), biến tất cả IP riêng nội bộ thành IP công cộng trên cổng `e0/0` để ra Internet.
+- **`ip route 0.0.0.0 0.0.0.0 e0/0`**: Tạo đường mặc định tĩnh chỉ đường ra Internet qua cổng `e0/0`.
+- **`redistribute ospf 1 metric 2` (trong RIP)**: Nạp toàn bộ thông tin các mạng OSPF vào RIP, thông báo cho vùng RIP rằng các mạng OSPF cách 2 hop.
+- **`redistribute rip subnets` (trong OSPF)**: Nạp toàn bộ thông tin các mạng RIP vào OSPF. Từ khóa `subnets` bắt buộc có để OSPF nhận cả các mạng con VLSM.
+- **`default-information originate`**: Quảng bá đường mặc định ra Internet cho toàn bộ các Router thuộc dải RIP và OSPF.
+
+#### D. Giải thích lệnh trên R3 (OSPF):
+- **`interface s1/1` (`228.224.11.18 255.255.255.252`)**: IP cổng Serial nối R1. Subnet mask `/30` = `255.255.255.252`.
+- **`interface e0/0` (`172.16.30.1 255.255.255.0`)**: IP Gateway cho Server (`172.16.30.10`).
+- **`interface e0/1` (`172.16.31.1 255.255.255.0`)**: IP Gateway cho VPC vùng OSPF.
+- **`network 228.224.11.16 0.0.0.3 area 0`**: Quảng bá dải mạng `/30` vào OSPF Area 0. Wildcard Mask của `/30` là `0.0.0.3`.
+- **`network 172.16.30.0 0.0.0.255 area 0`**: Quảng bá dải mạng LAN Server `/24` vào Area 0. Wildcard Mask của `/24` là `0.0.0.255`.
+
 =====================================================================
 CÂU 3 (2 điểm - CLO 3): GIẢI THÍCH ACL LÝ THUYẾT
 =======================================================
@@ -307,16 +390,24 @@ Router1(config-ext-nacl)# exit
 Router1(config)# interface e0/1
 Router1(config-if)# ip access-group WEB_ONLY out
 
-GIẢI THÍCH:
+GIẢI THÍCH CHI TIẾT LỆNH & VỊ TRÍ ĐẶT ACL:
 
-1. permit tcp any host 172.16.4.5 eq 80   -> Cho phép HTTP tới Server
-2. permit tcp any host 172.16.4.5 eq 443  -> Cho phép HTTPS tới Server
-3. deny ip any host 172.16.4.5            -> Cấm mọi thứ khác (ping, ftp...) tới Server
-4. permit ip any any                      -> Cho traffic đến đích KHÁC đi qua bình thường
-5. Áp vào e0/1 chiều out (cổng nối tới WebServer)
+1. `permit tcp any host 172.16.4.5 eq 80`   -> Cho phép HTTP (Web) tới Server
+2. `permit tcp any host 172.16.4.5 eq 443`  -> Cho phép HTTPS (Web bảo mật) tới Server
+3. `deny ip any host 172.16.4.5`            -> Cấm mọi dịch vụ khác (ping, FTP, Telnet...) tới Server
+4. `permit ip any any`                      -> Cho phép các lưu lượng đi tới địa chỉ ĐÍCH KHÁC đi qua bình thường
 
-TẠI SAO DÙNG EXTENDED? Vì Standard chỉ lọc IP nguồn, KHÔNG lọc port.
-Muốn phân biệt Web (80/443) với FTP (21) thì BẮT BUỘC dùng Extended.
+TẠI SAO DÙNG EXTENDED ACL VÀ ÁP VÀO CỔNG `e0/1 out` (GẦN ĐÍCH)?
+
+- **Tại sao dùng Extended ACL?**: Standard ACL chỉ kiểm tra địa chỉ IP nguồn, KHÔNG phân biệt được cổng dịch vụ (Port 80/443 Web vs Port 21 FTP/Ping). Muốn chỉ cho phép Web thì BẮT BUỘC phải dùng Extended ACL.
+- **Quy tắc lý thuyết vị trí đặt ACL**:
+  + **Standard ACL**: Đặt **Gần Đích** (để tránh chặn nhầm dữ liệu của IP nguồn đó đi tới các nơi khác).
+  + **Extended ACL**: Ưu tiên đặt **Gần Nguồn** (để tiêu hủy gói tin không hợp lệ ngay từ sớm, tránh lãng phí băng thông đường truyền WAN qua nhiều Router).
+- **Tại sao Câu 3.2 Extended ACL lại đặt ở `e0/1 out` (Cổng WebServer - Gần Đích)?**:
+  + **Sơ đồ chỉ có 1 Router duy nhất (Router1)**: Tất cả thiết bị đều cắm trực tiếp vào Router1, không có đường truyền WAN qua nhiều trạm Router intermediate.
+  + **Nguồn truy cập WebServer đến từ NHIỀU HƯỚNG KHÁC NHAU**: Vừa từ VPC2 (`e0/0`) vừa từ đám mây Internet (`e0/3`).
+  + Nếu áp Extended ACL ở `e0/0 in` thì chỉ bảo vệ được WebServer khỏi VPC2, còn traffic từ Internet (`e0/3`) chui vào vẫn truy cập FTP/Telnet của WebServer bình thường.
+  + Do đó, áp **1 bộ Extended ACL duy nhất tại `e0/1 out`** (chiều đi ra khỏi Router1 chui vào WebServer) là phương án tối ưu nhất, giúp bảo vệ WebServer trước **MỌI nguồn truy cập** (cả VPC2 lẫn Internet) chỉ với một lần cấu hình!
 
 =====================================================================
 =====================================================================
