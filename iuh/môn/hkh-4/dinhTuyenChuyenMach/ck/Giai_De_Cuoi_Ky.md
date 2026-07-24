@@ -22,41 +22,41 @@ CÂU 1 (2 điểm - CLO 02): CẤU HÌNH BẢO MẬT ROUTER
 BÀI GIẢI CÂU 1:
 ------------------
 
-enable
-configure terminal
+Router> enable
+Router# configure terminal
 
 ! 0. Đổi hostname (BẮT BUỘC để tạo RSA key cho SSH)
-hostname R1
+Router(config)# hostname R1
 
 ! 1. Mã hóa toàn bộ password
-service password-encryption
+R1(config)# service password-encryption
 
 ! 2. Line Console
-line console 0
- password 052025console
- login
- exit
+R1(config)# line console 0
+R1(config-line)# password 052025console
+R1(config-line)# login
+R1(config-line)# exit
 
 ! 3. Enable mode (mã hóa)
-enable secret 2710enable
+R1(config)# enable secret 2710enable
 
 ! 4a. SSH
-ip domain-name ck2025.net
-crypto key generate rsa modulus 1024
-username user2025 privilege 15 secret Tel@ssh25
+R1(config)# ip domain-name ck2025.net
+R1(config)# crypto key generate rsa modulus 1024
+R1(config)# username user2025 privilege 15 secret Tel@ssh25
 
 ! 4b. VTY (Telnet + SSH)
-line vty 0 4
- login local
- transport input ssh telnet
- exec-timeout 2 0
- exit
+R1(config)# line vty 0 4
+R1(config-line)# login local
+R1(config-line)# transport input ssh telnet
+R1(config-line)# exec-timeout 2 0
+R1(config-line)# exit
 
 ! 4c. Giới hạn đăng nhập sai
-ip ssh authentication-retries 3
+R1(config)# ip ssh authentication-retries 3
 
-end
-write memory
+R1(config)# end
+R1# write memory
 
 GIẢI THÍCH CHI TIẾT TỪNG LỆNH CẤU HÌNH:
 
@@ -121,106 +121,115 @@ BÀI GIẢI CÂU 2:
 ------------------
 
 === 1. SwitchServer ===
-enable
-configure terminal
-interface e0/0
- switchport trunk encapsulation dot1q
- switchport mode trunk
- no shutdown
-interface e0/2
- switchport mode access
- switchport access vlan 11
- no shutdown
-interface e0/1
- switchport mode access
- switchport access vlan 12
- no shutdown
-end
-write memory
+SwitchServer> enable
+SwitchServer# configure terminal
+SwitchServer(config)# interface e0/0
+SwitchServer(config-if)# switchport trunk encapsulation dot1q
+SwitchServer(config-if)# switchport mode trunk
+SwitchServer(config-if)# no shutdown
+SwitchServer(config-if)# interface e0/2
+SwitchServer(config-if)# switchport mode access
+SwitchServer(config-if)# switchport access vlan 11
+SwitchServer(config-if)# no shutdown
+SwitchServer(config-if)# interface e0/1
+SwitchServer(config-if)# switchport mode access
+SwitchServer(config-if)# switchport access vlan 12
+SwitchServer(config-if)# no shutdown
+SwitchServer(config-if)# end
+SwitchServer# write memory
 
 === 2. R2 (Router-on-a-stick + RIP) ===
-enable
-configure terminal
-interface e0/0
- no shutdown
-interface e0/0.11
- encapsulation dot1Q 11
- ip address 192.168.11.1 255.255.255.0
-interface e0/0.12
- encapsulation dot1Q 12
- ip address 192.168.12.1 255.255.255.0
-interface s1/0
- ip address 228.224.11.1 255.255.255.252
- no shutdown
+R2> enable
+R2# configure terminal
+R2(config)# interface e0/0
+R2(config-if)# no shutdown
+R2(config-if)# interface e0/0.11
+R2(config-subif)# encapsulation dot1Q 11
+R2(config-subif)# ip address 192.168.11.1 255.255.255.0
+R2(config-subif)# interface e0/0.12
+R2(config-subif)# encapsulation dot1Q 12
+R2(config-subif)# ip address 192.168.12.1 255.255.255.0
+R2(config-subif)# interface s1/0
+R2(config-if)# ip address 228.224.11.1 255.255.255.252
+R2(config-if)# no shutdown
 
-router rip
- version 2
- no auto-summary
- network 192.168.11.0
- network 192.168.12.0
- network 228.224.11.0
-end
-write memory
+R2(config-if)# router rip
+R2(config-router)# version 2
+R2(config-router)# no auto-summary
+R2(config-router)# network 192.168.11.0
+R2(config-router)# network 192.168.12.0
+R2(config-router)# network 228.224.11.0
+R2(config-router)# end
+R2# write memory
 
 === 3. R1 (Trung tâm - Redistribution + NAT) ===
-enable
-configure terminal
-interface s1/0
- ip address 228.224.11.2 255.255.255.252
- ip nat inside
- no shutdown
-interface s1/1
- ip address 228.224.11.17 255.255.255.252
- ip nat inside
- no shutdown
-interface e0/0
- ip address dhcp
- ip nat outside
- no shutdown
+R1> enable
+R1# configure terminal
+R1(config)# interface s1/0
+R1(config-if)# ip address 228.224.11.2 255.255.255.252
+R1(config-if)# ip nat inside
+R1(config-if)# no shutdown
+R1(config-if)# interface s1/1
+R1(config-if)# ip address 228.224.11.17 255.255.255.252
+R1(config-if)# ip nat inside
+R1(config-if)# no shutdown
+R1(config-if)# interface e0/0
+R1(config-if)# ip address dhcp
+R1(config-if)# ip nat outside
+R1(config-if)# no shutdown
 
-access-list 1 permit any
-ip nat inside source list 1 interface e0/0 overload
+R1(config-if)# exit
+R1(config)# access-list 1 permit any
+R1(config)# ip nat inside source list 1 interface e0/0 overload
+R1(config)# ip route 0.0.0.0 0.0.0.0 e0/0
 
-router rip
- version 2
- no auto-summary
- network 228.224.11.0
- redistribute ospf 1 metric 2
- default-information originate
+R1(config)# router rip
+R1(config-router)# version 2
+R1(config-router)# no auto-summary
+R1(config-router)# network 228.224.11.0
+R1(config-router)# redistribute ospf 1 metric 2
+R1(config-router)# default-information originate
 
-router ospf 1
- network 228.224.11.16 0.0.0.3 area 0
- redistribute rip subnets
- default-information originate
+R1(config-router)# router ospf 1
+R1(config-router)# network 228.224.11.16 0.0.0.3 area 0
+R1(config-router)# redistribute rip subnets
+R1(config-router)# default-information originate
 
-end
-write memory
+R1(config-router)# end
+R1# write memory
 
 === 4. R3 (OSPF) ===
-enable
-configure terminal
-interface s1/1
- ip address 228.224.11.18 255.255.255.252
- no shutdown
-interface e0/0
- ip address 172.16.30.1 255.255.255.0
- no shutdown
-interface e0/1
- ip address 172.16.31.1 255.255.255.0
- no shutdown
+R3> enable
+R3# configure terminal
+R3(config)# interface s1/1
+R3(config-if)# ip address 228.224.11.18 255.255.255.252
+R3(config-if)# no shutdown
+R3(config-if)# interface e0/0
+R3(config-if)# ip address 172.16.30.1 255.255.255.0
+R3(config-if)# no shutdown
+R3(config-if)# interface e0/1
+R3(config-if)# ip address 172.16.31.1 255.255.255.0
+R3(config-if)# no shutdown
 
-router ospf 1
- network 228.224.11.16 0.0.0.3 area 0
- network 172.16.30.0 0.0.0.255 area 0
- network 172.16.31.0 0.0.0.255 area 0
-end
-write memory
+R3(config-if)# router ospf 1
+R3(config-router)# network 228.224.11.16 0.0.0.3 area 0
+R3(config-router)# network 172.16.30.0 0.0.0.255 area 0
+R3(config-router)# network 172.16.31.0 0.0.0.255 area 0
+R3(config-router)# end
+R3# write memory
 
 === 5. IP CÁC VPC ===
-VPC_of_Vlan_11:  ip 192.168.11.10 255.255.255.0 192.168.11.1
-VPC_of_Vlan_12:  ip 192.168.12.10 255.255.255.0 192.168.12.1
-VPC (OSPF):      ip 172.16.31.10 255.255.255.0 172.16.31.1
-Server (đã có):  ip 172.16.30.10 255.255.255.0 172.16.30.1
+VPC_of_Vlan_11> ip 192.168.11.10 255.255.255.0 192.168.11.1
+VPC_of_Vlan_11> save
+
+VPC_of_Vlan_12> ip 192.168.12.10 255.255.255.0 192.168.12.1
+VPC_of_Vlan_12> save
+
+VPC_OSPF> ip 172.16.31.10 255.255.255.0 172.16.31.1
+VPC_OSPF> save
+
+LocalServer> ip 172.16.30.10 255.255.255.0 172.16.30.1
+LocalServer> save
 
 === 6. ACL ===
 
@@ -231,18 +240,18 @@ PHÂN TÍCH:
 - Extended ACL đặt GẦN NGUỒN -> Trên R1 interface s1/0 (in) lọc traffic từ RIP
 
 Trên R1:
-enable
-configure terminal
-ip access-list extended ACL_SERVER
- deny tcp 192.168.11.0 0.0.0.255 host 172.16.30.10 eq 80
- deny tcp 192.168.11.0 0.0.0.255 host 172.16.30.10 eq 443
- permit ip any any
-exit
-interface s1/0
- ip access-group ACL_SERVER in
-exit
-end
-write memory
+R1> enable
+R1# configure terminal
+R1(config)# ip access-list extended ACL_SERVER
+R1(config-ext-nacl)# deny tcp 192.168.11.0 0.0.0.255 host 172.16.30.10 eq 80
+R1(config-ext-nacl)# deny tcp 192.168.11.0 0.0.0.255 host 172.16.30.10 eq 443
+R1(config-ext-nacl)# permit ip any any
+R1(config-ext-nacl)# exit
+R1(config)# interface s1/0
+R1(config-if)# ip access-group ACL_SERVER in
+R1(config-if)# exit
+R1(config)# end
+R1# write memory
 
 GIẢI THÍCH LOGIC ACL:
 
@@ -330,138 +339,142 @@ MẪU THAY SỐ NHANH ĐI THI (CHỈ CẦN THAY GIÁ TRỊ TRONG [ ])
 
 === MẪU CÂU 1: BẢO MẬT ROUTER ===
 
-enable
-configure terminal
-hostname [TÊN_ROUTER]
-service password-encryption
+Router> enable
+Router# configure terminal
+Router(config)# hostname [TÊN_ROUTER]
+[TÊN_ROUTER](config)# service password-encryption
 
-line console 0
- password [PASS_CONSOLE]
- login
- exit
+[TÊN_ROUTER](config)# line console 0
+[TÊN_ROUTER](config-line)# password [PASS_CONSOLE]
+[TÊN_ROUTER](config-line)# login
+[TÊN_ROUTER](config-line)# exit
 
-enable secret [PASS_ENABLE]
+[TÊN_ROUTER](config)# enable secret [PASS_ENABLE]
 
-ip domain-name [DOMAIN]
-crypto key generate rsa modulus 1024
-username [USERNAME] privilege 15 secret [PASS_SSH]
+[TÊN_ROUTER](config)# ip domain-name [DOMAIN]
+[TÊN_ROUTER](config)# crypto key generate rsa modulus 1024
+[TÊN_ROUTER](config)# username [USERNAME] privilege 15 secret [PASS_SSH]
 
-line vty 0 4
- login local
- transport input ssh telnet
- exec-timeout [SỐ_PHÚT] 0
- exit
+[TÊN_ROUTER](config)# line vty 0 4
+[TÊN_ROUTER](config-line)# login local
+[TÊN_ROUTER](config-line)# transport input ssh telnet
+[TÊN_ROUTER](config-line)# exec-timeout [SỐ_PHÚT] 0
+[TÊN_ROUTER](config-line)# exit
 
-ip ssh authentication-retries [SỐ_LẦN_SAI]
-end
-write memory
+[TÊN_ROUTER](config)# ip ssh authentication-retries [SỐ_LẦN_SAI]
+[TÊN_ROUTER](config)# end
+[TÊN_ROUTER]# write memory
 
 === MẪU CÂU 2: SWITCH (Gán VLAN + Trunk) ===
 
-enable
-configure terminal
-interface [CỔNG_NỐI_ROUTER]
- switchport trunk encapsulation dot1q
- switchport mode trunk
- no shutdown
-interface [CỔNG_VPC_A]
- switchport mode access
- switchport access vlan [SỐ_VLAN_A]
-interface [CỔNG_VPC_B]
- switchport mode access
- switchport access vlan [SỐ_VLAN_B]
-end
-write memory
+Switch> enable
+Switch# configure terminal
+Switch(config)# interface [CỔNG_NỐI_ROUTER]
+Switch(config-if)# switchport trunk encapsulation dot1q
+Switch(config-if)# switchport mode trunk
+Switch(config-if)# no shutdown
+Switch(config-if)# interface [CỔNG_VPC_A]
+Switch(config-if)# switchport mode access
+Switch(config-if)# switchport access vlan [SỐ_VLAN_A]
+Switch(config-if)# interface [CỔNG_VPC_B]
+Switch(config-if)# switchport mode access
+Switch(config-if)# switchport access vlan [SỐ_VLAN_B]
+Switch(config-if)# end
+Switch# write memory
 
 === MẪU CÂU 2: ROUTER-ON-A-STICK (Router có VLAN) ===
 
-enable
-configure terminal
-interface [CỔNG_NỐI_SWITCH]
- no shutdown
-interface [CỔNG].X
- encapsulation dot1Q [SỐ_VLAN_X]
- ip address [IP_GATEWAY_X] [MASK]
-interface [CỔNG].Y
- encapsulation dot1Q [SỐ_VLAN_Y]
- ip address [IP_GATEWAY_Y] [MASK]
-interface [SERIAL_NỐI_R1]
- ip address [IP_SERIAL] 255.255.255.252
- no shutdown
-router rip
- version 2
- no auto-summary
- network [MẠNG_VLAN_X]
- network [MẠNG_VLAN_Y]
- network [MẠNG_SERIAL]
-end
-write memory
+Router> enable
+Router# configure terminal
+Router(config)# interface [CỔNG_NỐI_SWITCH]
+Router(config-if)# no shutdown
+Router(config-if)# interface [CỔNG].X
+Router(config-subif)# encapsulation dot1Q [SỐ_VLAN_X]
+Router(config-subif)# ip address [IP_GATEWAY_X] [MASK]
+Router(config-subif)# interface [CỔNG].Y
+Router(config-subif)# encapsulation dot1Q [SỐ_VLAN_Y]
+Router(config-subif)# ip address [IP_GATEWAY_Y] [MASK]
+Router(config-subif)# interface [SERIAL_NỐI_R1]
+Router(config-if)# ip address [IP_SERIAL] 255.255.255.252
+Router(config-if)# no shutdown
+
+Router(config-if)# router rip
+Router(config-router)# version 2
+Router(config-router)# no auto-summary
+Router(config-router)# network [MẠNG_VLAN_X]
+Router(config-router)# network [MẠNG_VLAN_Y]
+Router(config-router)# network [MẠNG_SERIAL]
+Router(config-router)# end
+Router# write memory
 
 === MẪU CÂU 2: R1 TRUNG TÂM (Redistribution + NAT) ===
 
-enable
-configure terminal
-interface [SERIAL_RIP]
- ip address [IP] 255.255.255.252
- ip nat inside
- no shutdown
-interface [SERIAL_OSPF]
- ip address [IP] 255.255.255.252
- ip nat inside
- no shutdown
-interface [CỔNG_INTERNET]
- ip address dhcp
- ip nat outside
- no shutdown
+R1> enable
+R1# configure terminal
+R1(config)# interface [SERIAL_RIP]
+R1(config-if)# ip address [IP] 255.255.255.252
+R1(config-if)# ip nat inside
+R1(config-if)# no shutdown
+R1(config-if)# interface [SERIAL_OSPF]
+R1(config-if)# ip address [IP] 255.255.255.252
+R1(config-if)# ip nat inside
+R1(config-if)# no shutdown
+R1(config-if)# interface [CỔNG_INTERNET]
+R1(config-if)# ip address dhcp
+R1(config-if)# ip nat outside
+R1(config-if)# no shutdown
 
-access-list 1 permit any
-ip nat inside source list 1 interface [CỔNG_INTERNET] overload
+R1(config-if)# exit
+R1(config)# access-list 1 permit any
+R1(config)# ip nat inside source list 1 interface [CỔNG_INTERNET] overload
 
-router rip
- version 2
- no auto-summary
- network [MẠNG_SERIAL_RIP]
- redistribute ospf 1 metric 2
- default-information originate
+R1(config)# router rip
+R1(config-router)# version 2
+R1(config-router)# no auto-summary
+R1(config-router)# network [MẠNG_SERIAL_RIP]
+R1(config-router)# redistribute ospf 1 metric 2
+R1(config-router)# default-information originate
 
-router ospf 1
- network [MẠNG_SERIAL_OSPF] [WILDCARD] area 0
- redistribute rip subnets
- default-information originate
-end
-write memory
+R1(config-router)# router ospf 1
+R1(config-router)# network [MẠNG_SERIAL_OSPF] [WILDCARD] area 0
+R1(config-router)# redistribute rip subnets
+R1(config-router)# default-information originate
+R1(config-router)# end
+R1# write memory
 
 === MẪU CÂU 2: ROUTER OSPF THUẦN ===
 
-enable
-configure terminal
-interface [SERIAL]
- ip address [IP] 255.255.255.252
- no shutdown
-interface [LAN_1]
- ip address [IP] [MASK]
- no shutdown
-interface [LAN_2]
- ip address [IP] [MASK]
- no shutdown
+Router> enable
+Router# configure terminal
+Router(config)# interface [SERIAL]
+Router(config-if)# ip address [IP] 255.255.255.252
+Router(config-if)# no shutdown
+Router(config-if)# interface [LAN_1]
+Router(config-if)# ip address [IP] [MASK]
+Router(config-if)# no shutdown
+Router(config-if)# interface [LAN_2]
+Router(config-if)# ip address [IP] [MASK]
+Router(config-if)# no shutdown
 
-router ospf 1
- network [MẠNG_SERIAL] [WILDCARD] area 0
- network [MẠNG_LAN_1] [WILDCARD] area 0
- network [MẠNG_LAN_2] [WILDCARD] area 0
-end
-write memory
+Router(config-if)# router rip / router ospf 1
+Router(config-router)# network [MẠNG_SERIAL] [WILDCARD] area 0
+Router(config-router)# network [MẠNG_LAN_1] [WILDCARD] area 0
+Router(config-router)# network [MẠNG_LAN_2] [WILDCARD] area 0
+Router(config-router)# end
+Router# write memory
 
 === MẪU ACL: CẤM DỊCH VỤ CỤ THỂ ===
 
-ip access-list extended [TÊN_ACL]
- deny tcp [IP_NGUỒN] [WILDCARD] host [IP_SERVER] eq [PORT]
- permit ip any any
-exit
-interface [CỔNG]
- ip access-group [TÊN_ACL] in
-end
-write memory
+Router> enable
+Router# configure terminal
+Router(config)# ip access-list extended [TÊN_ACL]
+Router(config-ext-nacl)# deny tcp [IP_NGUỒN] [WILDCARD] host [IP_SERVER] eq [PORT]
+Router(config-ext-nacl)# permit ip any any
+Router(config-ext-nacl)# exit
+Router(config)# interface [CỔNG]
+Router(config-if)# ip access-group [TÊN_ACL] in
+Router(config-if)# end
+Router# write memory
 
 === BẢNG PORT PHỔ BIẾN ===
 
@@ -495,3 +508,178 @@ Tất cả           : any
 - Wildcard Mask [Z]: Cho phép dải IP từ [A] đến [B] (tổng [N] IP).
 - Áp dụng: Cổng [e0/X] chiều [in = vào / out = ra].
 - Implicit Deny: Cuối ACL luôn có lệnh ngầm deny any chặn mọi gói tin không khớp."
+
+
+=====================================================================
+=====================================================================
+  CẨM NANG LÝ THUYẾT & VẤN ĐÁP TỔNG HỢP TỪ TẤT CẢ CÁC BÀI LAB (PDF)
+=====================================================================
+=====================================================================
+
+## I. KIẾN THỨC NỀN TẢNG THIẾT BỊ MẠNG & DÒNG LỆNH (CLI)
+
+### 1. Phân biệt Router, Switch Layer 2, Switch Layer 3 (Multilayer Switch)
+- **Router**: Thiết bị định tuyến ở Layer 3 (Network Layer). Kết nối các dải mạng IP khác nhau (Inter-network). Router định tuyến gói tin dựa trên địa chỉ IP đích (Destination IP) trong IP Header.
+- **Switch Layer 2**: Thiết bị chuyển mạch ở Layer 2 (Data Link Layer). Chuyển tiếp khung dữ liệu (Ethernet Frame) trong cùng một dải mạng LAN dựa trên địa chỉ MAC (MAC Address Table). Không có tính năng định tuyến IP (phải gõ `no ip routing`).
+- **Switch Layer 3 (Multilayer Switch - ví dụ SW3 trong Lab 5)**: Hỗ trợ cả chức năng Layer 2 (Switching) và Layer 3 (Routing). Cho phép tạo các Interface ảo đại diện cho VLAN (SVI - Switch Virtual Interface) và thực hiện định tuyến Inter-VLAN tốc độ cao trực tiếp trên Switch mà không cần Router ngoài (khi bật lệnh `ip routing`).
+
+### 2. Các chế độ dòng lệnh Cisco CLI (CLI Modes) & Chuyển đổi
+- **User EXEC Mode (`Router>`)**: Chế độ người dùng cơ bản, chỉ xem được một số thông tin hạn chế, không chỉnh sửa được cấu hình.
+- **Privileged EXEC Mode (`Router#`)**: Chế độ đặc quyền. Cho phép thực thi tất cả các lệnh kiểm tra (`show`), chẩn đoán (`ping`, `traceroute`), lưu cấu hình (`write memory`), debug. Gõ lệnh `enable` từ User mode để vào.
+- **Global Configuration Mode (`Router(config)#`)**: Chế độ cấu hình toàn cục. Cho phép thay đổi thông số hệ thống (hostname, domain, routing, password, ACL). Gõ `configure terminal` từ Privileged mode để vào.
+- **Interface Configuration Mode (`Router(config-if)#`)**: Cấu hình cổng mạng cụ thể. Gõ `interface e0/0` hoặc `interface s1/0`.
+- **Sub-interface Configuration Mode (`Router(config-subif)#`)**: Cấu hình cổng con định tuyến VLAN (Router-on-a-stick). Gõ `interface e0/0.11`.
+- **Line Configuration Mode (`Router(config-line)#`)**: Cấu hình kết nối Console/VTY. Gõ `line console 0` hoặc `line vty 0 4`.
+- **Router Configuration Mode (`Router(config-router)#`)**: Cấu hình giao thức định tuyến động. Gõ `router rip` hoặc `router ospf 1`.
+
+### 3. Sự khác nhau giữa `enable password` và `enable secret`
+- **`enable password`**: Đặt mật khẩu truy cập chế độ `#` lưu dưới dạng chữ thuần (Cleartext/Type 7). Dễ bị đọc trộm khi xem `show running-config`.
+- **`enable secret`**: Đặt mật khẩu truy cập chế độ `#` sử dụng thuật toán băm một chiều bảo mật cao (Type 5 - MD5/SHA-256). 
+- **Quy tắc ưu tiên**: Khi cả 2 lệnh cùng tồn tại, Cisco IOS luôn ưu tiên và bắt buộc sử dụng mật khẩu của `enable secret`.
+
+### 4. Cơ chế hoạt động của `service password-encryption`
+- Mặc định, các mật khẩu như `line console` hay `line vty` hiển thị dạng văn bản thuần.
+- Lệnh `service password-encryption` bật tính năng tự động biến đổi tất cả mật khẩu văn bản thuần trong file cấu hình thành chuỗi mã hóa Type 7 (Vigenere cipher). Ngăn chặn người ngoài nhìn trộm màn hình khi xem `show running-config`.
+
+---
+
+## II. LÝ THUYẾT VLAN, VTP, TRUNKING & ROUTER-ON-A-STICK
+
+### 1. VLAN (Virtual Local Area Network) là gì? Tại sao phải chia VLAN?
+- **Khái niệm**: VLAN là kỹ thuật chia một Switch vật lý thành nhiều mạng LAN ảo độc lập về mặt logic. Các máy trong cùng VLAN có thể giao tiếp trực tiếp ở Layer 2. Các máy khác VLAN muốn giao tiếp bắt buộc phải đi qua thiết bị Layer 3 (Router/L3 Switch).
+- **Lợi ích**:
+  + **Bảo mật**: Cách ly lưu lượng giữa các phòng ban (ví dụ VLAN 11 Kế toán không soi được VLAN 12 Nhân sự).
+  + **Thu nhỏ vùng Broadcast (Broadcast Domain)**: Tránh việc gói Broadcast quét toàn bộ mạng gây nghẽn đường truyền.
+  + **Quản lý linh hoạt**: Phân chia mạng theo chức năng công việc thay vì vị trí địa lý.
+
+### 2. Phân biệt Cổng Access và Cổng Trunk
+- **Access Port**: Cổng thuộc về **duy nhất 1 VLAN**. Dùng để nối Switch xuống các thiết bị cuối (PC, Server, Printer). Khung dữ liệu đi qua cổng Access là **Untagged** (không mang nhãn VLAN ID).
+- **Trunk Port**: Cổng cho phép **nhiều VLAN cùng đi qua trên một sợi cáp vật lý**. Dùng để nối giữa Switch với Switch, hoặc Switch với Router. Khung dữ liệu đi qua đường Trunk bắt buộc phải được đóng gói nhãn (Tagged) theo chuẩn **IEEE 802.1Q (dot1q)**.
+
+### 3. Giao thức VTP (VLAN Trunking Protocol)
+- **Công dụng**: Giúp đồng bộ cấu hình VLAN (tạo/xóa/sửa tên VLAN) tự động từ một Switch trung tâm (VTP Server) sang các Switch khác (VTP Client) qua đường Trunk, tránh phải cấu hình thủ công trên từng Switch.
+- **Các chế độ (VTP Modes)**:
+  + **Server Mode**: Có quyền tạo/sửa/xóa VLAN và quảng bá thông tin VLAN cho các Switch khác. Lưu VLAN vào NVRAM.
+  + **Client Mode**: KHÔNG thể tạo/sửa/xóa VLAN cục bộ. Chỉ nhận và đồng bộ thông tin VLAN từ Server. Không lưu VLAN vào NVRAM.
+  + **Transparent Mode**: Không đồng bộ VLAN từ Server, có thể tạo VLAN riêng cục bộ. Chỉ chuyển tiếp (forward) các bản tin VTP từ Server sang Switch khác.
+- **Điều kiện đồng bộ VTP**: Các Switch phải cùng **VTP Domain**, cùng **VTP Password**, và kết nối với nhau bằng đường **Trunk**.
+
+### 4. Cơ chế Router-on-a-stick (Định tuyến Inter-VLAN bằng Sub-interface)
+- **Khái niệm**: Sử dụng một cổng vật lý duy nhất của Router (ví dụ `e0/0`) chia thành nhiều cổng ảo (Sub-interface: `e0/0.11`, `e0/0.12`), mỗi cổng ảo đóng vai trò là Default Gateway cho một VLAN.
+- **Cú pháp bắt buộc**:
+  ```text
+  interface e0/0.11
+   encapsulation dot1Q 11       # Bắt buộc gán nhãn VLAN trước
+   ip address 192.168.11.1 255.255.255.0  # Đặt IP Gateway cho VLAN 11
+  ```
+
+---
+
+## III. LÝ THUYẾT ĐỊNH TUYẾN ĐỘNG (RIP & OSPF)
+
+### 1. Bảng so sánh RIPv1 vs RIPv2 vs OSPF
+| Tiêu chí | RIP version 1 | RIP version 2 | OSPF (Open Shortest Path First) |
+|----------|---------------|---------------|--------------------------------|
+| **Loại thuật toán** | Distance Vector (Hop Count) | Distance Vector (Hop Count) | Link-State (Dijkstra SPF) |
+| **Metric (Độ đo)** | Số hop (Số Router qua). Max = 15 | Số hop. Max = 15 | Cost = 10^8 / Bandwidth |
+| **Phân loại IP** | Classful (Không gửi Subnet Mask) | Classless (Có gửi Subnet Mask) | Classless (Hỗ trợ VLSM/CIDR) |
+| **Auto-summary** | Mặc định tự gộp mạng | Mặc định gộp → Phải `no auto-summary` | Không tự động gộp |
+| **Administrative Distance (AD)** | 120 | 120 | 110 |
+| **Thời gian gửi cập nhật** | 30 giây (Broadcast 255.255.255.255) | 30 giây (Multicast 224.0.0.9) | Khi có thay đổi (Multicast 224.0.0.5 / 224.0.0.6) |
+| **Xác thực bảo mật** | Không hỗ trợ | Hỗ trợ Plaintext & MD5 | Hỗ trợ Plaintext & MD5 |
+
+### 2. Tại sao OSPF lại ưu tiên hơn RIP trong bảng định tuyến? (Khái niệm AD)
+- **AD (Administrative Distance)**: Là chỉ số đo lường độ tin cậy của giao thức định tuyến. **AD càng nhỏ = Càng đáng tin cậy = Càng được ưu tiên**.
+- Bảng giá trị AD tiêu chuẩn:
+  + Connected (Cắm trực tiếp): **0**
+  + Static Route (Định tuyến tĩnh): **1**
+  + OSPF: **110**
+  + RIP: **120**
+- Nếu Router học cùng một mạng đích từ cả OSPF (AD=110) và RIP (AD=120), Router sẽ **luôn chọn đường đi của OSPF** đưa vào bảng định tuyến.
+
+### 3. Tại sao RIPv2 phải có lệnh `no auto-summary`?
+- Mặc định, RIP tự động gộp các mạng con (Subnet) về dải mạng gốc theo chuẩn Classful (A, B, C). Ví dụ `192.168.11.0/24` và `192.168.12.0/24` sẽ bị gộp thành `192.168.0.0/16`.
+- Điều này gây sai lệch đường đi khi các mạng con nằm ở nhiều hướng Router khác nhau. Lệnh `no auto-summary` bắt buộc RIPv2 giữ nguyên Subnet Mask chính xác khi quảng bá.
+
+### 4. Các khái niệm quan trọng trong OSPF
+- **Area 0 (Backbone Area)**: Vùng trung tâm bắt buộc. Tất cả các Area khác (Area 1, Area 2...) muốn trao đổi dữ liệu với nhau bắt buộc phải nối trực tiếp vào Area 0.
+- **ABR (Area Border Router)**: Router nằm ở ranh giới giữa 2 vùng (có 1 cổng thuộc Area 0 và cổng khác thuộc Area khác).
+- **ASBR (Autonomous System Boundary Router)**: Router ranh giới kết nối mạng OSPF với một mạng chạy giao thức khác (ví dụ OSPF ↔ RIP hoặc Internet).
+- **Wildcard Mask**: Ngược lại với Subnet Mask (đảo bit 0 ↔ 1). OSPF dùng Wildcard Mask để xác định chính xác địa chỉ IP hoặc dải mạng cần bật OSPF:
+  + Subnet `255.255.255.0` (`/24`) → Wildcard `0.0.0.255`
+  + Subnet `255.255.255.252` (`/30`) → Wildcard `0.0.0.3`
+  + Match 1 IP duy nhất `172.16.30.10` → Wildcard `0.0.0.0` (hoặc từ khóa `host`)
+- **DR (Designated Router) & BDR (Backup Designated Router)**:
+  + Trong mạng Broadcast (nhiều Router nối chung 1 Switch), OSPF bầu chọn 1 Router làm **DR** (Lớp trưởng) để thu thập và phân phối bản tin LSA cho toàn bộ Router khác, tránh lặp bản tin nghẽn mạng. **BDR** làm Lớp phó dự phòng.
+  + Tiêu chí bầu: Router có **Priority cao nhất** (Default = 1) → Nếu bằng nhau, chọn **Router-ID cao nhất**.
+
+---
+
+## IV. LÝ THUYẾT ROUTE REDISTRIBUTION (DỊCH ĐỊNH TUYẾN CHÉO)
+
+### 1. Route Redistribution là gì? Tại sao phải dùng?
+- **Khái niệm**: Là kỹ thuật cho phép một Router (ASBR - như R1 trong đề thi) lấy các tuyến đường học từ giao thức định tuyến này (ví dụ RIP) tiêm/chuyển sang cho giao thức định tuyến khác (ví dụ OSPF) và ngược lại.
+- **Lý do**: Khi hai vùng mạng sử dụng 2 giao thức định tuyến khác nhau (RIP và OSPF), nếu không có Redistribution thì hai vùng mạng hoàn toàn "mù" về nhau và không thể ping thông.
+
+### 2. Cú pháp Redistribution chuẩn trong Cisco IOS
+- **Tiêm OSPF vào RIP (trên R1)**:
+  ```text
+  router rip
+   redistribute ospf 1 metric 2   # BẮT BUỘC có metric (Hop count) vì OSPF không có hop count
+  ```
+- **Tiêm RIP vào OSPF (trên R1)**:
+  ```text
+  router ospf 1
+   redistribute rip subnets       # BẮT BUỘC có từ khóa "subnets" để dịch cả các mạng con VLSM
+  ```
+
+---
+
+## V. LÝ THUYẾT ACCESS CONTROL LIST (ACL) & NAT
+
+### 1. Phân biệt Standard ACL và Extended ACL
+| Tiêu chí | Standard ACL | Extended ACL |
+|----------|--------------|--------------|
+| **Dải số hiệu** | 1 - 99 và 1300 - 1999 | 100 - 199 và 2000 - 2699 |
+| **Yếu tố kiểm tra** | Chỉ kiểm tra **Địa chỉ IP NGUỒN** | Kiểm tra **IP Nguồn, IP Đích, Giao thức (TCP/UDP/ICMP), Cổng dịch vụ (Port)** |
+| **Độ linh hoạt** | Thấp (Chỉ chặn hoặc cho phép toàn bộ traffic từ IP đó) | Rất cao (Có thể chặn Web nhưng cho phép FTP/Ping) |
+| **Vị trí đặt tối ưu** | Đặt **gần ĐÍCH (Destination)** nhất có thể | Đặt **gần NGUỒN (Source)** nhất có thể để chặn sớm |
+
+### 2. Quy tắc hoạt động của ACL (Top-Down Processing & Implicit Deny)
+- **Top-Down (Từ trên xuống dưới)**: Router so sánh gói tin với các dòng luật ACL từ trên xuống theo thứ tự số hiệu (10, 20, 30...). Khi gói tin khớp (match) với một dòng luật, Router thực hiện ngay hành động (`permit` hoặc `deny`) và **DỪNG LẠI**, không kiểm tra các dòng bên dưới nữa.
+- **Implicit Deny Any (Từ chối ngầm định ở cuối)**: Ở cuối BẤT KỲ danh sách ACL nào cũng luôn có một dòng lệnh ẩn `deny ip any any`. Nếu gói tin không khớp với tất cả các dòng trên, nó sẽ bị tiêu hủy. **Do đó, nếu đã có dòng `deny`, bắt buộc phải có `permit ip any any` ở cuối để cho phép các traffic hợp lệ khác đi qua**.
+
+### 3. NAT Overload (PAT - Port Address Translation)
+- **Công dụng**: Cho phép hàng trăm máy tính trong mạng LAN nội bộ (dùng IP riêng - Private IP) dùng chung **duy nhất 1 địa chỉ IP công cộng (Public IP)** trên cổng WAN của Router để truy cập Internet cùng lúc.
+- **Cách phân biệt luồng dữ liệu**: NAT Overload gắn thêm số Cổng nguồn (Source Port) riêng biệt cho từng kết nối của mỗi máy trạm.
+- **Cú pháp cơ bản**:
+  ```text
+  interface e0/0
+   ip nat outside                # Cổng nối ra Internet
+  interface s1/0
+   ip nat inside                 # Cổng nối mạng nội bộ
+  access-list 1 permit any
+  ip nat inside source list 1 interface e0/0 overload  # Kích hoạt PAT
+  ```
+
+---
+
+## VI. TỔNG HỢP CÂU HỎI VẤN ĐÁP THƯỜNG GẶP KHI BẢO VỆ
+
+**Q1: Tại sao gõ lệnh `crypto key generate rsa` trên Router lại bị báo lỗi?**
+> **Trả lời**: Do chưa đổi Hostname (thiết bị vẫn giữ tên mặc định là `Router`) hoặc chưa khai báo `ip domain-name`. Cisco IOS bắt buộc phải có cả Hostname khác mặc định và Domain Name thì mới tạo được chìa khóa RSA cho SSH.
+
+**Q2: Lệnh `no ip cef` dùng để làm gì trong EVE-NG?**
+> **Trả lời**: CEF (Cisco Express Forwarding) là cơ chế chuyển tiếp gói tin tốc độ cao bằng phần cứng của Cisco. Trên môi trường giả lập IOL/EVE-NG, CEF hay bị lỗi làm Router không chịu chuyển tiếp gói tin giữa các VLAN (dẫn đến timeout khi ping). Lệnh `no ip cef` tắt tính năng này để Router dùng cơ sở chuyển tiếp truyền thống, xử lý dứt điểm lỗi rớt mạng trong EVE-NG.
+
+**Q3: Ký hiệu `O*E2` trong bảng định tuyến `show ip route` nghĩa là gì?**
+> **Trả lời**: 
+> - **O**: Học qua giao thức OSPF.
+> - *****: Tuyến đường mặc định (Candidate Default Route - `0.0.0.0/0`).
+> - **E2 (External Type 2)**: Tuyến đường được nhận từ bên ngoài vùng OSPF (do lệnh `default-information originate` hoặc `redistribute` quảng bá vào), có Metric cố định không tăng theo quãng đường đi.
+
+**Q4: Làm sao để kiểm tra một ACL có đang thực sự hoạt động và chặn gói tin hay không?**
+> **Trả lời**: Gõ lệnh `show access-lists` trên Router. Ở cuối mỗi dòng luật sẽ hiển thị số đếm gói tin đã khớp `(X matches)`. Nếu số `matches` tăng lên sau khi thực hiện ping/truy cập dịch vụ, chứng tỏ ACL hoạt động chính xác.
+
+**Q5: Tại sao cổng Trunk trên Switch IOL bắt buộc phải gõ `switchport trunk encapsulation dot1q` trước khi gõ `switchport mode trunk`?**
+> **Trả lời**: Switch IOL hỗ trợ nhiều chuẩn đóng gói Trunk (cả ISL của Cisco và dot1q chuẩn chung). Khi chưa chỉ định chuẩn đóng gói (`encapsulation dot1q`), Switch từ chối chuyển cổng sang chế độ `mode trunk`.
