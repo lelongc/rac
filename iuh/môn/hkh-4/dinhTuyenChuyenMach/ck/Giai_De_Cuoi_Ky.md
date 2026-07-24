@@ -4,40 +4,47 @@
 
 =====================================================================
 =====================================================================
-
-BÍ KÍP TÍNH & BẢNG TRA CỨU SUBNET MASK / WILDCARD MASK (CHO ĐỀ THI)
-==========================================================================
-
+ BÍ KÍP TRA CỨU SUBNET MASK & WILDCARD MASK (VIẾT NAY KHÔNG CẦN TÍNH)
+=====================================================================
 =====================================================================
 
-### 1. Cách tính cực nhanh không bao giờ sai:
+### 1. QUY TẮC VÀNG: KHI NÀO DÙNG MASK NÀO?
 
-- **Subnet Mask**: Là chuỗi xác định độ rộng của dải mạng.
-- **Wildcard Mask (dùng trong OSPF và ACL)**: Là số đảo ngược của Subnet Mask.
-  👉 **Công thức tính Wildcard Mask siêu tốc**:
-  `Wildcard Mask = 255.255.255.255 - Subnet Mask`
+👉 **CHỈ DÙNG SUBNET MASK (dạng `255.255.255.x`) TRONG CÁC LỆNH:**
+1. Đặt IP cổng Router / Sub-interface: `ip address 192.168.11.1 255.255.255.0`
+2. Đặt IP cổng Serial nối Router: `ip address 228.224.11.1 255.255.255.252`
+3. Đặt IP trên máy VPCS / Server: `ip 192.168.11.10 255.255.255.0 192.168.11.1`
+4. Lệnh tạo Route tĩnh: `ip route 0.0.0.0 0.0.0.0 e0/0`
 
-*Ví dụ*:
-
-- Với `/24` (Subnet `255.255.255.0`):
-  Wildcard = `(255-255).(255-255).(255-255).(255-0)` = `0.0.0.255`
-- Với `/30` (Subnet `255.255.255.252`):
-  Wildcard = `(255-255).(255-255).(255-255).(255-252)` = `0.0.0.3`
+👉 **CHỈ DÙNG WILDCARD MASK (dạng `0.0.0.x`) TRONG CÁC LỆNH:**
+1. Lệnh khai báo mạng OSPF: `network 172.16.30.0 0.0.0.255 area 0`
+2. Lệnh tạo Access Control List (ACL): `access-list 1 permit 172.16.3.0 0.0.0.15`
 
 ---
 
-### 2. BẢNG TRA CỨU "THẦN THÁNH" KHI ĐI THI (Chỉ cần gióng hàng, không cần tính!):
+### 2. TRONG ĐỀ THI CHỈ CÓ 2 LOẠI MẠNG CHÍNH (THUỘC LÒNG VIẾT LUÔN):
 
-|    Prefix (CIDR)    |     Subnet Mask     | Wildcard Mask | Dùng cho vị trí nào trong sơ đồ đề thi?                   | Số máy dùng được |
-| :-----------------: | :-----------------: | :-----------: | :----------------------------------------------------------------- | :--------------------: |
-|    **/30**    | `255.255.255.252` |  `0.0.0.3`  | **Nối 2 Router với nhau** (Cáp Serial `s1/0`, `s1/1`) |    2 IP (.1 và .2)    |
-|    **/29**    | `255.255.255.248` |  `0.0.0.7`  | Đường nối WAN nhỏ                                             |          6 IP          |
-|    **/28**    | `255.255.255.240` | `0.0.0.15` | Mạng nhỏ (14 máy) hoặc dải ACL chọn 16 IP                    |         14 IP         |
-|    **/27**    | `255.255.255.224` | `0.0.0.31` | Dải mạng 30 máy trạm                                           |         30 IP         |
-|    **/26**    | `255.255.255.192` | `0.0.0.63` | Dải mạng 62 máy trạm                                           |         62 IP         |
-|    **/25**    | `255.255.255.128` | `0.0.0.127` | Nửa dải mạng Lớp C (126 máy)                                  |         126 IP         |
-|    **/24**    |  `255.255.255.0`  | `0.0.0.255` | **Mạng LAN tiêu chuẩn** (VLAN, PC, Server)                | 254 IP (.1 đến .254) |
-| **host 1 IP** | `255.255.255.255` |  `0.0.0.0`  | Chỉ định đúng 1 máy Server duy nhất trong ACL               |          1 IP          |
+- **Loại 1: Mạng `/30` (Nối 2 Router với nhau qua cáp Serial)**
+  - Subnet Mask = **`255.255.255.252`** (dùng cho lệnh `ip address`)
+  - Wildcard Mask = **`0.0.0.3`** (dùng cho lệnh `network` OSPF)
+
+- **Loại 2: Mạng `/24` (Mạng LAN, VLAN, PC, Server)**
+  - Subnet Mask = **`255.255.255.0`** (dùng cho lệnh `ip address` và gán IP PC)
+  - Wildcard Mask = **`0.0.0.255`** (dùng cho OSPF và ACL)
+
+---
+
+### 3. BẢNG TRA CỨU ĐẦY ĐỦ TẤT CẢ DẢI MẠNG (TỪ /30 ĐẾN /24):
+
+| Prefix (CIDR) | Subnet Mask (Gán IP / Sub-interface) | Wildcard Mask (OSPF / ACL) | Đề thi dùng ở vị trí nào? |
+|:---:|:---:|:---:|:---|
+| **/30** | `255.255.255.252` | `0.0.0.3` | **Nối 2 Router với nhau** (Serial `s1/0`, `s1/1`) |
+| **/28** | `255.255.255.240` | `0.0.0.15` | Mạng nhỏ 14 máy / Dải ACL 16 IP |
+| **/27** | `255.255.255.224` | `0.0.0.31` | Dải mạng 30 máy trạm |
+| **/26** | `255.255.255.192` | `0.0.0.63` | Dải mạng 62 máy trạm |
+| **/25** | `255.255.255.128` | `0.0.0.127` | Nửa dải mạng Class C (126 máy) |
+| **/24** | `255.255.255.0` | `0.0.0.255` | **Mạng LAN tiêu chuẩn** (VLAN, PC, Server) |
+| **host 1 IP** | `255.255.255.255` | `0.0.0.0` (hoặc từ khóa `host`) | Chỉ định đúng 1 IP Server trong ACL |
 
 ---
 
@@ -516,14 +523,19 @@ BÀI GIẢI CÂU 3.2:
 ĐỀ BÀI: Dùng ACL cấu hình cho host CHỈ ĐƯỢC PHÉP truy cập Web
          trên WebServer (172.16.4.5/24).
 
+Router1> enable
+Router1# configure terminal
 Router1(config)# ip access-list extended WEB_ONLY
 Router1(config-ext-nacl)# permit tcp any host 172.16.4.5 eq 80
 Router1(config-ext-nacl)# permit tcp any host 172.16.4.5 eq 443
 Router1(config-ext-nacl)# deny ip any host 172.16.4.5
 Router1(config-ext-nacl)# permit ip any any
 Router1(config-ext-nacl)# exit
-Router1(config)# interface e0/1
+Router1(config)# interface ethernet 0/1
 Router1(config-if)# ip access-group WEB_ONLY out
+Router1(config-if)# exit
+Router1(config)# end
+Router1# write memory
 
 GIẢI THÍCH CHI TIẾT LỆNH & VỊ TRÍ ĐẶT ACL:
 
