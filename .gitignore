@@ -4,3 +4,4 @@ MDaemon16.5.2x64.exe
 *.vpp.bak*\
 *.class
 *.mp4
+*.env
