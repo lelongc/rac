@@ -191,13 +191,12 @@ Khởi động lại Asterisk: `/usr/bin/sudo systemctl restart asterisk`.
 
 ### 2.4 Bật Trạm Phát File Nội bộ trên Ubuntu (Python HTTP Server)
 
-Để giúp các máy ảo Win 7 dễ dàng tải file `setup_microsip_win7.ps1` và `MicroSIP.exe` mà không lo bị lỗi chứng chỉ SSL/TLS hay lỗi không copy/paste được:
+Để giúp các máy ảo Win 7 dễ dàng tải file `MicroSIP.exe` mà không lo bị lỗi chứng chỉ SSL/TLS hay lỗi không copy/paste được:
 
 1. **Đẩy 2 file cài đặt lên Ubuntu** (Gõ lệnh SCP từ PowerShell máy thật):
 
    ```powershell
    scp "d:\folder\rac\iuh\môn\hk1-4\quan-tri-dich-vu-mang\MicroSIP.exe" neko@192.168.1.100:~/
-   scp "d:\folder\rac\iuh\môn\hk1-4\quan-tri-dich-vu-mang\setup_microsip_win7.ps1" neko@192.168.1.100:~/
    ```
 2. **Bật Trạm phát file ngầm trên Ubuntu (Port 8000)**:
 
@@ -211,45 +210,34 @@ Khởi động lại Asterisk: `/usr/bin/sudo systemctl restart asterisk`.
 
 ## Bước 3: Cấu hình 2 Máy Win 7 (Softphone MicroSIP)
 
-### 3.1 Cài đặt & Cấu hình Tự động 100% bằng Script (Khuyên dùng - 5 Giây)
+### 3.1 Tải MicroSIP về Win 7
 
-1. Khởi động 2 máy ảo `Win7_GiamDoc` và `Win7_PhongKD`.
-   đảm bảo ip là `192.168.1.`xxxx
+1. Khởi động 2 máy ảo `Win7_GiamDoc` và `Win7_PhongKD`.đảm bảo cùng mạng ..1.xxx
    ![1786025893034](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025893034.png)
    ![1786025894684](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025894684.png)
-2. **Đưa file `setup_microsip_win7.ps1` vào Win 7**:
-   * **Cách 1**: Copy file từ máy thật dán sang màn hình Desktop của Win 7.
-   * **Cách 2 (Nếu không Copy/Paste hay Kéo thả được)**: Trên Ubuntu gõ `python3 -m http.server 8000`. Mở trình duyệt IE trên Win 7 truy cập `http://192.168.1.100:8000` click tải thẳng file `setup_microsip_win7.ps1` về Desktop!(scp "d:\folder\rac\iuh\môn\hk1-4\quan-tri-dich-vu-mang\setup_microsip_win7.ps1" neko@192.168.1.100:~/)
-3. Mở **Windows PowerShell** trên Win 7 và gõ lệnh chạy tự động:
-   * **![1786028330269](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786028330269.png)Trên máy `Win7_GiamDoc`**:
-     ```powershell
-     powershell -ExecutionPolicy Bypass -File $env:USERPROFILE\Desktop\setup_microsip_win7.ps1 -Extension 101
-     ```
-   * **![1786028307489](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786028307489.png)Trên máy `Win7_PhongKD`**:
-     ```powershell
-     powershell -ExecutionPolicy Bypass -File $env:USERPROFILE\Desktop\setup_microsip_win7.ps1 -Extension 102
-     ```
-4. Ngoài Desktop sẽ xuất hiện ngay thư mục **MicroSIP**. Mở ra và nhấp đúp file **`MicroSIP.exe`** là phần mềm **tự động Online kết nối với Tổng đài ngay lập tức**!
+2. Trên máy **Win 7**, mở trình duyệt **Internet Explorer** gõ địa chỉ: `http://192.168.1.100:8000`
+3. Click vào file **`MicroSIP.exe`** để tải thẳng về màn hình Desktop Win 7.
 
 ---
 
-### 3.2 Cấu hình Thủ công trên MicroSIP (Nếu không dùng Script)
+### 3.2 Cấu hình Đăng ký Tài khoản SIP Thủ công (Đạt 100% Điểm Demo)
 
-Mở phần mềm **MicroSIP** trên Win 7:
+Mở file `MicroSIP.exe` trên Win 7:
 
 #### 🟢 Đăng ký trên máy `Win7_GiamDoc` (Ext 101):
 
-1. Bấm vào nút **Mũi tên xổ xuống ở góc trên bên phải** -> Chọn **Add Account...**
+1. Bấm vào nút **Mũi tên xổ xuống `▼` ở góc trên bên phải giao diện MicroSIP** -> Chọn **Add Account...** (Thêm tài khoản...)
+   ![1786029823288](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786029823288.png)
 2. Điền chính xác các thông tin:
    * **Account Name**: `Giám đốc 101`
-   * **SIP Server**: `192.168.1.100` *(Địa chỉ IP máy Ubuntu Asterisk)*
+   * **SIP Server**: `192.168.1.100` *(Địa chỉ IP máy Server Ubuntu Asterisk)*
    * **Domain**: `192.168.1.100`
    * **Username**: `101`
-   * **Auth ID**: `101`
+   * **login**: `101`
    * **Password**: `123456`
    * **Display Name**: `Giám đốc`
-3. Bấm **Save**.
-4. Quan sát ở góc dưới bên trái màn hình MicroSIP: Biểu tượng chuyển sang **dấu chấm xanh lá cây kèm chữ Online** là đã thành công!
+3. Bấm **Save** (Lưu).
+4. Quan sát ở góc dưới bên trái màn hình MicroSIP: Biểu tượng chuyển sang **dấu chấm màu XANH LÁ CÂY kèm chữ Online** là đã đăng ký thành công!
 
 #### 🔵 Đăng ký trên máy `Win7_PhongKD` (Ext 102):
 
@@ -259,10 +247,10 @@ Mở phần mềm **MicroSIP** trên Win 7:
    * **SIP Server**: `192.168.1.100`
    * **Domain**: `192.168.1.100`
    * **Username**: `102`
-   * **Auth ID**: `102`
+   * login: `102`
    * **Password**: `123456`
    * **Display Name**: `Phòng KD`
-3. Bấm **Save** -> Trạng thái báo **Online** là hoàn tất.
+3. Bấm **Save** -> Trạng thái hiển thị **Online** là hoàn tất!
 
 ---
 
@@ -283,14 +271,14 @@ Mở phần mềm **MicroSIP** trên Win 7:
 
 Dưới đây là thứ tự test từng yêu cầu để thực hiện báo cáo demo với giáo viên:
 
-| STT         | Yêu cầu đề bài                  | Thao tác thực hiện Test                                                                                                          | Kết quả mong đợi                                                                                                                                                 |
-| :---------- | :----------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **1** | **Gọi nhóm**                 | Từ máy`101`, bấm gọi số **`600`**.                                                                                   | Cả máy Win7 (`102`) và Điện thoại Linphone (`103`) đồng thời đổ chuông. Máy nào nhấc máy trước sẽ bắt đàm thoại.                          |
-| **2** | **Gọi Di động**             | Từ Win7`101` bấm gọi số **`103`**.                                                                                    | App Linphone trên điện thoại di động reo chuông, nhấc máy nghe rõ âm thanh 2 chiều.                                                                      |
-| **3** | **Nhắn tin**                  | Trên MicroSIP (máy`101`), mở tab **Messages**, gõ nhắn tới `103`.                                                   | App Linphone (`103`) nhận được tin nhắn POP-UP hiển thị nội dung tin nhắn.                                                                                |
-| **4** | **Chặn cuộc gọi**           | **Lượt 1**: Từ Giám đốc (`101`) gọi `102`.**Lượt 2**: Từ Phòng KD (`102`) gọi Giám đốc (`101`).  | - Lượt 1: Gọi bình thường.- Lượt 2: Cuộc gọi bị**CHẶN** ngay lập tức, nghe tiếng báo không dịch vụ (`ss-noservice`) và ngắt cuộc gọi. |
-| **5** | **Gửi Gmail cuộc gọi nhỡ** | Từ`102` gọi `101`, máy `101` không nghe máy. Sau 20 giây chuyển qua Voicemail. Nói 1 đoạn âm thanh rồi dúp máy. | Asterisk tự động gửi 1 Email kèm file ghi âm`.wav` đến địa chỉ Gmail đã cấu hình.                                                                   |
-| **6** | **Gọi Tổng đài (IVR)**     | Từ bất kỳ máy nào bấm gọi số**`100`**.                                                                                    | Nghe lời chào tự động: Bấm phím`1` cuộc gọi tự chuyển sang Giám đốc (`101`), bấm phím `2` chuyển sang Phòng KD (`102`).                    |
+| STT         | Yêu cầu đề bài                  | Thao tác thực hiện Test                                                                                                                                                                                                                                      | Kết quả mong đợi                                                                                                                                                 |
+| :---------- | :----------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1** | **Gọi nhóm**                 | Từ máy`101`, bấm gọi số **`600`**.                                                                                                                                                                                                               | Cả máy Win7 (`102`) và Điện thoại Linphone (`103`) đồng thời đổ chuông. Máy nào nhấc máy trước sẽ bắt đàm thoại.                          |
+| **2** | **Gọi Di động**             | Từ Win7`101` bấm gọi số **`103`**.![1786030352476](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786030352476.png)![1786030354472](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786030354472.png)![1786030462476](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786030462476.png) | App Linphone trên điện thoại di động reo chuông, nhấc máy nghe rõ âm thanh 2 chiều.                                                                      |
+| **3** | **Nhắn tin**                  | Trên MicroSIP (máy`101`), mở tab **Messages**, gõ nhắn tới `103`.                                                                                                                                                                               | App Linphone (`103`) nhận được tin nhắn POP-UP hiển thị nội dung tin nhắn.                                                                                |
+| **4** | **Chặn cuộc gọi**           | **Lượt 1**: Từ Giám đốc (`101`) gọi `102`.**Lượt 2**: Từ Phòng KD (`102`) gọi Giám đốc (`101`).                                                                                                                              | - Lượt 1: Gọi bình thường.- Lượt 2: Cuộc gọi bị**CHẶN** ngay lập tức, nghe tiếng báo không dịch vụ (`ss-noservice`) và ngắt cuộc gọi. |
+| **5** | **Gửi Gmail cuộc gọi nhỡ** | Từ`102` gọi `101`, máy `101` không nghe máy. Sau 20 giây chuyển qua Voicemail. Nói 1 đoạn âm thanh rồi dúp máy.                                                                                                                             | Asterisk tự động gửi 1 Email kèm file ghi âm`.wav` đến địa chỉ Gmail đã cấu hình.                                                                   |
+| **6** | **Gọi Tổng đài (IVR)**     | Từ bất kỳ máy nào bấm gọi số**`100`**.                                                                                                                                                                                                                | Nghe lời chào tự động: Bấm phím`1` cuộc gọi tự chuyển sang Giám đốc (`101`), bấm phím `2` chuyển sang Phòng KD (`102`).                    |
 
 ---
 
