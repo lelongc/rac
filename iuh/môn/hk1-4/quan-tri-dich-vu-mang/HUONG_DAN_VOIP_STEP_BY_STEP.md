@@ -99,7 +99,7 @@ Tài liệu hướng dẫn từng bước (Step-by-Step) xây dựng hệ thốn
    * **Processors**: `1 Processor`, `1 Core`.
    * **Network**: Chọn **NAT**.
    * **Disk**: `20 GB`.
-3. Cài xong Win 7  -> Tắt máy ảo Win 7.
+3. Cài xong Win 7 -> Tắt máy ảo Win 7.
 4. **TẠO SNAPSHOT BẢN SẠCH**:
    * Chuột phải máy ảo Win 7 gốc -> **Snapshot** -> **Take Snapshot**.
    * Đặt tên: `00_CLEAN_BASE`. (Snapshot này giữ nguyên để dùng lại cho các môn học khác).
@@ -157,7 +157,7 @@ chmod +x setup_voip_ubuntu.sh
 sudo bash setup_voip_ubuntu.sh
 ```
 
-### 2.3 Cấu hình Gmail để gửi cuộc gọi nhỡ (Yêu cầu 5)
+### ![1786025486196](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025486196.png)2.3 Cấu hình Gmail để gửi cuộc gọi nhỡ (Yêu cầu 5)
 
 1. Mở tài khoản Gmail -> **Quản lý Tài khoản Google** -> **Bảo mật** -> Bật **Xác minh 2 bước**.
    ![1786019907879](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786019907879.png)
@@ -171,7 +171,7 @@ sudo bash setup_voip_ubuntu.sh
 sudo nano /etc/msmtprc
 ```
 
-Điền Gmail và App Password của bạn vào:
+Điền Gmail và App Password của bạn vào:![1786025619341](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025619341.png)
 
 ```ini
 user       email_cua_ban@gmail.com
@@ -179,6 +179,8 @@ password   xxxx xxxx xxxx xxxx  # (Mật khẩu ứng dụng 16 ký tự)
 ```
 
 Vào `/etc/asterisk/voicemail.conf` sửa email người nhận ở dòng `101`:
+
+![1786025699971](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025699971.png)
 
 ```ini
 101 => 1234,Giam Doc,email_giamdoc_nhan_mail@gmail.com
@@ -191,9 +193,7 @@ Khởi động lại Asterisk: `sudo systemctl restart asterisk`.
 ## Bước 3: Cấu hình 2 Máy Win 7 (Softphone MicroSIP)
 
 1. Mở máy ảo `Win7_GiamDoc` và `Win7_PhongKD`.
-   ![1786023186525](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786023186525.png)
-   ![1786023196056](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786023196056.png)
-2. Kiểm tra IP bằng `cmd` -> `ipconfig` (đảm bảo ở dải `192.168.1.x`).
+2. Kiểm tra IP bằng `cmd` -> `ipconfig` (đảm bảo ở dải `192.168.1.x`).![1786025893034](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025893034.png)![1786025894684](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025894684.png)
 3. Mở **MicroSIP** -> Bấm dấu mũi tên ở góc trên bên phải -> Chọn **Add Account...**:
 
 #### Đăng ký cho máy Win7_GiamDoc:
@@ -228,14 +228,14 @@ Khởi động lại Asterisk: `sudo systemctl restart asterisk`.
 
 Dưới đây là thứ tự test từng yêu cầu để thực hiện báo cáo demo với giáo viên:
 
-| STT         | Yêu cầu đề bài                  | Thao tác thực hiện Test                                                                                                          | Kết quả mong đợi                                                                                                                                                 |
-| :---------- | :----------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **1** | **Gọi nhóm**                 | Từ máy`101`, bấm gọi số **`600`**.                                                                                   | Cả máy Win7 (`102`) và Điện thoại Linphone (`103`) đồng thời đổ chuông. Máy nào nhấc máy trước sẽ bắt đàm thoại.                          |
-| **2** | **Gọi Di động**             | Từ Win7`101` bấm gọi số **`103`**.                                                                                    | App Linphone trên điện thoại di động reo chuông, nhấc máy nghe rõ âm thanh 2 chiều.                                                                      |
-| **3** | **Nhắn tin**                  | Trên MicroSIP (máy`101`), mở tab **Messages**, gõ nhắn tới `103`.                                                   | App Linphone (`103`) nhận được tin nhắn POP-UP hiển thị nội dung tin nhắn.                                                                                |
-| **4** | **Chặn cuộc gọi**           | **Lượt 1**: Từ Giám đốc (`101`) gọi `102`.**Lượt 2**: Từ Phòng KD (`102`) gọi Giám đốc (`101`).  | - Lượt 1: Gọi bình thường.- Lượt 2: Cuộc gọi bị**CHẶN** ngay lập tức, nghe tiếng báo không dịch vụ (`ss-noservice`) và ngắt cuộc gọi. |
-| **5** | **Gửi Gmail cuộc gọi nhỡ** | Từ`102` gọi `101`, máy `101` không nghe máy. Sau 20 giây chuyển qua Voicemail. Nói 1 đoạn âm thanh rồi dúp máy. | Asterisk tự động gửi 1 Email kèm file ghi âm`.wav` đến địa chỉ Gmail đã cấu hình.                                                                   |
-| **6** | **Gọi Tổng đài (IVR)**     | Từ bất kỳ máy nào bấm gọi số**`100`**.                                                                                    | Nghe lời chào tự động: Bấm phím`1` cuộc gọi tự chuyển sang Giám đốc (`101`), bấm phím `2` chuyển sang Phòng KD (`102`).                    |
+| STT         | Yêu cầu đề bài                  | Thao tác thực hiện Test                                                                                                          | Kết quả mong đợi                                                                                                                                                  |
+| :---------- | :----------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1** | **Gọi nhóm**                 | Từ máy`101`, bấm gọi số **`600`**.                                                                                   | Cả máy Win7 (`102`) và Điện thoại Linphone (`103`) đồng thời đổ chuông. Máy nào nhấc máy trước sẽ bắt đàm thoại.                           |
+| **2** | **Gọi Di động**             | Từ Win7`101` bấm gọi số **`103`**.                                                                                    | App Linphone trên điện thoại di động reo chuông, nhấc máy nghe rõ âm thanh 2 chiều.                                                                       |
+| **3** | **Nhắn tin**                  | Trên MicroSIP (máy`101`), mở tab **Messages**, gõ nhắn tới `103`.                                                   | App Linphone (`103`) nhận được tin nhắn POP-UP hiển thị nội dung tin nhắn.                                                                                 |
+| **4** | **Chặn cuộc gọi**           | **Lượt 1**: Từ Giám đốc (`101`) gọi `102`.**Lượt 2**: Từ Phòng KD (`102`) gọi Giám đốc (`101`).  | - Lượt 1: Gọi bình thường.- Lượt 2: Cuộc gọi bị **CHẶN** ngay lập tức, nghe tiếng báo không dịch vụ (`ss-noservice`) và ngắt cuộc gọi. |
+| **5** | **Gửi Gmail cuộc gọi nhỡ** | Từ`102` gọi `101`, máy `101` không nghe máy. Sau 20 giây chuyển qua Voicemail. Nói 1 đoạn âm thanh rồi dúp máy. | Asterisk tự động gửi 1 Email kèm file ghi âm`.wav` đến địa chỉ Gmail đã cấu hình.                                                                    |
+| **6** | **Gọi Tổng đài (IVR)**     | Từ bất kỳ máy nào bấm gọi số**`100`**.                                                                              | Nghe lời chào tự động: Bấm phím`1` cuộc gọi tự chuyển sang Giám đốc (`101`), bấm phím `2` chuyển sang Phòng KD (`102`).                     |
 
 ---
 
@@ -259,17 +259,23 @@ Dưới đây là thứ tự test từng yêu cầu để thực hiện báo cá
 
 * **Khắc phục**: Gõ lệnh ẩn ổ đĩa CDROM ảo:
   ```bash
-  sudo sed -i 's/^deb cdrom/# deb cdrom/' /etc/apt/sources.list
+  sudo sed -i '/cdrom/d' /etc/apt/sources.list
   ```
 
-### 🔴 Lỗi 4: Không SSH được từ máy thật vào Ubuntu (`Connection timed out` / `Connection refused`)
+### 🔴 Lỗi 4: Màn hình hỏi cấu hình AppArmor / SMTP server hostname của msmtp trong quá trình cài đặt
+
+* **Thao tác nhanh**:
+  - `Enable AppArmor support? [yes/no]`: Gõ `yes` và nhấn **Enter**.
+  - `SMTP server hostname:`: **Để TRỐNG và nhấn ENTER** (vì file script sẽ tự tạo sẵn file cấu hình `/etc/msmtprc` ở bước tiếp theo).
+
+### 🔴 Lỗi 5: Không SSH được từ máy thật vào Ubuntu (`Connection timed out` / `Connection refused`)
 
 * **Khắc phục**:
   1. Đảm bảo trên Ubuntu đã bật SSH: `sudo apt install openssh-server -y`.
   2. Kiểm tra dải IP máy thật và máy Ubuntu đã cùng dải `192.168.1.x` chưa.
   3. Lệnh SSH chuẩn từ PowerShell máy thật: `ssh neko@192.168.1.100`.
 
-### 🔴 Lỗi 5: Đẩy file script `setup_voip_ubuntu.sh` từ máy thật sang Ubuntu cực nhanh
+### 🔴 Lỗi 6: Đẩy file script `setup_voip_ubuntu.sh` từ máy thật sang Ubuntu cực nhanh
 
 * **Cách làm**: Mở PowerShell trên máy thật gõ lệnh SCP:
   ```powershell

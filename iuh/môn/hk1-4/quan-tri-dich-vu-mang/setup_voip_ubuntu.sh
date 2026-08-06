@@ -22,15 +22,18 @@ if [ "$EUID" -ne 0 ]; then
   exit 1
 fi
 
-# Tự động fix lỗi CDROM và DNS
-echo -e "${YELLOW}[0/5] Tự động sửa lỗi CDROM và bổ sung DNS Google 8.8.8.8...${NC}"
-sed -i 's/^deb cdrom/# deb cdrom/' /etc/apt/sources.list 2>/dev/null || true
+# Tắt hỏi đáp giao diện tương tác debconf khi apt install
+export DEBIAN_FRONTEND=noninteractive
+
+# 0. Tự động xóa triệt để dòng CDROM và bổ sung DNS Google 8.8.8.8
+echo -e "${YELLOW}[0/5] Tự động dọn dẹp nguồn CDROM và thiết lập DNS Google...${NC}"
+sed -i '/cdrom/d' /etc/apt/sources.list 2>/dev/null || true
 echo "nameserver 8.8.8.8" > /etc/resolv.conf
 
 # 1. Cập nhật hệ thống & cài đặt Asterisk + msmtp (gửi mail)
 echo -e "\n${YELLOW}[1/5] Đang cài đặt Asterisk và công cụ hỗ trợ...${NC}"
 apt-get update -y
-apt-get install -y asterisk asterisk-core-sounds-en asterisk-sounds-main msmtp msmtp-mta mailutils curl net-tools
+apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" asterisk asterisk-core-sounds-en-gsm msmtp msmtp-mta mailutils curl net-tools
 
 # 2. Lấy IP hiện tại của Ubuntu
 SERVER_IP=$(hostname -I | awk '{print $1}')
