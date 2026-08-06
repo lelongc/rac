@@ -271,72 +271,13 @@ Mở file `MicroSIP.exe` trên Win 7:
 
 Dưới đây là thứ tự test từng yêu cầu để thực hiện báo cáo demo với giáo viên:
 
-| STT         | Yêu cầu đề bài                  | Thao tác thực hiện Test                                                                                                                                                                                                                                      | Kết quả mong đợi                                                                                                                                                 |
-| :---------- | :----------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **1** | **Gọi nhóm**                 | Từ máy`101`, bấm gọi số **`600`**.                                                                                                                                                                                                               | Cả máy Win7 (`102`) và Điện thoại Linphone (`103`) đồng thời đổ chuông. Máy nào nhấc máy trước sẽ bắt đàm thoại.                          |
-| **2** | **Gọi Di động**             | Từ Win7`101` bấm gọi số **`103`**.![1786030352476](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786030352476.png)![1786030354472](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786030354472.png)![1786030462476](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786030462476.png) | App Linphone trên điện thoại di động reo chuông, nhấc máy nghe rõ âm thanh 2 chiều.                                                                      |
-| **3** | **Nhắn tin**                  | Trên MicroSIP (máy`101`), mở tab **Messages**, gõ nhắn tới `103`.                                                                                                                                                                               | App Linphone (`103`) nhận được tin nhắn POP-UP hiển thị nội dung tin nhắn.                                                                                |
-| **4** | **Chặn cuộc gọi**           | **Lượt 1**: Từ Giám đốc (`101`) gọi `102`.**Lượt 2**: Từ Phòng KD (`102`) gọi Giám đốc (`101`).                                                                                                                              | - Lượt 1: Gọi bình thường.- Lượt 2: Cuộc gọi bị**CHẶN** ngay lập tức, nghe tiếng báo không dịch vụ (`ss-noservice`) và ngắt cuộc gọi. |
-| **5** | **Gửi Gmail cuộc gọi nhỡ** | Từ`102` gọi `101`, máy `101` không nghe máy. Sau 20 giây chuyển qua Voicemail. Nói 1 đoạn âm thanh rồi dúp máy.                                                                                                                             | Asterisk tự động gửi 1 Email kèm file ghi âm`.wav` đến địa chỉ Gmail đã cấu hình.                                                                   |
-| **6** | **Gọi Tổng đài (IVR)**     | Từ bất kỳ máy nào bấm gọi số**`100`**.                                                                                                                                                                                                                | Nghe lời chào tự động: Bấm phím`1` cuộc gọi tự chuyển sang Giám đốc (`101`), bấm phím `2` chuyển sang Phòng KD (`102`).                    |
+| STT         | Yêu cầu đề bài                    | Thao tác thực hiện Test                                                                                                                                                                               | Kết quả mong đợi                                                                                                                                                                                                           |
+| :---------- | :------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1** | **Gọi nhóm (Ring Group)**      | Từ bất kỳ máy nào (101, 102 hoặc 103), bấm gọi số**`600`**.<br />(video3))                                                                                                                    | Cả máy Win7 (`101`, `102`) và Điện thoại (`103`) đồng thời đổ chuông. Máy nào nhấc máy trước sẽ bắt đàm thoại.                                                                                    |
+| **2** | **Gọi Di động**               | Từ Win7 (`101` hoặc `102`), bấm gọi số **`103`**.![1786035889567](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786035889567.png)                                                                  | App Sipnetic/Linphone trên điện thoại di động reo chuông, nhấc máy nghe rõ âm thanh 2 chiều.                                                                                                                       |
+| **3** | **Nhắn tin (SIP Messaging)**    | Trên MicroSIP (máy`101`), mở tab **Messages**, gõ nhắn tới `103`.                                                                                                                        | App trên điện thoại (`103`) nhận được tin nhắn POP-UP hiển thị nội dung tin nhắn.                                                                                                                               |
+| **4** | **Chặn cuộc gọi (Blacklist)** | **Lượt 1**: Từ Giám đốc (`101`) gọi Nhân viên (`102` hoặc `103`).<br />**Lượt 2**: Từ Nhân viên (`102` hoặc `103`) gọi Giám đốc (`101`).<br />()video1)      | -**Lượt 1**: Cuộc gọi thành công đàm thoại bình thường.<br />- **Lượt 2**: Cuộc gọi bị **CHẶN** ngay lập tức, nghe tiếng báo không dịch vụ (`ss-noservice`) và ngắt cuộc gọi. |
+| **5** | **Gửi Gmail cuộc gọi nhỡ**   | Gọi số**`100`** (Tổng đài IVR) -> Bấm phím `1` chuyển sang Giám đốc (`101`). Máy 101 KHÔNG nghe máy. Sau 20 giây tự chuyển qua Voicemail. Nói 1 đoạn âm thanh rồi cúp máy. | Asterisk tự động gửi 1 Email kèm file ghi âm`.wav` đến địa chỉ Gmail đã cấu hình.                                                                                                                             |
+| **6** | **Gọi Tổng đài (IVR)**       | Từ bất kỳ máy nào (101, 102, 103) bấm gọi số**`100`**.<br />()video2)                                                                                                                          | Nghe lời chào tự động: Bấm phím`1` cuộc gọi tự chuyển sang Giám đốc (`101`), bấm phím `2` chuyển sang Phòng KD (`102`).                                                                              |
 
 ---
-
-## 8. Tổng hợp Các Bước Sửa Lỗi Thường Gặp (Troubleshooting)
-
-### 🔴 Lỗi 1: Màn hình Ubuntu treo ở bước "Rebooting..." khi cài xong
-
-* **Khắc phục**: Click chuột vào máy ảo nhấn phím **ENTER**. Nếu không được, chọn menu VMware: **VM** -> **Power** -> **Restart Guest** (Reset).
-
-### 🔴 Lỗi 2: Bị lỗi `Temporary failure resolving 'vn.archive.ubuntu.com'` hoặc không có Internet (Mạng Trường)
-
-* **Nguyên nhân**: Mạng Wi-Fi trường bắt đăng nhập web, máy ảo Bridged bị chặn.
-* **Khắc phục**:
-  1. Đổi Card mạng trên VMware sang **NAT**.
-  2. Trên Ubuntu gõ lệnh thêm DNS Google:
-     ```bash
-     echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
-     ```
-
-### 🔴 Lỗi 3: Báo lỗi `file:/cdrom jammy Release` chữ màu đỏ khi `apt update`
-
-* **Khắc phục**: Gõ lệnh ẩn ổ đĩa CDROM ảo:
-  ```bash
-  sudo sed -i '/cdrom/d' /etc/apt/sources.list
-  ```
-
-### 🔴 Lỗi 4: Màn hình hỏi cấu hình AppArmor / SMTP server hostname của msmtp trong quá trình cài đặt
-
-* **Thao tác nhanh**:
-  - `Enable AppArmor support? [yes/no]`: Gõ `yes` và nhấn **Enter**.
-  - `SMTP server hostname:`: **Để TRỐNG và nhấn ENTER** (vì file script sẽ tự tạo sẵn file cấu hình `/etc/msmtprc` ở bước tiếp theo).
-
-### 🔴 Lỗi 5: Không SSH được từ máy thật vào Ubuntu (`Connection timed out` / `Connection refused`)
-
-* **Khắc phục**:
-  1. Đảm bảo trên Ubuntu đã bật SSH: `sudo apt install openssh-server -y`.
-  2. Kiểm tra dải IP máy thật và máy Ubuntu đã cùng dải `192.168.1.x` chưa.
-  3. Lệnh SSH chuẩn từ PowerShell máy thật: `ssh neko@192.168.1.100`.
-
-### 🔴 Lỗi 6: Đẩy file script `setup_voip_ubuntu.sh` từ máy thật sang Ubuntu cực nhanh
-
-* **Cách làm**: Mở PowerShell trên máy thật gõ lệnh SCP:
-  ```powershell
-  scp "d:\folder\rac\iuh\môn\hk1-4\quan-tri-dich-vu-mang\setup_voip_ubuntu.sh" neko@192.168.1.100:~/
-  ```
-
-### 🔴 Lỗi 7: Không Copy/Paste hay Kéo thả file sang Win 7 được (Do chưa có VMware Tools)
-
-* **Cách làm (Dùng Ubuntu làm trạm phát file 10 giây)**:
-  1. Trên Ubuntu terminal (hoặc SSH), gõ lệnh:
-     ```bash
-     python3 -m http.server 8000
-     ```
-  2. Mở trình duyệt Internet Explorer trên Win 7 truy cập: `http://192.168.1.100:8000`
-  3. Click vào file `setup_microsip_win7.ps1` để tải thẳng về Win 7!
-
----
-
-*Chúc bạn hoàn thành xuất sắc bài báo cáo demo môn Quản trị dịch vụ mạng!*
-
-![1786025699971](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025699971.png)
