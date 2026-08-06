@@ -150,13 +150,13 @@ sudo netplan apply
 ### 2.2 Chạy Script tự động cài đặt Asterisk
 
 1. Copy file `setup_voip_ubuntu.sh` vào Ubuntu (hoặc dùng SSH / SCP từ máy thật).![1786024140666](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786024140666.png)
-2. Phân quyền và chạy script:![1786026030323](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786026030323.png)
+2. Phân quyền và chạy script:
 
 ```bash
 chmod +x setup_voip_ubuntu.sh
 sudo bash setup_voip_ubuntu.sh
 ```
-
+![1786026030323](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786026030323.png)
 ### 2.3 Cấu hình Gmail để gửi cuộc gọi nhỡ (Yêu cầu 5)
 
 1. Mở tài khoản Gmail -> **Quản lý Tài khoản Google** -> **Bảo mật** -> Bật **Xác minh 2 bước**.
@@ -170,14 +170,15 @@ sudo bash setup_voip_ubuntu.sh
 ```bash
 sudo nano /etc/msmtprc
 ```
-  ![1786025619341](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025619341.png)
+
+  
 Điền Gmail và App Password của bạn vào:
 
 ```ini
 user       email_cua_ban@gmail.com
 password   xxxx xxxx xxxx xxxx  # (Mật khẩu ứng dụng 16 ký tự)
 ```
-
+![1786025619341](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025619341.png)
 Vào `/etc/asterisk/voicemail.conf` sửa email người nhận ở dòng `101`:
 
 ```ini
@@ -250,14 +251,14 @@ Mở phần mềm **MicroSIP** trên Win 7:
 
 Dưới đây là thứ tự test từng yêu cầu để thực hiện báo cáo demo với giáo viên:
 
-| STT         | Yêu cầu đề bài                  | Thao tác thực hiện Test                                                                                                          | Kết quả mong đợi                                                                                                                                                  |
-| :---------- | :----------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **1** | **Gọi nhóm**                 | Từ máy`101`, bấm gọi số **`600`**.                                                                                   | Cả máy Win7 (`102`) và Điện thoại Linphone (`103`) đồng thời đổ chuông. Máy nào nhấc máy trước sẽ bắt đàm thoại.                           |
-| **2** | **Gọi Di động**             | Từ Win7`101` bấm gọi số **`103`**.                                                                                    | App Linphone trên điện thoại di động reo chuông, nhấc máy nghe rõ âm thanh 2 chiều.                                                                       |
-| **3** | **Nhắn tin**                  | Trên MicroSIP (máy`101`), mở tab **Messages**, gõ nhắn tới `103`.                                                   | App Linphone (`103`) nhận được tin nhắn POP-UP hiển thị nội dung tin nhắn.                                                                                 |
-| **4** | **Chặn cuộc gọi**           | **Lượt 1**: Từ Giám đốc (`101`) gọi `102`.**Lượt 2**: Từ Phòng KD (`102`) gọi Giám đốc (`101`).  | - Lượt 1: Gọi bình thường.- Lượt 2: Cuộc gọi bị **CHẶN** ngay lập tức, nghe tiếng báo không dịch vụ (`ss-noservice`) và ngắt cuộc gọi. |
-| **5** | **Gửi Gmail cuộc gọi nhỡ** | Từ`102` gọi `101`, máy `101` không nghe máy. Sau 20 giây chuyển qua Voicemail. Nói 1 đoạn âm thanh rồi dúp máy. | Asterisk tự động gửi 1 Email kèm file ghi âm`.wav` đến địa chỉ Gmail đã cấu hình.                                                                    |
-| **6** | **Gọi Tổng đài (IVR)**     | Từ bất kỳ máy nào bấm gọi số**`100`**.                                                                              | Nghe lời chào tự động: Bấm phím`1` cuộc gọi tự chuyển sang Giám đốc (`101`), bấm phím `2` chuyển sang Phòng KD (`102`).                     |
+| STT         | Yêu cầu đề bài                  | Thao tác thực hiện Test                                                                                                          | Kết quả mong đợi                                                                                                                                                 |
+| :---------- | :----------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1** | **Gọi nhóm**                 | Từ máy`101`, bấm gọi số **`600`**.                                                                                   | Cả máy Win7 (`102`) và Điện thoại Linphone (`103`) đồng thời đổ chuông. Máy nào nhấc máy trước sẽ bắt đàm thoại.                          |
+| **2** | **Gọi Di động**             | Từ Win7`101` bấm gọi số **`103`**.                                                                                    | App Linphone trên điện thoại di động reo chuông, nhấc máy nghe rõ âm thanh 2 chiều.                                                                      |
+| **3** | **Nhắn tin**                  | Trên MicroSIP (máy`101`), mở tab **Messages**, gõ nhắn tới `103`.                                                   | App Linphone (`103`) nhận được tin nhắn POP-UP hiển thị nội dung tin nhắn.                                                                                |
+| **4** | **Chặn cuộc gọi**           | **Lượt 1**: Từ Giám đốc (`101`) gọi `102`.**Lượt 2**: Từ Phòng KD (`102`) gọi Giám đốc (`101`).  | - Lượt 1: Gọi bình thường.- Lượt 2: Cuộc gọi bị**CHẶN** ngay lập tức, nghe tiếng báo không dịch vụ (`ss-noservice`) và ngắt cuộc gọi. |
+| **5** | **Gửi Gmail cuộc gọi nhỡ** | Từ`102` gọi `101`, máy `101` không nghe máy. Sau 20 giây chuyển qua Voicemail. Nói 1 đoạn âm thanh rồi dúp máy. | Asterisk tự động gửi 1 Email kèm file ghi âm`.wav` đến địa chỉ Gmail đã cấu hình.                                                                   |
+| **6** | **Gọi Tổng đài (IVR)**     | Từ bất kỳ máy nào bấm gọi số**`100`**.                                                                                    | Nghe lời chào tự động: Bấm phím`1` cuộc gọi tự chuyển sang Giám đốc (`101`), bấm phím `2` chuyển sang Phòng KD (`102`).                    |
 
 ---
 
