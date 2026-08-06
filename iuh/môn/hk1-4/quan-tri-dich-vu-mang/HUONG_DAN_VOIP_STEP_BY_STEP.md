@@ -6,38 +6,16 @@ Tài liệu hướng dẫn từng bước (Step-by-Step) xây dựng hệ thốn
 
 ## MỤC LỤC
 
-1. [Bí quyết Chuẩn hóa Mạng VMware (Không bao giờ mất/đổi IP)](#1-bí-quyết-chuẩn-hóa-mạng-vmware-không-bao-giờ-mấtđổi-ip)
-2. [Sơ đồ Mạng &amp; Phân bổ IP / Extension](#2-sơ-đồ-mạng--phân-bổ-ip--extension)
-3. [Bước 1: Cấu hình VMware Workstation &amp; Tạo Máy Ảo Mẫu](#bước-1-cấu-hình-vmware-workstation--tạo-máy-ảo-mẫu)
-4. [Bước 2: Cài đặt &amp; Cấu hình Ubuntu 22.04 (VoIP Server)](#bước-2-cài-đặt--cấu-hình-ubuntu-2204-voip-server)
-5. [Bước 3: Cấu hình 2 Máy Win 7 (Softphone MicroSIP)](#bước-3-cấu-hình-2-máy-win-7-softphone-microsip)
-6. [Bước 4: Cấu hình Điện thoại Di động (App Linphone)](#bước-4-cấu-hình-điện-thoại-di-động-app-linphone)
-7. [Bước 5: Kịch bản Test 6 Yêu cầu Đề bài](#bước-5-kịch-bản-test-6-yêu-cầu-đề-bài)
-8. [Tổng hợp Các Bước Sửa Lỗi Thường Gặp (Troubleshooting)](#8-tổng-hợp-các-bước-sửa-lỗi-thường-gặp-troubleshooting)
+1. [Tổng quan Sơ đồ Mạng &amp; Phân bổ IP / Extension](#1-tổng-quan-sơ-đồ-mạng--phân-bổ-ip--extension)
+2. [Bước 1: Cấu hình VMware Workstation &amp; Chuẩn hóa Mạng (VMnet8 NAT + Dual NIC)](#bước-1-cấu-hình-vmware-workstation--chuẩn-hóa-mạng-vmnet8-nat--dual-nic)
+3. [Bước 2: Cài đặt &amp; Cấu hình Ubuntu 22.04 (VoIP Server)](#bước-2-cài-đặt--cấu-hình-ubuntu-2204-voip-server)
+4. [Bước 3: Cấu hình 2 Máy Win 7 (Softphone MicroSIP)](#bước-3-cấu-hình-2-máy-win-7-softphone-microsip)
+5. [Bước 4: Cấu hình Điện thoại Di động Thật (App Sipnetic)](#bước-4-cấu-hình-điện-thoại-di-động-thật-app-sipnetic)
+6. [Bước 5: Kịch bản Test 6 Yêu cầu Đề bài](#bước-5-kịch-bản-test-6-yêu-cầu-đề-bài)
 
 ---
 
-## 1. Bí quyết Chuẩn hóa Mạng VMware (Không bao giờ mất/đổi IP)
-
-Để tránh lỗi nhảy IP khi mang laptop đến trường, ở nhà hoặc kết nối Wi-Fi khác nhau, ta sẽ **cấu hình dải mạng NAT (VMnet8) cố định dải `192.168.1.0/24`**:
-
-1. Trên cửa sổ VMware Workstation: Chọn **Edit** -> **Virtual Network Editor...**
-2. Bấm nút **Change Settings** (góc dưới bên phải để cấp quyền Admin).
-3. Chọn dòng **VMnet8** (loại NAT).
-4. Tại ô **Subnet IP**: Đổi thành **`192.168.1.0`**, Subnet Mask: `255.255.255.0`.
-5. Bấm vào nút **NAT Settings...**:
-   * Mục **Gateway IP**: Kiểm tra/đổi thành **`192.168.1.2`** (hoặc `192.168.1.1`) -> Bấm **OK**.
-6. Bấm **Apply** -> **OK**.
-
-👉 **Lợi ích**:
-
-* Máy Ubuntu giữ cố định IP tĩnh `192.168.1.100`.
-* Các máy Win 7 có IP dạng `192.168.1.x` (ví dụ `192.168.1.128`).
-* Tất cả máy ảo vừa thông nhau 100%, vừa có Internet và SSH từ máy thật luôn hoạt động!
-
----
-
-## 2. Sơ đồ Mạng & Phân bổ IP / Extension
+## 1. Tổng quan Sơ đồ Mạng & Phân bổ IP / Extension
 
 ```text
                         [ Laptop Máy Thật (Windows) ]
@@ -48,28 +26,49 @@ Tài liệu hướng dẫn từng bước (Step-by-Step) xây dựng hệ thốn
          [ Ubuntu 22.04 Server ]                 [ Windows 7 - GiamDoc ]
          - Static IP: 192.168.1.100              - IP: 192.168.1.128 (hoặc tĩnh 101)
          - Dịch vụ: Asterisk PBX                 - Ext: 101 (MicroSIP)
-                                                         │
+         - Dual NIC: ens33 (NAT) + ens37 (Bridge)        │
                                                  [ Windows 7 - PhongKD ]
                                                  - IP: 192.168.1.129 (hoặc tĩnh 102)
                                                  - Ext: 102 (MicroSIP)
+                                                         │
+                                                 [ Điện thoại Di động Thật ]
+                                                 - Wi-Fi / 4G Hotspot
+                                                 - Ext: 103 (App Sipnetic)
 ```
 
-### Bảng phân bổ thông số:
+### Bảng phân bổ thông số hệ thống:
 
-| Thiết bị                    | Card mạng          | IP                                | Ext / Account | Mật khẩu | Vai trò                   |
-| :---------------------------- | :------------------ | :-------------------------------- | :------------ | :--------- | :------------------------- |
-| **Ubuntu 22.04**        | NAT (VMnet8)        | `192.168.1.100` (Tĩnh)         | Server PBX    | -          | Tổng đài Asterisk       |
-| **Win 7 - Máy 1**      | NAT (VMnet8)        | `192.168.1.128` (hoặc `101`) | `101`       | `123456` | Giám đốc                |
-| **Win 7 - Máy 2**      | NAT (VMnet8)        | `192.168.1.129` (hoặc `102`) | `102`       | `123456` | Phòng Kinh doanh          |
-| **Điện thoại thật** | Wi-Fi Hotspot / LAN | Dải mạng kết nối              | `103`       | `123456` | Di động (App Linphone)   |
-| **Số Gọi Nhóm**      | -                   | -                                 | `600`       | -          | Đổ chuông 101, 102, 103 |
-| **Số Tổng đài**     | -                   | -                                 | `100`       | -          | IVR Lời chào tự động  |
+| Thiết bị                    | Card mạng             | IP                                | Ext / Account | Mật khẩu | Vai trò                   |
+| :---------------------------- | :--------------------- | :-------------------------------- | :------------ | :--------- | :------------------------- |
+| **Ubuntu 22.04**        | NAT (VMnet8) + Bridged | `192.168.1.100` (Static)        | Server PBX    | -          | Tổng đài Asterisk       |
+| **Win 7 - Máy 1**      | NAT (VMnet8)           | `192.168.1.128` (hoặc `101`) | `101`       | `123456` | Giám đốc                |
+| **Win 7 - Máy 2**      | NAT (VMnet8)           | `192.168.1.129` (hoặc `102`) | `102`       | `123456` | Phòng Kinh doanh          |
+| **Điện thoại thật** | Wi-Fi / Hotspot 4G     | Dải mạng Wi-Fi/Hotspot          | `103`       | `123456` | Di động (App Sipnetic)   |
+| **Số Gọi Nhóm**      | -                      | -                                 | `600`       | -          | Đổ chuông 101, 102, 103 |
+| **Số Tổng đài**     | -                      | -                                 | `100`       | -          | IVR Lời chào tự động  |
 
 ---
 
-## Bước 1: Cấu hình VMware Workstation & Tạo Máy Ảo Mẫu
+## Bước 1: Cấu hình VMware Workstation & Chuẩn hóa Mạng (VMnet8 NAT + Dual NIC)
 
-### 1.1 Tạo máy ảo Ubuntu Server 22.04
+### 1.1 Chuẩn hóa dải mạng NAT (VMnet8) trên VMware Workstation
+
+Để tránh nhảy IP khi mang laptop đi các môi trường Wi-Fi khác nhau, ta cố định dải mạng NAT:
+
+1. Trên cửa sổ VMware Workstation: Chọn **Edit** -> **Virtual Network Editor...**
+2. Bấm nút **Change Settings** (góc dưới bên phải để cấp quyền Admin).
+3. Chọn dòng **VMnet8** (loại NAT).
+4. Tại ô **Subnet IP**: Đổi thành **`192.168.1.0`**, Subnet Mask: `255.255.255.0`.
+5. Bấm vào nút **NAT Settings...**:
+   * Mục **Gateway IP**: Kiểm tra/đổi thành **`192.168.1.2`** (hoặc `192.168.1.1`) -> Bấm **OK**.
+6. Bấm **Apply** -> **OK**.
+
+### 1.2 Mô hình Card mạng kép (Dual NIC) cho Server Ubuntu
+
+* **Card 1 (VMnet8 NAT)**: Giao tiếp cố định IP tĩnh `192.168.1.100` với 2 máy ảo Windows 7.
+* **Card 2 (VMnet0 Bridged)**: Kết nối tới Wi-Fi / 4G Hotspot phát từ Điện thoại di động để nhận IP DHCP cho Extension `103` truy cập từ thiết bị thật.
+
+### 1.3 Tạo máy ảo Ubuntu Server 22.04
 
 1. Bật VMware Workstation -> **File** -> **New Virtual Machine** -> Chọn **Custom (advanced)**.
    ![1786018836552](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786018836552.png)
@@ -84,12 +83,12 @@ Tài liệu hướng dẫn từng bước (Step-by-Step) xây dựng hệ thốn
      ![1786018896427](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786018896427.png)
    * **Processors**: `1 Processor`, `1 Core`.
      ![1786018892228](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786018892228.png)
-   * **Network Connection**: Chọn **NAT** (Dùng dải mạng NAT VMnet8).
+   * **Network Connection**: Chọn **NAT** (Dùng dải mạng NAT VMnet8). Sau đó chọn Add thêm 1 Network Adapter thứ 2 chế độ **Bridged**.
      ![1786018909934](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786018909934.png)
    * **Disk**: `20 GB`.
      ![1786018969688](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786018969688.png)
 
-### 1.2 Tạo máy ảo Windows 7 SP1 x86 (Master Image)
+### 1.4 Tạo máy ảo Windows 7 SP1 x86 (Master Image)
 
 ![1786020514567](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786020514567.png)
 
@@ -104,7 +103,7 @@ Tài liệu hướng dẫn từng bước (Step-by-Step) xây dựng hệ thốn
    * Chuột phải máy ảo Win 7 gốc -> **Snapshot** -> **Take Snapshot**.
    * Đặt tên: `00_CLEAN_BASE`. (Snapshot này giữ nguyên để dùng lại cho các môn học khác).
 
-### 1.3 Tạo 2 máy Win 7 cho bài VoIP bằng Linked Clone
+### 1.5 Tạo 2 máy Win 7 cho bài VoIP bằng Linked Clone
 
 1. Chuột phải máy Win 7 gốc -> **Manage** -> **Clone**.
 2. Chọn **An existing snapshot** -> Chọn `00_CLEAN_BASE`.
@@ -130,7 +129,7 @@ sudo nano /etc/netplan/00-installer-config.yaml
 network:
   version: 2
   ethernets:
-    ens33: # (Thay bằng tên card mạng của bạn, check bằng `ip a`)
+    ens33: # (Card NAT VMnet8)
       dhcp4: no
       addresses:
         - 192.168.1.100/24
@@ -139,6 +138,8 @@ network:
           via: 192.168.1.2
       nameservers:
         addresses: [8.8.8.8, 1.1.1.1]
+    ens37: # (Card Bridged cho Phone/Hotspot nếu có)
+      dhcp4: yes
 ```
 
 Áp dụng cấu hình:
@@ -176,24 +177,25 @@ sudo nano /etc/msmtprc
 Điền Gmail và App Password của bạn vào:
 
 ```ini
-user       email_cua_ban@gmail.com
-password   xxxx xxxx xxxx xxxx  # (Mật khẩu ứng dụng 16 ký tự)
+from       lelong191001@gmail.com
+user       lelong191001@gmail.com
+password   nwzl sjvs owce dizo  # (Mật khẩu ứng dụng 16 ký tự)
 ```
 
 ![1786025619341](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025619341.png)
 Vào `/etc/asterisk/voicemail.conf` sửa email người nhận ở dòng `101`:
 
 ```ini
-101 => 1234,Giam Doc,email_giamdoc_nhan_mail@gmail.com
+101 => 1234,Giam Doc,lelong191001@gmail.com
 ```
 
-Khởi động lại Asterisk: `/usr/bin/sudo systemctl restart asterisk`.
+Khởi động lại Asterisk: `sudo systemctl restart asterisk`.
 
 ### 2.4 Bật Trạm Phát File Nội bộ trên Ubuntu (Python HTTP Server)
 
-Để giúp các máy ảo Win 7 dễ dàng tải file `MicroSIP.exe` mà không lo bị lỗi chứng chỉ SSL/TLS hay lỗi không copy/paste được:
+Để giúp các máy ảo Win 7 dễ dàng tải file `MicroSIP.exe` mà không cần sử dụng cổng USB hay thao tác phức tạp:
 
-1. **Đẩy 2 file cài đặt lên Ubuntu** (Gõ lệnh SCP từ PowerShell máy thật):
+1. **Đẩy file cài đặt lên Ubuntu** (Gõ lệnh SCP từ PowerShell máy thật):
 
    ```powershell
    scp "d:\folder\rac\iuh\môn\hk1-4\quan-tri-dich-vu-mang\MicroSIP.exe" neko@192.168.1.100:~/
@@ -204,7 +206,9 @@ Khởi động lại Asterisk: `/usr/bin/sudo systemctl restart asterisk`.
    nohup python3 -m http.server 8000 > /dev/null 2>&1 &
    ```
 
-👉 **Kết quả**: Trạm phát file sẽ luôn chạy ngầm trên Ubuntu tại địa chỉ `http://192.168.1.100:8000`. Các máy Win 7 có thể tải file cài đặt và file MicroSIP qua mạng LAN nội bộ cực kỳ nhanh chóng và 100% không bao giờ lỗi!
+### Kết quả:
+
+Trạm phát file sẽ chạy ngầm trên Ubuntu tại địa chỉ `http://192.168.1.100:8000`. Các máy Win 7 có thể truy cập qua trình duyệt web và tải file MicroSIP trực tiếp trong mạng LAN nội bộ.
 
 ---
 
@@ -212,7 +216,7 @@ Khởi động lại Asterisk: `/usr/bin/sudo systemctl restart asterisk`.
 
 ### 3.1 Tải MicroSIP về Win 7
 
-1. Khởi động 2 máy ảo `Win7_GiamDoc` và `Win7_PhongKD`.đảm bảo cùng mạng ..1.xxx
+1. Khởi động 2 máy ảo `Win7_GiamDoc` và `Win7_PhongKD`. Đảm bảo cùng mạng 192.168.1.xxx.
    ![1786025893034](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025893034.png)
    ![1786025894684](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025894684.png)
 2. Trên máy **Win 7**, mở trình duyệt **Internet Explorer** gõ địa chỉ: `http://192.168.1.100:8000`
@@ -220,7 +224,7 @@ Khởi động lại Asterisk: `/usr/bin/sudo systemctl restart asterisk`.
 
 ---
 
-### 3.2 Cấu hình Đăng ký Tài khoản SIP Thủ công (Đạt 100% Điểm Demo)
+### 3.2 Cấu hình Đăng ký Tài khoản SIP trên MicroSIP
 
 Mở file `MicroSIP.exe` trên Win 7:
 
@@ -247,23 +251,51 @@ Mở file `MicroSIP.exe` trên Win 7:
    * **SIP Server**: `192.168.1.100`
    * **Domain**: `192.168.1.100`
    * **Username**: `102`
-   * login: `102`
+   * **login**: `102`
    * **Password**: `123456`
    * **Display Name**: `Phòng KD`
 3. Bấm **Save** -> Trạng thái hiển thị **Online** là hoàn tất!
 
+💡 **LƯU Ý NHẮN TIN TÍNH NĂNG MICROSIP**:
+Khi gửi tin nhắn văn bản (SIP MESSAGE) trên MicroSIP, nếu cửa sổ chat thu nhỏ, bạn kéo rộng cửa sổ sang bên phải để hiện nút **`Send`**, sau đó click chuột vào nút **`Send`** để gửi tin nhắn.
+
 ---
 
-## Bước 4: Cấu hình Điện thoại Di động (App Linphone)
+## Bước 4: Cấu hình Điện thoại Di động Thật (App Sipnetic)
 
-1. Đảm bảo điện thoại di động kết nối **cùng mạng Wi-Fi** hoặc **Hotspot** của laptop.
-2. Tải app **Linphone** (Miễn phí 100%, Mã nguồn mở) từ App Store hoặc CH Play.
-3. Mở app **Linphone** -> Chọn **USE SIP ACCOUNT**:
-   * **Username**: `103`
-   * **SIP Domain**: `192.168.1.100` (Địa chỉ IP máy Ubuntu)
+### 4.1 Đảm bảo kết nối Mạng giữa Điện thoại và Máy chủ Ubuntu
+
+* **Cách 1 (Kết nối chung Wi-Fi)**: Điện thoại di động và Laptop cùng kết nối vào một mạng Wi-Fi. Trên VMware, Card mạng thứ 2 (`ens37`) của Ubuntu chọn chế độ **Bridged (VMnet0)** tới Card Wi-Fi máy tính.![1786042020330](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786042020330.png)
+
+  **Các lệnh bật Card Bridged `ens37` và yêu cầu nhận IP DHCP từ Wi-Fi trên Ubuntu (khi card bị DOWN):**
+
+  ```bash
+  # 1. Bật card mạng ens37 lên trạng thái UP
+  sudo ip link set ens37 up
+
+  # 2. Yêu cầu nhận IP tự động DHCP từ Wi-Fi
+  sudo dhclient ens37
+
+  # 3. Kiểm tra IP vừa nhận được (Xem tại ô inet của card ens37)
+  ip a
+  ```
+* **Cách 2 (Phát Hotspot 4G từ Điện thoại)**: Điện thoại bật tính năng Phát Wi-Fi Hotspot 4G -> Laptop bắt Wi-Fi Hotspot đó. Mở Terminal Ubuntu gõ `ip a` để lấy địa chỉ IP của card Bridged điền vô phone (ví dụ: `10.45.80.164`).
+
+---
+
+### 4.2 Cấu hình Chi tiết trên Ứng dụng Sipnetic Mobile
+
+1. Tải ứng dụng **Sipnetic** từ Google Play Store (Android) hoặc App Store (iOS).
+2. Mở ứng dụng **Sipnetic** trên điện thoại.
+3. Chọn **Add Account** (Thêm tài khoản) -> Chọn **Custom SIP Provider** (Hoặc *Generic SIP Account*).
+4. Nhập đầy đủ các tham số cấu hình:
+   * **Account Name**: `Di động 103`
+   * **User ID / Username**: `103`
+   * **Domain / Server**: `192.168.1.100` *(Hoặc điền IP Card Bridged `10.10.55.250` / `10.45.80.164` nếu kết nối Wi-Fi/Hotspot)*
    * **Password**: `123456`
-   * **Transport**: Chọn **UDP**
-4. Bấm **LOGIN**. Đợi màn hình hiển thị chấm xanh **Connected** là hoàn tất!
+   * **Transport Protocol**: Chọn **UDP**
+5. Bấm **SAVE** (Lưu) hoặc **APPLY**.
+6. Quan sát biểu tượng tài khoản chuyển sang trạng thái **Registered** (Đã đăng ký) màu xanh lá cây là hoàn tất Extension `103`!
 
 ---
 
@@ -273,11 +305,11 @@ Dưới đây là thứ tự test từng yêu cầu để thực hiện báo cá
 
 | STT         | Yêu cầu đề bài                    | Thao tác thực hiện Test                                                                                                                                                                                              | Kết quả mong đợi                                                                                                                                                                                                           |
 | :---------- | :------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **1** | **Gọi nhóm (Ring Group)**      | Từ bất kỳ máy nào (101, 102 hoặc 103), bấm gọi số**`600`**.<br />(video3))                                                                                                                                   | Cả máy Win7 (`101`, `102`) và Điện thoại (`103`) đồng thời đổ chuông. Máy nào nhấc máy trước sẽ bắt đàm thoại.                                                                                    |
-| **2** | **Gọi Di động**               | Từ Win7 (`101` hoặc `102`), bấm gọi số **`103`**.![1786035889567](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786035889567.png)                                                                                 | App Sipnetic/Linphone trên điện thoại di động reo chuông, nhấc máy nghe rõ âm thanh 2 chiều.                                                                                                                       |
-| **3** | **Nhắn tin (SIP Messaging)**    | Trên MicroSIP (máy`101`), mở tab **Messages**, gõ nhắn tới `103`.                                                                                                                                       | App trên điện thoại (`103`) nhận được tin nhắn POP-UP hiển thị nội dung tin nhắn.                                                                                                                               |
+| **1** | **Gọi nhóm (Ring Group)**      | Từ bất kỳ máy nào (101, 102 hoặc 103), bấm gọi số**`600`**.<br />(video3)                                                                                                                                    | Cả máy Win7 (`101`, `102`) và Điện thoại (`103`) đồng thời đổ chuông. Máy nào nhấc máy trước sẽ bắt đàm thoại.                                                                                    |
+| **2** | **Gọi Di động**               | Từ Win7 (`101` hoặc `102`), bấm gọi số **`103`**.![1786035889567](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786035889567.png)                                                                                 | App Sipnetic trên điện thoại di động reo chuông, nhấc máy nghe rõ âm thanh 2 chiều.                                                                                                                                |
+| **3** | **Nhắn tin (SIP Messaging)**    | Trên MicroSIP (máy`101`), mở tab **Messages**, gõ nhắn tới `103`. Bấm nút **Send**.                                                                                                             | App Sipnetic trên điện thoại (`103`) nhận được tin nhắn POP-UP hiển thị nội dung tin nhắn.                                                                                                                      |
 | **4** | **Chặn cuộc gọi (Blacklist)** | **Lượt 1**: Từ Giám đốc (`101`) gọi Nhân viên (`102` hoặc `103`).<br />**Lượt 2**: Từ Nhân viên (`102` hoặc `103`) gọi Giám đốc (`101`).<br />()video1)                     | -**Lượt 1**: Cuộc gọi thành công đàm thoại bình thường.<br />- **Lượt 2**: Cuộc gọi bị **CHẶN** ngay lập tức, nghe tiếng báo không dịch vụ (`ss-noservice`) và ngắt cuộc gọi. |
-| **5** | **Gửi Gmail cuộc gọi nhỡ**   | Gọi số**`100`** (Tổng đài IVR) -> Bấm phím `1` chuyển sang Giám đốc (`101`). Máy 101 KHÔNG nghe máy. Sau 20 giây tự chuyển qua Voicemail. Nói 1 đoạn âm thanh rồi cúp máy.<br />(video4)) | Asterisk tự động gửi 1 Email kèm file ghi âm`.wav` đến địa chỉ Gmail đã cấu hình.                                                                                                                             |
-| **6** | **Gọi Tổng đài (IVR)**       | Từ bất kỳ máy nào (101, 102, 103) bấm gọi số**`100`**.<br />()video2)                                                                                                                                         | Nghe lời chào tự động: Bấm phím`1` cuộc gọi tự chuyển sang Giám đốc (`101`), bấm phím `2` chuyển sang Phòng KD (`102`).                                                                              |
+| **5** | **Gửi Gmail cuộc gọi nhỡ**   | Gọi số**`100`** (Tổng đài IVR) -> Bấm phím `1` chuyển sang Giám đốc (`101`). Máy 101 KHÔNG nghe máy. Sau 20 giây tự chuyển qua Voicemail. Nói 1 đoạn âm thanh rồi cúp máy.<br />(video4)) | Asterisk tự động gửi 1 Email kèm file ghi âm`.wav` đến địa chỉ Gmail đã cấu hình (`lelong191001@gmail.com`).                                                                                                |
+| **6** | **Gọi Tổng đài (IVR)**       | Từ bất kỳ máy nào (101, 102, 103) bấm gọi số **`100`**.<br />()video2)                                                                                                                                  | Nghe lời chào tự động: Bấm phím`1` cuộc gọi tự chuyển sang Giám đốc (`101`), bấm phím `2` chuyển sang Phòng KD (`102`).                                                                              |
 
 ---
