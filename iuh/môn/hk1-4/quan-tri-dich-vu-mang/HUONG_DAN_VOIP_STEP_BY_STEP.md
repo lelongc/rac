@@ -150,14 +150,14 @@ sudo netplan apply
 ### 2.2 Chạy Script tự động cài đặt Asterisk
 
 1. Copy file `setup_voip_ubuntu.sh` vào Ubuntu (hoặc dùng SSH / SCP từ máy thật).![1786024140666](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786024140666.png)
-2. Phân quyền và chạy script:
+2. Phân quyền và chạy script:![1786026030323](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786026030323.png)
 
 ```bash
 chmod +x setup_voip_ubuntu.sh
 sudo bash setup_voip_ubuntu.sh
 ```
 
-### ![1786025486196](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025486196.png)2.3 Cấu hình Gmail để gửi cuộc gọi nhỡ (Yêu cầu 5)
+### 2.3 Cấu hình Gmail để gửi cuộc gọi nhỡ (Yêu cầu 5)
 
 1. Mở tài khoản Gmail -> **Quản lý Tài khoản Google** -> **Bảo mật** -> Bật **Xác minh 2 bước**.
    ![1786019907879](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786019907879.png)
@@ -170,8 +170,8 @@ sudo bash setup_voip_ubuntu.sh
 ```bash
 sudo nano /etc/msmtprc
 ```
-
-Điền Gmail và App Password của bạn vào:![1786025619341](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025619341.png)
+  ![1786025619341](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025619341.png)
+Điền Gmail và App Password của bạn vào:
 
 ```ini
 user       email_cua_ban@gmail.com
@@ -180,34 +180,56 @@ password   xxxx xxxx xxxx xxxx  # (Mật khẩu ứng dụng 16 ký tự)
 
 Vào `/etc/asterisk/voicemail.conf` sửa email người nhận ở dòng `101`:
 
-![1786025699971](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025699971.png)
-
 ```ini
 101 => 1234,Giam Doc,email_giamdoc_nhan_mail@gmail.com
 ```
 
-Khởi động lại Asterisk: `sudo systemctl restart asterisk`.
+Khởi động lại Asterisk: `/usr/bin/sudo systemctl restart asterisk`.
 
 ---
 
 ## Bước 3: Cấu hình 2 Máy Win 7 (Softphone MicroSIP)
 
-1. Mở máy ảo `Win7_GiamDoc` và `Win7_PhongKD`.
-2. Kiểm tra IP bằng `cmd` -> `ipconfig` (đảm bảo ở dải `192.168.1.x`).![1786025893034](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025893034.png)![1786025894684](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025894684.png)
-3. Mở **MicroSIP** -> Bấm dấu mũi tên ở góc trên bên phải -> Chọn **Add Account...**:
+### 3.1 Tải và Chuẩn bị MicroSIP trên Windows 7
 
-#### Đăng ký cho máy Win7_GiamDoc:
+1. Khởi động 2 máy ảo `Win7_GiamDoc` và `Win7_PhongKD`.
+   ![1786025893034](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025893034.png)
+   ![1786025894684](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025894684.png)
+2. Kiểm tra IP trên Win 7 bằng `cmd` -> gõ `ipconfig` (đảm bảo hiển thị dải `192.168.1.x`).
+3. Mở trình duyệt Web trên Win 7 truy cập `https://www.microsip.org` tải bản **MicroSIP Portable** (nhẹ ~5MB) về Desktop.
 
-* **Account Name**: Giám đốc
-* **SIP Server**: `192.168.1.100` (IP máy Ubuntu)
-* **User**: `101`
-* **Domain**: `192.168.1.100`
-* **Password**: `123456`
-* Bấm **Save**. Trạng thái hiển thị **Online** là thành công!
+---
 
-#### Đăng ký cho máy Win7_PhongKD:
+### 3.2 Đăng ký Tài khoản SIP trên MicroSIP
 
-* Làm tương tự với **User**: `102`, **Password**: `123456`.
+Mở phần mềm **MicroSIP** trên Win 7:
+
+#### 🟢 Đăng ký trên máy `Win7_GiamDoc` (Ext 101):
+
+1. Bấm vào nút **Mũi tên xổ xuống ở góc trên bên phải** -> Chọn **Add Account...**
+2. Điền chính xác các thông tin:
+   * **Account Name**: `Giám đốc 101`
+   * **SIP Server**: `192.168.1.100` *(Địa chỉ IP máy Ubuntu Asterisk)*
+   * **Domain**: `192.168.1.100`
+   * **Username**: `101`
+   * **Auth ID**: `101`
+   * **Password**: `123456`
+   * **Display Name**: `Giám đốc`
+3. Bấm **Save**.
+4. Quan sát ở góc dưới bên trái màn hình MicroSIP: Biểu tượng chuyển sang **dấu chấm xanh lá cây kèm chữ Online** là đã thành công!
+
+#### 🔵 Đăng ký trên máy `Win7_PhongKD` (Ext 102):
+
+1. Mở MicroSIP trên máy Win 7 thứ hai -> Bấm **Add Account...**
+2. Điền thông tin tương tự:
+   * **Account Name**: `Phòng Kinh Doanh 102`
+   * **SIP Server**: `192.168.1.100`
+   * **Domain**: `192.168.1.100`
+   * **Username**: `102`
+   * **Auth ID**: `102`
+   * **Password**: `123456`
+   * **Display Name**: `Phòng KD`
+3. Bấm **Save** -> Trạng thái báo **Online** là hoàn tất.
 
 ---
 
@@ -285,3 +307,5 @@ Dưới đây là thứ tự test từng yêu cầu để thực hiện báo cá
 ---
 
 *Chúc bạn hoàn thành xuất sắc bài báo cáo demo môn Quản trị dịch vụ mạng!*
+
+![1786025699971](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025699971.png)
