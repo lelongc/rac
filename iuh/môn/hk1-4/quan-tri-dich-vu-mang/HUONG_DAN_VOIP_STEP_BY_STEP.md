@@ -156,7 +156,9 @@ sudo netplan apply
 chmod +x setup_voip_ubuntu.sh
 sudo bash setup_voip_ubuntu.sh
 ```
+
 ![1786026030323](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786026030323.png)
+
 ### 2.3 Cấu hình Gmail để gửi cuộc gọi nhỡ (Yêu cầu 5)
 
 1. Mở tài khoản Gmail -> **Quản lý Tài khoản Google** -> **Bảo mật** -> Bật **Xác minh 2 bước**.
@@ -171,13 +173,13 @@ sudo bash setup_voip_ubuntu.sh
 sudo nano /etc/msmtprc
 ```
 
-  
 Điền Gmail và App Password của bạn vào:
 
 ```ini
 user       email_cua_ban@gmail.com
 password   xxxx xxxx xxxx xxxx  # (Mật khẩu ứng dụng 16 ký tự)
 ```
+
 ![1786025619341](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025619341.png)
 Vào `/etc/asterisk/voicemail.conf` sửa email người nhận ở dòng `101`:
 
@@ -187,21 +189,51 @@ Vào `/etc/asterisk/voicemail.conf` sửa email người nhận ở dòng `101`:
 
 Khởi động lại Asterisk: `/usr/bin/sudo systemctl restart asterisk`.
 
+### 2.4 Bật Trạm Phát File Nội bộ trên Ubuntu (Python HTTP Server)
+
+Để giúp các máy ảo Win 7 dễ dàng tải file `setup_microsip_win7.ps1` và `MicroSIP.exe` mà không lo bị lỗi chứng chỉ SSL/TLS hay lỗi không copy/paste được:
+
+1. **Đẩy 2 file cài đặt lên Ubuntu** (Gõ lệnh SCP từ PowerShell máy thật):
+
+   ```powershell
+   scp "d:\folder\rac\iuh\môn\hk1-4\quan-tri-dich-vu-mang\MicroSIP.exe" neko@192.168.1.100:~/
+   scp "d:\folder\rac\iuh\môn\hk1-4\quan-tri-dich-vu-mang\setup_microsip_win7.ps1" neko@192.168.1.100:~/
+   ```
+2. **Bật Trạm phát file ngầm trên Ubuntu (Port 8000)**:
+
+   ```bash
+   nohup python3 -m http.server 8000 > /dev/null 2>&1 &
+   ```
+
+👉 **Kết quả**: Trạm phát file sẽ luôn chạy ngầm trên Ubuntu tại địa chỉ `http://192.168.1.100:8000`. Các máy Win 7 có thể tải file cài đặt và file MicroSIP qua mạng LAN nội bộ cực kỳ nhanh chóng và 100% không bao giờ lỗi!
+
 ---
 
 ## Bước 3: Cấu hình 2 Máy Win 7 (Softphone MicroSIP)
 
-### 3.1 Tải và Chuẩn bị MicroSIP trên Windows 7
+### 3.1 Cài đặt & Cấu hình Tự động 100% bằng Script (Khuyên dùng - 5 Giây)
 
 1. Khởi động 2 máy ảo `Win7_GiamDoc` và `Win7_PhongKD`.
+   đảm bảo ip là `192.168.1.`xxxx
    ![1786025893034](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025893034.png)
    ![1786025894684](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786025894684.png)
-2. Kiểm tra IP trên Win 7 bằng `cmd` -> gõ `ipconfig` (đảm bảo hiển thị dải `192.168.1.x`).
-3. Mở trình duyệt Web trên Win 7 truy cập `https://www.microsip.org` tải bản **MicroSIP Portable** (nhẹ ~5MB) về Desktop.
+2. **Đưa file `setup_microsip_win7.ps1` vào Win 7**:
+   * **Cách 1**: Copy file từ máy thật dán sang màn hình Desktop của Win 7.
+   * **Cách 2 (Nếu không Copy/Paste hay Kéo thả được)**: Trên Ubuntu gõ `python3 -m http.server 8000`. Mở trình duyệt IE trên Win 7 truy cập `http://192.168.1.100:8000` click tải thẳng file `setup_microsip_win7.ps1` về Desktop!(scp "d:\folder\rac\iuh\môn\hk1-4\quan-tri-dich-vu-mang\setup_microsip_win7.ps1" neko@192.168.1.100:~/)
+3. Mở **Windows PowerShell** trên Win 7 và gõ lệnh chạy tự động:
+   * **![1786028330269](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786028330269.png)Trên máy `Win7_GiamDoc`**:
+     ```powershell
+     powershell -ExecutionPolicy Bypass -File $env:USERPROFILE\Desktop\setup_microsip_win7.ps1 -Extension 101
+     ```
+   * **![1786028307489](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786028307489.png)Trên máy `Win7_PhongKD`**:
+     ```powershell
+     powershell -ExecutionPolicy Bypass -File $env:USERPROFILE\Desktop\setup_microsip_win7.ps1 -Extension 102
+     ```
+4. Ngoài Desktop sẽ xuất hiện ngay thư mục **MicroSIP**. Mở ra và nhấp đúp file **`MicroSIP.exe`** là phần mềm **tự động Online kết nối với Tổng đài ngay lập tức**!
 
 ---
 
-### 3.2 Đăng ký Tài khoản SIP trên MicroSIP
+### 3.2 Cấu hình Thủ công trên MicroSIP (Nếu không dùng Script)
 
 Mở phần mềm **MicroSIP** trên Win 7:
 
@@ -304,6 +336,16 @@ Dưới đây là thứ tự test từng yêu cầu để thực hiện báo cá
   ```powershell
   scp "d:\folder\rac\iuh\môn\hk1-4\quan-tri-dich-vu-mang\setup_voip_ubuntu.sh" neko@192.168.1.100:~/
   ```
+
+### 🔴 Lỗi 7: Không Copy/Paste hay Kéo thả file sang Win 7 được (Do chưa có VMware Tools)
+
+* **Cách làm (Dùng Ubuntu làm trạm phát file 10 giây)**:
+  1. Trên Ubuntu terminal (hoặc SSH), gõ lệnh:
+     ```bash
+     python3 -m http.server 8000
+     ```
+  2. Mở trình duyệt Internet Explorer trên Win 7 truy cập: `http://192.168.1.100:8000`
+  3. Click vào file `setup_microsip_win7.ps1` để tải thẳng về Win 7!
 
 ---
 

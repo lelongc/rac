@@ -1,5 +1,5 @@
 # ==============================================================================
-# SCRIPT CHẠY TRÊN WINDOWS 7 - TỰ ĐỘNG TẠO FILE CẤU HÌNH MICROSIP PORTABLE
+# SCRIPT CHAY TREN WINDOWS 7 - TU DONG TAI & CAU HINH MICROSIP PORTABLE 100%
 # ==============================================================================
 
 param (
@@ -9,14 +9,16 @@ param (
 )
 
 Write-Host "==========================================" -ForegroundColor Cyan
-Write-Host " Cấu hình MicroSIP cho Windows 7 Client   " -ForegroundColor Cyan
+Write-Host " TU DONG CAU HINH MICROSIP TREN WINDOWS 7 " -ForegroundColor Cyan
 Write-Host "==========================================" -ForegroundColor Cyan
 
+# 1. Tao thu muc MicroSIP ngoai Desktop
 $MicroSipFolder = "$env:USERPROFILE\Desktop\MicroSIP"
 if (-not (Test-Path $MicroSipFolder)) {
     New-Item -ItemType Directory -Path $MicroSipFolder | Out-Null
 }
 
+# 2. Tu dong tao file microsip.ini chua san tai khoan SIP
 $IniPath = "$MicroSipFolder\microsip.ini"
 
 $IniContent = @"
@@ -42,7 +44,27 @@ VolumeSpeaker=100
 VolumeMicrophone=100
 "@
 
-Set-Content -Path $IniPath -Value $IniContent -Encoding UTF8
+Set-Content -Path $IniPath -Value $IniContent -Encoding ASCII
+Write-Host "[1/2] Da tao xong file cau hinh microsip.ini" -ForegroundColor Green
 
-Write-Host "`nDa tao file cau hinh micoSIP tai: $IniPath" -ForegroundColor Green
-Write-Host "Dung luong siêu nhe. Ban chi can tai file MicroSIP.exe tha vao thư muc Desktop\MicroSIP la xong!" -ForegroundColor Yellow
+# 3. Tu dong tai file phan mem MicroSIP.exe tu Ubuntu Server (HTTP port 8000)
+$ExePath = "$MicroSipFolder\MicroSIP.exe"
+if (-not (Test-Path $ExePath)) {
+    Write-Host "[2/2] Dang tai phan mem MicroSIP.exe tu Ubuntu Server ($ServerIP)..." -ForegroundColor Yellow
+    $WebClient = New-Object System.Net.WebClient
+    
+    $LocalUrl = "http://$ServerIP`:8000/MicroSIP.exe"
+    try {
+        $WebClient.DownloadFile($LocalUrl, $ExePath)
+        Write-Host "-> Da tai xong MicroSIP.exe tu Ubuntu Server!" -ForegroundColor Green
+    } catch {
+        Write-Host "-> Tren Ubuntu vui long chay: python3 -m http.server 8000" -ForegroundColor Red
+    }
+} else {
+    Write-Host "[2/2] MicroSIP.exe da co san!" -ForegroundColor Green
+}
+
+Write-Host "==========================================" -ForegroundColor Cyan
+Write-Host " HOAN TAT! THU MUC MicroSIP DA CO TREN DESKTOP." -ForegroundColor Green
+Write-Host " Mo thu muc Desktop\MicroSIP va chay MicroSIP.exe la ONLINE!" -ForegroundColor Yellow
+Write-Host "==========================================" -ForegroundColor Cyan
