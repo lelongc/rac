@@ -47,6 +47,7 @@ cat <<EOF > /etc/asterisk/pjsip.conf
 [global]
 type=global
 user_agent=IUH-VoIP-Asterisk
+message_context=send-message
 
 [transport-udp]
 type=transport
@@ -120,6 +121,14 @@ cat <<EOF > /etc/asterisk/extensions.conf
 static=yes
 writeprotect=no
 clearglobalvars=no
+
+; ==============================================================================
+; CONTEXT XỬ LÝ NHẮN TIN SIP (PJSIP MESSAGE)
+; ==============================================================================
+[send-message]
+exten => _X.,1,NoOp(Sending SIP Message to \${EXTEN})
+same => n,MessageSend(pjsip:\${EXTEN},\${MESSAGE(from)})
+same => n,Hangup()
 
 ; ==============================================================================
 ; CONTEXT CHO GIÁM ĐỐC (101): Được gọi tất cả mọi người
