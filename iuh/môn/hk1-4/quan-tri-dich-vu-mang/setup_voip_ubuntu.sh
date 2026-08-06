@@ -35,6 +35,14 @@ echo -e "\n${YELLOW}[1/5] Đang cài đặt Asterisk và công cụ hỗ trợ..
 apt-get update -y
 apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" asterisk asterisk-core-sounds-en-gsm msmtp msmtp-mta mailutils curl net-tools
 
+cat <<EOF > /etc/asterisk/modules.conf
+[modules]
+autoload=yes
+noload => app_voicemail_imap.so
+noload => app_voicemail_odbc.so
+load => app_voicemail.so
+EOF
+
 # 2. Lấy IP hiện tại của Ubuntu
 SERVER_IP=$(hostname -I | awk '{print $1}')
 echo -e "${GREEN}-> Địa chỉ IP của Server Ubuntu VoIP: ${SERVER_IP}${NC}"
@@ -123,14 +131,6 @@ writeprotect=no
 clearglobalvars=no
 
 ; ==============================================================================
-; CONTEXT XỬ LÝ NHẮN TIN SIP (PJSIP MESSAGE)
-; ==============================================================================
-[send-message]
-exten => _X.,1,NoOp(Sending SIP Message to \${EXTEN})
-same => n,MessageSend(pjsip:\${EXTEN},\${MESSAGE(from)})
-same => n,Hangup()
-
-; ==============================================================================
 ; CONTEXT CHO GIÁM ĐỐC (101): Được gọi tất cả mọi người
 ; ==============================================================================
 [giamdoc-context]
@@ -146,10 +146,6 @@ same => n,Hangup()
 
 exten => 600,1,Goto(internal-common,600,1)
 exten => 100,1,Goto(internal-common,100,1)
-
-; Nhắn tin SIP
-exten => _X.,1,MessageSend(pjsip:\${EXTEN},\${MESSAGE(from)})
-same => n,Hangup()
 
 ; ==============================================================================
 ; CONTEXT CHO NHÂN VIÊN (102, 103): Chặn không cho gọi tới Giám đốc (101)
@@ -169,10 +165,6 @@ exten => 101,1,NoOp(--- PHÒNG BAN GỌI GIÁM ĐỐC -> BỊ CHẶN ---)
 same => n,Answer()
 same => n,Playback(ss-noservice)
 same => n,Hangup(17)
-
-; Nhắn tin SIP
-exten => _X.,1,MessageSend(pjsip:\${EXTEN},\${MESSAGE(from)})
-same => n,Hangup()
 
 ; ==============================================================================
 ; DỊCH VỤ CHUNG: GỌI NHÓM & TỔNG ĐÀI TỰ ĐỘNG IVR
@@ -224,7 +216,8 @@ mailcmd=/usr/bin/msmtp -t
 101 => 1234,Giam Doc IUH,sv.iuh.demo@gmail.com
 EOF
 
-# 6. Cấu hình msmtp cho Gmail (Cần điền thông tin Gmail thật khi test)
+# 6. Cấu hình msmtp cho Gmail (Chỉ tạo mẫu nếu file chưa tồn tại)
+if [ ! -f /etc/msmtprc ]; then
 cat <<EOF > /etc/msmtprc
 defaults
 auth           on
@@ -241,6 +234,7 @@ password       your_app_password_here
 
 account default : gmail
 EOF
+fi
 
 chmod 600 /etc/msmtprc
 chown asterisk:asterisk /etc/msmtprc 2>/dev/null || true
