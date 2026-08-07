@@ -138,7 +138,7 @@ password=123456
 
 [102](aor-template)
 
-; --- EXTENSION 103: ĐIỆN THOẠI DI ĐỘNG (App Mobile) ---
+; --- EXTENSION 103: ĐIỆN THOẠI DI ĐỘNG 1 (App Mobile) ---
 [103](endpoint-template)
 auth=auth-103
 aors=103
@@ -149,6 +149,30 @@ username=103
 password=123456
 
 [103](aor-template)
+
+; --- EXTENSION 104: ĐIỆN THOẠI BẠN BÈ 1 (App Mobile / Softphone) ---
+[104](endpoint-template)
+auth=auth-104
+aors=104
+context=nhanvien-context
+
+[auth-104](auth-template)
+username=104
+password=123456
+
+[104](aor-template)
+
+; --- EXTENSION 105: ĐIỆN THOẠI BẠN BÈ 2 (App Mobile / Softphone) ---
+[105](endpoint-template)
+auth=auth-105
+aors=105
+context=nhanvien-context
+
+[auth-105](auth-template)
+username=105
+password=123456
+
+[105](aor-template)
 EOF
 
 # 4. Cấu hình Modules (/etc/asterisk/modules.conf)
@@ -183,30 +207,25 @@ same => n,NoOp(MessageSend result: \${MESSAGE_SEND_STATUS})
 same => n,Hangup()
 
 ; ==============================================================================
-; CONTEXT CHO GIÁM ĐỐC (101): Được gọi tất cả mọi người
+; CONTEXT CHO GIÁM ĐỐC (101): Được gọi tất cả mọi người (101-109)
 ; ==============================================================================
 [giamdoc-context]
+exten => _10X,1,Dial(PJSIP/${EXTEN},30)
+same => n,Hangup()
+
 exten => 101,1,Dial(PJSIP/101,20)
 same => n,Voicemail(101@default,u)
-same => n,Hangup()
-
-exten => 102,1,Dial(PJSIP/102,30)
-same => n,Hangup()
-
-exten => 103,1,Dial(PJSIP/103,30)
 same => n,Hangup()
 
 exten => 600,1,Goto(internal-common,600,1)
 exten => 100,1,Goto(internal-common,100,1)
 
 ; ==============================================================================
-; CONTEXT CHO NHÂN VIÊN (102, 103): Chặn không cho gọi tới Giám đốc (101)
+; CONTEXT CHO NHÂN VIÊN (102-109): Chặn không cho gọi tới Giám đốc (101)
 ; ==============================================================================
 [nhanvien-context]
-exten => 102,1,Dial(PJSIP/102,30)
-same => n,Hangup()
-
-exten => 103,1,Dial(PJSIP/103,30)
+; --- Cho phép gọi các số 102, 103, 104, 105... ---
+exten => _10[2-9],1,Dial(PJSIP/${EXTEN},30)
 same => n,Hangup()
 
 exten => 600,1,Goto(internal-common,600,1)
@@ -222,10 +241,10 @@ same => n,Hangup(17)
 ; DỊCH VỤ CHUNG: GỌI NHÓM & TỔNG ĐÀI TỰ ĐỘNG IVR
 ; ==============================================================================
 [internal-common]
-; --- YÊU CẦU 1: GỌI NHÓM (Ext 600) ---
+; --- YÊU CẦU 1: GỌI NHÓM (Ext 600) - Tất cả các máy cùng reo ---
 exten => 600,1,NoOp(--- KÍCH HOẠT GỌI NHÓM 600 ---)
 same => n,Answer()
-same => n,Dial(PJSIP/101&PJSIP/102&PJSIP/103,30)
+same => n,Dial(PJSIP/101&PJSIP/102&PJSIP/103&PJSIP/104&PJSIP/105,30)
 same => n,Hangup()
 
 ; --- YÊU CẦU 6: GỌI TỔNG ĐÀI IVR (Ext 100) ---
