@@ -51,6 +51,22 @@ echo -e "${GREEN}-> Địa chỉ IP của Server Ubuntu VoIP: ${SERVER_IP}${NC}"
 echo -e "\n${YELLOW}[2/5] Cấu hình các tài khoản SIP (101, 102, 103)...${NC}"
 cp /etc/asterisk/pjsip.conf /etc/asterisk/pjsip.conf.bak 2>/dev/null || true
 
+# Tự động phát hiện mạng LAN và mạng ngoài (VPN/Bridge)
+DEFAULT_IFACE=\$(ip route | awk '/default/ {print \$5}' | head -n1)
+if [ -n "\$DEFAULT_IFACE" ]; then
+    LOCAL_NET=\$(ip route | grep "\$DEFAULT_IFACE" | grep -v "default" | awk '{print \$1}' | head -n1)
+else
+    LOCAL_NET="192.168.1.0/24"
+fi
+
+EXT_IFACE=\$(ip -o link show | awk -F': ' '{print \$2}' | grep -vE "lo|\$DEFAULT_IFACE" | head -n1)
+if [ -n "\$EXT_IFACE" ]; then
+    EXTERNAL_IP=\$(ip -4 addr show \$EXT_IFACE | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | head -n 1)
+else
+    # Nếu máy chỉ có 1 card mạng
+    EXTERNAL_IP=\$(ip -4 addr show \$DEFAULT_IFACE | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | head -n 1)
+fi
+
 cat <<EOF > /etc/asterisk/pjsip.conf
 [global]
 type=global
@@ -61,6 +77,9 @@ message_context=send-message
 type=transport
 protocol=udp
 bind=0.0.0.0:5060
+local_net=\$LOCAL_NET
+external_signaling_address=\$EXTERNAL_IP
+external_media_address=\$EXTERNAL_IP
 
 ; --- TEMPLATE CHUNG ---
 [endpoint-template](!)
