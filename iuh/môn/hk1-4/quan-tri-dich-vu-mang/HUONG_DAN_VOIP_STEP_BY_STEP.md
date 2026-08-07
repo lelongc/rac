@@ -291,7 +291,7 @@ Khi gửi tin nhắn văn bản (SIP MESSAGE) trên MicroSIP, nếu cửa sổ c
 4. Nhập đầy đủ các tham số cấu hình:
    * **Account Name**: `Di động 103`
    * **User ID / Username**: `103`
-   * **Domain / Server**: `192.168.1.100` *(Hoặc điền IP Card Bridged `10.10.55.250` / `10.45.80.164` nếu kết nối Wi-Fi/Hotspot)*
+   * **Domain / Server**:  *điền IP Card Bridged `10.10.55.250` / `10.45.80.164` nếu kết nối Wi-Fi/Hotspot)*
    * **Password**: `123456`
    * **Transport Protocol**: Chọn **UDP**
 5. Bấm **SAVE** (Lưu) hoặc **APPLY**.

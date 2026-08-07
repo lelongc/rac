@@ -66,6 +66,7 @@ bind=0.0.0.0:5060
 [endpoint-template](!)
 type=endpoint
 context=nhanvien-context
+message_context=send-message
 disallow=all
 allow=ulaw,alaw,g722,gsm
 direct_media=no
@@ -129,6 +130,16 @@ cat <<EOF > /etc/asterisk/extensions.conf
 static=yes
 writeprotect=no
 clearglobalvars=no
+
+; ==============================================================================
+; CONTEXT XỬ LÝ NHẮN TIN SIP (PJSIP MESSAGE)
+; ==============================================================================
+[send-message]
+exten => _X.,1,NoOp(Processing SIP MESSAGE from \${CALLERID(num)} to \${EXTEN})
+same => n,Set(MESSAGE(to)=pjsip:\${EXTEN})
+same => n,Set(MESSAGE(from)=sip:\${CALLERID(num)}@\${SERVER_IP})
+same => n,MessageSend(pjsip:\${EXTEN})
+same => n,Hangup()
 
 ; ==============================================================================
 ; CONTEXT CHO GIÁM ĐỐC (101): Được gọi tất cả mọi người
