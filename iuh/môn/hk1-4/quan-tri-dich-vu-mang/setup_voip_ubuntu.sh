@@ -135,10 +135,10 @@ clearglobalvars=no
 ; CONTEXT XỬ LÝ NHẮN TIN SIP (PJSIP MESSAGE)
 ; ==============================================================================
 [send-message]
-exten => _X.,1,NoOp(Processing SIP MESSAGE from \${CALLERID(num)} to \${EXTEN})
-same => n,Set(MESSAGE(to)=pjsip:\${EXTEN})
-same => n,Set(MESSAGE(from)=sip:\${CALLERID(num)}@\${SERVER_IP})
+exten => _X.,1,NoOp(SIP MESSAGE from \${MESSAGE(from)} to \${EXTEN})
+same => n,Set(MESSAGE(to)=sip:\${EXTEN}@\${SERVER_IP})
 same => n,MessageSend(pjsip:\${EXTEN})
+same => n,NoOp(MessageSend result: \${MESSAGE_SEND_STATUS})
 same => n,Hangup()
 
 ; ==============================================================================
