@@ -70,6 +70,9 @@ message_context=send-message
 disallow=all
 allow=ulaw,alaw,g722,gsm
 direct_media=no
+rewrite_contact=yes
+rtp_symmetric=yes
+force_rport=yes
 auth=auth-template
 aors=aor-template
 mailboxes=
@@ -119,6 +122,17 @@ username=103
 password=123456
 
 [103](aor-template)
+EOF
+
+# 4. Cấu hình Modules (/etc/asterisk/modules.conf)
+echo -e "\n\${YELLOW}Cấu hình modules.conf (Vô hiệu hóa chan_sip tránh xung đột)...\${NC}"
+cat <<EOF > /etc/asterisk/modules.conf
+[modules]
+autoload=yes
+noload => chan_sip.so
+noload => app_voicemail_imap.so
+noload => app_voicemail_odbc.so
+load => app_voicemail.so
 EOF
 
 # 4. Cấu hình Extensions (Dialplan) (/etc/asterisk/extensions.conf)
