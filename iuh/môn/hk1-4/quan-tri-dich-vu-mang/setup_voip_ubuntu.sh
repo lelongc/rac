@@ -31,7 +31,15 @@ sed -i '/cdrom/d' /etc/apt/sources.list 2>/dev/null || true
 echo "nameserver 8.8.8.8" > /etc/resolv.conf
 
 # 1. Cập nhật hệ thống & cài đặt Asterisk + msmtp (gửi mail)
-echo -e "\n${YELLOW}[1/5] Đang cài đặt Asterisk và công cụ hỗ trợ...${NC}"
+echo -e "\n${YELLOW}[1/5] Đang dọn dẹp Asterisk cũ (nếu có) và cài đặt mới...${NC}"
+systemctl stop asterisk 2>/dev/null || true
+systemctl disable asterisk 2>/dev/null || true
+killall -9 asterisk 2>/dev/null || true
+apt-get purge -y asterisk asterisk-core-sounds-en asterisk-core-sounds-en-wav asterisk-core-sounds-en-g722 asterisk-modules asterisk-voicemail asterisk-config >/dev/null 2>&1 || true
+apt-get autoremove -y >/dev/null 2>&1 || true
+apt-get clean >/dev/null 2>&1 || true
+rm -rf /etc/asterisk /var/lib/asterisk /var/log/asterisk /var/spool/asterisk /usr/lib/asterisk /var/run/asterisk 2>/dev/null || true
+
 apt-get update -y
 apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" asterisk asterisk-core-sounds-en-gsm msmtp msmtp-mta mailutils curl net-tools
 
@@ -52,19 +60,19 @@ echo -e "\n${YELLOW}[2/5] Cấu hình các tài khoản SIP (101, 102, 103)...${
 cp /etc/asterisk/pjsip.conf /etc/asterisk/pjsip.conf.bak 2>/dev/null || true
 
 # Tự động phát hiện mạng LAN và mạng ngoài (VPN/Bridge)
-DEFAULT_IFACE=\$(ip route | awk '/default/ {print \$5}' | head -n1)
-if [ -n "\$DEFAULT_IFACE" ]; then
-    LOCAL_NET=\$(ip route | grep "\$DEFAULT_IFACE" | grep -v "default" | awk '{print \$1}' | head -n1)
+DEFAULT_IFACE=$(ip route | awk '/default/ {print $5}' | head -n1)
+if [ -n "$DEFAULT_IFACE" ]; then
+    LOCAL_NET=$(ip route | grep "$DEFAULT_IFACE" | grep -v "default" | awk '{print $1}' | head -n1)
 else
     LOCAL_NET="192.168.1.0/24"
 fi
 
-EXT_IFACE=\$(ip -o link show | awk -F': ' '{print \$2}' | grep -vE "lo|\$DEFAULT_IFACE" | head -n1)
-if [ -n "\$EXT_IFACE" ]; then
-    EXTERNAL_IP=\$(ip -4 addr show \$EXT_IFACE | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | head -n 1)
+EXT_IFACE=$(ip -o link show | awk -F': ' '{print $2}' | grep -vE "lo|$DEFAULT_IFACE" | head -n1)
+if [ -n "$EXT_IFACE" ]; then
+    EXTERNAL_IP=$(ip -4 addr show $EXT_IFACE | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | head -n 1)
 else
     # Nếu máy chỉ có 1 card mạng
-    EXTERNAL_IP=\$(ip -4 addr show \$DEFAULT_IFACE | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | head -n 1)
+    EXTERNAL_IP=$(ip -4 addr show $DEFAULT_IFACE | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | head -n 1)
 fi
 
 cat <<EOF > /etc/asterisk/pjsip.conf
@@ -77,9 +85,9 @@ message_context=send-message
 type=transport
 protocol=udp
 bind=0.0.0.0:5060
-local_net=\$LOCAL_NET
-external_signaling_address=\$EXTERNAL_IP
-external_media_address=\$EXTERNAL_IP
+local_net=$LOCAL_NET
+external_signaling_address=$EXTERNAL_IP
+external_media_address=$EXTERNAL_IP
 
 ; --- TEMPLATE CHUNG ---
 [endpoint-template](!)
@@ -280,8 +288,12 @@ account default : gmail
 EOF
 fi
 
-chmod 600 /etc/msmtprc
-chown asterisk:asterisk /etc/msmtprc 2>/dev/null || true
+chmod 640 /etc/msmtprc
+chown root:asterisk /etc/msmtprc 2>/dev/null || chown root:root /etc/msmtprc
+touch /var/log/msmtp.log
+chown asterisk:asterisk /var/log/msmtp.log 2>/dev/null || true
+chmod 666 /var/log/msmtp.log
+
 
 # 7. Restart và Enable Asterisk
 echo -e "\n${YELLOW}[5/5] Khởi động lại dịch vụ Asterisk...${NC}"
