@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách sản phẩm</title>
+</head>
+<body>
+    <h2>Danh Sách Sản Phẩm</h2>
+
+    <button onclick="loadProducts()">Hiển thị danh sách sản phẩm</button>
+    <br><br>
+
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Mã SP</th>
+                <th>Tên sản phẩm</th>
+                <th>Giá (VNĐ)</th>
+                <th>Số lượng</th>
+                <th>Danh mục</th>
+            </tr>
+        </thead>
+        <tbody id="product-table-body">
+            <!-- Dữ liệu sản phẩm sẽ được nạp vào đây bằng JavaScript -->
+        </tbody>
+    </table>
+
+    <script src="script.js"></script>
+</body>
+</html>
