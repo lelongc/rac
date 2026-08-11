@@ -1,3 +1,4 @@
+# Global ignore rules
 MDaemon 16.5.2 x64.rar
 MDaemon16.5.2x64.exe
 .metadata
@@ -5,4 +6,7 @@ MDaemon16.5.2x64.exe
 *.class
 *.mp4
 *.env
-iuh/môn/hk1-4/công cụ web và website hướng dữ liệu/btl/*
+node_modules/
+target/
+.idea/
+.vscode/
