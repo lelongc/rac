@@ -29,10 +29,12 @@ Trả lời:
 - `true or null`    => **true**
 - `false or null`   => **null**
 
-b2/ cho chứa 1 mảng danh sách các đối tượng , đối tượng là 1 sản phẩm , viết hàm js để load danh sách này vào table
+b2/ Cho chứa 1 mảng danh sách các đối tượng (mỗi đối tượng là 1 sản phẩm), viết hàm JS để load danh sách này vào bảng HTML (table).
 
+---
 
+### 📌 Yêu cầu kiến trúc & Kỹ thuật chi tiết:
+- **Phía Server**: Xây dựng **Web Service theo chuẩn RESTful API**, xử lý và trả về dữ liệu định dạng **JSON**.
+- **Phía Client (Trình duyệt)**: Gửi yêu cầu (Call) tới Web Service bằng **jQuery (`$.ajax` / `$.getJSON`)** hoặc **Fetch API**.
+- **Xử lý hiển thị**: Sử dụng **JavaScript DOM** để nhận chuỗi/mảng JSON và kết xuất (render) dữ liệu hiển thị lên giao diện bảng HTML (`<table>`).
 
-17 trang 
-
-code đáp ứng yêu cầu khóa luận tốt nghiệp
