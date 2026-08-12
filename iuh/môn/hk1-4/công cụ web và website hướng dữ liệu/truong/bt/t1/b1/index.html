@@ -3,36 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Quy đổi tiền tệ</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>Chương trình quy đổi tiền tệ</h2>
+    <div class="container">
+        <h2>Chương trình quy đổi tiền tệ</h2>
 
-    <form>
-        <label for="amount">Số tiền:</label>
-        <input type="number" id="amount" value="1"><br><br>
+        <form>
+            <div class="form-group">
+                <label for="amount">Số tiền:</label>
+                <input type="number" id="amount" value="1">
+            </div>
 
-        <label for="from">Từ đồng tiền:</label>
-        <select id="from">
-            <option value="USD">USD - Đô la Mỹ</option>
-            <option value="VND" selected>VND - Việt Nam Đồng</option>
-            <option value="EUR">EUR - Euro</option>
-            <option value="JPY">JPY - Yên Nhật</option>
-            <option value="GBP">GBP - Bảng Anh</option>
-        </select><br><br>
+            <div class="form-group">
+                <label for="from">Từ đồng tiền:</label>
+                <select id="from">
+                    <option value="USD">USD - Đô la Mỹ</option>
+                    <option value="VND" selected>VND - Việt Nam Đồng</option>
+                    <option value="EUR">EUR - Euro</option>
+                    <option value="JPY">JPY - Yên Nhật</option>
+                    <option value="GBP">GBP - Bảng Anh</option>
+                </select>
+            </div>
 
-        <label for="to">Sang đồng tiền:</label>
-        <select id="to">
-            <option value="USD" selected>USD - Đô la Mỹ</option>
-            <option value="VND">VND - Việt Nam Đồng</option>
-            <option value="EUR">EUR - Euro</option>
-            <option value="JPY">JPY - Yên Nhật</option>
-            <option value="GBP">GBP - Bảng Anh</option>
-        </select><br><br>
+            <div class="form-group">
+                <label for="to">Sang đồng tiền:</label>
+                <select id="to">
+                    <option value="USD" selected>USD - Đô la Mỹ</option>
+                    <option value="VND">VND - Việt Nam Đồng</option>
+                    <option value="EUR">EUR - Euro</option>
+                    <option value="JPY">JPY - Yên Nhật</option>
+                    <option value="GBP">GBP - Bảng Anh</option>
+                </select>
+            </div>
 
-        <button type="button" onclick="convert()">Quy đổi</button>
-    </form>
+            <button type="button" onclick="convert()">Quy đổi</button>
+        </form>
 
-    <h3 id="result">Kết quả: </h3>
+        <div class="result-box" id="result">Kết quả: ---</div>
+    </div>
 
     <script src="script.js"></script>
 </body>
