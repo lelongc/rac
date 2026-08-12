@@ -1,4 +1,3 @@
-// Mảng chứa danh sách các đối tượng sản phẩm
 const products = [
     { id: "SP01", name: "Laptop Dell XPS 15", price: 35000000, quantity: 5, category: "Laptop" },
     { id: "SP02", name: "Điện thoại iPhone 15 Pro", price: 28000000, quantity: 10, category: "Điện thoại" },
@@ -7,14 +6,11 @@ const products = [
     { id: "SP05", name: "Màn hình LG UltraGear 27 inch", price: 7900000, quantity: 4, category: "Màn hình" }
 ];
 
-// Hàm nạp danh sách sản phẩm vào bảng (table)
 function loadProducts() {
     let tbody = document.getElementById("product-table-body");
-    
-    // Xóa dữ liệu cũ nếu có
+
     tbody.innerHTML = "";
 
-    // Duyệt qua mảng sản phẩm và nối từng dòng tr vào table
     products.forEach(product => {
         let row = `
             <tr>
@@ -29,5 +25,4 @@ function loadProducts() {
     });
 }
 
-// Tự động nạp dữ liệu khi trang web được tải xong
 window.onload = loadProducts;
