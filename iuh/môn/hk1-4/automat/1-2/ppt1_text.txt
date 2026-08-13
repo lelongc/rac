@@ -1,0 +1,128 @@
+1
+NGÔN NGỮ HÌNH THỨC & ÔTÔMÁT 
+Nguyễn Thanh Chuyên
+2
+Mục tiêu môn học
+Cung cấp những kiến thức cơ bản về ngôn ngữ, văn phạm và ôtômát.Cung cấp các phương pháp phân tích từ vựng, phân tích cú pháp.Cơ sở cho việc tìm hiểu các ngôn ngữ lập trình.Rèn luyện kỹ năng lập trình cho sinh viên.Sau khi hoàn thành môn học, sinh viên trình bày được qui trình biên dịch của một ngôn ngữ lập trình. Vận dụng các kiến thức, kỹ năng để xây dựng một ngôn ngữ lập trình và thực hiện các chuyên đề đồ án chuyên ngành, học phần. 
+Giới thiệu
+3
+Nội dung giáo trình
+CHƯƠNG 1. NHẬP MÔN VỀ VĂN PHẠM VÀ NGÔN NGỮ HÌNH THỨC CHƯƠNG 2. ÔTÔMÁT HỮU HẠNCHƯƠNG 3. BIỂU THỨC VÀ VĂN PHẠM CHÍNH QUICHƯƠNG 4. ÔTÔMÁT ĐẨY XUỐNG VÀ NGÔN NGỮ PHI NGỮ CẢNHCHƯƠNG 5. MÁY TURING
+Giới thiệu
+4
+CHƯƠNG 1. VĂN PHẠM VÀ NGÔN NGỮ HÌNH THỨC 
+Các khái niệm cơ bản về ngôn ngữ hình thứcCác phép toán trên các từCác phép toán trên ngôn ngữVăn phạm và ngôn ngữ sinh bởi văn phạmCác tính chất của văn phạm và ngôn ngữ
+1. Các khái niệm cơ bản về ngôn ngữ hình thức
+1.1. Bảng chữ cái1. 2. Từ1. 3. Ngôn ngữ
+5
+Bảng chữ cái
+Định nghĩa 1.1 Tập Σ khác rỗng gồm hũu hạn các ký hiệu được gọi là bảng chữ cái. Mỗi phần tử a ∈ Σ được gọi là một chữ cái hay một ký hiệu.Ví dụ: Dưới đây là các bảng chữ cái: 1. ∑ = {a, b, c, … , x, y, z} 2. Δ = {α, β, γ, δ, ε, η, ϕ, κ, μ, χ, ν, π, θ, ρ, σ, τ, ω,ξ, ψ}, 3. Г = {0, 1}4. W = {if, then, else, a, b, c, d, e, f, +, −, ∗, /, =, ≠}
+6
+Từ
+Định nghĩa 1.2 Giả sử có bảng chữ cái Σ = {a1, a2, …, am} , một dãy các chữ cái α = ai1 ai2 …ait, với aij ∈ Σ (1 ≤ j ≤ t) được gọi là một từ hay một xâu trên bảng chữ cái Σ. Tổng số vị trí của các ký hiệu xuất hiện trong xâu α được gọi là độ dài của từ α và ký hiệu là | α |.
+7
+Từ
+Chú ý: Một từ trên bảng chữ cái Σ là một xâu hữu hạn gồm một số lớn hơn hay bằng không các chữ cái của Σ, trong đó một chữ cái có thể xuất hiện nhiều lần. Xâu không có chữ cái nào được gọi là từ rỗng và được ký hiệu là ε. Rõ ràng từ rỗng là từ có thể được chọn từ bất kỳ bảng chữ cái nào. Hai từ α = a1a2…an và β = b1b2…bm được gọi là bằng nhau, và được ký hiệu là α = β, nếu n = m và ai = bi với mọi i = 1, 2, …, n.
+8
+Từ
+Tập mọi từ trên bảng chữ cái Σ được ký hiệu là Σ* , còn tập mọi từ khác rỗng trên bảng chữ cái Σ được ký hiệu là Σ+. Như vậy Σ+ = Σ* \ {ε} và Σ* = Σ+ ∪ {ε}. Các tập Σ* và Σ+ là vô hạn. Về cấu trúc đại số thì Σ* là một vị nhóm tự do sinh bởi Σ với đơn vị là từ rỗng ε, còn Σ+ là một nửa nhóm tự do sinh bởi Σ. Các tập Σ* và Σ+ là vô hạn đếm được.
+9
+Từ
+Ví dụ: Ta có ε , 0, 01, 101, 1010, 110011 là các từ trên bảng chữ cái Г = {0,1} 2. Các xâu ε, beautiful, happy, holiday là các từ trên bảng chữ cái Σ = {a, b, c, …, z}
+10
+Ngôn ngữ
+Ngôn ngữĐịnh nghĩa 1.3 Cho bảng chữ cái Σ, mỗt tập con L ⊆ Σ* được gọi là một ngôn ngữ hình thức (hay ngôn ngữ) trên bảng chữ cái Σ. Tập rỗng, ký hiệu ∅, là một ngôn ngữ không gồm một từ nào và được gọi là ngôn ngữ rỗng. Vậy ngôn ngữ rỗng là ngôn ngữ trên mọi bảng chữ cái. Chú ý rằng ngôn ngữ rỗng: L = ∅ là khác với ngôn ngữ chỉ gồm một từ rỗng: L = {ε}.
+11
+Ngôn ngữ
+Ví dụ:1. Σ* là ngôn ngữ gồm tất cả các từ trên Σ còn Σ+ là ngôn ngữ gồm tất cả các từ khác từ rỗng trên Σ. 2. L = { ε, 0, 1, 01, 10, 00, 11, 011,100} là một ngôn ngữ trên bảng chữ cái Г = {0, 1}. 3. L = {ε, a, b, c, aa, ab, ac, abc} là ngôn ngữ trên bảng chữ cái Σ = {a, b, c}. 
+12
+Ngôn ngữ
+4. L1 = {ε, a, b, abb, aab, aaa, bbb, abab}, L2 = {anbn | n∈ N} là hai ngôn ngữ trên bảng chữ Σ = {a, b}, L1 là ngôn ngữ hữu hạn trong khi L2 là ngôn ngữ vô hạn. Mỗi từ thuộc ngôn ngữ L2 có số chữ cái a bằng số chữ cái b với a và b không xen kẽ, a nằm ở phía trái và b ở phía phải của từ.
+13
+2. Các phép toán trên các từ
+Các phép toán thực hiện trên các từ trên cùng một bảng chữ cái Σ, tạo nên các từ mới cũng thuộc cùng một bảng chữ cái.2.1 Phép nhân ghép 2.2 Phép lấy từ ngược 2.3 Phép chia từ
+14
+2.1 Phép nhân ghép 
+Định nghĩa 2.1: Tích ghép (hay nhân ghép) của hai từ α = a1a2…am và từ β = b1b2…bn trên bảng chữ cái Σ, là từ γ = a1a2…amb1b2…bn trên bảng chữ cái Σ. Kí hiệu phép nhân ghép là γ = α.β (hay γ = αβ).Từ rỗng là phần tử đơn vị đối với phép nhân ghép, tức là: ωε = εω = ω đúng với mọi từ ω.Phép nhân ghép có tính kết hợp, nghĩa là với mọi từ α, β, γ, ta có (αβ)γ = α(βγ).
+15
+2.1 Phép nhân ghép 
+Ký hiệu ωn, với n là số tự nhiên, được dùng theo nghĩa quen thuộc:Đối với phép nhân ghép thì hàm độ dài có một số tính chất hình thức của logic: với mọi từ α, β và mọi số tự nhiên n, thì: |αβ| = |α| + |β|, và |αn| = n|α|,  | ε | = 0
+16
+2.1 Phép nhân ghép 
+Một vài khái niệm liên quan:• Đối với các từ ω, t1, φ, t2 trên bảng chữ cái Σ mà ω = t1φt2 thì *φ * ( * không phải là một ký hiệu của Σ) gọi là một vị trí của φ trên Σ.• Xâu φ được gọi là một từ con trong ω nếu tồn tại ít nhất một vị trí của φ trong ω.
+17
+Một vài khái niệm liên quan
+Nếu t1 = ε, tức là ω = φ t2 thì φ được gọi là tiền tố (phần đầu) của từ ω, nếu t2 = ε, tức là ω = t1φ thì φ được gọi là hậu tố (phần cuối) của từ ω. Dễ thấy rằng từ rỗng ε là phần đầu, phần cuối và là từ con của một từ ω bất kỳ trên bảng chữ cái Σ.• Trường hợp | φ | = 1, tức là φ chỉ gồm 1 ký hiệu, chẳng hạn φ = b ∈ Σ, thì *b* được gọi là một vị trí của b trong từ ω, cũng gọi là một điểm trong ω.• Số vị trí của kí hiệu a trong từ ω được ký hiệu là Ia(ω), hay |ω|a hoặc đơn giản hơn là ω| a.
+18
+2.1 Phép nhân ghép 
+Ví dụ:1. Trên bảng chữ cái W = {if, then, else, a, b, c, d, e, f, +, −, ∗, /, =, ≠}, ta có các từ α = if a+b=c then c∗d=e và β = else c/d=f , còn αβ là từ: if a+b=c then c∗d=e else c/d=f. 2. Cho Σ = {a, b, c}, khi đó: Từ ω = abcbcb chứa 2 vị trí của bcb, đó là a*bcb*cb và abc*bcb*, φ = bcb là một từ con của ω. Từ ω chứa một vị trí của ký hiệu a, đó là *a*bcbcb. 3. Từ ω = 010111001 trên bảng chữ cái {0, 1} có độ dài 9, trong đó 0101 là tiền tố và 11001 là hậu tố của ω.
+19
+2.2 Phép lấy từ ngược
+Định nghĩa 2.2 Giả sử có từ khác rỗng ω = a1a2 …am trên bảng chữ cái Σ, khi đó từ am am-1 … a2 a1 được gọi là từ ngược của từ ω, và được ký hiệu là ωR , hay ω^ . Khi ω = ε ta quy ước εR = ε.Một số tính chất của phép lấy ngược:• (ωR)R = ω.• (αβ)R = βR αR• | αR | = | α |
+20
+2.2 Phép lấy từ ngược
+Ví dụ:1. Cho các từ α = 100110 và β = aabb trên bảng chữ cái {0,1,a,b}, theo định nghĩa ta có: αR = 011001 và (αR)R = (011001)R = 100110 = α.βR = bbaa và (βR)R = (bbaa)R = aabb = β. 2. Cho các từ happy và oto trên bảng chữ cái ∑ = {a, b, c, …x, y, z}, khi đó ta có: (happy)R = yppah và (oto)R = oto. Ngoài ra ta có: | (happy)R | = | yppah| = | happy | = 5
+21
+2.3 Phép chia từ
+Là phép toán ngắt bỏ phần đầu hay phần cuối của một từ. Ta có các định nghĩa sau:Định nghĩa 2.3 Phép chia trái của từ α cho từ β (hay thương bên trái của α và β) cho kết quả là phần còn lại của từ α sau khi ngắt bỏ phần đầu β trong từ α, và được ký hiệu là β\α .Định nghĩa 2.4 Phép chia phải của từ α cho từ γ (hay thương bên phải của α và γ) cho kết quả là phần còn lại của từ α sau khi ngắt bỏ phần cuối γ trong từ α, và được ký hiệu là α/γ .
+22
+2.3 Phép chia từ
+Các tính chất của phép chia từ:Trong phép chia trái của từ α cho từ β thì β phải là tiền tố của từ α, tương tự, trong phép chia phải từ α cho từ γ thì γ phải là hậu tố của từ α.•ε\α = α /ε = α .•α\α = α /α = ε.• Nếu α = β.γ thì β\α = γ, còn α/γ = β• (β\α )R = αR / βR .• ( α/γ )R = γR \ αR
+23
+Phép chia từ
+Ví dụ:Cho các từ α = abcaabbcc, β = abc, γ = bcc trên bảng chữ cái ∑ = {a, b, c}, khi đó ta có:1. β\α = aabbcc và α /γ = abcaab. 2. (β\α )R = (aabbcc)R = ccbbaa = ccbbaacba / cba = αR / βR
+24
+Phép hợp  
+ 
+25
+Phép giao  
+ 
+26
+Phép lấy phần bù  
+Định nghĩa 3.3  Ngôn ngữ phần bù của ngôn ngữ L trên bảng chữ cái Σ, ký hiệu CΣL (hay đơn giản là CL, nếu không gây nhầm lẫn), là một ngôn ngữ trên bảng chữ cái ∑, đó là tập từ:  CΣL = {ω ∈ Σ* | ω ∉  L } Các ngôn ngữ có các tính chất sau: CΣ{ε} = Σ+ ,  CΣ Σ+ = {ε}. CΣ ∅ = Σ* , CΣ Σ* = ∅.  C(CL1 ∪ CL2) = L1 ∩ L2. 
+27
+Phép lấy phần bù 
+Ví dụ:Cho ngôn ngữ L1 = {ε, 0, 01}, L2 = {ε, 01, 10} trên bảng chữ cái Σ = {0, 1}, khi đó ta có:    L1∪ L2 = {ε, 0, 01, 10},  L1 ∩ L2 = {ε, 01}. Cho ngôn ngữ L = {ω ∈ ∑*,  với | ω | là một số chẵn }, khi đó ta có:        CΣL = {ω ∈ ∑+ , với | ω | là một số lẻ}. 
+28
+Phép nhân ghép  
+Định nghĩa 3.4  Cho hai ngôn ngữ L1 trên bảng chữ Σ1 và L2 trên bảng chữ Σ2. Nhân ghép hay tích của hai ngôn ngữ L1 và L2 là một ngôn ngữ trên bảng chữ Σ1 ∪ Σ2, ký hiệu L1L2, đuợc xác định bởi: L1L2 = {αβ | α∈L1 và β∈L2}. Các tính chất của phép nhân ghép: Phép nhân ghép có tính kết hợp: với mọi ngôn ngữ L1, L2 và L3, ta có: (L1L2)L3 = L1(L2L3). ∅L = L∅ = ∅,  {ε}L = L{ε} = L, 
+29
+Phép nhân ghép  
+Phép nhân ghép có tính phân phối đối với phép hợp, nghĩa là L1(L2 ∪ L3) = L1L2 ∪ L1L3,  (L2 ∪ L3)L1 = L2L1 ∪ L3L1. Phép nhân ghép không có tính phân phối đối với phép giao. Phép hợp, phép giao không có tính phân phối đối với phép nhân ghép.  Mọi ngôn ngữ L1, L2 và L3, thì: L1(L2 ∩ L3) ≠ (L1L2) ∩ (L1L3)L1 ∪ (L2L3) ≠ (L1 ∪ L2)(L1 ∪ L3),  L1 ∩ (L2L3) ≠ (L1 ∩ L2)(L1 ∩ L3). 
+30
+Phép nhân ghép 
+Ví dụ 3.2  Đây là một phản ví dụ để chỉ ra rằng phép nhân ghép không có tính phân phối đối với phép giao.  Phép hợp, phép giao không có tính phân phối đối với phép nhân ghép. Xét các ngôn ngữ L1 = {0, 01}, L2 = {01, 10}, L3 = {0} trên bảng chữ cái Σ = {0, 1}.  
+31
+Phép nhân ghép 
+Có thể kiểm tra được rằng phép nhân ghép không có tính phân phối đối với phép giao:        Ta có: L2 ∩ L3 = ∅, do đó:       L1(L2 ∩ L3) = ∅,        Mặt khác, ta có L1L2 = {001, 010, 0101, 0110} và L1L3 = {00, 010}, do đó:       (L1L2) ∩ (L1L3) = {010}.       Vậy L1(L2 ∩ L3) ≠ (L1L2) ∩ (L1L3), tức là phép nhân ghép không có tính phân phối đối với phép giao. 
+32
+Phép nhân ghép 
+Ví dụ:Kiểm tra tính phân phối của phép hợp, phép giao đối với phép nhân ghép: Ta có: L2L3 = {010, 100}, do đó: L1 ∪ (L2L3) = {0, 01, 010, 100},  Mặt khác ta cũng có L1 ∪ L2 = {0, 01, 10} và L1 ∪ L3 = {0, 01}, do đó: (L1 ∪ L2)(L1 ∪ L3) = {00, 001, 010, 0101, 100, 1001}.  Vậy L1 ∪ (L2L3) ≠ (L1 ∪ L2)(L1 ∪ L3), tức là phép hợp không có tính phân phối đối với phép nhân ghép.
+33
+Phép nhân ghép 
+Tương tự, đối với phép giao, ta có:        L2L3 = {010, 100}, do đó: L1 ∩ (L2L3) = ∅. Mặt khác L1 ∩ L2 = {01}, L1 ∩ L3 = {0}, do đó: (L1 ∩ L2)(L1 ∩ L3) = {010}.  Vậy L1 ∩ (L2L3) ≠ (L1 ∩ L2)(L1 ∩ L3). Tức là phép giao không có tính phân phối đối với phép nhân ghép. 
+34
+Phép lặp  
+ 
+35
+Phép lặp 
+Ví dụ:Xét ngôn ngữ L = {0, 1} trên bảng chữ Σ = {0, 1}. Ta có:       L2 = {00, 01, 10, 11}, tập hợp các xâu nhị phân độ dài 2;       L3 = {000, 001, 010, 011, 100, 101, 110, 111}, tập hợp các xâu nhị phân độ dài 3.       Tương tự, Ln là tập hợp các xâu nhị phân độ dài n.       Vì vậy, L* là tập hợp tất cả các xâu nhị phân. 
+36
+Phép lặp 
+Ví dụ:Xét hai ngôn ngữ trên bảng chữ Σ = {a}: L1 = {a2n | n ≥ 1},  L2 = {a5n+3 | n ≥ 0}. Khi đó, ta có L1 = {a2}+, L2 = {a5}*{a3}. 
+37
+Phép lấy ngôn ngữ ngược
+Định nghĩa 3.6  Cho ngôn ngữ L trên bảng chữ cái Σ, khi đó ngôn ngữ ngược của L là một ngôn ngữ trên bảng chữ cái ∑, được ký hiệu là LR hay L^, là tập từ: LR = {ω ∈ Σ* / ωR ∈ L} Nhận xét:  Dễ dàng thấy rằng phép lấy ngôn ngữ ngược có các tính chất sau: (LR)R = L. {ε}R  = { ε}.  (∅)R = ∅. 
+38
+Phép lấy ngôn ngữ ngược
+Ví dụ:Cho L = {ε, ab, abc, cbaa} là một ngôn ngữ trên bảng chữ cái Σ = {a, b, c}, khi đó LR = {ε, ba, cba, aabc} là ngôn ngữ ngược của L. 
+39
+Phép chia ngôn ngữ 	 
+Định nghĩa 3.7  Cho ngôn ngữ X và Y trên bảng chữ cái Σ, khi đó thương bên trái của ngôn ngữ X cho ngôn ngữ Y là một ngôn ngữ trên ∑, được ký hiệu là  Y \ X , là tập từ: Y \ X = {z ∈ Σ* / x ∈ X, y ∈ Y mà x = yz} Định nghĩa 3.8  Cho ngôn ngữ X và Y trên bảng chữ cái Σ, khi đó thương bên phải của ngôn ngữ X cho ngôn ngữ Y là một ngôn ngữ trên ∑, được ký hiệu là  X /Y , là tập từ: X / Y  = {z ∈ Σ* / x ∈ X, y ∈ Y mà x = zy} 
+40
+Phép chia ngôn ngữ 	
+Các tính chất của phép chia từ:{ε}\ L  =  L/{ε}   = L ∅\ L   =  L /∅    = L L\ Σ*  =  Σ*/L    = Σ*  L\ Σ+  =  Σ+/L    = Σ+ (Y \ X )R =  XR / Y R  , ( X / Y )R = YR.\ XR. 
+41
+Phép chia ngôn ngữ 	
+Ví dụ:Cho X = {a, b, abc, cab, bcaa} và Y = {ε, c, ab} là các ngôn ngữ trên bảng chữ cái Σ = {a, b, c}, khi đó: Y \ X = {a, b, abc, cab, bcaa, ab, c}           	 X / Y  = {a, b, abc, cab, bcaa, ab, c} 	 	  X \ Y   = {b} Y / X  = {a} X \ X = {ε , bc, caa} Y \ Y  = {ε, c, ab} 
+42

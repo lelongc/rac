@@ -1,0 +1,32 @@
+BÀI TẬP 
+
+Hãy đưa ra 5 chuỗi có độ dài ngắn nhất (theo thứ tự từ điển) 
+ cho các ngôn ngữ sau trên  = {a, b}.
+a) L1 ={uuu-1 | u*}
+b) L2 ={u-1 uu| u*}
+c) L3 ={uau-1 | u*}
+Hãy đưa ra 5 chuỗi có độ dài ngắn nhất (theo thứ tự từ điển với quy ước chuỗi rỗng đứng trước, chiều dài tăng dần) và xác định tính chất (mô tả ngôn ngữ) của những văn phạm sau.
+a) Cho văn phạm G1 = (V, T, S, P) với:
+V = {S}
+T = {a, b}
+P = {S →Sa | Sb |}
+
+b) Cho văn phạm G1 = (V, T, S, P) với:
+V = {S}
+T = {a, b}
+P = {S →aSa | bSb |a | b |}
+
+c) Cho văn phạm G3 = (V, T, S, P) với:
+V = {S}
+T = {a, b}
+P = {S→  aSb |}
+
+Coi văn phạm G = (V, T, S, P)  
+V = {S, B}; T = {a, b}; biến khởi đầu: S
+P: {S → aB; B → bS; S →  }
+Tìm 3 cặp chuỗi (mỗi cặp gồm 1 chuỗi được văn phạm chấp nhận và 1 chuỗi không được văn phạm chấp nhận) có chiều dài lần lượt là 2, 4 và 6.
+
+Coi văn phạm G = (V, T, S, P)  
+V = {S, B}; T = {0, 1}; biến khởi đầu: S
+P: {S → 0A; A → 1S; S →  }
+Tìm 3 cặp chuỗi (mỗi cặp gồm 1 chuỗi được văn phạm chấp nhận và 1 chuỗi không được văn phạm chấp nhận) có chiều dài lần lượt là 3, 5 và 7.

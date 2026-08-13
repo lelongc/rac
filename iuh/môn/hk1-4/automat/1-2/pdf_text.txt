@@ -1,0 +1,421 @@
+Chương 1  
+MỘT SỐ KIẾN THỨC CƠ BẢN  
+1.1 MỞ ĐẦU  
+Máy tự động và ngôn ngữ hình thức (Automata and Formal Languages) là môn học mà trên 
+hai mươi năm qua không chỉ được giảng dạy trong ngành khoa học máy tính hay ngành toán - tin 
+học mà còn cho nhiều ngành khác trong lĩnh vực công nghệ. Môn học này cũng cung cấp cho người 
+học những công cụ toán học liên quan đến những đối tượng trừu tượng trong những ngành học có 
+liên quan đến máy tính để cài đặt máy tự động, để xử lý những lớp ngôn ngữ đơn giản và văn phạm 
+liên quan tới lớp ngôn ngữ đó. Nó cũng là cơ sở cho môn học ngôn ngữ lập trình, trình biên dịch, và 
+đi vào chuyên sâu theo hướng xử lý ngôn ngữ tự nhiên.  
+Những kiến thức, ký hiệu và khái niệm trình bày trong chương này, là những điều cơ bản, 
+được sử dụng c ho toàn bộ các chương còn lại. Do vậy, người đọc cần đọc trước chương này trước 
+khi đọc các chương tiếp theo. Theo kinh nghiệm, phần lớn người học có cảm giác khó học môn 
+này, do có nhiều định nghĩa, định lý, thuật ngữ và bài tập sử dụng những ký hiệu làm người đọc 
+gặp khó khăn trong việc hiểu vấn đề, làm chậm quá trình đọc. Trong quá trình đọc những chương 
+sau, nếu cần, có thể đọc lại chương này để nhớ lại những khái niệm hay những ký hiệu, kiến thức 
+cần thiết.  
+Nội dung của chương gồm ba khái niệm chính l à văn phạm, ngôn ngữ và máy tự động . Ba khái 
+niệm này luôn đi kèm với nhau. Chúng được biểu thị, cài đặt trên những đối tượng hay cấu trúc dữ 
+liệu là tập hợp và đồ thị.  
+ 
+1.2  NHỮNG KHÁI NIỆM CƠ BẢN  
+Nội dung giáo trình Automat và Ngôn ngữ hình thức này xoay quanh ba khái niệm cơ bản: 
+ngôn ngữ  (language), văn phạm  (grammar) và máy tự động  - gồm có hai lớp là lớp máy tự động 
+hữu hạn  (finite automata) và lớp máy có bộ nhớ đẩy xuống  (pushdown automata). Trong phần này, 
+những  khái niệm được trình bày một cách khái quát, chi tiết sẽ bàn đến trong những chương sau. 
+Đọc hết phần này, người đọc sẽ nắm  được một cách khái quát các cấu trúc toán là tập hợp và đồ 
+thị được dùng để biểu diễn và cài đặt một ngôn ngữ thoả những luật văn phạm của nó bằng một 
+công cụ là máy tự động cũng như mối liên quan giữa ba khái niệm này.  
+1.2.1 Ngôn ngữ  
+ Chúng ta xét đến hai loại ngôn ngữ: Thứ nhất là ngôn ngữ của loài người gọi là ngôn ngữ 
+tự nhiên  như tiếng Việt, tiếng Anh, tiếng Pháp... Thứ hai là  ngôn ngữ dùng trong máy tính gọi là 
+ngôn ngữ lập trình . Ngôn ngữ tự nhiên, theo một số từ điển định nghĩa, là một hệ thống thích hợp 
+nhằm để diễn tả những ý kiến, sự kiện, khái niệm, giữa con người; nó sử dụng một tập hợp các ký 
+hiệu (trong tiếng Việt là những chữ cái a, ă, â,…)  và các quy luật (văn phạm) để tạo thành từ, câu 
+nói, bài viết… Ngôn ngữ lập trình, do lập trình viên viết cho máy tính hiểu để thực hiện công việc, 
+thông qua các câu lệnh viết theo văn phạm của một ngôn ngữ cụ thể nào đó . NGÔN NGỮ  CHÍNH 
+LÀ MỘT TẬP HỢP CỦA CÁC TỪ , do vậy người ta thường mô tả một ngôn ngữ dưới dạng tập 
+hợp. Phần sau đây trình bày cách thành lập các câu trong ngôn ngữ, các phép toán trên các từ của 
+ngôn ngữ, biểu diễn văn phạm và công cụ máy tự động được dùng để cài đặt ngôn ngữ, văn phạm 
+trên máy tính.  
+ 
+a) Từ hay một câu : Coi một tập hữu hạn không rỗng , gồm những ký số hay những hiệu mẫu 
+tự (alphabet). Kết hợp các kí hiệu này, chúng ta xây dựng nên các từ, các từ này là một dãy các 
+kí hiệu hữu hạn được trích ra từ  tập . Nếu có thêm ký tự là khoảng trắng trong , khi đó trong 
+một từ có thể có những khoảng trắng, và nó trở thành một câu trong ngôn ngữ. Để cho đơn 
+giản, từ đây ta gọi chuỗi , chung cho cách gọi một từ hay một câu. Ví dụ:   = {a, b}, thì abab,  
+aaabbba và aba bba là các chuỗi trên . 
+Ta thường dùng các kí hiệu chữ thường a, b, c, . . . biểu thị các phần tử của   và các kí tự u, 
+v, w, … là tên của các chuỗi. Ví dụ: w = abaaa   là một chuỗi có tên w và có giá trị là abaaa . 
+b) Sự kết nối : Sự kết nối giữa hai chuỗi w và v là một chuỗi có dạng wv. Ví dụ:  
+Nếu         w  =  a 1 a2... a n 
+   v   =  b 1 b2... b m 
+thì        wv =  a 1 a2... a n b1 b2... b m 
+c) Đảo ngược : Đảo ngược  của một chuỗi là một chuỗi có các kí hiệu theo thứ tự ngược lại. Nếu 
+w là một chuỗi như ở ví dụ trên thì ta có phép đảo của w là wR 
+wR = a n… a 2 a1 
+d) Nếu w = vu thì v được gọi là tiền tố , u là hậu tố  của w 
+e) Chiều dài của chuỗi w được kí hiệu là | w|, nó chính là số các kí hiệu trong chuỗi.   
+f) Chuỗi rỗng  là chuỗi không có chứa kí hiệu hay kí số nào, được mô tả bằng kí hiệu là , và ta 
+có: 
+    ||   =  0 
+    w   = w   =  w         
+    |uv|  =  |u| +  |v|  
+g) Chuỗi z là chuỗi con  của chuỗi w, nếu z là chuỗi nằm trong chuỗi w.  
+Ví dụ , hgad  là chuỗi con của chuỗi kilabhgadlam . 
+h) Nếu w là một chuỗi thì wn là chuỗi kết nối w với n lần. Trường hợp đặc biệt: w0 = ,  
+ví dụ : w =  abba  thì w2 = abbaabba  
+i) Coi tập , ta định nghĩa tập * gọi là bao đóng -sao (star closure) của  là tập kết nối không 
+hay nhiều ký hiệu từ , khi đó * luôn chứa chuỗi  là chuỗi không có ký tự nào.    
+* = 0  1 2 … 
+     0 = {} là tập các chuỗi có độ dài bằng 0 , chứa duy nhất chuỗi rỗng  
+     1 =     là tập hợp các chuỗi có độ dài bằng 1  
+     2 là tập các chuỗi có độ dài bằng 2, tập này chứa tất cả các chuỗi bằng cách ghép nối 2 ký 
+hiệu bất kỳ từ  (2 ký tự này có thể trùng nhau)  
+                   2 = {xy| x  , y  } 
+     Tổng quát  k là tập gồm các chuỗi có độ dài = k được tạo thành từ các ký hiệu trong . 
+                
+Ví dụ  1.1 
+           Cho  = {a,b} thì:  
+                      0 = {}; 1 = {a,b} ;  2 = {aa,ab,ba,bb} 
+ 
+Ta định nghĩa thêm tập + là bao đóng - dương  (positive closure) của  
++ = * - {} 
+ nên nhớ số phần tử của  thì luôn hữu hạn, nhưng *, + thì ngược lại.  
+ 
+j) Một ngôn ngữ được định nghĩa là tập con của *. Với chuỗi w bất kì như đã nói ở trên, được  gọi 
+là một từ (word) hoặc một câu (sentence) của ngôn ngữ . Từ đây được quy định là không phân 
+biệt giữa cách gọi từ hay câu, và có thể dùng từ “chuỗi” để gọi chúng.  
+  
+ 
+Định nghĩa : Một ngôn ngữ hình thức L trên bảng chữ cái  là một tập hợp con của *. 
++ Nói cách khác, bất kỳ tập hợp nào gồm các chuỗi được tạo thành từ bảng  đều được coi là một 
+ngôn ngữ hình thức (có thể là tập hợp hữu hạn hoặc vô hạn các chuỗi).  
++ Lưu ý:  Ngôn ngữ hình thức chỉ quan tâm đến văn phạm  (cách các ký hiệu xếp cạnh nhau), hoàn 
+toàn không quan tâm đến ngữ nghĩa  (ý nghĩa của chuỗi đó là gì).  
+ 
+Ví dụ 1.2 
+Cho  = {0, 1}, tìm tập chứa các chuỗi của một ngôn ngữ L trên  . 
+Tập chứa các chuỗi của L chính là tập *. 
+Theo định nghĩa của * thì     
+ 0 = {},  1  = { 0, 1},  
+    2 = 1.1  = {00, 01, 10, 11}  
+         3 = 2.1  = {000, 001, 010, 011,100, 101, 110, 111 }  
+              . . . 
+           * = 0  1  2  …  
+                = {}  {0, 1} {00, 01, 10, 11}   … 
+              = {, 0, 1, 00, 01, 10, 11 , 000, 001, 110, 111, 100 ,…} 
+ 
+k) Coi L là một ngôn ngữ, ta định nghĩa L* gọi là bao đóng -sao của ngôn ngữ  L 
+                 L*  =  L0  L1  L2 . . .   
+Trong đó  
+L0 = {}, tập chỉ chứa duy nhất một phần tử là chuỗi rỗng  
+Nó đại diện cho việc ghép 0 lần các chuỗi từ ngôn ngữ L, nên kết quả là chuỗi rỗng.  
+L1 = L , chính là bản thân ngôn ngữ L ban đầu.  
+Nó đại diện cho việc chọn ra 1 chuỗi bất kỳ từ ngôn ngữ L. 
+L2 = là tập hợp tất cả các chuỗi được tạo thành bằng cách nối ghép  hai chuỗi bất kỳ thuộc L lại 
+với nhau.   
+L2 = L. L = {xy | x  L và  y  L} 
+Lk = L k-1. L (với k ≥ 1) 
+và L+ gọi là bao đóng -dương  của L , nó không chứa chuỗi rỗng   
+                                   L+ = L1  L2 … 
+Ví dụ  1.3: 
+Cho  = {a, b}, coi ngôn ngữ L trên , chỉ có hai chuỗi: L = {a, ab} (ngôn ngữ này gồm 2 từ: từ 
+"a" và từ "ab") . Xác định các tập hợp L0, L1, và L2 
+Giải 
+L0 = {}, L1 = {a, ab} 
+L2 (Nối L với chính nó: L. L) 
+Ta lấy mọi chuỗi trong L ghép đôi với mọi chuỗi trong L (ghép chuỗi thứ nhất với chuỗi thứ hai):  
+a ghép với a → aa 
+a ghép với ab → aab 
+ab ghép với a → aba 
+ab ghép với ab → abab  
+Kết quả L2 = {aa, aab, aba, abab }  
+ 
+Cho   = {a, b}, xét một ngôn ngữ L1 chỉ có 3 chuỗi là  {a, aa, aab}  * , ngôn ngữ này 
+có số chuỗi hữu hạn nên là ngôn ngữ hữu hạn. Ngược lại, coi ngôn ngữ  L2 = { anbn : n  0} là một 
+ngôn ngữ trên . Vì số chuỗi của L2 là không giới hạn nên L2 là ngôn ngữ vô hạn.  
+Ngôn ngữ được biểu diễn dưới dạng tập hợp, nên các phép toán thông thường như: phép 
+giao, phép hội, phép khác, lấy phần bù giữa hai ngôn ngữ được thực hiện.  
+ 
+Ví dụ 1.4  
+       Cho hai ngôn ngữ hình thức L1 và L2 trên cùng  = {a, b} trong đó:  
+L1: Tập hợp các chuỗi có độ dài chẵn (bao gồm cả chuỗi rỗng ),  L1 = {, aa, bb, abba, …}  
+L2: Tập hợp các chuỗi bắt đầu bằng ký tự a,  L2 = {a, ab, aa, aba, …}  
+       Tìm phép giao, phép hội, phép khác, phép kết nối và lấy phần bù giữa L1 và L2.  
+Giải 
+● L1  L2 = {aa, ab, abba , …}  
+là tập hợp tất cả các chuỗi đồng thời thuộc cả L1 và L2. 
+            Do vậy xét các chuỗi thỏa mãn: vừa có độ dài chẵn (thuộc L1), vừa bắt đầu bằng chữ a 
+(thuộc L2).  
+●  L1  L2 = {, a, aa, ab, bb, aba, abba , …}  
+          là tập hợp tất cả các chuỗi thuộc L1, hoặc thuộc L2, hoặc thuộc cả hai.  
+●  L1 \ L2 = {, bb, baab , bbbbb ,…} (phép khác)  
+          Là tập hợp tất cả các chu ỗi thuộc L1 nhưng KHÔNG thu ộc L2. 
+          Do v ậy, lấy toàn b ộ các chu ỗi có đ ộ dài ch ẵn L1, sau đó lo ại bỏ đi nh ững chu ỗi nào b ắt đầu 
+bằng ch ữ a. Kết quả còn l ại sẽ là các chu ỗi có đ ộ dài ch ẵn nhưng b ắt đầu bằng ch ữ b.  
+●  Phần bù của ngôn ngữ L là
+___
+L:  
+___
+L = * - L 
+● Phép kết nối giữa hai ngôn ngữ L1 và L2 là một tập tất cả các chuỗi ký hiệu là L1L2 
+         L1L2 = {xy : x  L1, y  L2} 
+Là tập hợp tất cả các chu ỗi được tạo thành b ằng cách l ấy một chu ỗi bất kỳ từ L1 ghép n ối 
+với một chu ỗi bất kỳ từ  L2 theo th ứ tự (x thuộc L1 nối với y thuộc L2 thành xy). 
+         ví dụ cụ thể:  
+Kết  (từ L1) nối với a (từ L2) → ta được a. 
+Kết aa (từ L1) nối với ab (từ L2) → ta được aaab . 
+Kết bb (từ L1) nối với aa (từ L2) → ta được bbaa . 
+Chúng ta định nghĩa Ln là L kết hợp với chính nó n lần.  
+Với n = 2 thì ta có:  
+L2 = L.L  là tập hợp tất cả các chu ỗi được tạo thành b ằng cách ghép n ối một chu ỗi bất kỳ thuộc L 
+với một chu ỗi bất kỳ khác cũng thu ộc L. 
+ 
+Ví dụ 1. 5 
+Cho L = { anbn : n  0} tìm L2. 
+khi chọn n = 2  0, ta có chuỗi aabb   L 
+khi chọn m = 3  0, ta cũng có chuỗi aaabbb   L 
+thì L2 = { anbnambm : n  0, m  0} 
+Lưu ý rằng n và m là không có liên hệ với nhau, nhưng chuỗi aabbaaabbb là chuỗi trong L2. 
+ 
+1.2.2 Văn phạm   
+Học một ngôn ngữ thì luôn phải học văn phạm của nó, có như thế mới viết và nói đúng ngôn 
+ngữ. Văn phạm là những quy luật chi phối ngôn ngữ mà ngôn ngữ phải tuân theo. Do vậy cần có 
+một cách thức để mô tả và biểu diễn văn phạm. Phần này chỉ tìm hiểu một các h tổng quát về văn 
+phạm. Trong những chương sau, sẽ khảo sát kỹ hơn văn phạm của một ngôn ngữ cụ thể. Văn phạm 
+thường được biểu diễn dưới dạng luật nhân quả, gồm có hai vế, vế trái và vế phải. Vế trái đúng thì 
+có kết quả là vế phải. Để hiểu cách biểu diễn và cài đặt, chúng ta hãy xem một đoạn văn phạm 
+tiếng Anh, văn phạm này cho biết một loại câu cụ thể có đúng hay không. Một quy luật của một 
+loại câu tiếng Anh, đó là trong một câu (sentence), nó gồm có một mệnh đề danh từ ( noun phrase)  
+và theo sau nó là mộ t động từ (verb ) ta có thể viết luật văn phạm này và được gọi là “luật sinh” 
+như sau:  
+<sentence> → <noun -phrase> <verb>   (1.1)  
+Mũi tên để phân chia hai vế của luật. Vì có nhiều sentence  khác nhau để trình bày những ý 
+tưởng khác nhau của cùng loại câu, cũng như có nhiều noun -phrase  và nhiều verb, ta gọi chúng là 
+những biến của văn phạm, nên cách viết như (1.1), dùng cặp ngoặc nhọn để mô tả biến.  
+Một luật như (1.1) thì chưa đủ mà cần thêm những luật mà vế phải của nó phải là một chuỗi 
+cụ thể trong tiếng Anh, nghĩa là chuỗi đó không phải là biến được gọi là chuỗi gồm những ký hiệu 
+kết thúc . Do vậy có thêm một số luật sau:  
+<noun -phrase> → <article> <singular -noun>  (1.2)  
+và thêm một số luật nữa (chỉ dùng một số chuỗi) để có vế phải là những chuỗi cụ thể của ngôn 
+ngữ.   
+               <article>            →    "a"   và  "the"                          (1.3)  
+              <singular -noun> →  "những danh từ số ít"                          (1.4)  
+                < verb>              → "Những động từ ở ngôi thứ ba số ít”   (1.5).  
+Ta có năm luật văn phạm ở trên được đánh số từ 1 đến 5 và khi đó những câu như: " a boy 
+runs" và " the dog walks " là có  "dạng đúng" có nghĩa là được sinh ra từ văn phạm trên.  
+Cách kiểm tra một câu là áp dụng các luật văn phạm theo thứ tự từ  dưới đi lên (luật (1.5) 
+đến luật (1.1)):  
+a boy runs                     a boy  < verb>               áp dụng    (1.5)  
+a boy  < verb>              a <noun > < verb>                  …   (1.4)  
+a <noun > < verb>    <article > <noun > < verb>        …   (1.3)  
+<article > <noun > < verb>  <noun -phrase > < verb>  …   (1.2)  
+ <noun -phrase > < verb>        <sentence >                    …    (1.1).  
+Chú ý: những từ ghi trong 2 móc được gọi là biến, ví dụ <noun >,< verb> … là biến,  
+            những từ  không có dấu móc như boy, runs, a là kí hiệu kết thúc. Ta có định nghĩa 
+cho văn phạm sau.  
+ 
+Định nghĩa 1.1 
+ 
+              
+ 
+ 
+ 
+ Một văn phạm G được định nghĩa là một bộ bốn G = (V, T, S, P), 
+trong đó:  
+ V là tập hữu hạn các đối tượng gọi là các biến.  
+ T là tập hữu hạn các đối tượng gọi là tập các kí hiệu kết thúc.  
+ S V là một kí hiệu đặc biệt gọi là biến khởi đầu.  
+ P là tập hữu hạn các luật sinh.  
+V (Variables - Biến/Kí hi ệu không k ết thúc ): Là tập hợp các ký hi ệu có th ể được thay th ế hoặc suy 
+diễn tiếp trong quá trình t ạo chu ỗi (thư ờng vi ết bằng ch ữ cái in hoa như S, A, B). 
+T (Terminals - Kí hi ệu kết thúc): Là t ập hợp các ký hi ệu tạo nên chu ỗi kết quả cuối cùng, không 
+thể thay th ế hay bi ến đổi được nữa (thư ờng vi ết bằng ch ữ cái thư ờng như a, b, c) 
+Những luật sinh chính là những quy luật của văn phạm và là phần chủ yếu của văn phạm, nó 
+chỉ rõ văn phạm chuyển đổi một chuỗi này sang một chuỗi khác như thế nào, và thông qua cách 
+này, các luật sinh  định nghĩa một ngôn ngữ liên kết với văn phạm. Các luật sinh có dạng  
+x → y, 
+trong đó x là một phần tử của ( V  T)+ và y là phần tử của ( V  T)*. 
+(V  T)+ không chứa ,  nhưng (V  T)*có chứa  
+Giả sử ta có chuỗi w = uxv.  
+Áp dụng luật sinh x → y cho chuỗi w thì x được thay bằng y, ta có chuỗi mới z và z = uyv . 
+Như vậy luật sinh đã chuyển chuỗi w thành chuỗi z, ta viết  w 
+  z. 
+Ta nói rằng w dẫn xuất ra z hay ngược lại z được dẫn xuất từ w. Những chuỗi được sinh ra 
+qua một dẫn xuất, bằng cách áp dụng những luật sinh của một văn phạm nào đó. Một luật sinh có 
+thể áp dụng được ở bất cứ khi nào mà nó có thể, và nó còn có thể áp dụng một cách liên tiếp như 
+mô tả dưới đây.  
+w1 
+ w2 
+ … 
+  wn, 
+ 
+                 
+ 
+ 
+Giả sử tập ký hiệu kết thúc là T = {a, b}. Khi đó:  
+T0 = {} 
+T1 = {a, b} 
+T2 = {aa, ab, ba, bb} 
+T3 = {aaa, aab, aba, …} 
+T* là tập hợp vô hạn chứa tất cả các chuỗi có thể tạo ra từ hai chữ cái a và b: 
+T* = { , a, b, aa, ab, ba, bb, aaa, aab, …} 
+Nếu w  L(G) thì phải tồn tại dãy dẫn xuất   
+S 
+  w1
+ w2 
+ ... 
+  wn 
+ w, 
+được gọi là một dẫn xuất câu của w. Chuỗi w1, w2, ..., wn ở trên mà có chứa các biến cũng như các 
+kí hiệu kết thúc thì được gọi là dạng câu của sự dẫn xuất , w là chuỗi không chứa biến . 
+Ví dụ 1.6  
+Xét văn phạm G = ({S}, {a, b}, S, P) 
+Tập luật sinh P:    S → aSb 
+                                       S →  
+Coi dẫn xuất S 
+ aSb 
+ aaSbb 
+  aabb  
+ 
+Cho G = (V, T, P, S) là một văn phạm thì tập:  
+L(G) = {w  T*: S  w} 
+  là ngôn ngữ được sinh ra bởi G. 
+Định nghĩa 1.2 
+ 
+Ta có thể viết:            S 
+
+  aabb   
+Chuỗi aabb  là một câu được sinh ra bởi văn phạm G, còn aaSbb  là một dạng câu.  
+Một văn phạm G hoàn toàn xác định L(G), ngôn ngữ ứng với văn phạm này là:  
+L(G) = { anbn : n  0} 
+Ví dụ 1.7  
+Cho văn phạm G = ({S}, {a, b}, S, P) 
+Tập luật sinh P:    { S → bS|aa} 
+Hãy đưa ra 5 chuỗi có độ dài ngắn nhất (theo thứ tự bảng chữ cái) và xác định tính chất của  
+ngôn ngữ đó.  
+Giải 
+1- S → aa 
+2- S → bS → baa 
+3- S → bS → bbS → bbaa  
+4- S → bS → bbS → bbbS  → bbbaa  
+5- S→  bS → bbS → bbbS  → bbbbS  → bbbbaa  
+Ngôn ngữ được sinh ra bởi văn phạm G là tập hợp tất cả các chuỗi bắt đầu bằng một chuỗi 
+gồm không hoặc nhiều kí tự ‘b’ liên tiếp, và kết thúc bằng chuỗi cố định ‘aa’. 
+ 
+1.2.3  Máy tự động (Automat)  
+Automat được dùng để nhận diện xem một chuỗi ký tự (hoặc một câu) có tuân theo một tập 
+hợp các quy tắc văn phạm  của một ngôn ngữ hình thức cho trước hay không.  
+Automat dùng để làm gì?  
+Nó được dùng để giải xoay quanh ba bài toán:  
++ Nhận diện ngôn ngữ (Language Recognition): Kiểm tra một chuỗi đầu vào (input) có thuộc về 
+một ngôn ngữ hình thức hay không. Automat  sẽ trả về kết quả "Chấp nhận" (Accept) hoặc "Từ 
+chối" (Reject).  
++ Xử lý và phân tích cú pháp (Parsing): Được ứng dụng rộng r ãi trong việc xây dựng trình biên 
+dịch (compilers) của các ngôn ngữ lập trình. Nó giúp máy tính đọc hiểu các từ khóa, cấu trúc 
+câu lệnh (ví dụ: kiểm tra xem câu lệnh if -else có viết đúng cú pháp không).  
++ Mô hình hóa hệ thống rời rạc: Mô phỏng các hệ thống  có số lượng trạng thái hữu hạn và chuyển 
+đổi qua lại giữa các trạng thái dựa trên các sự kiện (ví dụ: máy bán hàng tự động, thang máy, 
+đèn giao thông).  
+Trong giáo trình này, chúng ta chỉ nói về : Automat nhận diện ngôn ngữ hình thức  và văn phạm.  
+Và xét đế n 3 loại Automat:  
+a- Automat hữu hạn  (Finite Automaton - FA) 
+Dùng để nhận diện các ngôn ngữ chính quy (regular languages). Đây là loại đơn giản nhất, bộ 
+nhớ của nó cực kỳ hạn chế (không có bộ nhớ phụ hay ngăn xếp), chỉ ghi nhớ trạng thái hiện tại.  
+Có 2 loại: automat hữu hạn đơn định DFA  (Deterministic Finite Accepters), hai là automat hữu 
+hạn không đơn định NFA  (Nondeterministic Finite Accepters).  
+b- Automat đẩy xuống  (Pushdown Automaton - PDA)  
+Dùng để nhận diện các ngôn ngữ phi ngữ cảnh (context -free languages).  Khác với FA, loại 
+automat này được gắn thêm một bộ nhớ dạng ngăn xếp (stack), cho phép nó "nhớ" được cấu 
+trúc lồng nhau (vượt qua giới hạn của automat hữu hạn).  
+c- Máy turing : Nó là loại automat tổng quát và mạnh mẽ nhất.  So sánh giữa automat  hữu hạn với 
+autmat đẩy xuống, ta thấy có sự khác nhau về bộ nhớ stack. Nếu không stack, thì nó là automat  
+hữu hạn, ngược lại ta có automat  đẩy xuống. Thực tế có những họ ngôn ngữ mạnh hơn nữa  mà 
+không thể dùng automat  đẩy xuống với cấu hình chỉ có một bộ nhớ stack, khi đó cần sử dụng 
+hai, ba stack, một hàng đợi (queue), hay một thiết bị lưu trữ nào khác để tăng số lượng bộ nhớ. 
+Số lượng và loại bộ nhớ sẽ định hình một automat  mới có tính năng cao hơn và xử lý được 
+những họ ngôn ngữ mới. Với thực tế này đã làm phát sinh lý thuyết cơ bản về máy Turing, bộ 
+nhớ có thể đọc -viết được, làm tăng khá mạnh về xử lý số liệu trong máy tính, dẫn đến máy vi 
+tính ngày nay.  
+Chi tiết về các loại automat trên sẽ  được nói chi tiết trong các chương sau.  
+//////////////////////////////////////////////////  
+ 
+BÀI TẬP  
+ 
+////////////////////////////////  
+1- Hãy đưa ra 5 chuỗi có độ dài ngắn nhất (được sắp xếp theo thứ tự độ dài tăng dần, 
+và theo thứ tự từ điển với quy ước chuỗi rỗng đứng trước, tiếp đến là chuỗi có 
+chiều dài tăng dần)  của các ngôn ngữ Li trên  = {a, b} sau 
+a) L1 = { uu-1u | u*} 
+b) L2 = {uu | u * } 
+c) L3 ={uu-1 | u + } 
+Giải bài 1  
+a) L1 = { uu-1u | u*} 
+                        Sắp xếp 5 chuỗi theo thứ tự độ dài tăng dần và thứ tự từ điển:  
+; aaa; bbb; aaaaaa ; abbaab  
+b) L2 = {uu | u *} 
+           5 chuỗi ngắn nhất của ngôn ngữ L2 sắp xếp theo đúng yêu cầu là:  
+           ; aa; abab ; abba ; bbaa  
+c) L3 ={uu-1 | u + } 
+            ; aa ; abba  ; baab  ; bbbb  
+             
+2- Hãy đưa ra 5 chuỗi có độ dài ngắn nhất (theo thứ tự bảng chữ cái) và xác định tính chất của  
+ngôn ngữ có văn phạm sau .      
+a) G1 (V, T, S, P), trong đó V = {S}, T = {a, b}, P = {S → aS|bS|} 
+b) G2 (V, T, S, P), trong đó V = {S}, T = {a, b}, P = {S → abS|ab} 
+c) G3 (V, T, S, P), trong đó V = {S, A}, T = {a, b}, P = {S → Aa; A →bA|b} 
+ 
+Giải 2 
+a) xác định tính chất của  ngôn ngữ có văn phạm  
+G3 (V, T, S, P), trong đó V = {S, A}, T = {a, b}, P = {S → Aa; A →bA|b}và cho 5 chuỗi có độ dài 
+ngắn nhất (theo thứ tự bảng chữ cái)  
+(chuỗi rỗng, độ dài 0)  
+a (độ dài 1)  
+b (độ dài 1)  
+aa (độ dài 2)  
+ab (độ dài 2)  
+Ngôn ng ữ được sinh ra b ởi văn ph ạm G1, là tập hợp tất cả các chu ỗi có th ể được tạo thành t ừ 
+bảng ch ữ cái {a, b}, bao g ồm cả chuỗi rỗng. 
+b)  
+ab (độ dài 2)  
+abab  (độ dài 4)  
+ababab  (độ dài 6)  
+abababab  (độ dài 8)  
+ababababab  (độ dài 10)  
+Ngôn ng ữ được sinh ra b ởi văn ph ạm G2, là tập hợp tất cả các chu ỗi được tạo thành b ởi sự lặp lại 
+một hoặc nhi ều lần liên ti ếp chu ỗi con " ab". 
+c) 
+ba (độ dài 2)  
+bba (độ dài 3)  
+bbba  (độ dài 4)  
+bbbba  (độ dài 5)  
+bbbbba  (độ dài 6)  
+Ngôn ngữ được sinh ra bởi văn phạm G3, là tập hợp tất cả các chuỗi bắt đầu bằng một hoặc nhiều 
+kí tự ' b' liên tiếp và kết thúc bằng một kí tự ' a'. 
+ 
+3-Cho văn phạm G (V, T, S, P) 
+   V = { S, A}, T = {a, b}, biến khởi đầu là S 
+  P:  S  → aA      ( tương tự cách viết < S> → a <A> ) 
+       A  → bS 
+       S   →  
+Tìm ba cặp chuỗi khác nhau có chiều dài lần lượt là 4, 6 và 10 được văn phạm chấp nhận và  
+ không chấp nhận.  
+Giải 3  
+1. Chiều dài 4  
+• Được chấp nhận: abab  (vì S→ aA →abS → abaA → ababS→ abab ) 
+• Không được chấp nhận: aabb  (không có cấu trúc xen kẽ ab) 
+2. Chiều dài 6  
+• Được chấp nhận: ababab  (dạng (ab)3) 
+• Không được chấp nhận: abbaab  (các ký tự không xen kẽ đúng quy luật ab) 
+3. Chiều dài 10  
+• Được chấp nhận: ababababab  (dạng (ab)5) 
+• Không được chấp nhận: aaaaabbbbb  (chứa toàn bộ chữ a đứng trước chữ b, vi phạm quy 
+tắc xen kẽ)  
+ 
+ 
+ 
+ 
+ 
+ 

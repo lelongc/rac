@@ -1,0 +1,92 @@
+1
+NGÔN NGỮ HÌNH THỨC & ÔTÔMÁT 
+Nguyễn Thanh Chuyên
+2
+CHƯƠNG 1. VĂN PHẠM VÀ NGÔN NGỮ HÌNH THỨC 
+Các khái niệm cơ bản về ngôn ngữ hình thứcCác phép toán trên các từCác phép toán trên ngôn ngữVăn phạm và ngôn ngữ sinh bởi văn phạmCác tính chất của văn phạm và ngôn ngữ
+VĂN PHẠM VÀ NGÔN NGỮ SINH BỞI VĂN PHẠM
+Định nghĩa 4.1  Văn phạm G là một bộ sắp thứ tự gồm 4 thành phần: G = < Σ, Δ, S, P >, trong đó: Σ là một bảng chữ cái, gọi là bảng chữ cái cơ bản (hay bảng chữ cái kết thúc), mỗi phần tử của nó được gọi là một ký hiệu kết thúc hay ký hiệu cơ bảnΔ là một bảng chữ cái, Δ ∩ Σ = ∅, gọi là bảng ký hiệu phụ (hay báng chữ cái không kết thúc), mỗi phần tử của nó được gọi là một ký hiệu không kết thúc hay ký hiệu phụ. S ∈ Δ được gọi là ký hiệu xuất phát hay tiên đề
+3
+VĂN PHẠM VÀ NGÔN NGỮ SINH BỞI VĂN PHẠM
+P là tập hợp các quy tắc sinh có dạng α→β, α được gọi là vế trái và β được gọi là vế phải của quy tắc này, với α, β ∈ (Σ ∪ Δ)* và trong α chứa ít nhất một ký hiệu không kết thúc. Ví dụ: Các bộ bốn sau là các văn phạm: G1 = <{0, 1}, {S}, S, {S→0S1, S→ε}>, G2 = <{a, b}, {S, A}, S, {S→Ab, A→aAb, A→ε}>, G3 = <{a, b, c}, {S, A, B, C}, S, {S→ABC, A→aA, B→bB, C→cC, A→a, B→b, C→c}> 
+4
+VĂN PHẠM VÀ NGÔN NGỮ SINH BỞI VĂN PHẠM
+G4 = <Σ, Δ, S, P>,  trong đó:   	Σ = {tôi, anh, chị, ăn, uống, cơm, phở, sữa, café},   	Δ = {<câu>, <chủngữ>, <vịngữ>, <độngtừ1>, <độngtừ2>, <danhtừ1>,  <danhtừ2>},  S = <câu>, P = {<câu>→<chủngữ><vịngữ>, <chủngữ>→tôi, <chủngữ>→anh,  <chủngữ>→chị, <vịngữ>→<độngtừ1><danhtừ1>, <vịngữ>→<độngtừ2><danhtừ2>, <độngtừ1>→ăn, <độngtừ2>→uống, <danhtừ1>→cơm, <danhtừ1>→phở, <danhtừ2>→sữa, <danhtừ2>→café}. 
+5
+VĂN PHẠM VÀ NGÔN NGỮ SINH BỞI VĂN PHẠM
+Chú ý:   Nếu các quy tắc có vế trái giống nhau có thể viết gọn lại: hai quy tắc α→ β, α→ γ có thể được viết là α→ β | γ.  Chẳng hạn, như trong văn phạm G1, ta có thể viết hai quy tắc của nó dưới dạng S→0S1 | ε.  
+6
+Ngôn ngữ sinh bởi văn phạm  
+Định nghĩa 4.2 Cho văn phạm G = < Σ, Δ, S, P > và η, ω∈(Σ ∪ Δ)*. Ta nói ω được suy dẫn trực tiếp từ η trong G, ký hiệu η├G ω hay ngắn gọn là η├ ω (nếu không sợ nhầm lẫn), nếu tồn tại quy tắc α→β∈P và γ, δ∈(Σ ∪ Δ)* sao cho η = γαδ, ω = γβδ.  Điều này có nghĩa là nếu η nhận vế trái α của quy tắc α→β như là từ con thì ta thay α bằng β để được từ mới ω. 
+7
+Ngôn ngữ sinh bởi văn phạm 
+Định nghĩa 4.3  Cho văn phạm G = < Σ, Δ, S, P > và η, ω∈(Σ ∪ Δ)*. Ta nói ω được suy dẫn từ η trong G, ký hiệu η╞G ω hay ngắn gọn là η╞ ω (nếu không sợ nhầm lẫn), nếu η = ω hoặc tồn tại một dãy D = ω0, ω1,…, ωk∈(Σ ∪ Δ)* sao cho ω0  = η, ω k = ω và ωi-1├ ωi, với i = 1, 2,..., k.  Dãy D = ω0, ω1, …, ωk được gọi là một dẫn xuất của ω từ η trong G và số k được gọi là độ dài của dẫn xuất này.  Nếu ω0 = S và ωk ∈ Σ* thì dãy D gọi là dẫn xuất đầy đủ. 
+Ngôn ngữ sinh bởi văn phạm 
+Định nghĩa 4.4  Cho văn phạm G = < Σ, Δ, S, P >. Từ ω∈Σ* được gọi là sinh bởi văn phạm G nếu tồn tại suy dẫn S╞ ω. Ngôn ngữ sinh bởi văn phạm G, ký hiệu L(G), là tập hợp tất cả các từ sinh bởi văn phạm G:                  L(G) = {ω∈Σ* | S ╞G ω}. Định nghĩa 4.5  Hai văn phạm G1 = < Σ1, Δ1, S1, P1 > và G2 = < Σ2, Δ2, S2, P2 > được gọi là tương đương nếu L(G1) = L(G2). 
+CÁC VÍ DỤ
+Xét văn phạm G1 =<{0, 1}, {S}, S, {S→0S1, S→ε}> Từ ω = 00001111 được suy dẫn từ S bằng dãy dẫn xuất độ dài 5: S├ 0S1├ 00S11├ 000S111├ 0000S1111 ├ 00001111 (có thể viết ngắn gọn là ω = 0414). Bằng việc sử dụng n lần (n ≥ 0) quy tắc 1 rồi quy tắc 2, ta có: S╞ 0n1n.  Do đó L(G1) = {0n1n | n ≥ 0}. 
+CÁC VÍ DỤ
+2. Xét văn phạm G2 = <{a, b}, {S, A}, S, {S→Ab, A→aAb, A→ε}>.  Sử dụng quy tắc 1, rồi n lần (n ≥ 0) quy tắc 2, sau đó quy tắc 3 để kết thúc, ta có: S├ Ab╞ anAbnb├ anbn+1.  Do đó L(G2) = {anbn+1 | n ≥ 0}. 
+CÁC VÍ DỤ
+3. Xét văn phạm G3 = <{a, b, c}, {S, A, B, C}, S, {S→ABC, A→aA, B→bB, C→cC, A→a, B→b, C→c}>. Sử dụng quy tắc 1, rồi m -1 lần (m ≥ 1) quy tắc 2, n-1 lần (n ≥ 1) quy tắc 3, k-1 lần (k ≥ 1) quy tắc 4 (các quy tắc có thể xen kẻ), sau đó kết thúc bởi các quy tắc 5, 6, 7, ta có: S ├  ABC ╞  amAbnBckC ╞    ambnck.  	Do đó L(G3) = {ambnck | m ≥ 1, n ≥ 1, k ≥ 1}. 
+CÁC VÍ DỤ
+4. Dễ dàng thấy rằng: L(G4) = {tôi ăn cơm, anh ăn cơm, chị ăn cơm, tôi ăn phở, anh ăn phở, chị ăn phở, tôi uống sữa, anh uống sữa, chị uống sữa, tôi uống café, anh uống café, chị uống café}. Ta có thể biểu diễn việc dẫn xuất từ <câu> đến một từ trong L(G4), chẳng hạn “tôi ăn cơm” bằng một cây gọi là cây dẫn xuất hay cây phân tích cú pháp như dưới đây. Tất nhiên, theo quan điểm phân tích cú pháp thực tế, việc xem xét các quy tắc theo hướng ngược lại là từ phải qua trái. Điều đó có nghĩa là cây dưới đây được xử lý từ dưới lên trên. 
+CÁC VÍ DỤ
+Phân loại văn phạm theo Chomsky 
+Noam Chomsky (Institute Professor, Massachusetts Institute of Technology. Born December 7, 1928 Philadelphia, Pennsylvania, USA) đã phân loại văn phạm thành bốn nhóm: Nhóm 0:  Văn phạm không hạn chế (hay văn phạm ngữ cấu, văn phạm tổng quát), Nhóm 1:  Văn phạm cảm ngữ cảnh, Nhóm 2:  Văn phạm phi ngữ cảnh, Nhóm 3:  Văn phạm chính quy. 
+Văn phạm không hạn chế
+Định nghĩa:  Văn phạm G = < Σ, Δ, S, P > mà không có một ràng buộc nào đối với các quy tắc của nó được gọi là văn phạm tổng quát  hay văn phạm không hạn chế. Như vậy, các quy tắc trong văn phạm nhóm 0 có dạng: α→β, với α = α’Aα’’, A ∈ Δ, α’, α’’, β ∈ (Σ ∪ Δ)*.   Các quy tắc của văn phạm nhóm 0 được gọi là quy tắc không hạn chế.  Ngôn ngữ do văn phạm nhóm 0 sinh ra được gọi là ngôn ngữ tổng quát. 
+văn phạm cảm ngữ cảnh
+Định nghĩa:  Văn phạm G = < Σ, Δ, S, P > mà các quy tắc của nó đều có dạng: α→β, với α = α’Aα’’, A ∈ Δ, α’, α’’, β ∈ (Σ ∪ Δ)*, và | α | ≤ | β |, được gọi là văn phạm nhóm 1 hay văn phạm cảm ngữ cảnh. Các quy tắc trong văn phạm nhóm 1 được gọi là quy tắc cảm ngữ cảnh.  Ngôn ngữ do văn phạm cảm ngữ cảnh sinh ra được gọi là ngôn ngữ cảm ngữ cảnh. Các văn phạm mà các quy tắc của chúng có dạng trên, đồng thời chứa thêm quy tắc rỗng S→ε, cũng được xếp vào lớp văn phạm nhóm 1. 
+văn phạm cảm ngữ cảnh
+Ví dụ: Cho văn phạm G = <{a, b, c}, {S, A, B, C}, S, P>, trong đó: P = {S→aSAC, S→abC, CA→BA, BA→BC, BC→AC, bA→bb, C→c}. Khi đó G là văn phạm cảm ngữ cảnh. Sử dụng n-1 lần (n ≥ 1) quy tắc 1, rồi quy tắc 2, kế đến sử dụng liên tiếp các quy tắc 3, 4, 5 (để đổi chỗ A và C), sau đó sử dụng n-1 lần quy tắc 6 và n lần quy tắc 7, ta có: S╞ an-1S(AC)n-1├ anbC(AC)n-1╞ anbAn-1Cn ╞  anbncn. Từ đó suy ra L(G) = {anbncn | n ≥ 1}. 
+văn phạm phi ngữ cảnh
+Định nghĩa  Văn phạm G = < Σ, Δ, S, P > mà các quy tắc của nó có dạng A→ω, trong đó A∈Δ, ω∈(Σ ∪ Δ)*, được gọi là văn phạm nhóm 2 hay văn phạm phi ngữ cảnh.  Như vậy, các quy tắc trong văn phạm phi ngữ cảnh có vế trái chỉ chứa một ký hiệu phụ còn vế phải là tùy ý, và được gọi là quy tắc phi ngữ cảnh.  Ngôn ngữ do văn phạm phi ngữ cảnh sinh ra được gọi là ngôn ngữ phi ngữ cảnh. 
+Các ví dụ
+1. Cho văn phạm G1 = <{a, b}, {S, A}, S, P>, trong đó: P = {S→Sa, S→Aa, A→aAb, A→ab}.  	Khi đó G1 là văn phạm phi ngữ cảnh.  Sử dụng m-1 lần (m ≥ 1) quy tắc 1, rồi quy tắc 2, sau đó sử dụng n-1 lần   (n ≥ 1) quy tắc 3, cuối cùng là quy tắc 4, ta có: S ╞ Sam-1├ Aaam-1╞ an-1Abn-1am ├ anbnam.  	Từ đó suy ra L(G1) = {anbnam | n ≥ 1, m ≥ 1}. 
+Các ví dụ
+2. Cho văn phạm G2 = <{0, 1}, {S}, S, {S→SS, S→0S1, S→1S0, S→ε}>.  G2 là văn phạm phi ngữ cảnh.  Từ các quy tắc của G2, ta có L(G2) ={ε, 01, 10, 0011, 1100, 1001, 111000, …} hay L(G2)={ω∈{0, 1}* | số các chữ số 0 và 1 trong ω là bằng nhau}. 
+văn phạm chính quy
+Định nghĩa:  Văn phạm G = < Σ, Δ, S, P > mà các quy tắc của nó chỉ có dạng A→aB, A→a (hoặc chỉ có dạng A→Ba, A→a ), trong đó A, B∈Δ, a∈Σ, được gọi là văn phạm nhóm 3 hay văn phạm chính quy. Các văn phạm mà các quy tắc của chúng có dạng trên, đồng thời chứa thêm quy tắc rỗng S→ε cũng được gọi là văn phạm chính quy (hay còn gọi là văn phạm chính quy suy rộng). Các quy tắc trong văn phạm chính quy được gọi là quy tắc chính quy.   Ngôn ngữ do văn phạm chính quy sinh ra được gọi là ngôn ngữ chính quy. 
+Ví dụ
+Cho văn phạm: G1 = <{1}, {S, A, B}, S, P1 >, với P1 = {S→ε, S→1A, A→1B, B→1A, A→1}. Khi đó, G1 là văn phạm chính quy và L(G1) = {12n | n ≥ 0}.  Thật vậy, sử dụng quy tắc 1, ta có S├ 12n, (ε = 12n, với n = 0), sử dụng quy tắc 2, rồi n-1 lần (n ≥ 1) liên tiếp cặp quy tắc 3 và 4, cuối cùng là quy tắc 5, ta có: S├ 1A ├ 11B ├ 111A ├ … ╞ 1(12n-2)A ├ 1(12n-2)1 = 12n. 
+Ví dụ
+Cho văn phạm G2 = <{0, 1}, {S, A}, S, P2 >, P2 = {S→0A, A→0A, A→1A, A→0}>.  Khi đó, G2 là văn phạm chính quy và L(G2) = {0ω0 | ω∈{0, 1}*}. Thật vậy, sử dụng quy tắc 1, rồi một số hưữ hạn lần tuỳ ý, có thể xen kẽ các quy tắc 2 và 3, cuối cùng là quy tắc 4, ta có:   S ├  0A ╞ 0ωA├ 0ω0. 
+Nhận xét
+Nhận xét:  Từ các định nghĩa trên, ta thấy lớp văn phạm không hạn chế là rộng nhất, nó chứa đựng các văn phạm cảm ngữ cảnh, lớp văn phạm cảm ngữ cảnh chứa các văn phạm phi ngữ cảnh và lớp văn phạm phi ngữ cảnh chứa các văn phạm chính quy.   Vì vậy, đối với các lớp ngôn ngữ, nếu ký hiệu L0, L1, L2, L3 lần lượt là các lớp ngôn ngữ tổng quát, cảm ngữ cảnh, phi ngữ cảnh và chính quy thì ta có bao hàm thức: L3 ⊂  L2 ⊂  L1 ⊂  L0. 
+Nhận xét
+Theo phân loại của Chomsky, cho thấy lớp ngôn ngữ chính quy L3 là nhỏ nhất, nó bị chứa thực sụ trong lớp ngôn ngữ phi ngữ cảnh L2, lớp ngôn ngữ phi ngữ cảnh lại bị chứa thực sự trong lớp ngôn ngữ cảm ngữ cảnh L1 và cuối cùng lớp ngôn ngữ tổng quát L0 (ngôn ngữ ngữ cấu) là rộng nhất. 
+Nhận xét
+Ta thấy về mặt cấu trúc ngữ pháp thì các quy tắc của các văn phạm phi ngữ cảnh và văn phạm chính quy là đơn giản hơn cả và chúng có nhiều ứng dụng trong việc thiết kế các ngôn ngữ lập trình và trong nghiên cứu về chương trình dịch…
+Ví dụ
+Cho bảng chữ cái Σ = {a1, a2, …, an}.  Chứng minh rằng các ngôn ngữ: L1 = {ω = a1a2 …an}, L2 = Σ+, L3 = Σ*, L4 = ∅ là các ngôn ngữ chính quy trên bảng chữ Σ. Thật vậy, ta có thể xây dựng các văn phạm chính quy sinh các ngôn ngữ trên: G1 = <Σ, {S, A1, …, An-1}, S, {S→a1A1, A1→a2A2, …, An-2→an-1An-1, An-1→an}>.  
+Ví dụ(tt)
+Dễ thấy  G1  là văn phạm chính quy, và L1 = L(G1). G2 = <Σ, {S}, S, {S→aS, S→a | a∈Σ}>, dễ thấy  G2  là văn phạm chính quy, và L2 = L(G2). G3 = <Σ, {S, A}, S, {S→ε, S→a, S→aA, A→aA, A→a | a∈Σ}>, dễ thấy  G3  là văn phạm chính quy, và L3 = L(G3). G4 = <Σ, {S}, S, {S→aS | a∈Σ}>, dễ thấy  G4  là văn phạm chính quy, và nó làm việc không bao giờ dừng, tức là không có ω∈Σ* sinh bởi G4, vậy G4 sinh ra ngôn ngữ ∅. 
+Các tính chất của văn phạm và ngôn ngữ sinh bởi văn phạm 
+Một số tính chất của văn phạm và dẫn xuất Tính đóng của lớp ngôn ngữ sinh bởi văn phạm 
+Một số tính chất của văn phạm và dẫn xuất 
+Định lý:  Với mọi văn phạm G = < Σ, Δ, S, P >, luôn tồn tại một văn phạm G’ = < Σ’, Δ’, S’, P’ > tương đương với văn phạm G, tức là  L(G) = L(G’).
+Một số tính chất của văn phạm và dẫn xuất 
+Ví dụ:  Cho văn phạm G1 = <{a, b}, {S}, S, {S→aSb, S→ab}>, ta có thể xây dựng G2 tương đương với G1  như sau: G2 = <{a, b}, {S, A, B}, S, {S→ASB, A→a, B→b, S→AB}>. Dễ dàng có được L(G1) = L(G2) = {anbn | n ≥ 1},  hay G1 và G2 là tương đương. 
+Một số tính chất của văn phạm và dẫn xuất
+Bổ đề 1: Cho văn phạm G = < Σ, Δ, S, P >. Khi đó nếu tồn tại trong P quy tắc chứa ký hiệu xuất phát S ở vế phải thì tồn tại văn phạm G’ tương đương với G mà các quy tắc của nó không chứa ký hiệu xuất phát ở vế phải. Bổ đề 2: Cho văn phạm G = < Σ, Δ, S, P > tùy ý, luôn luôn có thể xây dựng văn phạm G’ tương đương với G mà các quy tắc của nó không chứa ký hiệu cơ bản ở vế trái. 
+Một số tính chất của văn phạm và dẫn xuất
+Định nghĩa:  Cho văn phạm G = < Σ, Δ, S, P > và hai dãy dẫn xuất D = ω0, ω1, …, ωk và D’ = ω’0, ω’1, …, ω’m trong văn phạm G.  Ta nói hai dẫn xuất trên là đồng lực nếu ω0 = ω’0 và ωk = ωm. Định nghĩa:  Cho văn phạm G = < Σ, Δ, S, P > và dẫn xuất D = ω0, ω1, …, ωk trong văn phạm G.  Ta nói dẫn xuất D là không lặp nếu không tồn tại cặp (ωi, ωj) với i ≠ j mà ωi = ωj. Định lý:  Với mọi dẫn xuất trong văn phạm G tùy ý, luôn luôn tồn tại một dẫn xuất không lặp và đồng lưc với nó. 
+Tính đóng của lớp ngôn ngữ sinh bởi văn phạm 
+Định lý:  Lớp ngôn ngữ sinh bởi văn phạm là đóng đối với phép hợp (∪), phép giao (∩) và phép nhân ghép ngôn ngữ (.) Hệ quả 1:  Nếu L1 và L2 là hai ngôn ngữ chính quy (hay phi ngữ cảnh, cảm ngữ cảnh) thì L1∪L2 cũng là ngôn ngữ chính quy (hay phi ngữ cảnh, cảm ngữ cảnh). 
+Tính đóng của lớp ngôn ngữ sinh bởi văn phạm 
+Ví dụ:  Cho hai ngôn ngữ L1 = {ancb2n | n ≥ 0} và L2 = {a2ncbn  | n ≥ 0} trên bảng chữ Σ = {a, b, c}, có thể thấy rằng L1 và L2 lần lược được sinh bởi các văn phạm sau đây: G1 = <Σ, {S1, A, B}, S1, {S1→AS1B, S1→c, A→a, B→bb}>, G2 = <Σ, {S2, C, D}, S2, {S2→CS2D, S2→c, C→aa, D→b}>. Thật vậy, trong G1, sử dụng n lần (n ≥ 0) quy tắc 1, sau đó sử dụng n lần quy tắc 3, n lần quy tắc 4 và quy tắc 2, ta có: S1╞G1 AnS1Bn ╞G1 anc(bb)n = ancb2n. 
+Tính đóng của lớp ngôn ngữ sinh bởi văn phạm 
+Tương tự, trong G2 ta có S2╞G2 a2ncbn. (n ≥ 0) Rõ ràng G1, G2 là hai văn phạm phi ngữ cảnh, do đó các ngôn ngữ L(G1) và L(G2) cũng là các ngôn ngữ phi ngữ cảnh, do đó theo hệ quả 5.1 thì hợp của chúng L = L1 ∪ L2 = { ancb2n, a2ncbn  | n ≥ 0} cũng là ngôn ngữ phi ngữ cảnh. 
+Tính đóng của lớp ngôn ngữ sinh bởi văn phạm 
+Hệ quả 2:  Nếu L1 và L2 là hai ngôn ngữ chính quy (hay phi ngữ cảnh, cảm ngữ cảnh) thì L1L2 cũng là ngôn ngữ chính quy (hay phi ngữ cảnh, cảm ngữ cảnh). Nhờ hệ quả này, ta dễ dàng nhận biết một ngôn ngữ là chính quy (phi ngữ cảnh, cảm ngữ cảnh). 
+Tính đóng của lớp ngôn ngữ sinh bởi văn phạm 
+Ví dụ:Cho hai ngôn ngữ L1= {anbn | n ≥ 1} và L2={cn  | n ≥ 1}. Dễ dàng thấy rằng L1 = L(G1) và L2 = L(G2), trong đó:  	G1 = <{a, b}, {S1}, S1, {S1→aS1b, S1→ab}>, là văn phạm phi ngữ cảnh.  G2 = <{c}, {S2}, S2, {S2→cS2, S2→c}> là văn phạm chính quy (và đương nhiên cũng là văn phạm phi ngữ cảnh). Ta sẽ có L1L2 = {anbncm | n ≥ 1, m ≥ 1} là ngôn ngữ phi ngữ cảnh. 
+Tính đóng của lớp ngôn ngữ sinh bởi văn phạm 
+Hệ quả3: Nếu L là ngôn ngữ chính quy thì lặp L* của L cũng là ngôn ngữ chính quy. Nói một cách khác, lớp các ngôn ngữ chính quy đóng đối với phép toán lặp. Hệ quả 4:  Mọi ngôn ngữ hữu hạn đều là ngôn ngữ chính quy. 
+Tính đóng của lớp ngôn ngữ sinh bởi văn phạm 
+Ví dụ: Cho ngôn ngữ hữu hạn L = {0, 01, 011, 0111},  khi đó theo hệ quả trên, L là ngôn ngữ chính quy.  Mặt khác, có thể xây dựng văn phạm chính quy G = <{0, 1}, {S, A, B, C}, S, P>,  với P = {S→0, S→0A, A→1, A→1B, B→1, B→1C, C→1}. Dễ dàng thấy rằng L(G) = L. 
+Bài tập
+1. Tìm ngôn ngữ sinh bởi các văn phạm sau:a) S 0S1 | 0A1, A 1A | 1b) S  0S1 | 0A | 1B | 0 | 1, A  0A | 0, B  1B | 1c) S  0A | 1S | 0 | 1, A  1A | 1S | 1  d) S  0A | 1S | 0 | 1, A  1A0 | 1S |1 2. Xây dựng vp G sao cho L(G) = { anbam | n, m  1}. 3. Nếu G có qui tắc S  aS | a hãy chỉ ra rằng L(G) = {a}+. 
+Bài tập
+4. Xây dựng văn phạm để sinh ra các ngôn ngữ sau:a) Tập tất cả các xâu trên {0, 1}, trong đó số các chữ số 0 bằng số các chữ số 1. b) {0n1m0m1n | m, n   1} c) {0n12n | n  1} d) {0n1n | n  1}  {1m0m | m  1} 5. Xây dựnga) Văn phạm cảm ngữ cảnh nhưng không phải phi ngữ cảnhb) Văn phạm phi ngữ cảnh nhưng không phải là chính quyc) Văn phạm chính qui để sinh ra {an | n  1}. 
