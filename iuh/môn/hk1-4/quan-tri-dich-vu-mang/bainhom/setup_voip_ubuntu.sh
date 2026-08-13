@@ -210,11 +210,11 @@ same => n,Hangup()
 ; CONTEXT CHO GIÁM ĐỐC (101): Được gọi tất cả mọi người (101-109)
 ; ==============================================================================
 [giamdoc-context]
-exten => _10X,1,Dial(PJSIP/${EXTEN},30)
-same => n,Hangup()
-
 exten => 101,1,Dial(PJSIP/101,20)
 same => n,Voicemail(101@default,u)
+same => n,Hangup()
+
+exten => _10X,1,Dial(PJSIP/\${EXTEN},30)
 same => n,Hangup()
 
 exten => 600,1,Goto(internal-common,600,1)
@@ -225,7 +225,7 @@ exten => 100,1,Goto(internal-common,100,1)
 ; ==============================================================================
 [nhanvien-context]
 ; --- Cho phép gọi các số 102, 103, 104, 105... ---
-exten => _10[2-9],1,Dial(PJSIP/${EXTEN},30)
+exten => _10[2-9],1,Dial(PJSIP/\${EXTEN},30)
 same => n,Hangup()
 
 exten => 600,1,Goto(internal-common,600,1)

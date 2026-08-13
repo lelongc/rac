@@ -407,3 +407,63 @@ Kết quả: Cả 2 máy Win 7 đều phân giải thành công từ tên miền
    ```
 
 Script sẽ tự động cài đặt BIND9, tạo file zone `tranduong.com`, thêm các bản ghi `ns`, `www`, `ftp`, `mail` và restart dịch vụ hoàn toàn tự động!
+
+---
+
+## 5. BỘ CẨM NANG BẮT BỆNH LỖI MẠNG & THỦ THUẬT THỰC HÀNH (TROUBLESHOOTING)
+
+### 🚨 5.1 Lỗi Trùng IP (IP Conflict) trên VMware & Mẹo vàng đuôi `.254`
+- **Hiện tượng:** Máy ảo báo đụng IP `192.168.5.1` hoặc `192.168.6.1` không ra mạng được, hoặc gõ `ip a` bị mất địa chỉ IP.
+- **Nguyên nhân:** Card mạng ảo của VMware trên Windows máy thật (`VMware Network Adapter VMnet2` / `VMnet3`) mặc định tự chiếm giữ địa chỉ `.1`.
+- **💡 MẸO SỬA LỖI CỰC NHANH (MẸO ĐUÔI `.254`):**
+  1. Trên Windows máy thật: Mở **Control Panel** -> **Network Connections** (Change adapter settings).
+  2. Chuột phải vào card ảo **VMware Network Adapter VMnet2** (hoặc `VMnet3`) -> Chọn **Properties** -> Đúp chuột vào **TCP/IPv4**.
+  3. Chọn *Use the following IP address* và đổi IP của máy thật sang đuôi **`.254`**:
+     - Card `VMnet2`: Đổi thành **`192.168.5.254`** (Subnet Mask: `255.255.255.0`)
+     - Card `VMnet3`: Đổi thành **`192.168.6.254`** (Subnet Mask: `255.255.255.0`)
+  4. Bấm **OK**.
+  👉 **KẾT QUẢ:** Địa chỉ `.1` (`192.168.5.1` / `192.168.6.1`) lập tức được giải phóng hoàn toàn cho 2 máy ảo **Win7_A** và **Win7_B**, xóa sạch 100% lỗi đụng độ IP!
+
+---
+
+### 🚨 5.2 Lỗi Connection Timed Out khi kết nối SSH vào Ubuntu
+- **Nguyên nhân:** Máy Ubuntu chưa cài dịch vụ SSH Server (`openssh-server`), dịch vụ bị dừng, hoặc tường lửa UFW đang chặn port 22.
+- **Khắc phục:** Gõ 3 lệnh sau trên màn hình đen Ubuntu:
+  ```bash
+  sudo apt update && sudo apt install -y openssh-server
+  sudo ufw disable
+  sudo systemctl enable --now ssh
+  ```
+
+---
+
+### 🚨 5.3 Lỗi `Unreachable gateway` khi chạy `netplan apply`
+- **Nguyên nhân:** Khai báo dải IP của gateway (`via: ...`) lệch dải Subnet của card mạng đó (Ví dụ: card đặt IP `192.168.5.2/24` nhưng lại khai báo `via: 192.168.1.1`).
+- **Khắc phục:** Xóa bỏ dòng `via` gateway sai, hoặc chỉ khai báo `via` gateway thuộc đúng dải mạng IP của card đó.
+
+---
+
+### 🚨 5.4 Lỗi Ping sang Windows 7 bị Timeout
+- **Nguyên nhân:** Tường lửa (Windows Firewall) trên Windows 7 mặc định bật chặn tất cả gói tin ICMP Ping.
+- **Khắc phục:** Trên máy Windows 7 -> Vào **Control Panel** -> **Windows Firewall** -> Chọn **Turn Windows Firewall on or off** -> Chọn **Turn off Windows Firewall**.
+
+---
+
+### 🚨 5.5 Lỗi `Destination Host Unreachable` khi Ping IP Alias `192.168.5.3`
+- **Nguyên nhân:** Card mạng chứa IP Alias trên máy ảo cắm lầm công tắc ảo (VD: card cắm ở `VMnet3` nhưng IP lại đặt dải `VMnet2`).
+- **Khắc phục:** Vào VMware Virtual Machine Settings -> Chỉnh Card mạng chứa IP Alias sang đúng **`VMnet2`**.
+
+---
+
+### 💡 5.6 Thủ thuật quản lý SSH bằng Router Jump Server
+Để máy ảo **Ubuntu_2** đạt chuẩn nộp bài Lab (chỉ có 1 Card mạng nội bộ, không dùng Card NAT):
+1. Từ Windows máy thật: SSH vào Router **Ubuntu_1**:
+   ```powershell
+   ssh neko@192.168.1.150
+   ```
+2. Từ bên trong cửa sổ Ubuntu_1, SSH nhảy tiếp sang **Ubuntu_2**:
+   ```bash
+   ssh neko@192.168.6.2
+   ```
+   *(Hoặc `ssh neko@192.168.5.3`)*
+👉 Quản lý cả hệ thống cực kỳ an toàn, gọn gàng và chuẩn kiến trúc mạng!
