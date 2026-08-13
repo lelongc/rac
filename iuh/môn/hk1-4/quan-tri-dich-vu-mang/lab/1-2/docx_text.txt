@@ -1,0 +1,6 @@
+Mục tiêu : Thực hiện kết nối các máy trên 2 network khác nhau bằng giải phápthêm card mạng . Card mạng thêm vào là card vật lý hoặc dùng IP alias.Mô hình – bước 1:Sinh viên A dựng mô hình sau trên máy 05 . Máy LinuxA (máy ảo Linux) kết nốibridge với máy host Windows A.Sinh viên B làm tương tự ( thiết lập một mạng khác A)
+card mạng trên máy LinuxB có địa chỉ cùng mạng với Host của A.Tương tự , để máy Host của sinh viên B kết nối được với máy LinuxA của sinh viênA => thêm một card mạng trên máy LinuxA có địa chỉ cùng mạng với Host của B.
+Mô hình – bước 3:Để Host A kết nối với LinuxB , thay vì thêm một card mạng trên máy LinuxB ta sẽ sửdụng một card mạng có 2 IP address. Card mạng có sẵn trên máy LinuxB sẽ đượcgán thêm một IP address thuộc lớp mạng của Host A.Sau khi gán IP address thứ nhât cho eth0, ta thực hiện gán IP address thứ hai trêncard mạng này, với tên interface eth0:0 .Sử dụng một trong 2 cách gán IP alias sau:
+ifconfig eth0:0 192.168.5.3 netmask 255.255.255.0
+Mở file /etc/sysconfig/network/ifcfg-eth0, nhập thêm 3 dòng sau:IPADDR_2=’192.168.5.3’NETMASK_2=’255.255.255.0’LABEL_2=’0’
+Khởi động lại dịch vụ mạng , và kiểm tra kết quả bằng lệnh ifconfig.
