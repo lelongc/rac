@@ -151,6 +151,10 @@ Cho 2 ngôn ngữ $L_1, L_2 \subseteq \Sigma^*$:
 > - $L_1 \cap L_2 = \{\lambda, 01\}$
 > - $L_1 \setminus L_2 = \{0\}$
 > - Cho $L = \{w \in \Sigma^* \mid |w| \text{ là số chẵn}\} \Rightarrow \overline{L} = \{w \in \Sigma^* \mid |w| \text{ là số lẻ}\}$.
+>   - 🗣️ **Cách đọc một lèo (chuẩn thuyết trình / đọc bài trên lớp):**
+>     > *"Cho ngôn ngữ L là tập hợp các chuỗi w thuộc Xích-ma sao, sao cho độ dài của w là số chẵn; suy ra phần bù của L là tập hợp các chuỗi w thuộc Xích-ma sao, sao cho độ dài của w là số lẻ."*
+>   - 🗣️ **Cách đọc một lèo (ngắn gọn / văn nói dễ nhớ):**
+>     > *"Cho L là tập các chuỗi w thuộc Xích-ma sao có độ dài chẵn; suy ra L bù là tập các chuỗi w thuộc Xích-ma sao có độ dài lẻ."*
 
 ---
 
