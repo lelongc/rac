@@ -7,7 +7,6 @@
 
 #### a) $L_1 = \{ uuu^{-1} \mid u \in \Sigma^* \}$
 
-**Giải:**
 
 - Xét các chuỗi $u \in \Sigma^*$ theo thứ tự độ dài tăng dần:
   - $|u| = 0: u = \lambda \Rightarrow uuu^{-1} = \lambda$ (độ dài 0)
@@ -30,7 +29,6 @@ $$
 
 #### b) $L_2 = \{ u^{-1}uu \mid u \in \Sigma^* \}$
 
-**Giải:**
 
 - Xét các chuỗi $u \in \Sigma^*$ theo thứ tự độ dài tăng dần:
   - $|u| = 0: u = \lambda \Rightarrow u^{-1}uu = \lambda$ (độ dài 0)
@@ -53,7 +51,6 @@ $$
 
 #### c) $L_3 = \{ uau^{-1} \mid u \in \Sigma^* \}$
 
-**Giải:**
 
 - Xét các chuỗi $u \in \Sigma^*$ theo thứ tự độ dài tăng dần:
   - $|u| = 0: u = \lambda \Rightarrow uau^{-1} = \lambda a \lambda = a$ (độ dài 1)
@@ -75,15 +72,16 @@ $$
 ---
 
 ### BÀI 2
+
 **Hãy đưa ra 5 chuỗi có độ dài ngắn nhất (theo thứ tự từ điển với quy ước chuỗi rỗng đứng trước, chiều dài tăng dần) và xác định tính chất (mô tả ngôn ngữ) của những văn phạm sau:**
 
 ---
 
 #### a) Cho văn phạm $G_1 = (V, T, S, P)$ với: $V = \{S\}$, $T = \{a, b\}$, $P = \{S \to Sa \mid Sb \mid \lambda\}$
 
-**Giải:**
 
 **1. Các bước dẫn xuất sinh ra 5 chuỗi có độ dài ngắn nhất (theo thứ tự từ điển):**
+
 - **Chuỗi 1 (độ dài 0):** $S \Rightarrow \lambda$
 - **Chuỗi 2 (độ dài 1):** $S \Rightarrow Sa \Rightarrow \lambda a = a$
 - **Chuỗi 3 (độ dài 1):** $S \Rightarrow Sb \Rightarrow \lambda b = b$
@@ -91,24 +89,30 @@ $$
 - **Chuỗi 5 (độ dài 2):** $S \Rightarrow Sb \Rightarrow Sab \Rightarrow \lambda ab = ab$
 
 **2. Danh sách 5 chuỗi ngắn nhất sắp xếp theo yêu cầu:**
-$$\lambda \text{ (độ dài 0)}; \quad a \text{ (độ dài 1)}; \quad b \text{ (độ dài 1)}; \quad aa \text{ (độ dài 2)}; \quad ab \text{ (độ dài 2)}$$
+
+$$
+\lambda \text{ (độ dài 0)}; \quad a \text{ (độ dài 1)}; \quad b \text{ (độ dài 1)}; \quad aa \text{ (độ dài 2)}; \quad ab \text{ (độ dài 2)}
+$$
 
 **3. Xác định tính chất (mô tả ngôn ngữ):**
+
 - **Phân tích cơ chế sinh:**
   - Quy tắc $S \to Sa$ cho phép nối thêm ký tự '$a$' vào phía sau của chuỗi hiện tại.
   - Quy tắc $S \to Sb$ cho phép nối thêm ký tự '$b$' vào phía sau của chuỗi hiện tại.
   - Quy tắc $S \to \lambda$ dùng để khử biến $S$ và kết thúc quá trình dẫn xuất.
 - **Mô tả bằng lời:** Ngôn ngữ được sinh ra bởi văn phạm $G_1$ là tập hợp tất cả các chuỗi có thể được tạo thành từ bảng chữ cái $\{a, b\}$, bao gồm cả chuỗi rỗng.
 - **Biểu diễn tập hợp:**
-  $$L(G_1) = \Sigma^* = \{a, b\}^*$$
+  $$
+  L(G_1) = \Sigma^* = \{a, b\}^*
+  $$
 
 ---
 
 #### b) Cho văn phạm $G_2 = (V, T, S, P)$ với: $V = \{S\}$, $T = \{a, b\}$, $P = \{S \to aSa \mid bSb \mid a \mid b \mid \lambda\}$
 
-**Giải:**
 
 **1. Các bước dẫn xuất sinh ra 5 chuỗi có độ dài ngắn nhất (theo thứ tự từ điển):**
+
 - **Chuỗi 1 (độ dài 0):** $S \Rightarrow \lambda$
 - **Chuỗi 2 (độ dài 1):** $S \Rightarrow a$
 - **Chuỗi 3 (độ dài 1):** $S \Rightarrow b$
@@ -116,24 +120,30 @@ $$\lambda \text{ (độ dài 0)}; \quad a \text{ (độ dài 1)}; \quad b \text{
 - **Chuỗi 5 (độ dài 2):** $S \Rightarrow bSb \Rightarrow b\lambda b = bb$
 
 **2. Danh sách 5 chuỗi ngắn nhất sắp xếp theo yêu cầu:**
-$$\lambda \text{ (độ dài 0)}; \quad a \text{ (độ dài 1)}; \quad b \text{ (độ dài 1)}; \quad aa \text{ (độ dài 2)}; \quad bb \text{ (độ dài 2)}$$
+
+$$
+\lambda \text{ (độ dài 0)}; \quad a \text{ (độ dài 1)}; \quad b \text{ (độ dài 1)}; \quad aa \text{ (độ dài 2)}; \quad bb \text{ (độ dài 2)}
+$$
 
 **3. Xác định tính chất (mô tả ngôn ngữ):**
+
 - **Phân tích cơ chế sinh:**
   - Quy tắc $S \to aSa$ kẹp đồng thời hai ký tự '$a$' ở hai đầu chuỗi.
   - Quy tắc $S \to bSb$ kẹp đồng thời hai ký tự '$b$' ở hai đầu chuỗi.
   - Các quy tắc dừng: $S \to \lambda$ (kết thúc sinh chuỗi đối xứng độ dài chẵn), $S \to a$ hoặc $S \to b$ (kết thúc sinh chuỗi đối xứng độ dài lẻ có tâm là '$a$' hoặc '$b$').
 - **Mô tả bằng lời:** Ngôn ngữ được sinh ra bởi văn phạm $G_2$ là tập hợp tất cả các chuỗi đối xứng (chuỗi Palindrome) trên bảng chữ cái $\{a, b\}$, nghĩa là chuỗi đọc xuôi hay đọc ngược đều hoàn toàn giống nhau.
 - **Biểu diễn tập hợp:**
-  $$L(G_2) = \{w \in \{a, b\}^* \mid w = w^R\}$$
+  $$
+  L(G_2) = \{w \in \{a, b\}^* \mid w = w^R\}
+  $$
 
 ---
 
 #### c) Cho văn phạm $G_3 = (V, T, S, P)$ với: $V = \{S\}$, $T = \{a, b\}$, $P = \{S \to aSb \mid \lambda\}$
 
-**Giải:**
 
 **1. Các bước dẫn xuất sinh ra 5 chuỗi có độ dài ngắn nhất (theo thứ tự từ điển):**
+
 - **Chuỗi 1 (độ dài 0):** $S \Rightarrow \lambda$
 - **Chuỗi 2 (độ dài 2):** $S \Rightarrow aSb \Rightarrow a\lambda b = ab$
 - **Chuỗi 3 (độ dài 4):** $S \Rightarrow aSb \Rightarrow aaSbb \Rightarrow aa\lambda bb = aabb$
@@ -141,13 +151,19 @@ $$\lambda \text{ (độ dài 0)}; \quad a \text{ (độ dài 1)}; \quad b \text{
 - **Chuỗi 5 (độ dài 8):** $S \Rightarrow aSb \Rightarrow aaSbb \Rightarrow aaaSbbb \Rightarrow aaaaSbbbb \Rightarrow aaaa\lambda bbbb = aaaabbbb$
 
 **2. Danh sách 5 chuỗi ngắn nhất sắp xếp theo yêu cầu:**
-$$\lambda \text{ (độ dài 0)}; \quad ab \text{ (độ dài 2)}; \quad aabb \text{ (độ dài 4)}; \quad aaabbb \text{ (độ dài 6)}; \quad aaaabbbb \text{ (độ dài 8)}$$
+
+$$
+\lambda \text{ (độ dài 0)}; \quad ab \text{ (độ dài 2)}; \quad aabb \text{ (độ dài 4)}; \quad aaabbb \text{ (độ dài 6)}; \quad aaaabbbb \text{ (độ dài 8)}
+$$
 
 **3. Xác định tính chất (mô tả ngôn ngữ):**
+
 - **Phân tích cơ chế sinh:** Mỗi lần áp dụng quy tắc $S \to aSb$ sẽ sinh ra đúng 1 ký tự '$a$' ở phía bên trái và đúng 1 ký tự '$b$' ở phía bên phải. Do đó, số lượng ký tự '$a$' và '$b$' luôn bằng nhau và các ký tự '$a$' luôn đứng trước toàn bộ ký tự '$b$'. Dừng lại bằng $S \to \lambda$.
 - **Mô tả bằng lời:** Ngôn ngữ sinh bởi văn phạm $G_3$ là tập hợp tất cả các chuỗi có $n$ ký tự '$a$' liên tiếp đứng trước, tiếp theo sau là đúng $n$ ký tự '$b$' liên tiếp, với $n \ge 0$.
 - **Biểu diễn tập hợp:**
-  $$L(G_3) = \{a^n b^n \mid n \ge 0\}$$
+  $$
+  L(G_3) = \{a^n b^n \mid n \ge 0\}
+  $$
 
 ---
 
@@ -157,7 +173,7 @@ $$\lambda \text{ (độ dài 0)}; \quad ab \text{ (độ dài 2)}; \quad aabb \t
 **Tập luật sinh $P: \{S \to aB; \ B \to bS; \ S \to \lambda\}$**
 **Tìm 3 cặp chuỗi (mỗi cặp gồm 1 chuỗi được văn phạm chấp nhận và 1 chuỗi không được văn phạm chấp nhận) có chiều dài lần lượt là 2, 4 và 6.**
 
-**Giải:**
+
 Ngôn ngữ sinh bởi văn phạm là tập hợp các chuỗi có dạng $(ab)^n$ với $n \ge 0$.
 
 1. **Chiều dài 2:**
@@ -181,7 +197,6 @@ Ngôn ngữ sinh bởi văn phạm là tập hợp các chuỗi có dạng $(ab)
 **Tập luật sinh $P: \{S \to 0A; \ A \to 1S; \ S \to \lambda\}$** *(hoặc biến $A$ chính là biến phụ trong tập $V$)*
 **Tìm 3 cặp chuỗi (mỗi cặp gồm 1 chuỗi được văn phạm chấp nhận và 1 chuỗi không được văn phạm chấp nhận) có chiều dài lần lượt là 3, 5 và 7.**
 
-**Giải:**
 
 > **Nhận xét lý thuyết về cấu trúc văn phạm:**
 > Dãy dẫn xuất của văn phạm có dạng: $S \Rightarrow 0A \Rightarrow 01S \Rightarrow 010A \Rightarrow 0101S \Rightarrow \dots$
