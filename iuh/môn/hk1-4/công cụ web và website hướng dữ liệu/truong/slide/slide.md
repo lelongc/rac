@@ -34,7 +34,10 @@ b2/ Cho chứa 1 mảng danh sách các đối tượng (mỗi đối tượng l
 ---
 
 ### 📌 Yêu cầu kiến trúc & Kỹ thuật chi tiết:
+
 - **Phía Server**: Xây dựng **Web Service theo chuẩn RESTful API**, xử lý và trả về dữ liệu định dạng **JSON**.
 - **Phía Client (Trình duyệt)**: Gửi yêu cầu (Call) tới Web Service bằng **jQuery (`$.ajax` / `$.getJSON`)** hoặc **Fetch API**.
 - **Xử lý hiển thị**: Sử dụng **JavaScript DOM** để nhận chuỗi/mảng JSON và kết xuất (render) dữ liệu hiển thị lên giao diện bảng HTML (`<table>`).
 
+
+TUẦN 2
