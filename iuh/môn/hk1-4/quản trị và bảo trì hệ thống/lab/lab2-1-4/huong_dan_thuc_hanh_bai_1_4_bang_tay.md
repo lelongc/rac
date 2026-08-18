@@ -177,14 +177,15 @@ Tài liệu này hướng dẫn chi tiết từng bước (Step-by-step) cấu h
 
 #### 5. Cấu hình Map Network Drive (Gán ổ đĩa mạng)
 
-1. Share thư mục `C:\TAILIEU` với quyền Everyone Full Control (Share name: `TAILIEU`).
+1. Share thư mục `C:\TAILIEU` với quyền Everyone Full Control (Share name: `TAILIEU`).![1787023296819](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787023296819.png)
 2. Trên máy Client (Win7):
    * Mở **Computer** (Windows Explorer).
-   * Bấm vào nút **`Map network drive`** trên thanh công cụ.
+   * Bấm vào nút **`Map network drive`** trên thanh công cụ.![1787023464927](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787023464927.png)
    * **Drive**: Chọn ký tự ổ đĩa (ví dụ: `Z:` hoặc `W:`).
    * **Folder**: Gõ đường dẫn chia sẻ mạng: **`\\192.168.11.1\TAILIEU`** (hoặc `\\Server\TAILIEU`).
    * Tích chọn **`Reconnect at logon`** ➔ Nhấn **Finish**.
-   * Đăng nhập với User `U1` / pass `123`.
+   * Đăng nhập với User `U1` / pass `abc@123`.![1787023605562](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787023605562.png)
+3. những gì server share ![1787025204216](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787025204216.png)
 
 #### 6. Kiểm tra kết quả & Chụp màn hình:
 
