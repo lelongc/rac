@@ -1,3 +1,23 @@
+# BẢNG TỔNG HỢP MẬT KHẨU TOÀN BỘ TÀI KHOẢN (BÀI 1 - 4)
+
+> 🔑 **LƯU Ý QUAN TRỌNG VỀ MẬT KHẨU:**
+>
+> * Toàn bộ các tài khoản làm Lab và tài khoản Administrator đều đã được đồng bộ mật khẩu là: **`123`** (hoặc `abc@123`).
+> * Tính năng tự khóa tài khoản khi nhập sai đã được tắt hoàn toàn (`Lockout = 0`) để tránh bị lỗi khóa tài khoản.
+
+| Tên Tài Khoản (User)     | Nhóm (Group)  | Mật khẩu (Password)                 | Ghi chú mục đích                                 |
+| :-------------------------- | :------------- | :------------------------------------ | :--------------------------------------------------- |
+| **`Administrator`** | Administrators | **`123`**                     | Tài khoản Quản trị Server                        |
+| **`SV1, SV2, SV3`** | SINHVIEN       | **`123`** (hoặc `abc@123`) | Bài 1: Nhóm Sinh viên                             |
+| **`GV1, GV2`**      | GIAOVIEN       | **`123`** (hoặc `abc@123`) | Bài 1: Nhóm Giáo viên                            |
+| **`U4`**            | Users          | **`123`**                     | Bài 2: Test Password Policy & Tắt máy/Chỉnh giờ |
+| **`U1`**            | Users          | **`123`** (hoặc `abc@123`) | Bài 3: Truy cập Share`DULIEU`, `TAILIEU`       |
+| **`U2`**            | Users          | **`123`** (hoặc `abc@123`) | Bài 3: Truy cập Share ẩn`BIMAT$`                |
+| **`KT1, KT2`**      | KETOAN         | **`123`** (hoặc `abc@123`) | Bài 4: Nhóm Kế toán                              |
+| **`NS1, NS2`**      | NHANSU         | **`123`** (hoặc `abc@123`) | Bài 4: Nhóm Nhân sự                              |
+
+---
+
 # HƯỚNG DẪN THỰC HÀNH CHI TIẾT BẰNG TAY (BÀI 1 ĐẾN BÀI 4)
 
 ## MÔN: QUẢN TRỊ VÀ BẢO TRÌ HỆ THỐNG (IUH)
@@ -184,7 +204,7 @@ Tài liệu này hướng dẫn chi tiết từng bước (Step-by-step) cấu h
    * **Drive**: Chọn ký tự ổ đĩa (ví dụ: `Z:` hoặc `W:`).
    * **Folder**: Gõ đường dẫn chia sẻ mạng: **`\\192.168.11.1\TAILIEU`** (hoặc `\\Server\TAILIEU`).
    * Tích chọn **`Reconnect at logon`** ➔ Nhấn **Finish**.
-   * Đăng nhập với User `U1` / pass `abc@123`.![1787023605562](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787023605562.png)
+   * Đăng nhập với User `U1` / pass `abc@123`.![1787023605562](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787023605562.png)![1787029411008](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787029411008.png)
 3. những gì server share ![1787025204216](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787025204216.png)
 
 #### 6. Kiểm tra kết quả & Chụp màn hình:
