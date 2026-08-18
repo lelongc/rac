@@ -253,7 +253,7 @@ Tài liệu này hướng dẫn chi tiết từng bước (Step-by-step) cấu h
 
 1. Chuột phải `C:\DATA` ➔ **Properties** ➔ chọn tab **`Security`** ➔ Nhấn **`Advanced`**.
 2. **Ngắt kế thừa (Disable Inheritance)**:
-   * Nhấn nút **`Disable inheritance`**.
+   * Nhấn nút **`Disable inheritance`**.![1787029858494](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787029858494.png)
    * Chọn dòng: **`Convert inherited permissions into explicit permissions on this object`** (Chuyển quyền kế thừa thành quyền trực tiếp).
 3. Xóa bớt quyền mặc định của User thường:
    * Chọn dòng **`Users (...)`** ➔ Nhấn **Remove**.
@@ -261,6 +261,7 @@ Tài liệu này hướng dẫn chi tiết từng bước (Step-by-step) cấu h
    * Nhấn nút **`Add`** ➔ Chọn **`Select a principal`** ➔ Gõ: `KETOAN; NHANSU` ➔ **Check Names** ➔ **OK**.
    * Tại mục **Basic permissions**: Tích chọn **`Read & execute`**, **`List folder contents`**, **`Read`**.
    * Nhấn **OK** ➔ **Apply** ➔ **OK**.
+   * ![1787029981364](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787029981364.png)
 
 ---
 
