@@ -209,9 +209,9 @@ Tài liệu này hướng dẫn chi tiết từng bước (Step-by-step) cấu h
 
 #### 6. Kiểm tra kết quả & Chụp màn hình:
 
-* **Từ máy Client (Win7)**: Bấm `Windows + R` ➔ Gõ `\\192.168.11.1` ➔ Thấy xuất hiện thư mục `DULIEU`, `DULIEU_KETOAN`, `TAILIEU`, nhưng **KHÔNG THẤY** thư mục `BIMAT` (do đã bị ẩn).
-* Gõ tiếp vào Run: `\\192.168.11.1\BIMAT$` ➔ Truy cập vào thư mục ẩn `BIMAT$` thành công!
-* Mở **Computer** trên Client: Thấy xuất hiện ổ đĩa mạng **`TAILIEU (Z:)`**.
+* **Từ máy Client (Win7)**: Bấm `Windows + R` ➔ Gõ `\\192.168.11.1` ➔ Thấy xuất hiện thư mục `DULIEU`, `DULIEU_KETOAN`, `TAILIEU`, nhưng **KHÔNG THẤY** thư mục `BIMAT` (do đã bị ẩn).![1787029464824](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787029464824.png)
+* Gõ tiếp vào Run: `\\192.168.11.1\BIMAT$` ➔ Truy cập vào thư mục ẩn `BIMAT$` thành công!![1787029497065](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787029497065.png)
+* Mở **Computer** trên Client: Thấy xuất hiện ổ đĩa mạng **`TAILIEU (Z:)`**.![1787029533077](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787029533077.png)
 
 ---
 
