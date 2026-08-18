@@ -141,9 +141,9 @@ Tài liệu này hướng dẫn chi tiết từng bước (Step-by-step) cấu h
 2. Mở ổ đĩa **`C:\`** ➔ Tạo thư mục lớn tên **`THUCHANH`**.
 3. Bên trong thư mục `C:\THUCHANH`, tạo 2 thư mục con:
    * **`DULIEU`**
-   * **`BIMAT`**
+   * **`BIMAT`![1787022635181](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787022635181.png)**
 4. Trong mỗi thư mục, tạo một file text: `thuchanh.txt` (nội dung: *"Day la tai lieu thuc hanh"*).
-5. Tạo thêm một thư mục riêng **`C:\TAILIEU`** để làm bài Map Network Drive.
+5. Tạo thêm một thư mục riêng **`C:\TAILIEU`** để làm bài Map Network Drive.![1787022665467](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787022665467.png)
 
 #### 2. Share thư mục thường (Folder DULIEU)
 
