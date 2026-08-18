@@ -154,7 +154,7 @@ Tài liệu này hướng dẫn chi tiết từng bước (Step-by-step) cấu h
 5. Nhấn nút **`Permissions`**:
    * Mặc định có group `Everyone`.
    * Ở khung Permissions for Everyone, tích chọn **`Allow`** cho mục **`Full Control`** (hoặc Change, Read).
-   * Nhấn **OK** ➔ Nhấn **OK** ➔ Nhấn **Close**.
+   * Nhấn **OK** ➔ Nhấn **OK** ➔ Nhấn **Close**.![1787022935615](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787022935615.png)
 
 #### 3. Share ẩn một thư mục (Folder BIMAT$)
 
@@ -162,7 +162,7 @@ Tài liệu này hướng dẫn chi tiết từng bước (Step-by-step) cấu h
 2. Chọn tab **`Sharing`** ➔ Nhấn nút **`Advanced Sharing...`**.
 3. Tích chọn vào ô **`Share this folder`**.
 4. Ô **Share name**: Điền thêm dấu **`$`** vào cuối: **`BIMAT$`**.
-5. Nhấn nút **`Permissions`** ➔ Chọn Everyone ➔ Tích **Allow Full Control** ➔ Nhấn **OK** ➔ **OK** ➔ **Close**.
+5. Nhấn nút **`Permissions`** ➔ Chọn Everyone ➔ Tích **Allow Full Control** ➔ Nhấn **OK** ➔ **OK** ➔ **Close**.![1787023021640](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787023021640.png)
 
 #### 4. Share một thư mục với nhiều tên (Multi-Share Name)
 
