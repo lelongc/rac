@@ -230,10 +230,10 @@ Tài liệu này hướng dẫn chi tiết từng bước (Step-by-step) cấu h
 
 #### 1. Chuẩn bị cây thư mục và User/Group trên Server:
 
-1. **Tạo 2 Group**: `KETOAN`, `NHANSU`.
+1. **Tạo 2 Group**: `KETOAN`, `NHANSU`.![1787029656560](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787029656560.png)
 2. **Tạo các User**:
    * User `KT1`, `KT2` ➔ Add vào Group `KETOAN`.
-   * User `NS1`, `NS2` ➔ Add vào Group `NHANSU`.
+   * User `NS1`, `NS2` ➔ Add vào Group `NHANSU`.![1787029677997](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787029677997.png)
 3. **Tạo cây thư mục trên ổ C:**
    ```
    C:\DATA
@@ -241,7 +241,7 @@ Tài liệu này hướng dẫn chi tiết từng bước (Step-by-step) cấu h
    ├── KETOAN
    └── NHANSU
    ```
-4. **Chia sẻ thư mục gốc `C:\DATA`**:
+4. **![1787029718943](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787029718943.png)Chia sẻ thư mục gốc `C:\DATA`**:
    * Chuột phải `C:\DATA` ➔ **Properties** ➔ **Sharing** ➔ **Advanced Sharing**.
    * Tích **Share this folder** (Share name: `DATA`) ➔ **Permissions** ➔ Everyone Allow **Full Control** ➔ **OK** (Quyền mạng để mở hoàn toàn, việc siết quyền sẽ do tab Security/NTFS đảm nhận).
 
