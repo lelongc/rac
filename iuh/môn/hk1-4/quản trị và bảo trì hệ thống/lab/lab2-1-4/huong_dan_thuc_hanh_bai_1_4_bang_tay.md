@@ -273,7 +273,7 @@ Tài liệu này hướng dẫn chi tiết từng bước (Step-by-step) cấu h
 2. Nhấn **`Add...`** ➔ Gõ: `KETOAN; NHANSU` ➔ **Check Names** ➔ **OK**.
 3. Chọn group `KETOAN` ➔ Tích **Allow Full control**.
 4. Chọn group `NHANSU` ➔ Tích **Allow Full control**.
-5. Nhấn **OK** ➔ **OK**.
+5. Nhấn **OK** ➔ **OK**.![1787030103945](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787030103945.png)
 
 ---
 
@@ -287,7 +287,7 @@ Tài liệu này hướng dẫn chi tiết từng bước (Step-by-step) cấu h
 2. Nhấn **`Disable inheritance`** ➔ Chọn **`Convert inherited permissions...`**.
 3. Trong danh sách Permission entries:
    * Chọn dòng **`NHANSU`** ➔ Nhấn nút **`Remove`** (để xóa hẳn quyền của phòng Nhân sự).
-   * Chọn dòng **`KETOAN`** ➔ Nhấn nút **`Edit`** ➔ Tích chọn **`Full control`** ➔ Nhấn **OK**.
+   * Chọn dòng **`KETOAN`** ➔ Nhấn nút **`Edit`** ➔ Tích chọn **`Full control`** ➔ Nhấn **OK**.![1787030283717](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787030283717.png)
 4. Nhấn **Apply** ➔ **OK**.
 
 **B. Đối với thư mục `C:\DATA\NHANSU`:**
@@ -311,10 +311,10 @@ Tài liệu này hướng dẫn chi tiết từng bước (Step-by-step) cấu h
 4. **BỎ TÍCH** 2 dòng sau:
    * ❌ **`Delete subfolders and files`**
    * ❌ **`Delete`**
-     *(Vẫn giữ tích các quyền: Read, Write, Execute, Create files, Create folders...)*.
+     *(Vẫn giữ tích các quyền: Read, Write, Execute, Create files, Create folders...)*.![1787030406623](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787030406623.png)
 5. Nhấn **OK**.
 6. Đảm bảo trong danh sách có đối tượng **`CREATOR OWNER`** với quyền **Full Control** (đây là đối tượng đại diện cho người vừa tạo ra file, giúp người tạo file vẫn có toàn quyền xóa file của chính mình).
-7. Nhấn **Apply** ➔ **OK** ➔ **OK**.
+7. Nhấn **Apply** ➔ **OK** ➔ **OK**.![1787030422086](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787030422086.png)
 
 ---
 
@@ -322,13 +322,13 @@ Tài liệu này hướng dẫn chi tiết từng bước (Step-by-step) cấu h
 
 1. **Kiểm tra phân quyền thư mục riêng**:
    * Đăng nhập Client bằng `KT1` truy cập `\\192.168.11.1\DATA`:
-     * Vào `KETOAN` ➔ **Thành công**.
-     * Vào `NHANSU` ➔ Bị báo lỗi **Access is denied** (Chặn thành công!).
+     * Vào `KETOAN` ➔ **Thành công**.![1787034122930](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787034122930.png)
+     * Vào `NHANSU` ➔ Bị báo lỗi **Access is denied** (Chặn thành công!).![1787034108749](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787034108749.png)
    * Đăng nhập Client bằng `NS1` truy cập `\\192.168.11.1\DATA`:
-     * Vào `NHANSU` ➔ **Thành công**.
-     * Vào `KETOAN` ➔ Bị báo lỗi **Access is denied** (Chặn thành công!).
+     * Vào `NHANSU` ➔ **Thành công**.![1787034185206](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787034185206.png)
+     * Vào `KETOAN` ➔ Bị báo lỗi **Access is denied** (Chặn thành công!).![1787034198231](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787034198231.png)
 2. **Kiểm tra Special Permission (Chống xóa file người khác)**:
    * Đăng nhập `KT1` vào `KETOAN` ➔ Tạo file `KT1_data.txt`.
    * Đăng nhập `KT2` vào `KETOAN` ➔ Tạo file `KT2_data.txt`.
-   * Thử dùng `KT1` bấm xóa file `KT2_data.txt` ➔ Windows hiện bảng cảnh báo: **`Folder/File Access Denied - You need permission to perform this action`** ➔ Chụp lại tấm hình này làm minh chứng điểm 10!
+   * Thử dùng `KT1` bấm xóa file `KT2_data.txt` ➔ Windows hiện bảng cảnh báo: **`Folder/File Access Denied - You need permission to perform this action`** ➔ Chụp lại tấm hình này làm minh chứng điểm 10!![1787034341765](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787034341765.png)
    * Dùng `KT1` xóa file `KT1_data.txt` của chính mình ➔ **Xóa thành công**.
