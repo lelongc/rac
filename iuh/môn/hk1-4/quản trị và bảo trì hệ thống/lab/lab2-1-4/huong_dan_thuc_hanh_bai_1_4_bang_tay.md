@@ -59,7 +59,7 @@ Tài liệu này hướng dẫn chi tiết từng bước (Step-by-step) cấu h
 
 * **Ảnh chụp 1**: Mở thư mục `Users`, hiển thị danh sách các User vừa tạo (`SV1`, `SV2`, `SV3`, `GV1`, `GV2`).![1787021130398](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787021130398.png)
 * **Ảnh chụp 2**: Mở thư mục `Groups`, nhấp đúp vào nhóm `SINHVIEN` (hiện danh sách SV1, SV2, SV3) và nhóm `GIAOVIEN`.![1787021158964](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787021158964.png)
-* **Ảnh chụp 3 (Đăng nhập)**: Đăng xuất (Sign out) tài khoản hiện tại, đăng nhập bằng tài khoản `SV1` với pass `abc@123` ➔ Đăng nhập thành công vào màn hình Desktop.
+* **Ảnh chụp 3 (Đăng nhập)**: Đăng xuất (Sign out) tài khoản hiện tại, đăng nhập bằng tài khoản `SV1` với pass `abc@123` ➔ Đăng nhập thành công vào màn hình Desktop.![1787021471385](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787021471385.png)
 
 ---
 
@@ -87,7 +87,7 @@ Tài liệu này hướng dẫn chi tiết từng bước (Step-by-step) cấu h
    * **Minimum password age**: Đặt là **`0`** days ➔ **OK**.
    * **Maximum password age**: Đặt là **`0`** (Password will not expire) hoặc `42` days ➔ **OK**.
 4. Cập nhật chính sách: Mở CMD gõ **`gpupdate /force`** ➔ Nhấn **Enter**.
-5. **Kiểm tra**: Vào `lusrmgr.msc` tạo thử user **`U4`** với mật khẩu siêu ngắn/đơn giản là **`123`** ➔ Tạo thành công (không bị báo lỗi Password Complexity).
+5. **Kiểm tra**: Vào `lusrmgr.msc` tạo thử user **`U4`** với mật khẩu siêu ngắn/đơn giản là **`123`** ➔ Tạo thành công (không bị báo lỗi Password Complexity).![1787021709269](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787021709269.png)
 
 #### 2. Cấu hình Account Lockout Policy (Khóa tài khoản khi nhập sai)
 
@@ -102,7 +102,7 @@ Tài liệu này hướng dẫn chi tiết từng bước (Step-by-step) cấu h
 3. **Kiểm tra**:
    * Sign out (hoặc Lock máy) ➔ Chọn tài khoản `U4`.
    * Cố tình nhập sai mật khẩu 4 lần liên tiếp.
-   * Quan sát thông báo: *"The referenced account is currently locked out and may not be logged on to"*.
+   * Quan sát thông báo: *"The referenced account is currently locked out and may not be logged on to"*.![1787021797274](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787021797274.png)
 
 #### 3. Cấu hình User Rights Assignment (Cấp quyền tắt máy & đổi giờ cho User thường)
 
@@ -110,7 +110,7 @@ Tài liệu này hướng dẫn chi tiết từng bước (Step-by-step) cấu h
    `Security Settings` ➔ `Local Policies` ➔ **`User Rights Assignment`**.
 2. **Cấp quyền thay đổi ngày giờ hệ thống**:
    * Tìm chính sách **`Change the system time`** ➔ Nhấp đúp.
-   * Nhấn **`Add User or Group...`** ➔ Gõ **`Users`** ➔ Nhấn **Check Names** ➔ **OK** ➔ **OK**.
+   * Nhấn **`Add User or Group...`** ➔ Gõ **`Users`** ➔ Nhấn **Check Names** ➔ **OK** ➔ **OK**.![1787021930834](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787021930834.png)
 3. **Cấp quyền tắt máy**:
    * Tìm chính sách **`Shut down the system`** ➔ Nhấp đúp.
    * Nhấn **`Add User or Group...`** ➔ Gõ **`Users`** ➔ Nhấn **Check Names** ➔ **OK** ➔ **OK**.
