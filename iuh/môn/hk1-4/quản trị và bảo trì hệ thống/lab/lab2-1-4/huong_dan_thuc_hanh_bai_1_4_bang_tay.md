@@ -114,7 +114,7 @@ Tài liệu này hướng dẫn chi tiết từng bước (Step-by-step) cấu h
 3. **Cấp quyền tắt máy**:
    * Tìm chính sách **`Shut down the system`** ➔ Nhấp đúp.
    * Nhấn **`Add User or Group...`** ➔ Gõ **`Users`** ➔ Nhấn **Check Names** ➔ **OK** ➔ **OK**.
-4. Cập nhật chính sách: Mở CMD gõ **`gpupdate /force`**.
+4. Cập nhật chính sách: Mở CMD gõ **`gpupdate /force`**.![1787022131465](image/huong_dan_thuc_hanh_bai_1_4_bang_tay/1787022131465.png)
 5. **Kiểm tra**:
    * Đăng nhập bằng tài khoản `U4`.
    * Nhấp đúp vào đồng hồ ở góc phải màn hình ➔ Đổi ngày giờ thành công (không bị hỏi quyền Admin).
