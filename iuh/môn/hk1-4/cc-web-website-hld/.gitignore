@@ -1,0 +1,25 @@
+# Eclipse temporary workspace & build files
+.metadata/
+.settings/
+bin/
+*.class
+
+# Maven & Gradle build outputs
+target/
+build/
+.gradle/
+
+# Secret & config files
+application-secret.yml
+*.env
+
+# Node.js dependencies
+node_modules/
+
+# IDE & OS temporary files
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+*.log
