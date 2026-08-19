@@ -39,5 +39,9 @@ b2/ Cho chứa 1 mảng danh sách các đối tượng (mỗi đối tượng l
 - **Phía Client (Trình duyệt)**: Gửi yêu cầu (Call) tới Web Service bằng **jQuery (`$.ajax` / `$.getJSON`)** hoặc **Fetch API**.
 - **Xử lý hiển thị**: Sử dụng **JavaScript DOM** để nhận chuỗi/mảng JSON và kết xuất (render) dữ liệu hiển thị lên giao diện bảng HTML (`<table>`).
 
-
 TUẦN 2
+
+b1/ tìm virtual restful api có hỗ trợ hình ảnh 
+
+b2/ dựa vào virtual restful api trên , viết app fpa quảng cáo sản phẩm , có các chức năng thêm xóa sửa, tìm kiếm ,
+thử fake rest api

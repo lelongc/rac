@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ứng Dụng Quảng Cáo Sản Phẩm - Virtual REST API</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- jQuery de goi AJAX tien loi -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <h1>🛍️ SHOP ADS - QUẢNG CÁO SẢN PHẨM</h1>
+            <p class="subtitle">Ứng dụng Single Page App kết nối Virtual RESTful API (CRUD & Tìm kiếm)</p>
+        </div>
+    </header>
+
+    <div class="main-container">
+
+        <!-- Toolbar / Thanh cong cu -->
+        <section class="toolbar-section">
+            <div class="api-selector-group">
+                <label for="api-source"><strong>🌐 Nguồn Virtual API:</strong></label>
+                <select id="api-source" onchange="changeApiSource()">
+                    <option value="fakestore" selected>FakeStore API (fakestoreapi.com/products)</option>
+                    <option value="dummyjson">DummyJSON (dummyjson.com/products)</option>
+                    <option value="jsonplaceholder">JSONPlaceholder Photos (typicode.com/photos)</option>
+                    <option value="local">Local Java Server (localhost:8084/api/products)</option>
+                </select>
+                <span id="api-url-display" class="badge-url">https://fakestoreapi.com/products</span>
+            </div>
+
+            <div class="action-bar">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="🔍 Nhập từ khóa tìm kiếm sản phẩm..." onkeyup="handleSearch()">
+                </div>
+                
+                <div class="filter-box">
+                    <select id="category-filter" onchange="handleCategoryFilter()">
+                        <option value="ALL">-- Tất cả danh mục --</option>
+                    </select>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="openAddModal()">➕ Thêm Sản Phẩm</button>
+                    <button class="btn btn-secondary" onclick="loadProducts()">🔄 Tải Lại</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Thong ke & Trang thai -->
+        <div class="status-bar">
+            <span id="product-count">Đang tải sản phẩm...</span>
+            <span id="loading-spinner" class="spinner" style="display:none;">⏳ Đang xử lý API...</span>
+        </div>
+
+        <!-- Danh sach san pham (Grid Banner Ads) -->
+        <main class="products-grid" id="products-grid">
+            <!-- Render bang JavaScript DOM / AJAX -->
+        </main>
+
+        <!-- Khung Response JSON Log tu API -->
+        <section class="log-section">
+            <div class="log-header">
+                <h3>📡 KẾT QUẢ PHẢN HỒI JSON TỪ RESTFUL API:</h3>
+                <button class="btn-clear" onclick="clearLog()">Xóa log</button>
+            </div>
+            <pre id="json-response">// Thuc hien thao tac GET, POST, PUT, DELETE de xem chuoi JSON tai day...</pre>
+        </section>
+
+    </div>
+
+    <!-- Modal Form Them / Sua San Pham -->
+    <div id="product-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Thêm Sản Phẩm Mới</h3>
+                <button class="btn-close" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="product-form" onsubmit="handleFormSubmit(event)">
+                <input type="hidden" id="form-id">
+                
+                <div class="form-group">
+                    <label for="form-title">Tên sản phẩm (*):</label>
+                    <input type="text" id="form-title" required placeholder="Ví dụ: iPhone 15 Pro Max 256GB">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="form-price">Giá bán (USD hoặc VNĐ):</label>
+                        <input type="number" id="form-price" step="any" required placeholder="Ví dụ: 199.99">
+                    </div>
+                    <div class="form-group">
+                        <label for="form-category">Danh mục:</label>
+                        <input type="text" id="form-category" required placeholder="Ví dụ: electronics, fashion">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="form-image">Đường dẫn hình ảnh (Image URL):</label>
+                    <input type="url" id="form-image" placeholder="https://images.unsplash.com/..." onchange="previewFormImage()">
+                    <div class="image-preview-container">
+                        <img id="image-preview" src="https://via.placeholder.com/150?text=Xem+Truoc+Anh" alt="Preview">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="form-desc">Mô tả sản phẩm quảng cáo:</label>
+                    <textarea id="form-desc" rows="3" placeholder="Nhập mô tả nổi bật về sản phẩm..."></textarea>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Hủy Bỏ</button>
+                    <button type="submit" class="btn btn-primary" id="btn-save">Lưu Sản Phẩm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
