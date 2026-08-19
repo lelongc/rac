@@ -13,7 +13,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     width: 100%;
-    max-width: 650px;
+    max-width: 550px;
 }
 
 h2 {
@@ -22,28 +22,6 @@ h2 {
     text-align: center;
     font-size: 22px;
     margin-bottom: 20px;
-}
-
-.nav-menu {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-bottom: 25px;
-}
-
-.nav-menu a {
-    text-decoration: none;
-    color: #007bff;
-    font-weight: bold;
-    padding: 8px 16px;
-    border: 1px solid #007bff;
-    border-radius: 4px;
-    font-size: 14px;
-}
-
-.nav-menu a:hover, .nav-menu a.active {
-    background-color: #007bff;
-    color: #ffffff;
 }
 
 .form-group {
@@ -94,33 +72,6 @@ button:hover {
     font-size: 15px;
     font-weight: bold;
     color: #212529;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-    margin-top: 15px;
-}
-
-th, td {
-    padding: 10px 14px;
-    text-align: left;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-th {
-    background-color: #f1f3f5;
-    color: #333333;
-    font-weight: bold;
-}
-
-tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-tr:hover {
-    background-color: #f1f5f9;
 }
 
 .api-tag {

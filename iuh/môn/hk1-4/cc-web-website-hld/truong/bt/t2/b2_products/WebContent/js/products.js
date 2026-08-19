@@ -1,7 +1,6 @@
 function loadProductsFromAPI() {
     let apiUrl = "/api/products";
 
-    // Gọi RESTful API mảng JSON sản phẩm bằng jQuery $.getJSON
     if (typeof $ !== 'undefined') {
         $.getJSON(apiUrl, function(products) {
             renderTableWithDOM(products);

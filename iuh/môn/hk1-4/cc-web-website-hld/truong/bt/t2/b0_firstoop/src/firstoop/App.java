@@ -20,10 +20,8 @@ public class App {
         pm.addPerson(t2);
 
         pm.displayAll();
-
         pm.displayStudentsOnly();
         pm.displayTeachersOnly();
-
         pm.countStats();
     }
 }
