@@ -43,5 +43,5 @@ TUẦN 2
 
 b1/ tìm virtual restful api có hỗ trợ hình ảnh 
 
-b2/ dựa vào virtual restful api trên , viết app fpa quảng cáo sản phẩm , có các chức năng thêm xóa sửa, tìm kiếm ,
+b2/ dựa vào virtual restful api trên , viết app Single Page App spa quảng cáo sản phẩm , có các chức năng thêm xóa sửa, tìm kiếm ,
 thử fake rest api
