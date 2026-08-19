@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 2: Danh Sách Sản Phẩm (Package bt2_products)</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-menu">
+            <a href="index.html">Trang Chủ</a>
+            <a href="b1_currency.html">Bài 1: Quy Đổi Tiền Tệ</a>
+            <a href="b2_products.html" class="active">Bài 2: Danh Sách Sản Phẩm</a>
+        </div>
+
+        <h2>Bài 2: Danh Sách Sản Phẩm</h2>
+        <div style="text-align: center;"><span class="api-tag">RESTful API: /api/products (Package bt2_products)</span></div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Mã SP</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá (VNĐ)</th>
+                    <th>Số lượng</th>
+                    <th>Danh mục</th>
+                </tr>
+            </thead>
+            <tbody id="product-table-body">
+                <!-- Dữ liệu JSON từ Web Service sẽ được chèn vào đây bằng JS DOM -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="js/products.js"></script>
+</body>
+</html>

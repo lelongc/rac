@@ -1,82 +1,61 @@
-# HƯỚNG DẪN MỞ VÀ CHẠY DỰ ÁN JAVA TRONG ECLIPSE IDE
+# HƯỚNG DẪN TỔ CHỨC DỰ ÁN VÀ MỞ BẰNG ECLIPSE IDE (PROJECT T2)
 
-Tài liệu này hướng dẫn bạn **2 cách** mở và chạy dự án mẫu Java tại thư mục `t2` trên phần mềm **Eclipse IDE**.
-
----
-
-## 🚀 CÁCH 1: Import dự án có sẵn vào Eclipse (Nhanh & Khuyên dùng)
-
-### **Bước 1: Mở Eclipse IDE**
-Mở phần mềm Eclipse và chọn Workspace làm việc của bạn.
-
-### **Bước 2: Mở cửa sổ Import**
-Trên thanh menu trên cùng, chọn **File** ➔ **Import...**
-
-### **Bước 3: Chọn kiểu Import**
-* Trong danh sách hiện ra, mở thư mục **General**.
-* Chọn dòng **Existing Projects into Workspace**.
-* Nhấn nút **Next**.
-
-### **Bước 4: Trỏ đường dẫn đến thư mục dự án**
-* Tích chọn mục **Select root directory**.
-* Nhấn nút **Browse...** và tìm chọn đến thư mục:
-  `D:\folder\rac\iuh\môn\hk1-4\công cụ web và website hướng dữ liệu\truong\bt\t2`
-* Eclipse sẽ tự động nhận diện dự án tên là `t2`.
-
-### **Bước 5: Hoàn tất Import**
-* Đảm bảo ô vuông trước dự án `t2` đã được tích chọn.
-* Nhấn nút **Finish**.
-
-### **Bước 6: Chạy chương trình**
-* Trong cửa sổ **Package Explorer** bên trái, mở cây thư mục:
-  `t2` ➔ `src` ➔ `firstoop` ➔ nhấp đúp chuột mở file **`App.java`**.
-* Nhấp chuột phải vào màn hình code của `App.java` chọn **Run As** ➔ **Java Application** (hoặc nhấn phím tắt `Ctrl + F11`).
-* Kết quả chạy sẽ hiển thị ở bảng **Console** phía dưới.
+Tài liệu này hướng dẫn chi tiết về cấu trúc phân chia các Package trong dự án **`t2`** và cách mở, biên dịch, khởi chạy dự án trên phần mềm **Eclipse IDE**.
 
 ---
 
-## 🛠️ CÁCH 2: Tạo Java Project mới trong Eclipse rồi chép code vào
+## 🏗️ CẤU TRÚC PHÂN CHIA PACKAGE TRONG ECLIPSE IDE:
 
-Nếu dự án của bạn chưa có file cấu hình Eclipse (`.project`, `.classpath`), bạn làm theo các bước sau:
+Trong **Eclipse IDE**, một dự án Java hoàn toàn có thể chứa nhiều Package khác nhau nằm trong cùng thư mục `src`. Dự án `t2` được sắp xếp gọn gàng thành **4 Package chuyên biệt**:
 
-### **Bước 1: Tạo Java Project mới**
-* Vào menu **File** ➔ **New** ➔ **Java Project**.
-* Nhập **Project name**: `t2` (hoặc tên tùy ý).
-* *(Lưu ý)*: Nếu Eclipse hỏi tạo `module-info.java`, bạn chọn **Don't Create**.
-* Nhấn **Finish**.
-
-### **Bước 2: Tạo Package**
-* Trong cửa sổ Package Explorer, nhấp chuột phải vào thư mục **`src`**.
-* Chọn **New** ➔ **Package**.
-* Nhập tên Package: **`firstoop`** ➔ Nhấn **Finish**.
-
-### **Bước 3: Thêm các file Java vào Package**
-* Tạo lần lượt từng lớp bằng cách nhấp chuột phải vào package `firstoop` vừa tạo ➔ **New** ➔ **Class**:
-  1. `Person.java`
-  2. `Student.java`
-  3. `Teacher.java`
-  4. `PersonManagement.java`
-  5. `Functional.java`
-  6. `App.java`
-* Copy nội dung mã nguồn tương ứng đã viết sẵn vào từng file.
-
-### **Bước 4: Chạy thử**
-Mở file `App.java`, nhấp chuột phải chọn **Run As** ➔ **Java Application**.
-
----
-
-## 📁 CẤU TRÚC THƯ MỤC DỰ ÁN MẪU `t2`:
 ```text
 t2/
-├── .project                   # File cấu hình dự án Eclipse
-├── .classpath                 # File cấu hình đường dẫn biên dịch Eclipse
-├── HD_MO_DU_AN_ECLIPSE.md     # Tài liệu hướng dẫn này
-└── src/
-    └── firstoop/              # Package chứa mã nguồn OOP
-        ├── Person.java        # Lớp cha Person
-        ├── Student.java       # Lớp con Student (kế thừa Person)
-        ├── Teacher.java       # Lớp con Teacher (kế thừa Person)
-        ├── PersonManagement.java # Lớp quản lý danh sách
-        ├── Functional.java    # Lớp xử lý chức năng
-        └── App.java           # Lớp chứa hàm main() để chạy
+├── .project                         # File cấu hình dự án Eclipse
+├── .classpath                       # File cấu hình classpath biên dịch Eclipse
+├── HD_MO_DU_AN_ECLIPSE.md           # Tài liệu hướng dẫn chi tiết
+├── src/                             # Mã nguồn Java chính
+│   ├── firstoop/                    # [Package 1] Bài tập OOP cũ (Person, Student, Teacher, PersonManagement, App)
+│   ├── bt1_currency/                # [Package 2 - Bài 1] Web Service RESTful API Quy đổi tiền tệ (CurrencyServlet)
+│   ├── bt2_products/                # [Package 2 - Bài 2] Web Service RESTful API Danh sách sản phẩm (ProductServlet)
+│   └── webserver/                   # [Package 4] Standalone WebServer chạy REST API & WebClient trên Eclipse
+└── WebContent/                      # Ứng dụng phía Client (HTML, CSS, JS DOM & jQuery AJAX)
+    ├── index.html                   # Trang chủ điều hướng chọn bài
+    ├── b1_currency.html             # Bài 1 Client: Giao diện Quy đổi tiền tệ
+    ├── b2_products.html             # Bài 2 Client: Giao diện Danh sách sản phẩm
+    ├── css/
+    │   └── style.css                # CSS đơn giản, trang nhã
+    └── js/
+        ├── currency.js              # Gọi REST API /api/convert (jQuery $.ajax & DOM)
+        └── products.js              # Gọi REST API /api/products (jQuery $.getJSON & DOM)
 ```
+
+---
+
+## 🚀 HƯỚNG DẪN MỞ DỰ ÁN TRÊN ECLIPSE IDE:
+
+### **Bước 1: Import dự án vào Eclipse**
+1. Mở phần mềm **Eclipse IDE**.
+2. Chọn menu **File** ➔ **Import...**
+3. Trong cửa sổ hiện ra, chọn **General** ➔ **Existing Projects into Workspace** ➔ Nhấn **Next**.
+4. Tích chọn **Select root directory**, bấm nút **Browse...** và tìm chọn đến thư mục:
+   `D:\folder\rac\iuh\môn\hk1-4\công cụ web và website hướng dữ liệu\truong\bt\t2`
+5. Eclipse sẽ tự động nhận diện dự án tên là **`t2`**. Nhấn nút **Finish**.
+
+---
+
+## 🏃 HƯỚNG DẪN CHẠY CÁC BÀI TẬP TRÊN ECLIPSE:
+
+### 1. Chạy bài cũ OOP (Package `firstoop`):
+- Mở thư mục: `t2` ➔ `src` ➔ `firstoop` ➔ Nhấp đúp mở file **`App.java`**.
+- Nhấp chuột phải chọn **Run As** ➔ **Java Application** (hoặc ấn `Ctrl + F11`).
+
+### 2. Chạy bài Web Service RESTful API (Package `bt1_currency` & `bt2_products`):
+- Mở thư mục: `t2` ➔ `src` ➔ `webserver` ➔ Nhấp đúp mở file **`WebServer.java`**.
+- Nhấp chuột phải chọn **Run As** ➔ **Java Application** (hoặc ấn `Ctrl + F11`).
+- Màn hình Console sẽ thông báo Server đã chạy thành công tại cổng `8080`.
+- Mở trình duyệt Web (Chrome/Edge) và truy cập:
+  * 🌐 **Trang chủ**: [http://localhost:8080/index.html](http://localhost:8080/index.html)
+  * 💱 **Bài 1 (Quy đổi tiền tệ)**: [http://localhost:8080/b1_currency.html](http://localhost:8080/b1_currency.html)
+  * 📦 **Bài 2 (Danh sách sản phẩm)**: [http://localhost:8080/b2_products.html](http://localhost:8080/b2_products.html)
+  * 🔗 **REST API /api/convert (JSON)**: [http://localhost:8080/api/convert?amount=100&from=USD&to=VND](http://localhost:8080/api/convert?amount=100&from=USD&to=VND)
+  * 🔗 **REST API /api/products (JSON)**: [http://localhost:8080/api/products](http://localhost:8080/api/products)

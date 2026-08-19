@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài 1: Quy Đổi Tiền Tệ (Package bt1_currency)</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-menu">
+            <a href="index.html">Trang Chủ</a>
+            <a href="b1_currency.html" class="active">Bài 1: Quy Đổi Tiền Tệ</a>
+            <a href="b2_products.html">Bài 2: Danh Sách Sản Phẩm</a>
+        </div>
+
+        <h2>Bài 1: Quy Đổi Tiền Tệ</h2>
+        <div style="text-align: center;"><span class="api-tag">RESTful API: /api/convert (Package bt1_currency)</span></div>
+
+        <form onsubmit="event.preventDefault(); convertCurrency();">
+            <div class="form-group">
+                <label for="amount">Số tiền:</label>
+                <input type="number" id="amount" value="1" min="0" step="any">
+            </div>
+
+            <div class="form-group">
+                <label for="from">Từ đồng tiền:</label>
+                <select id="from">
+                    <option value="USD">USD - Đô la Mỹ</option>
+                    <option value="VND" selected>VND - Việt Nam Đồng</option>
+                    <option value="EUR">EUR - Euro</option>
+                    <option value="JPY">JPY - Yên Nhật</option>
+                    <option value="GBP">GBP - Bảng Anh</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="to">Sang đồng tiền:</label>
+                <select id="to">
+                    <option value="USD" selected>USD - Đô la Mỹ</option>
+                    <option value="VND">VND - Việt Nam Đồng</option>
+                    <option value="EUR">EUR - Euro</option>
+                    <option value="JPY">JPY - Yên Nhật</option>
+                    <option value="GBP">GBP - Bảng Anh</option>
+                </select>
+            </div>
+
+            <button type="button" id="btn-convert" onclick="convertCurrency()">Quy Đổi (Gọi REST API)</button>
+        </form>
+
+        <div class="result-box" id="result">Kết quả: ---</div>
+    </div>
+
+    <script src="js/currency.js"></script>
+</body>
+</html>
