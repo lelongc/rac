@@ -172,29 +172,19 @@ ssh neko@192.168.1.150
 
 ---
 
-### 2.4 Cấu hình Ubuntu_2 (LinuxB) - 1 Card mạng 2 IP (IP Alias)
-
-### 2.4 Cấu hình Ubuntu_2 (LinuxB) - 2 Card Mạng & IP Alias (`192.168.6.2` + `192.168.5.3`)
-
-Trên **Ubuntu_2 (LinuxB)**:
-
-- **Card 1 (`ens33`)**: NAT (`VMnet8`) - IP `192.168.1.151/24` (Dùng để SSH từ máy thật Windows `ssh neko@192.168.1.151` và cài đặt phần mềm).
-- **Card 2 (`ens37`)**: Custom (`VMnet3` - LAN 2) - Cấu hình 2 địa chỉ IP trên cùng 1 card:
-  - **IP chính**: `192.168.6.2/24` (Client dải LAN 2)
-  - **IP Alias**: `192.168.5.3/24` (IP phụ dải LAN 1 để kết nối thẳng với Win7_A `192.168.5.1`)
+### 2.4 Cấu hình Ubuntu_2 (LinuxB) - Dual Card Mạng & Chuẩn hóa 1 Card khi Nộp bài
 
 ---
 
-#### 📝 FILE CẤU HÌNH NETPLAN CHUẨN HOÀN CHỈNH CHO UBUNTU_2:
+#### 📌 GIAI ĐOẠN 1: KHI CẦN TẢI PHẦN MỀM & SSH TỪ MÁY THẬT (DÙNG 2 CARD)
 
-Mở file Netplan trên màn hình Ubuntu_2:
+Trong quá trình thực hành ban đầu, Ubuntu_2 cần kết nối Internet để tải các gói bổ trợ và kết nối SSH từ máy thật:
+- **Card 1 (`ens33`)**: NAT (`VMnet8`) - IP `192.168.1.151/24` (Dùng cho SSH máy thật & Internet).
+- **Card 2 (`ens37`)**: Custom (`VMnet3` - LAN 2) - Gán 2 IP:
+  - **IP chính**: `192.168.6.2/24` (Client dải LAN 2)
+  - **IP Alias**: `192.168.5.3/24` (IP phụ dải LAN 1 để kết nối thẳng với Win7_A `192.168.5.1`)
 
-```bash
-sudo nano /etc/netplan/00-installer-config.yaml
-```
-
-Copy & Nhập nội dung cấu hình chuẩn:
-
+**File Netplan Giai đoạn 1 (`/etc/netplan/00-installer-config.yaml`):**
 ```yaml
 network:
   version: 2
@@ -211,7 +201,7 @@ network:
       nameservers:
         addresses: [192.168.5.2, 8.8.8.8]
 
-    # --- CARD 2 (ens37): LAN 2 (VMnet3) - IP CHÍNH 192.168.6.2 VÀ IP ALIAS 192.168.5.3 ---
+    # --- CARD 2 (ens37): LAN 2 (VMnet3) - IP CHÍNH VÀ IP ALIAS ---
     ens37:
       dhcp4: no
       addresses:
@@ -219,23 +209,61 @@ network:
         - 192.168.5.3/24 # IP Alias (phụ) dải LAN 1
 ```
 
-Lưu file (`Ctrl+O`, `Enter`, `Ctrl+X`) rồi áp dụng:
-
-```bash
-sudo chmod 600 /etc/netplan/00-installer-config.yaml
-sudo netplan apply
-sudo ufw disable
-```
+Áp dụng: `sudo chmod 600 /etc/netplan/00-installer-config.yaml && sudo netplan apply`
 
 ---
 
-#### 🛠️ KẾT NỐI SSH VÀO UBUNTU_2 TỪ WINDOWS POWERSHELL:
+#### 🏆 GIAI ĐOẠN 2: CẤU HÌNH LẠI SAU KHI XÓA CARD NAT (CHUẨN 100% NỘP BÀI CHO THẦY)
 
-```powershell
-ssh neko@192.168.1.151
+Theo đúng sơ đồ đề bài Lab của giảng viên, **Ubuntu_2 chỉ có DUY NHẤT 1 card mạng nội bộ LAN 2** mang 2 IP (IP chính `192.168.6.2` + IP Alias `192.168.5.3`).
+
+##### Bước 1: Xóa Card NAT trên VMware Workstation
+1. Chuột phải vào máy ảo **Ubuntu_2** trên VMware -> Chọn **Settings...**
+2. Chọn **Network Adapter** (Card 1 - NAT `VMnet8`).
+3. Bấm nút **Remove** ở góc dưới cùng -> Bấm **OK**.
+
+##### Bước 2: Kiểm tra tên card thực tế trên màn hình Ubuntu_2
+Mở terminal Ubuntu_2 gõ:
+```bash
+ip a
+```
+*(Kiểm tra xem card mạng hiển thị là `ens37` hay `ens33`)*.
+
+##### Bước 3: Cập nhật file Netplan chuẩn 1 Card duy nhất
+Mở file:
+```bash
+sudo nano /etc/netplan/00-installer-config.yaml
 ```
 
-*(Nhập mật khẩu: `conmeo` hoặc mật khẩu máy Ubuntu 2 của bạn).*
+Nhập cấu hình sạch đẹp chuẩn 100% đề bài:
+```yaml
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    # Card mạng nội bộ duy nhất (Nếu ip a hiện ens33 thì đổi ens37 thành ens33)
+    ens37:
+      dhcp4: no
+      addresses:
+        - 192.168.6.2/24 # IP chính dải LAN 2
+        - 192.168.5.3/24 # IP Alias dải LAN 1
+      nameservers:
+        addresses: [192.168.6.3] # Trỏ trực tiếp về DNS Server Ubuntu 1
+        search: [tranduong.com]
+```
+
+Lưu file (`Ctrl+O`, `Enter`, `Ctrl+X`) rồi áp dụng:
+```bash
+sudo chmod 600 /etc/netplan/00-installer-config.yaml
+sudo netplan apply
+echo "nameserver 192.168.6.3" | sudo tee /etc/resolv.conf
+```
+
+##### Bước 4: Kiểm tra phân giải tên miền và SSH Jump
+1. **Kiểm tra DNS:** `nslookup www.tranduong.com` -> Trả về `192.168.5.2` thành công!
+2. **Quản lý SSH Jump từ Windows máy thật:**
+   - SSH vào Router Ubuntu_1: `ssh neko@192.168.1.150`
+   - Từ trong Ubuntu_1, SSH nhảy sang Ubuntu_2: `ssh neko@192.168.6.2` (hoặc `ssh neko@192.168.5.3`).
 
 ---
 
