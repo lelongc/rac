@@ -227,3 +227,37 @@ Nếu thầy yêu cầu: *"Cấu hình máy Win7_A khi xin IP tự động luôn
 cat /var/lib/dhcp/dhcpd.leases
 ```
 *(Màn hình sẽ hiển thị chi tiết IP đã cấp, địa chỉ MAC của máy xin IP, tên máy client và thời gian thuê IP).*
+
+---
+
+## 6. BỘ SCRIPT 1-CLICK TỰ ĐỘNG HÓA CHO CLIENT WINDOWS 7 (LOCAL SCRIPTS)
+
+Để giúp bạn thao tác nhanh chóng và chính xác 100% trong phòng thi mà không cần nhớ lệnh mạng hay phải gõ tay:
+
+### 6.1 Danh sách các file script tự động (`.bat`):
+1. **[win7_switch_to_dhcp.bat](file:///d:/folder/rac/iuh/m%C3%B4n/hk1-4/quan-tri-dich-vu-mang/lab/3-4/win7_switch_to_dhcp.bat)**:
+   - **Chức năng:** Tự động chuyển card mạng sang DHCP, gửi lệnh `ipconfig /renew` để nhận IP từ Ubuntu 1 và in bảng IP mới ra màn hình.
+   - **Cách dùng:** Click đúp chuột -> Bấm **Yes** khi UAC hỏi quyền Administrator.
+
+2. **[win7_A_static.bat](file:///d:/folder/rac/iuh/m%C3%B4n/hk1-4/quan-tri-dich-vu-mang/lab/3-4/win7_A_static.bat)** (Dành riêng cho máy Win7_A):
+   - **Chức năng:** Tự động khôi phục IP tĩnh chuẩn cho Win7_A (`IP: 192.168.5.1`, `Subnet: 255.255.255.0`, `Gateway: 192.168.5.2`, `DNS: 192.168.5.2`).
+   - **Cách dùng:** Click đúp chuột -> Bấm **Yes**.
+
+3. **[win7_B_static.bat](file:///d:/folder/rac/iuh/m%C3%B4n/hk1-4/quan-tri-dich-vu-mang/lab/3-4/win7_B_static.bat)** (Dành riêng cho máy Win7_B):
+   - **Chức năng:** Tự động khôi phục IP tĩnh chuẩn cho Win7_B (`IP: 192.168.6.1`, `Subnet: 255.255.255.0`, `Gateway: 192.168.6.3`, `DNS: 192.168.5.2`).
+   - **Cách dùng:** Click đúp chuột -> Bấm **Yes**.
+
+4. **[win7_switch_to_static.bat](file:///d:/folder/rac/iuh/m%C3%B4n/hk1-4/quan-tri-dich-vu-mang/lab/3-4/win7_switch_to_static.bat)** (Script tổng hợp có Menu lựa chọn):
+   - **Chức năng:** Menu bấm phím `1` (cho Win7_A) hoặc phím `2` (cho Win7_B).
+
+5. **[enable_telnet.bat](file:///d:/folder/rac/iuh/m%C3%B4n/hk1-4/quan-tri-dich-vu-mang/lab/3-4/enable_telnet.bat)**:
+   - **Chức năng:** Mở Telnet Server trên Windows 7 để điều khiển và kiểm tra từ xa.
+
+---
+
+### 6.2 Vị trí file trên màn hình Windows 7:
+Tất cả các file script trên đã được đặt sẵn tại:
+- **Desktop** và thư mục **Downloads** của tài khoản người dùng hiện tại.
+- Thư mục gốc **`C:\Scripts\`** và **`C:\Users\Public\Documents\`**.
+- Có thể tải lại bất kỳ lúc nào từ trình duyệt qua địa chỉ: `http://192.168.5.2/<tên_file>.bat`.
+
