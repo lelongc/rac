@@ -15,7 +15,22 @@ echo -e "\e[36m[1/4] Đang cập nhật và cài đặt dịch vụ BIND9 DNS Se
 apt-get update -y
 apt-get install -y bind9 bind9utils bind9-doc dnsutils
 
-echo -e "\e[36m[2/4] Đang khai báo Zone $DOMAIN vào /etc/bind/named.conf.default-zones...\e[0m"
+echo -e "\e[36m[2/5] Đang cấu hình /etc/bind/named.conf.options (cho phép truy vấn từ mọi subnet)...\e[0m"
+cat <<EOF > /etc/bind/named.conf.options
+options {
+	directory "/var/cache/bind";
+	forwarders {
+		8.8.8.8;
+		1.1.1.1;
+	};
+	listen-on port 53 { any; };
+	allow-query { any; };
+	dnssec-validation auto;
+	listen-on-v6 { any; };
+};
+EOF
+
+echo -e "\e[36m[3/5] Đang khai báo Zone $DOMAIN vào /etc/bind/named.conf.default-zones...\e[0m"
 
 # Tránh ghi trùng zone nếu chạy lại nhiều lần
 if ! grep -q "zone \"$DOMAIN\"" /etc/bind/named.conf.default-zones; then
@@ -28,7 +43,7 @@ zone "$DOMAIN" {
 EOF
 fi
 
-echo -e "\e[36m[3/4] Đang tạo file cơ sở dữ liệu Zone /etc/bind/db.$DOMAIN...\e[0m"
+echo -e "\e[36m[4/5] Đang tạo file cơ sở dữ liệu Zone /etc/bind/db.$DOMAIN...\e[0m"
 cat <<EOF > /etc/bind/db.$DOMAIN
 \$TTL    604800
 @       IN      SOA     ns.$DOMAIN. root.$DOMAIN. (
@@ -49,7 +64,7 @@ win7b   IN      A       192.168.6.1
 ubuntuB IN      A       192.168.6.2
 EOF
 
-echo -e "\e[36m[4/4] Kiểm tra cú pháp cấu hình và khởi động dịch vụ BIND9...\e[0m"
+echo -e "\e[36m[5/5] Kiểm tra cú pháp cấu hình và khởi động dịch vụ BIND9...\e[0m"
 named-checkconf
 named-checkzone $DOMAIN /etc/bind/db.$DOMAIN
 
