@@ -23,12 +23,12 @@ set /p opt="Nhap lua chon cua ban (1 hoac 2): "
 
 if "%opt%"=="1" (
     echo [*] Dang cai dat IP Tinh cho Win7_A (192.168.5.1)...
-    netsh interface ip set address name="Local Area Connection" static 192.168.5.1 255.255.255.0 192.168.5.2 1
-    netsh interface ip set dnsservers name="Local Area Connection" static 192.168.5.2 primary
+    netsh interface ip set address "Local Area Connection" static 192.168.5.1 255.255.255.0 192.168.5.2
+    netsh interface ip set dns "Local Area Connection" static 192.168.5.2 primary
 ) else if "%opt%"=="2" (
     echo [*] Dang cai dat IP Tinh cho Win7_B (192.168.6.1)...
-    netsh interface ip set address name="Local Area Connection" static 192.168.6.1 255.255.255.0 192.168.6.3 1
-    netsh interface ip set dnsservers name="Local Area Connection" static 192.168.5.2 primary
+    netsh interface ip set address "Local Area Connection" static 192.168.6.1 255.255.255.0 192.168.6.3
+    netsh interface ip set dns "Local Area Connection" static 192.168.5.2 primary
 ) else (
     echo [!] Lua chon khong hop le.
     pause

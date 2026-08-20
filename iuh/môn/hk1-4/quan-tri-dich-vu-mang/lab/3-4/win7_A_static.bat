@@ -1,35 +1,37 @@
 @echo off
 :: ==============================================================================
-:: SCRIPT TỰ ĐỘNG CHUYỂN WINDOWS 7 SANG NHẬN IP ĐỘNG (DHCP) - LAB 3 IUH
+:: SCRIPT TỰ ĐỘNG KHÔI PHỤC IP TĨNH CHO WIN7_A (192.168.5.1) - LAB IUH
 :: ==============================================================================
-title CHUYEN WINDOWS 7 SANG NHAN IP DONG (DHCP)
-color 0b
+title KHOI PHUC IP TINH WIN7_A
+color 0a
 
-:: Tự động yêu cầu quyền Administrator nếu người dùng chỉ click đúp chuột
+:: Tự động yêu cầu quyền Administrator nếu click đúp chuột
 net session >nul 2>&1
 if %errorlevel% neq 0 (
-    echo [*] Dang yeu cau quyen Administrator...
     powershell -Command "Start-Process '%~f0' -Verb RunAs"
     exit /b
 )
 
 echo ==============================================================================
-echo   DANG CHUYEN CARD MANG SANG CHE DO NHAN IP VA DNS TU DONG (DHCP)...
+echo   DANG CAI DAT IP TINH CHO WIN7_A (LAN 1):
+echo   - IP Address:       192.168.5.1
+echo   - Subnet Mask:      255.255.255.0
+echo   - Default Gateway:  192.168.5.2
+echo   - DNS Server:       192.168.5.2
 echo ==============================================================================
 
-:: 1. Chuyen sang DHCP
-netsh interface ip set address "Local Area Connection" dhcp
-netsh interface ip set dns "Local Area Connection" dhcp
+:: Cài đặt IP Tĩnh và DNS chuẩn Windows 7
+netsh interface ip set address "Local Area Connection" static 192.168.5.1 255.255.255.0 192.168.5.2
+netsh interface ip set dns "Local Area Connection" static 192.168.5.2 primary
 
-echo [*] Dang xin cap phat IP tu DHCP Server Ubuntu 1...
-ipconfig /renew
-
+echo.
 echo ==============================================================================
-echo   KET QUA NHAN IP DONG TU DHCP SERVER:
+echo   KET QUA CAI DAT:
 echo ==============================================================================
 ipconfig /all
 
+echo.
 echo ==============================================================================
-echo [V] DA CHUYEN SANG DHCP THANH CONG!
+echo [V] DA KHOI PHUC IP TINH CHO WIN7_A THANH CONG!
 echo ==============================================================================
 pause
