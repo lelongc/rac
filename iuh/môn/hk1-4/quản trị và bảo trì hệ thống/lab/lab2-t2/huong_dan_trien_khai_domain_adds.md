@@ -134,40 +134,40 @@ Tài liệu này hướng dẫn chi tiết từng bước (Step-by-step) cấu h
 
 ---
 
-### BƯỚC 2: TIẾN HÀNH GIA NHẬP DOMAIN (JOIN DOMAIN)
-1. Trên máy **Win 7 (1)**, nhấp chuột phải vào biểu tượng **Computer** (trên Desktop hoặc Start Menu) ➔ Chọn **`Properties`**.
-2. Tại mục *Computer name, domain, and workgroup settings*, bấm vào dòng chữ màu xanh: **`Change settings`**.
-3. Hộp thoại *System Properties* hiện ra, bấm vào nút **`Change...`** ở phía dưới.
-4. Tại mục **Member of**:
+### BƯỚC 2: ĐỔI TÊN MÁY THÀNH WIN7-PC1 VÀ GIA NHẬP DOMAIN
+1. Trên máy **Win 7 (1)**, nhấp chuột phải vào biểu tượng **Computer** ➔ Chọn **`Properties`**.
+2. Tại mục *Computer name, domain, and workgroup settings*, bấm vào dòng chữ: **`Change settings`**.
+3. Hộp thoại *System Properties* hiện ra, bấm vào nút **`Change...`**.
+4. Tại ô **Computer name**: Đặt tên là **`WIN7-PC1`**.
+5. Tại mục **Member of**:
    * Tích chọn vào ô: **`Domain`**.
    * Nhập tên miền: **`newstar.vn`**.
    * Bấm nút **OK**.
 
 ![Nhập tên miền Join Domain](image/huong_dan_trien_khai_domain/image_08.jpeg)
 
-5. Hộp thoại **Windows Security** hiện lên yêu cầu xác thực tài khoản có quyền gia nhập Domain:
+6. Hộp thoại **Windows Security** hiện lên yêu cầu xác thực:
    * **User name**: **`administrator`** (hoặc `newstar.vn\administrator`)
-   * **Password**: **`123`** (hoặc mật khẩu Administrator của Server).
+   * **Password**: **`123`**
    * Bấm **OK**.
-6. Khi thấy thông báo: **`Welcome to the newstar.vn domain.`** ➔ Bấm **OK**.
-7. Bấm **OK** tiếp theo thông báo khởi động lại ➔ Bấm **Close** ➔ Bấm **`Restart Now`** để khởi động lại máy Win 7.
+7. Khi thấy thông báo: **`Welcome to the newstar.vn domain.`** ➔ Bấm **OK** ➔ Bấm **`Restart Now`**.
 
 ---
 
-### BƯỚC 3: ĐĂNG NHẬP BẰNG TÀI KHOẢN DOMAIN TRÊN CLIENT WIN 7
-1. Sau khi máy Win 7 khởi động lại, tại màn hình đăng nhập:
+### BƯỚC 3: ĐĂNG NHẬP BẰNG TÀI KHOẢN DOMAIN TRÊN CLIENT WIN 7 (1)
+1. Sau khi máy Win 7 (1) khởi động lại:
 2. Nhấn nút **`Switch User`** ➔ Chọn **`Other User`**.
 3. Quan sát thấy dòng chữ: **`Log on to: NEWSTAR`**.
 4. Nhập thông tin tài khoản Domain:
    * **User name**: **`hiepdh`** (hoặc `newstar\hiepdh`)
-   * **Password**: **`123`** (hoặc `abc@123`)
+   * **Password**: **`123`**
 5. Nhấn **Enter** ➔ Máy Win 7 sẽ chuẩn bị màn hình Desktop mới cho tài khoản Domain User!
 
 ![Đăng nhập tài khoản Domain hiepdh](image/huong_dan_trien_khai_domain/image_11.jpeg)
 
 ---
 
-# PHẦN 3: CẤU HÌNH TRÊN MÁY CLIENT WIN 7 (2) (HOẶC WIN 8/10) GIA NHẬP DOMAIN
+# PHẦN 3: CẤU HÌNH TRÊN MÁY CLIENT WIN 7 (2) GIA NHẬP DOMAIN
 
 ### BƯỚC 1: ĐẶT IP VÀ DNS TRÊN WIN 7 (2) (DẢI MẠNG VMNET12)
 1. Trên máy **Win 7 (2)**, mở card mạng đặt IP tĩnh:
@@ -181,23 +181,105 @@ Tài liệu này hướng dẫn chi tiết từng bước (Step-by-step) cấu h
 
 ---
 
-### BƯỚC 2: JOIN DOMAIN VÀ ĐĂNG NHẬP TRÊN CLIENT 2
+### BƯỚC 2: ĐỔI TÊN MÁY THÀNH WIN7-PC2 VÀ JOIN DOMAIN
 1. Mở **Computer Properties** ➔ **Change settings** ➔ **Change...**.
-2. Tích chọn **Domain**: Nhập `newstar.vn` ➔ Bấm **OK**.
-3. Nhập tài khoản quản trị Domain: `administrator` / pass `123`.
-4. Báo **Welcome to the newstar.vn domain** ➔ Restart máy.
-5. Sau khi khởi động lại, đăng nhập bằng tài khoản:
-   * **`NEWSTAR\Administrator`** (Mật khẩu: `123`)
-   * Hoặc tài khoản **`hiepdh`** (Mật khẩu: `123`).
+2. Tại ô **Computer name**: Đặt tên là **`WIN7-PC2`** *(Bắt buộc khác tên WIN7-PC1 để không bị xung đột SID)*.
+3. Tích chọn **Domain**: Nhập `newstar.vn` ➔ Bấm **OK**.
+4. Nhập tài khoản quản trị Domain: `administrator` / pass `123`.
+5. Báo **Welcome to the newstar.vn domain** ➔ Bấm **OK** ➔ Restart máy.
+6. Sau khi khởi động lại, đăng nhập bằng tài khoản:
+   * **`hiepdh`** (Mật khẩu: `123`) hoặc **`NEWSTAR\Administrator`** (Mật khẩu: `123`).
 
 ![Đăng nhập Administrator Domain trên Client](image/huong_dan_trien_khai_domain/image_12.jpeg)
 
 ---
 
-# PHẦN 4: KIỂM TRA TOÀN BỘ KẾT QUẢ TRÊN DOMAIN CONTROLLER (CHỤP HÌNH BÁO CÁO)
+# PHẦN 4: HƯỚNG DẪN CHẠY BỘ SCRIPT TỰ ĐỘNG HÓA 100% (AUTOMATION SCRIPTS)
 
-1. Trên máy **Windows Server**, mở **Server Manager** ➔ **Tools** ➔ **Active Directory Users and Computers** (`dsa.msc`).
-2. Mở rộng `newstar.vn` ➔ Nhấp vào thư mục **`Computers`**.
-3. **Minh chứng điểm 10**: Trong danh sách bên phải sẽ hiển thị đầy đủ tên của các máy Client đã gia nhập Domain thành công (ví dụ: `WIN7-PC1`, `WIN7-PC2` hoặc `DESKTOP-...`).
+Bộ script tự động hóa được chuẩn hóa và lưu tại thư mục `lab2-t2`:
 
-![Danh sách các máy Client đã Join Domain thành công](image/huong_dan_trien_khai_domain/image_13.png)
+| Tên File Script | Nơi thực thi | Chức năng tự động |
+| :--- | :--- | :--- |
+| **`01_cai_dat_adds_va_promote_dc.ps1`** | **Windows Server** | Cài đặt AD DS, DNS Server và tự động nâng cấp Domain Controller `newstar.vn`. |
+| **`02_tao_domain_users_va_groups.ps1`** | **Windows Server** | Tự động tạo tài khoản Domain User `hiepdh` (Pass: `123`, PasswordNeverExpires). |
+| **`03_client1_join_domain.bat`** | **Win 7 (1)** | Cấu hình DNS, kiểm tra kết nối, đổi tên `WIN7-PC1` và Join Domain `newstar.vn`. |
+| **`03_client2_join_domain.bat`** | **Win 7 (2)** | Cấu hình DNS, kiểm tra kết nối, đổi tên `WIN7-PC2` và Join Domain `newstar.vn`. |
+| **`04_kiem_tra_he_thong_toan_dien.ps1`** | **Quản trị / Server** | Tự động quét toàn bộ trạng thái DC, Users, Computers, SPN và Secure Channel. |
+
+### Cách chạy từng script:
+
+1. **Trên Server (Nâng cấp Domain Controller)**:
+   ```powershell
+   powershell -ExecutionPolicy Bypass -File "d:\folder\rac\iuh\môn\hk1-4\quản trị và bảo trì hệ thống\lab\lab2-t2\01_cai_dat_adds_va_promote_dc.ps1"
+   ```
+
+2. **Trên Server (Tạo tài khoản Domain User)**:
+   ```powershell
+   powershell -ExecutionPolicy Bypass -File "d:\folder\rac\iuh\môn\hk1-4\quản trị và bảo trì hệ thống\lab\lab2-t2\02_tao_domain_users_va_groups.ps1"
+   ```
+
+3. **Trên Client Win 7 (1) & Win 7 (2)**:
+   * Chuột phải file `03_client1_join_domain.bat` (hoặc `03_client2_join_domain.bat`) ➔ Chọn **Run as administrator**.
+
+4. **Kiểm tra nghiệm thu toàn bộ bài Lab**:
+   ```powershell
+   powershell -ExecutionPolicy Bypass -File "d:\folder\rac\iuh\môn\hk1-4\quản trị và bảo trì hệ thống\lab\lab2-t2\04_kiem_tra_he_thong_toan_dien.ps1"
+   ```
+
+---
+
+# PHẦN 5: CÁC LỖI THỰC TẾ THƯỜNG GẶP VÀ CÁCH XỬ LÝ TRIỆT ĐỂ (TROUBLESHOOTING)
+
+### ❌ LỖI 1: Trùng tên máy tính do Clone từ cùng một máy ảo Win 7 gốc
+* **Hiện tượng**: Cả 2 máy Win 7 khi bật lên đều mang tên mặc định ngẫu nhiên giống nhau (ví dụ: `WIN-RKVRS24A9VK`). Khi máy Win 7 (2) gia nhập Domain thì máy Win 7 (1) bị văng và báo lỗi Trust relationship (hoặc ngược lại).
+* **Nguyên nhân**: Active Directory quản lý máy tính bằng tài khoản máy (Computer Account - SAMAccountName). Khi 2 máy cùng tên và cùng SID gia nhập Domain, máy sau sẽ đè lên mật khẩu bảo mật (Machine Secret) của máy trước.
+* **Cách khắc phục**:
+  1. Unjoin máy về `WORKGROUP` trước.
+  2. Đổi tên máy thành **`WIN7-PC1`** cho Client 1 và **`WIN7-PC2`** cho Client 2.
+  3. Khởi động lại máy rồi mới tiến hành Join Domain `newstar.vn`.
+
+---
+
+### ❌ LỖI 2: "The trust relationship between this workstation and the primary domain failed"
+* **Hiện tượng**: Tại màn hình đăng nhập Client, nhập tài khoản `hiepdh` / pass `123` nhưng bị báo lỗi vi phạm quan hệ tin cậy với Domain.
+* **Nguyên nhân**: Kênh tin cậy (Secure Channel) giữa Client và Server bị mất đồng bộ mật khẩu máy tính.
+* **Cách khắc phục**:
+  * Chạy lệnh sửa kênh tin cậy trên Client bằng PowerShell:
+    ```powershell
+    Test-ComputerSecureChannel -Repair -Credential (Get-Credential)
+    ```
+  * Hoặc chạy file `03_client1_join_domain.bat` / `03_client2_join_domain.bat` để script tự động tái tạo kết nối sạch.
+
+---
+
+### ❌ LỖI 3: "The security database on the server does not have a computer account for this workstation trust relationship"
+* **Hiện tượng**: Không tìm thấy tài khoản máy tính trên cơ sở dữ liệu Domain Controller khi đăng nhập.
+* **Nguyên nhân**: Tài khoản máy tính bị thiếu thuộc tính Kerberos SPN (`ServicePrincipalNames`) hoặc `DNSHostName` trên Active Directory.
+* **Cách khắc phục**:
+  * Trên Server, mở PowerShell chạy lệnh:
+    ```powershell
+    Set-ADComputer -Identity "WIN7-PC1" -DNSHostName "WIN7-PC1.newstar.vn" -ServicePrincipalNames @{ Add = @("HOST/WIN7-PC1", "HOST/WIN7-PC1.newstar.vn") }
+    ```
+
+---
+
+### ❌ LỖI 4: Không thấy nút "Switch User" hoặc "Other User" trên màn hình đăng nhập
+* **Hiện tượng**: Màn hình đăng nhập Win 7 chỉ hiện tài khoản cục bộ (`Administrator` / `Neko`), không thấy chỗ gõ User Domain `hiepdh`.
+* **Nguyên nhân**: Máy tính đang ở chế độ Workgroup, chưa Join Domain thành công.
+* **Cách khắc phục**:
+  * Kiểm tra lại Preferred DNS Server trên Client đã trỏ đúng về IP của Server (`192.168.11.1` hoặc `100.100.11.1`) chưa.
+  * Mở CMD gõ `ping newstar.vn` xem có phản hồi không.
+  * Chạy file `03_client1_join_domain.bat` (hoặc `03_client2_join_domain.bat`) và khởi động lại máy.
+
+---
+
+# PHẦN 6: CHECKLIST NGHIỆM THU ĐIỂM 10 BÀI LAB 2-T2
+
+- [x] **Windows Server** đã nâng cấp thành công Domain Controller `newstar.vn`.
+- [x] **DNS Server** hoạt động bình thường, phân giải chính xác `newstar.vn`.
+- [x] **Active Directory Users and Computers (`dsa.msc`)** có đủ:
+  - Thư mục **`Users`**: Có tài khoản `hiepdh` (và các user theo yêu cầu).
+  - Thư mục **`Computers`**: Có cả **`WIN7-PC1`** và **`WIN7-PC2`**.
+- [x] **Client Win 7 (1)** (`192.168.11.2`): Đăng nhập thành công tài khoản `hiepdh`, mở CMD gõ `whoami` hiện `newstar\hiepdh`.
+- [x] **Client Win 7 (2)** (`100.100.11.2`): Đăng nhập thành công tài khoản `hiepdh`, mở CMD gõ `whoami` hiện `newstar\hiepdh`.
+- [x] Cả 2 máy Client đều có `Test-ComputerSecureChannel` = **`True`** (Kênh tin cậy hoạt động hoàn hảo 100%).
