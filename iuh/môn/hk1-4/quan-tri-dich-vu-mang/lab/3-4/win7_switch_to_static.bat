@@ -5,10 +5,11 @@
 title KHOI PHUC IP TINH CHO WINDOWS 7
 color 0a
 
->nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
-if '%errorlevel%' NEQ '0' (
-    echo [!] Vui long chay script voi quyen Administrator (Chuot phai -> Run as administrator)
-    pause
+:: Tự động yêu cầu quyền Administrator nếu người dùng chỉ click đúp chuột
+net session >nul 2>&1
+if %errorlevel% neq 0 (
+    echo [*] Dang yeu cau quyen Administrator...
+    powershell -Command "Start-Process '%~f0' -Verb RunAs"
     exit /b
 )
 
