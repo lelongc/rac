@@ -1,0 +1,232 @@
+
+--- PAGE 1 ---
+CHƯƠNG 2  MÁY  HỮU HẠN KHÔNG ĐƠN ĐỊNH   
+                          (NonDeterministic Finite Accepter , nfa) 
+ 
+ 
+      Xét trò chơi đi tìm kho báu, ở mỗi lần di chuyển, người chơi phải tự chọn một con 
+đường đi trong những con đường trước mặt, cho phép đi và hy vọng sẽ đi đến kho 
+báu (đích). Nhưng cũng có lối đi sẽ không đến đích mà dẫn đến một ngõ bí hay thất 
+bại. Chọn hướng đi nào để đi đến đích là một vấn đề khó, vì nếu biết được hướng đi 
+nào đó, đi đến đích thì bài toán trở thành đơn định. Trong phần này chún g ta xét đến 
+những máy hữu hạn không đơn định nfa, nó có một ý nghĩa thiết thực và thường gặp 
+trong cuộc sống.  
+ 
+ 
+Nhắc lại :  
+         Nếu một tập hợp có n phần tử, thì số tập con của nó sẽ là: 2n 
+Ví dụ minh họa  
+    Giả sử có tập hợp A  ={1, 2, 3} gồm 3 phần tử ( n = 3) thì số tập con là  23 = 8 
+Tập rỗng: { }luôn là tập con của mọi tập hợp  
+Tập có 1 phần tử: {1}, {2} , {3} 
+Tập có 2 phần tử: { 1, 2}, {1, 3}, {2, 3}  
+Tập có 3 phần tử (chính nó): {1, 2, 3}  
+          Tổng cộng chúng ta có đúng 8 tập con.   
+           2A = { { }, {1}, {2}, {3}, {1, 2}, {1, 3}, {2, 3} , {1, 2, 3}} có 8 phần tử  
+    
+Chú ý: Q là tập hữu hạn các trạng thái nội của nfa, thì 2Q là tập hợp của  
+tất cả các tập con có thể có của Q. Ký hiệu 2Q gọi là tập lũy thừa (Power Set)  
+    Hãy x em xét một nfa N1 như hình 2.14  thì: 
+              = {0,1}; Q = { q0, q1, q2, q3}; F ={q3}; q0 là trạng thái ban đầu ;  
+              là một ký hiệu đặc biệt gọi là ký hiệu “rỗng”  nghĩa là không có ký hiệu nào  
+             Hàm chuyển dịch : Q × (  ) → 2Q  
+                            (q0,0) → q0;  (q0,1) → q0;  (q0,1) → q1;  (q1,0) → q2;  (q1, ) → q2;   
+                            (q2,1) → q3;  (q3,0) → q3;   (q3,1) → q3. 
+             Đặc biệt:  (q1, ) → q2; được coi như tại q1 không đọc ký tự nào thì nfa cũng 
+chuyển dịch sang q2.   
+ 
+  Một nfa được định nghĩa bằng bộ năm  M = ( Q, , , q0, F). 
+  Trong đó:  
+       Q:  tập hữu hạn các trạng thái nội.  
+       :  tập hữu hạn các ký hiệu được gọi là bảng chữ cái đầu nhập.  
+       : Q × (  ) → 2Q gọi là hàm chuyển dịch.  
+       q0  Q    là trạng thái ban đầu.  
+       F   Q    là tập trạng thái kết thúc  
+ 
+Định nghĩa 2.4  
+ 
+--- PAGE 2 ---
+                        
+                                                   Hình 2.14: nfa N1.  
+ 
+  N1 cho thấy tại trạng thái q0 có một mũi tên cho ký hiệu 0, nhưng hai mũi tên cho ký hiệu 
+1, đây là tính không đơn định của nfa. Trong một nfa có thể không có mũi tên nào hay một, 
+hay nhiều mũi tên cho một ký hiệu nhập  trong  hay . Trên mỗi cạnh (cạnh có mũi tên) 
+có gắn một hay nhiều ký hiệu trong  và ký hiệu . Trạng thái có vòng tròn đôi là trạng 
+thái kết thúc.  
+    Hoạt động của nfa N1 như sau: Nó có hoạt động không đơn định mà hoạt động mang tính 
+song song trong nhiều tiến trình độc lập, vì từ trạng thái q0 đọc ký hiệu 1, nó có thể chuyển 
+đến q1 hay đứng yên tại q0. Một số hoạt động nữa là: Từ trạng thái q1 không đọc ký hiệu 
+nào hay đọc  ký hiệu 0, nó đều có thể dịch chuyển đến q2.  
+ 
+               
+    Trường hợp đặc biệt là từ trạng thái q2, đọc ký hiệu 0, không có chuyển dịch nào, cũng 
+không phải đứng yên tại chỗ  mà là lúc này  N1 ở trạng thái rỗng, nó ngưng hoạt động, cũng 
+đồng nghĩa với chuỗi nhập không được nó chấp nhận, dù chuỗi chưa được đọc đến ký hiệu 
+cuối cùng.  
+     Giả sử N1 chấp nhận chuỗi w, vì nó hoạt động với nhiều tiến trình song song, nên buộc 
+phải có ít nhất  một tiến trình mà nó chấp nhậ n chuỗi w, nói khác đi, nó sẽ dừng ở một trạng 
+thái kết thúc khi đọc xong chuỗi w, có thể còn một số tiến trình khác  sẽ không dẫn đến 
+trạng thái kết thúc hay nfa ở trạng thái rỗng. Tiến trình dẫn đến chấp nhận chuỗi w hẳn là 
+một tiến trình đơn định, tồn tạ i trong nfa, nên ta nói nfa là sự khái quát của máy hữu hạn 
+đơn định ( dfa).  
+      Ví dụ, N1 chấp nhận chuỗi nhập w = 010110, ta hãy xem cây chuyển dịch khi đọc các 
+kí tự trong w như sau:  
+ 
+                                                                                         (q0, 0) → q0 
+                                                                                           (q0, 10) 
+                                (q0, 0110) → (q0, 110)                      (q1, 0) → q2 
+ (q0, 010110)  → (q0, 10110)                                               (q1, 10) Rỗng  
+                                                  (q1, 0110) → (q2, 110)→ (q3,10) → (q3, 0)→ q3. 
+ 
+                                   Hình 2.15 chuyển dịch của N1 khi đọc w = 010110  
+Nhận xét : qua bốn đường chuyển dịch   thì N1 chấp nhận chuỗi w khi điểm kết thúc là 
+q3 còn các chuyển dịch khác thì N1 không chấp nhận w. 
+ 
+
+--- PAGE 3 ---
+Tiến trình song song trong nfa  
+       Trong hoạt động của nfa là có nhiều tiến trình  (chuyển dịch)  song song nhưng độc lập 
+với nhau để kiểm tra một chuỗi nhập có được chấp nhận hay không. Để có một cái nhìn 
+trực quan về các tiến trình này. Chúng ta xây dựng cây tiến trình cho nfa, trên cây chỉ cho 
+thấy những lối đi dẫn đến chấp nhận chuỗi, không chấp nhận chuỗi dù đã đọc hết chuỗi 
+nhập và không chấp nhận chuỗi khi ở trạng thái rỗng . Coi lại nfa N1 trong hình 2.14 làm ví 
+dụ. Hình 2.1 5 chỉ ra một cây tiến trình của cho chuỗi nhập w = 010110.   
+ 
+Ví dụ 2. 1 
+Xem đồ thị chuyển dịch trong hình 2. 16. Nó mô tả một nfa, nó có hai chuyển dịch 
+mang nhãn a đi ra từ trạng thái q0. Những thành phần Q và hàm chuyển dịch  của 
+nó là:  
+ 
+          Hình 2.16:  mô tả một nfa                                              
+                
+                           Q = { q0, q1, q2, q3, q4, q5 }, 
+                           (q0, a ) = {  q1, q4 }, (q1, a ) = {  q2 },   
+                           (q2, a ) = {  q3 }, (q4, a ) = {  q5 }, (q5, a ) = {  q4 }.   
+                                                    
+nfa có  hàm chuyển dịch được mở rộng * 
+                             *(qi, w)  =  Qj 
+Với  Qj  là tập những trạng thái có thể của nfa, khi nó ở trạng thái qi và đọc  w.  
+Coi nfa trong hình 2.1 6, dễ thấy rằng, nó chấp nhận những chuỗi có đúng ba ký 
+hiệu a hay chuỗi có chiều dài ngắn nhất là 2 và chiều dài phải là số chẵn. Với chuỗi 
+w = aaa và v = aaaaaa , được viết theo hàm *như: 
+ 
+ (q0, aaa) → (q1, aa) → (q2, a) →{q3} hay *(q0, w)  = {q3},   
+(q0, aaaaaa) → (q4, aaaaa) → (q5, aaaa) → (q4, aaa) → (q5, aa) →  
+(q4, a) → q5.                                                                                                                
+hay *(q0, v)  = {q5}, 
+    
+
+--- PAGE 4 ---
+ 
+Ví dụ 2.2  
+              Coi nfa hình 2.17  
+              
+                                        Hình 2.17  
+Trong nfa hình 2.17 ta có:  
+                  *(q2, λ) = {q0, q2}  
+                  *(q2,aa) = {q0, q1, q2}   
+Coi phụ lục cuối chương                              
+ 
+Ví dụ 2. 2 
+       Tìm n gôn ngữ được chấp nhận bởi nfa trong hình 2. 17.  
+                        
+       Quan sát trên đồ thị,  dễ thấy rằng chỉ một lối đi mà nfa có thể dừng lại trong trạng 
+thái kết thúc , nếu chuỗi nhập là việc lặp lại chuỗi 10  hay khi đọc chuỗi nhập, nfa chỉ 
+chuyển dịch từ q0 đến q1 rồi trở về q0 và cứ thế lặp lại cho đến khi đọc hết chuỗi . Vì 
+thế,  nfa chấp nhận ngôn ngữ  
+                                     L = {(10)n: n ≥ 0}.  
+       
+       Khi n = 0, (w0 =  ) thì L= {}, có hai lối đi cho chuỗi nhập không có ký hiệu 
+nào. Một là nfa đứng yên tại q0, hai là nfa chuyển đến trạng thái q2.  Nhưng ta chọn 
+nfa đứng yên, vì q0 là trạng thái kết thúc. Đ iều gì xảy ra khi nfa này thực hiện với 
+chuỗi w = 110 , sau khi đọc hai ký hiệu đầu 11, nfa ở  trạng thái q2, với  chuyển dịch 
+(q2, 0) không được xác định. Chúng ta gọi tình huống này là cấu hình chết, và có 
+ 
+     Ngôn ngữ L được chấp nhận bởi một nfa M = ( Q, , , q0, F) 
+được định nghĩa như là một tập tất cả các chuỗi được chấp nhận  
+bởi M.  
+    L(M) =  w *: *(q0, w) ∩ F  . 
+     Ta nói, ngôn ngữ chứa tất cả các chuỗi w, khi có một lối đi 
+mang nhãn w đi từ đỉnh b ắt đầu của đồ thị chuyển dịch đến một 
+đỉnh kết thúc.  
+ 
+Định nghĩa 2. 5 
+q1 
+ 
+1 
+0,1 
+0 
+q0 
+ q2 
+Hình 2.1 7 nfa bi ểu thị một ngôn ng ữ  
+ 
+--- PAGE 5 ---
+thể coi như nfa ngưng lại không hoạt động nữa , chuỗi w không được chấp nhận bởi 
+nfa, và có th ể viết:  
+                                                     *(q0,110)  =   
+          
+     Ví dụ 2.3       Tìm δ(q0,1011) và δ(q1,01) 
+ 
+Giải 
+              δ(q0,1011)  = {q2} hoặc rỗng  
+    δ(q1,01) = {q1} hoặc rỗng  
+Ví dụ 2.4  
+ Thiết kế  nfa với điều kiện ít không quá  5 trạng th ái cho tập  ngôn ngữ L 
+L = {ababn: n ≥ 0}  {aban: n ≥ 0}.  
+Giải 
+Không quá 5 trạng thái, vậy ta thiết kế NFA chỉ có 5 trạng thái.  
+ababn và aban chung nhau chuỗi con aba. Do vậy thiết kế nhánh chuyển dịch 
+cho chuỗi aba rồi sau đó tiếp tục chuyển dịch cho hoàn tất chuỗi aban 
+và cuối cùng cho hoàn tất chuỗi ababn. 
+                    
+      BÀI TẬ P 
+ 
+1. Trong hình sau , tìm (q0, a) và (q1, ). 
+ 
+                 
+ 
+2. Với nfa trong hình sau.  
+a- Hãy tìm *(q0,1010) và *(q1,00). 
+b- Chuỗi nào trong các chuỗi : 00, 01001, 10010, 000, 0000  đựơc chấp nhận  
+ 
+a 
+  
+ 
+q0 
+ q1 
+ q2 
+--- PAGE 6 ---
+                            
+3. Cho hàm chuyển dịch của một nfa như bảng sau. Vẽ đồ thị của nó.  
+ 
+ 
+ 
+ 
+ 
+ 
+                
+4. Thiết kế một nfa mà chấp nhận các chuỗi , a, baba  và baa, nhưng không chấp nhận 
+những chuỗi b, bb và babba.  
+ 
+5. Thiết kế  nfa với điều kiện ít hơn 5 trạng th ái cho tập  ngôn ngữ L 
+L = {ababn: n ≥ 0}  {aban: n ≥ 0}.  
+ 
+6- Thiết kế một NFA có 3 tr ạng thái chấp nhận ngôn ng ữ {ab, abc}*.  
+(Ngôn ng ữ này sinh ra m ột tập gồm các chu ỗi trong đó ab và abc có th ể lặp lại , vì có 
+dấu * nên có th ể không l ặp lại lần nào nghĩa là r ỗng. 
+Hãy tư ởng tư ợng bạn có hai lo ại gạch: m ột viên ghi ch ữ ab và m ột viên ghi ch ữ abc. 
+Ngôn ng ữ {ab, abc}* là t ập hợp tất cả các b ức tường bạn có th ể xây b ằng cách x ếp các 
+viên g ạch này n ối tiếp nhau, cách ch ọn viên g ạch nào là tùy ý, cũng có th ể bức tường 
+rỗng chưa xây).  
+                    
+7-  Thiết kế một NFA đ ể chấp nhận tập hợp các chu ỗi gồm các s ố 0 và 1  
+Kết thúc bằng 010 và có chu ỗi  011 ở bất kỳ trước đó, ho ặc kết thúc b ằng 101 và có 
+chuỗi 100 ở bất kỳ trước đó.  
+//////////////////////////////  
+(q, a)    0         1             
+q0 
+q1 
+q2      {q0, q1}    { q1} 
+{q2} {q0, q1}       
+{q2}               {q1} 

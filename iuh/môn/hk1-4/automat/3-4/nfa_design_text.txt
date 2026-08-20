@@ -1,0 +1,208 @@
+
+--- PAGE 1 ---
+1 
+ 
+THIẾT KẾ NFA  
+ 
+NFA (Nondeterministic Finite Automaton - Máy t ự động hữu hạn không đơn đ ịnh) là m ột kỹ 
+năng quan tr ọng trong lý thuy ết tính toán. Khác v ới DFA (máy đơn đ ịnh) v ốn cứng nh ắc, NFA 
+cho phép chúng ta "đoán" ho ặc đi theo nhi ều hướng cùng m ột lúc. 
+NFA là gì? (Nhắc lại)  
+Một NFA  được định nghĩa bằng bộ năm  M = ( Q, , , q0, F). 
+  Trong đó:  
+       Q:  tập hữu hạn các trạng thái nội.  
+       :  tập hữu hạn các ký hiệu được gọi là bảng chữ cái đầu nhập.  
+       : Q × (  ) → 2Q gọi là hàm chuyển dịch.  
+       q0  Q    là trạng thái ban đầu.  
+       F   Q    là tập trạng thái kết thúc  
+Nhắc lại :  
+         Nếu một tập hợp có n phần tử, thì số tập con của nó sẽ là: 2n 
+Ví dụ minh họa  
+    Giả sử có tập hợp A ={1, 2, 3} gồm 3 phần tử ( n = 3) thì số tập con là  23 = 8 
+Tập rỗng: { }luôn là tập con của mọi tập hợp  
+Tập có 1 phần tử: {1}, {2}, {3}  
+Tập có 2 phần tử: {1, 2}, {1, 3}, {2, 3}  
+Tập có 3 phần tử (chính nó): {1, 2, 3}  
+          Tổng cộng chúng ta có đúng 8 tập con.   
+           2A = { { }, {1}, {2}, {3}, {1, 2}, {1, 3}, {2, 3}, {1, 2, 3}} có 8 phần tử  
+ 
+THIẾT KẾ  NFA     
+Thiết kế NFA thì khác v ới DFA (Đơn đ ịnh), NFA cho phép chúng ta " ĐOÁN " hoặc đi theo nhi ều 
+hướng cùng lúc, giúp vi ệc thiết kế các ngôn ng ữ phức tạp trở nên tr ực quan và ng ắn gọn hơn r ất 
+nhiều. 
+Dưới đây là cách thiết kế NFA và các ví dụ minh họa theo từng b ước. 
+1. Tư duy thiết kế NFA  
+Để thiết kế một NFA hiệu quả, cần nắm vững 3 "đ iểm chính " mà DFA không có:  
+1. Chuyển dịch : Có thể nhảy từ trạng thái này sang trạng thái khác mà không cần đọc ký 
+tự nào.  
+2. Nhiều  lựa chọn:  Từ một trạng thái, với cùng một ký tự nhập vào, có thể đi đến nhiều trạng 
+thái khác nhau.  
+3. Trạng thái chết : Nếu đọc một ký tự mà không có đường đi tiếp theo, nhá nh đó sẽ tự động 
+"chết"  , không cần phải vẽ trạng thái "bẫy" (trap state) như DFA.  
+ 
+ 
+ 
+Quy trình thiết kế:  
+Bước 1:  Xác định " MẪU "  cốt lõi mà ngôn ngữ yêu cầu.  
+Bước 2:  Tạo trạng thái bắt đầu q0. Sử dụng các trạng thái để đại diện cho các giai đoạn của 
+quá trình so khớp mẫu.  
+--- PAGE 2 ---
+2 
+ 
+Bước 3:  Sử dụng tính không đơn định để xử lý các phần "không quan trọng" ở đầu hoặc 
+cuối chuỗi.  
+Thứ tự các bước thì tùy theo từng đầu bài yêu cầu  thiết kế , bởi vì không có giải thuật để thiết 
+kế NFA một cách tổng quát.  
+ 
+2. Các ví dụ thiết kế  
+Ví dụ 1: Thiết kế NFA cho ngôn ngữ chứa chuỗi con "011"  
+ = {1, 0}  dùng kí hiệu ba dấu *, “***”  để mô tả chuỗi gồm các kí tự trong  và có đ ộ dài tùy ý  
+có kể đến kí tự rỗng   
+Phân tích:  
++ Chúng ta chỉ cần tập trung vào việc tìm thấy chuỗi 011 (MẪU) . Trước và sau chuỗi này là chuỗi 
+có thể chứa  bất cứ kí hiệu nào . 
++ Liệt kê một vài chuỗi của ngôn ngữ mà NFA chấp nhận, trong đó những chuỗi đặc biệt, chuỗi 
+đặc biệt trong ví dụ này là chuỗi chỉ có 3 ký tự là  011.  
+ + ví dụ có 4 chuỗi hợp lệ: *** 011*** ;   011;  001***;  ***001   
+Thiết kế  
+Trạng thái q0: Trạng thái bắt đầu. Tại đây, ta có một vòng lặp có nhãn là 0,1 để " ĐỢI" có 
+nghĩa là cho đọc chuỗi *** cho đến khi chuỗi MẪU 011 xuất hiện.  
+Bước đoán : Tại q0, khi đọc 0, NFA có quyền "đoán" rằng đây là khởi đầu của chuỗi 011 
+và chuyển trạng thái  là:  (q0, 0) = q1. 
+Khi đ ã đọc được 0 rồi , thì hy vọng đọc tiếp 11 để có MẪU 011 thì phải có những 
+chuyển dịch:  
+               (q1, 1) = q2 và  (q2, 1) =  q3. 
+Trạng thái  q3: Là trạng thái chấp nhận  vì đã đọc được MẪU 001 . Và từ đây nếu còn thì 
+đọc chuỗi ***  nên tạo vòng lặp  có nhãn  0, 1 tại q3. 
+              
+ 
+Ví dụ 2: Thiết kế NFA cho ngôn ngữ kết thúc bằng " ab" hoặc " ba" 
+ = {a, b} 
+Phân tích:  
++ Chúng ta chỉ cần tập trung vào việc tìm thấy chuỗi ab hay ba (MẪU) ở cuối chuỗi. Trước chuỗi 
+này là chuỗi có thể chứa bất cứ kí hiệu nào.  
++ Liệt kê một vài chuỗi của ngôn ngữ mà NFA chấp nhận, trong đó những chuỗi đặc biệt, chuỗi 
+đặc biệt trong ví dụ này là chuỗi chỉ có 2 ký tự là  ab hoặc ba. 
+ + ví dụ những  chuỗi hợp lệ: *** ab ;   ab;  ba;  *** ba 
+NFA sẽ rẽ nhánh ngay từ đầu.  
+Nhánh 1:  Đoán các chuỗi kết thúc bằng ab. 
+Nhánh 2:  Đoán lấy các chuỗi kết thúc bằng ba. 
+Thiết kế:  
+1. q0 là trạng thái bắt đầu với vòng lặp tại q0 với nhãn a, b. 
+2. (q0, a) = q1, đây là nhánh đoán kết thúc là ab. 
+3. (q0, b) = q3, đây là nhánh đoán kết thúc là ba. 
+4.  (q1, b) = q2. Chấp nhận.  
+
+--- PAGE 3 ---
+3 
+ 
+5. (q3, a) = q4. Chấp nhận . 
+ 
+ 
+Ví dụ 3: NFA cho ngôn ngữ có ký tự thứ 3 tính từ cuối lên là '1'  
+ = {0, 1}  
+Phân tích:  
++ Chúng ta chỉ cần tập trung vào việc tìm thấy chuỗi có kí tự thứ 3 tính từ cuối chuỗi đi  ngược lên 
+là kí tự 1. Trước kí tự 1 này có thể chứa bất cứ kí hiệu nào.  
++ Liệt kê một vài chuỗi của ngôn ngữ mà NFA chấp nhận,  
++ ví dụ những chuỗi hợp lệ: *** 1**     (** là 2 kí tự bất kỳ khác ) 
+NFA sẽ "đoán" xem đâu là vị trí thứ 3 tính từ cuối. Khi nó đọc một ký tự 1, nó sẽ thử kích hoạt 
+một luồng kiểm tra xem sau đó có đúng 2 ký tự nữa là kết thúc chuỗi hay không.  
+Thiết kế : 
+1. q0 là trạng thái bắt đầu với vòng lặp tại q0 với nhãn 0, 1.  
+2. (q0 , 1) = q1 , đoán khi gặp kí tự 1 là kí tự gần cuối, nó đứng trước 2 ký tự  ở cuối chuỗi . 
+3. (q1,{0,1}) =  q2: Đọc ký tự sát với kí tự cuối cùng của chuỗi . 
+4. (q2 ,{0,1} ) = q3: Đọc ký tự cuối cùng  của chuỗi, q3: Trạng thái chấp nhận.  
+ 
+Ghi chú:  
+Nếu sau q3 mà còn ký tự nào nữa  chưa đọc , nhánh đó sẽ bị hủy vì q3 không có đường đi tiếp. Chỉ 
+những nhánh kết thúc đúng tại q3 mới được chấp nhận.  
+ 
+Ví dụ 4: NFA cho ngôn ngữ chứa chuỗi 01 HOẶC 10   
+ = {0, 1}  
+Phân tích:  
+Ngôn ngữ này chấp nhận bất kỳ chuỗi nào có sự xuất hiện của một trong hai mẫu cơ bản (mẫu 
+chứa 01  và mẫu chứa 10 ). 
++ Liệt kê một vài chuỗi của ngôn ngữ mà NFA chấp nhận, trong đó những chuỗi đặc biệt, chuỗi 
+đặc biệt trong ví dụ này là chuỗi chỉ có 2 ký tự là  01 hoặc 10.  
++ ví dụ những chuỗi hợp lệ: ***01*** ;  ***10*** ; 01;  10;   
+NFA sẽ rẽ nhánh ngay từ đầu.  
+Nhánh 1:  Đoán các chuỗi có chứa chuỗi con 01.  
+Nhánh 2:  Đoán các chuỗi có chứa chuỗi con 10.  
+Thiết kế : 
+1. q0 là trạng thái bắt đầu với vòng lặp tại q0 với nhãn 0, 1 để đọc các kí tự ở đầu chuỗi.  
+      2. Nhánh 1 để đoán đọc vào 01: ( q0, 0) = q1 và (q1, 1) = q2, trạng thái q2 là kết thúc.  
+      3. Nhánh 2 để đoán đọc vào 10: ( q0, 1) = q3 và (q3, 0) = q4, trạng thái q4 là kết thúc.  
+      4. Tại q2 và q4 có vòng lặp có nhãn là 0,1.  
+
+--- PAGE 4 ---
+4 
+ 
+                   
+ 
+Ví dụ 5: NFA cho ngôn ngữ có ít nhất 2 ký tự và  ký tự đầu và ký tự cuối đều giống nhau  
+ = {a, b} 
+Phân tích:  
+NFA chấp nhận chuỗi có kí tự đầu và cuối là a hay là b. 
+Ví dụ: NFA chấp nhận các chuỗi:  a *** a ; b***b ;… 
+Thiết kế : 
+NFA rẽ nhánh từ trạng thái bắt đầu q0 để tách biệt hai trường hợp: chuỗi bắt đầu bằng a và chuỗi 
+bắt đầu bằng b. 
++ Trường hợp 1 (Bắt đầu bằng a): 
+         (q0, a) = q1, tại q1 có vòng lặp có nhãn a, b để đọc các ký tự ở giữa sau kí tự a đầu tiên  
+         (q1, a) = q2,  q2 là trạng thái chấp nhận.  
+Lưu ý : q2 cũng có thể quay lại q 1 nếu có ký tự khác được đọc vào ,  
+           có nghĩa là chuỗi đọc vào vẫn chưa kết thúc.  
++ Trường hợp 2 (Bắt đầu bằng b): tương tự trường hợp 1  
+         (q0, b) = q3, tại q3 cũng có vòng lặp có nhãn a, b để đọc các ký tự ở giữa sau kí tự b đầu tiên  
+         (q3, b) = q4, q4 là trạng thái chấp nhận.  
+Lưu ý : q4 cũng có thể quay lại q 3 nếu có ký tự khác được đọc vào,  
+           có nghĩa là chuỗi đọc vào vẫn chưa kết thúc.  
+                
+                                 
+Ví dụ 6: NFA chấp nhận các chuỗi có số lượng số 0 là bội số của 2 HOẶC số lượng số 1 là bội 
+số của 3  
+ = {0, 1}  
+ 
+Đây là ví dụ điển hình về việc kết hợp hai máy tự động bằng chuyển dịch . 
+Phân tích:  
+Việc thiết kế một DFA cho yêu cầu này rất rắc rối. Với NFA, ta chỉ cần vẽ hai máy con A và B rồi  
+nối chúng lại.  
+Thiết kế : 
+1. Máy A:  Chấp nhận chuỗi có số lượng kí tự 0 là chẵn . 
+              (q1, 0) = q2;  (q2, 0) = q3 ; (q3, 0) = q2 , q3 là trạng thái kêt thúc .       
+2. Máy B:  Chấp nhận chuỗi có số lượng kí tự 1 chia hết cho 3 . 
+
+--- PAGE 5 ---
+5 
+ 
+              (q4, 1) = q5;  (q5, 1) = q6 ; (q6, 1) = q7 ; (q7, 1) = q5 , q7 là trạng thái kêt thúc .        
+3. Kết nối:  Tạo một trạng thái bắt đầu q0, từ đó vẽ hai cạnh đi ra có nhãn  dẫn đến trạng thái 
+khởi đầu của Máy A  và Máy B . 
+          
+ 
+Kết quả:  Khi một chuỗi đi vào, NFA sẽ "phân nhánh " vào cả hai máy. Chỉ cần một trong hai máy 
+báo "Chấp nhận" ở cuối chuỗi, toàn bộ chuỗi đó sẽ được chấp nhận.  
+////////////////////////////////////  
+ 
+ 
+BÀI TẬP  
+1- Thiết kế NFA chấp nhận ngôn ngữ L1 trên bảng chữ cái  = {0, 1}sao cho các chuỗi có ký tự 
+thứ 3 tính từ cuối lên là số 1.  
+2- Thiết kế NFA chấp nhận ngôn ngữ L2 trên bảng chữ cái  = {a, b} chứa chuỗi con aba hoặc 
+bab. 
+3- Thiết kế NFA chấp nhận các chuỗi nhị phân đại diện cho số chia hết cho 3 hoặc  chia hết cho 5.  
+ 
+Đáp án  
+1-       
+                    
+2- 
+                        
+ 
+3- 
+
+--- PAGE 6 ---
+6 
+ 
+                     
+ 

@@ -7,7 +7,6 @@
 
 #### a) $L_1 = \{ uuu^{-1} \mid u \in \Sigma^* \}$
 
-
 - Xét các chuỗi $u \in \Sigma^*$ theo thứ tự độ dài tăng dần:
   - $|u| = 0: u = \lambda \Rightarrow uuu^{-1} = \lambda$ (độ dài 0)
   - $|u| = 1:$
@@ -29,7 +28,6 @@ $$
 
 #### b) $L_2 = \{ u^{-1}uu \mid u \in \Sigma^* \}$
 
-
 - Xét các chuỗi $u \in \Sigma^*$ theo thứ tự độ dài tăng dần:
   - $|u| = 0: u = \lambda \Rightarrow u^{-1}uu = \lambda$ (độ dài 0)
   - $|u| = 1:$
@@ -50,7 +48,6 @@ $$
 ---
 
 #### c) $L_3 = \{ uau^{-1} \mid u \in \Sigma^* \}$
-
 
 - Xét các chuỗi $u \in \Sigma^*$ theo thứ tự độ dài tăng dần:
   - $|u| = 0: u = \lambda \Rightarrow uau^{-1} = \lambda a \lambda = a$ (độ dài 1)
@@ -78,7 +75,6 @@ $$
 ---
 
 #### a) Cho văn phạm $G_1 = (V, T, S, P)$ với: $V = \{S\}$, $T = \{a, b\}$, $P = \{S \to Sa \mid Sb \mid \lambda\}$
-
 
 **1. Các bước dẫn xuất sinh ra 5 chuỗi có độ dài ngắn nhất (theo thứ tự từ điển):**
 
@@ -110,7 +106,6 @@ $$
 
 #### b) Cho văn phạm $G_2 = (V, T, S, P)$ với: $V = \{S\}$, $T = \{a, b\}$, $P = \{S \to aSa \mid bSb \mid a \mid b \mid \lambda\}$
 
-
 **1. Các bước dẫn xuất sinh ra 5 chuỗi có độ dài ngắn nhất (theo thứ tự từ điển):**
 
 - **Chuỗi 1 (độ dài 0):** $S \Rightarrow \lambda$
@@ -140,7 +135,6 @@ $$
 ---
 
 #### c) Cho văn phạm $G_3 = (V, T, S, P)$ với: $V = \{S\}$, $T = \{a, b\}$, $P = \{S \to aSb \mid \lambda\}$
-
 
 **1. Các bước dẫn xuất sinh ra 5 chuỗi có độ dài ngắn nhất (theo thứ tự từ điển):**
 
@@ -173,7 +167,6 @@ $$
 **Tập luật sinh $P: \{S \to aB; \ B \to bS; \ S \to \lambda\}$**
 **Tìm 3 cặp chuỗi (mỗi cặp gồm 1 chuỗi được văn phạm chấp nhận và 1 chuỗi không được văn phạm chấp nhận) có chiều dài lần lượt là 2, 4 và 6.**
 
-
 Ngôn ngữ sinh bởi văn phạm là tập hợp các chuỗi có dạng $(ab)^n$ với $n \ge 0$.
 
 1. **Chiều dài 2:**
@@ -194,9 +187,8 @@ Ngôn ngữ sinh bởi văn phạm là tập hợp các chuỗi có dạng $(ab)
 ### BÀI 4
 
 **Coi văn phạm $G = (V, T, S, P)$ với $V = \{S, B\}; \ T = \{0, 1\}$; biến khởi đầu: $S$**
-**Tập luật sinh $P: \{S \to 0A; \ A \to 1S; \ S \to \lambda\}$** *(hoặc biến $A$ chính là biến phụ trong tập $V$)*
+**Tập luật sinh $P: \{S \to 0A; \ A \to 1S; \ S \to \lambda\}$** 
 **Tìm 3 cặp chuỗi (mỗi cặp gồm 1 chuỗi được văn phạm chấp nhận và 1 chuỗi không được văn phạm chấp nhận) có chiều dài lần lượt là 3, 5 và 7.**
-
 
 > **Nhận xét lý thuyết về cấu trúc văn phạm:**
 > Dãy dẫn xuất của văn phạm có dạng: $S \Rightarrow 0A \Rightarrow 01S \Rightarrow 010A \Rightarrow 0101S \Rightarrow \dots$
@@ -205,9 +197,6 @@ Ngôn ngữ sinh bởi văn phạm là tập hợp các chuỗi có dạng $(ab)
 
 Do văn phạm $G$ **chỉ sinh ra các chuỗi có chiều dài chẵn**, nên **không tồn tại chuỗi nào có chiều dài lẻ (3, 5, 7) được văn phạm chấp nhận**.
 
-Ta trình bày lời giải theo 2 góc độ:
-
-#### Cách 1: Trình bày chuẩn xác theo lý thuyết đề bài đã cho
 
 1. **Chiều dài 3:**
    - **Được chấp nhận:** Không có (do văn phạm chỉ sinh ra chuỗi có độ dài chẵn).
@@ -220,17 +209,3 @@ Ta trình bày lời giải theo 2 góc độ:
    - **Không được chấp nhận:** $0101010$ (hoặc $0000000$).
 
 ---
-
-#### Cách 2: Trường hợp đề bài đính chính luật dừng tại $A$ ($A \to \lambda$) để sinh chuỗi lẻ $(01)^k 0$
-
-*(Nếu văn phạm có luật kết thúc ở $A$: $S \to 0A; A \to 1S; A \to \lambda$)*
-
-1. **Chiều dài 3:**
-   - **Được chấp nhận:** $010$ (dẫn xuất: $S \Rightarrow 0A \Rightarrow 01S \Rightarrow 010A \Rightarrow 010$)
-   - **Không được chấp nhận:** $001$
-2. **Chiều dài 5:**
-   - **Được chấp nhận:** $01010$ (dẫn xuất: $S \Rightarrow^* (01)^2 0A \Rightarrow 01010$)
-   - **Không được chấp nhận:** $00011$
-3. **Chiều dài 7:**
-   - **Được chấp nhận:** $0101010$ (dẫn xuất: $S \Rightarrow^* (01)^3 0A \Rightarrow 0101010$)
-   - **Không được chấp nhận:** $1010101$
