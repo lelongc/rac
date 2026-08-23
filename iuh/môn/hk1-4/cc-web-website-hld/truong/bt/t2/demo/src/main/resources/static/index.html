@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Cáo Bài Tập Lớn - Blog Website | Công Nghệ Web Và Website Hướng Dữ Liệu</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #3b82f6;
+            --success: #16a34a;
+            --bg: #f8fafc;
+            --text: #1e293b;
+            --muted: #64748b;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            color: #ffffff;
+            padding: 35px 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--primary-light);
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.25);
+            color: #93c5fd;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            border: 1px solid rgba(147, 197, 253, 0.3);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            font-size: 1rem;
+            color: #cbd5e1;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Section Layout */
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 26px 28px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 10px;
+        }
+
+        /* Team Grid */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .member-card {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--primary-light);
+            border-radius: 8px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .member-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #e0e7ff;
+            color: #3730a3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .member-info h4 {
+            font-size: 1.05rem;
+            color: var(--text);
+            margin-bottom: 3px;
+        }
+
+        .member-info span {
+            font-size: 0.9rem;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        /* Tech Tags */
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .tech-tag {
+            background: #f1f5f9;
+            color: #334155;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Feature List */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 15px;
+        }
+
+        .feature-item {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .feature-item h4 {
+            font-size: 1rem;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+
+        .feature-item p {
+            font-size: 0.88rem;
+            color: var(--muted);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 25px 20px;
+            color: var(--muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-badge">ĐẠI HỌC CÔNG NGHIỆP TP. HỒ CHÍ MINH (IUH)</div>
+        <h1>BÀI TẬP LỚN: XÂY DỰNG BLOG WEBSITE</h1>
+        <p>Môn học: <strong>Công nghệ web và website hướng dữ liệu</strong> | Nền tảng diễn đàn trực tuyến chia sẻ bài viết</p>
+    </header>
+
+    <div class="container">
+
+        <!-- 1. Thong tin nhom sinh vien -->
+        <section class="section-card">
+            <h2 class="section-title">👥 Nhóm Sinh Viên Thực Hiện</h2>
+            <div class="team-grid">
+                <div class="member-card">
+                    <div class="member-avatar">D</div>
+                    <div class="member-info">
+                        <h4>Hoàng Đại Dương</h4>
+                        <span>MSSV: 24743991</span>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-avatar">D</div>
+                    <div class="member-info">
+                        <h4>Nguyễn Trung Dũng</h4>
+                        <span>MSSV: 24000905</span>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-avatar">L</div>
+                    <div class="member-info">
+                        <h4>Lê Thành Long</h4>
+                        <span>MSSV: 23630851</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Tong quan de tai & Cong nghe -->
+        <section class="section-card">
+            <h2 class="section-title">🛠️ Công Nghệ & Kiến Trúc Hệ Thống</h2>
+            <p style="margin-bottom: 12px; color: var(--muted);">
+                Hệ thống Blog Website được xây dựng theo kiến trúc phân tầng chuẩn doanh nghiệp (Layered Architecture: Controller ➔ Service ➔ Repository ➔ Entity), giao tiếp RESTful API & Thymeleaf SSR:
+            </p>
+            <div class="tech-tags">
+                <span class="tech-tag">☕ Java 21</span>
+                <span class="tech-tag">🌱 Spring Boot 3.5.x</span>
+                <span class="tech-tag">🗄️ Spring Data JPA (Hibernate)</span>
+                <span class="tech-tag">🐬 MySQL 8.0</span>
+                <span class="tech-tag">🔒 Spring Security 6 & JWT</span>
+                <span class="tech-tag">☁️ Cloudinary API</span>
+                <span class="tech-tag">🍃 Thymeleaf Engine</span>
+                <span class="tech-tag">⚡ MapStruct & Lombok</span>
+            </div>
+        </section>
+
+        <!-- 3. Cac tinh nang cot loi -->
+        <section class="section-card">
+            <h2 class="section-title">✨ Các Chức Năng Chính Của Blog Website</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h4>🔐 Xác thực & Hồ sơ</h4>
+                    <p>Đăng ký, Đăng nhập bảo mật JWT, Đổi mật khẩu, Cập nhật ảnh đại diện (Avatar) và tiểu sử.</p>
+                </div>
+                <div class="feature-item">
+                    <h4>📝 Quản lý bài viết</h4>
+                    <p>Soạn thảo bài viết mới, phân loại danh mục, gắn thẻ Tags, lưu bản nháp và xuất bản công khai.</p>
+                </div>
+                <div class="feature-item">
+                    <h4>❤️ Tương tác cộng đồng</h4>
+                    <p>Thả tim (Like/Unlike) bài viết, Bình luận đa cấp, Lưu bài viết vào danh sách yêu thích.</p>
+                </div>
+                <div class="feature-item">
+                    <h4>🛡️ Quản trị Admin</h4>
+                    <p>Kiểm duyệt bài viết, Khóa/Mở tài khoản vi phạm, Quản lý danh mục bài viết và xem Dashboard thống kê.</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        © 2026 - Báo Cáo Bài Tập Lớn Môn Công Nghệ Web Và Website Hướng Dữ Liệu | Nhóm: Hoàng Đại Dương - Nguyễn Trung Dũng - Lê Thành Long
+    </footer>
+
+</body>
+</html>
