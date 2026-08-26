@@ -1,0 +1,110 @@
+====================================================================================================
+               HỆ THỐNG MÁY ẢO VMWARE & TÀI LIỆU VẬN HÀNH TỰ ĐỘNG HÓA MCP CHO AI AGENT
+====================================================================================================
+
+Tài liệu này tổng hợp toàn bộ thông tin hệ thống máy ảo VMware, cấu trúc thư mục, danh sách snapshot, 
+cấu hình mạng và hướng dẫn cho AI Agent cách sử dụng MCP `vmware-mcp` cùng PowerShell để tự động hóa 
+100% các bài thực hành và đề thi môn Quản trị và Bảo trì Hệ thống (IUH).
+
+----------------------------------------------------------------------------------------------------
+1. THÔNG TIN THƯ MỤC CỐT LÕI (ROOT DIRECTORIES)
+----------------------------------------------------------------------------------------------------
+- Thư mục lưu trữ tất cả máy ảo:
+  D:\ctt\vm
+
+- Thư mục bài lab & mã nguồn môn học:
+  d:\folder\rac\iuh\môn\hk1-4\quản trị và bảo trì hệ thống\
+
+- Thư mục kho đĩa cài đặt ISO:
+  + Windows Server 2012 R2: D:\ctt\winserver2022\2012\9600.17050.WINBLUE_REFRESH.140317-1640_X64FRE_SERVER_EVAL_EN-US-IR3_SSS_X64FREE_EN-US_DV9.ISO
+  + Windows Server 2022:    D:\ctt\winserver2022\WindowsServer2022Standard.iso
+  + Windows 7 Pro SP1 x86:  D:\ctt\win102018\win7sp1-x86\en_windows_7_professional_with_sp1_x86_dvd_u_677056.iso
+  + Windows 10 1809 x64:    D:\ctt\win102018\Win10_1809_English_x64.iso
+  + Ubuntu Server 22.04.3:  D:\ctt\ubuntu-22.04.3-live-server-amd64.iso
+  + Ubuntu Server 24.04:    D:\ctt\ubuntu-24.04-live-server-amd64.iso
+  + VMware ESXi 7.0:        D:\ctt\VMware-VMvisor-Installer-7.0.0-15843807.x86_64.iso
+
+----------------------------------------------------------------------------------------------------
+2. DANH SÁCH MÁY ẢO CHI TIẾT & SNAPSHOT BASE TRẮNG (ORIGIN SNAPSHOTS)
+----------------------------------------------------------------------------------------------------
+
+A. PHÂN HỆ MÔN HỌC QUẢN TRỊ & BẢO TRÌ HỆ THỐNG (qtbtht):
++ 1. Windows Server 2012 (Domain Controller: newstar.vn / DC-SERVER)
+     - File .vmx: D:\ctt\vm\lab-qtbtht\winserver\Windows Server 2012.vmx
+     - Card mạng 1 (Quản trị Host): VMnet8 (NAT) - IP: 192.168.1.132 / 24
+     - Card mạng 2 (LAN 1):        VMnet11 (Host-Only) - IP: 192.168.11.1 / 24, DNS: 127.0.0.1
+     - Card mạng 3 (LAN 2):        VMnet12 (Host-Only) - IP: 100.100.11.1 / 24
+     - Snapshot Base sạch gốc:     "origin" (Mới cài trắng tinh chưa làm gì)
+     - Snapshot Telnet sẵn sàng:   "telnet1" (Đã cấu hình telnet để AI remote vào làm bài)
+     - Tài khoản Quản trị:         Administrator / 123 (hoặc hiepdh / 123)
+
++ 2. Client Win 7 - Máy 1 (WIN7-PC1)
+     - File .vmx: D:\ctt\vm\lab-qtbtht\Clone of client-win7.vmx
+     - Card mạng: VMnet11 (Host-Only) - IP: 192.168.11.2 / 24, DNS: 192.168.11.1
+     - Snapshot Base sạch: "telnet1"
+     - Tài khoản: Administrator / 123
+
++ 3. Client Win 7 - Máy 2 (WIN7-PC2)
+     - File .vmx: D:\ctt\vm\lab-qtbtht\win7-client\client-win7-2.vmx
+     - Card mạng: VMnet12 (Host-Only) - IP: 100.100.11.2 / 24, DNS: 100.100.11.1
+     - Snapshot Base sạch: "t1-telnet"
+     - Tài khoản: Administrator / 123
+
+B. MÁY ẢO GỐC MASTER & CÁC MÔN HỌC KHÁC:
++ 4. Windows 7 SP1 Master Base (Bản gốc sạch nhất)
+     - File .vmx: D:\ctt\vm\win\client-win7\Windows 7.vmx
+     - Snapshot Base sạch gốc: "00_CLEAN_BASE"
+     - Ghi chú: Tất cả client win 7 khác đều là Linked Clone từ snapshot này.
+
++ 5. Ubuntu Server 22.04 LTS Master Base (Bản gốc sạch nhất)
+     - File .vmx: D:\ctt\vm\ubuntu22.04\UbuntuServer22.04.vmx
+     - Snapshot Base sạch gốc: "00_CLEAN_BASE-ubuntu"
+     - Tài khoản: ubuntu / 123 (hoặc root / 123)
+
++ 6. Phân hệ Quản trị Dịch vụ Mạng (lab-dvm):
+     - ubuntu22.04-a: D:\ctt\vm\lab-dvm\ubuntu22.04\ubuntu22.04.vmx
+     - ubuntu22.04-b: D:\ctt\vm\lab-dvm\ubuntu22.04-2\ubuntu22.04-2.vmx
+     - client-win7-a: D:\ctt\vm\lab-dvm\win7\win7-1\Clone of client-win7.vmx
+     - client-win7-b: D:\ctt\vm\lab-dvm\win7\win7-2\client-win7-2.vmx
+
+----------------------------------------------------------------------------------------------------
+3. CẤU HÌNH VIRTUAL NETWORK EDITOR (VMWARE NETWORKING)
+----------------------------------------------------------------------------------------------------
+- VMnet1  (Host-Only, DHCP Enabled) : 192.168.226.0 / 24
+- VMnet8  (NAT, DHCP Enabled)       : 192.168.1.0 / 24     (Đường nối Host với Windows Server qua IP 192.168.1.132)
+- VMnet11 (Host-Only, No DHCP)      : 192.168.11.0 / 24    (LAN 1 nối Windows Server và Client 1)
+- VMnet12 (Host-Only, No DHCP)      : 100.100.11.0 / 24    (LAN 2 nối Windows Server và Client 2)
+
+----------------------------------------------------------------------------------------------------
+4. HƯỚNG DẪN AI CÁCH SỬ DỤNG MCP `vmware-mcp` ĐỂ TỰ ĐỘNG HÓA
+----------------------------------------------------------------------------------------------------
+File cấu hình MCP: c:\Users\Acer\.gemini\config\mcp_config.json
+Mã nguồn MCP:     C:\Users\Acer\.gemini\antigravity-ide\mcp\vmware-mcp (Python venv: mcp==1.29.1)
+
+A. CÁC CÔNG CỤ MCP QUAN TRỌNG NHẤT:
+1. `vmrun_list`: Kiểm tra danh sách các máy ảo đang chạy.
+2. `vmrun_start`: Bật máy ảo (tham số: vm_id = đường dẫn .vmx, gui = true).
+3. `vmrun_stop`:  Tắt máy ảo (tham số: vm_id, hard = false/true).
+4. `vmrun_reset`: Khởi động lại máy ảo.
+5. `vmrun_snapshot_list`: Xem danh sách snapshot của máy ảo.
+6. `vmrun_snapshot_revert`: Khôi phục máy ảo về snapshot gốc trong 1 giây (tham số: vm_id, name = "origin" hoặc "00_CLEAN_BASE").
+7. `vmrun_snapshot_take`: Tạo snapshot sao lưu trước khi thi/làm bài.
+8. `guest_run` / `vmrun_run`: Chạy lệnh CMD / PowerShell trực tiếp trong máy ảo (ngay cả khi máy ảo chưa có mạng hoặc bị mất IP).
+   - Ví dụ: Đổi IP card mạng, cấu hình DNS, bật Service.
+9. `guest_copy_to` / `guest_copy_from`: Copy file script cấu hình từ máy thật vào thẳng ổ C:\ của máy ảo.
+10. `mks_screenshot` / `vmrun_screenshot`: Tự động chụp ảnh màn hình máy ảo lưu ra máy thật để làm báo cáo nghiệm thu nộp giáo viên.
+11. `mks_send_key` / `vmrun_keystrokes`: Gửi phím bấm (Ctrl+Alt+Del, gõ pass, Enter) vào màn hình máy ảo.
+12. `ethernet_set_network`: Đổi card mạng máy ảo sang VMnet11, VMnet12, VMnet8 NAT, hoặc Bridged.
+
+----------------------------------------------------------------------------------------------------
+5. QUY TRÌNH TIÊU CHUẨN KHI AI THỰC HIỆN BÀI LAB HOẶC ĐỀ THI MỚI (STANDARD WORKFLOW)
+----------------------------------------------------------------------------------------------------
+Bước 1: Đọc đề bài (File Word/PDF/Ảnh chụp) ➔ Xác định dải IP, tên miền, tài khoản và dịch vụ cần cài (DHCP, DNS, AD DS, OU, Group, GPO, Web IIS, FTP, File Server, NTFS...).
+Bước 2: (Tùy chọn) Revert máy ảo về Snapshot gốc hoặc Snapshot Telnet nếu cần làm mới:
+        vmrun_snapshot_revert("D:\ctt\vm\lab-qtbtht\winserver\Windows Server 2012.vmx", "telnet1")
+Bước 3: Điều khiển cấu hình:
+        - Cách 1 (Khuyên dùng): Dùng PowerShell từ Host gọi `Invoke-Command` hoặc WMI/Telnet qua IP quản trị 192.168.1.132 để cấu hình máy chủ, và từ máy chủ cấu hình tiếp cho Client 1 & 2.
+        - Cách 2: Dùng MCP `guest_run` / `vmrun_run` đẩy trực tiếp lệnh cấu hình vào trong từng máy ảo.
+Bước 4: Chạy script kiểm tra nghiệm thu (Audit) để xác nhận 100% tính năng hoạt động.
+Bước 5: Dùng MCP `mks_screenshot` hoặc hướng dẫn người dùng chụp ảnh các bước minh chứng để hoàn thành báo cáo đạt điểm tối đa!
+====================================================================================================
