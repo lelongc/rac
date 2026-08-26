@@ -48,6 +48,13 @@ function excerpt(s, n) {
     return plainText.substring(0, n).split(' ').slice(0,-1).join(' ') + '…';
 }
 
+// Alias extractText trỏ đến excerpt
+function extractText(s, n) {
+    return excerpt(s, n);
+}
+window.extractText = excerpt;
+window.excerpt = excerpt;
+
 // 3. Lấy chữ cái đầu của Tên
 function initials(name) {
     if(!name || name === 'Guest') return "?";

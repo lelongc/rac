@@ -30,31 +30,44 @@ function extractText(content, len) {
 
 // ─────────────── 1. HÀM XÂY DỰNG GIAO DIỆN THẺ BÀI VIẾT ───────────────
 function buildCard(p) {
-    var catName = p.category ? p.category.name : 'Chưa phân loại';
-    var authorName = p.author ? p.author.username : 'Anonymous';
-    var authorAvatar = (p.author && p.author.avatarUrl) ? p.author.avatarUrl : `https://ui-avatars.com/api/?name=${authorName}&background=151a22&color=ac8aff`;
-    var dateStr = fmtDate(p.createdAt);
+    if (!p) return $('<div>');
+
+    var catName = p.category ? (p.category.name || 'Chưa phân loại') : 'Chưa phân loại';
+    var authorName = p.author ? (p.author.username || 'Anonymous') : 'Anonymous';
+    var authorAvatar = (p.author && p.author.avatarUrl) ? p.author.avatarUrl : `https://ui-avatars.com/api/?name=${encodeURIComponent(authorName)}&background=151a22&color=ac8aff`;
+    
+    var dateStr = "Gần đây";
+    try {
+        if (typeof fmtDate === 'function') dateStr = fmtDate(p.createdAt);
+        else dateStr = new Date(p.createdAt).toLocaleDateString('vi-VN');
+    } catch(e) {
+        dateStr = "N/A";
+    }
 
     // Trích xuất mô tả
     var postExcerpt = p.description ? p.description : extractText(p.content, 180);
+    if (!postExcerpt) postExcerpt = "Xem chi tiết bài viết để đọc nội dung...";
 
     // Ảnh thumbnail
-    var bannerUrl = p.banner ? p.banner : 'https://placehold.co/600x400/151a22/a5abba?text=No+Image';
+    var bannerUrl = p.banner ? p.banner : 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600';
 
     // Tính thời gian đọc
     let plainTextContent = extractText(p.content, 99999);
-    let readingTime = Math.ceil((plainTextContent.split(/\s+/).length || 1) / 200);
-    if (readingTime === 0) readingTime = 1;
+    let readingTime = Math.ceil(((plainTextContent || '').split(/\s+/).length || 1) / 200);
+    if (readingTime <= 0) readingTime = 1;
 
-    // 🔥 XỬ LÝ DANH SÁCH TAG (Nằm gọn ngang hàng, fix lỗi ##) 🔥
+    // 🔥 XỬ LÝ DANH SÁCH TAG AN TOÀN TUYỆT ĐỐI 🔥
     let tagsHtml = '';
-    if (p.tags && p.tags.length > 0) {
+    if (p.tags && Array.isArray(p.tags) && p.tags.length > 0) {
         tagsHtml = '<div class="d-flex align-items-center flex-wrap gap-2">';
         let maxTags = 3;
         for (let i = 0; i < Math.min(p.tags.length, maxTags); i++) {
-            // Dọn dẹp mọi dấu # bị thừa từ Database trước khi thêm dấu # chuẩn
-            let cleanTag = p.tags[i].name.replace(/^#+/, '');
-            tagsHtml += `<span class="badge border fw-normal" style="background: rgba(172,138,255,0.05); color: #a5abba; border-color: rgba(66,72,85,0.3) !important; font-size: 0.75rem;">#${cleanTag}</span>`;
+            let t = p.tags[i];
+            let rawName = (typeof t === 'string') ? t : (t && t.name ? t.name : '');
+            let cleanTag = (rawName || '').replace(/^#+/, '');
+            if (cleanTag) {
+                tagsHtml += `<span class="badge border fw-normal" style="background: rgba(172,138,255,0.05); color: #a5abba; border-color: rgba(66,72,85,0.3) !important; font-size: 0.75rem;">#${cleanTag}</span>`;
+            }
         }
         if (p.tags.length > maxTags) {
             tagsHtml += `<span class="badge border fw-normal text-muted" style="background: transparent; border-color: rgba(66,72,85,0.2) !important; font-size: 0.75rem;">+${p.tags.length - maxTags}</span>`;
@@ -63,13 +76,14 @@ function buildCard(p) {
     }
 
     // Khởi tạo Card
+    var targetId = p.slug || p.id || '';
     var $card = $('<article class="d-flex flex-column flex-sm-row gap-3 gap-sm-4 py-4 border-bottom" style="border-color: rgba(66,72,85,0.4) !important; border-bottom-width: 1px !important; cursor: pointer; transition: background 0.2s;">')
         .hover(
             function() { $(this).css('background-color', 'rgba(255,255,255,0.03)'); },
             function() { $(this).css('background-color', 'transparent'); }
         )
         .on('click', function(){
-            window.location.href = 'post.html?id=' + p.slug;
+            window.location.href = 'post.html?id=' + encodeURIComponent(targetId);
         });
 
     var cardHtml = `
@@ -83,7 +97,7 @@ function buildCard(p) {
             </div>
 
             <h2 class="mb-2" style="font-family: 'Newsreader', serif; font-size: 1.5rem; font-weight: 700; color: #e0e5f5; line-height: 1.3;">
-                ${p.title}
+                ${p.title || 'Không có tiêu đề'}
             </h2>
 
             <p class="mb-2" style="color: #a5abba; font-size: 0.95rem; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
@@ -109,7 +123,7 @@ function buildCard(p) {
         </div>
 
         <div class="flex-shrink-0 order-1 order-sm-2 mb-3 mb-sm-0">
-            <img src="${bannerUrl}" alt="${p.title}" style="width: 100%; max-width: 150px; height: 130px; object-fit: cover; border-radius: 8px; background: #1b202a; display: block;">
+            <img src="${bannerUrl}" alt="${p.title || 'Ảnh bìa'}" style="width: 100%; max-width: 150px; height: 130px; object-fit: cover; border-radius: 8px; background: #1b202a; display: block;" onerror="this.src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600'">
         </div>
     `;
 
@@ -139,9 +153,10 @@ function skeletons(n) {
 // ─────────────── 3. HÀM CẬP NHẬT BANNER BỘ LỌC ───────────────
 function updateFilterBanner() {
     var $banner = $('#active-filter-banner');
+    if (!$banner.length) return;
     var activeFiltersHtml = '';
 
-    if (S.keyword) {
+    if (S && S.keyword) {
         activeFiltersHtml += `
             <span class="badge bg-light text-dark border p-2 me-2 d-inline-flex align-items-center gap-2" style="font-size: 0.85rem;">
                 <span class="text-muted">Search:</span> <strong>${S.keyword}</strong>
@@ -149,9 +164,9 @@ function updateFilterBanner() {
             </span>`;
     }
 
-    if (S.cat) {
+    if (S && S.cat) {
         var activeCatName = 'Active';
-        if (typeof CATEGORIES !== 'undefined') {
+        if (typeof CATEGORIES !== 'undefined' && Array.isArray(CATEGORIES)) {
             var foundCat = CATEGORIES.find(c => c.id === S.cat);
             if (foundCat) activeCatName = foundCat.name;
         }
@@ -211,52 +226,67 @@ $(document).on('click', '.btn-clear-filter', function() {
 // ─────────────── 4. HÀM CHÍNH ĐỂ RENDER DANH SÁCH BÀI VIẾT ───────────────
 function renderPosts() {
     var $list = $('#post-list'), $cnt = $('#pcount');
+    if (!$list.length) return;
+
     $list.html(skeletons(3));
     $cnt.html('Đang tải bài viết...');
 
     updateFilterBanner();
 
     let apiUrl = '/blogs/filter?';
-    if (S.keyword) apiUrl += 'keyword=' + encodeURIComponent(S.keyword) + '&';
-    if (S.cat) apiUrl += 'categoryId=' + encodeURIComponent(S.cat) + '&';
+    if (S && S.keyword) apiUrl += 'keyword=' + encodeURIComponent(S.keyword) + '&';
+    if (S && S.cat) apiUrl += 'categoryId=' + encodeURIComponent(S.cat) + '&';
 
-    callApi(apiUrl, 'GET').done(function(res) {
-        var filteredPosts = res.result || res;
-
-        if (!S.sort) {
-            S.sort = 'createdAt,desc';
-        }
-
-        var parts = S.sort.split(',');
-        var f = parts[0];
-        var d = parts[1];
-
-        filteredPosts.sort(function(a, b){
-            var va = a[f] || '';
-            var vb = b[f] || '';
-
-            if (f === 'title') {
-                va = va.toString().toLowerCase();
-                vb = vb.toString().toLowerCase();
+    callApi(apiUrl, 'GET')
+        .done(function(res) {
+            var filteredPosts = res.result || res || [];
+            if (!Array.isArray(filteredPosts)) {
+                filteredPosts = [];
             }
 
-            if (va < vb) return d === 'asc' ? -1 : 1;
-            if (va > vb) return d === 'asc' ?  1 : -1;
-            return 0;
+            if (!S.sort) {
+                S.sort = 'createdAt,desc';
+            }
+
+            var parts = S.sort.split(',');
+            var f = parts[0];
+            var d = parts[1];
+
+            filteredPosts.sort(function(a, b){
+                var va = a[f] || '';
+                var vb = b[f] || '';
+
+                if (f === 'title') {
+                    va = va.toString().toLowerCase();
+                    vb = vb.toString().toLowerCase();
+                }
+
+                if (va < vb) return d === 'asc' ? -1 : 1;
+                if (va > vb) return d === 'asc' ?  1 : -1;
+                return 0;
+            });
+
+            $list.empty();
+            $cnt.html('Hiển thị <strong>' + filteredPosts.length + '</strong> bài viết');
+
+            if (filteredPosts.length === 0) {
+                $list.html('<div class="text-center py-5" style="color: #a5abba;"><p class="mt-3">Không tìm thấy bài viết nào thỏa mãn bộ lọc!</p></div>');
+                return;
+            }
+
+            $.each(filteredPosts, function(_, p){
+                try {
+                    $list.append(buildCard(p));
+                } catch(err) {
+                    console.error("Lỗi khi render thẻ bài viết:", err, p);
+                }
+            });
+        })
+        .fail(function(xhr) {
+            console.error("Lỗi khi tải danh sách bài viết từ Backend:", xhr);
+            $list.html('<div class="text-center py-5 text-warning"><p>Chưa tải được danh sách bài viết. Vui lòng thử lại hoặc bấm F5!</p></div>');
+            $cnt.html('Không có dữ liệu');
         });
-
-        $list.empty();
-        $cnt.html('Showing <strong>' + filteredPosts.length + '</strong> article' + (filteredPosts.length !== 1 ? 's' : ''));
-
-        if (filteredPosts.length === 0) {
-            $list.html('<div class="text-center py-5" style="color: #a5abba;"><span class="material-symbols-outlined" style="font-size:3rem; opacity:0.5;">search_off</span><p class="mt-3">Không tìm thấy bài viết nào thỏa mãn bộ lọc!</p></div>');
-            return;
-        }
-
-        $.each(filteredPosts, function(_, p){
-            $list.append(buildCard(p));
-        });
-    });
 }
 
 // ─────────────── 5. XỬ LÝ SỰ KIỆN SẮP XẾP (SORT) ───────────────
