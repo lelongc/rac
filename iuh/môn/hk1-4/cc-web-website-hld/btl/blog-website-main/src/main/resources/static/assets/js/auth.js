@@ -1,70 +1,110 @@
 /**
  * auth.js
- * Auth UI: login/logout, avatar dropdown, mobile auth buttons
- * Depends on: app.js (S, initials, toast)
  */
 
 function renderAuth() {
+    // 1. Xác định vùng chứa và XÓA SẠCH trước khi vẽ lại
     var $d = $('#auth-area').empty();
     var $m = $('#mob-auth').empty();
 
-    if (S.isAuth) {
-        /* Desktop */
-        $d.append(
-            $('<button class="btn-drafts">').html(
-                '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>Drafts'
-            ).on('click', function(){ toast('Drafts — coming soon!'); })
-        );
+    // 2. Kiểm tra trạng thái thực tế
+    const token = localStorage.getItem('token');
+    const uname = localStorage.getItem('username'); // Sẽ lấy từ localStorage
+
+    // Kiểm tra xem có Token không
+    const isAuth = token !== null && token !== "";
+
+    if (isAuth) {
+        /* ─────────────── TRẠNG THÁI: ĐÃ ĐĂNG NHẬP ─────────────── */
+        // Tên hiển thị (Nếu không có tên thì để Guest)
+        const displayName = uname || 'Guest';
+
+        /* Desktop: Nút chức năng */
         $d.append(
             $('<button class="btn-newpost">').html(
                 '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>New Post'
-            ).on('click', function(){ toast('New post editor — coming soon!'); })
+            ).on('click', function(){ window.location.href = 'editor.html'; })
         );
 
-        /* Avatar + dropdown */
+        /* Avatar + Dropdown */
         var $wrap = $('<div style="position:relative;"></div>');
-        var $av   = $('<div class="avatar">').text(initials(S.uname)).attr('title', S.uname);
+        // Hàm initials() lấy chữ cái đầu của tên (Ví dụ: "lan" -> "L")
+        var $av   = $('<div class="avatar">').text(initials(displayName)).attr('title', displayName);
         var $dd   = $('<div class="user-dd">');
 
         $dd.append(
             $('<div class="dd-head">').html(
-                '<div class="dn">' + S.uname + '</div><div class="dr">Author</div>'
+                '<div class="dn">' + displayName + '</div><div class="dr">Author</div>'
             )
         );
-        $dd.append(
-            $('<button class="dd-btn">').html(
-                '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>My Drafts'
-            ).on('click', function(){ toast('Drafts — coming soon!'); $dd.removeClass('open'); })
-        );
+
         $dd.append('<div class="dd-sep"></div>');
+
+        // Nút Log Out
         $dd.append(
             $('<button class="dd-btn red">').html(
                 '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Log Out'
-            ).on('click', function(){ S.isAuth = false; renderAuth(); toast('Logged out successfully.'); $dd.removeClass('open'); })
+            ).on('click', handleLogout)
         );
 
-        $av.on('click', function(e){ e.stopPropagation(); $dd.toggleClass('open'); });
+        $av.on('click', function(e){
+            e.stopPropagation();
+            $('.user-dd').not($dd).removeClass('open'); // Đóng các dropdown khác nếu có
+            $dd.toggleClass('open');
+        });
+
         $wrap.append($av, $dd);
         $d.append($wrap);
 
-        /* Mobile */
-        $m.append($('<button class="mb-nav-btn">').text('📄  Drafts').on('click', function(){ toast('Drafts — coming soon!'); }));
-        $m.append($('<button class="mb-nav-btn">').text('✏️  New Post').on('click', function(){ toast('New post editor — coming soon!'); }));
-        $m.append($('<button class="mb-nav-btn" style="color:#f87171;">').text('→  Log Out').on('click', function(){ S.isAuth = false; renderAuth(); toast('Logged out successfully.'); }));
-
     } else {
+        /* ─────────────── TRẠNG THÁI: CHƯA ĐĂNG NHẬP ─────────────── */
+        // CHỈ HIỆN nút Login và Register ở đây
         $d.append(
             $('<button class="btn-login">').text('Log In').on('click', function(){
-                S.isAuth = true; renderAuth(); toast('Logged in as ' + S.uname + ' ✓');
+                window.location.href = 'login.html';
             })
         );
-        $m.append(
-            $('<button class="mb-nav-btn">').text('Log In').on('click', function(){
-                S.isAuth = true; renderAuth(); toast('Logged in as ' + S.uname + ' ✓');
+        $d.append(
+            $('<button class="btn-register">').text('Sign Up').on('click', function(){
+                window.location.href = 'register.html';
             })
         );
     }
 }
+
+function initials(name) {
+    if (!name || name === 'Guest') return "?";
+
+    // Xóa khoảng trắng thừa
+    name = name.trim();
+    var parts = name.split(' ');
+
+    if (parts.length >= 2) {
+        // Nếu có từ 2 từ trở lên: Lấy chữ đầu của từ đầu và từ cuối (VD: Lan Nguyen -> LN)
+        return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    } else {
+        // Nếu chỉ có 1 từ: Lấy 2 chữ cái đầu của từ đó (VD: lan -> LA)
+        return name.slice(0, 2).toUpperCase();
+    }
+}
+
+// Hàm xử lý Log Out
+function handleLogout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+
+    // Xóa thêm các thông tin khác nếu cần
+    if(typeof toast === 'function') toast('Đã đăng xuất thành công.');
+
+    setTimeout(() => {
+        window.location.href = 'home-page.html';
+    }, 500);
+}
+
+// GỌI HÀM KHI TRANG LOAD XONG
+$(document).ready(function() {
+    renderAuth();
+});
 
 /* Close dropdown on outside click */
 $(document).on('click', function(){ $('.user-dd').removeClass('open'); });

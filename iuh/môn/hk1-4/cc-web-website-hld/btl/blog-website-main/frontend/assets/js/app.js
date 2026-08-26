@@ -73,7 +73,7 @@ function toast(msg) {
 }
 
 /* ─────────────── TRẠM TRUNG CHUYỂN API ─────────────── */
-const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = (window.location.port === '8080' || window.location.host === 'localhost:8080') ? '' : 'http://localhost:8080';
 
 function callApi(endpoint, method, data = null) {
     var token = localStorage.getItem('token');
