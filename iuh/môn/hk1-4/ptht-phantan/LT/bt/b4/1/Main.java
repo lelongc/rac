@@ -9,7 +9,7 @@ public class Main {
         // ---------------------------------------------------------
         System.out.println(">>> 1. KIEM TRA 1.1: CONSUMER DANG CHAY <<<");
         MessageBroker broker1 = new MessageBroker();
-        OrderService orderService1 = new OrderService();
+        OrderService orderService1 = new OrderService("OrderService");
         broker1.registerConsumer(orderService1);
 
         Customer customer1 = new Customer(broker1);
@@ -33,8 +33,26 @@ public class Main {
 
         System.out.println("\n--> Sau do moi khoi dong OrderService:");
         System.out.println("Ket qua:");
-        OrderService orderService2 = new OrderService();
+        OrderService orderService2 = new OrderService("OrderService");
         broker2.registerConsumer(orderService2);
+
+        System.out.println("\n------------------------------------------------------------------\n");
+
+        // ---------------------------------------------------------
+        // KIEM TRA 3: NHIEU NGUOI TIEU DUNG (COMPETING CONSUMERS)
+        // ---------------------------------------------------------
+        System.out.println(">>> 3. KIEM TRA 3: NHIEU NGUOI TIEU DUNG (COMPETING CONSUMERS) <<<");
+        MessageBroker broker3 = new MessageBroker();
+        OrderService service1 = new OrderService("Service-1");
+        OrderService service2 = new OrderService("Service-2");
+        broker3.registerConsumer(service1);
+        broker3.registerConsumer(service2);
+
+        Customer customer3 = new Customer(broker3);
+        customer3.sendOrder("ORDER-001");
+        customer3.sendOrder("ORDER-002");
+        customer3.sendOrder("ORDER-003");
+        customer3.sendOrder("ORDER-004");
 
         System.out.println("\n==================================================================");
     }
