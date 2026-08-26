@@ -18,7 +18,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -36,6 +38,7 @@ public class UserService {
  public UserResponse createUser(UserCreatetionRequest request){
   if(userRepository.existsByUsername(request.getUsername())) throw new AppException(ErrorCode.USER_EXITED);
   User u=userMapper.toUser(request);
+  if(u.getRoles() == null) u.setRoles(new HashSet<>());
   u.setPassword(passwordEncoder.encode(request.getPassword()));
   u.getRoles().add(Role.USER.name());
   User savedUser=userRepository.save(u);

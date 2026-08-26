@@ -20,7 +20,7 @@ import java.time.LocalDate;
         String username;
 
         @NotBlank(message = "PASSWORD_REQUIRED")
-        @Size(min = 8, message = "INVALID_PASSWORD")
+        @Size(min = 6, message = "INVALID_PASSWORD")
         String password;
     }
 

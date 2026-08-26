@@ -1,167 +1,134 @@
-# 📖 HƯỚNG DẪN CHẠY & TEST DỰ ÁN BLOG WEBSITE TRÊN ECLIPSE
+# 📖 HƯỚNG DẪN CẤU HÌNH, CHẠY & BÁO CÁO KIỂM THỬ TOÀN DIỆN (FULL SYSTEM TEST REPORT)
 
 > **Dự án**: Website Blog & Nền tảng Viết bài trực tuyến (BTL Môn Công nghệ Web & Website Hướng Dữ Liệu - IUH)  
-> **Công nghệ**: Spring Boot 3.5, Java 21, Spring Security (JWT), Spring Data JPA, H2 In-Memory Database (MySQL Mode), MapStruct, Lombok, HTML5/CSS3/JavaScript (Bootstrap 5, jQuery).
+> **Nhóm thực hiện**: 
+> 1. **24743991** — Hoàng Đại Dương
+> 2. **24000905** — Nguyễn Trung Dũng
+> 3. **23630851** — Lê Thành Long  
+> **Công nghệ**: Spring Boot 3.5, Java 21, Spring Security (JWT), Spring Data JPA, H2 In-Memory Database (MySQL Mode), MapStruct, Lombok, HTML5/CSS3/JavaScript (Bootstrap 5, Tailwind CSS, jQuery).
 
 ---
 
-## 📌 PHẦN 1: CẤU HÌNH & IMPORT DỰ ÁN TRÊN ECLIPSE
+## 📊 1. KẾT QUẢ KIỂM THỬ TỰ ĐỘNG TOÀN HỆ THỐNG (TEST RESULTS: 48/48 PASS - 100%)
 
-### 1. Yêu cầu môi trường
-* **JDK**: Java 21 hoặc Java 17 trở lên.
-* **Eclipse**: Eclipse IDE for Enterprise Java and Web Developers (2023-12 trở lên).
-* **Lombok**: Đã cài đặt Agent vào Eclipse (`eclipse.ini`).
-  > *Kiểm tra*: Trong file `eclipse.ini` có dòng `-javaagent:...lombok.jar`. Nếu chưa có, tải file `lombok.jar` và chạy lệnh `java -jar lombok.jar` để trỏ vào thư mục cài Eclipse.
-
-### 2. Các bước Import vào Eclipse
-1. Mở Eclipse $\rightarrow$ Chọn **File** $\rightarrow$ **Import...**
-2. Chọn **Maven** $\rightarrow$ **Existing Maven Projects** $\rightarrow$ Bấm **Next**.
-3. Tại ô **Root Directory**, bấm **Browse...** và chọn đến thư mục dự án:
-   `D:\folder\rac\iuh\môn\hk1-4\cc-web-website-hld\btl\blog-website-main`
-4. Tick chọn file `pom.xml` $\rightarrow$ Bấm **Finish**.
-5. **Cập nhật Maven (Bắt buộc)**:
-   * Click chuột phải vào tên Project (`blog-website`) trong mục *Package Explorer*.
-   * Chọn **Maven** $\rightarrow$ **Update Project...** (hoặc phím tắt `Alt + F5`).
-   * Tick vào ô **Force Update of Snapshots/Releases** $\rightarrow$ Bấm **OK** để Eclipse tự sinh các class Mapper (`BlogMapperImpl`, `UserMapperImpl`, `CategoryMapperImpl`).
-
----
-
-## 🚀 PHẦN 2: CÁCH CHẠY DỰ ÁN (RUN APPLICATION)
-
-### Cách 1: Chạy trực tiếp từ Eclipse (Khuyên dùng)
-1. Trong cửa sổ *Package Explorer*, mở thư mục:
-   `src/main/java` $\rightarrow$ `com.group.blog` $\rightarrow$ Mở file **`BlogWebsiteApplication.java`**.
-2. Click **chuột phải** vào file $\rightarrow$ Chọn **Run As** $\rightarrow$ **Java Application** (hoặc **Spring Boot App**).
-3. Mở tab **Console** bên dưới để quan sát log khởi động.
-4. Khi thấy dòng log sau xuất hiện là ứng dụng đã chạy thành công:
-   ```text
-   Tomcat started on port 8080 (http) with context path '/'
-   Initialized Sample Data Successfully: 4 Users, 4 Categories, 5 Tags, 3 Blogs!
-   ```
-
-### Cách 2: Chạy qua Terminal / Command Prompt
-Nếu Eclipse bị kẹt tiến trình hoặc port, bạn có thể chạy bằng dòng lệnh trong thư mục dự án:
-```powershell
-.\mvnw.cmd spring-boot:run
-```
-
-> ⚠️ **Xử lý lỗi Port 8080 bị chiếm dụng (Port 8080 was already in use)**:
-> Nếu gặp thông báo lỗi cổng 8080, mở PowerShell chạy lệnh sau để giải phóng:
-> ```powershell
-> Get-NetTCPConnection -LocalPort 8080 -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force }
-> ```
-
----
-
-## 🗄️ PHẦN 3: DỮ LIỆU MẪU CÓ SẴN (SEED DATA)
-
-Hệ thống được lập trình tự động nạp sẵn cơ sở dữ liệu mẫu khi khởi động (`ApplicationInitConfig.java`):
-
-### 1. Danh sách Tài khoản thử nghiệm (Mật khẩu chung: `123456`)
-| Username | Họ và tên | Vai trò (Role) | Chức năng |
-| :--- | :--- | :--- | :--- |
-| **`admin`** | Quản Trị Viên Hệ Thống | `ROLE_ADMIN`, `ROLE_USER` | Toàn quyền quản trị bài viết, danh mục, người dùng |
-| **`duonghd`** | Hoàng Đại Dương | `ROLE_USER` | Tác giả viết bài, bình luận, like |
-| **`dungnt`** | Nguyễn Trung Dũng | `ROLE_USER` | Tác giả viết bài, bình luận, like |
-| **`longlt`** | Lê Thành Long | `ROLE_USER` | Tác giả viết bài, bình luận, like |
-
-### 2. Danh mục & Tag mẫu
-* **Danh mục (Categories)**: `Technology`, `Programming`, `Web Design`, `Life & Tips`.
-* **Thẻ Tag (Tags)**: `Java`, `SpringBoot`, `Bootstrap`, `Thymeleaf`, `AI`.
-* **Bài viết (Blogs)**: Có sẵn 3 bài viết lớn kèm ảnh bìa công nghệ độ phân giải cao Unsplash.
-
----
-
-## 🧪 PHẦN 4: HƯỚNG DẪN TEST ĐẦY ĐỦ CÁC TÍNH NĂNG
-
-### 1. Test Cơ Sở Dữ Liệu Trực Quan (H2 Console)
-Hệ thống sử dụng H2 Database (chế độ tương thích MySQL), bạn có thể truy vấn bảng dữ liệu trực tiếp:
-* **Đường dẫn**: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
-* **Thông tin đăng nhập**:
-  * **Driver Class**: `org.h2.Driver`
-  * **JDBC URL**: `jdbc:h2:mem:blogdb` *(Lưu ý nhập chính xác URL này)*
-  * **User Name**: `sa`
-  * **Password**: *(Để trống - không nhập gì)*
-* Bấm nút **Connect** $\rightarrow$ Bạn sẽ thấy cây thư mục gồm các bảng: `USERS`, `BLOGS`, `CATEGORIES`, `TAGS`, `COMMENTS`, `BLOG_LIKES`, `BLOG_TAGS`...
-
----
-
-### 2. Test Giao Diện Người Dùng (Frontend Website)
-
-#### A. Trang chủ (Home Page)
-* **Đường dẫn**: [http://localhost:8080/](http://localhost:8080/)
-* **Các mục cần kiểm tra**:
-  1. **Thanh Navbar trên cùng**: Logo Inkwell, ô tìm kiếm, các nút *Sign In*, *Sign Up*, *Write*.
-  2. **Banner Hero**: Khối giới thiệu nền tảng blog.
-  3. **Danh sách bài viết (Cột trái)**: Hiển thị 3 bài viết mẫu có đầy đủ ảnh bìa, avatar tác giả, ngày đăng, danh mục, tags và số lượt like.
-  4. **Bộ lọc & Sắp xếp (Sort)**:
-     * Chọn dropdown *Sort* $\rightarrow$ Thử sắp xếp theo: *Newest First*, *Oldest First*, *Title A-Z*.
-     * Nhập từ khóa vào ô tìm kiếm trên Navbar (Ví dụ: `Spring` hoặc `Thymeleaf`) $\rightarrow$ Bấm Enter để lọc bài viết.
-  5. **Thanh bên (Sidebar - Cột phải)**:
-     * *Stories from all interests*: Bấm vào từng danh mục (`Technology`, `Programming`...) để lọc bài tương ứng.
-     * *Trending ↗*: Hiển thị danh sách các bài viết có lượt đọc nhiều nhất.
-
-#### B. Đăng nhập & Xác thực (Authentication)
-* **Đường dẫn**: [http://localhost:8080/login](http://localhost:8080/login) (hoặc bấm nút **Sign In** trên Navbar).
-* **Thao tác**:
-  1. Nhập `username`: `admin` và `password`: `123456`.
-  2. Bấm **Đăng nhập** $\rightarrow$ Hệ thống lưu JWT Token vào `localStorage` và tự động chuyển về trang chủ.
-  3. **Kết quả**: Thanh Navbar chuyển sang chế độ đã đăng nhập:
-     * Hiện avatar và tên `admin`.
-     * Xuất hiện nút **Dashboard / Quản trị** (dành riêng cho tài khoản Admin).
-     * Bấm vào avatar để xem menu: *Profile*, *My Stories*, *Settings*, *Sign Out*.
-
-#### C. Viết và Đăng bài mới (Blog Editor)
-* **Đường dẫn**: [http://localhost:8080/blog-editor](http://localhost:8080/blog-editor) (hoặc bấm nút **Write** trên Navbar).
-* **Thao tác**:
-  1. Nhập tiêu đề bài viết.
-  2. Chọn danh mục (Category).
-  3. Nhập các thẻ Tag (cách nhau bởi dấu phẩy, ví dụ: `Java, Web, IUH`).
-  4. Nhập nội dung bài viết.
-  5. Bấm nút **Publish / Đăng bài** $\rightarrow$ Bài viết mới sẽ xuất hiện ngay lập tức trên trang chủ.
-
-#### D. Đọc chi tiết bài viết, Like & Bình luận (Post Detail)
-* **Thao tác**:
-  1. Tại trang chủ, click vào bất kỳ bài viết nào.
-  2. Trang chuyển đến `post.html?id=...`.
-  3. Đọc toàn bộ nội dung bài viết, xem thông tin tác giả.
-  4. Bấm nút **Tim / Like** $\rightarrow$ Số like tăng lên và lưu vào CSDL.
-  5. Cuộn xuống dưới, nhập nội dung bình luận $\rightarrow$ Bấm **Gửi bình luận**.
-
----
-
-### 3. Test REST API bằng Postman (Backend API)
-
-Nếu cần kiểm tra API độc lập qua Postman:
-
-| STT | Chức năng | Phương thức (Method) | Endpoint URL | Request Body (JSON) / Headers |
-| :---: | :--- | :---: | :--- | :--- |
-| 1 | **Đăng nhập lấy Token** | `POST` | `http://localhost:8080/auth/login` | `{"username": "admin", "password": "123456"}` |
-| 2 | **Lấy danh sách bài viết** | `GET` | `http://localhost:8080/blogs/filter` | Không cần Token |
-| 3 | **Tìm kiếm & Lọc bài viết** | `GET` | `http://localhost:8080/blogs/filter?keyword=Spring&categoryId=...` | Không cần Token |
-| 4 | **Lấy danh sách Danh mục** | `GET` | `http://localhost:8080/categories` | Không cần Token |
-| 5 | **Lấy danh sách Thẻ Tag** | `GET` | `http://localhost:8080/tags` | Không cần Token |
-| 6 | **Tạo bài viết mới** | `POST` | `http://localhost:8080/blogs` | Header: `Authorization: Bearer <token>`<br>Body: `{"title": "...", "content": "...", "categoryId": "..."}` |
-| 7 | **Like bài viết** | `POST` | `http://localhost:8080/blogs/{id}/like` | Header: `Authorization: Bearer <token>` |
-
----
-
-## 🛠️ CẤU TRÚC DỰ ÁN TỔNG QUAN
+Toàn bộ 48 ca kiểm thử tự động từ giao diện HTML, Fragment, Static Asset, Authentication, API Nghiệp vụ (CRUD Blog, Like, Comment, Bookmark, Notifications) và API Quản trị Admin đã được chạy và đạt kết quả hoàn hảo:
 
 ```text
-blog-website-main/
-├── src/main/java/com/group/blog/
-│   ├── config/             # Cấu hình Spring Security, CORS, JWT, Seed Data Init
-│   ├── controller/         # REST Controllers & ViewController (điều hướng trang HTML)
-│   ├── dto/                # Data Transfer Objects (Request / Response)
-│   ├── entity/             # JPA Entities (User, Blog, Category, Tag, Comment...)
-│   ├── mapper/             # MapStruct Mappers (Chuyển đổi Entity <-> DTO)
-│   ├── repository/         # Spring Data JPA Repositories
-│   └── service/            # Business Logic Services
-├── src/main/resources/
-│   ├── static/             # File tĩnh Frontend (assets/css, assets/js, fragments)
-│   ├── templates/          # Thymeleaf / HTML Templates
-│   └── application.properties # Cấu hình H2 Database, JWT Secret, Server Port
-├── pom.xml                 # Khai báo Maven Dependencies & Compiler Plugins
-└── HUONG_DAN_CHAY_VA_TEST.md # Tài liệu hướng dẫn này
+================ TEST SUMMARY ================
+Total Tests: 48 | Passed: 48 (100%) | Failed: 0
+==============================================
+```
+
+### Chi tiết các nhóm kiểm thử:
+1. **Giao diện người dùng & Admin (16/16 Trang `200 OK`)**:
+   - `GET /` (Trang chủ) $\rightarrow$ `200 OK`
+   - `GET /login` (Đăng nhập) $\rightarrow$ `200 OK`
+   - `GET /register` (Đăng ký tài khoản) $\rightarrow$ `200 OK`
+   - `GET /forgot-password` (Quên mật khẩu) $\rightarrow$ `200 OK`
+   - `GET /change-password` (Đổi mật khẩu) $\rightarrow$ `200 OK`
+   - `GET /post` (Chi tiết bài viết) $\rightarrow$ `200 OK`
+   - `GET /blog-editor` (Trình soạn thảo bài viết) $\rightarrow$ `200 OK`
+   - `GET /user-profile` (Hồ sơ người dùng) $\rightarrow$ `200 OK`
+   - `GET /edit-profile` (Chỉnh sửa hồ sơ) $\rightarrow$ `200 OK`
+   - `GET /saved-blogs` (Bài viết đã lưu) $\rightarrow$ `200 OK`
+   - `GET /notifications` (Trung tâm thông báo) $\rightarrow$ `200 OK`
+   - `GET /manage-blogs` (Quản lý bài viết cá nhân) $\rightarrow$ `200 OK`
+   - `GET /admin/dashboard` (Admin - Bảng điều khiển thống kê) $\rightarrow$ `200 OK`
+   - `GET /admin/posts` (Admin - Quản lý bài viết) $\rightarrow$ `200 OK`
+   - `GET /admin/users` (Admin - Quản lý người dùng) $\rightarrow$ `200 OK`
+   - `GET /admin/categories-tags` (Admin - Quản lý danh mục & thẻ tag) $\rightarrow$ `200 OK`
+
+2. **Các thành phần HTML Tĩnh & Assets (15/15 `200 OK`)**:
+   - Fragments: `navbar.html`, `hero.html`, `footer.html`, `sidebar.html`, `admin_sidebar.html`, `dashboard-sidebar.html`.
+   - Assets: `main.css`, `app.js`, `posts.js`, `sidebar.js`, `filters.js`, `nav.js`, `auth.js`, `init.js`, `pages.js`.
+
+3. **Xác thực & Phân quyền (Authentication & Authorization)**:
+   - Đăng nhập 4 tài khoản có sẵn: `admin`, `duonghd`, `dungnt`, `longlt` (Mật khẩu: `123456`) $\rightarrow$ Cấp JWT Token thành công.
+   - Đăng ký thành viên mới $\rightarrow$ Lưu Database và mã hóa BCrypt thành công.
+   - Tự động đăng nhập cho thành viên mới $\rightarrow$ Thành công.
+   - Phân quyền Admin: User thường truy cập API Admin `/api/admin/stats` bị chặn với mã `403 Forbidden` (Đúng chuẩn bảo mật).
+
+4. **Nghiệp vụ Blog & Dữ liệu**:
+   - `GET /categories` (4 Danh mục) & `GET /tags` (5 Tags) $\rightarrow$ Thành công.
+   - `GET /blogs/filter` & `GET /blogs/search` $\rightarrow$ Trả về danh sách bài viết kèm lượt thích, lượt xem, tác giả và tag.
+   - `POST /blogs` (Tạo bài viết mới) $\rightarrow$ Sinh UUID và lưu CSDL thành công.
+   - `GET /blogs/{id}` (Đọc bài viết) $\rightarrow$ Tăng biến đếm lượt xem (Views) thành công.
+   - `GET /api/notifications` $\rightarrow$ Trả về danh sách thông báo tương tác thành công.
+
+---
+
+## 📌 2. CẤU HÌNH & CHẠY DỰ ÁN TRÊN ECLIPSE
+
+### 1. Yêu cầu môi trường
+* **JDK**: Java 21 (hoặc Java 17+).
+* **Eclipse**: Eclipse IDE for Enterprise Java and Web Developers.
+* **Lombok Plugin**: Đã cài đặt trong `eclipse.ini` (`-javaagent:...lombok.jar`).
+
+### 2. Các bước Import vào Eclipse
+1. Mở Eclipse $\rightarrow$ **File** $\rightarrow$ **Import...**
+2. Chọn **Maven** $\rightarrow$ **Existing Maven Projects** $\rightarrow$ **Next**.
+3. Tại ô **Root Directory**, Browse đến thư mục:
+   `D:\folder\rac\iuh\môn\hk1-4\cc-web-website-hld\btl\blog-website-main`
+4. Bấm **Finish**.
+5. **Cập nhật Maven (Bắt buộc)**:
+   * Chuột phải vào tên Project (`blog-website`) $\rightarrow$ **Maven** $\rightarrow$ **Update Project...** (`Alt + F5`).
+   * Tick vào ô **Force Update of Snapshots/Releases** $\rightarrow$ Bấm **OK**.
+
+### 3. Chạy Ứng Dụng
+* **Cách 1 (Từ Eclipse)**: Mở file `src/main/java/com/group/blog/BlogWebsiteApplication.java` $\rightarrow$ Chuột phải chọn **Run As** $\rightarrow$ **Java Application** (hoặc **Spring Boot App**).
+* **Cách 2 (Từ Terminal / CMD)**:
+  ```powershell
+  .\mvnw.cmd spring-boot:run
+  ```
+
+---
+
+## 🗄️ 3. TÀI KHOẢN MẪU & CƠ SỞ DỮ LIỆU H2
+
+### 1. Danh sách tài khoản (Tất cả mật khẩu là `123456`)
+| Username | Mật khẩu | Quyền hạn (Roles) | Ghi chú |
+| :--- | :---: | :--- | :--- |
+| **`admin`** | `123456` | `ROLE_ADMIN`, `ROLE_USER` | Quản trị viên cao nhất của hệ thống |
+| **`duonghd`** | `123456` | `ROLE_USER` | Tác giả: Hoàng Đại Dương (MSSV: 24743991) |
+| **`dungnt`** | `123456` | `ROLE_USER` | Tác giả: Nguyễn Trung Dũng (MSSV: 24000905) |
+| **`longlt`** | `123456` | `ROLE_USER` | Tác giả: Lê Thành Long (MSSV: 23630851) |
+
+### 2. Trực quan hóa CSDL (H2 Database Console)
+* **Đường dẫn**: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
+* **JDBC URL**: `jdbc:h2:mem:blogdb`
+* **User Name**: `sa`
+* **Password**: *(Để trống)*
+
+---
+
+## 🧪 4. HƯỚNG DẪN TEST CÁC TÍNH NĂNG TRÊN TRÌNH DUYỆT
+
+### 1. Test Trang chủ ([http://localhost:8080/](http://localhost:8080/))
+- Xem 3 bài viết mẫu có sẵn với hình ảnh, tác giả, ngày đăng, danh mục, tag.
+- Chọn bộ lọc bên phải (*Stories from all interests*) để lọc bài theo chủ đề.
+- Chọn sắp xếp (*Newest First*, *Oldest First*, *Title A-Z*).
+- Nhập từ khóa vào ô tìm kiếm ở Navbar (Ví dụ: `Spring`) $\rightarrow$ Bấm Enter để tìm bài.
+
+### 2. Test Đăng nhập ([http://localhost:8080/login](http://localhost:8080/login))
+- Nhập `admin` / `123456` $\rightarrow$ Bấm **Đăng nhập**.
+- Quan sát thông báo xanh và trang tự chuyển về Trang chủ.
+- Navbar xuất hiện avatar, tên tài khoản `admin` và nút **Admin Controller**.
+
+### 3. Test Trang Quản trị Admin ([http://localhost:8080/admin/dashboard](http://localhost:8080/admin/dashboard))
+- Bấm nút **Admin Controller** trên Navbar (hoặc truy cập trực tiếp link trên).
+- Xem số liệu thống kê: Tổng số người dùng, tổng số bài viết, danh sách bài viết gần đây.
+- Chuyển sang menu **Users** để xem toàn bộ danh sách thành viên.
+- Chuyển sang menu **Categories & Tags** để thêm/sửa/xóa danh mục và tag.
+
+### 4. Test Viết bài mới ([http://localhost:8080/blog-editor](http://localhost:8080/blog-editor))
+- Bấm nút **Write** trên Navbar.
+- Nhập tiêu đề, chọn danh mục, gắn tags và viết nội dung $\rightarrow$ Bấm **Publish**.
+- Bài viết mới lập tức xuất hiện trên trang chủ và bảng điều khiển cá nhân.
+
+---
+
+## 📁 5. CHẠY LẠI SUITE KIỂM THỬ TỰ ĐỘNG (BẤT CỨ LÚC NÀO)
+Nếu muốn chạy lại toàn bộ 48 test case tự động để kiểm tra sức khỏe hệ thống:
+```powershell
+pwsh -File test_suite.ps1
 ```

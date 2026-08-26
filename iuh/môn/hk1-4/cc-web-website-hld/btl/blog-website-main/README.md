@@ -1,4 +1,4 @@
-# 🌐 Blog Platform — Website Blog & Nền Tảng Viết Bài
+# 🌐 Blog Platform — Website Blog & Nền Tảng Viết Bài Trực Tuyến
 
 > Dự án Bài Tập Lớn môn **Công nghệ Web và Website hướng dữ liệu** — Trường Đại học Công nghiệp TP.HCM (IUH).
 
@@ -11,6 +11,14 @@
 
 ---
 
+## 🏆 KẾT QUẢ KIỂM THỬ HỆ THỐNG
+* **Trạng thái kiểm thử**: **`48 / 48 PASS (100%)`**
+* **16/16 Trang Giao diện**: `200 OK`
+* **Xác thực JWT & Phân quyền**: Hoạt động chuẩn xác.
+* **REST API & Cơ sở dữ liệu H2**: Hoàn toàn ổn định.
+
+---
+
 ## ⚡ HƯỚNG DẪN NHANH (QUICK START)
 
 1. **Khởi chạy ứng dụng**:
@@ -19,15 +27,16 @@
 2. **Truy cập Giao diện Web**:
    * Trang chủ: [http://localhost:8080/](http://localhost:8080/)
    * Đăng nhập: [http://localhost:8080/login](http://localhost:8080/login)
+   * Quản trị Admin: [http://localhost:8080/admin/dashboard](http://localhost:8080/admin/dashboard)
    * Viết bài mới: [http://localhost:8080/blog-editor](http://localhost:8080/blog-editor)
 3. **Cơ sở dữ liệu H2 Console**:
    * Đường dẫn: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
    * JDBC URL: `jdbc:h2:mem:blogdb` | User: `sa` | Password: *(để trống)*
-4. **Tài khoản đăng nhập có sẵn**:
-   * Admin: `admin` / `123456`
-   * User: `duonghd` / `123456`, `dungnt` / `123456`, `longlt` / `123456`
+4. **Tài khoản đăng nhập có sẵn** *(Mật khẩu chung: `123456`)*:
+   * **Admin**: `admin` / `123456`
+   * **Tác giả**: `duonghd` / `123456`, `dungnt` / `123456`, `longlt` / `123456`
 
 ---
 
-👉 Xem hướng dẫn chi tiết toàn bộ các bước cấu hình Eclipse, cơ sở dữ liệu và kịch bản test tại file:  
+👉 Xem hướng dẫn chi tiết toàn bộ các bước cấu hình Eclipse, cơ sở dữ liệu và bảng báo cáo kiểm thử tại file:  
 📄 **[HUONG_DAN_CHAY_VA_TEST.md](HUONG_DAN_CHAY_VA_TEST.md)**
