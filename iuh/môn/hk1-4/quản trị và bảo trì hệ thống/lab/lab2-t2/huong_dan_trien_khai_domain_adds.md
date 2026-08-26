@@ -1,7 +1,7 @@
 # HƯỚNG DẪN CHI TIẾT TRIỂN KHAI HỆ THỐNG DOMAIN CONTROLLER (AD DS)
 ## MÔN: QUẢN TRỊ VÀ BẢO TRÌ HỆ THỐNG (IUH) - BÀI THỰC HÀNH TUẦN 2 (LAB 2-T2)
 
-Tài liệu này hướng dẫn chi tiết từng bước (Step-by-step) cấu hình nâng cấp máy **Windows Server 2012 R2 / 2016** thành máy chủ điều khiển vùng **Domain Controller (Active Directory Domain Services - AD DS)**, cấu hình **DNS Server**, tạo tài khoản người dùng trên Domain, cấu hình máy **Client Windows 7 (1)** và **Windows 7 (2)** gia nhập Domain (Join Domain) và đăng nhập xác thực tập trung.
+Tài liệu này hướng dẫn chi tiết từng bước (Step-by-step) cấu hình nâng cấp máy **Windows Server 2012 R2 / 2016** thành máy chủ điều khiển vùng **Domain Controller (Active Directory Domain Services - AD DS)**, cấu hình **DNS Server**, tạo tài khoản người dùng trên Domain, cấu hình máy **Client Windows 7 (1)** và **Windows 7 (2)** gia nhập Domain (Join Domain), đăng nhập xác thực tập trung và **bộ quy trình kiểm tra nghiệm thu toàn diện (Verification & Audit)**.
 
 ---
 
@@ -228,7 +228,110 @@ Bộ script tự động hóa được chuẩn hóa và lưu tại thư mục `l
 
 ---
 
-# PHẦN 5: CÁC LỖI THỰC TẾ THƯỜNG GẶP VÀ CÁCH XỬ LÝ TRIỆT ĐỂ (TROUBLESHOOTING)
+# PHẦN 5: CÁC LỆNH VÀ THAO TÁC KIỂM TRA ĐÃ XÁC THỰC THÀNH CÔNG (VERIFICATION & AUDIT)
+
+Để đảm bảo toàn bộ hệ thống đạt điểm tối đa và không có lỗi tiềm ẩn, dưới đây là các phương pháp kiểm tra toàn diện:
+
+### 1. Kiểm tra 1-Click bằng Script tự động `04_kiem_tra_he_thong_toan_dien.ps1`:
+Khi chạy script `04_kiem_tra_he_thong_toan_dien.ps1`, toàn bộ hệ thống sẽ được quét và trả về kết quả đạt chuẩn như sau:
+
+```powershell
+==========================================================================
+     KIEM TRA TOAN DIEN HE THONG DOMAIN CONTROLLER & CLIENTS (LAB 2-T2)  
+==========================================================================
+
+1. THONG TIN DOMAIN CONTROLLER:
+  - Ten mien (Domain Name)       : newstar.vn
+  - NetBIOS Name                 : NEWSTAR
+  - Domain Mode                  : Windows2012R2Domain
+  - PDC Emulator                 : WIN-P6PG9M9AICK.newstar.vn
+
+2. DANH SACH MAY TINH TRONG ACTIVE DIRECTORY (COMPUTERS):
+Name            DNSHostName                Enabled
+----            -----------                -------
+WIN-P6PG9M9AICK WIN-P6PG9M9AICK.newstar.vn    True
+WIN7-PC1        WIN7-PC1.newstar.vn           True
+WIN7-PC2        WIN7-PC2.newstar.vn           True
+
+3. DANH SACH NGUOI DUNG TRONG DOMAIN (USERS):
+Name          SamAccountName UserPrincipalName Enabled
+----          -------------- ----------------- -------
+Administrator Administrator                       True
+Hiep Dang     hiepdh         hiepdh@newstar.vn    True
+
+4. KIEM TRA KENH BAO MAT (SECURE CHANNEL) TU MAY CLIENT:
+  [+] May WIN7-PC1 (192.168.11.2):
+      - Ten may thuc te : WIN7-PC1
+      - Domain ket noi  : newstar.vn
+      - PartOfDomain    : True
+      - Secure Channel  : True (HOẠT ĐỘNG HOÀN HẢO)
+  [+] May WIN7-PC2 (100.100.11.2):
+      - Ten may thuc te : WIN7-PC2
+      - Domain ket noi  : newstar.vn
+      - PartOfDomain    : True
+      - Secure Channel  : True (HOẠT ĐỘNG HOÀN HẢO)
+
+==========================================================================
+                     KIEM TRA HOAN TAT! (100% SUCCESS)
+==========================================================================
+```
+
+---
+
+### 2. Kiểm tra thủ công chi tiết từng thành phần:
+
+#### A. Kiểm tra trên máy chủ Domain Controller (Windows Server):
+1. **Kiểm tra 5 vai trò FSMO (Flexible Single Master Operations)**:
+   * Mở CMD trên Server gõ:
+     ```cmd
+     netdom query fsmo
+     ```
+   * **Kết quả chuẩn**: Cả 5 vai trò (*Schema master, Domain naming master, PDC, RID pool manager, Infrastructure master*) đều trỏ về tên máy chủ DC.
+2. **Kiểm tra dịch vụ DNS Server**:
+   * Mở CMD gõ:
+     ```cmd
+     nslookup newstar.vn
+     nslookup 192.168.11.1
+     ```
+   * **Kết quả chuẩn**: Trả về đúng địa chỉ IP `192.168.11.1` của máy chủ DC.
+3. **Kiểm tra danh bạ Active Directory**:
+   * Mở `dsa.msc` ➔ Thư mục **`Computers`** có cả 2 máy: **`WIN7-PC1`** và **`WIN7-PC2`**.
+   * Thư mục **`Users`** có tài khoản **`hiepdh`**.
+
+#### B. Kiểm tra trên các máy Client (Win 7 - 1 và Win 7 - 2):
+1. **Kiểm tra thông tin đăng nhập tài khoản Domain**:
+   * Mở CMD trên Win 7 gõ:
+     ```cmd
+     whoami
+     ```
+   * **Kết quả chuẩn**: Hiển thị **`newstar\hiepdh`** (hoặc `newstar\administrator`).
+2. **Kiểm tra thông tin Domain của máy trạm**:
+   * Mở CMD gõ:
+     ```cmd
+     net config workstation
+     ```
+   * **Kết quả chuẩn**:
+     * *Workstation domain*: **`NEWSTAR`**
+     * *Logon domain*: **`NEWSTAR`**
+     * *Workstation Domain DNS Name*: **`newstar.vn`**
+3. **Kiểm tra biến môi trường Logon Server**:
+   * Mở CMD gõ:
+     ```cmd
+     echo %LOGONSERVER%
+     ```
+   * **Kết quả chuẩn**: Hiển thị tên máy chủ DC (ví dụ: `\\WIN-P6PG9M9AICK` hoặc `\\DC-SERVER`).
+4. **Kiểm tra kênh bảo mật tin cậy (Secure Channel)**:
+   * Mở PowerShell trên Win 7 gõ:
+     ```powershell
+     Test-ComputerSecureChannel -Verbose
+     ```
+   * **Kết quả chuẩn**: Hiển thị dòng chữ:
+     `VERBOSE: "The secure channel between 'WIN7-PC1' and 'newstar.vn' is alive and working correctly."`
+     `True`
+
+---
+
+# PHẦN 6: CÁC LỖI THỰC TẾ THƯỜNG GẶP VÀ CÁCH XỬ LÝ TRIỆT ĐỂ (TROUBLESHOOTING)
 
 ### ❌ LỖI 1: Trùng tên máy tính do Clone từ cùng một máy ảo Win 7 gốc
 * **Hiện tượng**: Cả 2 máy Win 7 khi bật lên đều mang tên mặc định ngẫu nhiên giống nhau (ví dụ: `WIN-RKVRS24A9VK`). Khi máy Win 7 (2) gia nhập Domain thì máy Win 7 (1) bị văng và báo lỗi Trust relationship (hoặc ngược lại).
@@ -273,7 +376,19 @@ Bộ script tự động hóa được chuẩn hóa và lưu tại thư mục `l
 
 ---
 
-# PHẦN 6: CHECKLIST NGHIỆM THU ĐIỂM 10 BÀI LAB 2-T2
+# PHẦN 7: DANH SÁCH ẢNH MINH CHỨNG BÁO CÁO THỰC HÀNH (ĐIỂM 10)
+
+Để hoàn thiện bài báo cáo nộp giáo viên đạt điểm tối đa, chụp các ảnh sau:
+
+1. **Ảnh 1 (Server)**: Mở `dsa.msc` ➔ Thư mục **`Computers`** hiển thị cả 2 máy **`WIN7-PC1`** và **`WIN7-PC2`**.
+2. **Ảnh 2 (Server)**: Mở `dsa.msc` ➔ Thư mục **`Users`** hiển thị tài khoản **`hiepdh`**.
+3. **Ảnh 3 (Win 7 - 1)**: Mở CMD gõ `whoami` (kết quả `newstar\hiepdh`) và `ipconfig /all`.
+4. **Ảnh 4 (Win 7 - 2)**: Mở CMD gõ `whoami` (kết quả `newstar\hiepdh`) và `ipconfig /all`.
+5. **Ảnh 5 (Tổng quan)**: Kết quả chạy script `04_kiem_tra_he_thong_toan_dien.ps1` hiển thị toàn bộ hệ thống `True` (Pass).
+
+---
+
+# PHẦN 8: CHECKLIST NGHIỆM THU ĐIỂM 10 BÀI LAB 2-T2
 
 - [x] **Windows Server** đã nâng cấp thành công Domain Controller `newstar.vn`.
 - [x] **DNS Server** hoạt động bình thường, phân giải chính xác `newstar.vn`.
