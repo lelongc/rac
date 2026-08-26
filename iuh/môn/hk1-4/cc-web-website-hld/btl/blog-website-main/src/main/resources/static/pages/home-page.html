@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
           rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="/assets/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="../assets/css/main.css"/>
 </head>
 <body>
 
@@ -96,29 +97,38 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 
-<script src="/assets/js/app.js"></script>
-<script src="/assets/js/posts.js"></script>
-<script src="/assets/js/sidebar.js"></script>
-<script src="/assets/js/filters.js"></script>
-<script src="/assets/js/pages.js"></script>
-<script src="/assets/js/auth.js"></script>
-<script src="/assets/js/nav.js"></script>
-<script src="/assets/js/init.js"></script>
+<script src="/assets/js/app.js" onerror="this.onerror=null;this.src='../assets/js/app.js'"></script>
+<script src="/assets/js/posts.js" onerror="this.onerror=null;this.src='../assets/js/posts.js'"></script>
+<script src="/assets/js/sidebar.js" onerror="this.onerror=null;this.src='../assets/js/sidebar.js'"></script>
+<script src="/assets/js/filters.js" onerror="this.onerror=null;this.src='../assets/js/filters.js'"></script>
+<script src="/assets/js/pages.js" onerror="this.onerror=null;this.src='../assets/js/pages.js'"></script>
+<script src="/assets/js/auth.js" onerror="this.onerror=null;this.src='../assets/js/auth.js'"></script>
+<script src="/assets/js/nav.js" onerror="this.onerror=null;this.src='../assets/js/nav.js'"></script>
+<script src="/assets/js/init.js" onerror="this.onerror=null;this.src='../assets/js/init.js'"></script>
 
 <script>
     $(document).ready(function() {
-        // 1. Tải Hero và Footer
-        $('#hero-container').load('/fragments/hero.html');
-        $('#footer-container').load('/fragments/footer.html');
+        // Tự động nạp Hero và Footer với cơ chế thử đường dẫn gốc và fallback tương đối
+        $('#hero-container').load('/fragments/hero.html', function(res, status) {
+            if (status === 'error') {
+                $('#hero-container').load('../fragments/hero.html');
+            }
+        });
+        $('#footer-container').load('/fragments/footer.html', function(res, status) {
+            if (status === 'error') {
+                $('#footer-container').load('../fragments/footer.html');
+            }
+        });
 
-        // 2. Tải Navbar và CHỜ tải xong mới chạy logic Auth
+        // Tự động nạp Navbar và kích hoạt logic Auth
         $('#navbar-container').load('/fragments/navbar.html', function(response, status, xhr) {
-            if (status == "error") {
-                console.error("Lỗi tải Navbar: " + xhr.status + " " + xhr.statusText);
+            if (status === "error") {
+                $('#navbar-container').load('../fragments/navbar.html', function() {
+                    if (typeof updateNavAuth === 'function') updateNavAuth();
+                });
                 return;
             }
 
-            // Cập nhật giao diện Đăng nhập/Khách ngay khi Navbar vừa xuất hiện trên web
             if (typeof updateNavAuth === 'function') {
                 updateNavAuth();
             }
