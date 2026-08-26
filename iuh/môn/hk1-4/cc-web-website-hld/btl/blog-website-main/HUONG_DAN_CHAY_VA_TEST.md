@@ -5,13 +5,27 @@
 > 1. **24743991** — Hoàng Đại Dương
 > 2. **24000905** — Nguyễn Trung Dũng
 > 3. **23630851** — Lê Thành Long  
-> **Công nghệ**: Spring Boot 3.5, Java 21, Spring Security (JWT), Spring Data JPA, H2 In-Memory Database (MySQL Mode), MapStruct, Lombok, HTML5/CSS3/JavaScript (Bootstrap 5, Tailwind CSS, jQuery).
+> **Công nghệ**: Spring Boot 3.5, Java 21, Spring Security (JWT), Spring Data JPA, **H2 File-based Persistent Database (Lưu trữ vĩnh viễn trên ổ cứng)**, MapStruct, Lombok, HTML5/CSS3/JavaScript (Bootstrap 5, Tailwind CSS, jQuery).
 
 ---
 
-## 📊 1. KẾT QUẢ KIỂM THỬ TỰ ĐỘNG TOÀN HỆ THỐNG (TEST RESULTS: 48/48 PASS - 100%)
+## 🗄️ 1. CƠ SỞ DỮ LIỆU LƯU TRỮ VĨNH VIỄN (PERSISTENT STORAGE)
 
-Toàn bộ 48 ca kiểm thử tự động từ giao diện HTML, Fragment, Static Asset, Authentication, API Nghiệp vụ (CRUD Blog, Like, Comment, Bookmark, Notifications) và API Quản trị Admin đã được chạy và đạt kết quả hoàn hảo:
+* **Cơ chế lưu trữ**: Sử dụng **H2 Database dạng File** lưu trực tiếp tại thư mục dự án `data/blogdb.mv.db`.
+* **Ưu điểm**:
+  - Không cần cài đặt MySQL Server, XAMPP hay Docker.
+  - **Dữ liệu được lưu vĩnh viễn 100%** vào file vật lý trên ổ cứng.
+  - Khởi động lại ứng dụng, tắt máy tính hoặc reset IDE thì toàn bộ tài khoản, bài viết, like, bình luận **vẫn còn nguyên vẹn**.
+* **Truy cập H2 Web Console**:
+  - Đường dẫn: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
+  - **Driver Class**: `org.h2.Driver`
+  - **JDBC URL**: `jdbc:h2:file:./data/blogdb`
+  - **User Name**: `sa`
+  - **Password**: *(Để trống)*
+
+---
+
+## 📊 2. KẾT QUẢ KIỂM THỬ TỰ ĐỘNG TOÀN HỆ THỐNG (TEST RESULTS: 48/48 PASS - 100%)
 
 ```text
 ================ TEST SUMMARY ================
@@ -51,13 +65,13 @@ Total Tests: 48 | Passed: 48 (100%) | Failed: 0
 4. **Nghiệp vụ Blog & Dữ liệu**:
    - `GET /categories` (4 Danh mục) & `GET /tags` (5 Tags) $\rightarrow$ Thành công.
    - `GET /blogs/filter` & `GET /blogs/search` $\rightarrow$ Trả về danh sách bài viết kèm lượt thích, lượt xem, tác giả và tag.
-   - `POST /blogs` (Tạo bài viết mới) $\rightarrow$ Sinh UUID và lưu CSDL thành công.
+   - `POST /blogs` (Tạo bài viết mới) $\rightarrow$ Sinh UUID và lưu file CSDL thành công.
    - `GET /blogs/{id}` (Đọc bài viết) $\rightarrow$ Tăng biến đếm lượt xem (Views) thành công.
    - `GET /api/notifications` $\rightarrow$ Trả về danh sách thông báo tương tác thành công.
 
 ---
 
-## 📌 2. CẤU HÌNH & CHẠY DỰ ÁN TRÊN ECLIPSE
+## 📌 3. CẤU HÌNH & CHẠY DỰ ÁN TRÊN ECLIPSE
 
 ### 1. Yêu cầu môi trường
 * **JDK**: Java 21 (hoặc Java 17+).
@@ -83,9 +97,8 @@ Total Tests: 48 | Passed: 48 (100%) | Failed: 0
 
 ---
 
-## 🗄️ 3. TÀI KHOẢN MẪU & CƠ SỞ DỮ LIỆU H2
+## 👥 4. TÀI KHOẢN MẪU CÓ SẴN (Tất cả mật khẩu: `123456`)
 
-### 1. Danh sách tài khoản (Tất cả mật khẩu là `123456`)
 | Username | Mật khẩu | Quyền hạn (Roles) | Ghi chú |
 | :--- | :---: | :--- | :--- |
 | **`admin`** | `123456` | `ROLE_ADMIN`, `ROLE_USER` | Quản trị viên cao nhất của hệ thống |
@@ -93,15 +106,9 @@ Total Tests: 48 | Passed: 48 (100%) | Failed: 0
 | **`dungnt`** | `123456` | `ROLE_USER` | Tác giả: Nguyễn Trung Dũng (MSSV: 24000905) |
 | **`longlt`** | `123456` | `ROLE_USER` | Tác giả: Lê Thành Long (MSSV: 23630851) |
 
-### 2. Trực quan hóa CSDL (H2 Database Console)
-* **Đường dẫn**: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
-* **JDBC URL**: `jdbc:h2:mem:blogdb`
-* **User Name**: `sa`
-* **Password**: *(Để trống)*
-
 ---
 
-## 🧪 4. HƯỚNG DẪN TEST CÁC TÍNH NĂNG TRÊN TRÌNH DUYỆT
+## 🧪 5. HƯỚNG DẪN TEST CÁC TÍNH NĂNG TRÊN TRÌNH DUYỆT
 
 ### 1. Test Trang chủ ([http://localhost:8080/](http://localhost:8080/))
 - Xem 3 bài viết mẫu có sẵn với hình ảnh, tác giả, ngày đăng, danh mục, tag.
@@ -127,8 +134,7 @@ Total Tests: 48 | Passed: 48 (100%) | Failed: 0
 
 ---
 
-## 📁 5. CHẠY LẠI SUITE KIỂM THỬ TỰ ĐỘNG (BẤT CỨ LÚC NÀO)
-Nếu muốn chạy lại toàn bộ 48 test case tự động để kiểm tra sức khỏe hệ thống:
+## 📁 6. CHẠY LẠI SUITE KIỂM THỬ TỰ ĐỘNG
 ```powershell
 pwsh -File test_suite.ps1
 ```

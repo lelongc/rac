@@ -14,8 +14,7 @@
 ## 🏆 KẾT QUẢ KIỂM THỬ HỆ THỐNG
 * **Trạng thái kiểm thử**: **`48 / 48 PASS (100%)`**
 * **16/16 Trang Giao diện**: `200 OK`
-* **Xác thực JWT & Phân quyền**: Hoạt động chuẩn xác.
-* **REST API & Cơ sở dữ liệu H2**: Hoàn toàn ổn định.
+* **Lưu trữ CSDL**: **H2 Persistent File Database** (`./data/blogdb.mv.db`) — **Lưu vĩnh viễn trên ổ cứng, không bao giờ mất dữ liệu khi khởi động lại!**
 
 ---
 
@@ -31,7 +30,7 @@
    * Viết bài mới: [http://localhost:8080/blog-editor](http://localhost:8080/blog-editor)
 3. **Cơ sở dữ liệu H2 Console**:
    * Đường dẫn: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
-   * JDBC URL: `jdbc:h2:mem:blogdb` | User: `sa` | Password: *(để trống)*
+   * **JDBC URL**: `jdbc:h2:file:./data/blogdb` | **User**: `sa` | **Password**: *(để trống)*
 4. **Tài khoản đăng nhập có sẵn** *(Mật khẩu chung: `123456`)*:
    * **Admin**: `admin` / `123456`
    * **Tác giả**: `duonghd` / `123456`, `dungnt` / `123456`, `longlt` / `123456`
