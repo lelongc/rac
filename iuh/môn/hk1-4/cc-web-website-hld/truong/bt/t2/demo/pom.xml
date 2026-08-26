@@ -12,7 +12,7 @@
 	<artifactId>demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>demo</name>
-	<description>Demo project for Spring Boot Web at IUH</description>
+	<description>Demo project for Spring Boot Web + Thymeleaf + Bootstrap at IUH</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -21,6 +21,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!-- Thymeleaf Template Engine -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 
 		<!-- Spring Boot DevTools (Auto-reload khi sua code) -->

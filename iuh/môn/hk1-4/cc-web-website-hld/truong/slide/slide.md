@@ -41,7 +41,12 @@ b2/ Cho chứa 1 mảng danh sách các đối tượng (mỗi đối tượng l
 
 TUẦN 2
 
-b1/ tìm virtual restful api có hỗ trợ hình ảnh 
+b1/ tìm virtual restful api có hỗ trợ hình ảnh
 
 b2/ dựa vào virtual restful api trên , viết app Single Page App spa quảng cáo sản phẩm , có các chức năng thêm xóa sửa, tìm kiếm ,
 thử fake rest api
+
+
+tuần 3
+
+thiết kế lại giao diện dùng bootstrap kết hợp thymeleaf , thymeleaf là view engine , bootstrap là css framework
