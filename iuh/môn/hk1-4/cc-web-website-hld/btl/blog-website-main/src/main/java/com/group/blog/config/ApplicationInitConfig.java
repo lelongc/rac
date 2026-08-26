@@ -45,7 +45,7 @@ public class ApplicationInitConfig {
                 User admin = User.builder()
                         .username("admin")
                         .email("admin@blog.com")
-                        .password(passwordEncoder.encode("admin"))
+                        .password(passwordEncoder.encode("123456"))
                         .bio("Quản trị viên hệ thống Blog Bleb")
                         .avatarUrl("https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150")
                         .roles(adminRoles)

@@ -43,13 +43,15 @@ public class SecurityConfig {
             "/login", "/login.html",
             "/register", "/register.html",
             "/forgot-password", "/forgot-password.html",
+            "/change-password", "/change-password.html",
             "/post", "/post.html",
             "/blog-editor", "/blog-editor.html",
             "/user-profile", "/user-profile.html",
             "/edit-profile", "/edit-profile.html",
             "/saved-blogs", "/saved-blogs.html",
             "/notifications", "/notifications.html",
-            "/manage-blogs", "/Manage-Blogs.html",
+            "/manage-blogs", "/manage-blogs.html", "/Manage-Blogs.html",
+            "/admin", "/admin/**",
             "/pages/**",
 
             // --- CÁC API DỮ LIỆU CÔNG KHAI ---
@@ -69,8 +71,7 @@ public class SecurityConfig {
 
     // Định nghĩa riêng các Endpoint dành cho khu vực ADMIN
     private final String[] ADMIN_ENDPOINTS = {
-            "/api/admin/**", // Các REST API phục vụ cho trang Dashboard
-            "/admin/**"      // Các route View trả về file HTML Admin
+            "/api/admin/**" // Các REST API phục vụ cho trang Dashboard
     };
 
     @Value("${jwt.signerKey}")

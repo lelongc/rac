@@ -67,8 +67,38 @@ public class ViewController {
     }
 
     // 11. Trang Quan Ly Bai Viet Cua Toi (Manage Blogs)
-    @GetMapping({"/manage-blogs", "/Manage-Blogs.html"})
+    @GetMapping({"/manage-blogs", "/manage-blogs.html", "/Manage-Blogs.html"})
     public String manageBlogsPage() {
         return "public/Manage-Blogs";
+    }
+
+    // 12. Trang Doi Mat Khau (Change Password)
+    @GetMapping({"/change-password", "/change-password.html"})
+    public String changePasswordPage() {
+        return "public/change-password";
+    }
+
+    // 13. Admin Dashboard
+    @GetMapping({"/admin", "/admin/dashboard", "/admin/dashboard.html"})
+    public String adminDashboardPage() {
+        return "admin/dashboard";
+    }
+
+    // 14. Admin Posts Management
+    @GetMapping({"/admin/posts", "/admin/posts.html"})
+    public String adminPostsPage() {
+        return "admin/posts";
+    }
+
+    // 15. Admin Users Management
+    @GetMapping({"/admin/users", "/admin/users.html"})
+    public String adminUsersPage() {
+        return "admin/users";
+    }
+
+    // 16. Admin Categories & Tags Management
+    @GetMapping({"/admin/categories-tags", "/admin/categories-tags.html"})
+    public String adminCategoriesTagsPage() {
+        return "admin/categories-tags";
     }
 }

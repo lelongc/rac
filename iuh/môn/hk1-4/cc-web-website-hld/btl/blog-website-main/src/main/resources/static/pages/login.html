@@ -84,20 +84,18 @@
     }
 
     document.getElementById('loginForm').addEventListener('submit', function(event) {
-        // 1. Chặn hành động reload trang mặc định của Form
         event.preventDefault();
 
-        // 2. Lấy dữ liệu người dùng nhập
-        const user = document.getElementById('username').value;
+        const user = document.getElementById('username').value.trim();
         const pass = document.getElementById('password').value;
 
-        // Hiệu ứng UX: Vô hiệu hóa nút bấm tạm thời để tránh bấm 2 lần
         const btnSubmit = document.getElementById('btnSubmit');
         btnSubmit.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Đang xử lý...';
         btnSubmit.disabled = true;
 
-        // 3. Gửi request gọi API của Spring Boot
-        fetch('http://localhost:8080/auth/login', {
+        const apiUrl = (window.location.port === '8080') ? '/auth/login' : 'http://localhost:8080/auth/login';
+
+        fetch(apiUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -107,37 +105,34 @@
                 password: pass
             })
         })
-            .then(response => response.json().then(data => ({ status: response.status, body: data })))
+            .then(async response => {
+                const data = await response.json();
+                return { status: response.status, body: data };
+            })
             .then(({ status, body }) => {
-                // Trả lại trạng thái ban đầu cho nút bấm
                 btnSubmit.innerHTML = 'Đăng nhập';
                 btnSubmit.disabled = false;
 
-                // 4. Xử lý kết quả trả về
                 if (status === 200 && body.code === 1000) {
-                    // Cất Token vào két sắt của trình duyệt (localStorage)
                     localStorage.setItem('token', body.result.token);
                     localStorage.setItem('username', user);
 
-                    // Hiện thông báo thành công màu xanh trước khi chuyển trang (tùy chọn)
                     showToast('Đăng nhập thành công! Đang chuyển hướng...', 'success');
 
                     setTimeout(() => {
-                        window.location.href = "home-page.html";
-                    }, 1000);
+                        window.location.href = "/";
+                    }, 600);
 
                 } else {
-                    // Nếu thất bại (Sai mật khẩu, user không tồn tại...) - Thay vì alert, gọi showToast
-                    showToast('Đăng nhập thất bại: ' + (body.message || 'Lỗi không xác định'));
+                    const errMsg = body.message === 'Unauthenticated' ? 'Tên đăng nhập hoặc mật khẩu không chính xác!' : (body.message || 'Đăng nhập thất bại');
+                    showToast('Đăng nhập thất bại: ' + errMsg, 'danger');
                 }
             })
             .catch(error => {
                 btnSubmit.innerHTML = 'Đăng nhập';
                 btnSubmit.disabled = false;
                 console.error('Lỗi kết nối:', error);
-
-                // Thay vì alert, gọi showToast
-                showToast('Không thể kết nối đến Server Backend!');
+                showToast('Không thể kết nối đến máy chủ Backend! Vui lòng kiểm tra lại Spring Boot.', 'danger');
             });
     });
 </script>
