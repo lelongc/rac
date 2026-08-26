@@ -93,7 +93,7 @@ function checkUnreadNotifications() {
     // Lấy thời điểm người dùng click vào chuông lần cuối cùng
     const clearedTime = localStorage.getItem('notif_cleared_time') || 0;
 
-    callApi('/notifications', 'GET').done(function(res) {
+    callApi('/api/notifications', 'GET').done(function(res) {
         const notifs = res.result || [];
 
         // Đếm những thông báo: Chưa đọc VÀ Mới hơn lần cuối cùng click chuông

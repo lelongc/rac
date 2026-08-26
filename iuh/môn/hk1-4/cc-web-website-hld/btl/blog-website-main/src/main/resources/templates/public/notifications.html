@@ -69,7 +69,7 @@
 
     function loadNotifications() {
         const $list = $('#notif-list');
-        callApi('/notifications', 'GET').done(function(res) {
+        callApi('/api/notifications', 'GET').done(function(res) {
             const notifs = res.result || [];
             $list.empty();
 
@@ -147,14 +147,14 @@
 
     function openNotif(id, url) {
         // Đánh dấu đã đọc ngầm dưới nền, gọi xong thì chuyển hướng URL
-        callApi('/notifications/' + id + '/read', 'PUT').always(function() {
+        callApi('/api/notifications/' + id + '/read', 'PUT').always(function() {
             window.location.href = url;
         });
     }
 
     function deleteNotif(id, event) {
         event.stopPropagation(); // Ngăn chặn click lan ra thẻ cha
-        callApi('/notifications/' + id, 'DELETE').done(function() {
+        callApi('/api/notifications/' + id, 'DELETE').done(function() {
             $(`#notif-${id}`).slideUp(300, function() { $(this).remove(); });
             toast("Đã xóa thông báo.");
         }).fail(function() {
