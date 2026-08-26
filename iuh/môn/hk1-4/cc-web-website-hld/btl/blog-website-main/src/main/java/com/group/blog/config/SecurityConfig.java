@@ -28,16 +28,29 @@ public class SecurityConfig {
     private final String[] PUBLIC_POST_ENDPOINTS = {
             "/users",
             "/auth/login",
-            "/auth/introspect"
+            "/auth/introspect",
+            "/h2-console/**"
     };
 
     // Các API và View dùng phương thức GET được phép truy cập tự do
     private final String[] PUBLIC_GET_ENDPOINTS = {
             "/assets/**", "/css/**", "/js/**",         // Tài nguyên tĩnh (frontend)
             "/fragments/**",                           // Các file html tĩnh (sidebar, navbar...)
+            "/h2-console/**",                          // H2 Database Web Console
 
             // --- CÁC ROUTE GIAO DIỆN (VIEW) CÔNG KHAI ---
-            "/", "/home", "/login", "/register", "/forgot-password",
+            "/", "/home", "/home-page.html",
+            "/login", "/login.html",
+            "/register", "/register.html",
+            "/forgot-password", "/forgot-password.html",
+            "/post", "/post.html",
+            "/blog-editor", "/blog-editor.html",
+            "/user-profile", "/user-profile.html",
+            "/edit-profile", "/edit-profile.html",
+            "/saved-blogs", "/saved-blogs.html",
+            "/notifications", "/notifications.html",
+            "/manage-blogs", "/Manage-Blogs.html",
+            "/pages/**",
 
             // --- CÁC API DỮ LIỆU CÔNG KHAI ---
             "/categories", "/tags",                    // Danh mục, Thẻ
@@ -67,10 +80,12 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .cors(org.springframework.security.config.Customizer.withDefaults())
+                .headers(headers -> headers.frameOptions(frame -> frame.disable()))
                 .authorizeHttpRequests(request -> request
                         // 1. CÁC API VÀ VIEW PUBLIC (AI CŨNG VÀO ĐƯỢC)
                         .requestMatchers(HttpMethod.POST, PUBLIC_POST_ENDPOINTS).permitAll()
                         .requestMatchers(HttpMethod.GET, PUBLIC_GET_ENDPOINTS).permitAll()
+                        .requestMatchers("/h2-console/**").permitAll()
 
                         // 2. CÁC API ĐẶC THÙ YÊU CẦU QUYỀN ADMIN
                         .requestMatchers(ADMIN_ENDPOINTS).hasRole(Role.ADMIN.name())
