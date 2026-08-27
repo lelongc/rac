@@ -392,8 +392,19 @@ stateDiagram-v2
 
 ---
 
-### 3. Mẫu có ký tự thứ 3 tính từ cuối lên là '1' trên $\Sigma = \{0, 1\}$
-- **Ý tưởng:** Loop $\{0, 1\}$ tại $q_0 \xrightarrow{1} q_1 \xrightarrow{0, 1} q_2 \xrightarrow{0, 1} q_3 \in F$.
+### 3. Ví dụ 3 (Trang 3 slide Thiết kế NFA): Mẫu có ký tự thứ 3 tính từ cuối lên là '1'
+
+**Đề bài:** Thiết kế NFA trên $\Sigma = \{0, 1\}$ chấp nhận các chuỗi có ký tự thứ 3 tính từ cuối chuỗi ngược lên là ký tự **`1`**.
+
+#### Phân tích & Ý tưởng thiết kế:
+* **Dạng chuỗi:** $*** \mathbf{1} * *$ (trong đó trước ký tự 1 có thể chứa chuỗi bất kỳ, và sau ký tự 1 có đúng 2 ký tự bất kỳ $\in \{0, 1\}$ rồi kết thúc).
+* **Các bước thiết kế:**
+  1. $q_0$ là trạng thái bắt đầu với vòng lặp nhãn $0, 1$ để đọc phần đầu chuỗi.
+  2. $q_0 \xrightarrow{\mathbf{1}} q_1$: NFA đoán gặp ký tự `1` ở vị trí thứ 3 tính từ cuối lên.
+  3. $q_1 \xrightarrow{\mathbf{0, 1}} q_2$: Đọc ký tự thứ 2 tính từ cuối lên (là $0$ hoặc $1$).
+  4. $q_2 \xrightarrow{\mathbf{0, 1}} q_3$: Đọc ký tự cuối cùng của chuỗi (là $0$ hoặc $1$) $\to$ Dừng tại $q_3 \in F$.
+
+#### Đồ thị chuyển dịch NFA chuẩn xác 100%:
 
 ```mermaid
 stateDiagram-v2
@@ -405,6 +416,10 @@ stateDiagram-v2
     q2 --> q3: 0, 1
     q3 --> [*]
 ```
+
+> ⚠️ **LƯU Ý ĐÍNH CHÍNH LỖI HÌNH VẼ TRÊN FILE SLIDE `Thiết kế NFA_ SV.pdf` (Trang 3):**  
+> - **Lỗi trong hình vẽ của slide:** Ở trang 3, phần lời văn bên trên ghi đúng $(q_0, 1) = q_1; \ (q_1, \{0, 1\}) = q_2; \ (q_2, \{0, 1\}) = q_3$, nhưng **hình vẽ bên dưới lại bị in nhầm các nhãn thành $0 \to 1 \to 1$**.  
+> - **Sửa lại chuẩn 100%:** Nhãn 3 cung liên tiếp bắt buộc phải là **$1 \to 0,1 \to 0,1$** như sơ đồ trên (đỏ trong hình của bạn) thì máy mới nhận đúng ký tự thứ 3 từ cuối là `1`!
 
 ---
 
