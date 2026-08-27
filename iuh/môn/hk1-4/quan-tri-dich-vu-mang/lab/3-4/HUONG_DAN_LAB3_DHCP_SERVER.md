@@ -20,6 +20,29 @@
 
 ---
 
+### 1.3 Quy trình 4 bước bắt tay cấp IP của DHCP (Quy tắc D.O.R.A - Câu hỏi thi vấn đáp):
+
+Khi một máy Client bật lên hoặc cắm cáp mạng, quá trình xin cấp IP diễn ra qua 4 bước:
+
+1. **`D` - DHCP DISCOVER (Broadcast):** Máy Client gửi gói tin broadcast (`255.255.255.255`) hỏi: *"Có DHCP Server nào trong mạng không, cho tôi xin 1 IP?"*.
+2. **`O` - DHCP OFFER (Unicast/Broadcast):** DHCP Server nhận được và đề nghị một gói thông số: *"Tôi có IP 192.168.5.10 kèm Gateway và DNS này, bạn dùng không?"*.
+3. **`R` - DHCP REQUEST (Broadcast):** Client phản hồi xác nhận: *"Tôi đồng ý thuê IP 192.168.5.10 này nhé!"*.
+4. **`A` - DHCP ACKNOWLEDGE (Unicast):** DHCP Server chốt hợp đồng và phản hồi: *"Xác nhận! Bạn được phép dùng IP này trong thời gian thuê (Lease Time)!"*.
+
+---
+
+### 1.4 So sánh DHCP Thường (Direct) và DHCP Relay Agent:
+
+| Tiêu chí | DHCP Thường (Direct DHCP) | DHCP Relay Agent |
+| :--- | :--- | :--- |
+| **Vị trí Server & Client** | Cùng chung một mạng LAN / Subnet | Khác mạng LAN, ngăn cách bởi Router |
+| **Loại gói tin** | Toàn bộ là gói **Broadcast** | Chuyển đổi từ **Broadcast sang Unicast** |
+| **Dịch vụ cài đặt** | `isc-dhcp-server` trên Server | Cài thêm `isc-dhcp-relay` trên Router |
+| **Mục đích sử dụng** | Cấp phát trực tiếp trong mạng nội bộ | Dùng 1 DHCP Server tập trung cấp cho nhiều chi nhánh |
+
+
+---
+
 ## 2. CÀI ĐẶT & CẤU HÌNH TỰ ĐỘNG 1-CLICK (SCRIPT NHANH CHO PHÒNG THI)
 
 Để cấu hình toàn bộ dịch vụ DHCP Server chỉ trong **10 giây**:
@@ -260,4 +283,91 @@ Tất cả các file script trên đã được đặt sẵn tại:
 - **Desktop** và thư mục **Downloads** của tài khoản người dùng hiện tại.
 - Thư mục gốc **`C:\Scripts\`** và **`C:\Users\Public\Documents\`**.
 - Có thể tải lại bất kỳ lúc nào từ trình duyệt qua địa chỉ: `http://192.168.5.2/<tên_file>.bat`.
+
+---
+
+## 7. BÀI TOÁN NÂNG CAO: CẤU HÌNH DHCP RELAY AGENT (BÀI TẬP 6 IUH)
+
+### 7.1 Tại sao cần DHCP Relay Agent? (Nguyên lý hoạt động)
+- **Vấn đề thực tế:** Khi một doanh nghiệp có nhiều mạng con (Subnet A: `192.168.5.0/24`, Subnet B: `192.168.6.0/24`) ngăn cách nhau bởi Router, máy Client khi xin IP sẽ gửi gói tin **Broadcast (`255.255.255.255`)**. Theo nguyên tắc định tuyến, **Router sẽ chặn hoàn toàn các gói tin Broadcast**, khiến Client ở Subnet B không thể nhận IP từ DHCP Server đặt tại Subnet A.
+- **Giải pháp:** Cài đặt dịch vụ **DHCP Relay Agent (`isc-dhcp-relay`)** ngay trên Router (hoặc một máy trung gian). Agent sẽ "nghe trộm" gói Broadcast của Client ở Subnet B, chuyển đổi nó thành gói **Unicast** rồi gửi thẳng đến địa chỉ IP của DHCP Server tại Subnet A, sau đó nhận kết quả IP trả ngược lại cho Client!
+
+---
+
+### 7.2 Hướng dẫn Cấu hình DHCP Relay Agent từng bước trên Router:
+
+#### Bước 1: Cài đặt gói `isc-dhcp-relay` trên Router
+Mở Terminal trên máy Router gõ:
+```bash
+sudo apt update
+sudo apt install -y isc-dhcp-relay
+```
+*(Trong quá trình cài, nếu màn hình hỏi IP của DHCP Server thì điền IP của máy DHCP Server: `192.168.5.2`)*.
+
+#### Bước 2: Cấu hình file `/etc/default/isc-dhcp-relay`
+Mở file cấu hình:
+```bash
+sudo nano /etc/default/isc-dhcp-relay
+```
+Điền các thông số:
+```ini
+# Địa chỉ IP của máy DHCP Server
+SERVERS="192.168.5.2"
+
+# Danh sách các card mạng cần lắng nghe và chuyển tiếp (card nối subnet A và subnet B)
+INTERFACES="ens37 ens38"
+
+# Các tham số bổ sung (để trống)
+OPTIONS=""
+```
+Lưu file (`Ctrl+O`, `Enter`, `Ctrl+X`).
+
+#### Bước 3: Đảm bảo tính năng Định tuyến IP (IP Forwarding) đã bật
+```bash
+sudo sysctl -w net.ipv4.ip_forward=1
+```
+
+#### Bước 4: Khởi động và kiểm tra dịch vụ Relay
+```bash
+sudo systemctl restart isc-dhcp-relay
+sudo systemctl enable isc-dhcp-relay
+sudo systemctl status isc-dhcp-relay --no-pager
+```
+
+---
+
+### 7.3 Kiểm tra kết quả xin cấp IP xuyên Router:
+1. **Trên Client Windows (ở Subnet B):**
+   ```cmd
+   ipconfig /release
+   ipconfig /renew
+   ipconfig /all
+   ```
+   *(Kiểm tra máy nhận đúng IP trong dải Subnet B: `192.168.6.x` và DHCP Server hiển thị đúng IP `192.168.5.2`)*.
+
+2. **Trên Client Linux (ở Subnet B):**
+   ```bash
+   sudo dhclient -r
+   sudo dhclient -v
+   ip a
+   ```
+
+---
+
+### 7.4 Bảng đối chiếu 1-1 giữa Đề bài Word và Hệ thống 4 máy ảo thực tế của bạn:
+
+| Thành phần trong Đề bài 6 | Dải IP ví dụ trong Đề Word | **DẢI IP CHUẨN CỦA BẠN (GIỮ NGUYÊN 100%)** | Máy ảo tương ứng |
+| :--- | :--- | :--- | :--- |
+| **Mạng Subnet A** | `192.168.1.0/24` (VMnet1) | **`192.168.5.0/24` (VMnet2)** | Mạng **LAN 1** |
+| **Mạng Subnet B** | `10.10.10.0/24` (VMnet2) | **`192.168.6.0/24` (VMnet3)** | Mạng **LAN 2** |
+| **DHCP Server** | IP: `192.168.1.1` | **IP: `192.168.5.2`** | **Ubuntu 1** |
+| **Gateway Subnet A** | `192.168.1.254` | **`192.168.5.2`** (Card `ens37`) | **Ubuntu 1 (Router)** |
+| **Gateway Subnet B** | `10.10.10.254` | **`192.168.6.3`** (Card `ens38`) | **Ubuntu 1 (Router)** |
+| **DNS Server** | `203.113.131.1` | **`192.168.5.2`** | **DNS BIND9 trên Ubuntu 1** |
+| **Domain Name** | `cse.hui.edu.vn` | **`tranduong.com`** | **Domain của bạn** |
+| **Client Subnet A** | Host Windows / Linux A | **`Win7_A`** (IP tĩnh `192.168.5.1` hoặc DHCP) | Máy Win 7 1 |
+| **Client Subnet B** | Host Windows / Linux B | **`Win7_B` & `Ubuntu 2`** (nhận `192.168.6.x`) | Máy Win 7 2 & LinuxB |
+| **DHCP Relay (Mục 8)** | Cài trên Router | **Đã cài `isc-dhcp-relay` trên Ubuntu 1!** | Router Ubuntu 1 |
+
+
 

@@ -57,17 +57,20 @@ echo -e "\e[36m[3/5] Đang tạo người dùng và mật khẩu Samba...\e[0m"
 # Tạo user hệ thống nếu chưa có
 id -u tranduong &>/dev/null || useradd -m -s /bin/bash tranduong
 id -u admin &>/dev/null || useradd -m -s /bin/bash admin
+id -u cseuser &>/dev/null || useradd -m -s /bin/bash cseuser
 
 usermod -aG sambausers tranduong
 usermod -aG sambausers admin
+usermod -aG sambausers cseuser
 
 # Phân quyền bảo mật chặt chẽ cho thư mục Private (Chỉ User & Group được vào)
 chown -R tranduong:sambausers /samba/private
 chmod -R 0770 /samba/private
 
-# Đặt mật khẩu Samba cho các tài khoản (Mật khẩu: 123456)
+# Đặt mật khẩu Samba cho các tài khoản
 (echo "123456"; echo "123456") | smbpasswd -a -s tranduong
 (echo "123456"; echo "123456") | smbpasswd -a -s admin
+(echo "cseuser"; echo "cseuser") | smbpasswd -a -s cseuser
 (echo "conmeo"; echo "conmeo") | smbpasswd -a -s neko 2>/dev/null
 
 echo -e "\e[36m[4/5] Đang cấu hình file /etc/samba/smb.conf...\e[0m"
@@ -76,7 +79,7 @@ cp /etc/samba/smb.conf /etc/samba/smb.conf.bak 2>/dev/null
 
 cat <<EOF > /etc/samba/smb.conf
 # ==============================================================================
-# CẤU HÌNH SAMBA FILE SERVER - LAB 4 (IUH) - TRẦN DƯƠNG
+# CẤU HÌNH SAMBA FILE SERVER - LAB 4 & LAB BỔ SUNG (IUH) - TRẦN DƯƠNG
 # ==============================================================================
 
 [global]
@@ -116,7 +119,8 @@ cat <<EOF > /etc/samba/smb.conf
    browseable = yes
    read only = no
    guest ok = no
-   valid users = admin, tranduong, neko
+   invalid users = nobody
+   valid users = admin, tranduong, cseuser, neko
    writable = yes
    create mask = 0770
    directory mask = 0770
@@ -131,6 +135,18 @@ cat <<EOF > /etc/samba/smb.conf
    read only = yes
    guest ok = yes
    write list = admin, tranduong
+
+# ------------------------------------------------------------------------------
+# 4. THƯ MỤC SHAREDATA_1 (BÀI TẬP 5 BỔ SUNG IUH - CSEUSER)
+# ------------------------------------------------------------------------------
+[sharedata_1]
+   comment = data share
+   path = /tmp
+   browseable = yes
+   read only = no
+   guest ok = yes
+   writable = yes
+   valid users = cseuser, admin, tranduong
 EOF
 
 echo -e "\e[36m[5/5] Đang kiểm tra cú pháp và Khởi động lại dịch vụ Samba...\e[0m"

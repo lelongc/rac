@@ -1,0 +1,8 @@
+
+
+	
+Cài NFS
+Bài tập 3: cấu hình share không phân quyền
+Bước 1: cài đặt NFS
+Bước 2: tạo thư mục share
+Bước 3: máy client linux mount thư mục

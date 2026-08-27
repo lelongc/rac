@@ -16,13 +16,31 @@
 
 ---
 
-### 1.2 Bảng quy hoạch 3 loại thư mục chia sẻ trong bài Lab:
+### 1.2 Bảng quy hoạch 4 loại thư mục chia sẻ trong bài Lab (kèm Bài tập 5 bổ sung):
 
 | Tên Share | Đường dẫn trên Server | Loại thư mục | Quyền hạn truy cập | Tài khoản / Mật khẩu | Mục đích sử dụng |
 | :--- | :--- | :---: | :--- | :--- | :--- |
 | **`[Public]`** | `/samba/public` | Công cộng (Guest) | Đọc + Ghi (Read/Write) | Không cần mật khẩu (`guest ok = yes`) | Chia sẻ dữ liệu chung, trao đổi file tự do |
-| **`[Private]`** | `/samba/private` | Bảo mật (User) | Đọc + Ghi (Read/Write) | `tranduong` / `123456`<br>`admin` / `123456` | Dữ liệu nội bộ phòng ban, cần xác thực |
+| **`[Private]`** | `/samba/private` | Bảo mật (User) | Đọc + Ghi (Read/Write) | `tranduong` / `123456`<br>`admin` / `123456`<br>`cseuser` / `cseuser` | Dữ liệu nội bộ phòng ban, cần xác thực |
 | **`[TaiLieu]`** | `/samba/tailieu` | Giáo trình (Read-Only) | Khách: Chỉ đọc (Read)<br>Admin: Đọc + Ghi | Khách: Xem tự do<br>Admin: `admin` / `123456` | Lưu giáo trình, đề thi (Chống bị sửa/xóa) |
+| **`[sharedata_1]`** | `/tmp` | Bài tập 5 bổ sung | Đọc + Ghi cho user | `cseuser` / `cseuser` | Thư mục chia sẻ theo đề bài 5 IUH |
+
+---
+
+### 1.3 Quy tắc vàng so sánh giữa SAMBA và NFS (Câu hỏi thi vấn đáp):
+
+👉 **SAMBA là cầu nối chia sẻ giữa LINUX ↔ WINDOWS (và Linux ↔ Linux)**  
+👉 **NFS là cầu nối chia sẻ chuyên dụng nội bộ giữa LINUX ↔ LINUX**
+
+| Tiêu chí | SAMBA (SMB/CIFS) | NFS (Network File System) |
+| :--- | :--- | :--- |
+| **Đối tượng Client** | **Windows 7 / 10 / 11** (`\\192.168.5.2`) | **Ubuntu 2 Client** (`mount -t nfs ...`) |
+| **Cơ chế xác thực** | Bắt buộc nhập **Username & Mật khẩu** (`smbpasswd`) | Dựa trên **Địa chỉ IP của Client** và UID/GID |
+| **Giao diện trải nghiệm** | Hiện cửa sổ thư mục như USB / Ổ đĩa mạng | Mount thẳng vào cây thư mục (`/mnt/share`) |
+| **File cấu hình** | `/etc/samba/smb.conf` | `/etc/exports` |
+| **Cổng mạng (Port)** | Port `139`, `445` (TCP/UDP) | Port `2049` (NFS), Port `111` (RPC) |
+| **Tốc độ / Hiệu năng** | Đa năng, độ trễ vừa phải | **Cực nhanh, tối ưu cho hệ thống máy chủ Linux** |
+
 
 ---
 
@@ -86,15 +104,19 @@ Trong Linux, để một User có thể đăng nhập vào Samba thì User đó 
    ```bash
    sudo useradd -m -s /bin/bash tranduong
    sudo useradd -m -s /bin/bash admin
+   sudo useradd -m -s /bin/bash cseuser
    ```
 
-2. **Tạo mật khẩu Samba cho 2 User (Đặt mật khẩu là `123456`):**
+2. **Tạo mật khẩu Samba cho các User:**
    ```bash
    sudo smbpasswd -a tranduong
    # (Nhập mật khẩu: 123456 và xác nhận lại: 123456)
 
    sudo smbpasswd -a admin
    # (Nhập mật khẩu: 123456 và xác nhận lại: 123456)
+
+   sudo smbpasswd -a cseuser
+   # (Nhập mật khẩu: cseuser và xác nhận lại: cseuser - theo yêu cầu Bài tập 5 bổ sung)
    ```
 
 ---
@@ -148,7 +170,8 @@ Xóa hoặc thêm đoạn cấu hình chuẩn sau vào cuối file:
    browseable = yes
    read only = no
    guest ok = no
-   valid users = admin, tranduong, neko
+   invalid users = nobody
+   valid users = admin, tranduong, cseuser, neko
    writable = yes
    create mask = 0770
    directory mask = 0770
@@ -163,6 +186,18 @@ Xóa hoặc thêm đoạn cấu hình chuẩn sau vào cuối file:
    read only = yes
    guest ok = yes
    write list = admin, tranduong
+
+# ------------------------------------------------------------------------------
+# 4. SHARE DATA (SHAREDATA_1 - BÀI TẬP 5 BỔ SUNG IUH)
+# ------------------------------------------------------------------------------
+[sharedata_1]
+   comment = data share
+   path = /tmp
+   browseable = yes
+   read only = no
+   guest ok = yes
+   writable = yes
+   valid users = cseuser, admin, tranduong
 ```
 
 Lưu file (`Ctrl+O`, `Enter`, `Ctrl+X`).
