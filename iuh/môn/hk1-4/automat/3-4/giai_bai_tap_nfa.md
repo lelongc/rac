@@ -489,17 +489,17 @@ stateDiagram-v2
 **Đề bài:** Thiết kế NFA chấp nhận tập các chuỗi nhị phân trên $\Sigma = \{0, 1\}$:
 *"Kết thúc bằng $010$ và có chuỗi $011$ ở bất kỳ trước đó, HOẶC kết thúc bằng $101$ và có chuỗi $100$ ở bất kỳ trước đó."*
 
-![1787791407485](image/giai_bai_tap_nfa/1787791407485.png)
+---
 
-**Phân tích:**
-NFA sẽ phân nhánh làm 2 luồng độc lập từ trạng thái bắt đầu $q_0$:
+#### 🌟 CÁCH 1: SƠ ĐỒ DÙNG CHUYỂN DỊCH $\lambda$ (15 TRẠNG THÁI)
 
-- **Nhánh trên (Nhánh 1):**
-  - Đợi chuỗi $011$: $q_1 \xrightarrow{0} q_2 \xrightarrow{1} q_3 \xrightarrow{1} q_4$. (Tại $q_1$ có vòng lặp $\{0, 1\}$).
-  - Đợi chuỗi kết thúc $010$: $q_4 \xrightarrow{0} q_5 \xrightarrow{1} q_6 \xrightarrow{0} q_7 \in F$. (Tại $q_4$ có vòng lặp $\{0, 1\}$).
-- **Nhánh dưới (Nhánh 2):**
-  - Đợi chuỗi $100$: $q_8 \xrightarrow{1} q_9 \xrightarrow{0} q_{10} \xrightarrow{0} q_{11}$. (Tại $q_8$ có vòng lặp $\{0, 1\}$).
-  - Đợi chuỗi kết thúc $101$: $q_{11} \xrightarrow{1} q_{12} \xrightarrow{0} q_{13} \xrightarrow{1} q_{14} \in F$. (Tại $q_{11}$ có vòng lặp $\{0, 1\}$).
+* **Tư duy:** Tách làm 2 máy độc lập, từ $q_0$ dùng chuyển dịch rỗng $\lambda$ để phân nhánh:
+  - **Nhánh trên (Nhánh 1):**
+    - Đợi chuỗi $011$: $q_1 \xrightarrow{0} q_2 \xrightarrow{1} q_3 \xrightarrow{1} q_4$ (tại $q_1$ có vòng lặp $0, 1$).
+    - Đợi đuôi $010$: $q_4 \xrightarrow{0} q_5 \xrightarrow{1} q_6 \xrightarrow{0} q_7 \in F$ (tại $q_4$ có vòng lặp $0, 1$).
+  - **Nhánh dưới (Nhánh 2):**
+    - Đợi chuỗi $100$: $q_8 \xrightarrow{1} q_9 \xrightarrow{0} q_{10} \xrightarrow{0} q_{11}$ (tại $q_8$ có vòng lặp $0, 1$).
+    - Đợi đuôi $101$: $q_{11} \xrightarrow{1} q_{12} \xrightarrow{0} q_{13} \xrightarrow{1} q_{14} \in F$ (tại $q_{11}$ có vòng lặp $0, 1$).
 
 ```mermaid
 stateDiagram-v2
@@ -529,6 +529,53 @@ stateDiagram-v2
     q7 --> [*]
     q14 --> [*]
 ```
+
+---
+
+#### 🌟 CÁCH 2: SƠ ĐỒ VIẾT TAY TỐI ƯU KHÔNG DÙNG $\lambda$ (13 TRẠNG THÁI)
+
+![1787791407485](image/giai_bai_tap_nfa/1787791407485.png)
+
+* **Tư duy tối ưu:**
+  - Đặt vòng lặp $\{0, 1\}$ ngay tại trạng thái bắt đầu $q_0$ để đọc phần đầu chuỗi.
+  - Khi bắt đầu xuất hiện chuỗi con $011$, NFA đoán và rẽ nhánh trên:
+    $$q_0 \xrightarrow{0} q_1 \xrightarrow{1} q_2 \xrightarrow{1} q_3$$
+    - Tại $q_3$: đặt vòng lặp $\{0, 1\}$ để đọc đoạn giữa.
+    - Đón nhận đuôi $010$: $q_3 \xrightarrow{0} q_4 \xrightarrow{1} q_5 \xrightarrow{0} q_6 \in F$.
+  - Khi bắt đầu xuất hiện chuỗi con $100$, NFA đoán và rẽ nhánh dưới:
+    $$q_0 \xrightarrow{1} q_7 \xrightarrow{0} q_8 \xrightarrow{0} q_9$$
+    - Tại $q_9$: đặt vòng lặp $\{0, 1\}$ để đọc đoạn giữa.
+    - Đón nhận đuôi $101$: $q_9 \xrightarrow{1} q_{10} \xrightarrow{0} q_{11} \xrightarrow{1} q_{12} \in F$.
+
+```mermaid
+stateDiagram-v2
+    direction LR
+    [*] --> q0
+    q0 --> q0: 0, 1
+  
+    q0 --> q1: 0
+    q1 --> q2: 1
+    q2 --> q3: 1
+    q3 --> q3: 0, 1
+    q3 --> q4: 0
+    q4 --> q5: 1
+    q5 --> q6: 0
+  
+    q0 --> q7: 1
+    q7 --> q8: 0
+    q8 --> q9: 0
+    q9 --> q9: 0, 1
+    q9 --> q10: 1
+    q10 --> q11: 0
+    q11 --> q12: 1
+  
+    q6 --> [*]
+    q12 --> [*]
+```
+
+* **Ưu điểm của Cách 2:**
+  - Tiết kiệm được 2 trạng thái (chỉ dùng **13 trạng thái $\{q_0, \dots, q_{12}\}$** so với 15 trạng thái của Cách 1).
+  - Không cần dùng chuyển dịch rỗng $\lambda$, sơ đồ rất gọn gàng và tự nhiên khi vẽ tay trong bài thi tự luận!
 
 ---
 
