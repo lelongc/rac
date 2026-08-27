@@ -432,8 +432,9 @@ stateDiagram-v2
 
 ### 5. Mẫu có ít nhất 2 ký tự, đầu và cuối giống nhau trên $\Sigma = \{a, b\}$
 - **Ý tưởng:**
-  - Nhánh đầu $a$, cuối $a$: $q_0 \xrightarrow{a} q_1 \xrightarrow{a} q_2 \in F$ (tại $q_1$ loop $a, b$, từ $q_2$ quay lại $q_1$ bằng $a, b$).
-  - Nhánh đầu $b$, cuối $b$: $q_0 \xrightarrow{b} q_3 \xrightarrow{b} q_4 \in F$ (tại $q_3$ loop $a, b$, từ $q_4$ quay lại $q_3$ bằng $a, b$).
+  - Nhánh đầu $a$, cuối $a$: $q_0 \xrightarrow{a} q_1 \xrightarrow{a} q_2 \in F$ (tại $q_1$ loop $a, b$).
+  - Nhánh đầu $b$, cuối $b$: $q_0 \xrightarrow{b} q_3 \xrightarrow{b} q_4 \in F$ (tại $q_3$ loop $a, b$).
+  - 💡 *Lưu ý rút gọn (từ slide mới):* Ta hoàn toàn có thể **bỏ đi cung quay lại** $q_2 \xrightarrow{a, b} q_1$ và $q_4 \xrightarrow{a, b} q_3$ vì NFA có cơ chế tự đoán ký tự kết thúc tại $q_2, q_4$.
 
 ```mermaid
 stateDiagram-v2
@@ -442,12 +443,10 @@ stateDiagram-v2
     q0 --> q1: a
     q1 --> q1: a, b
     q1 --> q2: a
-    q2 --> q1: a, b
     
     q0 --> q3: b
     q3 --> q3: a, b
     q3 --> q4: b
-    q4 --> q3: a, b
     
     q2 --> [*]
     q4 --> [*]
@@ -455,8 +454,10 @@ stateDiagram-v2
 
 ---
 
-### 6. Số lượng '0' chẵn HOẶC số lượng '1' chia hết cho 3 (Ghép máy bằng $\lambda$)
-- **Ý tưởng:** Vẽ riêng máy A (đếm 0 chẵn) và máy B (đếm 1 chia hết cho 3), nối $q_0 \xrightarrow{\lambda}$ vào cả 2 máy.
+### 6. Số lượng '0' là bội số của 2 HOẶC số lượng '1' là bội số của 3
+- **Ý tưởng:** Thiết kế 2 máy con riêng biệt rồi dùng chuyển dịch $\lambda$ từ $q_0$ kết nối:
+  - **Máy A (Đếm chẵn số 0):** $q_1 \xrightarrow{0} q_2 \xrightarrow{0} q_3 \in F$, từ $q_3 \xrightarrow{0} q_2$.
+  - **Máy B (Đếm 1 chia hết cho 3):** $q_4 \xrightarrow{1} q_5 \xrightarrow{1} q_6 \xrightarrow{1} q_7 \in F$, từ $q_7 \xrightarrow{1} q_5$.
 
 ```mermaid
 stateDiagram-v2
@@ -466,15 +467,75 @@ stateDiagram-v2
     q0 --> q4: λ
     
     q1 --> q2: 0
-    q2 --> q1: 0
+    q2 --> q3: 0
+    q3 --> q2: 0
     
     q4 --> q5: 1
     q5 --> q6: 1
-    q6 --> q4: 1
+    q6 --> q7: 1
+    q7 --> q5: 1
+    
+    q3 --> [*]
+    q7 --> [*]
+```
+
+* Chuỗi mẫu được chấp nhận: $00, 0000, 000000, \dots$ hoặc $111, 111111, \dots$
+
+---
+
+### 7. 🌟 VÍ DỤ 7 (MỚI BỔ SUNG): CHUỖI ĐAN XEN $w, v$ HOẶC $m, n$
+
+*(Bổ sung theo tài liệu bài giảng mới `Thiết kế NFA_ SV.pdf`)*
+
+**Đề bài:** Thiết kế NFA trên $\Sigma = \{0, 1\}$ chấp nhận:
+1. Các chuỗi chứa chuỗi con $w$ và $v$ **đan xen nhau**, trong đó:
+   - $w$ chứa 1 hay nhiều số 1 ($1^+$).
+   - $v$ chứa số lượng số 0 là số chẵn không có số 1 ($(00)^+$).
+   *(Ví dụ chuỗi hợp lệ: $1100$, $000010011$, $\dots$)*
+2. **HOẶC** các chuỗi chứa chuỗi con $m$ và $n$ **đan xen nhau**, trong đó:
+   - $m$ chứa 1 hay nhiều số 0 ($0^+$).
+   - $n$ chứa số lượng số 1 là bội số của 3 ($(111)^+$).
+
+---
+
+**Tư duy & Thiết kế:**
+
+#### a) Thiết kế Máy con A (nhận chuỗi con $w$ và $v$ đan xen):
+- Trạng thái bắt đầu của Máy A là $q_1 \in F$ (vòng tròn đôi).
+- Đọc $w$ ($1^+$): Đặt vòng lặp $1$ tại $q_1$ ($q_1 \xrightarrow{1} q_1$).
+- Đọc $v$ ($(00)^+$ - chẵn số 0):
+  - $q_1 \xrightarrow{0} q_2$ (lẻ số 0, chưa về đích).
+  - $q_2 \xrightarrow{0} q_1 \in F$ (chẵn số 0, về đích $q_1$).
+
+#### b) Thiết kế Máy con B (nhận chuỗi con $m$ và $n$ đan xen):
+- Trạng thái bắt đầu của Máy B là $q_3 \in F$ (vòng tròn đôi).
+- Đọc $m$ ($0^+$): Đặt vòng lặp $0$ tại $q_3$ ($q_3 \xrightarrow{0} q_3$).
+- Đọc $n$ ($(111)^+$ - bội số 3 của 1):
+  - $q_3 \xrightarrow{1} q_4 \xrightarrow{1} q_5 \xrightarrow{1} q_3 \in F$ (đủ chu kỳ 3 số 1 thì quay về đích $q_3$).
+
+#### c) Sơ đồ NFA kết nối hoàn chỉnh bằng $\lambda$:
+
+```mermaid
+stateDiagram-v2
+    direction LR
+    [*] --> q0
+    q0 --> q1: λ
+    q0 --> q3: λ
+    
+    q1 --> q1: 1
+    q1 --> q2: 0
+    q2 --> q1: 0
+    
+    q3 --> q3: 0
+    q3 --> q4: 1
+    q4 --> q5: 1
+    q5 --> q3: 1
     
     q1 --> [*]
-    q4 --> [*]
+    q3 --> [*]
 ```
+
+* **Kết quả:** NFA này chấp nhận tuyệt đối mọi sự đan xen phức tạp giữa các khối lũy thừa $1^+ / (00)^+$ hoặc $0^+ / (111)^+$ nhờ cơ chế hồi quy trạng thái kết thúc!
 
 ---
 

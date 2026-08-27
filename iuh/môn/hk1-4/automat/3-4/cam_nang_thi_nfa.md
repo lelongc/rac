@@ -58,6 +58,17 @@
 
 ---
 
+### DẠNG 5: Thiết kế NFA nhận dạng các chuỗi con ĐAN XEN (Interleaved Patterns)
+
+#### 🎯 Bí quyết "Vòng lặp tự thân kết hợp Chu trình khép kín":
+Khi đề bài yêu cầu nhận diện các chuỗi con $w$ và $v$ đan xen nhau (ví dụ: $w$ gồm $1^+$ và $v$ gồm chẵn số $0$):
+1. **Đặt trạng thái kết thúc $q \in F$ làm trạm xuất phát và hồi quy.**
+2. **Ký tự lặp đơn lẻ ($1^+$):** Đặt vòng lặp tại $q$ ($q \xrightarrow{1} q$).
+3. **Ký tự đếm chu kỳ (chẵn số 0 hoặc bội 3 số 1):** Vẽ chu trình đi qua các trạng thái phụ rồi **hồi quy trở lại đúng trạng thái kết thúc $q$** ($q \xrightarrow{0} q_{\text{phụ}} \xrightarrow{0} q \in F$).
+4. Nhờ vậy, máy có thể đọc đan xen vô tận $11001000011\dots$ mà luôn giữ được tính chẵn/lẻ chuẩn xác!
+
+---
+
 ## 2. NHỮNG LỖI SAI KINH ĐIỂN CẦN TRÁNH TRONG PHÒNG THI
 
 1. ⚠️ **Quên bao đóng $\lambda$ khi tính $\delta^*$:**  
