@@ -169,13 +169,13 @@ stateDiagram-v2
 #### a) Với chuỗi $w = aaa$:
 Ta theo dõi đường đi nhánh trên:
 $$\delta(q_0, aaa) \to \delta(q_1, aa) \to \delta(q_2, a) \to \{q_3\}$$
-$$\Rightarrow \mathbf{\delta^*(q_0, aaa) = \{q_3\}}$$
+$$\Rightarrow \delta^*(q_0, aaa) = \{q_3\}$$
 Vì $q_3 \in F \Rightarrow$ **Chuỗi $aaa$ được chấp nhận!**
 
 #### b) Với chuỗi $v = aaaaaa$ (6 chữ $a$):
 Ta theo dõi đường đi nhánh dưới:
 $$\delta(q_0, aaaaaa) \to \delta(q_4, aaaaa) \to \delta(q_5, aaaa) \to \delta(q_4, aaa) \to \delta(q_5, aa) \to \delta(q_4, a) \to \{q_5\}$$
-$$\Rightarrow \mathbf{\delta^*(q_0, aaaaaa) = \{q_5\}}$$
+$$\Rightarrow \delta^*(q_0, aaaaaa) = \{q_5\}$$
 Vì $q_5 \in F \Rightarrow$ **Chuỗi $aaaaaa$ được chấp nhận!**
 
 > 🎯 **Kết luận tính chất:** NFA này chấp nhận tập hợp các chuỗi gồm toàn chữ $a$ có đúng 3 ký tự ($aaa$) HOẶC có chiều dài là số chẵn $\ge 2$ ($aa, aaaa, aaaaaa, \dots$).
@@ -207,7 +207,7 @@ stateDiagram-v2
 - Từ $q_2$ có cung $\lambda$ nhảy sang $q_0$.
 - Tại $q_0$ không có cung $\lambda$ nào đi tiếp.
 - Do đó, khi đứng ở $q_2$ mà không đọc ký tự nào, máy có thể ở $q_2$ hoặc $q_0$:
-  $$\mathbf{\delta^*(q_2, \lambda) = \{q_0, q_2\}}$$
+  $$\delta^*(q_2, \lambda) = \{q_0, q_2\}$$
 
 #### 2. Tính $\delta^*(q_2, aa)$ (Chuỗi gồm 2 chữ $a$ xuất phát từ $q_2$):
 - **Xuất phát từ $q_2$:** Như vừa tính ở trên, tập ban đầu là $\{q_0, q_2\}$.
@@ -220,7 +220,7 @@ stateDiagram-v2
   - Từ $q_1$ đọc $a \to \emptyset$.
   - Từ $q_2$ đọc $a \to \emptyset$.
   - Hợp lại ta được:
-    $$\mathbf{\delta^*(q_2, aa) = \{q_0, q_1, q_2\}}$$
+    $$\delta^*(q_2, aa) = \{q_0, q_1, q_2\}$$
 
 ---
 
@@ -252,7 +252,7 @@ stateDiagram-v2
    - Đọc $0$: $q_1 \xrightarrow{0} q_0 \in F$.
    - Lặp lại $n$ lần chuỗi $10$, máy luôn kết thúc tại $q_0 \in F \Rightarrow$ **Mọi chuỗi $(10)^n$ đều được chấp nhận.**
 3. **Kết luận ngôn ngữ:**
-   $$\mathbf{L = \{(10)^n \mid n \ge 0\} = \{\lambda, 10, 1010, 101010, \dots\}}$$
+   $$L = \{(10)^n \mid n \ge 0\} = \{\lambda, 10, 1010, 101010, \dots\}$$
 
 ---
 
@@ -260,7 +260,7 @@ stateDiagram-v2
 - Đọc ký tự đầu `1`: $q_0 \xrightarrow{1} q_1$.
 - Đọc ký tự thứ hai `1`: tại $q_1$, cung đọc 1 dẫn sang $q_2$.
 - Đọc ký tự thứ ba `0`: tại $q_2$, **không có bất kỳ chuyển dịch nào cho 0** ($\delta(q_2, 0) = \emptyset$).
-- **Kết luận:** Máy rơi vào cấu hình chết, ngưng hoạt động $\Rightarrow \mathbf{\delta^*(q_0, 110) = \emptyset} \Rightarrow$ Chuỗi $110$ không được chấp nhận!
+- **Kết luận:** Máy rơi vào cấu hình chết, ngưng hoạt động $\Rightarrow \delta^*(q_0, 110) = \emptyset \Rightarrow$ Chuỗi $110$ không được chấp nhận!
 
 ---
 
@@ -304,7 +304,7 @@ Sử dụng máy NFA Hình 2.17b ở trên (Lưu ý: **Trạng thái kết thúc
 
 - **Nhánh A:** $q_0 \xrightarrow{1} q_1 \xrightarrow{0} q_0 \xrightarrow{1} q_1 \xrightarrow{1} q_2 \Rightarrow$ Dừng ở $q_2$. Vì $q_2 \notin F = \{q_0\}$ nên chuỗi bị từ chối.
 - **Nhánh B:** Từ $q_1$ đọc 0 rẽ sang $q_2$ sớm $\to$ Kẹt đường khi đọc tiếp 1 $\to$ Bị rơi vào **$\emptyset$ (Rỗng)**.
-- **Đáp án trong slide:** $\mathbf{\delta^*(q_0, 1011) = \{q_2\} \text{ hoặc rỗng}}$.
+- **Đáp án trong slide:** $\delta^*(q_0, 1011) = \{q_2\} \text{ (hoặc rỗng)}$.
 
 ---
 
@@ -312,7 +312,7 @@ Sử dụng máy NFA Hình 2.17b ở trên (Lưu ý: **Trạng thái kết thúc
 - **Xuất phát từ $q_1$ đọc ký tự '0':**
   - **Nhánh 1:** $q_1 \xrightarrow{0} q_0 \xrightarrow{1} q_1 \Rightarrow$ Dừng ở $q_1$. Vì $q_1 \notin F = \{q_0\}$ nên không về đích.
   - **Nhánh 2:** $q_1 \xrightarrow{0} q_2 \xrightarrow{1} \emptyset \Rightarrow$ Kẹt đường, rơi vào **$\emptyset$ (Rỗng)**.
-- **Đáp án trong slide:** $\mathbf{\delta^*(q_1, 01) = \{q_1\} \text{ hoặc rỗng}}$.
+- **Đáp án trong slide:** $\delta^*(q_1, 01) = \{q_1\} \text{ (hoặc rỗng)}$.
 
 ---
 
