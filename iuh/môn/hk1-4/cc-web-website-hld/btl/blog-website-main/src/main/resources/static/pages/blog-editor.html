@@ -771,7 +771,7 @@
                 formData.append('file', file);
 
                 const uploadResponse = await $.ajax({
-                    url: 'http://localhost:8080/upload/image',
+                    url: '/upload/image',
                     type: 'POST',
                     data: formData,
                     processData: false,
@@ -1044,7 +1044,7 @@
                 formData.append('file', selectedBannerFile);
 
                 const uploadResponse = await $.ajax({
-                    url: 'http://localhost:8080/upload/image',
+                    url: '/upload/image',
                     type: 'POST',
                     data: formData,
                     processData: false,
@@ -1269,7 +1269,7 @@
                 formData.append('file', selectedBannerFile);
 
                 const uploadResponse = await $.ajax({
-                    url: 'http://localhost:8080/upload/image',
+                    url: '/upload/image',
                     type: 'POST',
                     data: formData,
                     processData: false,

@@ -163,7 +163,7 @@
 
                 // Dùng Ajax trần vì hàm callApi mặc định đang gửi JSON
                 const uploadResponse = await $.ajax({
-                    url: 'http://localhost:8080/upload/image', // Nhớ sửa domain nếu cần
+                    url: '/upload/image',
                     type: 'POST',
                     data: formData,
                     processData: false,
