@@ -530,7 +530,92 @@ if (token) {
 
 ---
 
-## 🎯 PHẦN 8: BỘ CÂU HỎI "BẢO BỐI" VẤN ĐÁP CỦA GIẢNG VIÊN (KÈM CÂU TRẢ LỜI MẪU)
+## ☁️ PHẦN 8: DỊCH VỤ LƯU TRỮ ẢNH ĐÁM MÂY CLOUDINARY (CLOUDINARY SERVICE & CONFIG)
+
+### 8.1. Cấu hình kết nối `CloudinaryConfig.java`
+File nằm tại: `src/main/java/com/group/blog/config/CloudinaryConfig.java`
+```java
+@Configuration
+public class CloudinaryConfig {
+    @Value("${cloudinary.cloud-name}") // Đọc giá trị cloud-name từ file application-secret.yml
+    private String cloudName;
+
+    @Value("${cloudinary.api-key}")    // Đọc api-key từ application-secret.yml
+    private String apiKey;
+
+    @Value("${cloudinary.api-secret}") // Đọc api-secret từ application-secret.yml
+    private String apiSecret;
+
+    @Bean
+    public Cloudinary cloudinary() {
+        Map<String, String> config = new HashMap<>();
+        config.put("cloud_name", cloudName);
+        config.put("api_key", apiKey);
+        config.put("api_secret", apiSecret);
+        return new Cloudinary(config); // Tạo Bean Cloudinary đưa vào Spring ApplicationContext
+    }
+}
+```
+
+### 8.2. Xử lý tải ảnh lên đám mây `CloudinaryService.java`
+File nằm tại: `src/main/java/com/group/blog/service/CloudinaryService.java`
+```java
+@Service
+@RequiredArgsConstructor
+public class CloudinaryService {
+    private final Cloudinary cloudinary; // Tự động Inject Bean Cloudinary từ config
+
+    public String uploadImage(MultipartFile file) throws IOException {
+        // 1. Gửi mảng byte nhị phân của file ảnh lên Cloudinary
+        Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
+        // 2. Lấy về đường dẫn URL công khai phân phối qua CDN
+        return uploadResult.get("url").toString();
+    }
+}
+```
+
+### 8.3. Tiếp nhận Request từ Client `UploadController.java`
+File nằm tại: `src/main/java/com/group/blog/controller/UploadController.java`
+```java
+@RestController
+@RequestMapping("/upload")
+@RequiredArgsConstructor
+public class UploadController {
+    private final CloudinaryService cloudinaryService;
+
+    // API nhận file Multipart tải lên từ form: POST /upload/image
+    @PostMapping("/image")
+    public ApiResponse<String> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
+        String imageUrl = cloudinaryService.uploadImage(file);
+        return ApiResponse.<String>builder()
+                .result(imageUrl) // Trả về link ảnh dạng JSON { code: 1000, result: "http://res.cloudinary..." }
+                .build();
+    }
+}
+```
+
+### 8.4. File cấu hình khóa bí mật `application-secret.yml`
+File nằm tại: `src/main/resources/application-secret.yml`
+```yaml
+cloudinary:
+  cloud-name: fu18kpep             # Tên Cloud lưu trữ của tài khoản
+  api-key: "616397886535446"       # Khóa API Key
+  api-secret: qyvdA2-sFh0sypZG3sTzhe7e5cA # Khóa bí mật API Secret
+```
+
+### 8.5. Cơ chế tài khoản Cloudinary & Hướng dẫn tự tạo tài khoản riêng:
+* **Cloudinary có miễn phí không?**  
+  Cloudinary cung cấp gói **Free Plan vĩnh viễn** gồm **25 GB lưu trữ** và **25 Credits băng thông/tháng** (tương đương hàng chục nghìn lượt xem ảnh), hoàn toàn không tốn chi phí.
+* **Tại sao dự án chạy được ngay mà không cần tự đăng ký?**  
+  Vì dự án đã được tích hợp sẵn 1 tài khoản Cloudinary miễn phí trong file `application-secret.yml` ở trên để phục vụ chấm điểm và chạy demo.
+* **Cách đổi sang tài khoản của riêng bạn (nếu muốn)**:
+  1. Truy cập [https://cloudinary.com](https://cloudinary.com) $\rightarrow$ Chọn **Sign Up For Free** (Đăng ký nhanh bằng Google/Gmail).
+  2. Vào Dashboard lấy 3 thông số: `Cloud Name`, `API Key`, `API Secret`.
+  3. Mở file `application-secret.yml` và dán đè các giá trị mới vào $\rightarrow$ Khởi động lại ứng dụng.
+
+---
+
+## 🎯 PHẦN 9: BỘ CÂU HỎI "BẢO BỐI" VẤN ĐÁP CỦA GIẢNG VIÊN (KÈM CÂU TRẢ LỜI MẪU)
 
 ### ❓ Câu 1: "Tại sao nhóm chọn cơ chế xác thực JWT mà không dùng Session Cookie truyền thống?"
 * **Trả lời**:  
@@ -565,3 +650,19 @@ if (token) {
   * `@Builder`: Giúp khởi tạo đối tượng nhanh chóng theo mẫu thiết kế Builder Pattern (ví dụ: `User.builder().username("...").build()`).
   * `@RequiredArgsConstructor`: Tự động tạo Constructor cho tất cả các biến có từ khóa `final` (được dùng để **Dependency Injection** thay cho `@Autowired` theo khuyến nghị mới của Spring).
   * `@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)`: Tự động biến tất cả các thuộc tính trong class thành `private final`, giúp code ngắn gọn, sạch sẽ và an toàn.
+
+---
+
+### ❓ Câu 6: "Hình ảnh tải lên được lưu ở đâu? Tại sao nhóm không lưu file ảnh trực tiếp trên máy chủ hoặc lưu kiểu BLOB trong CSDL?"
+* **Trả lời**:  
+  *"Dạ thưa Thầy/Cô:
+  1. **Không lưu trên ổ cứng máy chủ cục bộ (Local Disk)**: Vì khi deploy ứng dụng lên Cloud (AWS, Render, Heroku) hoặc đóng gói Docker, các container có tính chất Stateless (mỗi lần restart hoặc scale container mới thì file lưu cục bộ sẽ bị mất). Ngoài ra, server ứng dụng sẽ bị nghẽn mạng do phải vừa xử lý logic vừa gánh tải truyền file ảnh tĩnh.
+  2. **Không lưu dạng BLOB trong CSDL**: Vì file ảnh rất nặng, nếu lưu trực tiếp vào CSDL sẽ làm phình to dung lượng database và làm chậm đáng kể các câu truy vấn SQL tìm kiếm.
+  3. **Lựa chọn Cloudinary**: Là giải pháp chuẩn doanh nghiệp hiện nay. File ảnh thật được đưa lên lưu tại Cloudinary và phân phối qua mạng lưới CDN tốc độ cao. CSDL H2 của nhóm chỉ cần lưu một chuỗi đường link URL ngắn khoảng 100 ký tự (tại cột `avatar_url` bảng `users` hoặc `banner` bảng `blogs`), vừa nhẹ vừa tối ưu hiệu năng."*
+
+---
+
+### ❓ Câu 7: "Cloudinary có mất tiền không? Khóa API Key cấu hình ở đâu?"
+* **Trả lời**:  
+  *"Dạ thưa Thầy/Cô, Cloudinary cung cấp gói Free Plan vĩnh viễn với 25GB lưu trữ, hoàn toàn miễn phí. Khóa kết nối (`cloud-name`, `api-key`, `api-secret`) được nhóm cấu hình trong file `application-secret.yml` và được Spring Boot nạp động qua Annotation `@Value` trong class `CloudinaryConfig.java`, không bị hardcode trong mã Java và dễ dàng thay đổi khi triển khai thực tế ạ."*
+

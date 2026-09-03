@@ -153,6 +153,15 @@
 
 ---
 
+### ☁️ MODULE 9: TẢI ẢNH LÊN CLOUDINARY (IMAGE UPLOAD TEST)
+
+| Testcase ID | Tên ca kiểm thử | Các bước thực hiện | Kết quả kỳ vọng (Expected Result) |
+| :--- | :--- | :--- | :--- |
+| **TC-IMG-01** | Upload Avatar người dùng | 1. Đăng nhập tài khoản<br>2. Vào [http://localhost:8080/edit-profile](http://localhost:8080/edit-profile)<br>3. Bấm **Change Avatar** và chọn 1 file ảnh từ máy tính<br>4. Bấm **Save Changes** | Nút hiện *"Uploading Image..."* $\rightarrow$ Ảnh được đẩy lên Cloudinary $\rightarrow$ URL CDN Cloudinary được gán vào avatar $\rightarrow$ Báo lưu hồ sơ thành công. |
+| **TC-IMG-02** | Upload Banner bài viết | 1. Vào [http://localhost:8080/blog-editor](http://localhost:8080/blog-editor)<br>2. Bấm vào khung ảnh bìa $\rightarrow$ Chọn ảnh từ máy tính<br>3. Nhập tiêu đề, nội dung và bấm **Publish** | Ảnh bìa tự động được tải lên Cloudinary $\rightarrow$ Bài viết xuất bản thành công kèm ảnh bìa vừa upload. |
+
+> **Lưu ý cấu hình Cloudinary**: Dự án đã tích hợp sẵn tài khoản Cloudinary miễn phí tại `src/main/resources/application-secret.yml`. Nếu bạn muốn dùng tài khoản Cloudinary của riêng mình, hãy đăng ký miễn phí tại [https://cloudinary.com](https://cloudinary.com) và dán 3 giá trị `cloud-name`, `api-key`, `api-secret` vào file trên.
+
 ## 💻 5. CHẠY KỊCH BẢN KIỂM THỬ TỰ ĐỘNG (AUTOMATED TEST SUITE)
 
 Để kiểm tra nhanh 48 kịch bản API, phân quyền và giao diện:
