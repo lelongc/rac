@@ -378,6 +378,18 @@ Trạm phát file sẽ chạy ngầm tại `http://192.168.1.100:8000`.
    * **Password**: `123456`
    * **Transport Protocol**: Chọn **UDP**
 4. Bấm **SAVE**. Biểu tượng tài khoản chuyển sang **Registered (Đã đăng ký màu xanh)** là hoàn tất Extension `103`!
+5. 
+
+1. **Bật Wi-Fi trên máy 104:**
+   Bắt vào **điểm phát sóng 4G (Hotspot)** mà máy **103** đang phát ra.
+   *(Khi đó máy 104, máy 103 và máy chủ Asterisk đều đang nằm chung trong một mạng nội bộ).*
+2. **Mở App Zoiper (hoặc Grandstream Wave / Linphone) trên máy 104 và điền:**
+   * 👤 **Username / Account:** **`104`**
+   * 🔑 **Password:** **`123456`**
+   * 🌐 **Domain / Host / Server Provider:** **`10.107.17.164`**
+     *(Đây chính là địa chỉ IP của máy chủ Asterisk Ubuntu trên mạng Wi-Fi Hotspot).*
+   * 🔌 **Transport:** Chọn **UDP** (Port: `5060`).
+3. Bấm **Login / Register** ➔ Màn hình hiện **dấu tích xanh lá cây (Account is ready / Registered)** là thành công 100%!
 
 ---
 
