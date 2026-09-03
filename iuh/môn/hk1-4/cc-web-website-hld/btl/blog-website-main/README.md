@@ -37,5 +37,6 @@
 
 ---
 
-👉 Xem hướng dẫn chi tiết toàn bộ các bước cấu hình Eclipse, cơ sở dữ liệu và bảng báo cáo kiểm thử tại file:  
-📄 **[HUONG_DAN_CHAY_VA_TEST.md](HUONG_DAN_CHAY_VA_TEST.md)**
+📚 **TÀI LIỆU HỖ TRỢ BẢO VỆ BÀI TẬP LỚN (BTL)**:  
+* 📄 **[HUONG_DAN_CHAY_VA_TEST.md](HUONG_DAN_CHAY_VA_TEST.md)**: Hướng dẫn chạy Eclipse, 48 kịch bản kiểm thử chi tiết từng chức năng.
+* 🎓 **[GIAI_THICH_CHI_TIET_CODE_VAN_DAP.md](GIAI_THICH_CHI_TIET_CODE_VAN_DAP.md)**: Giải thích chi tiết từng dòng code cốt lõi, kiến trúc 3 lớp, JWT Security, JPA Entities và **Bộ câu hỏi vấn đáp chuẩn điểm 10** từ Giảng viên.

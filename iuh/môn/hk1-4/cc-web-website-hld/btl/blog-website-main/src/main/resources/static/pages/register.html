@@ -53,7 +53,7 @@
                     </form>
 
                     <div class="text-center mt-4">
-                        <span class="small text-muted">Đã có tài khoản? <a href="login.html" class="text-primary text-decoration-none">Đăng nhập</a></span>
+                        <span class="small text-muted">Đã có tài khoản? <a href="/login" class="text-primary text-decoration-none">Đăng nhập</a></span>
                     </div>
                 </div>
             </div>
@@ -81,9 +81,20 @@
         const pass = document.getElementById('password').value;
         const confirmPass = document.getElementById('confirmPassword').value;
 
-        // 1. Kiểm tra mật khẩu
+        // 1. Kiểm tra độ dài
+        if (user.length < 3) {
+            showToast('Tên đăng nhập phải có ít nhất 3 ký tự!', 'warning');
+            return;
+        }
+
+        if (pass.length < 6) {
+            showToast('Mật khẩu phải có ít nhất 6 ký tự!', 'warning');
+            return;
+        }
+
+        // 2. Kiểm tra mật khẩu khớp nhau
         if (pass !== confirmPass) {
-            showToast('Mật khẩu xác nhận không khớp. Vui lòng nhập lại!');
+            showToast('Mật khẩu xác nhận không khớp. Vui lòng nhập lại!', 'warning');
             return;
         }
 
@@ -92,62 +103,76 @@
         btnSubmit.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Đang tạo tài khoản...';
         btnSubmit.disabled = true;
 
-        // 2. GỌI API ĐĂNG KÝ
-        fetch('http://localhost:8080/users', {
+        const apiUrl = (window.location.port === '8080') ? '/users' : 'http://localhost:8080/users';
+
+        // 3. GỌI API ĐĂNG KÝ
+        fetch(apiUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username: user, password: pass })
         })
-            .then(response => response.json().then(data => ({ status: response.status, body: data })))
+            .then(async response => {
+                const data = await response.json();
+                return { status: response.status, body: data };
+            })
             .then(({ status, body }) => {
                 if (status === 200 && body.code === 1000) {
-
-                    // Đăng ký thành công -> Báo thành công -> Gọi API Login ngầm
                     showToast('Tạo tài khoản thành công! Đang tự động đăng nhập...', 'success');
                     btnSubmit.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Đang đăng nhập...';
 
-                    autoLogin(user, pass); // GỌI HÀM AUTO LOGIN
-
+                    autoLogin(user, pass); // Tự động đăng nhập
                 } else {
-                    // Đăng ký thất bại (Trùng tên, lỗi DB...)
                     btnSubmit.innerHTML = 'Đăng ký ngay';
                     btnSubmit.disabled = false;
-                    showToast('Đăng ký thất bại: ' + (body.message || 'Lỗi không xác định'));
+
+                    let msg = body.message || 'Lỗi không xác định';
+                    if (msg === 'User Exited' || body.code === 1002) {
+                        msg = 'Tên đăng nhập "' + user + '" đã tồn tại! Vui lòng chọn tên đăng nhập khác.';
+                    } else if (msg.includes('at least 6') || body.code === 1004) {
+                        msg = 'Mật khẩu phải có ít nhất 6 ký tự!';
+                    } else if (msg.includes('at least 3') || body.code === 1003) {
+                        msg = 'Tên đăng nhập phải có ít nhất 3 ký tự!';
+                    }
+                    showToast('Đăng ký thất bại: ' + msg, 'danger');
                 }
             })
             .catch(error => {
                 btnSubmit.innerHTML = 'Đăng ký ngay';
                 btnSubmit.disabled = false;
-                showToast('Không thể kết nối đến Server Backend!');
+                console.error('Lỗi kết nối:', error);
+                showToast('Không thể kết nối đến Server Backend!', 'danger');
             });
     });
 
-    // 3. HÀM TỰ ĐỘNG ĐĂNG NHẬP SAU KHI ĐĂNG KÝ THÀNH CÔNG
+    // 4. HÀM TỰ ĐỘNG ĐĂNG NHẬP SAU KHI ĐĂNG KÝ THÀNH CÔNG
     function autoLogin(username, password) {
-        fetch('http://localhost:8080/auth/login', {
+        const loginUrl = (window.location.port === '8080') ? '/auth/login' : 'http://localhost:8080/auth/login';
+
+        fetch(loginUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username: username, password: password })
         })
-            .then(response => response.json().then(data => ({ status: response.status, body: data })))
+            .then(async response => {
+                const data = await response.json();
+                return { status: response.status, body: data };
+            })
             .then(({ status, body }) => {
                 if (status === 200 && body.code === 1000) {
-                    // Lấy được Token -> Lưu vào Két sắt -> Chuyển sang Home
                     localStorage.setItem('token', body.result.token);
                     localStorage.setItem('username', username);
 
                     setTimeout(() => {
-                        window.location.href = "home-page.html";
-                    }, 800); // Chờ 0.8s để người dùng kịp nhìn thấy thông báo xanh
+                        window.location.href = "/";
+                    }, 600);
                 } else {
-                    // Đề phòng lỗi mạng bất ngờ lúc đăng nhập
-                    showToast('Tài khoản đã tạo nhưng không thể tự đăng nhập. Vui lòng đăng nhập thủ công.', 'warning');
-                    setTimeout(() => { window.location.href = "login.html"; }, 2000);
+                    showToast('Tài khoản đã tạo thành công. Vui lòng đăng nhập.', 'info');
+                    setTimeout(() => { window.location.href = "/login"; }, 1500);
                 }
             })
             .catch(error => {
-                showToast('Lỗi mạng. Vui lòng chuyển đến trang đăng nhập.', 'warning');
-                setTimeout(() => { window.location.href = "login.html"; }, 2000);
+                showToast('Tài khoản đã tạo thành công! Vui lòng bấm Đăng nhập.', 'info');
+                setTimeout(() => { window.location.href = "/login"; }, 1500);
             });
     }
 </script>

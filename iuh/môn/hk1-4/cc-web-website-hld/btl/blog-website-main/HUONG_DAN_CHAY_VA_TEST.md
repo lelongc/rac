@@ -1,11 +1,11 @@
-# 📖 HƯỚNG DẪN CẤU HÌNH, CHẠY & BÁO CÁO KIỂM THỬ TOÀN DIỆN (FULL SYSTEM TEST REPORT)
+# 📖 HƯỚNG DẪN CẤU HÌNH, CHẠY & BỘ TESTCASE KIỂM THỬ TOÀN DIỆN (FULL SYSTEM TEST SUITE)
 
-> **Dự án**: Website Blog & Nền tảng Viết bài trực tuyến (BTL Môn Công nghệ Web & Website Hướng Dữ Liệu - IUH)  
-> **Nhóm thực hiện**: 
+> **Dự án**: Website Blog & Nền tảng Viết bài trực tuyến (BTL Môn Công nghệ Web & Website Hướng Dữ Liệu - IUH)**Nhóm thực hiện**:
+>
 > 1. **24743991** — Hoàng Đại Dương
 > 2. **24000905** — Nguyễn Trung Dũng
-> 3. **23630851** — Lê Thành Long  
-> **Công nghệ**: Spring Boot 3.5, Java 21, Spring Security (JWT), Spring Data JPA, **H2 File-based Persistent Database (Lưu trữ vĩnh viễn trên ổ cứng)**, MapStruct, Lombok, HTML5/CSS3/JavaScript (Bootstrap 5, Tailwind CSS, jQuery).
+> 3. **23630851** — Lê Thành Long
+>    **Công nghệ**: Spring Boot 3.5, Java 21, Spring Security (JWT), Spring Data JPA, **H2 File-based Persistent Database (Lưu trữ vĩnh viễn trên ổ cứng)**, MapStruct, Lombok, Thymeleaf/HTML5, CSS3, JavaScript (Bootstrap 5, Tailwind CSS, jQuery).
 
 ---
 
@@ -25,60 +25,16 @@
 
 ---
 
-## 📊 2. KẾT QUẢ KIỂM THỬ TỰ ĐỘNG TOÀN HỆ THỐNG (TEST RESULTS: 48/48 PASS - 100%)
-
-```text
-================ TEST SUMMARY ================
-Total Tests: 48 | Passed: 48 (100%) | Failed: 0
-==============================================
-```
-
-### Chi tiết các nhóm kiểm thử:
-1. **Giao diện người dùng & Admin (16/16 Trang `200 OK`)**:
-   - `GET /` (Trang chủ) $\rightarrow$ `200 OK`
-   - `GET /login` (Đăng nhập) $\rightarrow$ `200 OK`
-   - `GET /register` (Đăng ký tài khoản) $\rightarrow$ `200 OK`
-   - `GET /forgot-password` (Quên mật khẩu) $\rightarrow$ `200 OK`
-   - `GET /change-password` (Đổi mật khẩu) $\rightarrow$ `200 OK`
-   - `GET /post` (Chi tiết bài viết) $\rightarrow$ `200 OK`
-   - `GET /blog-editor` (Trình soạn thảo bài viết) $\rightarrow$ `200 OK`
-   - `GET /user-profile` (Hồ sơ người dùng) $\rightarrow$ `200 OK`
-   - `GET /edit-profile` (Chỉnh sửa hồ sơ) $\rightarrow$ `200 OK`
-   - `GET /saved-blogs` (Bài viết đã lưu) $\rightarrow$ `200 OK`
-   - `GET /notifications` (Trung tâm thông báo) $\rightarrow$ `200 OK`
-   - `GET /manage-blogs` (Quản lý bài viết cá nhân) $\rightarrow$ `200 OK`
-   - `GET /admin/dashboard` (Admin - Bảng điều khiển thống kê) $\rightarrow$ `200 OK`
-   - `GET /admin/posts` (Admin - Quản lý bài viết) $\rightarrow$ `200 OK`
-   - `GET /admin/users` (Admin - Quản lý người dùng) $\rightarrow$ `200 OK`
-   - `GET /admin/categories-tags` (Admin - Quản lý danh mục & thẻ tag) $\rightarrow$ `200 OK`
-
-2. **Các thành phần HTML Tĩnh & Assets (15/15 `200 OK`)**:
-   - Fragments: `navbar.html`, `hero.html`, `footer.html`, `sidebar.html`, `admin_sidebar.html`, `dashboard-sidebar.html`.
-   - Assets: `main.css`, `app.js`, `posts.js`, `sidebar.js`, `filters.js`, `nav.js`, `auth.js`, `init.js`, `pages.js`.
-
-3. **Xác thực & Phân quyền (Authentication & Authorization)**:
-   - Đăng nhập 4 tài khoản có sẵn: `admin`, `duonghd`, `dungnt`, `longlt` (Mật khẩu: `123456`) $\rightarrow$ Cấp JWT Token thành công.
-   - Đăng ký thành viên mới $\rightarrow$ Lưu Database và mã hóa BCrypt thành công.
-   - Tự động đăng nhập cho thành viên mới $\rightarrow$ Thành công.
-   - Phân quyền Admin: User thường truy cập API Admin `/api/admin/stats` bị chặn với mã `403 Forbidden` (Đúng chuẩn bảo mật).
-
-4. **Nghiệp vụ Blog & Dữ liệu**:
-   - `GET /categories` (4 Danh mục) & `GET /tags` (5 Tags) $\rightarrow$ Thành công.
-   - `GET /blogs/filter` & `GET /blogs/search` $\rightarrow$ Trả về danh sách bài viết kèm lượt thích, lượt xem, tác giả và tag.
-   - `POST /blogs` (Tạo bài viết mới) $\rightarrow$ Sinh UUID và lưu file CSDL thành công.
-   - `GET /blogs/{id}` (Đọc bài viết) $\rightarrow$ Tăng biến đếm lượt xem (Views) thành công.
-   - `GET /api/notifications` $\rightarrow$ Trả về danh sách thông báo tương tác thành công.
-
----
-
-## 📌 3. CẤU HÌNH & CHẠY DỰ ÁN TRÊN ECLIPSE
+## 📌 2. CẤU HÌNH & CHẠY DỰ ÁN TRÊN ECLIPSE
 
 ### 1. Yêu cầu môi trường
+
 * **JDK**: Java 21 (hoặc Java 17+).
 * **Eclipse**: Eclipse IDE for Enterprise Java and Web Developers.
 * **Lombok Plugin**: Đã cài đặt trong `eclipse.ini` (`-javaagent:...lombok.jar`).
 
 ### 2. Các bước Import vào Eclipse
+
 1. Mở Eclipse $\rightarrow$ **File** $\rightarrow$ **Import...**
 2. Chọn **Maven** $\rightarrow$ **Existing Maven Projects** $\rightarrow$ **Next**.
 3. Tại ô **Root Directory**, Browse đến thư mục:
@@ -89,6 +45,7 @@ Total Tests: 48 | Passed: 48 (100%) | Failed: 0
    * Tick vào ô **Force Update of Snapshots/Releases** $\rightarrow$ Bấm **OK**.
 
 ### 3. Chạy Ứng Dụng
+
 * **Cách 1 (Từ Eclipse)**: Mở file `src/main/java/com/group/blog/BlogWebsiteApplication.java` $\rightarrow$ Chuột phải chọn **Run As** $\rightarrow$ **Java Application** (hoặc **Spring Boot App**).
 * **Cách 2 (Từ Terminal / CMD)**:
   ```powershell
@@ -97,44 +54,117 @@ Total Tests: 48 | Passed: 48 (100%) | Failed: 0
 
 ---
 
-## 👥 4. TÀI KHOẢN MẪU CÓ SẴN (Tất cả mật khẩu: `123456`)
+## 👥 3. TÀI KHOẢN MẪU CÓ SẴN (Tất cả mật khẩu: `123456`)
 
-| Username | Mật khẩu | Quyền hạn (Roles) | Ghi chú |
-| :--- | :---: | :--- | :--- |
-| **`admin`** | `123456` | `ROLE_ADMIN`, `ROLE_USER` | Quản trị viên cao nhất của hệ thống |
-| **`duonghd`** | `123456` | `ROLE_USER` | Tác giả: Hoàng Đại Dương (MSSV: 24743991) |
-| **`dungnt`** | `123456` | `ROLE_USER` | Tác giả: Nguyễn Trung Dũng (MSSV: 24000905) |
-| **`longlt`** | `123456` | `ROLE_USER` | Tác giả: Lê Thành Long (MSSV: 23630851) |
-
----
-
-## 🧪 5. HƯỚNG DẪN TEST CÁC TÍNH NĂNG TRÊN TRÌNH DUYỆT
-
-### 1. Test Trang chủ ([http://localhost:8080/](http://localhost:8080/))
-- Xem 3 bài viết mẫu có sẵn với hình ảnh, tác giả, ngày đăng, danh mục, tag.
-- Chọn bộ lọc bên phải (*Stories from all interests*) để lọc bài theo chủ đề.
-- Chọn sắp xếp (*Newest First*, *Oldest First*, *Title A-Z*).
-- Nhập từ khóa vào ô tìm kiếm ở Navbar (Ví dụ: `Spring`) $\rightarrow$ Bấm Enter để tìm bài.
-
-### 2. Test Đăng nhập ([http://localhost:8080/login](http://localhost:8080/login))
-- Nhập `admin` / `123456` $\rightarrow$ Bấm **Đăng nhập**.
-- Quan sát thông báo xanh và trang tự chuyển về Trang chủ.
-- Navbar xuất hiện avatar, tên tài khoản `admin` và nút **Admin Controller**.
-
-### 3. Test Trang Quản trị Admin ([http://localhost:8080/admin/dashboard](http://localhost:8080/admin/dashboard))
-- Bấm nút **Admin Controller** trên Navbar (hoặc truy cập trực tiếp link trên).
-- Xem số liệu thống kê: Tổng số người dùng, tổng số bài viết, danh sách bài viết gần đây.
-- Chuyển sang menu **Users** để xem toàn bộ danh sách thành viên.
-- Chuyển sang menu **Categories & Tags** để thêm/sửa/xóa danh mục và tag.
-
-### 4. Test Viết bài mới ([http://localhost:8080/blog-editor](http://localhost:8080/blog-editor))
-- Bấm nút **Write** trên Navbar.
-- Nhập tiêu đề, chọn danh mục, gắn tags và viết nội dung $\rightarrow$ Bấm **Publish**.
-- Bài viết mới lập tức xuất hiện trên trang chủ và bảng điều khiển cá nhân.
+| Username              | Mật khẩu | Quyền hạn (Roles)           | Ghi chú                                         |
+| :-------------------- | :--------: | :---------------------------- | :----------------------------------------------- |
+| **`admin`**   | `123456` | `ROLE_ADMIN`, `ROLE_USER` | Quản trị viên cao nhất của hệ thống       |
+| **`duonghd`** | `123456` | `ROLE_USER`                 | Tác giả: Hoàng Đại Dương (MSSV: 24743991) |
+| **`dungnt`**  | `123456` | `ROLE_USER`                 | Tác giả: Nguyễn Trung Dũng (MSSV: 24000905)  |
+| **`longlt`**  | `123456` | `ROLE_USER`                 | Tác giả: Lê Thành Long (MSSV: 23630851)      |
 
 ---
 
-## 📁 6. CHẠY LẠI SUITE KIỂM THỬ TỰ ĐỘNG
+## 🧪 4. BỘ TESTCASE KIỂM THỬ TOÀN DIỆN TRÊN TRÌNH DUYỆT (MANUAL UI TESTCASES)
+
+### 📦 MODULE 1: XÁC THỰC & TÀI KHOẢN (AUTHENTICATION)
+
+| Testcase ID          | Tên ca kiểm thử                   | Các bước thực hiện                                                                                                                                                                                           | Kết quả kỳ vọng (Expected Result)                                                                                                                                                                                                     |
+| :------------------- | :----------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **TC-AUTH-01** | Đăng nhập sai mật khẩu          | 1. Vào[http://localhost:8080/login](http://localhost:8080/login)2. Nhập username `admin`, password `sai_mat_khau`3. Bấm **Đăng nhập**                                                              | Hiện Toast đỏ:*"Tên đăng nhập hoặc mật khẩu không chính xác!"*, giữ nguyên trang.                                                                                                                                        |
+| **TC-AUTH-02** | Đăng nhập thành công với Admin | 1. Tại trang login, nhập`admin` / `123456`2. Bấm **Đăng nhập**                                                                                                                                    | Hiện Toast xanh thành công$\rightarrow$ tự chuyển về Trang chủ $\rightarrow$ Trên Navbar hiển thị avatar, username `admin` và nút **Admin Controller**.                                                           |
+| **TC-AUTH-03** | Đăng nhập với User thường      | 1. Đăng xuất tài khoản Admin2. Đăng nhập với `duonghd` / `123456`                                                                                                                                    | Đăng nhập thành công$\rightarrow$ Navbar hiển thị username `duonghd` $\rightarrow$ **Không hiển thị** nút Admin Controller (đúng phân quyền).                                                                  |
+| **TC-AUTH-04** | Đăng ký tài khoản mới          | 1. Vào[http://localhost:8080/register](http://localhost:8080/register)2. Nhập Username mới (ví dụ: `thanhvien2026`)3. Nhập Mật khẩu: `123456`, Xác nhận: `123456`4. Bấm **Đăng ký ngay** | 1. Hiện Toast xanh:*"Tạo tài khoản thành công! Đang tự động đăng nhập..."*.2. Hệ thống tự lấy JWT Token và lưu vào `localStorage`.3. Tự động chuyển hướng về Trang chủ, Navbar hiển thị user vừa tạo. |
+| **TC-AUTH-05** | Đăng ký trùng tên đăng nhập  | 1. Tại trang register, nhập lại username đã tồn tại (ví dụ:`admin` hoặc `duonghd`)2. Bấm **Đăng ký ngay**                                                                                 | Hiện Toast đỏ:*"Tên đăng nhập '...' đã tồn tại! Vui lòng chọn tên đăng nhập khác."*                                                                                                                                   |
+| **TC-AUTH-06** | Đăng ký mật khẩu không khớp   | 1. Tại trang register, nhập username hợp lệ, mật khẩu`123456`, xác nhận `654321`2. Bấm **Đăng ký ngay**                                                                                     | Hiện Toast cảnh báo vàng:*"Mật khẩu xác nhận không khớp. Vui lòng nhập lại!"*                                                                                                                                              |
+| **TC-AUTH-07** | Đăng xuất (Logout)                | Bấm vào avatar góc phải Navbar$\rightarrow$ Chọn **Sign Out**                                                                                                                                        | Đăng xuất thành công$\rightarrow$ Xóa token trong `localStorage` $\rightarrow$ Navbar trở về nút **Sign In** và **Sign Up**.                                                                                  |
+
+---
+
+### 📰 MODULE 2: TRANG CHỦ, BỘ LỌC & TÌM KIẾM (HOME & FILTER)
+
+| Testcase ID          | Tên ca kiểm thử               | Các bước thực hiện                                                                                     | Kết quả kỳ vọng (Expected Result)                                                                                                                        |
+| :------------------- | :------------------------------- | :---------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **TC-HOME-01** | Hiển thị bài viết Trang chủ | Truy cập[http://localhost:8080/](http://localhost:8080/)                                                    | Danh sách bài viết tải mượt mà kèm Banner, Tiêu đề, Tác giả, Ngày đăng, Category, Tags, số lượt Thích, số Bình luận và Lượt đọc. |
+| **TC-HOME-02** | Lọc theo Danh mục (Categories) | Ở thanh Sidebar bên phải, bấm vào 1 chủ đề (ví dụ:`Technology` hoặc `Programming`)           | Danh sách bài viết lọc lại ngay lập tức, chỉ hiển thị những bài thuộc danh mục được chọn.                                                  |
+| **TC-HOME-03** | Sắp xếp bài viết             | Ở menu dropdown sắp xếp (Sort by), chọn:*Newest First*, *Oldest First*, hoặc *Title A-Z*         | Danh sách tự động đảo thứ tự tương ứng không cần reload lại toàn trang.                                                                       |
+| **TC-HOME-04** | Tìm kiếm theo từ khóa        | Tại ô Search trên Navbar$\rightarrow$ Nhập từ khóa `Spring` $\rightarrow$ Nhấn **Enter** | Trang hiển thị đúng các bài viết có chứa từ khóa`Spring` trong tiêu đề hoặc nội dung.                                                      |
+
+---
+
+### 📖 MODULE 3: CHI TIẾT BÀI VIẾT & TƯƠNG TÁC (POST INTERACTIONS)
+
+| Testcase ID          | Tên ca kiểm thử               | Các bước thực hiện                                                                                                                                | Kết quả kỳ vọng (Expected Result)                                                                                                                                                     |
+| :------------------- | :------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **TC-POST-01** | Xem chi tiết bài & Tăng View  | 1. Bấm vào tiêu đề một bài viết bất kỳ từ Trang chủ2. Mở trang `/post?id=...`                                                           | Nội dung bài viết hiển thị đầy đủ chi tiết; biến đếm lượt đọc (**Views**) tự động tăng thêm 1.                                                                |
+| **TC-POST-02** | Thả tim (Like / Unlike)         | Đăng nhập tài khoản$\rightarrow$ Tại trang chi tiết bài viết, bấm nút **Icon Trái tim (Like)**                                     | Lượt like tăng lên 1, icon chuyển sang màu đỏ (Active). Bấm thêm lần nữa$\rightarrow$ Hủy like, số tim giảm về ban đầu.                                               |
+| **TC-POST-03** | Bình luận bài viết (Comment) | Cuộn xuống phần Bình luận$\rightarrow$ Nhập nội dung: *"Bài viết rất hay và bổ ích!"* $\rightarrow$ Bấm **Gửi bình luận** | Bình luận xuất hiện ngay tức thì kèm tên người gửi, avatar và thời gian vừa đăng.                                                                                         |
+| **TC-POST-04** | Lưu bài viết (Bookmark)       | Bấm vào biểu tượng**Bookmark (Lưu bài)** ở đầu hoặc cuối bài viết                                                                  | Icon đổi trạng thái đã lưu. Truy cập trang[http://localhost:8080/saved-blogs](http://localhost:8080/saved-blogs) $\rightarrow$ Thấy bài viết nằm trong danh sách đã lưu. |
+
+---
+
+### ✍️ MODULE 4: SOẠN THẢO & QUẢN LÝ BÀI VIẾT CÁ NHÂN
+
+| Testcase ID          | Tên ca kiểm thử             | Các bước thực hiện                                                                                                                                                                                                                                                   | Kết quả kỳ vọng (Expected Result)                                                                                            |
+| :------------------- | :----------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------- |
+| **TC-BLOG-01** | Viết & Đăng bài mới       | 1. Đăng nhập với`duonghd`2. Bấm nút **Write** trên Navbar (hoặc vào [http://localhost:8080/blog-editor](http://localhost:8080/blog-editor))3. Nhập Tiêu đề, chọn Danh mục, nhập Tags, dán URL ảnh banner, gõ nội dung4. Bấm **Publish** | Báo xuất bản thành công$\rightarrow$ Quay lại Trang chủ thấy ngay bài viết mới vừa đăng ở vị trí đầu tiên. |
+| **TC-BLOG-02** | Quản lý bài viết của tôi | Vào trang[http://localhost:8080/manage-blogs](http://localhost:8080/manage-blogs)                                                                                                                                                                                         | Hiển thị toàn bộ các bài do tài khoản`duonghd` đã viết kèm các nút thao tác: Xem, Chỉnh sửa, Xóa.            |
+
+---
+
+### 👤 MODULE 5: PROFILE, ĐỔI MẬT KHẨU & THEO DÕI (USER PROFILE)
+
+| Testcase ID          | Tên ca kiểm thử           | Các bước thực hiện                                                                                                                                                                             | Kết quả kỳ vọng (Expected Result)                                                                                                                |
+| :------------------- | :--------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **TC-USER-01** | Xem trang hồ sơ cá nhân  | Truy cập[http://localhost:8080/user-profile](http://localhost:8080/user-profile)                                                                                                                    | Hiển thị đúng Avatar, Bio, Email, số lượng người theo dõi (Followers), số đang theo dõi (Following) và các bài viết của user đó. |
+| **TC-USER-02** | Chỉnh sửa hồ sơ          | Truy cập[http://localhost:8080/edit-profile](http://localhost:8080/edit-profile) $\rightarrow$ Sửa Bio thành *"Sinh viên IUH đam mê Spring Boot"* $\rightarrow$ Bấm **Save**      | Thông tin được cập nhật và lưu vào cơ sở dữ liệu.                                                                                       |
+| **TC-USER-03** | Đổi mật khẩu             | 1. Vào[http://localhost:8080/change-password](http://localhost:8080/change-password)2. Nhập mật khẩu cũ `123456`3. Nhập mật khẩu mới `654321` $\rightarrow$ Bấm **Cập nhật** | Báo đổi mật khẩu thành công. Thử đăng xuất và đăng nhập lại bằng`654321` $\rightarrow$ Đăng nhập thành công.               |
+| **TC-USER-04** | Theo dõi tác giả (Follow) | Vào bài viết của một tác giả khác$\rightarrow$ Bấm nút **Follow** cạnh tên tác giả                                                                                            | Trạng thái chuyển thành**Following**, số lượng followers của tác giả đó tăng 1.                                                   |
+
+---
+
+### 🔔 MODULE 6: TRUNG TÂM THÔNG BÁO (NOTIFICATIONS)
+
+| Testcase ID          | Tên ca kiểm thử             | Các bước thực hiện                                                                                                                                                                                             | Kết quả kỳ vọng (Expected Result)                                                                           |
+| :------------------- | :----------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :-------------------------------------------------------------------------------------------------------------- |
+| **TC-NOTI-01** | Nhận thông báo tương tác | 1. Dùng tài khoản`dungnt` vào like hoặc comment bài viết của `duonghd`2. Đăng xuất và đăng nhập vào `duonghd`3. Mở [http://localhost:8080/notifications](http://localhost:8080/notifications) | Xuất hiện thông báo:*"dungnt đã thích/bình luận bài viết của bạn"* kèm thời gian tương ứng. |
+| **TC-NOTI-02** | Đánh dấu đã đọc         | Bấm vào thông báo                                                                                                                                                                                               | Thông báo chuyển từ trạng thái chưa đọc sang đã đọc.                                               |
+
+---
+
+### 🛡️ MODULE 7: QUẢN TRỊ VIÊN HỆ THỐNG (ADMIN DASHBOARD)
+
+| Testcase ID         | Tên ca kiểm thử        | Các bước thực hiện                                                                                                                                                        | Kết quả kỳ vọng (Expected Result)                                                                                  |
+| :------------------ | :------------------------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------- |
+| **TC-ADM-01** | Xem Dashboard thống kê  | Đăng nhập tài khoản`admin` $\rightarrow$ Truy cập [http://localhost:8080/admin/dashboard](http://localhost:8080/admin/dashboard)                                      | Thống kê chính xác:**Total Users**, **Total Posts**, bảng danh sách bài viết gần đây.           |
+| **TC-ADM-02** | Quản lý thành viên    | Vào trang[http://localhost:8080/admin/users](http://localhost:8080/admin/users)                                                                                                | Hiển thị bảng danh sách toàn bộ người dùng trong hệ thống kèm thông tin vai trò (ROLE_ADMIN, ROLE_USER). |
+| **TC-ADM-03** | Quản lý bài viết      | Vào trang[http://localhost:8080/admin/posts](http://localhost:8080/admin/posts)                                                                                                | Cho phép Admin xem tất cả bài của mọi tác giả, tìm kiếm và kiểm duyệt/xóa bài viết.                    |
+| **TC-ADM-04** | Quản lý Danh mục & Tag | Vào trang[http://localhost:8080/admin/categories-tags](http://localhost:8080/admin/categories-tags) $\rightarrow$ Thêm 1 danh mục mới (ví dụ: `Trí tuệ nhân tạo`) | Danh mục mới xuất hiện ngay trên bảng và xuất hiện ở Sidebar lọc bài viết ngoài trang chủ.              |
+
+---
+
+### 🔒 MODULE 8: BẢO MẬT & LƯU TRỮ DỮ LIỆU BỀN VỮNG (PERSISTENCE)
+
+| Testcase ID         | Tên ca kiểm thử                           | Các bước thực hiện                                                                                                                                         | Kết quả kỳ vọng (Expected Result)                                                                                                                     |
+| :------------------ | :------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **TC-SEC-01** | Chặn User thường vào API Admin           | Đăng nhập tài khoản`duonghd` (không có quyền ADMIN) $\rightarrow$ Gọi `GET /api/admin/stats`                                                     | Spring Security chặn lại và trả về mã lỗi**`403 Forbidden`**.                                                                              |
+| **TC-DB-01**  | Kiểm tra CSDL qua H2 Console                | 1. Truy cập[http://localhost:8080/h2-console](http://localhost:8080/h2-console)2. Nhập JDBC URL: `jdbc:h2:file:./data/blogdb`3. Bấm **Connect**       | Đăng nhập thành công$\rightarrow$ Thấy đầy đủ cây bảng: `USERS`, `BLOGS`, `COMMENTS`, `CATEGORIES`, `TAGS`, `NOTIFICATIONS`,... |
+| **TC-DB-02**  | Kiểm tra Lưu trữ Vĩnh viễn (Persistent) | 1. Đăng ký một user mới hoặc viết 1 bài mới.2. Tắt hẳn ứng dụng Spring Boot.3. Khởi động lại ứng dụng Spring Boot.4. Mở lại trình duyệt. | **Dữ liệu bài viết/tài khoản vừa tạo vẫn còn nguyên 100%**, không hề bị mất (nhờ cơ chế file `data/blogdb.mv.db`).              |
+
+---
+
+## 💻 5. CHẠY KỊCH BẢN KIỂM THỬ TỰ ĐỘNG (AUTOMATED TEST SUITE)
+
+Để kiểm tra nhanh 48 kịch bản API, phân quyền và giao diện:
+
 ```powershell
 pwsh -File test_suite.ps1
+```
+
+* **Kết quả**:
+
+```text
+================ TEST SUMMARY ================
+Total Tests: 48 | Passed: 48 (100%) | Failed: 0
+==============================================
 ```
