@@ -200,6 +200,19 @@ clearglobalvars=no
 ; CONTEXT XỬ LÝ NHẮN TIN SIP (PJSIP MESSAGE)
 ; ==============================================================================
 [send-message]
+; Nhắn tin tới số di động thật của máy 103 (0987214065)
+exten => 0987214065,1,NoOp(SIP MESSAGE to 0987214065 -> redirect to 103)
+same => n,Set(MESSAGE(to)=sip:103@\${SERVER_IP})
+same => n,MessageSend(pjsip:103)
+same => n,Hangup()
+
+; Nhắn tin tới số di động thật của máy 104 (0981647882)
+exten => 0981647882,1,NoOp(SIP MESSAGE to 0981647882 -> redirect to 104)
+same => n,Set(MESSAGE(to)=sip:104@\${SERVER_IP})
+same => n,MessageSend(pjsip:104)
+same => n,Hangup()
+
+; Nhắn tin qua số extension nội bộ thông thường (_X.)
 exten => _X.,1,NoOp(SIP MESSAGE from \${MESSAGE(from)} to \${EXTEN})
 same => n,Set(MESSAGE(to)=sip:\${EXTEN}@\${SERVER_IP})
 same => n,MessageSend(pjsip:\${EXTEN})
@@ -207,14 +220,29 @@ same => n,NoOp(MessageSend result: \${MESSAGE_SEND_STATUS})
 same => n,Hangup()
 
 ; ==============================================================================
-; CONTEXT CHO GIÁM ĐỐC (101): Được gọi tất cả mọi người (101-109)
+; CONTEXT CHO GIÁM ĐỐC (101): Được gọi tất cả mọi người (101-109 & Số di động thật)
 ; ==============================================================================
 [giamdoc-context]
+; Gọi số nội bộ Giám đốc (101)
 exten => 101,1,Dial(PJSIP/101,20)
 same => n,Voicemail(101@default,u)
 same => n,Hangup()
 
-exten => _10X,1,Dial(PJSIP/\${EXTEN},30)
+; Gọi số di động thật của máy 103 (0987214065) -> Đổ chuông máy 103
+exten => 0987214065,1,NoOp(--- GOI SO DI DONG THAT 0987214065 (MAY 103) ---)
+same => n,Dial(PJSIP/103,20)
+same => n,Voicemail(103@default,u)
+same => n,Hangup()
+
+; Gọi số di động thật của máy 104 (0981647882) -> Đổ chuông máy 104
+exten => 0981647882,1,NoOp(--- GOI SO DI DONG THAT 0981647882 (MAY 104) ---)
+same => n,Dial(PJSIP/104,20)
+same => n,Voicemail(104@default,u)
+same => n,Hangup()
+
+; Gọi các số máy nhánh ngắn 102, 103, 104, 105...
+exten => _10X,1,Dial(PJSIP/\${EXTEN},20)
+same => n,Voicemail(\${EXTEN}@default,u)
 same => n,Hangup()
 
 exten => 600,1,Goto(internal-common,600,1)
@@ -224,18 +252,32 @@ exten => 100,1,Goto(internal-common,100,1)
 ; CONTEXT CHO NHÂN VIÊN (102-109): Chặn không cho gọi tới Giám đốc (101)
 ; ==============================================================================
 [nhanvien-context]
-; --- Cho phép gọi các số 102, 103, 104, 105... ---
-exten => _10[2-9],1,Dial(PJSIP/\${EXTEN},30)
+; --- YÊU CẦU 4: CHẶN CUỘC GỌI TỚI GIÁM ĐỐC (101) ---
+exten => 101,1,NoOp(--- PHÒNG BAN GỌI GIÁM ĐỐC -> BỊ CHẶN ---)
+same => n,Answer()
+same => n,Playback(ss-noservice)
+same => n,Hangup(17)
+
+; --- Gọi số di động thật của máy 103 (0987214065) -> Đổ chuông máy 103 ---
+exten => 0987214065,1,NoOp(--- NHAN VIEN GOI SO THAT 0987214065 (MAY 103) ---)
+same => n,Dial(PJSIP/103,20)
+same => n,Voicemail(103@default,u)
+same => n,Hangup()
+
+; --- Gọi số di động thật của máy 104 (0981647882) -> Đổ chuông máy 104 ---
+exten => 0981647882,1,NoOp(--- NHAN VIEN GOI SO THAT 0981647882 (MAY 104) ---)
+same => n,Dial(PJSIP/104,20)
+same => n,Voicemail(104@default,u)
+same => n,Hangup()
+
+; --- Cho phép gọi các số ngắn 102, 103, 104, 105... ---
+exten => _10[2-9],1,Dial(PJSIP/\${EXTEN},20)
+same => n,Voicemail(\${EXTEN}@default,u)
 same => n,Hangup()
 
 exten => 600,1,Goto(internal-common,600,1)
 exten => 100,1,Goto(internal-common,100,1)
 
-; --- YÊU CẦU 4: CHẶN CUỘC GỌI TỚI GIÁM ĐỐC ---
-exten => 101,1,NoOp(--- PHÒNG BAN GỌI GIÁM ĐỐC -> BỊ CHẶN ---)
-same => n,Answer()
-same => n,Playback(ss-noservice)
-same => n,Hangup(17)
 
 ; ==============================================================================
 ; DỊCH VỤ CHUNG: GỌI NHÓM & TỔNG ĐÀI TỰ ĐỘNG IVR
@@ -276,15 +318,20 @@ format=wav
 attach=yes
 maxmsg=100
 maxmessage=300
-minmessage=3
+minmessage=1
 emaildateformat=%A, %B %d, %Y at %r
+
 emailsubject=[IUH-VoIP] Cuoc goi nho tu \${VM_CALLERID}
 emailbody=Chao \${VM_NAME},\n\nBan co mot cuoc goi nho / loi nhan thoai tu số \${VM_CALLERID} vao lúc \${VM_DATE}.\nFile ghi âm loi nhan duoc dinh kem theo email nay.\n\nTran trong,\nTong dai VoIP IUH.
 
 mailcmd=/usr/bin/msmtp -t
 
 [default]
-101 => 1234,Giam Doc IUH,sv.iuh.demo@gmail.com
+101 => 1234,Giam Doc IUH,lelong191001@gmail.com
+102 => 1234,Phong Kinh Doanh,lelong191001@gmail.com
+103 => 1234,Phong Ky Thuat,lelong191001@gmail.com
+104 => 1234,Phong Ke Toan,lelong191001@gmail.com
+105 => 1234,Phong Nhan Su,lelong191001@gmail.com
 EOF
 
 # 6. Cấu hình msmtp cho Gmail (Chỉ tạo mẫu nếu file chưa tồn tại)
@@ -326,7 +373,11 @@ echo -e "${CYAN}Thông tin các tài khoản SIP:${NC}"
 echo -e "  - Server IP    : ${GREEN}${SERVER_IP}${NC}"
 echo -e "  - Ext 101      : Giám đốc (Pass: 123456)"
 echo -e "  - Ext 102      : Phòng KD (Pass: 123456)"
-echo -e "  - Ext 103      : Di động  (Pass: 123456)"
-echo -e "  - Số Gọi nhóm  : 600"
+echo -e "  - Ext 103      : Di động 1 / Số thật: 0987214065 (Pass: 123456)"
+echo -e "  - Ext 104      : Di động 2 / Số thật: 0981647882 (Pass: 123456)"
+echo -e "  - Ext 105      : Di động 3 (Pass: 123456)"
+echo -e "  - Số Gọi nhóm  : 600 (Rung tất cả các máy)"
 echo -e "  - Số IVR       : 100"
+
 echo -e "\n${YELLOW}Lưu ý: Để gửi email về Gmail thật, hãy mở file /etc/msmtprc và điền App Password Gmail của bạn.${NC}"
+
