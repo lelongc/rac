@@ -97,7 +97,7 @@
         </section>
 
         <!-- C. Cac chuc nang chinh cua de tai -->
-        <section class="card shadow-sm p-4 bg-white">
+        <section class="card shadow-sm p-4 mb-4 bg-white">
             <h4 class="card-custom-header pb-2 mb-3">
                 <i class="bi bi-stars text-primary me-2"></i> Các Chức Năng Chính Của Blog Website
             </h4>
@@ -131,6 +131,63 @@
                 </div>
             </div>
         </section>
+
+        <!-- D. Cac Bai Tap Thuc Hanh Tuan 2 (basic_web & independent_web) -->
+        <section class="card shadow-sm p-4 bg-white border-primary border-2">
+            <h4 class="card-custom-header pb-2 mb-3 text-primary">
+                <i class="bi bi-journal-code text-primary me-2"></i> BÀI TẬP THỰC HÀNH TUẦN 2 (SPRING BOOT & THYMELEAF)
+            </h4>
+            <div class="row g-4">
+                <!-- Bai 1: basic_web -->
+                <div class="col-md-6">
+                    <div class="card h-100 p-3 border-0 bg-light shadow-sm">
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="badge bg-primary me-2 px-3 py-2 fs-6">Bài 1</span>
+                            <h5 class="fw-bold mb-0 text-dark">basic_web (Quản lý Sản phẩm)</h5>
+                        </div>
+                        <p class="text-muted small mb-3">
+                            Thực hành Spring MVC Controller truyền danh sách Model <code>Product</code> sang View engine Thymeleaf hiển thị dạng bảng:
+                        </p>
+                        <div class="d-flex flex-column gap-2">
+                            <a href="/products" class="btn btn-primary btn-sm text-start">
+                                <i class="bi bi-table me-2"></i> 1. Xem Danh Sách Sản Phẩm Thymeleaf (<code>/products</code>)
+                            </a>
+                            <a href="/dashboard" class="btn btn-outline-primary btn-sm text-start">
+                                <i class="bi bi-speedometer2 me-2"></i> 2. Xem Giao Diện Admin Dashboard (<code>/dashboard</code>)
+                            </a>
+                            <a href="/table-demo" class="btn btn-outline-secondary btn-sm text-start">
+                                <i class="bi bi-check2-square me-2"></i> 3. Demo Bảng Chọn Dòng JavaScript (<code>/table-demo</code>)
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bai 2: independent_web -->
+                <div class="col-md-6">
+                    <div class="card h-100 p-3 border-0 bg-light shadow-sm">
+                        <div class="d-flex align-items-center mb-2">
+                            <span class="badge bg-success me-2 px-3 py-2 fs-6">Bài 2</span>
+                            <h5 class="fw-bold mb-0 text-dark">independent_web (Khoa & Sinh viên)</h5>
+                        </div>
+                        <p class="text-muted small mb-3">
+                            Thực hành quan hệ 1-Nhiều (One-to-Many: 1 Khoa có nhiều Sinh viên), liên kết URL động với <code>@PathVariable</code>:
+                        </p>
+                        <div class="d-flex flex-column gap-2">
+                            <a href="/faculties" class="btn btn-success btn-sm text-start">
+                                <i class="bi bi-diagram-3 me-2"></i> 1. Xem Danh Sách Các Khoa (<code>/faculties</code>)
+                            </a>
+                            <a href="/faculties/1/students" class="btn btn-outline-success btn-sm text-start">
+                                <i class="bi bi-people me-2"></i> 2. Xem Sinh Viên Khoa CNTT (<code>/faculties/1/students</code>)
+                            </a>
+                            <a href="/faculties/2/students" class="btn btn-outline-success btn-sm text-start">
+                                <i class="bi bi-people me-2"></i> 3. Xem Sinh Viên Khoa Cơ Khí (<code>/faculties/2/students</code>)
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
 
     </main>
 

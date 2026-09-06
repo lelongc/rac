@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Table Row Selection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f9f9f9;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        th,
+        td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        /* Hover effect to show interactivity */
+        
+        tbody tr {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+        /* Active style for the selected row */
+        
+        tbody tr.selected {
+            background-color: #d1ecf1 !important;
+            color: #0c5460;
+            font-weight: bold;
+        }
+        
+        .output-box {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e2e3e5;
+            border-radius: 4px;
+            border: 1px solid #d6d8db;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Click a row to select a record</h2>
+
+    <table id="myTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- We store the unique database identifier in the data-id attribute -->
+            <tr data-id="101">
+                <td>101</td>
+                <td>Alice Smith</td>
+                <td>Admin</td>
+            </tr>
+            <tr data-id="102">
+                <td>102</td>
+                <td>Bob Jones</td>
+                <td>Developer</td>
+            </tr>
+            <tr data-id="103">
+                <td>103</td>
+                <td>Charlie Brown</td>
+                <td>Designer</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="output-box" id="output">
+        No record selected yet. Click a row above!
+    </div>
+
+    <script>
+        const table = document.getElementById('myTable');
+        const output = document.getElementById('output');
+
+        // Listen for clicks on the entire table (Event Delegation)
+        table.addEventListener('click', (event) => {
+            // Find the closest <tr> to the clicked element (handles clicking cell text or spacing)
+            const row = event.target.closest('tr');
+
+            // Ensure the click happened inside the <tbody> (ignoring the <thead> header row)
+            if (row && row.parentElement.tagName === 'TBODY') {
+
+                // 1. Extract data from the row
+                const recordId = row.dataset.id; // Pulls from data-id
+                const name = row.cells[1].textContent; // Second cell (index 1)
+                const role = row.cells[2].textContent; // Third cell (index 2)
+
+                // 2. Display the selected data in the output box
+                output.innerHTML = `<strong>Selected Record:</strong> ID: ${recordId} | Name: ${name} | Role: ${role}`;
+
+                // 3. Toggle visual highlighting classes
+                // Remove 'selected' from any row that currently has it
+                document.querySelectorAll('#myTable tbody tr').forEach(tr => {
+                    tr.classList.remove('selected');
+                });
+                // Add 'selected' to the clicked row
+                row.classList.add('selected');
+            }
+        });
+    </script>
+
+</body>
+
+</html>

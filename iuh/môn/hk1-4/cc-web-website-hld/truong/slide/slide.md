@@ -46,27 +46,27 @@ b1/ tìm virtual restful api có hỗ trợ hình ảnh
 b2/ dựa vào virtual restful api trên , viết app Single Page App spa quảng cáo sản phẩm , có các chức năng thêm xóa sửa, tìm kiếm ,
 thử fake rest api
 
-
 tuần 3
 
 thiết kế lại giao diện dùng bootstrap kết hợp thymeleaf , thymeleaf là view engine , bootstrap là css framework
 
-
 master-n-detail(tên gọi chức năng của trang) + template
 
-thymeleaf + bootstrap 
+thymeleaf + bootstrap
 
-tìm hiểu cách nhúng dữ liệu vào trang , cách chia theo quy định của thymeleaf 
+tìm hiểu cách nhúng dữ liệu vào trang , cách chia theo quy định của thymeleaf
 
 ### 📊 CÁC CÁCH TRÌNH BÀY DỮ LIỆU TRÊN GIAO DIỆN WEB (DATA PRESENTATION LAYOUTS)
 
 ---
 
 #### 1. Dạng Bảng Dữ Liệu Chuẩn (Datasheet / Tabular Layout)
+
 - **Đặc điểm**: Dữ liệu hiển thị dạng bảng lưới gồm các hàng (rows) và cột (columns), mỗi dòng là 1 bản ghi (record).
 - **Ứng dụng**: Danh sách sản phẩm, bảng quản lý tài khoản, danh sách sinh viên.
 
 **🖼️ Hình vẽ minh họa:**
+
 ```text
 ┌──────┬──────────────────────────┬────────────┬───────────┬──────────────┐
 │ ID   │ Tên Sản Phẩm             │ Đơn Giá    │ Số Lượng  │ Trạng Thái   │
@@ -78,6 +78,7 @@ tìm hiểu cách nhúng dữ liệu vào trang , cách chia theo quy định c�
 ```
 
 - **Mã ví dụ Thymeleaf + Bootstrap**:
+
 ```html
 <table class="table table-bordered table-hover shadow-sm">
     <thead class="table-dark">
@@ -109,10 +110,12 @@ tìm hiểu cách nhúng dữ liệu vào trang , cách chia theo quy định c�
 ---
 
 #### 2. Dạng Phân Nhóm Chính - Phụ (Master - Detail / Main - Sub Layout)
+
 - **Đặc điểm**: Trình bày dữ liệu phân cấp quan hệ **1 - Nhiều (1-N)**. Mỗi nhóm chính (**Master/Main**) đại diện cho thực thể cha, bên dưới chứa danh sách chi tiết các thực thể con (**Detail/Sub**).
 - **Ứng dụng**: Liệt kê danh sách nhân viên theo từng phòng ban, hóa đơn kèm danh sách món hàng, danh mục kèm các bài viết thuộc danh mục đó.
 
 **🖼️ Hình vẽ minh họa:**
+
 ```text
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │ 🏢 PHÒNG BAN: PHÒNG KỸ THUẬT (Mã: PB01 - Trưởng phòng: Hoàng Đại Dương)    │  <-- MASTER (Main)
@@ -133,6 +136,7 @@ tìm hiểu cách nhúng dữ liệu vào trang , cách chia theo quy định c�
 ```
 
 - **Mã ví dụ Thymeleaf lồng nhau (Nested `th:each`)**:
+
 ```html
 <!-- 1. Vòng lặp cấp 1: Lặp qua từng Phòng Ban (Master) -->
 <div th:each="dept : ${departments}" class="card mb-4 shadow-sm border-primary">
@@ -170,10 +174,12 @@ tìm hiểu cách nhúng dữ liệu vào trang , cách chia theo quy định c�
 ---
 
 #### 3. Dạng Ma Trận / Bảng Chéo (Crosstab / Pivot Table - Chuyển Dòng ⇄ Cột)
+
 - **Đặc điểm**: Xoay chiều dữ liệu (Transpose / Pivot), biến giá trị các dòng thành các tiêu đề cột (hoặc ngược lại) để phân tích đối chiếu đa chiều.
 - **Ứng dụng**: Bảng chấm công theo ngày trong tháng, báo cáo doanh số theo tháng, bảng điểm sinh viên theo môn học.
 
 **🖼️ Hình vẽ minh họa:**
+
 ```text
 ┌──────────────────────┬─────────────┬─────────────┬─────────────┬──────────────┐
 │ Nhân Viên \ Tháng    │ Tháng 1     │ Tháng 2     │ Tháng 3     │ Tổng Doanh Số│  <-- Tiêu đề cột động
@@ -187,6 +193,7 @@ tìm hiểu cách nhúng dữ liệu vào trang , cách chia theo quy định c�
 ```
 
 - **Mã ví dụ Thymeleaf**:
+
 ```html
 <table class="table table-bordered text-center align-middle shadow-sm">
     <thead class="table-secondary">
@@ -211,10 +218,12 @@ tìm hiểu cách nhúng dữ liệu vào trang , cách chia theo quy định c�
 ---
 
 #### 4. Dạng Lưới Thẻ / X Cột Nhiều Dòng (Card Grid Layout - Responsive Matrix)
+
 - **Đặc điểm**: Dữ liệu trực quan gồm cả hình ảnh, badge, mô tả được xếp theo lưới đa cột (Grid: ví dụ 3 cột trên Desktop, 2 cột trên Tablet, 1 cột trên Mobile), tự động xuống hàng theo số lượng bản ghi.
 - **Ứng dụng**: Danh mục sản phẩm e-commerce, danh sách tin tức/blog, danh bạ nhân sự.
 
 **🖼️ Hình vẽ minh họa:**
+
 ```text
 ┌─────────────────────────┐  ┌─────────────────────────┐  ┌─────────────────────────┐
 │ 🖼️ [ Hình Ảnh Laptop ]  │  │ 🖼️ [ Hình Ảnh Chuột ]   │  │ 🖼️ [ Hình Ảnh Bàn Phím] │
@@ -236,6 +245,7 @@ tìm hiểu cách nhúng dữ liệu vào trang , cách chia theo quy định c�
 ```
 
 - **Mã ví dụ Thymeleaf + Bootstrap Grid System**:
+
 ```html
 <div class="container my-4">
     <!-- row-cols thiết lập: 1 cột (mobile), 2 cột (tablet), 3 cột (desktop) -->
@@ -259,3 +269,7 @@ tìm hiểu cách nhúng dữ liệu vào trang , cách chia theo quy định c�
 </div>
 ```
 
+
+[github.com/baphuc/basic_web](https://github.com/baphuc/basic_web)
+
+github.com/baphuc/independent_web
