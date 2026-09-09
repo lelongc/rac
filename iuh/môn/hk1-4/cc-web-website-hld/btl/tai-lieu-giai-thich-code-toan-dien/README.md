@@ -21,7 +21,10 @@ Bộ tài liệu này được biên soạn độc quyền và chi tiết từ d
 
 ---
 
-## 📚 MỤC LỤC TỔNG QUAN HỆ THỐNG TÀI LIỆU
+### 📂 [THƯ MỤC 00: NHẬP MÔN CHO NGƯỜI CHƯA BIẾT GÌ VỀ WEB](./00-nhap-mon-cho-nguoi-chua-biet-gi/)
+- [01-Tu-Dien-Thuat-Ngu-Web-Va-Spring-Boot-Binh-Dan-Hoc-Vu.md](./00-nhap-mon-cho-nguoi-chua-biet-gi/01-Tu-Dien-Thuat-Ngu-Web-Va-Spring-Boot-Binh-Dan-Hoc-Vu.md): **Bắt buộc đọc đầu tiên:** Giải thích hơn 40 thuật ngữ kỹ thuật hóc búa (API, JSON, JWT, Stateless, Bean, DI, DTO, BCrypt, H2, ORM) bằng các hình ảnh đời thường bình dân học vụ cực kỳ dễ hiểu.
+- [02-Ban-Do-Vong-Doi-Va-Tat-Ca-Cac-Luong-Du-Lieu-He-Thong.md](./00-nhap-mon-cho-nguoi-chua-biet-gi/02-Ban-Do-Vong-Doi-Va-Tat-Ca-Cac-Luong-Du-Lieu-He-Thong.md): **Trọng tâm luồng chạy:** 7 Sơ đồ tuần tự trực quan (Mermaid Sequence Diagrams) mô tả từng bước đi của dữ liệu từ nút bấm Client ➔ Bảo mật ➔ Controller ➔ Service ➔ Repository ➔ CSDL.
+- [03-Bang-Tra-Cuu-Giang-Vien-Hoi-Gi-Mo-Dung-File-Nay.md](./00-nhap-mon-cho-nguoi-chua-biet-gi/03-Bang-Tra-Cuu-Giang-Vien-Hoi-Gi-Mo-Dung-File-Nay.md): **Phao cứu sinh phòng thi:** Bảng tra cứu 25+ câu hỏi giảng viên hay hỏi ➔ Mở chính xác file nào, dòng bao nhiêu trong 1 giây ➔ Đọc câu thoại mẫu điểm 10.
 
 ### 📂 [THƯ MỤC 01: TỔNG QUAN KIẾN TRÚC HỆ THỐNG](./01-tong-quan-kien-truc/)
 - [01-Kien-Truc-He-Thong-Spring-Boot-Va-Mo-Hinh-3-Tier.md](./01-tong-quan-kien-truc/01-Kien-Truc-He-Thong-Spring-Boot-Va-Mo-Hinh-3-Tier.md): Giải thích mô hình 3 lớp (Controller - Service - Repository), vòng đời của một HTTP Request, cơ chế Stateless và DTO Pattern.
@@ -78,6 +81,7 @@ Bộ tài liệu này được biên soạn độc quyền và chi tiết từ d
 - [01-Kich-Ban-Thuyet-Trinh-Demo-BTL-5-Phut.md](./09-cam-nang-van-dap-diem-10/01-Kich-Ban-Thuyet-Trinh-Demo-BTL-5-Phut.md): Kịch bản phân vai và từng câu thoại chuẩn mực khi demo trực tiếp 5 phút trước hội đồng.
 - [02-Top-50-Cau-Hoi-Van-Dap-Giang-Vien-Hay-Hoi-Nhat.md](./09-cam-nang-van-dap-diem-10/02-Top-50-Cau-Hoi-Van-Dap-Giang-Vien-Hay-Hoi-Nhat.md): **Bộ 50 câu hỏi trắc nghiệm miệng & câu hỏi chuyên sâu** bao quát 100% mọi tình huống giảng viên hay hỏi kèm câu trả lời chuẩn xác nhất.
 - [03-Huong-Dan-Debug-Va-Sua-Code-Truc-Tiep-Khi-Giang-Vien-Yeu-Cau.md](./09-cam-nang-van-dap-diem-10/03-Huong-Dan-Debug-Va-Sua-Code-Truc-Tiep-Khi-Giang-Vien-Yeu-Cau.md): Hướng dẫn Live Coding trong 2 phút: Thêm trường mới, đổi luật validate, phân quyền API, đổi cổng server và cách mở trực tiếp CSDL H2 Console để giải thích dữ liệu.
+- [04-Bi-Kip-Tam-Ly-Va-Ky-Nang-Ung-Bien-Khi-Bi-Hoi-Cau-Kho.md](./09-cam-nang-van-dap-diem-10/04-Bi-Kip-Tam-Ly-Va-Ky-Nang-Ung-Bien-Khi-Bi-Hoi-Cau-Kho.md): **Chiến thuật phòng thi:** Nghệ thuật câu giờ thông minh 10-15s khi gặp câu hỏi khó, xử lý "hiệu ứng demo" khi web bị lỗi, và kỹ thuật chuyển hướng về vùng tự tin.
 
 ### 📂 [THƯ MỤC 10: KIỂM THỬ VÀ TRIỂN KHAI](./10-kiem-thu-va-trien-khai/)
 - [01-Kiem-Thu-Tu-Dong-SpringBootTest-Va-Ma-Tran-TestCase.md](./10-kiem-thu-va-trien-khai/01-Kiem-Thu-Tu-Dong-SpringBootTest-Va-Ma-Tran-TestCase.md): Cơ chế chạy `@SpringBootTest`, bài kiểm thử Context Sanity, Ma trận Test Cases hoàn chỉnh (Auth, Blog, Interaction, Admin) và hướng dẫn viết Integration Test với MockMvc.
@@ -86,10 +90,10 @@ Bộ tài liệu này được biên soạn độc quyền và chi tiết từ d
 ---
 
 ## ⚡ LỘ TRÌNH ÔN THI CẤP TỐC DÀNH CHO THÀNH VIÊN NHÓM
-- **Ngày 1**: Đọc lướt Thư mục 01 (Tổng quan kiến trúc) + Thư mục 03 (Entities). Mở H2 Console xem các bảng trong DB.
-- **Ngày 2**: Đọc Thư mục 02 (Bảo mật SecurityConfig) + Thư mục 05 (Services). Nắm chắc luồng tạo bài viết và xác thực JWT.
-- **Ngày 3**: Đọc Thư mục 06 (Controllers) + Thư mục 07 (Exceptions, DTO, Mappers).
-- **Ngày 4**: Đọc Thư mục 08 (Frontend JS, HTML, CSS) + Thư mục 10 (Kiểm thử & Triển khai). Tập dượt kịch bản demo 5 phút trên 2 trình duyệt.
-- **Ngày 5**: Học thuộc lòng file `09.02-Top-50-Cau-Hoi-Van-Dap-Giang-Vien-Hay-Hoi-Nhat.md` và thực hành thử 6 tình huống Live Coding trong file `09.03`.
+- **Ngày 1 (Nhập môn & Nắm luồng dữ liệu)**: Đọc toàn bộ **Thư mục 00** (Từ điển thuật ngữ bình dân + Bản đồ 7 luồng dữ liệu + Bảng tra cứu) + **Thư mục 01** (Kiến trúc 3 lớp & Thymeleaf). Sau ngày này, bạn sẽ hiểu 80% cách website vận hành!
+- **Ngày 2 (Bảo mật & CSDL)**: Đọc **Thư mục 02** (Bảo mật SecurityConfig & Token JWT) + **Thư mục 03** (Entities) + **Thư mục 04** (Repositories). Mở H2 Console để xem các bảng dữ liệu thực tế.
+- **Ngày 3 (Nghiệp vụ Backend)**: Đọc **Thư mục 05** (Services) + **Thư mục 06** (Controllers) + **Thư mục 07** (Exceptions, DTO, Mappers). Nắm chắc luồng tạo bài viết, like, comment, và đổi mật khẩu.
+- **Ngày 4 (Giao diện & Kiểm thử)**: Đọc **Thư mục 08** (Frontend JS, HTML, CSS) + **Thư mục 10** (Kiểm thử & Triển khai). Tập dượt kịch bản demo 5 phút trên 2 trình duyệt.
+- **Ngày 5 (Tổng diễn tập điểm 10)**: Học thuộc lòng file `09.02-Top-50-Cau-Hoi-Van-Dap-Giang-Vien-Hay-Hoi-Nhat.md`, thực hành 6 tình huống Live Coding trong file `09.03` và ghi nhớ các mẹo ứng biến trong file `09.04`.
 
 Chúc nhóm bảo vệ thành công rực rỡ và đạt điểm 10 tuyệt đối! 🎓🎉
