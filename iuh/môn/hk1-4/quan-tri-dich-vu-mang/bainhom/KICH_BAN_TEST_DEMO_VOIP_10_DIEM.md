@@ -3,7 +3,7 @@
 
 **Môn học:** Quản trị dịch vụ mạng  
 **Đơn vị:** Đại học Công nghiệp TP.HCM (IUH)  
-**Địa chỉ Server IP hiện tại:** `10.160.130.164` (Wi-Fi Hotspot) / `192.168.1.100` (LAN nội bộ)
+**Địa chỉ Server IP hiện tại:** `10.245.3.165` (Wi-Fi Hotspot) / `192.168.1.100` (LAN nội bộ)
 
 ---
 
@@ -13,8 +13,8 @@
 | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
 | **Win 7 - Máy 1** | Máy ảo VMware (MicroSIP) | `101` / `123456` | `192.168.1.100` | **`101`** | - | **Giám Đốc** (Quyền cao nhất) |
 | **Win 7 - Máy 2** | Máy ảo VMware (MicroSIP) | `102` / `123456` | `192.168.1.100` | **`102`** | - | **Phòng Kinh Doanh** |
-| **Điện thoại 1** | Smartphone thật (Sipnetic/Zoiper) | `103` / `123456` | `10.160.130.164` | **`103`** | **`0987214065`** | **Di động Cá nhân 1** |
-| **Điện thoại 2** | Smartphone thật (Sipnetic/Zoiper) | `104` / `123456` | `10.160.130.164` | **`104`** | **`0981647882`** | **Di động Cá nhân 2** |
+| **Điện thoại 1** | Smartphone thật (Sipnetic/Zoiper) | `103` / `123456` | `10.245.3.165` | **`103`** | **`0987214065`** | **Di động Cá nhân 1** |
+| **Điện thoại 2** | Smartphone thật (Sipnetic/Zoiper) | `104` / `123456` | `10.245.3.165` | **`104`** | **`0981647882`** | **Di động Cá nhân 2** |
 | **Số Tổng Đài** | Hệ thống tự động | - | - | **`100`** | - | **IVR Lời chào tương tác** |
 | **Số Gọi Nhóm** | Tính năng tổng đài | - | - | **`600`** | - | **Ring Group (Rung tất cả máy)** |
 

@@ -372,6 +372,7 @@ Trạm phát file sẽ chạy ngầm tại `http://192.168.1.100:8000`.
    ![1786073528659](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786073528659.png)
 3. Điền thông tin cấu hình:
    ![1786073494810](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786073494810.png)
+
    * **Account Name**: `Di động 103`
    * **User ID / Username**: `103`
    * **Domain / Server**: *Điền IP Card Bridged của Ubuntu (ví dụ: `10.45.80.164`)*
@@ -379,17 +380,17 @@ Trạm phát file sẽ chạy ngầm tại `http://192.168.1.100:8000`.
    * **Transport Protocol**: Chọn **UDP**
 4. Bấm **SAVE**. Biểu tượng tài khoản chuyển sang **Registered (Đã đăng ký màu xanh)** là hoàn tất Extension `103`!
 5. 
-
-1. **Bật Wi-Fi trên máy 104:**
+6. **Bật Wi-Fi trên máy 104:**
    Bắt vào **điểm phát sóng 4G (Hotspot)** mà máy **103** đang phát ra.
    *(Khi đó máy 104, máy 103 và máy chủ Asterisk đều đang nằm chung trong một mạng nội bộ).*
-2. **Mở App Zoiper (hoặc Grandstream Wave / Linphone) trên máy 104 và điền:**
+7. **Mở App Zoiper (hoặc Grandstream Wave / Linphone) trên máy 104 và điền:**
+
    * 👤 **Username / Account:** **`104`**
    * 🔑 **Password:** **`123456`**
    * 🌐 **Domain / Host / Server Provider:** **`10.107.17.164`**
      *(Đây chính là địa chỉ IP của máy chủ Asterisk Ubuntu trên mạng Wi-Fi Hotspot).*
    * 🔌 **Transport:** Chọn **UDP** (Port: `5060`).
-3. Bấm **Login / Register** ➔ Màn hình hiện **dấu tích xanh lá cây (Account is ready / Registered)** là thành công 100%!
+8. Bấm **Login / Register** ➔ Màn hình hiện **dấu tích xanh lá cây (Account is ready / Registered)** là thành công 100%!
 
 ---
 
@@ -403,7 +404,7 @@ Bảng đối chiếu kịch bản kiểm thử và kết quả thực nghiệm 
 | **2** | **Gọi Di động**               | Từ Win7 (`101` hoặc `102`), bấm gọi số **`103`**.<br />*(Trong video 1)*<br />![1786035889567](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786035889567.png)                                                                                                    | App Sipnetic trên điện thoại di động reo chuông, nhấc máy nghe rõ âm thanh 2 chiều thông suốt.                                                                                            | **ĐẠT (OK)** |
 | **3** | **Nhắn tin (SIP Messaging)**    | Trên MicroSIP (máy`101`), mở tab **Messages**, nhập số nhận `103`, gõ văn bản và bấm **Send**.<br />![1786076984167](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786076984167.png)![1786077008514](image/HUONG_DAN_VOIP_STEP_BY_STEP/1786077008514.png) | App Sipnetic trên điện thoại (`103`) nhận được tin nhắn POP-UP tức thì với đúng nội dung văn bản.                                                                                    | **ĐẠT (OK)** |
 | **4** | **Chặn cuộc gọi (Blacklist)** | **Lượt 1**: Từ Giám đốc (`101`) gọi Nhân viên (`102` hoặc `103`).<br />**Lượt 2**: Từ Nhân viên (`102` hoặc `103`) gọi lại Giám đốc (`101`).<br />*(Trong video 1)*                                                        | **Lượt 1**: Gọi thành công, đàm thoại bình thường.<br />**Lượt 2**: Cuộc gọi bị **CHẶN** lập tức, nghe âm báo không dịch vụ (`ss-noservice`) và tự ngắt. | **ĐẠT (OK)** |
-| **5** | **Gửi Gmail cuộc gọi nhỡ**   | Gọi số**`100`** (IVR) -> Bấm phím `1` chuyển sang Giám đốc (`101`). Máy `101` không nghe máy. Sau 20s tự chuyển sang Voicemail. Để lại lời nhắn rồi cúp máy.<br />*(Trong video 4)*                                                  | Asterisk tự động đóng gói file âm thanh`.wav` và gửi 1 Email báo cuộc gọi nhỡ đến Gmail đã cấu hình.                                                                               | **ĐẠT (OK)** |
+| **5** | **Gửi Gmail cuộc gọi nhỡ**   | Gọi số**`100`** (IVR) -> Bấm phím `1` chuyển sang Giám đốc (`101`). Máy `101` không nghe máy. Sau 20s tự chuyển sang Voicemail. Để lại lời nhắn rồi cúp máy.<br />*(Trong video 4)*                                                        | Asterisk tự động đóng gói file âm thanh`.wav` và gửi 1 Email báo cuộc gọi nhỡ đến Gmail đã cấu hình.                                                                               | **ĐẠT (OK)** |
 | **6** | **Gọi Tổng đài (IVR)**       | Từ bất kỳ extension nào (`101`, `102`, `103`), bấm gọi số **`100`**.<br />*(Trong video 2)*                                                                                                                                                        | Nghe lời chào tự động: Phím`1` chuyển sang Giám đốc (`101`), Phím `2` chuyển sang Phòng KD (`102`).                                                                                | **ĐẠT (OK)** |
 
 ---
