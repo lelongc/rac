@@ -269,7 +269,8 @@ tìm hiểu cách nhúng dữ liệu vào trang , cách chia theo quy định c�
 </div>
 ```
 
-
 [github.com/baphuc/basic_web](https://github.com/baphuc/basic_web)
 
 github.com/baphuc/independent_web
+
+dựa vào link trên , thêm , sửa , xóa
