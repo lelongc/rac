@@ -11,12 +11,8 @@ import java.util.List;
 @Controller
 public class ProductController {
 
-    @GetMapping("/")
-    public String index() {
-        return "redirect:/products";
-    }
-
-    @GetMapping("/products")
+    // 1. Danh sách sản phẩm: Hỗ trợ mọi biến thể URL thường gặp để chống lỗi 404
+    @GetMapping({"/", "/products", "/product", "/product-list", "/product_list", "/home", "/index"})
     public String getProducts(Model model) {
         List<Product> productList = Arrays.asList(
                 new Product(1L, "Laptop Dell XPS 15", 999.99),
@@ -29,12 +25,14 @@ public class ProductController {
         return "product_list";
     }
 
-    @GetMapping("/dashboard")
+    // 2. Giao diện Admin Dashboard
+    @GetMapping({"/dashboard", "/admin", "/admin/dashboard"})
     public String getDashboard() {
         return "dashboard";
     }
 
-    @GetMapping("/table-demo")
+    // 3. Demo bảng tương tác
+    @GetMapping({"/table-demo", "/table", "/abc"})
     public String getTableDemo() {
         return "abc";
     }

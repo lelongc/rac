@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Trang Không Tồn Tại | Bài 5 Basic Web</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f6f9;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .error-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            max-width: 550px;
+            width: 100%;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        .error-code {
+            font-size: 72px;
+            font-weight: 800;
+            color: #ef4444;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+        .error-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #1f2937;
+        }
+        .error-desc {
+            font-size: 15px;
+            color: #6b7280;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .btn-link {
+            display: block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: background 0.2s;
+        }
+        .btn-link:hover { background: #1d4ed8; }
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+        .btn-secondary:hover { background: #e5e7eb; }
+        .port-notice {
+            margin-top: 25px;
+            font-size: 13px;
+            color: #9ca3af;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="error-card">
+    <div class="error-code">404</div>
+    <h1 class="error-title">Đường Dẫn Không Tồn Tại</h1>
+    <p class="error-desc">
+        Đường dẫn bạn vừa truy cập không có trong hệ thống. Vui lòng bấm vào một trong các liên kết hợp lệ của <strong>Bài 5 (b5_basic_web)</strong> dưới đây:
+    </p>
+
+    <div class="nav-links">
+        <a href="/products" class="btn-link">📦 Xem Bảng Danh Sách Sản Phẩm (/products)</a>
+        <a href="/dashboard" class="btn-link btn-secondary">📊 Xem Giao Diện Admin Dashboard (/dashboard)</a>
+        <a href="/table-demo" class="btn-link btn-secondary">🖱️ Xem Trang Table Demo Tương Tác (/table-demo)</a>
+    </div>
+
+    <div class="port-notice">
+        Lưu ý: Ứng dụng Bài 5 đang chạy tại cổng <strong>8081</strong> (http://localhost:8081).
+    </div>
+</div>
+
+</body>
+</html>
