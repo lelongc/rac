@@ -1,11 +1,15 @@
-version: '3.8'
+# ==============================================================================
+# HỆ THỐNG PHÂN TÁN IUH - DOCKER COMPOSE CHAT SOCKET ĐA CONTAINER
+# Chạy nhiều container (Server + Client 1 + Client 2) TỪ CHUNG 1 IMAGE DUY NHẤT:
+# Image: shima594/socket-chat:latest
+# ==============================================================================
 
 services:
+  # ----------------------------------------------------------------------------
+  # 1. CONTAINER SERVER: Lắng nghe kết nối và điều phối broadcast tin nhắn
+  # ----------------------------------------------------------------------------
   chat-server:
-    image: shima594/chat-server:latest
-    build:
-      context: .
-      dockerfile: Dockerfile.server
+    image: shima594/socket-chat:latest
     container_name: socket-chat-server
     ports:
       - "5000:5000"
@@ -13,6 +17,43 @@ services:
     networks:
       - chat-net
 
+  # ----------------------------------------------------------------------------
+  # 2. CONTAINER CLIENT 1: Dùng CHUNG image, chạy ở chế độ Client kết nối Server
+  # ----------------------------------------------------------------------------
+  client-1:
+    image: shima594/socket-chat:latest
+    container_name: socket-chat-client-1
+    command: ["client"]
+    environment:
+      - SERVER_HOST=chat-server
+      - SERVER_PORT=5000
+      - CHAT_USER=SinhVien_A
+    depends_on:
+      - chat-server
+    stdin_open: true  # Tương đương cờ -i (interactive)
+    tty: true         # Tương đương cờ -t (terminal tty)
+    networks:
+      - chat-net
+
+  # ----------------------------------------------------------------------------
+  # 3. CONTAINER CLIENT 2: Dùng CHUNG image, chạy thêm 1 Client khác để chat
+  # ----------------------------------------------------------------------------
+  client-2:
+    image: shima594/socket-chat:latest
+    container_name: socket-chat-client-2
+    command: ["client"]
+    environment:
+      - SERVER_HOST=chat-server
+      - SERVER_PORT=5000
+      - CHAT_USER=SinhVien_B
+    depends_on:
+      - chat-server
+    stdin_open: true  # Tương đương cờ -i (interactive)
+    tty: true         # Tương đương cờ -t (terminal tty)
+    networks:
+      - chat-net
+
+# Mạng nội bộ cho phép các container tự tìm thấy nhau qua tên service (chat-server)
 networks:
   chat-net:
     driver: bridge
