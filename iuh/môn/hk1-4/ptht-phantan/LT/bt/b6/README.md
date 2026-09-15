@@ -1,5 +1,6 @@
 # BÀI TẬP 4 & 5: CHAT CLIENT-SERVER BẰNG SOCKET TRONG DOCKER
-**Học phần:** Phát triển hệ thống phân tán - IUH (Đại học Công nghiệp TP.HCM)  
+
+**Học phần:** Phát triển hệ thống phân tán - IUH (Đại học Công nghiệp TP.HCM)
 **Tài khoản Docker Hub:** `shima594`
 
 ---
@@ -7,6 +8,7 @@
 ## 📌 1. THÔNG TIN NỘP BÀI DOCKER HUB (THEO YÊU CẦU CỦA CÔ)
 
 ### 🔹 Image 1: CHAT SERVER
+
 * **Link Docker Hub:** [https://hub.docker.com/r/shima594/chat-server](https://hub.docker.com/r/shima594/chat-server)
 * **Lệnh kéo Image (Pull):**
   ```bash
@@ -16,11 +18,13 @@
   ```bash
   docker run -d -p 5000:5000 --name socket-chat-server shima594/chat-server:latest
   ```
+
   *(Server sẽ lắng nghe kết nối TCP trên cổng 5000 và ghi log kết nối/broadcast)*
 
 ---
 
 ### 🔹 Image 2: CHAT CLIENT
+
 * **Link Docker Hub:** [https://hub.docker.com/r/shima594/chat-client](https://hub.docker.com/r/shima594/chat-client)
 * **Lệnh kéo Image (Pull):**
   ```bash
@@ -62,6 +66,7 @@ b6/
 ## 🚀 3. HƯỚNG DẪN CHẠY VÀ KIỂM THỬ TRÊN IDE HOẶC LOCAL JAVA
 
 ### Cách 1: Chạy bằng Java thuần (CLI / IDE Eclipse / VS Code / IntelliJ)
+
 1. **Biên dịch:**
    ```bash
    javac -encoding UTF-8 ChatServer.java ChatClient.java
@@ -82,15 +87,21 @@ b6/
 ---
 
 ## 🐳 4. HƯỚNG DẪN CHẠY BẰNG DOCKER COMPOSE
+
 Chỉ cần 1 lệnh để dựng Server:
+
 ```bash
 docker compose up -d
 ```
+
 Xem log Server trực tiếp:
+
 ```bash
 docker logs -f socket-chat-server
 ```
+
 Dừng hệ thống:
+
 ```bash
 docker compose down
 ```
@@ -98,7 +109,9 @@ docker compose down
 ---
 
 ## ✅ 5. KẾT QUẢ KIỂM THỬ THỰC TẾ (TEST LOG)
+
 Chương trình đã được kiểm thử thực tế trên Docker Desktop:
+
 ```
 [SERVER] Đang khởi động Server trên cổng: 5000...
 [SERVER] Server đã sẵn sàng lắng nghe kết nối từ các Client!
@@ -111,4 +124,5 @@ Chương trình đã được kiểm thử thực tế trên Docker Desktop:
 [LOG TIN NHẮN] [13:13:42] SinhVien_A: Xin chao ca lop PTHT!
 [LOG TIN NHẮN] [13:13:42] SinhVien_B: Chao A, minh da nhan duoc tin!
 ```
+
 Client gửi tin nhắn $\to$ Server broadcast ngay lập tức tới tất cả client khác trong phòng theo đúng yêu cầu slide đề bài.
