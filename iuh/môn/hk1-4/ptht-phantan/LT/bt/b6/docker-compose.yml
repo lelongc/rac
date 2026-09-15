@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  chat-server:
+    image: shima594/chat-server:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    container_name: socket-chat-server
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    networks:
+      - chat-net
+
+networks:
+  chat-net:
+    driver: bridge
