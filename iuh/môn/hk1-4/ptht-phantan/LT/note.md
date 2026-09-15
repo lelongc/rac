@@ -1,1 +1,1 @@
-rmi tcp udp
+rmi tcp udp gk
