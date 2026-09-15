@@ -1,57 +1,93 @@
 # THÔNG TIN NỘP BÀI TẬP SOCKET CHAT DOCKER (BÀI 4 & 5)
-
-(Dùng để copy-paste nộp vào form / link nộp bài của cô)
-
----
-
-### THÔNG TIN TÀI KHOẢN DOCKER HUB:
-
-* **Docker Hub Username:** `shima594`
+**Học phần:** Phát triển hệ thống phân tán - IUH  
+**Docker Hub Username:** `shima594`
 
 ---
 
-### LINK VÀ LỆNH PULL IMAGE 1: SERVER
+## 🌟 PHƯƠNG ÁN 1: CHẠY GỘP TOÀN BỘ HỆ THỐNG TỪ 1 IMAGE DUY NHẤT (THEO ĐÚNG Ý CÔ)
+> **Ưu điểm:** Chỉ cần 1 Image duy nhất `shima594/socket-chat:latest` là có thể tự động sinh ra cả Server và nhiều Client cùng lúc thông qua `docker-compose.yml` hoặc dòng lệnh Docker thông thường.
 
-* **Link Image Docker Hub:** https://hub.docker.com/r/shima594/chat-server
+* **Link Image trên Docker Hub:** [https://hub.docker.com/r/shima594/socket-chat](https://hub.docker.com/r/shima594/socket-chat)
+* **Lệnh kéo Image về máy (Pull):**
+  ```bash
+  docker pull shima594/socket-chat:latest
+  ```
+
+### Cách 1.1: Khởi chạy gộp tự động bằng Docker Compose (Khuyên dùng)
+1. **Khởi động cùng lúc Server và 2 Client:**
+   ```bash
+   docker compose up -d
+   ```
+2. **Xem Server nhận kết nối và ghi nhận log:**
+   ```bash
+   docker logs socket-chat-server
+   ```
+3. **Mở terminal để chat trực tiếp:**
+   - Chat với vai trò **Client 1**:
+     ```bash
+     docker attach socket-chat-client-1
+     ```
+   - Chat với vai trò **Client 2** (mở thêm terminal khác):
+     ```bash
+     docker attach socket-chat-client-2
+     ```
+4. **Dừng và dọn dẹp hệ thống khi xong:**
+   ```bash
+   docker compose down
+   ```
+
+### Cách 1.2: Chạy lẻ từng container thủ công từ 1 Image này
+* **Chạy Server:**
+  ```bash
+  docker run -d -p 5000:5000 --name socket-chat-server shima594/socket-chat:latest
+  ```
+* **Chạy Client (mở nhiều terminal để chat đa máy/đa người dùng):**
+  ```bash
+  docker run -it --rm --network host shima594/socket-chat:latest client
+  ```
+
+---
+
+## 📋 PHƯƠNG ÁN 2: DÀNH CHO FORM NỘP BÀI YÊU CẦU 2 LINK IMAGE TÁCH RỜI
+
+### 🔹 Image 1: CHAT SERVER
+* **Link Image Docker Hub:** [https://hub.docker.com/r/shima594/chat-server](https://hub.docker.com/r/shima594/chat-server)
 * **Lệnh pull image:**
   ```bash
   docker pull shima594/chat-server:latest
   ```
-* **Lệnh khởi chạy Server:**
+* **Lệnh chạy Server:**
   ```bash
   docker run -d -p 5000:5000 --name socket-chat-server shima594/chat-server:latest
   ```
 
----
-
-### LINK VÀ LỆNH PULL IMAGE 2: CLIENT
-
-* **Link Image Docker Hub:** https://hub.docker.com/r/shima594/chat-client
+### 🔹 Image 2: CHAT CLIENT
+* **Link Image Docker Hub:** [https://hub.docker.com/r/shima594/chat-client](https://hub.docker.com/r/shima594/chat-client)
 * **Lệnh pull image:**
   ```bash
   docker pull shima594/chat-client:latest
   ```
-* **Lệnh khởi chạy Client (chạy ở nhiều terminal để chat đa người dùng):**
+* **Lệnh chạy Client:**
   ```bash
   docker run -it --rm --network host shima594/chat-client:latest
   ```
 
 ---
 
-### TÓM TẮT CHỨC NĂNG ĐÃ THỰC HIỆN:
-
+## ⚙️ TÓM TẮT CHỨC NĂNG KỸ THUẬT ĐÃ HOÀN THÀNH:
 1. **Server (`ChatServer.java`):**
+   - Sử dụng `ServerSocket` TCP cổng `5000`.
+   - Phục vụ nhiều Client đồng thời qua cơ chế đa luồng (Multi-threading).
+   - Quản lý danh sách kết nối thread-safe bằng `CopyOnWriteArrayList`.
+   - Nhận tin nhắn từ bất kỳ Client nào $\to$ Broadcast thời gian thực tới tất cả các Client khác trong phòng chat kèm dấu thời gian `[HH:mm:ss]`.
+   - Xử lý mượt mà sự kiện tham gia phòng và rời phòng khi gõ `exit`/`quit`.
 
-   - Sử dụng `ServerSocket` lắng nghe cổng `5000`.
-   - Phục vụ đa Client đồng thời bằng kỹ thuật Multi-threading (mỗi client 1 luồng riêng biệt).
-   - Quản lý danh sách Client an toàn với `CopyOnWriteArrayList`.
-   - Khi bất kỳ Client nào gửi tin nhắn $\to$ Server tự động broadcast đến tất cả các Client khác kèm mốc thời gian và tên người gửi.
-   - Xử lý thông báo khi Client tham gia hoặc thoát phòng (`exit`/`quit`).
 2. **Client (`ChatClient.java`):**
-
    - Kết nối Socket tới Server.
-   - Thiết kế 2 luồng độc lập: 1 luồng chuyên lắng nghe tin nhắn đến từ Server và in ra console, 1 luồng đọc bàn phím và gửi dữ liệu lên Server.
-3. **Đóng gói Docker & Docker Hub:**
+   - Kiến trúc 2 luồng độc lập: 1 luồng đọc tin nhắn liên tục từ Server, 1 luồng nhập liệu từ bàn phím và gửi lên Server.
 
-   - Sử dụng Docker multi-stage build trên nền Alpine nhẹ tối ưu dung lượng (~74 MB).
-   - Đã kiểm thử thành công trên Docker Desktop cục bộ và đẩy (push) đầy đủ 2 Image lên Docker Hub công khai.
+3. **Đóng gói Docker & Docker Compose:**
+   - Multi-stage build trên nền `eclipse-temurin:21-jre-alpine` siêu nhẹ (~74 MB).
+   - Entrypoint script tự động điều phối: mặc định chạy Server, nhận tham số `client` để chạy Client.
+   - `docker-compose.yml` thiết lập sẵn toàn bộ mạng nội bộ `chat-net` và tự động liên kết các container từ duy nhất 1 Image.
+   - Đã kiểm thử thành công trên Docker Desktop và đẩy đầy đủ lên Docker Hub `shima594`.
