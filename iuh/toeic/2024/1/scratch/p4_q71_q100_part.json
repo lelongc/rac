@@ -1,0 +1,1236 @@
+{
+  "71": {
+    "exp": "Người nói mở đầu quảng cáo: 'At Volkov Tire and Auto Service, we're proud to serve the Livingstone Valley area. We offer quality automotive maintenance and repairs...' (Tại Dịch vụ Lốp và Ô tô Volkov, chúng tôi tự hào phục vụ khu vực thung lũng Livingstone. Chúng tôi cung cấp dịch vụ bảo trì và sửa chữa ô tô chất lượng...) -> Đây là cửa hàng sửa chữa ô tô ('An auto repair shop'). Đáp án đúng là (C).",
+    "vocab": [
+      {
+        "word": "automotive",
+        "ipa": "/ˌɔː.təˈməʊ.tɪv/",
+        "pos": "adj",
+        "meaning": "thuộc về ô tô, xe hơi",
+        "example": "The city is known for its thriving automotive industry."
+      },
+      {
+        "word": "maintenance",
+        "ipa": "/ˈmeɪn.tən.əns/",
+        "pos": "n",
+        "meaning": "sự bảo dưỡng, bảo trì",
+        "example": "Regular maintenance extends the lifespan of machinery."
+      },
+      {
+        "word": "repair",
+        "ipa": "/rɪˈpeər/",
+        "pos": "n, v",
+        "meaning": "việc sửa chữa; sửa chữa",
+        "example": "The mechanics completed the brake repairs in two hours."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "auto repair shop",
+        "meaning": "tiệm sửa chữa ô tô"
+      },
+      {
+        "phrase": "automotive maintenance",
+        "meaning": "bảo trì xe hơi"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cụm danh từ định danh dịch vụ 'Tire and Auto Service'",
+        "rule": "Noun Adjunct + Head Noun",
+        "content": "Dùng các danh từ chỉ phương tiện/bộ phận đứng trước để định rõ ngành nghề kinh doanh."
+      }
+    ]
+  },
+  "72": {
+    "exp": "Người nói chia sẻ: 'We're pleased to announce that for the second year in a row, we've received the Livingstone Business Award for outstanding customer service' (Chúng tôi vui mừng thông báo rằng năm thứ hai liên tiếp, chúng tôi đã nhận được Giải thưởng Doanh nghiệp Livingstone cho dịch vụ khách hàng xuất sắc) -> Cơ sở kinh doanh ăn mừng vì đã đạt giải thưởng ('It has won an award'). Đáp án đúng là (C).",
+    "vocab": [
+      {
+        "word": "award",
+        "ipa": "/əˈwɔːd/",
+        "pos": "n",
+        "meaning": "giải thưởng, phần thưởng vinh danh",
+        "example": "The architect accepted an award for sustainable design."
+      },
+      {
+        "word": "in a row",
+        "ipa": "/ɪn ə rəʊ/",
+        "pos": "idiom",
+        "meaning": "liên tiếp, liền nhau",
+        "example": "The team won the championship three years in a row."
+      },
+      {
+        "word": "outstanding",
+        "ipa": "/ˌaʊtˈstæn.dɪŋ/",
+        "pos": "adj",
+        "meaning": "xuất sắc, nổi bật",
+        "example": "She was recognized for her outstanding contribution to research."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "win an award",
+        "meaning": "đoạt một giải thưởng"
+      },
+      {
+        "phrase": "customer service",
+        "meaning": "dịch vụ khách hàng"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cấu trúc 'in a row' chỉ chuỗi sự kiện liên tục",
+        "rule": "for the + Ordinal Number + year/time + in a row",
+        "content": "Diễn tả thành tích đạt được nhiều năm liên tiếp trong hoạt động kinh doanh."
+      }
+    ]
+  },
+  "73": {
+    "exp": "Người nói kêu gọi: 'To celebrate, we're offering a 20 percent discount on all tire replacements. Just schedule an appointment on our website...' (Để ăn mừng, chúng tôi giảm giá 20% cho tất cả các dịch vụ thay lốp. Chỉ cần đặt lịch hẹn trên trang web của chúng tôi...) -> Khách hàng cần đặt lịch hẹn để được giảm giá ('Make an appointment'). Paraphrasing: schedule an appointment -> make an appointment. Đáp án đúng là (A).",
+    "vocab": [
+      {
+        "word": "schedule",
+        "ipa": "/ˈʃedʒ.uːl/",
+        "pos": "v",
+        "meaning": "lên lịch, sắp xếp thời gian",
+        "example": "Please schedule an interview with the prospective candidate."
+      },
+      {
+        "word": "appointment",
+        "ipa": "/əˈpɔɪnt.mənt/",
+        "pos": "n",
+        "meaning": "cuộc hẹn (dịch vụ, gặp mặt)",
+        "example": "He made an appointment to inspect the vehicle on Friday."
+      },
+      {
+        "word": "discount",
+        "ipa": "/ˈdɪs.kaʊnt/",
+        "pos": "n",
+        "meaning": "khoản giảm giá, chiết khấu",
+        "example": "First-time buyers receive a ten percent discount."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "make an appointment",
+        "meaning": "đặt một cuộc hẹn"
+      },
+      {
+        "phrase": "schedule an appointment",
+        "meaning": "lên lịch hẹn"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu mệnh lệnh chỉ dẫn với 'Just + V'",
+        "rule": "Just + V-inf (Just schedule an appointment...)",
+        "content": "Dùng 'Just' đầu câu để nhấn mạnh hành động người nghe cần làm rất đơn giản và dễ dàng."
+      }
+    ]
+  },
+  "74": {
+    "exp": "Người dẫn chương trình mở đầu: 'Welcome to Business Insights. Today's podcast is about the possibilities and limitations of marketing on social media. How can businesses improve on their marketing efforts...' (Chào mừng quý vị đến với Thấu hiểu Kinh doanh. Tập podcast hôm nay nói về các tiềm năng và giới hạn của tiếp thị trên mạng xã hội. Làm thế nào các doanh nghiệp cải thiện nỗ lực tiếp thị...) -> Tập podcast bàn về các chiến lược tiếp thị ('Marketing strategies'). Đáp án đúng là (A).",
+    "vocab": [
+      {
+        "word": "strategy",
+        "ipa": "/ˈstræt.ə.dʒi/",
+        "pos": "n",
+        "meaning": "chiến lược, kế sách",
+        "example": "The executive unveiled a comprehensive digital marketing strategy."
+      },
+      {
+        "word": "limitation",
+        "ipa": "/ˌlɪm.ɪˈteɪ.ʃən/",
+        "pos": "n",
+        "meaning": "sự hạn chế, giới hạn",
+        "example": "Recognize the budgetary limitations of the advertising campaign."
+      },
+      {
+        "word": "podcast",
+        "ipa": "/ˈpɒd.kɑːst/",
+        "pos": "n",
+        "meaning": "chương trình phát thanh số định kỳ",
+        "example": "He subscribes to a weekly tech podcast."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "marketing strategy",
+        "meaning": "chiến lược tiếp thị"
+      },
+      {
+        "phrase": "social media",
+        "meaning": "mạng xã hội"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cấu trúc giới thiệu chủ đề 'Today's podcast is about...'",
+        "rule": "S + be + about + Noun / V-ing",
+        "content": "Mẫu câu trực tiếp xác định chủ đề trọng tâm của bài nói ngay ở câu đầu tiên."
+      }
+    ]
+  },
+  "75": {
+    "exp": "Người nói giới thiệu chuyên gia khách mời: 'Our guest today, digital strategist Sylvie Bertrand, is renowned for her ability to explain complicated concepts in simple, accessible terms' (Khách mời của chúng ta hôm nay, chuyên gia chiến lược kỹ thuật số Sylvie Bertrand, nổi tiếng với khả năng giải thích các khái niệm phức tạp bằng những thuật ngữ đơn giản, dễ tiếp cận) -> Bà Bertrand giỏi giải thích các ý tưởng phức tạp ('Explaining complicated ideas'). Đáp án đúng là (C).",
+    "vocab": [
+      {
+        "word": "complicated",
+        "ipa": "/ˈkɒm.plɪ.keɪ.tɪd/",
+        "pos": "adj",
+        "meaning": "phức tạp, rắc rối",
+        "example": "The user manual explains complicated procedures clearly."
+      },
+      {
+        "word": "accessible",
+        "ipa": "/əkˈses.ə.bəl/",
+        "pos": "adj",
+        "meaning": "dễ tiếp cận, dễ hiểu",
+        "example": "The author made advanced economics accessible to everyday readers."
+      },
+      {
+        "word": "renowned",
+        "ipa": "/rɪˈnaʊnd/",
+        "pos": "adj",
+        "meaning": "nổi tiếng, trứ danh",
+        "example": "The institute is renowned for its cancer research."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "explain complicated concepts",
+        "meaning": "giải thích các khái niệm phức tạp"
+      },
+      {
+        "phrase": "accessible terms",
+        "meaning": "thuật ngữ dễ hiểu"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cấu trúc tính từ nổi tiếng về điều gì 'be renowned for'",
+        "rule": "S + be + renowned for + N/V-ing",
+        "content": "Diễn đạt sự công nhận rộng rãi về tài năng hoặc đặc điểm nổi bật của một cá nhân."
+      }
+    ]
+  },
+  "76": {
+    "exp": "Người nói thông báo nội dung tiếp theo: 'Before we bring Ms. Bertrand on, let's look at the results of our listener survey regarding social media advertising habits' (Trước khi mời cô Bertrand lên sóng, chúng ta hãy cùng nhìn vào kết quả cuộc khảo sát thính giả về thói quen quảng cáo mạng xã hội) -> Người nói sẽ thảo luận về kết quả khảo sát ('Survey results'). Đáp án đúng là (B).",
+    "vocab": [
+      {
+        "word": "survey",
+        "ipa": "/ˈsɜː.veɪ/",
+        "pos": "n",
+        "meaning": "cuộc khảo sát, điều tra ý kiến",
+        "example": "The survey revealed that customer satisfaction rose by ten percent."
+      },
+      {
+        "word": "regarding",
+        "ipa": "/rɪˈɡɑː.dɪŋ/",
+        "pos": "prep",
+        "meaning": "về, liên quan tới",
+        "example": "Send all inquiries regarding the conference schedule to the coordinator."
+      },
+      {
+        "word": "habit",
+        "ipa": "/ˈhæb.ɪt/",
+        "pos": "n",
+        "meaning": "thói quen, hành vi thường nhật",
+        "example": "Consumer shopping habits changed drastically during the pandemic."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "survey results",
+        "meaning": "kết quả khảo sát"
+      },
+      {
+        "phrase": "listener survey",
+        "meaning": "khảo sát ý kiến thính giả"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cấu trúc dẫn dắt bước tiếp theo 'let's look at...'",
+        "rule": "Let's + look at / discuss + Noun",
+        "content": "Được dùng để chuyển tiếp mạch thuyết trình sang nội dung chi tiết kế tiếp."
+      }
+    ]
+  },
+  "77": {
+    "exp": "Người nói thông báo: 'Next Wednesday, Arlington Landscaping will deliver the potted plants we ordered to brighten up the common areas in our office' (Thứ Tư tới, công ty Cảnh quan Arlington sẽ giao những chậu cây cảnh chúng ta đã đặt mua để làm bừng sáng các khu vực chung trong văn phòng) -> Thứ Tư tới sẽ giao cây cảnh trồng trong chậu ('Potted plants'). Đáp án đúng là (C).",
+    "vocab": [
+      {
+        "word": "potted plant",
+        "ipa": "/ˌpɒt.ɪd ˈplɑːnt/",
+        "pos": "n",
+        "meaning": "cây cảnh trồng trong chậu",
+        "example": "Potted plants were placed around the reception lounge."
+      },
+      {
+        "word": "brighten up",
+        "ipa": "/ˈbraɪ.tən ʌp/",
+        "pos": "phr v",
+        "meaning": "làm cho tươi sáng hơn, sinh động hơn",
+        "example": "Fresh flowers brighten up the meeting room."
+      },
+      {
+        "word": "common area",
+        "ipa": "/ˈkɒm.ən ˈeə.ri.ə/",
+        "pos": "n",
+        "meaning": "khu vực sinh hoạt chung",
+        "example": "Keep shared common areas clean and organized."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "potted plants",
+        "meaning": "cây trồng trong chậu"
+      },
+      {
+        "phrase": "common areas",
+        "meaning": "khu vực chung"
+      }
+    ]
+  },
+  "78": {
+    "exp": "Người nói giải thích lý do: 'Research shows that having indoor greenery reduces stress and can significantly boost workplace productivity by improving the office atmosphere' (Nghiên cứu chỉ ra rằng việc có cây xanh trong nhà giúp giảm căng thẳng và có thể tăng đáng kể năng suất làm việc bằng cách cải thiện bầu không khí văn phòng) -> Năng suất có thể được cải thiện nhờ không gian văn phòng xung quanh ('It can be improved by office surroundings'). Đáp án đúng là (C).",
+    "vocab": [
+      {
+        "word": "productivity",
+        "ipa": "/ˌprɒd.ʌkˈtɪv.ə.ti/",
+        "pos": "n",
+        "meaning": "năng suất làm việc",
+        "example": "Flexible hours improved overall employee productivity."
+      },
+      {
+        "word": "greenery",
+        "ipa": "/ˈɡriː.nər.i/",
+        "pos": "n",
+        "meaning": "cây xanh, mảng xanh thiên nhiên",
+        "example": "The rooftop terrace is filled with lush greenery."
+      },
+      {
+        "word": "surroundings",
+        "ipa": "/səˈraʊn.dɪŋz/",
+        "pos": "n pl",
+        "meaning": "không gian xung quanh, cảnh quan phụ cận",
+        "example": "A comfortable working environment provides pleasant surroundings."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "boost workplace productivity",
+        "meaning": "gia tăng năng suất làm việc"
+      },
+      {
+        "phrase": "office surroundings",
+        "meaning": "không gian cảnh quan văn phòng"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cấu trúc danh động từ làm chủ ngữ 'having greenery...'",
+        "rule": "V-ing (having indoor greenery) + singular verb (reduces...)",
+        "content": "Danh động từ đóng vai trò chủ ngữ số ít, chia động từ tương ứng ở ngôi thứ ba số ít."
+      }
+    ]
+  },
+  "79": {
+    "exp": "Người nói hướng dẫn thêm: 'If you want to choose a small plant for your own desk, please check the catalog in the staff room by Friday' (Nếu bạn muốn chọn một cây nhỏ cho bàn làm việc cá nhân của mình, vui lòng xem danh mục sản phẩm trong phòng nghỉ nhân viên trước thứ Sáu) -> Tài liệu có sẵn trong phòng nhân viên là cuốn danh mục giới thiệu sản phẩm ('A product catalog'). Đáp án đúng là (A).",
+    "vocab": [
+      {
+        "word": "catalog",
+        "ipa": "/ˈkæt.əl.ɒɡ/",
+        "pos": "n",
+        "meaning": "cuốn danh mục sản phẩm, vựng tập",
+        "example": "Browse the office supply catalog for ergonomic furniture."
+      },
+      {
+        "word": "staff room",
+        "ipa": "/ˈstɑːf ruːm/",
+        "pos": "n",
+        "meaning": "phòng sinh hoạt/nghỉ ngơi của nhân viên",
+        "example": "Notices are pinned onto the bulletin board in the staff room."
+      },
+      {
+        "word": "available",
+        "ipa": "/əˈveɪ.lə.bəl/",
+        "pos": "adj",
+        "meaning": "có sẵn, sẵn sàng để sử dụng",
+        "example": "Copies of the quarterly report are available in the lobby."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "product catalog",
+        "meaning": "cuốn danh mục sản phẩm"
+      },
+      {
+        "phrase": "staff room",
+        "meaning": "phòng nhân viên"
+      }
+    ]
+  },
+  "80": {
+    "exp": "Người nói bản tin thời sự cho biết: 'The building has been empty for three years since the factory moved to its new, larger facility south of town' (Tòa nhà đã bị bỏ trống suốt 3 năm kể từ khi nhà máy chuyển đến cơ sở mới lớn hơn ở phía nam thị trấn) -> 3 năm trước một doanh nghiệp đã chuyển địa điểm ('A business relocated'). Paraphrasing: factory moved -> business relocated. Đáp án đúng là (D).",
+    "vocab": [
+      {
+        "word": "relocate",
+        "ipa": "/ˌriː.ləʊˈkeɪt/",
+        "pos": "v",
+        "meaning": "di dời, chuyển cơ sở",
+        "example": "The manufacturing division will relocate to the new industrial park."
+      },
+      {
+        "word": "abandoned",
+        "ipa": "/əˈbæn.dənd/",
+        "pos": "adj",
+        "meaning": "bị bỏ hoang, không còn sử dụng",
+        "example": "The abandoned warehouse was converted into art lofts."
+      },
+      {
+        "word": "facility",
+        "ipa": "/fəˈsɪl.ə.ti/",
+        "pos": "n",
+        "meaning": "cơ sở vật chất, nhà máy, phân xưởng",
+        "example": "The medical company opened an advanced testing facility."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "relocate a facility",
+        "meaning": "di dời một cơ sở"
+      },
+      {
+        "phrase": "empty for years",
+        "meaning": "bỏ trống trong nhiều năm"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cấu trúc mốc thời gian với 'since'",
+        "rule": "S + have/has + been + adj + for [thời gian] + since + Past Simple",
+        "content": "Diễn tả trạng thái kéo dài từ một mốc sự kiện cụ thể trong quá khứ."
+      }
+    ]
+  },
+  "81": {
+    "exp": "Người nói thông báo kết quả bỏ phiếu của hội đồng thị trấn: '...the town council voted last night to sell the building to developer Matthew Hughes, who will convert it into family housing' (Hội đồng thị trấn đã bỏ phiếu vào tối qua để bán tòa nhà cho nhà phát triển Matthew Hughes, người sẽ chuyển đổi nó thành khu nhà ở gia đình) -> Matthew Hughes là một nhà phát triển bất động sản ('A real estate developer'). Đáp án đúng là (B).",
+    "vocab": [
+      {
+        "word": "developer",
+        "ipa": "/dɪˈvel.ə.pər/",
+        "pos": "n",
+        "meaning": "nhà phát triển dự án (bất động sản/công nghệ)",
+        "example": "The commercial developer submitted plans for a shopping center."
+      },
+      {
+        "word": "convert",
+        "ipa": "/kənˈvɜːt/",
+        "pos": "v",
+        "meaning": "chuyển đổi công năng, cải tạo",
+        "example": "They plan to convert the historic mill into luxury apartments."
+      },
+      {
+        "word": "housing",
+        "ipa": "/ˈhaʊ.zɪŋ/",
+        "pos": "n",
+        "meaning": "nhà ở, khu dân cư",
+        "example": "The council prioritizes affordable housing for working families."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "real estate developer",
+        "meaning": "nhà phát triển bất động sản"
+      },
+      {
+        "phrase": "family housing",
+        "meaning": "khu nhà ở gia đình"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Mệnh đề quan hệ không xác định với 'who'",
+        "rule": "Proper Name (Matthew Hughes), who will convert it...",
+        "content": "Bổ sung thông tin về nghề nghiệp và kế hoạch hành động của nhân vật cụ thể."
+      }
+    ]
+  },
+  "82": {
+    "exp": "Người phát thanh viên kết thúc bản tin: 'Up next, it looks like the rain is on the way. Stay tuned for our local weather forecast right after this commercial break' (Tiếp theo, có vẻ như trời sắp đổ mưa. Hãy tiếp tục theo dõi dự báo thời tiết địa phương ngay sau phần quảng cáo) -> Thính giả sẽ được nghe về thời tiết ('The weather'). Đáp án đúng là (C).",
+    "vocab": [
+      {
+        "word": "forecast",
+        "ipa": "/ˈfɔː.kɑːst/",
+        "pos": "n",
+        "meaning": "bản tin dự báo (thời tiết/kinh tế)",
+        "example": "Check the five-day weather forecast before traveling."
+      },
+      {
+        "word": "stay tuned",
+        "ipa": "/steɪ tjuːnd/",
+        "pos": "idiom",
+        "meaning": "đừng chuyển kênh, tiếp tục theo dõi",
+        "example": "Stay tuned for interviews with the award recipients."
+      },
+      {
+        "word": "commercial break",
+        "ipa": "/kəˈmɜː.ʃəl breɪk/",
+        "pos": "n",
+        "meaning": "khoảng thời gian tạm nghỉ để phát quảng cáo",
+        "example": "The score will be announced right after the commercial break."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "weather forecast",
+        "meaning": "dự báo thời tiết"
+      },
+      {
+        "phrase": "commercial break",
+        "meaning": "giờ nghỉ quảng cáo"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Thành ngữ báo hiệu nội dung kế tiếp 'Up next'",
+        "rule": "Up next, S + V... -> Dự đoán nội dung phần tiếp",
+        "content": "Cụm từ cố định trong phát thanh/truyền hình nhằm thu hút thính giả nán lại nghe chuyên mục sau."
+      }
+    ]
+  },
+  "83": {
+    "exp": "Người nói mở đầu cuộc họp cơ quan: 'Before we end this transportation agency meeting, I want to give you an update on the Springdale bridge replacement project' (Trước khi kết thúc cuộc họp cơ quan giao thông này, tôi muốn cập nhật cho quý vị về dự án thay thế cây cầu Springdale) -> Người nói đang thảo luận về việc thay thế một cây cầu ('The replacement of a bridge'). Đáp án đúng là (C).",
+    "vocab": [
+      {
+        "word": "replacement",
+        "ipa": "/rɪˈpleɪs.mənt/",
+        "pos": "n",
+        "meaning": "việc thay thế, công trình thay mới",
+        "example": "The replacement of the aging bridge began last autumn."
+      },
+      {
+        "word": "transportation",
+        "ipa": "/ˌtræn.spɔːˈteɪ.ʃən/",
+        "pos": "n",
+        "meaning": "giao thông vận tải",
+        "example": "The municipal transportation department supervises bus routes."
+      },
+      {
+        "word": "update",
+        "ipa": "/ˈʌp.deɪt/",
+        "pos": "n",
+        "meaning": "bản tin cập nhật tiến độ",
+        "example": "The project manager provided a weekly status update."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "bridge replacement",
+        "meaning": "việc thay thế cây cầu"
+      },
+      {
+        "phrase": "give an update",
+        "meaning": "cung cấp bản cập nhật"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cấu trúc giới từ thời gian 'Before + S + V'",
+        "rule": "Before + S + V, S + want to + V",
+        "content": "Tạo tiền đề thời gian trước khi đưa ra thông báo quan trọng cuối buổi họp."
+      }
+    ]
+  },
+  "84": {
+    "exp": "Người nói thông báo: 'We are more than six months past the scheduled completion date. But this is just one of our many projects' (Chúng ta đã quá hạn hoàn thành theo kế hoạch hơn 6 tháng. Nhưng đây chỉ là một trong nhiều dự án của chúng ta) -> Câu nói nhằm giải thích cho sự chậm trễ ('To explain a delay'). Đáp án đúng là (B).",
+    "vocab": [
+      {
+        "word": "scheduled completion",
+        "ipa": "/ˈʃedʒ.uːld kəmˈpliː.ʃən/",
+        "pos": "n phr",
+        "meaning": "ngày hoàn thành theo kế hoạch",
+        "example": "Work is lagging three months behind the scheduled completion date."
+      },
+      {
+        "word": "delay",
+        "ipa": "/dɪˈleɪ/",
+        "pos": "n",
+        "meaning": "sự chậm trễ, trì hoãn",
+        "example": "Inclement weather caused a major construction delay."
+      },
+      {
+        "word": "frustrating",
+        "ipa": "/frʌsˈtreɪ.tɪŋ/",
+        "pos": "adj",
+        "meaning": "gây bức bối, nản lòng",
+        "example": "Frequent train delays are deeply frustrating to commuters."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "explain a delay",
+        "meaning": "giải thích sự chậm trễ"
+      },
+      {
+        "phrase": "past the scheduled date",
+        "meaning": "quá hạn ấn định"
+      }
+    ]
+  },
+  "85": {
+    "exp": "Người nói đưa ra đề xuất: 'Therefore, I strongly recommend we hold a press conference early next week to explain the construction hurdles directly to the public' (Vì vậy, tôi đặc biệt khuyến nghị chúng ta tổ chức họp báo vào đầu tuần tới để giải thích trực tiếp những trở ngại thi công cho công chúng) -> Người nói gợi ý gặp gỡ báo chí ('Meeting with the press'). Paraphrasing: hold a press conference -> meet with the press. Đáp án đúng là (D).",
+    "vocab": [
+      {
+        "word": "press conference",
+        "ipa": "/ˈpres ˌkɒn.fər.əns/",
+        "pos": "n",
+        "meaning": "buổi họp báo",
+        "example": "The mayor scheduled a press conference regarding road repairs."
+      },
+      {
+        "word": "hurdle",
+        "ipa": "/ˈhɜː.dəl/",
+        "pos": "n",
+        "meaning": "rào cản, trở ngại thi công",
+        "example": "Supply chain hurdles slowed down bridge construction."
+      },
+      {
+        "word": "recommend",
+        "ipa": "/ˌrek.əˈmend/",
+        "pos": "v",
+        "meaning": "khuyến nghị, đề xuất",
+        "example": "Specialists recommend installing reinforced steel girders."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "hold a press conference",
+        "meaning": "tổ chức họp báo"
+      },
+      {
+        "phrase": "meet with the press",
+        "meaning": "gặp gỡ giới truyền thông/báo chí"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cấu trúc giả định thức với 'recommend that...'",
+        "rule": "recommend (that) + S + (should) + V-bare",
+        "content": "Động từ theo sau chủ ngữ trong mệnh đề 'that' luôn giữ ở dạng nguyên mẫu không 'to'."
+      }
+    ]
+  },
+  "86": {
+    "exp": "Người thuyết trình thông báo: 'During yesterday's session, you listened to lectures. But today, you will be paired with a partner for interactive one-on-one role-playing exercises' (Trong buổi hôm qua, các bạn đã nghe giảng. Nhưng hôm nay, các bạn sẽ được ghép đôi với một bạn đồng hành để thực hành bài tập đóng vai tương tác 1 kèm 1) -> Điểm khác biệt là người tham gia sẽ làm việc theo cặp ('Participants will work in pairs'). Paraphrasing: paired with a partner / one-on-one -> work in pairs. Đáp án đúng là (C).",
+    "vocab": [
+      {
+        "word": "in pairs",
+        "ipa": "/ɪn peəz/",
+        "pos": "prep phr",
+        "meaning": "theo cặp, từng đôi một",
+        "example": "Trainees completed the technical assessment in pairs."
+      },
+      {
+        "word": "interactive",
+        "ipa": "/ˌɪn.tərˈæk.tɪv/",
+        "pos": "adj",
+        "meaning": "tương tác, hai chiều",
+        "example": "The training features interactive simulation games."
+      },
+      {
+        "word": "workshop",
+        "ipa": "/ˈwɜːk.ʃɒp/",
+        "pos": "n",
+        "meaning": "buổi tập huấn, hội thảo chuyên đề",
+        "example": "Register for the weekend workshop on effective communication."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "work in pairs",
+        "meaning": "làm việc theo từng cặp"
+      },
+      {
+        "phrase": "interactive exercise",
+        "meaning": "bài tập tương tác"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Thì Tương lai tiếp diễn diễn tả hoạt động được bố trí trước",
+        "rule": "S + will be + V-ing / V3 (will be paired)",
+        "content": "Diễn tả việc phân nhóm đã được ban tổ chức chuẩn bị sẵn trong lịch trình ngày hôm nay."
+      }
+    ]
+  },
+  "87": {
+    "exp": "Người nói nêu chủ đề trọng tâm: 'The focus of today's exercises is on active listening and giving constructive feedback—vital communication skills for any team leader' (Trọng tâm của các bài tập hôm nay là lắng nghe chủ động và đưa ra phản hồi mang tính xây dựng—những kỹ năng giao tiếp cốt lõi đối với bất kỳ người lãnh đạo nhóm nào) -> Chủ đề của buổi học là nâng cao kỹ năng giao tiếp ('Improving communication skills'). Đáp án đúng là (A).",
+    "vocab": [
+      {
+        "word": "constructive",
+        "ipa": "/kənˈstrʌk.tɪv/",
+        "pos": "adj",
+        "meaning": "mang tính xây dựng, tích cực",
+        "example": "Offer constructive feedback to help junior colleagues improve."
+      },
+      {
+        "word": "communication skills",
+        "ipa": "/kəˌmjuː.nɪˈkeɪ.ʃən skɪlz/",
+        "pos": "n pl",
+        "meaning": "các kỹ năng giao tiếp",
+        "example": "Exceptional communication skills are mandatory for client relations."
+      },
+      {
+        "word": "vital",
+        "ipa": "/ˈvaɪ.təl/",
+        "pos": "adj",
+        "meaning": "tối quan trọng, sống còn",
+        "example": "Clear documentation is vital to project success."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "communication skills",
+        "meaning": "kỹ năng giao tiếp"
+      },
+      {
+        "phrase": "constructive feedback",
+        "meaning": "phản hồi mang tính xây dựng"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cụm từ chỉ trọng tâm 'The focus is on...'",
+        "rule": "The focus + of + N + is on + V-ing / Noun",
+        "content": "Dùng để nhấn mạnh mục tiêu cốt lõi của bài đào tạo hoặc hội thảo chuyên môn."
+      }
+    ]
+  },
+  "88": {
+    "exp": "Người nói thông báo về bữa trưa: 'And I'm pleased to mention that lunch has been generously donated by local gourmet bistro Bella Cucina' (Và tôi rất vui mừng thông báo rằng bữa trưa đã được nhà hàng địa phương Bella Cucina tài trợ hào phóng) -> Bữa trưa đã được quyên góp/tài trợ miễn phí ('It has been donated'). Paraphrasing: generously donated -> donated. Đáp án đúng là (A).",
+    "vocab": [
+      {
+        "word": "donate",
+        "ipa": "/dəʊˈneɪt/",
+        "pos": "v",
+        "meaning": "quyên góp, ủng hộ, tài trợ",
+        "example": "Local bakeries donated refreshments for the charity event."
+      },
+      {
+        "word": "generously",
+        "ipa": "/ˈdʒen.ər.əs.li/",
+        "pos": "adv",
+        "meaning": "một cách hào phóng, rộng rãi",
+        "example": "Sponsors contributed generously to the scholarship fund."
+      },
+      {
+        "word": "bistro",
+        "ipa": "/ˈbiː.strəʊ/",
+        "pos": "n",
+        "meaning": "quán ăn nhỏ, nhà hàng phong cách ấm cúng",
+        "example": "We enjoyed lunch at an authentic French bistro."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "generously donate",
+        "meaning": "tài trợ/quyên góp hào phóng"
+      },
+      {
+        "phrase": "cater lunch",
+        "meaning": "phục vụ bữa ăn trưa"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Bị động thì Hiện tại hoàn thành với trạng từ 'generously'",
+        "rule": "have/has + been + adv + V3/ed (has been generously donated)",
+        "content": "Trạng từ đứng giữa 'been' và động từ chính V3 để bổ nghĩa cho phương thức thực hiện hành động."
+      }
+    ]
+  },
+  "89": {
+    "exp": "Người nói giới thiệu bản thân: 'This is Adisa from Car Pro returning your call. In your message, you said your sedan seems sluggish and isn't accelerating well...' (Tôi là Adisa từ Car Pro gọi lại theo cuộc gọi của bạn. Trong tin nhắn, bạn nói chiếc sedan có vẻ bị ỳ và không tăng tốc tốt...) -> Người nói làm việc tại xưởng sửa chữa ô tô ('At an auto-mechanic shop'). Đáp án đúng là (D).",
+    "vocab": [
+      {
+        "word": "auto-mechanic",
+        "ipa": "/ˌɔː.təʊ.mɪˈkæn.ɪk/",
+        "pos": "n",
+        "meaning": "thợ sửa xe ô tô, cơ khí",
+        "example": "The certified auto-mechanic identified the transmission fault."
+      },
+      {
+        "word": "accelerate",
+        "ipa": "/əkˈsel.ə.reɪt/",
+        "pos": "v",
+        "meaning": "tăng tốc, gia tốc",
+        "example": "The vehicle failed to accelerate smoothly on the highway."
+      },
+      {
+        "word": "sluggish",
+        "ipa": "/ˈslʌɡ.ɪʃ/",
+        "pos": "adj",
+        "meaning": "chậm chạp, ì ạch",
+        "example": "A dirty fuel injector makes the engine feel sluggish."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "auto-mechanic shop",
+        "meaning": "tiệm cơ khí ô tô"
+      },
+      {
+        "phrase": "accelerate well",
+        "meaning": "tăng tốc tốt"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Mẫu câu gọi lại điện thoại 'This is [Name] returning your call'",
+        "rule": "This is + Name + (from Company) + returning your call",
+        "content": "Cách mở đầu chuẩn mực của cuộc gọi phản hồi đối tác hoặc khách hàng trong kinh doanh."
+      }
+    ]
+  },
+  "90": {
+    "exp": "Người nói giải thích: 'It could be something simple like a clogged oil filter, which is inexpensive, or it could be the fuel pump. But we'll have to take a look' (Nó có thể là thứ đơn giản như bộ lọc dầu bị tắc với chi phí rẻ, hoặc có thể do bơm nhiên liệu. Nhưng chúng tôi sẽ phải kiểm tra tận mắt đã) -> Câu nói ngụ ý chưa thể xác định được chi phí sửa chữa cụ thể ('A cost cannot be determined yet'). Đáp án đúng là (C).",
+    "vocab": [
+      {
+        "word": "determine",
+        "ipa": "/dɪˈtɜː.mɪn/",
+        "pos": "v",
+        "meaning": "xác định, phán đoán chính xác",
+        "example": "Diagnostic scans help determine the exact cause of engine trouble."
+      },
+      {
+        "word": "clogged",
+        "ipa": "/klɒɡd/",
+        "pos": "adj",
+        "meaning": "bị tắc nghẽn",
+        "example": "A clogged air filter reduces vehicle fuel economy."
+      },
+      {
+        "word": "filter",
+        "ipa": "/ˈfɪl.tər/",
+        "pos": "n",
+        "meaning": "bộ lọc (dầu, không khí)",
+        "example": "Replace the oil filter at every scheduled service interval."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "take a look",
+        "meaning": "kiểm tra, xem qua"
+      },
+      {
+        "phrase": "clogged filter",
+        "meaning": "bộ lọc bị tắc"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu hỏi suy luận hàm ý từ cụm từ quen thuộc",
+        "rule": "Liệt kê nhiều khả năng khác nhau về giá + we'll have to take a look -> chưa thể biết giá",
+        "content": "Cần xâu chuỗi thông tin chi phí rẻ vs đắt và việc phải kiểm tra xe trực tiếp để rút ra kết luận về chi phí."
+      }
+    ]
+  },
+  "91": {
+    "exp": "Người nói lưu ý về thời gian làm việc: 'Oh, by the way, we're closing early tomorrow for inventory, but we can get you in the day after. We'll open at eight A.M.' (Ồ nhân tiện, ngày mai chúng tôi sẽ đóng cửa sớm để kiểm kê hàng, nhưng chúng tôi có thể nhận xe của bạn vào ngày mốt. Chúng tôi mở cửa lúc 8 giờ sáng) -> Cơ sở kinh doanh sẽ đóng cửa sớm vào ngày mai ('The business will close early'). Đáp án đúng là (B).",
+    "vocab": [
+      {
+        "word": "close early",
+        "ipa": "/kləʊz ˈɜː.li/",
+        "pos": "v phr",
+        "meaning": "đóng cửa sớm hơn thường lệ",
+        "example": "The branch will close early on New Year's Eve."
+      },
+      {
+        "word": "inventory",
+        "ipa": "/ˈɪn.vən.tər.i/",
+        "pos": "n",
+        "meaning": "sự kiểm kê hàng hóa tồn kho",
+        "example": "Staff stayed overtime to conduct the annual parts inventory."
+      },
+      {
+        "word": "the day after",
+        "ipa": "/ðə deɪ ˈɑːf.tər/",
+        "pos": "adv phr",
+        "meaning": "ngày hôm sau nữa, ngày mốt",
+        "example": "Deliveries will resume the day after tomorrow."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "close early",
+        "meaning": "đóng cửa sớm"
+      },
+      {
+        "phrase": "conduct inventory",
+        "meaning": "tiến hành kiểm kê"
+      }
+    ]
+  },
+  "92": {
+    "exp": "Người quản lý phát biểu: 'Thanks, everyone, for helping set up the showroom floor with the displays of the new bedroom and living room sets. They look great' (Cảm ơn mọi người đã hỗ trợ bày biện tầng trưng bày với các bộ nội thất phòng ngủ và phòng khách mới. Trông chúng rất đẹp) -> Người nói làm việc tại cửa hàng nội thất ('A furniture store'). Đáp án đúng là (D).",
+    "vocab": [
+      {
+        "word": "furniture store",
+        "ipa": "/ˈfɜː.nɪ.tʃər stɔːr/",
+        "pos": "n",
+        "meaning": "cửa hàng bán đồ gỗ nội thất",
+        "example": "The furniture store offers free delivery on sofa purchases."
+      },
+      {
+        "word": "showroom",
+        "ipa": "/ˈʃəʊ.ruːm/",
+        "pos": "n",
+        "meaning": "phòng/tầng trưng bày sản phẩm",
+        "example": "Customers can test reclining chairs in the main showroom."
+      },
+      {
+        "word": "display",
+        "ipa": "/dɪˈspleɪ/",
+        "pos": "n",
+        "meaning": "khu vực bài trí, hàng trưng bày",
+        "example": "Store designers created an eye-catching window display."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "furniture store",
+        "meaning": "cửa hàng nội thất"
+      },
+      {
+        "phrase": "showroom floor",
+        "meaning": "khu trưng bày sản phẩm"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Nhận diện nơi làm việc qua danh từ miêu tả hàng hóa",
+        "rule": "bedroom and living room sets + showroom -> Furniture store",
+        "content": "Các từ vựng chỉ đồ đạc phòng ngủ, phòng khách khẳng định rõ môi trường kinh doanh nội thất gia đình."
+      }
+    ]
+  },
+  "93": {
+    "exp": "Người nói nhắc đến ngày diễn ra giải thi đấu lớn của thành phố: 'Many of you have asked for time off next Wednesday for the championship soccer game. Go ahead and take it. That day will probably not be a profitable day for us anyway' (Nhiều bạn đã xin nghỉ phép vào thứ Tư tuần tới để xem trận bóng đá chung kết. Cứ việc nghỉ đi. Dù sao thì ngày hôm đó cũng sẽ không phải là một ngày có nhiều doanh thu cho chúng ta đâu) -> Câu nói ngụ ý các nhân viên sẽ có thể tham dự sự kiện đó ('The listeners will be able to attend an event'). Đáp án đúng là (C).",
+    "vocab": [
+      {
+        "word": "profitable",
+        "ipa": "/ˈprɒf.ɪ.tə.bəl/",
+        "pos": "adj",
+        "meaning": "sinh lời, có lợi nhuận",
+        "example": "The holiday season is our most profitable period of the year."
+      },
+      {
+        "word": "time off",
+        "ipa": "/taɪm ɒf/",
+        "pos": "n",
+        "meaning": "thời gian nghỉ phép",
+        "example": "Employees requested paid time off during the festival."
+      },
+      {
+        "word": "championship",
+        "ipa": "/ˈtʃæm.pi.ən.ʃɪp/",
+        "pos": "n",
+        "meaning": "trận chung kết, giải vô địch",
+        "example": "Thousands gathered downtown to watch the soccer championship."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "take time off",
+        "meaning": "nghỉ làm có phép"
+      },
+      {
+        "phrase": "profitable day",
+        "meaning": "ngày bán hàng sinh lời"
+      }
+    ]
+  },
+  "94": {
+    "exp": "Người quản lý kết luận: 'One last thing: I need all of you to put in an order for a new uniform. It's time we replaced them' (Một việc cuối cùng: tôi cần tất cả các bạn gửi đơn đặt đồng phục mới. Đã đến lúc chúng ta thay mới chúng rồi) -> Người nói yêu cầu nhân viên nộp mẫu đơn đặt hàng ('Submit an order form'). Paraphrasing: put in an order -> submit an order form. Đáp án đúng là (A).",
+    "vocab": [
+      {
+        "word": "uniform",
+        "ipa": "/ˈjuː.nɪ.fɔːm/",
+        "pos": "n",
+        "meaning": "đồng phục công ty",
+        "example": "Sales associates are required to wear a navy blue uniform."
+      },
+      {
+        "word": "order form",
+        "ipa": "/ˈɔː.dər fɔːm/",
+        "pos": "n",
+        "meaning": "mẫu đơn đặt hàng",
+        "example": "Fill out your sizing details on the uniform order form."
+      },
+      {
+        "word": "submit",
+        "ipa": "/səbˈmɪt/",
+        "pos": "v",
+        "meaning": "nộp, gửi đệ trình",
+        "example": "Please submit your completed time sheets by Friday."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "submit an order form",
+        "meaning": "nộp mẫu đơn đặt hàng"
+      },
+      {
+        "phrase": "put in an order",
+        "meaning": "đặt một đơn hàng"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cấu trúc 'It's time + S + V-ed' (Đã đến lúc làm gì)",
+        "rule": "It is time + S + Past Simple (It's time we replaced them)",
+        "content": "Mẫu câu giả định diễn tả hành động lẽ ra cần được tiến hành từ trước hoặc đã đến lúc cấp bách phải đổi mới."
+      }
+    ]
+  },
+  "95": {
+    "exp": "Người nói xưng danh và nêu lý do gọi điện: 'This is Emily calling from Speedy Services. I'm picking you up from the central train station today. I see you selected a pickup location...' (Tôi là Emily gọi từ Dịch vụ Cấp tốc. Hôm nay tôi sẽ đón bạn tại ga xe lửa trung tâm. Tôi thấy bạn đã chọn một điểm đón...) -> Người nói là tài xế dịch vụ đưa đón / gọi xe ('A rideshare driver'). Đáp án đúng là (A).",
+    "vocab": [
+      {
+        "word": "rideshare",
+        "ipa": "/ˈraɪd.ʃeər/",
+        "pos": "n",
+        "meaning": "dịch vụ đi chung xe, gọi xe công nghệ",
+        "example": "The passenger booked a rideshare from the airport terminal."
+      },
+      {
+        "word": "pick up",
+        "ipa": "/pɪk ʌp/",
+        "pos": "phr v",
+        "meaning": "đón ai đó bằng phương tiện",
+        "example": "The shuttle driver will pick up guests at 7:00 A.M."
+      },
+      {
+        "word": "passenger",
+        "ipa": "/ˈpæs.ən.dʒər/",
+        "pos": "n",
+        "meaning": "hành khách đi xe/tàu",
+        "example": "Passengers must present their mobile boarding pass."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "pick someone up",
+        "meaning": "đón ai đó"
+      },
+      {
+        "phrase": "pickup location",
+        "meaning": "địa điểm đón khách"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Thì Hiện tại tiếp diễn chỉ kế hoạch đã ấn định",
+        "rule": "S + be + V-ing (I'm picking you up today)",
+        "content": "Diễn tả hành động đón khách đã được đặt trước trên hệ thống và sắp diễn ra trong ngày."
+      }
+    ]
+  },
+  "96": {
+    "exp": "Nhìn vào bản đồ ga trung tâm: Người nói giải thích rằng lối ra Twelfth Street đang thi công đông đúc: 'There's a lot of road work there, so traffic is backed up. Could you walk through the station and meet me at the North Exit on Market Street instead?' (Khu vực đó đang làm đường rất nhiều nên giao thông ùn ứ. Bạn có thể đi bộ xuyên qua nhà ga và gặp tôi ở Cổng Bắc trên đường Market Street được không?) -> Địa điểm muốn gặp là đường Market Street ('On Market Street'). Đáp án đúng là (A).",
+    "vocab": [
+      {
+        "word": "backed up",
+        "ipa": "/bækt ʌp/",
+        "pos": "adj phr",
+        "meaning": "bị ùn ứ, dồn ứ kéo dài (giao thông)",
+        "example": "Commuter traffic was backed up for three miles on the expressway."
+      },
+      {
+        "word": "exit",
+        "ipa": "/ˈek.sɪt/",
+        "pos": "n",
+        "meaning": "lối ra, cổng ra",
+        "example": "Proceed to the emergency exit in a single file."
+      },
+      {
+        "word": "station",
+        "ipa": "/ˈsteɪ.ʃən/",
+        "pos": "n",
+        "meaning": "nhà ga xe lửa",
+        "example": "Meet under the main clock inside the central station."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "traffic is backed up",
+        "meaning": "giao thông bị ùn tắc"
+      },
+      {
+        "phrase": "north exit",
+        "meaning": "cổng phía bắc"
+      }
+    ]
+  },
+  "97": {
+    "exp": "Người lái xe hướng dẫn: 'If that works for you, please open the Speedy Services app and tap 'Confirm New Pickup Location' so my GPS navigation updates' (Nếu điều đó phù hợp với bạn, vui lòng mở ứng dụng Speedy Services và nhấn 'Xác nhận điểm đón mới' để điều hướng GPS của tôi được cập nhật) -> Việc thay đổi được xác nhận thông qua ứng dụng di động ('By using an app'). Đáp án đúng là (C).",
+    "vocab": [
+      {
+        "word": "app",
+        "ipa": "/æp/",
+        "pos": "n",
+        "meaning": "ứng dụng phần mềm di động",
+        "example": "Download the navigation app for real-time traffic alerts."
+      },
+      {
+        "word": "modify",
+        "ipa": "/ˈmɒd.ɪ.faɪ/",
+        "pos": "v",
+        "meaning": "thay đổi, điều chỉnh",
+        "example": "Passengers can modify their pickup location via the app."
+      },
+      {
+        "word": "navigation",
+        "ipa": "/ˌnæv.ɪˈɡeɪ.ʃən/",
+        "pos": "n",
+        "meaning": "hệ thống định vị, dẫn đường",
+        "example": "The in-car navigation system recalculated the quickest route."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "use an app",
+        "meaning": "sử dụng ứng dụng"
+      },
+      {
+        "phrase": "confirm a location",
+        "meaning": "xác nhận vị trí"
+      }
+    ]
+  },
+  "98": {
+    "exp": "Nhìn vào bảng lịch trình các diễn giả hội nghị: Người nói mở đầu: 'Good morning. My presentation will look closely at the nutritional benefits of eating fruit...' (Chào buổi sáng. Bài thuyết trình của tôi sẽ phân tích kỹ lưỡng về các lợi ích dinh dưỡng của việc ăn hoa quả...). Đối chiếu với biểu đồ hội thảo, chủ đề 'Nutritional Benefits of Fruit' được trình bày bởi Tiến sĩ Novikova -> Diễn giả là Tiến sĩ Novikova ('Dr. Novikova'). Đáp án đúng là (B).",
+    "vocab": [
+      {
+        "word": "nutritional",
+        "ipa": "/njuːˈtrɪʃ.ən.əl/",
+        "pos": "adj",
+        "meaning": "thuộc về dinh dưỡng",
+        "example": "The nutritionist analyzed the nutritional value of organic berries."
+      },
+      {
+        "word": "benefit",
+        "ipa": "/ˈben.ɪ.fɪt/",
+        "pos": "n",
+        "meaning": "lợi ích, tác dụng tích cực",
+        "example": "Eating citrus fruits offers significant immune benefits."
+      },
+      {
+        "word": "presenter",
+        "ipa": "/prɪˈzen.tər/",
+        "pos": "n",
+        "meaning": "người thuyết trình, diễn giả",
+        "example": "Each presenter is allotted twenty minutes for Q&A."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "nutritional benefits",
+        "meaning": "các lợi ích dinh dưỡng"
+      },
+      {
+        "phrase": "look closely at",
+        "meaning": "xem xét/nghiên cứu kỹ lưỡng"
+      }
+    ]
+  },
+  "99": {
+    "exp": "Diễn giả đề cập đến nghiên cứu của mình: 'Last year, my research team published a landmark study in the Journal of Dietary Health demonstrating that whole fruits support long-term metabolic health' (Năm ngoái, nhóm nghiên cứu của tôi đã công bố một nghiên cứu mang tính bước ngoặt trên Tạp chí Sức khỏe Dinh dưỡng chứng minh rằng hoa quả nguyên trái hỗ trợ sức khỏe trao đổi chất lâu dài) -> Năm ngoái cô ấy đã công bố một công trình nghiên cứu ('She published a study'). Paraphrasing: published a landmark study -> published a study. Đáp án đúng là (C).",
+    "vocab": [
+      {
+        "word": "publish",
+        "ipa": "/ˈpʌb.lɪʃ/",
+        "pos": "v",
+        "meaning": "xuất bản, công bố (bài báo khoa học)",
+        "example": "Scientists publish peer-reviewed papers in medical journals."
+      },
+      {
+        "word": "study",
+        "ipa": "/ˈstʌd.i/",
+        "pos": "n",
+        "meaning": "công trình nghiên cứu khoa học",
+        "example": "A recent clinical study confirmed the efficacy of the vaccine."
+      },
+      {
+        "word": "landmark",
+        "ipa": "/ˈlænd.mɑːk/",
+        "pos": "adj",
+        "meaning": "mang tính bước ngoặt, cột mốc lịch sử",
+        "example": "The Supreme Court delivered a landmark ruling on environmental regulations."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "publish a study",
+        "meaning": "công bố một nghiên cứu"
+      },
+      {
+        "phrase": "research team",
+        "meaning": "nhóm nghiên cứu"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Thì Quá khứ đơn với mốc thời gian rõ ràng 'Last year'",
+        "rule": "Past time expression (Last year) + S + V2/ed (published)",
+        "content": "Diễn tả hành động nghiên cứu đã hoàn tất trong quá khứ tại một thời điểm xác định."
+      }
+    ]
+  },
+  "100": {
+    "exp": "Người nói mời người nghe trải nghiệm thực tế: 'After our session wraps up, you can sample several new high-nutrient fruit varieties in the dining area adjacent to the main hall' (Sau khi buổi thuyết trình kết thúc, quý vị có thể nếm thử một số giống hoa quả giàu dinh dưỡng mới tại khu vực ăn uống liền kề hội trường chính) -> Người nghe có thể dùng thử sản phẩm tại khu vực ăn uống ('In a dining area'). Paraphrasing: sample -> test a product, dining area -> in a dining area. Đáp án đúng là (D).",
+    "vocab": [
+      {
+        "word": "dining area",
+        "ipa": "/ˈdaɪ.nɪŋ ˈeə.ri.ə/",
+        "pos": "n",
+        "meaning": "khu vực ăn uống, căng tin hội nghị",
+        "example": "Refreshments will be served in the outdoor dining area."
+      },
+      {
+        "word": "sample",
+        "ipa": "/ˈsɑːm.pəl/",
+        "pos": "v",
+        "meaning": "nếm thử, dùng thử mẫu sản phẩm",
+        "example": "Shoppers can sample artisanal cheeses at the counter."
+      },
+      {
+        "word": "adjacent",
+        "ipa": "/əˈdʒeɪ.sənt/",
+        "pos": "adj",
+        "meaning": "liền kề, sát cạnh",
+        "example": "The executive boardroom is located adjacent to the cafeteria."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "dining area",
+        "meaning": "khu vực ăn uống"
+      },
+      {
+        "phrase": "sample a product",
+        "meaning": "dùng thử/nếm thử sản phẩm"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cụm tính từ 'adjacent to' chỉ vị trí tương đối",
+        "rule": "Noun + adjacent to + Noun (in the dining area adjacent to the main hall)",
+        "content": "Dùng để bổ nghĩa và xác định vị trí tiếp giáp giữa hai khu vực kiến trúc trong tòa nhà."
+      }
+    ]
+  }
+}

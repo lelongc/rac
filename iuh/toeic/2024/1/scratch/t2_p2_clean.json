@@ -1,0 +1,252 @@
+{
+  "7": {
+    "stem": "Have the machines on the factory floor been cleaned?",
+    "options": {
+      "A": "No, not yet.",
+      "B": "It's in the shipping container.",
+      "C": "I just put it in the trash bin."
+    },
+    "audioClip": "assets/audio/test2/cuts/q7.mp3",
+    "audioLabel": "Nghe câu 7"
+  },
+  "8": {
+    "stem": "How much will the budget increase next year?",
+    "options": {
+      "A": "About 10 percent.",
+      "B": "Three hours, I think.",
+      "C": "At the bank's main branch."
+    },
+    "audioClip": "assets/audio/test2/cuts/q8.mp3",
+    "audioLabel": "Nghe câu 8"
+  },
+  "9": {
+    "stem": "You're going to water the plants before you leave, aren't you?",
+    "options": {
+      "A": "I walked the whole way.",
+      "B": "Yes, right after lunch.",
+      "C": "In the break room."
+    },
+    "audioClip": "assets/audio/test2/cuts/q9.mp3",
+    "audioLabel": "Nghe câu 9"
+  },
+  "10": {
+    "stem": "Aren't you going to schedule an eye doctor appointment?",
+    "options": {
+      "A": "Those glasses look nice on you.",
+      "B": "I already scheduled one.",
+      "C": "The seminar is three days long."
+    },
+    "audioClip": "assets/audio/test2/cuts/q10.mp3",
+    "audioLabel": "Nghe câu 10"
+  },
+  "11": {
+    "stem": "I'm going to try to fix this printer.",
+    "options": {
+      "A": "It doesn't fit.",
+      "B": "Double-sided copies.",
+      "C": "Are you sure it can be repaired?"
+    },
+    "audioClip": "assets/audio/test2/cuts/q11.mp3",
+    "audioLabel": "Nghe câu 11"
+  },
+  "12": {
+    "stem": "What should we do with these brochures?",
+    "options": {
+      "A": "A trip to the seashore.",
+      "B": "Yes, I found it already.",
+      "C": "I'll leave them at the front desk."
+    },
+    "audioClip": "assets/audio/test2/cuts/q12.mp3",
+    "audioLabel": "Nghe câu 12"
+  },
+  "13": {
+    "stem": "Has the policy meeting been rescheduled?",
+    "options": {
+      "A": "We have lots of desk calendar designs.",
+      "B": "Yes, it's happening tomorrow instead.",
+      "C": "This soup is delicious."
+    },
+    "audioClip": "assets/audio/test2/cuts/q13.mp3",
+    "audioLabel": "Nghe câu 13"
+  },
+  "14": {
+    "stem": "Why don't we stop by the office cafeteria on our way to the workshop?",
+    "options": {
+      "A": "Sure, we have time for that.",
+      "B": "A full service buffet.",
+      "C": "The topic is professional networking."
+    },
+    "audioClip": "assets/audio/test2/cuts/q14.mp3",
+    "audioLabel": "Nghe câu 14"
+  },
+  "15": {
+    "stem": "Have you tried our famous pasta dish?",
+    "options": {
+      "A": "We need a table for five.",
+      "B": "Yes, it was delicious.",
+      "C": "I'll try to make it on time."
+    },
+    "audioClip": "assets/audio/test2/cuts/q15.mp3",
+    "audioLabel": "Nghe câu 15"
+  },
+  "16": {
+    "stem": "Who's the opening act at tonight's concert?",
+    "options": {
+      "A": "Could you turn up the volume?",
+      "B": "A jazz singer from France.",
+      "C": "The position has been filled."
+    },
+    "audioClip": "assets/audio/test2/cuts/q16.mp3",
+    "audioLabel": "Nghe câu 16"
+  },
+  "17": {
+    "stem": "When do the product demonstrations start?",
+    "options": {
+      "A": "The schedule was emailed last Friday.",
+      "B": "Some innovative features.",
+      "C": "In room 202, I think."
+    },
+    "audioClip": "assets/audio/test2/cuts/q17.mp3",
+    "audioLabel": "Nghe câu 17"
+  },
+  "18": {
+    "stem": "I tried updating the website, but it didn't work.",
+    "options": {
+      "A": "That date works for me.",
+      "B": "Usually our online reviews.",
+      "C": "Just send me the changes you want."
+    },
+    "audioClip": "assets/audio/test2/cuts/q18.mp3",
+    "audioLabel": "Nghe câu 18"
+  },
+  "19": {
+    "stem": "Did you hire a new welding specialist?",
+    "options": {
+      "A": "The part is back-ordered.",
+      "B": "Yes, he starts tomorrow.",
+      "C": "No, it should be higher."
+    },
+    "audioClip": "assets/audio/test2/cuts/q19.mp3",
+    "audioLabel": "Nghe câu 19"
+  },
+  "20": {
+    "stem": "How was the color palette for the lobby chosen?",
+    "options": {
+      "A": "Blue and orange.",
+      "B": "It was fine, thanks.",
+      "C": "I wasn't involved."
+    },
+    "audioClip": "assets/audio/test2/cuts/q20.mp3",
+    "audioLabel": "Nghe câu 20"
+  },
+  "21": {
+    "stem": "When are we ordering more supplies for the office?",
+    "options": {
+      "A": "In the storage closet.",
+      "B": "Next week on Monday.",
+      "C": "The new desk looks great."
+    },
+    "audioClip": "assets/audio/test2/cuts/q21.mp3",
+    "audioLabel": "Nghe câu 21"
+  },
+  "22": {
+    "stem": "The battery for the water pump is going to be solar powered, right?",
+    "options": {
+      "A": "We're still in the planning stages.",
+      "B": "140 dollars per year.",
+      "C": "Yes, I'd love a glass of water."
+    },
+    "audioClip": "assets/audio/test2/cuts/q22.mp3",
+    "audioLabel": "Nghe câu 22"
+  },
+  "23": {
+    "stem": "Where can I buy a charger for this laptop?",
+    "options": {
+      "A": "Around three o'clock.",
+      "B": "I can order one for you.",
+      "C": "A limited return policy."
+    },
+    "audioClip": "assets/audio/test2/cuts/q23.mp3",
+    "audioLabel": "Nghe câu 23"
+  },
+  "24": {
+    "stem": "Do I need to reserve a meeting room?",
+    "options": {
+      "A": "Yes, let me show you how.",
+      "B": "The service is good.",
+      "C": "My slide presentation."
+    },
+    "audioClip": "assets/audio/test2/cuts/q24.mp3",
+    "audioLabel": "Nghe câu 24"
+  },
+  "25": {
+    "stem": "When's the new department director supposed to start?",
+    "options": {
+      "A": "It's an hour long.",
+      "B": "Ms. Pavlova isn't retiring for several weeks.",
+      "C": "No, that department's upstairs."
+    },
+    "audioClip": "assets/audio/test2/cuts/q25.mp3",
+    "audioLabel": "Nghe câu 25"
+  },
+  "26": {
+    "stem": "Should I deliver these pizzas, or will you?",
+    "options": {
+      "A": "No thanks, I'm not hungry.",
+      "B": "Ten dollars for two.",
+      "C": "They're being picked up."
+    },
+    "audioClip": "assets/audio/test2/cuts/q26.mp3",
+    "audioLabel": "Nghe câu 26"
+  },
+  "27": {
+    "stem": "This month's shipment schedule has been revised.",
+    "options": {
+      "A": "I couldn't find them either.",
+      "B": "Which dates have been changed?",
+      "C": "Two dollars per pound."
+    },
+    "audioClip": "assets/audio/test2/cuts/q27.mp3",
+    "audioLabel": "Nghe câu 27"
+  },
+  "28": {
+    "stem": "How much will the repairs cost?",
+    "options": {
+      "A": "The work is covered under the warranty plan.",
+      "B": "Yes, it's also available in red.",
+      "C": "In about two weeks."
+    },
+    "audioClip": "assets/audio/test2/cuts/q28.mp3",
+    "audioLabel": "Nghe câu 28"
+  },
+  "29": {
+    "stem": "Why don't we provide more samples of the wallpaper patterns?",
+    "options": {
+      "A": "The newspaper is delivered daily.",
+      "B": "An interior design course.",
+      "C": "There are plenty in the binders."
+    },
+    "audioClip": "assets/audio/test2/cuts/q29.mp3",
+    "audioLabel": "Nghe câu 29"
+  },
+  "30": {
+    "stem": "Can you give me a tour of the property this afternoon?",
+    "options": {
+      "A": "Sorry, I won't have time until tomorrow.",
+      "B": "It has a very modern design.",
+      "C": "A house on Maple Street."
+    },
+    "audioClip": "assets/audio/test2/cuts/q30.mp3",
+    "audioLabel": "Nghe câu 30"
+  },
+  "31": {
+    "stem": "Who's scheduled to test the product today?",
+    "options": {
+      "A": "We're waiting for confirmation.",
+      "B": "It's a great album, right?",
+      "C": "About six weeks ago."
+    },
+    "audioClip": "assets/audio/test2/cuts/q31.mp3",
+    "audioLabel": "Nghe câu 31"
+  }
+}

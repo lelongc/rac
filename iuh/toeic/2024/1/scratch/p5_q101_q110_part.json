@@ -1,0 +1,432 @@
+{
+  "101": {
+    "exp": "Cấu trúc: Liên từ chỉ thời gian đứng đầu mệnh đề phụ 'While your order is being processed,...' (Trong khi đơn hàng của bạn đang được xử lý,...). Phương án (C) 'While' là liên từ duy nhất diễn tả hành động đang diễn ra đồng thời. Các phương án khác: (A) 'Also' (trạng từ liên kết, không nối mệnh đề), (B) 'During' (giới từ, theo sau là cụm danh từ chứ không phải mệnh đề có động từ 'is being processed'), (D) 'Next' (trạng từ). Dịch câu: Trong khi đơn hàng của bạn đang được xử lý, vui lòng gọi cho bộ phận chăm sóc khách hàng nếu có bất kỳ thắc mắc nào.",
+    "vocab": [
+      {
+        "word": "process",
+        "ipa": "/ˈprəʊ.ses/",
+        "pos": "v",
+        "meaning": "xử lý (đơn hàng, dữ liệu, hồ sơ)",
+        "example": "The fulfillment team will process your order within 24 hours."
+      },
+      {
+        "word": "customer service",
+        "ipa": "/ˈkʌs.tə.mər ˈsɜː.vɪs/",
+        "pos": "n",
+        "meaning": "dịch vụ khách hàng, chăm sóc khách hàng",
+        "example": "Reach out to customer service for return inquiries."
+      },
+      {
+        "word": "inquiry",
+        "ipa": "/ɪnˈkwaɪə.ri/",
+        "pos": "n",
+        "meaning": "câu hỏi, thắc mắc",
+        "example": "Please direct all pricing inquiries to the sales desk."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "process an order",
+        "meaning": "xử lý đơn hàng"
+      },
+      {
+        "phrase": "customer service",
+        "meaning": "bộ phận chăm sóc khách hàng"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Phân biệt liên từ 'While' và giới từ 'During'",
+        "rule": "While + S + V (Clause) vs. During + Noun Phrase",
+        "content": "'While' bắt buộc đi với một mệnh đề hoàn chỉnh (có chủ ngữ và động từ chia). 'During' là giới từ nên chỉ đi kèm cụm danh từ chỉ khoảng thời gian."
+      }
+    ]
+  },
+  "102": {
+    "exp": "Cấu trúc: Cụm so sánh nhất 'the + widest selection of mufflers' (sự lựa chọn ống giảm thanh đa dạng/phong phú nhất). Trước danh từ 'selection' có mạo từ 'the' và phạm vi so sánh 'in the state' (trong toàn bang) nên bắt buộc dùng dạng so sánh nhất của tính từ. Phương án (B) 'widest' là đáp án chính xác. Các phương án: (A) 'wide' (nguyên mẫu), (C) 'wider' (so sánh hơn), (D) 'widely' (trạng từ). Dịch câu: ABC Truck Supplies có sự lựa chọn các loại ống giảm thanh đa dạng nhất trong toàn bang.",
+    "vocab": [
+      {
+        "word": "selection",
+        "ipa": "/sɪˈlek.ʃən/",
+        "pos": "n",
+        "meaning": "sự lựa chọn, tập hợp các mặt hàng phong phú",
+        "example": "The boutique offers an extensive selection of designer scarves."
+      },
+      {
+        "word": "muffler",
+        "ipa": "/ˈmʌf.lər/",
+        "pos": "n",
+        "meaning": "ống giảm thanh, ống bô xe",
+        "example": "A cracked exhaust muffler causes excessive engine noise."
+      },
+      {
+        "word": "supplies",
+        "ipa": "/səˈplaɪz/",
+        "pos": "n pl",
+        "meaning": "vật tư, nguồn cung ứng thiết bị",
+        "example": "Order industrial maintenance supplies through our online portal."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "the widest selection",
+        "meaning": "sự lựa chọn đa dạng nhất"
+      },
+      {
+        "phrase": "in the state",
+        "meaning": "trong toàn tiểu bang"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cấu trúc so sánh nhất của tính từ ngắn",
+        "rule": "the + Adj-est + Noun + in/of [phạm vi]",
+        "content": "Tính từ 1 âm tiết 'wide' thêm đuôi '-est' thành 'widest'. Đi kèm với mạo từ 'the' phía trước và cụm giới từ chỉ phạm vi 'in the state'."
+      }
+    ]
+  },
+  "103": {
+    "exp": "Cấu trúc: Sau cụm từ chỉ lượng 'dozens of' (hàng tá, hàng chục) và tính từ bổ nghĩa 'five-star' (5 sao), ta cần một danh từ đếm được số nhiều làm tân ngữ cho động từ 'has received'. Phương án (A) 'reviews' (những lời đánh giá, nhận xét) hoàn toàn chính xác cả về ngữ pháp và ngữ nghĩa. Các phương án: (B) 'reviewed' (dạng V-ed), (C) 'reviewer' (danh từ số ít chỉ người), (D) 'reviewing' (danh động từ). Dịch câu: Sharswood Landscaping đã nhận được hàng chục đánh giá năm sao cho công việc của mình.",
+    "vocab": [
+      {
+        "word": "landscaping",
+        "ipa": "/ˈlænd.skeɪ.pɪŋ/",
+        "pos": "n",
+        "meaning": "dịch vụ làm đẹp cảnh quan, thiết kế sân vườn",
+        "example": "Professional landscaping enhances residential property value."
+      },
+      {
+        "word": "review",
+        "ipa": "/rɪˈvjuː/",
+        "pos": "n",
+        "meaning": "bản đánh giá, nhận xét từ khách hàng",
+        "example": "Positive online reviews attract new patrons."
+      },
+      {
+        "word": "dozens of",
+        "ipa": "/ˈdʌz.ənz əv/",
+        "pos": "quantifier",
+        "meaning": "hàng chục, rất nhiều",
+        "example": "Dozens of applicants attended the open career fair."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "five-star reviews",
+        "meaning": "đánh giá 5 sao"
+      },
+      {
+        "phrase": "dozens of",
+        "meaning": "hàng tá, hàng chục"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Danh từ đếm được số nhiều sau cụm chỉ lượng 'dozens of'",
+        "rule": "dozens of + Plural Countable Noun (reviews)",
+        "content": "'Dozens of' đòi hỏi danh từ đếm được số nhiều đi sau. Lưu ý tính từ ghép có gạch nối 'five-star' không có 's'."
+      }
+    ]
+  },
+  "104": {
+    "exp": "Cấu trúc: Mệnh đề phụ sau liên từ chỉ lý do 'since' (vì) đang thiếu một chủ ngữ đứng trước cụm động từ khiếm khuyết 'may not have another chance...'. Danh từ đứng trước là 'Dr. Cho' (Bác sĩ Cho - phụ nữ), nên ta dùng đại từ nhân xưng chủ ngữ (subject pronoun) là (B) 'she'. Các phương án: (A) 'her' (tính từ sở hữu hoặc tân ngữ), (C) 'herself' (đại từ phản thân), (D) 'hers' (đại từ sở hữu). Dịch câu: Bác sĩ Cho sẽ đến thăm Phòng thí nghiệm Teledarr trong ngày mở cửa thường niên, vì cô ấy có thể không còn cơ hội nào khác để tham quan nơi này.",
+    "vocab": [
+      {
+        "word": "open house",
+        "ipa": "/ˌəʊ.pən ˈhaʊs/",
+        "pos": "n",
+        "meaning": "ngày hội mở cửa tham quan tự do",
+        "example": "The university welcomed prospective students at its spring open house."
+      },
+      {
+        "word": "chance",
+        "ipa": "/tʃɑːns/",
+        "pos": "n",
+        "meaning": "cơ hội, dịp thuận lợi",
+        "example": "Take this chance to consult with certified financial planners."
+      },
+      {
+        "word": "laboratory",
+        "ipa": "/ləˈbɒr.ə.tər.i/",
+        "pos": "n",
+        "meaning": "phòng thí nghiệm (viết tắt: lab)",
+        "example": "Strict protective gear is mandatory inside the testing lab."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "annual open house",
+        "meaning": "ngày mở cửa tự do thường niên"
+      },
+      {
+        "phrase": "have a chance to",
+        "meaning": "có cơ hội làm gì"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Đại từ nhân xưng làm chủ ngữ (Subject Pronouns)",
+        "rule": "since + Subject Pronoun (she) + Verb Phrase (may not have...)",
+        "content": "Vị trí trước động từ chính/trợ động từ luôn cần một đại từ đóng vai trò chủ ngữ (he, she, they, we, it, I, you)."
+      }
+    ]
+  },
+  "105": {
+    "exp": "Cấu trúc: Cụm động từ 'decide to do something' (quyết định làm gì) yêu cầu một động từ nguyên thể có 'to' (to-infinitive). Về ngữ nghĩa: mở rộng danh mục hàng gia dụng sẵn có 'expand its already large selection of housewares'. Phương án (D) 'expand' (mở rộng) là đáp án đúng. Các phương án: (A) 'expanding' (V-ing), (B) 'expansion' (danh từ), (C) 'expanded' (V-ed). Dịch câu: Cửa hàng Bách hóa Dorn đã quyết định mở rộng thêm danh mục đồ gia dụng vốn đã rất phong phú của mình.",
+    "vocab": [
+      {
+        "word": "expand",
+        "ipa": "/ɪkˈspænd/",
+        "pos": "v",
+        "meaning": "mở rộng, cơi nới, phát triển thêm",
+        "example": "The retailer plans to expand its presence in Asian markets."
+      },
+      {
+        "word": "housewares",
+        "ipa": "/ˈhaʊs.weəz/",
+        "pos": "n pl",
+        "meaning": "đồ gia dụng, dụng cụ gia đình",
+        "example": "The home goods section discounts various kitchen housewares."
+      },
+      {
+        "word": "department store",
+        "ipa": "/dɪˈpɑːt.mənt stɔːr/",
+        "pos": "n",
+        "meaning": "cửa hàng bách hóa tổng hợp",
+        "example": "Shoppers flocked to the downtown department store for Black Friday."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "expand a selection",
+        "meaning": "mở rộng chủng loại hàng hóa"
+      },
+      {
+        "phrase": "decide to do something",
+        "meaning": "quyết định làm gì"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Động từ theo sau bởi To-Infinitive",
+        "rule": "decide + to-V (decided to expand)",
+        "content": "Các động từ chỉ ý định, quyết định (decide, plan, hope, expect, promise) luôn đi kèm với động từ nguyên thể có 'to'."
+      }
+    ]
+  },
+  "106": {
+    "exp": "Cấu trúc giả định thức (Subjunctive Mood): Động từ 'ask that S + V-bare' (yêu cầu/đề nghị rằng ai đó làm gì). Ở vế trước, chủ ngữ 'We' (chúng tôi) đi với thì hiện tại đơn cần động từ nguyên mẫu (C) 'ask'. Lưu ý ở mệnh đề 'that', động từ 'bring' ở dạng nguyên thể không chia. Các phương án: (A) 'asks' (chia theo ngôi thứ 3 số ít), (B) 'asking' (dạng V-ing, không làm vị ngữ đơn lẻ), (D) 'asked' (quá khứ đơn, không hòa hợp với ngữ cảnh yêu cầu hiện tại). Dịch câu: Chúng tôi đề nghị bạn mang theo một tập hồ sơ năng lực chứa các mẫu công việc đã làm đến buổi phỏng vấn.",
+    "vocab": [
+      {
+        "word": "portfolio",
+        "ipa": "/pɔːtˈfəʊ.li.əʊ/",
+        "pos": "n",
+        "meaning": "hồ sơ năng lực, tập tác phẩm mẫu",
+        "example": "Graphic designers must submit an online portfolio of recent work."
+      },
+      {
+        "word": "work samples",
+        "ipa": "/wɜːk ˈsɑːm.pəlz/",
+        "pos": "n pl",
+        "meaning": "các mẫu công việc, sản phẩm minh họa kinh nghiệm",
+        "example": "Bring tangible work samples illustrating your coding proficiency."
+      },
+      {
+        "word": "interview",
+        "ipa": "/ˈɪn.tə.vjuː/",
+        "pos": "n",
+        "meaning": "buổi phỏng vấn xin việc",
+        "example": "Arrive 15 minutes ahead of your scheduled job interview."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "portfolio of work samples",
+        "meaning": "hồ sơ chứa các mẫu công việc"
+      },
+      {
+        "phrase": "bring to the interview",
+        "meaning": "mang tới buổi phỏng vấn"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cấu trúc Thức giả định với động từ yêu cầu (Subjunctive)",
+        "rule": "ask / request / require + that + S + (should) + V-bare",
+        "content": "Động từ theo sau 'that' luôn ở dạng nguyên mẫu không chia dù chủ ngữ là ngôi thứ ba số ít hay số nhiều."
+      }
+    ]
+  },
+  "107": {
+    "exp": "Cấu trúc: Đứng trước danh từ số nhiều 'discounts' (mức giảm giá) cần một tính từ bổ nghĩa. 'Deep discounts' là một cụm từ cố định (collocation) quen thuộc trong kinh doanh mang nghĩa 'mức chiết khấu sâu / giảm giá mạnh'. Phương án (C) 'deep' là đáp án đúng. Các phương án: (A) 'deeply' (trạng từ), (B) 'deepen' (động từ), (D) 'deepest' (so sánh nhất, thiếu 'the'). Dịch câu: Các thành viên của Cửa hàng Nông trại Bold Stone được hưởng các mức giảm giá sâu trên tất cả các đơn hàng mua sắm.",
+    "vocab": [
+      {
+        "word": "discount",
+        "ipa": "/ˈdɪs.kaʊnt/",
+        "pos": "n",
+        "meaning": "mức giảm giá, chiết khấu",
+        "example": "Senior citizens enjoy a 15% discount on prescription drugs."
+      },
+      {
+        "word": "purchase",
+        "ipa": "/ˈpɜː.tʃəs/",
+        "pos": "n",
+        "meaning": "hàng mua sắm, khoản thanh toán",
+        "example": "Retain the original cash receipt for all store purchases."
+      },
+      {
+        "word": "membership",
+        "ipa": "/ˈmem.bə.ʃɪp/",
+        "pos": "n",
+        "meaning": "tư cách thành viên",
+        "example": "Annual membership unlocks exclusive promotional vouchers."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "deep discounts",
+        "meaning": "mức giảm giá sâu"
+      },
+      {
+        "phrase": "on all purchases",
+        "meaning": "trên mọi giao dịch mua sắm"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Vị trí của tính từ trước danh từ (Adj + Noun)",
+        "rule": "Adjective (deep) + Noun (discounts)",
+        "content": "Tính từ đứng ngay trước danh từ để bổ nghĩa trực tiếp cho danh từ đó về tính chất hoặc mức độ."
+      }
+    ]
+  },
+  "108": {
+    "exp": "Cấu trúc: Đứng sau tính từ sở hữu 'your' và cụm giới từ 'before the time of' cần một danh từ chỉ sự việc: 'the time of your reservation' (thời điểm đặt chỗ của bạn). Phương án (B) 'reservation' (sự đặt chỗ trước) là danh từ đúng. Các phương án: (A) 'reserve' (động từ), (C) 'reserved' (V-ed/tính từ), (D) 'reserves' (danh từ số nhiều/động từ chia ngôi 3 số ít). Dịch câu: Nếu kế hoạch của bạn thay đổi, vui lòng liên hệ với chúng tôi ít nhất 24 giờ trước thời gian bạn đã đặt chỗ.",
+    "vocab": [
+      {
+        "word": "reservation",
+        "ipa": "/ˌrez.əˈveɪ.ʃən/",
+        "pos": "n",
+        "meaning": "sự đặt chỗ trước (bàn ăn, phòng khách sạn, vé xe)",
+        "example": "Confirm your hotel reservation 48 hours prior to arrival."
+      },
+      {
+        "word": "at least",
+        "ipa": "/æt liːst/",
+        "pos": "adv phr",
+        "meaning": "ít nhất, tối thiểu",
+        "example": "Complete at least three training modules per quarter."
+      },
+      {
+        "word": "contact",
+        "ipa": "/ˈkɒn.tækt/",
+        "pos": "v",
+        "meaning": "liên hệ, liên lạc",
+        "example": "Contact our technical support hotline for immediate help."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "time of your reservation",
+        "meaning": "thời điểm đặt chỗ của bạn"
+      },
+      {
+        "phrase": "at least 24 hours",
+        "meaning": "ít nhất 24 giờ"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Tính từ sở hữu đứng trước danh từ",
+        "rule": "Possessive Adjective (your) + Noun (reservation)",
+        "content": "Các tính từ sở hữu (my, your, his, her, their, our, its) bắt buộc phải có một danh từ hoặc cụm danh từ theo sau."
+      }
+    ]
+  },
+  "109": {
+    "exp": "Cấu trúc: Đứng trước danh từ số nhiều 'roots' (những chiếc rễ cây) cần một tính từ sở hữu bổ nghĩa. Danh từ được thay thế là 'the tomato seedling' (cây cà chua con - danh từ số ít chỉ thực vật/sự vật), do đó ta chọn tính từ sở hữu (A) 'its' (của nó). Các phương án: (B) 'it' (đại từ tân ngữ/chủ ngữ), (C) 'itself' (đại từ phản thân), (D) 'they' (đại từ nhân xưng chủ ngữ số nhiều). Dịch câu: Hãy cầm nhẹ cây cà chua con ở phần thân để tránh làm tổn hại đến bộ rễ của nó.",
+    "vocab": [
+      {
+        "word": "seedling",
+        "ipa": "/ˈsiːd.lɪŋ/",
+        "pos": "n",
+        "meaning": "cây con, mầm cây mới mọc",
+        "example": "Transplant tomato seedlings into fertile soil carefully."
+      },
+      {
+        "word": "stem",
+        "ipa": "/stem/",
+        "pos": "n",
+        "meaning": "thân cây, cuống lá",
+        "example": "Cut the flower stem diagonally before placing it in water."
+      },
+      {
+        "word": "harm",
+        "ipa": "/hɑːm/",
+        "pos": "v",
+        "meaning": "làm hại, gây tổn hại",
+        "example": "Avoid chemical sprays that harm beneficial insects."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "avoid harming",
+        "meaning": "tránh làm tổn hại"
+      },
+      {
+        "phrase": "gently by the stem",
+        "meaning": "nhẹ nhàng ở phần thân cây"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Tính từ sở hữu 'its' thay thế cho danh từ số ít chỉ vật",
+        "rule": "Singular noun (the tomato seedling) -> its + Noun (its roots)",
+        "content": "Phân biệt 'its' (tính từ sở hữu: của nó) và 'it's' (dạng viết tắt của it is / it has)."
+      }
+    ]
+  },
+  "110": {
+    "exp": "Cấu trúc: Sau chỗ trống là danh động từ 'entering the conference' (bước vào hội nghị). Ta cần một giới từ chỉ thời gian đứng trước danh động từ V-ing: 'before entering the conference' (trước khi vào phòng hội thảo). Phương án (D) 'before' là đáp án chính xác. Các phương án: (A) 'toward' (hướng về phía), (B) 'ahead' (trạng từ, đi với 'of'), (C) 'except' (ngoại trừ, đi với 'for'). Dịch câu: Tại bàn đăng ký, hãy nhớ nhận thẻ tên của bạn trước khi bước vào tham dự hội nghị.",
+    "vocab": [
+      {
+        "word": "name tag",
+        "ipa": "/ˈneɪm tæɡ/",
+        "pos": "n",
+        "meaning": "thẻ đeo ghi tên, bảng tên",
+        "example": "Wear your laminated name tag at all conference venues."
+      },
+      {
+        "word": "registration table",
+        "ipa": "/ˌredʒ.ɪˈstreɪ.ʃən ˈteɪ.bəl/",
+        "pos": "n",
+        "meaning": "bàn đăng ký làm thủ tục",
+        "example": "Check in at the registration table to collect seminar materials."
+      },
+      {
+        "word": "collect",
+        "ipa": "/kəˈlekt/",
+        "pos": "v",
+        "meaning": "nhận lấy, thu thập",
+        "example": "Collect your complimentary tote bag at the entrance."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "registration table",
+        "meaning": "bàn đăng ký"
+      },
+      {
+        "phrase": "before entering",
+        "meaning": "trước khi bước vào"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Giới từ chỉ thời gian đi với V-ing",
+        "rule": "Preposition (before / after) + V-ing + Object",
+        "content": "Khi hai hành động có cùng chủ ngữ, mệnh đề trạng ngữ chỉ thời gian có thể rút gọn thành 'before/after + V-ing'."
+      }
+    ]
+  }
+}

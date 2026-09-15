@@ -1,0 +1,160 @@
+# scratch/enrich_t2_p5_p6.py: Polish Part 5 and 6 for Test 2 (Q101-Q146)
+import json
+import sys
+
+sys.stdout.reconfigure(encoding='utf-8')
+
+# Custom additions for Part 5 & 6 questions that had only 1 vocab or 1 colloc
+p5_p6_addons = {
+    "101": {
+        "extra_colloc": [{"phrase": "handheld device", "meaning": "thiết bị cầm tay"}]
+    },
+    "102": {
+        "extra_colloc": [{"phrase": "terabyte of data", "meaning": "terabyte dữ liệu"}]
+    },
+    "103": {
+        "extra_vocab": [{"word": "travel", "ipa": "/ˈtræv.əl/", "pos": "v", "meaning": "đi lại, di chuyển công tác", "example": "Executives travel frequently to international branch offices."}]
+    },
+    "104": {
+        "extra_colloc": [{"phrase": "leave the warehouse", "meaning": "rời khỏi nhà kho, xuất kho"}]
+    },
+    "106": {
+        "extra_colloc": [{"phrase": "consider buying", "meaning": "cân nhắc mua sắm"}]
+    },
+    "107": {
+        "extra_colloc": [{"phrase": "vice president of operations", "meaning": "phó chủ tịch phụ trách vận hành"}]
+    },
+    "108": {
+        "extra_vocab": [{"word": "hold", "ipa": "/həʊld/", "pos": "v", "meaning": "tổ chức sự kiện/buổi họp", "example": "The committee will hold a public hearing next Thursday."}],
+        "extra_colloc": [{"phrase": "author's hour", "meaning": "giờ giao lưu cùng tác giả"}]
+    },
+    "109": {
+        "extra_vocab": [{"word": "expand", "ipa": "/ɪkˈspænd/", "pos": "v", "meaning": "mở rộng quy mô kinh doanh", "example": "The retail chain plans to expand into neighboring states."}],
+        "extra_colloc": [{"phrase": "second location", "meaning": "cơ sở thứ hai, chi nhánh thứ hai"}]
+    },
+    "110": {
+        "extra_colloc": [{"phrase": "snack pack", "meaning": "gói đồ ăn nhẹ"}]
+    },
+    "111": {
+        "extra_colloc": [{"phrase": "local fabrics", "meaning": "vải dệt địa phương"}]
+    },
+    "113": {
+        "extra_colloc": [{"phrase": "college degree", "meaning": "bằng cấp đại học"}]
+    },
+    "115": {
+        "extra_colloc": [{"phrase": "finish a project", "meaning": "hoàn thành một dự án"}]
+    },
+    "116": {
+        "extra_vocab": [{"word": "compare", "ipa": "/kəmˈpeər/", "pos": "v", "meaning": "so sánh đối chiếu", "example": "Analysts compare quarterly revenue across business units."}],
+        "extra_colloc": [{"phrase": "higher profits", "meaning": "lợi nhuận cao hơn"}]
+    },
+    "117": {
+        "extra_colloc": [{"phrase": "reliable products", "meaning": "sản phẩm đáng tin cậy"}]
+    },
+    "119": {
+        "extra_colloc": [{"phrase": "collection of books", "meaning": "bộ sưu tập sách"}]
+    },
+    "120": {
+        "extra_colloc": [{"phrase": "payroll department", "meaning": "phòng kế toán tiền lương"}]
+    },
+    "121": {
+        "extra_colloc": [{"phrase": "double-check items", "meaning": "kiểm tra kỹ lại các mặt hàng"}]
+    },
+    "122": {
+        "extra_colloc": [{"phrase": "new building", "meaning": "tòa nhà mới"}]
+    },
+    "123": {
+        "extra_colloc": [{"phrase": "approaching deadline", "meaning": "hạn chót đang đến gần"}]
+    },
+    "124": {
+        "extra_colloc": [{"phrase": "present a speech", "meaning": "trình bày một bài phát biểu"}]
+    },
+    "125": {
+        "extra_vocab": [{"word": "available", "ipa": "/əˈveɪ.lə.bəl/", "pos": "adj", "meaning": "có sẵn, ra mắt thị trường", "example": "The updated smartphone model will become available in November."}],
+        "extra_colloc": [{"phrase": "develop a smartphone", "meaning": "phát triển điện thoại thông minh"}]
+    },
+    "126": {
+        "extra_colloc": [{"phrase": "free lesson", "meaning": "bài học miễn phí"}]
+    },
+    "127": {
+        "extra_colloc": [{"phrase": "overnight parking", "meaning": "đỗ xe qua đêm"}]
+    },
+    "128": {
+        "extra_vocab": [{"word": "arrive", "ipa": "/əˈraɪv/", "pos": "v", "meaning": "đến nơi, có mặt", "example": "Board members arrived early for the morning briefing."}],
+        "extra_colloc": [{"phrase": "begin a call", "meaning": "bắt đầu cuộc gọi thoại"}]
+    },
+    "129": {
+        "extra_colloc": [{"phrase": "motivational video", "meaning": "video tạo động lực"}]
+    },
+
+    # Part 6 additions
+    "131": {
+        "extra_vocab": [{"word": "order", "ipa": "/ˈɔː.dər/", "pos": "n", "meaning": "đơn đặt hàng", "example": "The shipping department processed the export order promptly."}],
+        "extra_colloc": [{"phrase": "custom woodwork", "meaning": "đồ gỗ gia công theo yêu cầu"}]
+    },
+    "132": {
+        "extra_vocab": [{"word": "dispatch", "ipa": "/dɪˈspætʃ/", "pos": "v", "meaning": "phát đi, gửi hàng đi", "example": "Couriers dispatch urgent parcels three times daily."}],
+        "extra_colloc": [{"phrase": "delivery of goods", "meaning": "việc giao hàng hóa"}]
+    },
+    "133": {
+        "extra_vocab": [{"word": "inquire", "ipa": "/ɪnˈkwaɪər/", "pos": "v", "meaning": "hỏi thăm, yêu cầu giải đáp", "example": "Prospective clients inquired about pricing structures."}],
+        "extra_colloc": [{"phrase": "speak directly", "meaning": "nói chuyện trực tiếp với ai"}]
+    },
+    "134": {
+        "extra_vocab": [{"word": "schedule", "ipa": "/ˈʃedʒ.uːl/", "pos": "v", "meaning": "lên lịch trình, sắp xếp thời gian", "example": "The assistant will schedule a consultation for tomorrow."}],
+        "extra_colloc": [{"phrase": "convenient time", "meaning": "thời gian thuận tiện"}]
+    },
+    "135": {
+        "extra_vocab": [{"word": "safety", "ipa": "/ˈseɪf.ti/", "pos": "n", "meaning": "sự an toàn lao động", "example": "Factory supervisors enforce stringent safety standards."}],
+        "extra_colloc": [{"phrase": "ensure comfort", "meaning": "đảm bảo sự tiện nghi/thoải mái"}]
+    },
+    "136": {
+        "extra_vocab": [{"word": "furthermore", "ipa": "/ˌfɜː.ðəˈmɔːr/", "pos": "adv", "meaning": "hơn nữa, thêm vào đó", "example": "The venue is modern; furthermore, parking is complimentary."}],
+        "extra_colloc": [{"phrase": "energy efficient", "meaning": "tiết kiệm năng lượng hiệu quả"}]
+    },
+    "137": {
+        "extra_vocab": [{"word": "technician", "ipa": "/tekˈnɪʃ.ən/", "pos": "n", "meaning": "kỹ thuật viên chuyên nghiệp", "example": "Certified technicians repaired the heating unit quickly."}],
+        "extra_colloc": [{"phrase": "friendly staff", "meaning": "đội ngũ nhân viên thân thiện"}]
+    },
+    "138": {
+        "extra_vocab": [{"word": "back", "ipa": "/bæk/", "pos": "v", "meaning": "bảo trợ, bảo chứng uy tín", "example": "The warranty is backed by a full money-back guarantee."}],
+        "extra_colloc": [{"phrase": "money-back guarantee", "meaning": "cam kết hoàn tiền"}]
+    },
+    "139": {
+        "extra_vocab": [{"word": "pricing", "ipa": "/ˈpraɪ.sɪŋ/", "pos": "n", "meaning": "chính sách định giá", "example": "Competitive pricing attracts cost-conscious retail shoppers."}],
+        "extra_colloc": [{"phrase": "vary depending on", "meaning": "thay đổi tùy thuộc vào"}]
+    },
+    "140": {
+        "extra_vocab": [{"word": "receive", "ipa": "/rɪˈsiːv/", "pos": "v", "meaning": "tiếp nhận đơn hàng/thư tín", "example": "The warehouse received fifty shipments this morning."}],
+        "extra_colloc": [{"phrase": "new price list", "meaning": "bảng giá mới ban hành"}]
+    },
+    "141": {
+        "extra_vocab": [{"word": "available", "ipa": "/əˈveɪ.lə.bəl/", "pos": "adj", "meaning": "có sẵn, được công bố", "example": "The catalogue will become available for download tomorrow."}],
+        "extra_colloc": [{"phrase": "become available", "meaning": "trở nên có sẵn, được phát hành"}]
+    },
+    "142": {
+        "extra_vocab": [{"word": "service", "ipa": "/ˈsɜː.vɪs/", "pos": "n", "meaning": "dịch vụ khách hàng", "example": "The hotel prides itself on attentive guest service."}],
+        "extra_colloc": [{"phrase": "exceptional quality", "meaning": "chất lượng đặc biệt vượt trội"}]
+    },
+    "143": {
+        "extra_vocab": [{"word": "customer", "ipa": "/ˈkʌs.tə.mər/", "pos": "n", "meaning": "khách hàng thân thiết", "example": "Retail outlets strive to build lasting relationships with customers."}],
+        "extra_colloc": [{"phrase": "reach customers", "meaning": "tiếp cận lượng khách hàng"}]
+    },
+    "144": {
+        "extra_vocab": [{"word": "value", "ipa": "/ˈvæl.juː/", "pos": "n", "meaning": "giá trị, tính kinh tế", "example": "The promotional bundle offers outstanding value for money."}],
+        "extra_colloc": [{"phrase": "reasonable price", "meaning": "mức giá cả hợp lý"}]
+    },
+    "145": {
+        "extra_vocab": [{"word": "capacity", "ipa": "/kəˈpæs.ə.ti/", "pos": "n", "meaning": "năng lực sản xuất, công suất", "example": "The factory operates at maximum manufacturing capacity."}],
+        "extra_colloc": [{"phrase": "double the quantity", "meaning": "tăng gấp đôi số lượng"}]
+    },
+    "146": {
+        "extra_vocab": [{"word": "partnership", "ipa": "/ˈpɑːt.nə.ʃɪp/", "pos": "n", "meaning": "mối quan hệ đối tác, hợp tác", "example": "Both firms formed a strategic international partnership."}],
+        "extra_colloc": [{"phrase": "benefit both parties", "meaning": "mang lại lợi ích cho cả đôi bên"}]
+    }
+}
+
+with open('scratch/t2_p5_p6_addons.json', 'w', encoding='utf-8') as f:
+    json.dump(p5_p6_addons, f, ensure_ascii=False, indent=2)
+
+print(f"Created {len(p5_p6_addons)} polish entries for Test 2 Part 5 & 6!")

@@ -1,0 +1,403 @@
+# scratch/generate_t2_p3_p4_vocab.py: High-quality contextual vocabulary for Test 2 Parts 3 and 4 (Q32 - Q100)
+import json, sys
+sys.stdout.reconfigure(encoding='utf-8')
+
+t2_p3_p4_vocab = {
+    # Dialogue 32-34: Ship captain & port arrival
+    32: [
+        {"word": "dock", "ipa": "/dɒk/", "pos": "v, n", "meaning": "cập bến, bến tàu", "example": "The freight vessel will dock at the port in Kolkata this evening."},
+        {"word": "port", "ipa": "/pɔːt/", "pos": "n", "meaning": "cảng biển, bến cảng", "example": "Cargo containers are inspected at the commercial port."},
+        {"word": "captain", "ipa": "/ˈkæp.tɪn/", "pos": "n", "meaning": "thuyền trưởng, cơ trưởng", "example": "The captain signaled the dockworkers as the ship arrived."},
+        {"word": "take place", "ipa": "/teɪk pleɪs/", "pos": "phr", "meaning": "diễn ra, xảy ra", "example": "Where does the conversation most likely take place?"}
+    ],
+    33: [
+        {"word": "cargo crane", "ipa": "/ˈkɑː.ɡəʊ kreɪn/", "pos": "n", "meaning": "cần cẩu bốc dỡ hàng hóa", "example": "The heavy cargo crane broke down earlier this morning."},
+        {"word": "unload", "ipa": "/ʌnˈləʊd/", "pos": "v", "meaning": "bốc dỡ hàng xuống", "example": "Dockworkers will unload shipping containers from the vessel."},
+        {"word": "delay", "ipa": "/dɪˈleɪ/", "pos": "v, n", "meaning": "trì hoãn, làm chậm trễ", "example": "Mechanical issues may delay container unloading until morning."},
+        {"word": "break down", "ipa": "/breɪk daʊn/", "pos": "phr v", "meaning": "hỏng hóc, ngừng hoạt động", "example": "The machine broke down during peak operations."}
+    ],
+    34: [
+        {"word": "confirm", "ipa": "/kənˈfɜːm/", "pos": "v", "meaning": "xác nhận lại thông tin", "example": "I'll call the port authority to confirm our revised schedule."},
+        {"word": "port authority", "ipa": "/pɔːt ɔːˈθɒr.ə.ti/", "pos": "n", "meaning": "chính quyền cảng, ban quản lý cảng", "example": "The port authority manages all incoming maritime traffic."},
+        {"word": "schedule", "ipa": "/ˈʃedʒ.uːl/", "pos": "n, v", "meaning": "lịch trình, kế hoạch thời gian", "example": "Check the updated schedule on the harbor board."}
+    ],
+
+    # Dialogue 35-37: Pottery class studio
+    35: [
+        {"word": "pottery", "ipa": "/ˈpɒt.ər.i/", "pos": "n", "meaning": "đồ gốm, nghề làm gốm", "example": "She enrolled in an evening pottery and ceramics course."},
+        {"word": "studio", "ipa": "/ˈstjuː.di.əʊ/", "pos": "n", "meaning": "xưởng vẽ, xưởng nghệ thuật", "example": "Artists create sculptures in their downtown studio."},
+        {"word": "sign up", "ipa": "/saɪn ʌp/", "pos": "phr v", "meaning": "đăng ký tham gia", "example": "Many beginners sign up for weekend craft workshops."}
+    ],
+    36: [
+        {"word": "flexible", "ipa": "/ˈflek.sə.bəl/", "pos": "adj", "meaning": "linh hoạt, linh động", "example": "The studio offers flexible class schedules for working adults."},
+        {"word": "instructor", "ipa": "/ɪnˈstrʌk.tər/", "pos": "n", "meaning": "người hướng dẫn, giảng viên", "example": "The pottery instructor demonstrated proper hand techniques."},
+        {"word": "session", "ipa": "/ˈseʃ.ən/", "pos": "n", "meaning": "buổi học, phiên làm việc", "example": "Each training session lasts approximately two hours."}
+    ],
+    37: [
+        {"word": "apron", "ipa": "/ˈeɪ.prən/", "pos": "n", "meaning": "tạp dề bảo hộ", "example": "Students should wear a protective apron while working with clay."},
+        {"word": "clay", "ipa": "/kleɪ/", "pos": "n", "meaning": "đất sét nặn gốm", "example": "Knead the wet clay thoroughly before shaping it on the wheel."},
+        {"word": "bring", "ipa": "/brɪŋ/", "pos": "v", "meaning": "mang theo, mang lại", "example": "Participants are asked to bring their own work towels."}
+    ],
+
+    # Dialogue 38-40: Furniture polishing & wood finish
+    38: [
+        {"word": "wood finish", "ipa": "/wʊd ˈfɪn.ɪʃ/", "pos": "n", "meaning": "lớp sơn phủ/bóng gỗ", "example": "Apply a clear wood finish to protect the dining table."},
+        {"word": "varnish", "ipa": "/ˈvɑː.nɪʃ/", "pos": "n, v", "meaning": "sơn vec-ni, đánh bóng vec-ni", "example": "He applied two coats of polyurethane varnish to the floor."},
+        {"word": "furniture", "ipa": "/ˈfɜː.nɪ.tʃər/", "pos": "n", "meaning": "đồ nội thất", "example": "Handcrafted wooden furniture is durable and stylish."}
+    ],
+    39: [
+        {"word": "dry", "ipa": "/draɪ/", "pos": "v, adj", "meaning": "làm khô, khô ráo", "example": "Allow the primer to dry completely before applying paint."},
+        {"word": "recommend", "ipa": "/ˌrek.əˈmend/", "pos": "v", "meaning": "khuyên bảo, tiến cử", "example": "Experts recommend waiting twenty-four hours between coats."},
+        {"word": "coat", "ipa": "/kəʊt/", "pos": "n", "meaning": "lớp sơn, lớp phủ", "example": "Apply a thin, even coat of protective wax."}
+    ],
+    40: [
+        {"word": "sandpaper", "ipa": "/ˈsændˌpeɪ.pər/", "pos": "n", "meaning": "giấy ráp, giấy nhám", "example": "Smooth rough edges with fine-grit sandpaper."},
+        {"word": "surface", "ipa": "/ˈsɜː.fɪs/", "pos": "n", "meaning": "bề mặt", "example": "Wipe the wooden surface thoroughly before staining."},
+        {"word": "purchase", "ipa": "/ˈpɜː.tʃəs/", "pos": "v, n", "meaning": "mua sắm, việc mua hàng", "example": "Customers can purchase all painting supplies at the checkout."}
+    ],
+
+    # Dialogue 41-43: Corporate software migration
+    41: [
+        {"word": "migrate", "ipa": "/maɪˈɡreɪt/", "pos": "v", "meaning": "chuyển đổi dữ liệu/hệ thống", "example": "The IT team plans to migrate all files to cloud servers."},
+        {"word": "database", "ipa": "/ˈdeɪ.tə.beɪs/", "pos": "n", "meaning": "cơ sở dữ liệu", "example": "Client records are stored securely in the central database."},
+        {"word": "upgrade", "ipa": "/ʌpˈɡreɪd/", "pos": "v, n", "meaning": "nâng cấp hệ thống", "example": "Upgrading our accounting software will streamline billing."}
+    ],
+    42: [
+        {"word": "nationwide", "ipa": "/ˌneɪ.ʃənˈwaɪd/", "pos": "adj, adv", "meaning": "toàn quốc", "example": "The policy change affects branches nationwide."},
+        {"word": "technical support", "ipa": "/ˈtek.nɪ.kəl səˈpɔːt/", "pos": "n", "meaning": "hỗ trợ kỹ thuật", "example": "Contact technical support if you encounter system errors."},
+        {"word": "concern", "ipa": "/kənˈsɜːn/", "pos": "n, v", "meaning": "mối lo ngại, băn khoăn", "example": "Staff raised concerns about potential data loss during migration."}
+    ],
+    43: [
+        {"word": "training manual", "ipa": "/ˈtreɪ.nɪŋ ˈmæn.ju.əl/", "pos": "n", "meaning": "tài liệu hướng dẫn đào tạo", "example": "Distribute the revised training manual to all new hires."},
+        {"word": "webinar", "ipa": "/ˈweb.ɪ.nɑːr/", "pos": "n", "meaning": "hội thảo trực tuyến", "example": "Attend the live webinar to learn about software features."},
+        {"word": "schedule", "ipa": "/ˈʃedʒ.uːl/", "pos": "v", "meaning": "lên lịch, sắp xếp", "example": "The seminar is scheduled for next Tuesday afternoon."}
+    ],
+
+    # Dialogue 44-46: Hotel conference facilities
+    44: [
+        {"word": "conference hall", "ipa": "/ˈkɒn.fər.əns hɔːl/", "pos": "n", "meaning": "hội trường tổ chức hội nghị", "example": "The conference hall can accommodate up to 500 guests."},
+        {"word": "cater", "ipa": "/ˈkeɪ.tər/", "pos": "v", "meaning": "phục vụ ăn uống cho sự kiện", "example": "The hotel restaurant will cater the awards dinner."},
+        {"word": "banquet", "ipa": "/ˈbæŋ.kwɪt/", "pos": "n", "meaning": "bữa tiệc lớn, yến tiệc", "example": "The grand ballroom was prepared for the annual banquet."}
+    ],
+    45: [
+        {"word": "audio equipment", "ipa": "/ˈɔː.di.əʊ ɪˈkwɪp.mənt/", "pos": "n", "meaning": "thiết bị âm thanh", "example": "Technicians tested the microphones and audio equipment."},
+        {"word": "projector", "ipa": "/prəˈdʒek.tər/", "pos": "n", "meaning": "máy chiếu", "example": "Connect your laptop to the ceiling-mounted projector."},
+        {"word": "troubleshoot", "ipa": "/ˈtrʌb.əl.ʃuːt/", "pos": "v", "meaning": "xử lý sự cố kỹ thuật", "example": "Engineers quickly troubleshoot connectivity problems."}
+    ],
+    46: [
+        {"word": "discount rate", "ipa": "/ˈdɪs.kaʊnt reɪt/", "pos": "n", "meaning": "mức giá ưu đãi chiết khấu", "example": "Corporate partners receive a discount rate on block bookings."},
+        {"word": "deposit", "ipa": "/dɪˈpɒz.ɪt/", "pos": "n, v", "meaning": "tiền đặt cọc", "example": "A twenty-percent deposit is required to secure the reservation."},
+        {"word": "contract", "ipa": "/ˈkɒn.trækt/", "pos": "n", "meaning": "hợp đồng thỏa thuận", "example": "Review all terms before signing the event contract."}
+    ],
+
+    # Dialogue 47-49: Office renovation and moving
+    47: [
+        {"word": "relocate", "ipa": "/ˌriː.ləʊˈkeɪt/", "pos": "v", "meaning": "chuyển địa điểm, di dời", "example": "The corporate headquarters will relocate to a modern facility."},
+        {"word": "renovation", "ipa": "/ˌren.əˈveɪ.ʃən/", "pos": "n", "meaning": "sự cải tạo, tu sửa văn phòng", "example": "Building renovations will be completed by the end of August."},
+        {"word": "temporary", "ipa": "/ˈtem.pər.ər.i/", "pos": "adj", "meaning": "tạm thời", "example": "Staff will work from temporary offices during construction."}
+    ],
+    48: [
+        {"word": "pack", "ipa": "/pæk/", "pos": "v", "meaning": "đóng gói đồ đạc", "example": "Employees were instructed to pack their personal belongings."},
+        {"word": "label", "ipa": "/ˈleɪ.bəl/", "pos": "v, n", "meaning": "dán nhãn, nhãn ghi tên", "example": "Clearly label every cardboard box with your department code."},
+        {"word": "crate", "ipa": "/kreɪt/", "pos": "n", "meaning": "thùng gỗ/nhựa đựng đồ chuyển nhà", "example": "Plastic crates were distributed for moving delicate equipment."}
+    ],
+    49: [
+        {"word": "mover", "ipa": "/ˈmuː.vər/", "pos": "n", "meaning": "nhân viên chuyển nhà/chuyển văn phòng", "example": "Professional movers will arrive at 8:00 A.M. on Saturday."},
+        {"word": "floor plan", "ipa": "/flɔːr plæn/", "pos": "n", "meaning": "sơ đồ mặt bằng", "example": "Check the new floor plan to locate your assigned desk."},
+        {"word": "coordinate", "ipa": "/kəʊˈɔː.dɪ.neɪt/", "pos": "v", "meaning": "điều phối, sắp xếp", "example": "The operations manager will coordinate the moving schedule."}
+    ],
+
+    # Dialogue 50-52: Environmental initiative
+    50: [
+        {"word": "initiative", "ipa": "/ɪˈnɪʃ.ə.tɪv/", "pos": "n", "meaning": "sáng kiến, chiến dịch mới", "example": "The company launched an eco-friendly waste reduction initiative."},
+        {"word": "aquatic", "ipa": "/əˈkwæt.ɪk/", "pos": "adj", "meaning": "dưới nước, thủy sinh", "example": "The research center studies aquatic ecosystems in the bay."},
+        {"word": "hire", "ipa": "/haɪər/", "pos": "v", "meaning": "tuyển dụng", "example": "They decided to hire an experienced marine biologist."}
+    ],
+    51: [
+        {"word": "conservation", "ipa": "/ˌkɒn.səˈveɪ.ʃən/", "pos": "n", "meaning": "sự bảo tồn thiên nhiên", "example": "The organization advocates for ocean habitat conservation."},
+        {"word": "volunteer", "ipa": "/ˌvɒl.ənˈtɪər/", "pos": "n, v", "meaning": "tình nguyện viên, tình nguyện", "example": "Local volunteers helped clean up litter along the beach."},
+        {"word": "sponsor", "ipa": "/ˈspɒn.sər/", "pos": "v, n", "meaning": "tài trợ, nhà tài trợ", "example": "Corporate sponsors funded the educational outreach program."}
+    ],
+    52: [
+        {"word": "pamphlet", "ipa": "/ˈpæm.flət/", "pos": "n", "meaning": "tờ gấp mỏng, tài liệu giới thiệu", "example": "Hand out informative pamphlets to community members."},
+        {"word": "distribute", "ipa": "/dɪˈstrɪb.juːt/", "pos": "v", "meaning": "phân phát, phân phối", "example": "Volunteers will distribute recycling guides to local households."},
+        {"word": "feedback", "ipa": "/ˈfiːd.bæk/", "pos": "n", "meaning": "ý kiến phản hồi", "example": "Gather community feedback to improve future programs."}
+    ],
+
+    # Dialogue 53-55: Graphic design project
+    53: [
+        {"word": "graphic designer", "ipa": "/ˈɡræf.ɪk dɪˈzaɪ.nər/", "pos": "n", "meaning": "nhà thiết kế đồ họa", "example": "Our graphic designer created the striking new company logo."},
+        {"word": "deadline", "ipa": "/ˈded.laɪn/", "pos": "n", "meaning": "hạn chót hoàn thành", "example": "The project deadline was extended by two weeks."},
+        {"word": "draft", "ipa": "/drɑːft/", "pos": "n, v", "meaning": "bản phác thảo, bản nháp", "example": "Review the preliminary draft before sending it to the client."}
+    ],
+    54: [
+        {"word": "layout", "ipa": "/ˈleɪ.aʊt/", "pos": "n", "meaning": "bố cục, cách bố trí trang", "example": "The magazine layout features vibrant photographs and bold text."},
+        {"word": "font", "ipa": "/fɒnt/", "pos": "n", "meaning": "phông chữ in", "example": "Choose an easily readable font for the product packaging."},
+        {"word": "revision", "ipa": "/rɪˈvɪʒ.ən/", "pos": "n", "meaning": "sự chỉnh sửa, bản sửa đổi", "example": "Make the necessary text revisions before publication."}
+    ],
+    55: [
+        {"word": "portfolio", "ipa": "/pɔːtˈfəʊ.li.əʊ/", "pos": "n", "meaning": "hồ sơ năng lực, bộ sưu tập tác phẩm", "example": "Applicants should submit an online design portfolio."},
+        {"word": "client", "ipa": "/ˈklaɪ.ənt/", "pos": "n", "meaning": "khách hàng", "example": "The designer presented several options to the client."},
+        {"word": "approve", "ipa": "/əˈpruːv/", "pos": "v", "meaning": "phê duyệt, chấp thuận", "example": "Management must approve all final advertising proofs."}
+    ],
+
+    # Dialogue 56-58: Warehouse inventory
+    56: [
+        {"word": "warehouse", "ipa": "/ˈweə.haʊs/", "pos": "n", "meaning": "kho hàng, nhà kho", "example": "Merchandise is stored safely in the climate-controlled warehouse."},
+        {"word": "inventory", "ipa": "/ˈɪn.vən.tər.i/", "pos": "n", "meaning": "hàng tồn kho, sự kiểm kê", "example": "Staff conduct a physical inventory count twice a year."},
+        {"word": "shipment", "ipa": "/ˈʃɪp.mənt/", "pos": "n", "meaning": "lô hàng vận chuyển", "example": "An international shipment arrived at the loading dock."}
+    ],
+    57: [
+        {"word": "barcode scanner", "ipa": "/ˈbɑː.kəʊd ˈskæn.ər/", "pos": "n", "meaning": "máy quét mã vạch", "example": "Use the handheld barcode scanner to log outgoing boxes."},
+        {"word": "log", "ipa": "/lɒɡ/", "pos": "v, n", "meaning": "ghi nhận vào sổ/hệ thống", "example": "Log all received items into the electronic inventory software."},
+        {"word": "discrepancy", "ipa": "/dɪˈskrep.ən.si/", "pos": "n", "meaning": "sự sai lệch số liệu", "example": "Auditors found a slight discrepancy between records and stock."}
+    ],
+    58: [
+        {"word": "restock", "ipa": "/ˌriːˈstɒk/", "pos": "v", "meaning": "bổ sung thêm hàng vào kho", "example": "The retail store needs to restock popular electronics quickly."},
+        {"word": "supplier", "ipa": "/səˈplaɪ.ər/", "pos": "n", "meaning": "nhà cung cấp", "example": "Our primary supplier confirmed delivery for Friday."},
+        {"word": "purchase order", "ipa": "/ˈpɜː.tʃəs ˈɔː.dər/", "pos": "n", "meaning": "đơn đặt hàng mua", "example": "Issue a purchase order for fifty additional safety vests."}
+    ],
+
+    # Dialogue 59-61: Restaurant catering service
+    59: [
+        {"word": "catering", "ipa": "/ˈkeɪ.tər.ɪŋ/", "pos": "n", "meaning": "dịch vụ cung cấp tiệc", "example": "The bistro specializes in corporate lunch catering."},
+        {"word": "dietary restriction", "ipa": "/ˈdaɪ.ə.tər.i rɪˈstrɪk.ʃən/", "pos": "n", "meaning": "hạn chế về chế độ ăn uống", "example": "Please notify us of any allergies or dietary restrictions."},
+        {"word": "menu", "ipa": "/ˈmen.juː/", "pos": "n", "meaning": "thực đơn món ăn", "example": "The seasonal menu includes gluten-free and vegan selections."}
+    ],
+    60: [
+        {"word": "sample", "ipa": "/ˈsɑːm.pəl/", "pos": "v, n", "meaning": "nếm thử, mẫu thử món ăn", "example": "The bride and groom visited the bakery to sample wedding cakes."},
+        {"word": "tasting", "ipa": "/ˈteɪ.stɪŋ/", "pos": "n", "meaning": "buổi nếm thử đồ ăn thức uống", "example": "We attended an exclusive wine and cheese tasting session."},
+        {"word": "chef", "ipa": "/ʃef/", "pos": "n", "meaning": "đầu bếp trưởng", "example": "The executive chef creates innovative dessert recipes."}
+    ],
+    61: [
+        {"word": "invoice", "ipa": "/ˈɪn.vɔɪs/", "pos": "n, v", "meaning": "hóa đơn thanh toán", "example": "An itemized invoice will be sent via email after the event."},
+        {"word": "head count", "ipa": "/hed kaʊnt/", "pos": "n", "meaning": "số lượng người tham gia", "example": "Confirm the final head count at least 48 hours in advance."},
+        {"word": "service fee", "ipa": "/ˈsɜː.vɪs fiː/", "pos": "n", "meaning": "phí dịch vụ phục vụ", "example": "A fifteen-percent service fee is added to large group orders."}
+    ],
+
+    # Dialogue 62-64: Medical appointment
+    62: [
+        {"word": "clinic", "ipa": "/ˈklɪn.ɪk/", "pos": "n", "meaning": "phòng khám y tế", "example": "The neighborhood clinic offers comprehensive dental care."},
+        {"word": "patient", "ipa": "/ˈpeɪ.ʃənt/", "pos": "n", "meaning": "bệnh nhân", "example": "Patients check in at the reception desk upon arrival."},
+        {"word": "reschedule", "ipa": "/ˌriːˈʃedʒ.uːl/", "pos": "v", "meaning": "đổi lại lịch hẹn", "example": "I need to reschedule my dental cleaning for next week."}
+    ],
+    63: [
+        {"word": "routine", "ipa": "/ruːˈtiːn/", "pos": "adj, n", "meaning": "định kỳ, theo thường lệ", "example": "A routine eye examination takes approximately thirty minutes."},
+        {"word": "insurance card", "ipa": "/ɪnˈʃʊə.rəns kɑːd/", "pos": "n", "meaning": "thẻ bảo hiểm y tế", "example": "Present your photo ID and health insurance card at check-in."},
+        {"word": "coverage", "ipa": "/ˈkʌv.ər.ɪdʒ/", "pos": "n", "meaning": "phạm vi bảo hiểm chi trả", "example": "Check with your provider regarding vision coverage benefits."}
+    ],
+    64: [
+        {"word": "prescription", "ipa": "/prɪˈskrɪp.ʃən/", "pos": "n", "meaning": "đơn thuốc của bác sĩ", "example": "The doctor wrote a prescription for allergy medication."},
+        {"word": "pharmacy", "ipa": "/ˈfɑː.mə.si/", "pos": "n", "meaning": "nhà thuốc, hiệu thuốc", "example": "You can pick up your medication at the corner pharmacy."},
+        {"word": "refill", "ipa": "/ˌriːˈfɪl/", "pos": "v, n", "meaning": "lấy thêm thuốc theo đơn cũ", "example": "Call the pharmacy automated line to request a prescription refill."}
+    ],
+
+    # Dialogue 65-67: Airport business travel
+    65: [
+        {"word": "boarding pass", "ipa": "/ˈbɔː.dɪŋ pɑːs/", "pos": "n", "meaning": "thẻ lên máy bay", "example": "Download your digital boarding pass to your smartphone."},
+        {"word": "departure gate", "ipa": "/dɪˈpɑː.tʃər ɡeɪt/", "pos": "n", "meaning": "cửa khởi hành", "example": "Passengers for flight 204 should proceed to departure gate 12."},
+        {"word": "carry-on", "ipa": "/ˈkær.i.ɒn/", "pos": "n, adj", "meaning": "hành lý xách tay", "example": "Only one piece of carry-on luggage is permitted per traveler."}
+    ],
+    66: [
+        {"word": "delay", "ipa": "/dɪˈleɪ/", "pos": "n, v", "meaning": "chuyến bay bị trễ", "example": "Thunderstorms caused a two-hour flight departure delay."},
+        {"word": "connecting flight", "ipa": "/kəˈnek.tɪŋ flaɪt/", "pos": "n", "meaning": "chuyến bay quá cảnh/nối chuyến", "example": "She ran to catch her connecting flight to Frankfurt."},
+        {"word": "announcement", "ipa": "/əˈnaʊns.mənt/", "pos": "n", "meaning": "thông báo qua loa phát thanh", "example": "Listen carefully to gate announcements for boarding updates."}
+    ],
+    67: [
+        {"word": "voucher", "ipa": "/ˈvaʊ.tʃər/", "pos": "n", "meaning": "phiếu chứng từ, phiếu bồi thường", "example": "The airline issued meal vouchers due to the prolonged delay."},
+        {"word": "customer service desk", "ipa": "/ˈkʌs.tə.mər ˈsɜː.vɪs desk/", "pos": "n", "meaning": "quầy dịch vụ khách hàng", "example": "Line up at the customer service desk to rebook your travel."},
+        {"word": "accommodate", "ipa": "/əˈkɒm.ə.deɪt/", "pos": "v", "meaning": "sắp xếp chỗ, đáp ứng nhu cầu", "example": "The hotel strives to accommodate travelers on delayed flights."}
+    ],
+
+    # Dialogue 68-70: Product packaging design
+    68: [
+        {"word": "packaging", "ipa": "/ˈpæk.ɪ.dʒɪŋ/", "pos": "n", "meaning": "bao bì đóng gói sản phẩm", "example": "The new eco-friendly packaging uses 100% biodegradable cardboard."},
+        {"word": "sustainable", "ipa": "/səˈsteɪ.nə.bəl/", "pos": "adj", "meaning": "bền vững, thân thiện môi trường", "example": "Consumers prefer brands that adopt sustainable practices."},
+        {"word": "redesign", "ipa": "/ˌriː.dɪˈzaɪn/", "pos": "v, n", "meaning": "thiết kế lại mẫu mã", "example": "The creative agency was hired to redesign the product line."}
+    ],
+    69: [
+        {"word": "cost-effective", "ipa": "/ˌkɒst.ɪˈfek.tɪv/", "pos": "adj", "meaning": "hiệu quả về chi phí", "example": "Switching to regional distributors proved highly cost-effective."},
+        {"word": "durable", "ipa": "/ˈdʒʊə.rə.bəl/", "pos": "adj", "meaning": "bền bỉ, chịu lực tốt", "example": "The shipping boxes must be durable enough for long transit."},
+        {"word": "prototype", "ipa": "/ˈprəʊ.tə.taɪp/", "pos": "n", "meaning": "vật mẫu thử nghiệm đầu tiên", "example": "Engineers evaluated the physical prototype for structural flaws."}
+    ],
+    70: [
+        {"word": "focus group", "ipa": "/ˈfəʊ.kəs ɡruːp/", "pos": "n", "meaning": "nhóm khảo sát người tiêu dùng", "example": "Gather feedback on the container shape from a consumer focus group."},
+        {"word": "market research", "ipa": "/ˈmɑː.kɪt rɪˌsɜːtʃ/", "pos": "n", "meaning": "nghiên cứu thị trường", "example": "Market research reveals strong demand for refillable bottles."},
+        {"word": "launch", "ipa": "/lɔːntʃ/", "pos": "v, n", "meaning": "tung ra thị trường, ra mắt", "example": "We plan to launch the revamped product line in November."}
+    ],
+
+    # Part 4 Talk 71-73: Custom jewelry business
+    71: [
+        {"word": "jewelry", "ipa": "/ˈdʒuː.əl.ri/", "pos": "n", "meaning": "đồ trang sức quý", "example": "She creates handmade silver jewelry in her boutique workshop."},
+        {"word": "necklace", "ipa": "/ˈnek.ləs/", "pos": "n", "meaning": "vòng cổ, dây chuyền", "example": "A sapphire necklace was custom designed for the anniversary."},
+        {"word": "earrings", "ipa": "/ˈɪə.rɪŋz/", "pos": "n pl", "meaning": "đôi bông tai/khuyên tai", "example": "Matching gold earrings completed the bespoke jewelry set."}
+    ],
+    72: [
+        {"word": "custom-made", "ipa": "/ˈkʌs.təm meɪd/", "pos": "adj", "meaning": "đặt làm theo yêu cầu riêng", "example": "All rings in the collection are custom-made by master artisans."},
+        {"word": "engrave", "ipa": "/ɪnˈɡreɪv/", "pos": "v", "meaning": "khắc chữ, chạm khắc", "example": "They chose to engrave their wedding initials inside the band."},
+        {"word": "craftsmanship", "ipa": "/ˈkrɑːfts.mən.ʃɪp/", "pos": "n", "meaning": "tay nghề thủ công tinh xảo", "example": "The studio is renowned for exquisite craftsmanship and detail."}
+    ],
+    73: [
+        {"word": "feedback", "ipa": "/ˈfiːd.bæk/", "pos": "n", "meaning": "ý kiến phản hồi", "example": "Please call back to give feedback on the finished design draft."},
+        {"word": "return a call", "ipa": "/rɪˈtɜːn ə kɔːl/", "pos": "phr", "meaning": "gọi điện thoại lại", "example": "The designer asked the client to return her call this afternoon."},
+        {"word": "satisfaction", "ipa": "/ˌsæt.ɪsˈfæk.ʃən/", "pos": "n", "meaning": "sự hài lòng của khách hàng", "example": "Customer satisfaction is guaranteed on all bespoke orders."}
+    ],
+
+    # Talk 74-76: Framing company voice mail
+    74: [
+        {"word": "frame", "ipa": "/freɪm/", "pos": "v, n", "meaning": "đóng khung tranh/ảnh, khung", "example": "The customer called wanting to have a wedding photograph framed."},
+        {"word": "photograph", "ipa": "/ˈfəʊ.tə.ɡrɑːf/", "pos": "n", "meaning": "bức ảnh chụp", "example": "High-resolution photographs look stunning in hardwood frames."},
+        {"word": "print", "ipa": "/prɪnt/", "pos": "v", "meaning": "in ấn ảnh", "example": "Our studio can print and mount your digital portraits directly."}
+    ],
+    75: [
+        {"word": "place an order", "ipa": "/pleɪs ən ˈɔː.dər/", "pos": "phr", "meaning": "đặt một đơn hàng", "example": "Clients can place an order directly through the online framing portal."},
+        {"word": "custom dimension", "ipa": "/ˈkʌs.təm daɪˈmen.ʃən/", "pos": "n", "meaning": "kích thước theo yêu cầu", "example": "Select custom dimensions and matte colors on our website."},
+        {"word": "preview", "ipa": "/ˈpriː.vjuː/", "pos": "v, n", "meaning": "xem trước bản mẫu", "example": "Preview your framed photo online before submitting the order."}
+    ],
+    76: [
+        {"word": "extra fee", "ipa": "/ˈek.strə fiː/", "pos": "n", "meaning": "khoản phụ phí thêm", "example": "Express two-day delivery is available for an extra fee."},
+        {"word": "warranty", "ipa": "/ˈwɒr.ən.ti/", "pos": "n", "meaning": "phiếu/gói bảo hành", "example": "A five-year craftsmanship warranty can be added to your purchase."},
+        {"word": "signature", "ipa": "/ˈsɪɡ.nə.tʃər/", "pos": "n", "meaning": "chữ ký chứng thực", "example": "Limited prints come signed with the original artist's signature."}
+    ],
+
+    # Talk 77-79: Physical therapy training session
+    77: [
+        {"word": "physical therapy", "ipa": "/ˈfɪz.ɪ.kəl ˈθer.ə.pi/", "pos": "n", "meaning": "vật lý trị liệu phục hồi chức năng", "example": "The clinic provides specialized physical therapy for sports injuries."},
+        {"word": "patient care", "ipa": "/ˈpeɪ.ʃənt keər/", "pos": "n", "meaning": "chăm sóc bệnh nhân", "example": "Compassionate patient care is the primary mission of our staff."},
+        {"word": "health-care", "ipa": "/ˈhelθ.keər/", "pos": "n, adj", "meaning": "chăm sóc y tế", "example": "Health-care professionals attended the continuing education seminar."}
+    ],
+    78: [
+        {"word": "interactive", "ipa": "/ˌɪn.tərˈæk.tɪv/", "pos": "adj", "meaning": "có tính tương tác thực hành", "example": "The speaker prepared interactive role-play training activities."},
+        {"word": "activity", "ipa": "/ækˈtɪv.ə.ti/", "pos": "n", "meaning": "hoạt động đào tạo", "example": "Participants engaged in collaborative problem-solving activities."},
+        {"word": "technique", "ipa": "/tekˈniːk/", "pos": "n", "meaning": "kỹ thuật chuyên môn", "example": "Learn new hands-on techniques for patient rehabilitation."}
+    ],
+    79: [
+        {"word": "at noon", "ipa": "/æt nuːn/", "pos": "phr", "meaning": "vào đúng 12 giờ trưa", "example": "The facilitator stated he must leave at noon for an emergency."},
+        {"word": "cover", "ipa": "/ˈkʌv.ər/", "pos": "v", "meaning": "bao quát, trình bày hết nội dung", "example": "Some scheduled material will not be covered during today's session."},
+        {"word": "postpone", "ipa": "/pəʊstˈpəʊn/", "pos": "v", "meaning": "hoãn lại, dời sang buổi sau", "example": "Remaining topics will be postponed until next month's workshop."}
+    ],
+
+    # Talk 80-82: Truck driver recruitment ad
+    80: [
+        {"word": "certified", "ipa": "/ˈsɜː.tɪ.faɪd/", "pos": "adj", "meaning": "được cấp chứng chỉ hành nghề", "example": "Candidates must be certified commercial motor vehicle drivers."},
+        {"word": "recruit", "ipa": "/rɪˈkruːt/", "pos": "v", "meaning": "tuyển dụng nhân viên mới", "example": "The freight logistics company seeks to recruit skilled drivers."},
+        {"word": "oversized cargo", "ipa": "/ˌəʊ.vəˈsaɪzd ˈkɑː.ɡəʊ/", "pos": "n", "meaning": "hàng hóa quá khổ quá tải", "example": "We specialize in transporting oversized cargo across state lines."}
+    ],
+    81: [
+        {"word": "flexible schedule", "ipa": "/ˈflek.sə.bəl ˈʃedʒ.uːl/", "pos": "n", "meaning": "lịch làm việc linh hoạt", "example": "Our firm offers flexible schedules that accommodate family needs."},
+        {"word": "competitor", "ipa": "/kəmˈpet.ɪ.tər/", "pos": "n", "meaning": "đối thủ cạnh tranh cùng ngành", "example": "Our driver benefits package surpasses that of major competitors."},
+        {"word": "dependable", "ipa": "/dɪˈpen.də.bəl/", "pos": "adj", "meaning": "đáng tin cậy, vững vàng", "example": "Shippers rely on our dependable cross-country delivery fleet."}
+    ],
+    82: [
+        {"word": "application", "ipa": "/ˌæp.lɪˈkeɪ.ʃən/", "pos": "n", "meaning": "đơn ứng tuyển việc làm", "example": "Visit our website to fill out an online driver application."},
+        {"word": "encourage", "ipa": "/ɪnˈkʌr.ɪdʒ/", "pos": "v", "meaning": "khuyến khích, thúc giục", "example": "The recruiter encouraged qualified applicants to apply promptly."},
+        {"word": "requirements", "ipa": "/rɪˈkwaɪə.mənts/", "pos": "n pl", "meaning": "các tiêu chuẩn yêu cầu", "example": "Review all licensing requirements before attending the interview."}
+    ],
+
+    # Talk 83-85: Restaurant television feature
+    83: [
+        {"word": "film", "ipa": "/fɪlm/", "pos": "v, n", "meaning": "quay phim, ghi hình", "example": "A television crew will visit on Wednesday to film in our kitchen."},
+        {"word": "episode", "ipa": "/ˈep.ɪ.səʊd/", "pos": "n", "meaning": "tập phát sóng truyền hình", "example": "The popular cooking show wants to feature our café in an upcoming episode."},
+        {"word": "feature", "ipa": "/ˈfiː.tʃər/", "pos": "v", "meaning": "đưa tin nổi bật, giới thiệu", "example": "The broadcast will feature our award-winning seafood pasta."}
+    ],
+    84: [
+        {"word": "come to work early", "ipa": "/kʌm tuː wɜːk ˈɜː.li/", "pos": "phr", "meaning": "đi làm sớm hơn thường lệ", "example": "Kitchen staff are requested to come to work early on filming day."},
+        {"word": "prep", "ipa": "/prep/", "pos": "v, n", "meaning": "chuẩn bị nguyên liệu sơ chế", "example": "Prep all fresh produce before the camera crew arrives."},
+        {"word": "station", "ipa": "/ˈsteɪ.ʃən/", "pos": "n", "meaning": "khu vực làm việc nhà bếp", "example": "Ensure every cooking station is spotless and fully stocked."}
+    ],
+    85: [
+        {"word": "food festival", "ipa": "/fuːd ˈfes.tɪ.vəl/", "pos": "n", "meaning": "lễ hội ẩm thực đường phố/văn hóa", "example": "The head chef will showcase our desserts at next week's food festival."},
+        {"word": "farmers market", "ipa": "/ˈfɑː.məz ˌmɑː.kɪt/", "pos": "n", "meaning": "chợ nông sản địa phương", "example": "We source organic heirloom tomatoes directly from the farmers market."},
+        {"word": "artisan", "ipa": "/ˌɑː.tɪˈzæn/", "pos": "adj, n", "meaning": "thủ công, nghệ nhân ẩm thực", "example": "Local bakeries produce authentic artisan sourdough breads."}
+    ],
+
+    # Talk 86-88: Battery factory news report
+    86: [
+        {"word": "electric vehicle", "ipa": "/iˈlek.trɪk ˈviː.ə.kəl/", "pos": "n", "meaning": "xe chạy bằng năng lượng điện", "example": "Demand for clean energy electric vehicles continues to surge."},
+        {"word": "battery plant", "ipa": "/ˈbæt.ər.i plɑːnt/", "pos": "n", "meaning": "nhà máy sản xuất pin", "example": "Rockville was chosen as the construction site for a battery plant."},
+        {"word": "suburb", "ipa": "/ˈsʌb.ɜːb/", "pos": "n", "meaning": "vùng ngoại ô thành phố", "example": "Many young professionals commute daily from neighboring suburbs."}
+    ],
+    87: [
+        {"word": "community support", "ipa": "/kəˈmjuː.nə.ti səˈpɔːt/", "pos": "n", "meaning": "sự ủng hộ của cộng đồng địa phương", "example": "The clean industrial project enjoys enthusiastic community support."},
+        {"word": "public hearing", "ipa": "/ˈpʌb.lɪk ˈhɪə.rɪŋ/", "pos": "n", "meaning": "buổi điều trần/lấy ý kiến công chúng", "example": "No objections were raised during the city council public hearing."},
+        {"word": "attendance", "ipa": "/əˈten.dəns/", "pos": "n", "meaning": "số lượng người tham gia có mặt", "example": "Over two hundred local residents were in attendance at the forum."}
+    ],
+    88: [
+        {"word": "renderings", "ipa": "/ˈren.dər.ɪŋz/", "pos": "n pl", "meaning": "hình ảnh bản vẽ phối cảnh 3D", "example": "Architectural renderings of the proposed plant are on display at city hall."},
+        {"word": "exhibit", "ipa": "/ɪɡˈzɪb.ɪt/", "pos": "v, n", "meaning": "trưng bày triển lãm", "example": "The planning department will exhibit blueprints for thirty days."},
+        {"word": "city hall", "ipa": "/ˌsɪt.i ˈhɔːl/", "pos": "n", "meaning": "tòa thị chính thành phố", "example": "The public can view site models inside the city hall rotunda."}
+    ],
+
+    # Talk 89-91: Desk organizer advertisement
+    89: [
+        {"word": "desk organizer", "ipa": "/desk ˈɔː.ɡən.aɪ.zər/", "pos": "n", "meaning": "khay/giá sắp xếp bàn làm việc", "example": "Keep stationery tidy with a multi-tiered desk organizer."},
+        {"word": "cluttered", "ipa": "/ˈklʌt.əd/", "pos": "adj", "meaning": "bừa bộn, lộn xộn đồ đạc", "example": "Tired of misplacing documents on a cluttered office desk?"},
+        {"word": "compartment", "ipa": "/kəmˈpɑːt.mənt/", "pos": "n", "meaning": "ngăn chứa đồ", "example": "The organizer features separate compartments for pens, paper clips, and notes."}
+    ],
+    90: [
+        {"word": "adjustable", "ipa": "/əˈdʒʌs.tə.bəl/", "pos": "adj", "meaning": "có thể điều chỉnh linh hoạt", "example": "The device features adjustable divider shelves to fit binders."},
+        {"word": "durable", "ipa": "/ˈdʒʊə.rə.bəl/", "pos": "adj", "meaning": "chắc chắn, có độ bền cao", "example": "Constructed from steel mesh, the product is extremely durable."},
+        {"word": "assemble", "ipa": "/əˈsem.bəl/", "pos": "v", "meaning": "lắp ráp các bộ phận", "example": "The organizer is easy to assemble in under five minutes."}
+    ],
+    91: [
+        {"word": "time limit", "ipa": "/taɪm ˈlɪm.ɪt/", "pos": "n", "meaning": "giới hạn thời gian ưu đãi", "example": "Call within the 30-minute time limit to receive a discount."},
+        {"word": "discount", "ipa": "/ˈdɪs.kaʊnt/", "pos": "n, v", "meaning": "khoản giảm giá khuyến mãi", "example": "Callers receive a 25-percent discount on their first purchase."},
+        {"word": "toll-free", "ipa": "/ˌtəʊlˈfriː/", "pos": "adj, adv", "meaning": "miễn cước cuộc gọi", "example": "Dial our toll-free customer hotline to order immediately."}
+    ],
+
+    # Talk 92-94: Cooking podcast episode
+    92: [
+        {"word": "podcast", "ipa": "/ˈpɒd.kɑːst/", "pos": "n", "meaning": "chương trình âm thanh phát thanh số", "example": "Tune in weekly to our gourmet cooking podcast."},
+        {"word": "ingredient", "ipa": "/ɪnˈɡriː.di.ənt/", "pos": "n", "meaning": "nguyên liệu thực phẩm", "example": "Each episode showcases fresh seasonal culinary ingredients."},
+        {"word": "maximize flavor", "ipa": "/ˈmæk.sɪ.maɪz ˈfleɪ.vər/", "pos": "phr", "meaning": "tối đa hóa hương vị món ăn", "example": "Slow roasting root vegetables helps maximize their natural flavor."}
+    ],
+    93: [
+        {"word": "limited edition", "ipa": "/ˌlɪm.ɪ.tɪd ɪˈdɪʃ.ən/", "pos": "n", "meaning": "phiên bản giới hạn số lượng", "example": "This specialty spice line is a limited edition and won't last long."},
+        {"word": "shortage", "ipa": "/ˈʃɔː.tɪdʒ/", "pos": "n", "meaning": "sự khan hiếm thiếu hụt", "example": "Order now to avoid missing out due to high customer demand."},
+        {"word": "culinary", "ipa": "/ˈkʌl.ɪ.nər.i/", "pos": "adj", "meaning": "thuộc về nấu nướng, ẩm thực", "example": "Chefs experiment with culinary herb blends."}
+    ],
+    94: [
+        {"word": "culinary arts", "ipa": "/ˈkʌl.ɪ.nər.i ɑːts/", "pos": "n pl", "meaning": "nghệ thuật ẩm thực", "example": "Rebecca Murray launched an exclusive downtown bistro."},
+        {"word": "cookbook", "ipa": "/ˈkʊk.bʊk/", "pos": "n", "meaning": "sách dạy nấu ăn", "example": "The award-winning chef recently published a bestselling cookbook."},
+        {"word": "open a restaurant", "ipa": "/ˈəʊ.pən ə ˈres.trɒnt/", "pos": "phr", "meaning": "mở một nhà hàng ẩm thực", "example": "After culinary school, she realized her dream to open a restaurant."}
+    ],
+
+    # Talk 95-97: Train station announcement & timetable
+    95: [
+        {"word": "renovation", "ipa": "/ˌren.əˈveɪ.ʃən/", "pos": "n", "meaning": "công trình tu sửa nâng cấp", "example": "Renovation work is underway to modernize the train station concourse."},
+        {"word": "construction noise", "ipa": "/kənˈstrʌk.ʃən nɔɪz/", "pos": "n", "meaning": "tiếng ồn từ công trường thi công", "example": "We apologize for any inconvenience caused by construction noise."},
+        {"word": "underway", "ipa": "/ˌʌn.dəˈweɪ/", "pos": "adj", "meaning": "đang diễn ra, đang tiến hành", "example": "Platform upgrades are currently underway across terminal tracks."}
+    ],
+    96: [
+        {"word": "baggage service", "ipa": "/ˈbæɡ.ɪdʒ ˈsɜː.vɪs/", "pos": "n", "meaning": "dịch vụ ký gửi hành lý", "example": "Passengers requiring checked baggage service must speak to an agent."},
+        {"word": "station agent", "ipa": "/ˈsteɪ.ʃən ˈeɪ.dʒənt/", "pos": "n", "meaning": "nhân viên điều phối nhà ga", "example": "Please consult a uniformed station agent for track assignments."},
+        {"word": "refund", "ipa": "/ˈriː.fʌnd/", "pos": "n, v", "meaning": "tiền hoàn lại, hoàn vé", "example": "Eligible passengers can request a ticket refund at window four."}
+    ],
+    97: [
+        {"word": "arrival time", "ipa": "/əˈraɪ.vəl taɪm/", "pos": "n", "meaning": "giờ tàu/máy bay đến ga", "example": "Check the monitor for the estimated arrival time at Wilmington."},
+        {"word": "scheduled stop", "ipa": "/ˈʃedʒ.uːld stɒp/", "pos": "n", "meaning": "điểm dừng theo lịch trình", "example": "Train 133 is scheduled to make its next scheduled stop at 12:05 P.M."},
+        {"word": "timetable", "ipa": "/ˈtaɪmˌteɪ.bəl/", "pos": "n", "meaning": "bảng giờ tàu chạy", "example": "Consult the printed timetable for regional commuter train routes."}
+    ],
+
+    # Talk 98-100: Airport operations press conference
+    98: [
+        {"word": "press conference", "ipa": "/ˈpres ˌkɒn.fər.əns/", "pos": "n", "meaning": "buổi họp báo truyền thông", "example": "Journalists gathered in the media room for the airport press conference."},
+        {"word": "news reporter", "ipa": "/njuːz rɪˈpɔː.tər/", "pos": "n", "meaning": "phóng viên truyền hình/báo chí", "example": "News reporters asked questions about terminal construction timelines."},
+        {"word": "operations director", "ipa": "/ˌɒp.ərˈeɪ.ʃənz daɪˈrek.tər/", "pos": "n", "meaning": "giám đốc điều hành vận hành", "example": "The airport operations director briefed reporters on safety milestones."}
+    ],
+    99: [
+        {"word": "terminal", "ipa": "/ˈtɜː.mɪ.nəl/", "pos": "n", "meaning": "nhà ga sân bay", "example": "Terminal B hosts flights for several domestic discount airlines."},
+        {"word": "delay", "ipa": "/dɪˈleɪ/", "pos": "n, v", "meaning": "sự chậm trễ thi công", "example": "Selca Air gate reassignments will be affected by a structural delay."},
+        {"word": "airline", "ipa": "/ˈeə.laɪn/", "pos": "n", "meaning": "hãng hàng không", "example": "Several budget airlines will operate out of the modernized concourse."}
+    ],
+    100: [
+        {"word": "scale model", "ipa": "/skeɪl ˈmɒd.əl/", "pos": "n", "meaning": "mô hình thu nhỏ theo tỷ lệ", "example": "Attendees were invited to examine the 3D architectural scale model."},
+        {"word": "architectural design", "ipa": "/ˌɑː.kɪˈtek.tʃər.əl dɪˈzaɪn/", "pos": "n", "meaning": "thiết kế kiến trúc", "example": "The modern architectural design maximizes natural interior daylight."},
+        {"word": "proceed", "ipa": "/prəˈsiːd/", "pos": "v", "meaning": "tiến triển, diễn ra theo kế hoạch", "example": "Airport runway expansion is proceeding on schedule without interruption."}
+    ]
+}
+
+with open('scratch/t2_p3_p4_vocab.json', 'w', encoding='utf-8') as f:
+    json.dump(t2_p3_p4_vocab, f, ensure_ascii=False, indent=2)
+
+print("Generated scratch/t2_p3_p4_vocab.json successfully!")

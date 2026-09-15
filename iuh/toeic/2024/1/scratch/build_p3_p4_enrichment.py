@@ -1,0 +1,137 @@
+# build_p3_p4_enrichment.py
+import json
+
+data = {}
+
+# Group 1: 32 - 34
+data[32] = {
+    "exp": "Người đàn ông bắt đầu cuộc trò chuyện bằng câu: 'year by moving offices. It's exciting that the new space will be much bigger' (chuyển văn phòng... không gian mới sẽ lớn hơn nhiều) -> Công ty đang dời sang địa điểm mới ('moving to a new location'). Đáp án đúng là (C).",
+    "vocab": [
+        {"word": "relocate", "ipa": "/ˌriː.ləʊˈkeɪt/", "pos": "v", "meaning": "di dời, chuyển địa điểm", "example": "The headquarters will relocate to a larger office building."},
+        {"word": "spacious", "ipa": "/ˈspeɪ.ʃəs/", "pos": "adj", "meaning": "rộng rãi, thoáng đãng", "example": "The new conference room is extremely spacious."},
+        {"word": "location", "ipa": "/ləʊˈkeɪ.ʃən/", "pos": "n", "meaning": "địa điểm, vị trí", "example": "The retail store chosen has a prime downtown location."}
+    ],
+    "collocations": [{"phrase": "move offices", "meaning": "chuyển văn phòng làm việc"}, {"phrase": "new location", "meaning": "địa điểm mới"}],
+    "grammar": [{"title": "Rút gọn mệnh đề bằng Giới từ + V-ing", "rule": "by + V-ing (by moving offices)", "content": "Giới từ 'by' kết hợp với danh động từ V-ing để chỉ phương thức hoặc hành động dẫn đến sự thay đổi."}]
+}
+data[33] = {
+    "exp": "Người phụ nữ đưa ra đề xuất: 'Why don't we donate our surplus desks and chairs to a local charity?' (Tại sao chúng ta không quyên góp bàn ghế thừa cho tổ chức từ thiện địa phương?) -> Đề xuất quyên góp đồ nội thất ('Donating some furniture'). Đáp án đúng là (B).",
+    "vocab": [
+        {"word": "donate", "ipa": "/dəʊˈneɪt/", "pos": "v", "meaning": "quyên góp, ủng hộ", "example": "The corporation plans to donate surplus supplies to schools."},
+        {"word": "surplus", "ipa": "/ˈsɜː.pləs/", "pos": "adj", "meaning": "thừa, thặng dư", "example": "Sell off surplus office equipment at discounted rates."},
+        {"word": "furniture", "ipa": "/ˈfɜː.nɪ.tʃər/", "pos": "n", "meaning": "đồ gỗ, nội thất (không đếm được)", "example": "Modern office furniture enhances employee productivity."}
+    ],
+    "collocations": [{"phrase": "donate furniture", "meaning": "quyên góp đồ đạc nội thất"}, {"phrase": "surplus equipment", "meaning": "thiết bị tồn dư"}],
+    "grammar": [{"title": "Cấu trúc đề xuất ý kiến 'Why don't we...?'", "rule": "Why don't we + V-inf?", "content": "Mẫu câu đề xuất quen thuộc trong TOEIC Listening Part 3. Người nói dùng cấu trúc này để gợi ý một giải pháp hợp lý."}]
+}
+data[34] = {
+    "exp": "Người đàn ông đáp lại lời đề nghị: 'I'll consult with the board of directors this afternoon to get their approval' (Tôi sẽ trao đổi với ban giám đốc vào chiều nay để xin phê duyệt) -> Họ sẽ nói chuyện với các giám đốc ('Talk to some directors'). Đáp án đúng là (D).",
+    "vocab": [
+        {"word": "consult with", "ipa": "/kənˈsʌlt wɪð/", "pos": "phr v", "meaning": "hội ý, tham khảo ý kiến", "example": "Consult with senior management before signing the lease."},
+        {"word": "director", "ipa": "/daɪˈrek.tər/", "pos": "n", "meaning": "giám đốc, thành viên ban quản trị", "example": "The executive director approved the revised budget."},
+        {"word": "approval", "ipa": "/əˈpruː.vəl/", "pos": "n", "meaning": "sự chấp thuận, phê duyệt", "example": "Obtain written approval prior to purchasing software."}
+    ],
+    "collocations": [{"phrase": "board of directors", "meaning": "hội đồng quản trị"}, {"phrase": "get approval", "meaning": "nhận được sự phê duyệt"}],
+    "grammar": [{"title": "Hành động tiếp theo với thì Tương lai đơn 'will'", "rule": "S + will ('ll) + V-inf", "content": "Khi trả lời câu hỏi 'What will the speakers do next?', hãy chú ý các câu chứa 'I will', 'Let me', 'I'm going to' ở cuối đoạn thoại."}]
+}
+
+# Group 2: 35 - 37
+data[35] = {
+    "exp": "Người phụ nữ nói: 'We really wanted to interview you as the organizer from our newspaper' (Chúng tôi thực sự muốn phỏng vấn ông với tư cách là ban tổ chức đến từ tòa soạn báo của chúng tôi) -> Hai người phụ nữ là nhà báo/phóng viên ('Journalists'). Đáp án đúng là (B).",
+    "vocab": [
+        {"word": "journalist", "ipa": "/ˈdʒɜː.nə.lɪst/", "pos": "n", "meaning": "nhà báo, phóng viên", "example": "The journalist published an investigative report on trade tariffs."},
+        {"word": "interview", "ipa": "/ˈɪn.tə.vjuː/", "pos": "v", "meaning": "phỏng vấn", "example": "We will interview three shortlisted candidates today."},
+        {"word": "organizer", "ipa": "/ˈɔː.ɡən.aɪ.zər/", "pos": "n", "meaning": "người tổ chức, ban tổ chức", "example": "Contact the conference organizer for exhibition booth details."}
+    ],
+    "collocations": [{"phrase": "conduct an interview", "meaning": "tiến hành phỏng vấn"}, {"phrase": "trade show", "meaning": "hội chợ triển lãm thương mại"}],
+    "grammar": [{"title": "Nhận diện nghề nghiệp qua từ khóa ngữ cảnh", "rule": "newspaper + interview -> journalist", "content": "Các từ khóa như 'newspaper', 'press', 'magazine' kết hợp cùng 'interview' giúp xác định ngay nghề nghiệp là nhà báo."}]
+}
+data[36] = {
+    "exp": "Người đàn ông chia sẻ: 'I'm thrilled with the high turnout. We have over 500 attendees registered' (Tôi rất phấn khởi trước lượng người tham dự đông đảo. Đã có hơn 500 người đăng ký) -> Ông ấy hài lòng về số lượng người tham gia sự kiện ('The number of event participants'). Paraphrasing: turnout / attendees -> event participants. Đáp án đúng là (A).",
+    "vocab": [
+        {"word": "turnout", "ipa": "/ˈtɜːn.aʊt/", "pos": "n", "meaning": "lượng người tham dự, số người có mặt", "example": "The election had an unusually high voter turnout."},
+        {"word": "participant", "ipa": "/pɑːˈtɪs.ɪ.pənt/", "pos": "n", "meaning": "người tham gia", "example": "All conference participants receive a welcome pack."},
+        {"word": "thrilled", "ipa": "/θrɪld/", "pos": "adj", "meaning": "vui mừng, phấn khởi", "example": "The team was thrilled with the positive sales numbers."}
+    ],
+    "collocations": [{"phrase": "high turnout", "meaning": "lượng người tham gia đông đảo"}, {"phrase": "event participants", "meaning": "những người tham gia sự kiện"}],
+    "grammar": [{"title": "Paraphrasing danh từ chỉ người tham gia trong TOEIC", "rule": "attendees = participants = turnout", "content": "TOEIC thường xuyên biến đổi từ 'attendees/turnout' trong bài nghe thành 'event participants' trong câu hỏi."}]
+}
+data[37] = {
+    "exp": "Người phụ nữ yêu cầu: 'Can we get a photo of you in front of the poster for the show? - Certainly!' (Chúng tôi có thể chụp một bức ảnh của ông trước tấm áp phích triển lãm được không? - Chắc chắn rồi!) -> Hành động tiếp theo là chụp ảnh ('Take a photograph'). Paraphrasing: get a photo -> take a photograph. Đáp án đúng là (D).",
+    "vocab": [
+        {"word": "photograph", "ipa": "/ˈfəʊ.tə.ɡrɑːf/", "pos": "n", "meaning": "bức ảnh chụp", "example": "Display the photograph prominently on the front page."},
+        {"word": "poster", "ipa": "/ˈpəʊ.stər/", "pos": "n", "meaning": "tấm áp phích, tranh cổ động", "example": "Hang promotional posters near the entrance."},
+        {"word": "certainly", "ipa": "/ˈsɜː.tən.li/", "pos": "adv", "meaning": "chắc chắn rồi, tất nhiên", "example": "I will certainly assist you with the luggage."}
+    ],
+    "collocations": [{"phrase": "take a photograph / get a photo", "meaning": "chụp một bức ảnh"}, {"phrase": "in front of", "meaning": "ở phía trước"}],
+    "grammar": [{"title": "Cấu trúc xin phép lịch sự 'Can we get...?'", "rule": "Can we + get / have + Noun?", "content": "'Can we get a photo?' là cách diễn đạt tự nhiên trong giao tiếp để đề nghị được chụp một bức hình lưu niệm."}]
+}
+
+# Group 3: 38 - 40
+data[38] = {
+    "exp": "Người phụ nữ nói: 'I've been redesigning Ace Bancorp's Web site to add new online banking functions' (Tôi đang thiết kế lại trang web của Ace Bancorp để bổ sung các tính năng ngân hàng trực tuyến mới) -> Công việc của cô ấy là người thiết kế web ('Web designer'). Đáp án đúng là (D).",
+    "vocab": [
+        {"word": "web designer", "ipa": "/web dɪˈzaɪ.nər/", "pos": "n", "meaning": "nhà thiết kế trang web", "example": "The web designer created a responsive mobile interface."},
+        {"word": "redesign", "ipa": "/ˌriː.dɪˈzaɪn/", "pos": "v", "meaning": "thiết kế lại, tái cấu trúc", "example": "We must redesign the homepage to improve usability."},
+        {"word": "streamlined", "ipa": "/ˈstriːm.laɪnd/", "pos": "adj", "meaning": "tinh gọn, tối giản hóa", "example": "A streamlined checkout process boosts online sales."}
+    ],
+    "collocations": [{"phrase": "redesign a website", "meaning": "thiết kế lại trang web"}, {"phrase": "online banking", "meaning": "ngân hàng điện tử trực tuyến"}],
+    "grammar": [{"title": "Thì Hiện tại hoàn thành tiếp diễn (Present Perfect Continuous)", "rule": "S + have/has been + V-ing", "content": "Diễn tả hành động thiết kế web đã bắt đầu trong quá khứ và hiện tại vẫn đang tiếp tục diễn ra."}]
+}
+data[39] = {
+    "exp": "Người phụ nữ đề nghị: 'I wonder whether you could test out the redeveloped site for me? - Sure, I can do that' (Tôi tự hỏi liệu bạn có thể kiểm thử trang web vừa được phát triển lại giúp tôi được không? - Chắc chắn rồi, tôi làm được) -> Người đàn ông sẽ kiểm tra sản phẩm của cô ấy ('Check the woman’s work'). Paraphrasing: test out the site -> check the work. Đáp án đúng là (B).",
+    "vocab": [
+        {"word": "test out", "ipa": "/test aʊt/", "pos": "phr v", "meaning": "kiểm tra thử nghiệm tính năng", "example": "The engineers will test out the prototype tomorrow."},
+        {"word": "redeveloped", "ipa": "/ˌriː.dɪˈvel.əpt/", "pos": "adj", "meaning": "được phát triển lại, cải tiến", "example": "The redeveloped portal features enhanced security."},
+        {"word": "function", "ipa": "/ˈfʌŋk.ʃən/", "pos": "n", "meaning": "chức năng, tính năng", "example": "The accounting software includes an automated invoicing function."}
+    ],
+    "collocations": [{"phrase": "test out", "meaning": "kiểm thử tính năng"}, {"phrase": "check one's work", "meaning": "kiểm tra rà soát công việc của ai"}],
+    "grammar": [{"title": "Cấu trúc đề nghị gián tiếp 'I wonder whether you could...'", "rule": "I wonder whether + S + could + V-inf", "content": "Mẫu câu nhờ vả cực kỳ trang trọng và lịch thiệp trong môi trường doanh nghiệp quốc tế."}]
+}
+data[40] = {
+    "exp": "Người đàn ông gợi ý: 'Why don't you send me a list of the specific updates you made?' (Tại sao bạn không gửi cho tôi danh sách những cập nhật cụ thể mà bạn đã làm?) -> Người phụ nữ sẽ gửi danh sách các điểm thay đổi ('A list of changes'). Paraphrasing: specific updates -> list of changes. Đáp án đúng là (D).",
+    "vocab": [
+        {"word": "specific updates", "ipa": "/spəˈsɪf.ɪk ʌpˈdeɪts/", "pos": "n pl", "meaning": "các bản cập nhật cụ thể", "example": "Document all specific updates in the project release log."},
+        {"word": "revision", "ipa": "/rɪˈvɪʒ.ən/", "pos": "n", "meaning": "sự chỉnh sửa, bản hiệu đính", "example": "Send the final revision of the proposal by noon."},
+        {"word": "checklist", "ipa": "/ˈtʃek.lɪst/", "pos": "n", "meaning": "danh mục kiểm tra", "example": "Follow the safety checklist before operating machinery."}
+    ],
+    "collocations": [{"phrase": "list of changes", "meaning": "danh sách các thay đổi"}, {"phrase": "make an update", "meaning": "thực hiện cập nhật"}],
+    "grammar": [{"title": "Từ đồng nghĩa trừu tượng trong TOEIC (Paraphrasing)", "rule": "updates = changes", "content": "'Updates' (các mục cập nhật mới) được diễn đạt tương đương trong đề thi là 'changes' (các thay đổi)."}]
+}
+
+# Group 4: 41 - 43
+data[41] = {
+    "exp": "Người phụ nữ giải thích: 'Unfortunately, some tracks are being repaired, so no trains are departing from this platform' (Không may là một số đường ray đang được sửa chữa, nên không có chuyến tàu nào khởi hành từ sân ga này) -> Một số đường ray đang trong quá trình bảo trì/sửa chữa. Đáp án đúng là (A).",
+    "vocab": [
+        {"word": "track", "ipa": "/træk/", "pos": "n", "meaning": "đường ray xe lửa", "example": "Maintenance crews inspected the commuter railway tracks."},
+        {"word": "platform", "ipa": "/ˈplæt.fɔːm/", "pos": "n", "meaning": "sân ga, thềm ga tàu", "example": "Passengers must wait behind the yellow line on the platform."},
+        {"word": "depart", "ipa": "/dɪˈpɑːt/", "pos": "v", "meaning": "khởi hành, xuất bến", "example": "The train to Chicago will depart from track 4."}
+    ],
+    "collocations": [{"phrase": "depart from a platform", "meaning": "khởi hành từ sân ga"}, {"phrase": "repair tracks", "meaning": "sửa chữa đường ray"}],
+    "grammar": [{"title": "Bị động Hiện tại tiếp diễn (Present Continuous Passive)", "rule": "S + are + being + V3/ed (tracks are being repaired)", "content": "Nhấn mạnh công việc sửa chữa đường ray đang trực tiếp diễn ra tại thời điểm nói khiến tàu không thể chạy."}]
+}
+data[42] = {
+    "exp": "Người đàn ông phàn nàn: 'And I'm upset that now I'm late for an appointment' (Và tôi rất khó chịu vì bây giờ tôi bị trễ một cuộc hẹn) -> Ông ấy lo lắng bị muộn giờ hẹn ('Miss an appointment' / 'Late for an appointment'). Đáp án đúng là (C).",
+    "vocab": [
+        {"word": "appointment", "ipa": "/əˈpɔɪnt.mənt/", "pos": "n", "meaning": "cuộc hẹn (công việc, bác sĩ)", "example": "I have an appointment with a prospective client at 3:00 P.M."},
+        {"word": "upset", "ipa": "/ʌpˈset/", "pos": "adj", "meaning": "khó chịu, tức giận", "example": "Customers were upset about the prolonged flight delay."},
+        {"word": "late for", "ipa": "/leɪt fɔːr/", "pos": "adj phr", "meaning": "muộn, trễ giờ cho việc gì", "example": "Leave early so you are not late for the interview."}
+    ],
+    "collocations": [{"phrase": "be late for an appointment", "meaning": "bị trễ một cuộc hẹn"}, {"phrase": "miss an appointment", "meaning": "lỡ mất cuộc hẹn"}],
+    "grammar": [{"title": "Cấu trúc tính từ chỉ cảm xúc đi kèm mệnh đề 'that'", "rule": "S + be + upset/glad/concerned + that + Clause", "content": "Diễn tả cảm xúc bực bội của nhân vật trước một hệ quả phát sinh (bị trễ hẹn)."}]
+}
+data[43] = {
+    "exp": "Người phụ nữ hướng dẫn giải pháp thay thế: 'Well, they're providing free bus service to the next few stations. You can catch a shuttle bus from the south side of the station' (Họ đang cung cấp dịch vụ xe buýt miễn phí... Bạn có thể bắt xe buýt trung chuyển từ phía nam nhà ga) -> Người đàn ông sẽ đi xe buýt trung chuyển ('Take a shuttle bus'). Đáp án đúng là (B).",
+    "vocab": [
+        {"word": "shuttle bus", "ipa": "/ˈʃʌt.əl bʌs/", "pos": "n", "meaning": "xe buýt trung chuyển chặng ngắn", "example": "A complimentary shuttle bus runs between the airport and hotel."},
+        {"word": "catch a bus", "ipa": "/kætʃ ə bʌs/", "pos": "phr", "meaning": "bắt xe buýt", "example": "He walked to the corner to catch a bus downtown."},
+        {"word": "station", "ipa": "/ˈsteɪ.ʃən/", "pos": "n", "meaning": "nhà ga xe lửa/tàu điện", "example": "The subway station is undergoing renovation."}
+    ],
+    "collocations": [{"phrase": "shuttle bus", "meaning": "xe buýt trung chuyển"}, {"phrase": "take a bus", "meaning": "đi xe buýt"}],
+    "grammar": [{"title": "Động từ khiếm khuyết 'can' chỉ khả năng lựa chọn", "rule": "You can + V-inf (catch a shuttle bus)", "content": "Dùng 'can' để đưa ra một chỉ dẫn hữu ích giúp đối phương giải quyết khó khăn đi lại."}]
+}
+
+# Save partial to verify
+with open('scratch/enrich_p3_p4.json', 'w', encoding='utf-8') as f:
+    json.dump(data, f, ensure_ascii=False, indent=2)
+print("Saved partial 12 questions successfully!")

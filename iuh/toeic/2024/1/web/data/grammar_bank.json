@@ -1,0 +1,960 @@
+[
+  {
+    "title": "Thì Hiện tại tiếp diễn (Present Continuous)",
+    "rule": "S + is/am/are + V-ing",
+    "analysis": "Dùng để diễn tả hành động đang diễn ra của nhân vật ngay tại thời điểm được chụp lại trong bức ảnh."
+  },
+  {
+    "title": "Giới từ chỉ vị trí (Preposition of Place)",
+    "rule": "beside + Noun (tương đương với 'next to')",
+    "analysis": "Xác định chính xác mối quan hệ không gian giữa chủ thể (the man) và vật thể mốc (a car)."
+  },
+  {
+    "title": "Cụm định lượng xác định đối tượng (Partitive Pronoun Structure)",
+    "rule": "Two of the people / One of the men + V",
+    "analysis": "Cấu trúc thường xuyên xuất hiện trong Part 1 để chỉ một bộ phận người thực hiện hành động trong một nhóm lớn."
+  },
+  {
+    "title": "Thể Bị động tiếp diễn chỉ trạng thái trưng bày",
+    "rule": "is/are being + V3/ed (đặc biệt với 'display')",
+    "analysis": "Trong TOEIC Part 1, 'is being displayed' được dùng để miêu tả trạng thái hàng hóa đang được bày biện để khách xem, không nhất thiết phải có người đang trực tiếp cầm đặt vào."
+  },
+  {
+    "title": "Bị động Hiện tại hoàn thành chỉ trạng thái tĩnh của vật (Present Perfect Passive for Object State)",
+    "rule": "have/has + been + V3/ed",
+    "analysis": "Cực kỳ phổ biến trong TOEIC Part 1 khi miêu tả khung cảnh không có người: đồ vật đã được ai đó sắp đặt sẵn từ trước và duy trì trạng thái đó."
+  },
+  {
+    "title": "Cụm động từ dạng Bị động (Phrasal Verb Passive)",
+    "rule": "S + has been + taken off + O",
+    "analysis": "Hành động 'take off' (tháo ra) được chuyển thành thể bị động 'has been taken off its frame' để diễn đạt trạng thái cánh cửa đã được gỡ ra khỏi bản lề/khung cửa."
+  },
+  {
+    "title": "Câu hỏi 'How old' (Wh-question with How old)",
+    "rule": "How old + be + S?",
+    "analysis": "Hỏi về số lượng thời gian tồn tại của người hoặc vật. Câu trả lời chuẩn thường đi kèm con số chỉ thời gian và cụm 'years old'."
+  },
+  {
+    "title": "Câu hỏi đề nghị / Lời mời với 'Can you...'",
+    "rule": "Can you + V-bare...? -> Phản hồi: Sure / I'd love to / I'm afraid I can't...",
+    "analysis": "Dạng câu hỏi Yes/No đóng vai trò làm lời mời (Invitation/Request). Câu trả lời chấp nhận thường dùng các từ tán thành như Sure, Definitely, Of course."
+  },
+  {
+    "title": "Câu hỏi lựa chọn xác định 'Which + Noun'",
+    "rule": "Which + Noun + V + O?",
+    "analysis": "Từ hỏi 'Which' yêu cầu chỉ ra đích danh đối tượng trong một phạm vi xác định (tên phòng, số nhà, mã hiệu cụ thể như 'B23')."
+  },
+  {
+    "title": "Câu yêu cầu với 'Will you...?'",
+    "rule": "Will you + V-bare...? -> Câu trả lời đồng ý: Of course / Certainly / Sure",
+    "analysis": "Dạng câu nhờ vả trong môi trường công sở. Cụm 'take care of it' là phản hồi kinh điển khi nhận một nhiệm vụ được giao phó."
+  },
+  {
+    "title": "Câu hỏi nguyên nhân 'Why' và bị động với Need",
+    "rule": "Why + was/were + S...? -> Because + clause / To + V",
+    "analysis": "Cấu trúc bị động: S (vật) + need + to be V3/ed (a light needed to be fixed = bóng đèn cần được sửa)."
+  },
+  {
+    "title": "Câu hỏi Yes/No thì Quá khứ đơn",
+    "rule": "Did + S + V-bare...? -> Yes/No + details",
+    "analysis": "Đại từ 'they' trong phương án đúng thay thế chính xác cho danh từ tập hợp 'management'."
+  },
+  {
+    "title": "Câu hỏi lựa chọn 'A or B' (Alternative Question)",
+    "rule": "Do you want to X or Y? -> Không trả lời bằng Yes/No; chọn X, Y hoặc đưa ra ý kiến thứ 3",
+    "analysis": "Sử dụng cấu trúc đề xuất 'Let's + V-bare' (Let's eat here) để chọn phương án thứ nhất."
+  },
+  {
+    "title": "Câu hỏi phủ định (Negative Question)",
+    "rule": "Didn't you + V...? -> No = Chưa làm; Yes = Đã làm",
+    "analysis": "Trong tiếng Anh, trả lời 'No' với câu hỏi phủ định nghĩa là sự việc đó chưa diễn ra trong thực tế."
+  },
+  {
+    "title": "Câu hỏi đuôi / câu xác nhận ngữ điệu (Tag / Confirmation Question)",
+    "rule": "Statement, right? -> Câu trả lời gián tiếp (Indirect Response)",
+    "analysis": "Đặc trưng đề thi ETS hiện đại: không trả lời Yes/No trực tiếp mà đưa ra tình huống thực tế ảnh hưởng tới kế hoạch."
+  },
+  {
+    "title": "Câu hỏi lựa chọn từ chối cả hai (Alternative Offer - Third Choice)",
+    "rule": "Would you like A or B? -> Neither / Just C, please",
+    "analysis": "Người nghe có quyền chọn phương án thứ ba khi cả hai lựa chọn ban đầu đều không phù hợp."
+  },
+  {
+    "title": "Phản hồi câu trần thuật (Statement Response)",
+    "rule": "Statement expressing good result -> Congratulatory / Positive reaction",
+    "analysis": "Khi nghe một câu kể về tin vui, phản ứng phù hợp luôn là lời khen ngợi hoặc chúc mừng."
+  },
+  {
+    "title": "Câu hỏi tần suất 'How often'",
+    "rule": "How often + do/does + S + V? -> Trả lời: once/twice/three times a week/month...",
+    "analysis": "Dấu hiệu nhận biết câu trả lời đúng cho 'How often' là các cụm từ chỉ tần suất như 'once a month', 'every day', 'rarely'."
+  },
+  {
+    "title": "Lời đề xuất với 'We should...' và từ chối gián tiếp",
+    "rule": "We should + V -> Indirect refusal by giving an obstacle",
+    "analysis": "Cách từ chối tinh tế trong bài thi TOEIC: nêu ra một trở ngại thực tế (không có trang bị phù hợp) thay vì nói No thẳng thừng."
+  },
+  {
+    "title": "Câu hỏi đuôi (Tag Question) và Paraphrasing",
+    "rule": "S + have V3/ed..., haven't they/you? -> Paraphrase 'book' = 'make a reservation'",
+    "analysis": "Kỹ thuật bẫy phổ biến trong TOEIC: đáp án đúng thường sử dụng từ đồng nghĩa (synonyms) thay vì lặp lại y nguyên từ trong câu hỏi."
+  },
+  {
+    "title": "Bẫy từ đồng âm khác nghĩa (Homophone / Polysemy Trap)",
+    "rule": "left (quá khứ của leave = còn lại) vs left (hướng bên trái)",
+    "analysis": "Phương án (C) bẫy người nghe bắt từ 'left' rồi trả lời vị trí 'On the left'. Cần hiểu đúng nghĩa ngữ cảnh của 'tickets left'."
+  },
+  {
+    "title": "Thì Hiện tại hoàn thành diễn tả trải nghiệm (Experience in Present Perfect)",
+    "rule": "Haven't you + V3/ed + before? -> I haven't had the chance yet",
+    "analysis": "Cụm 'have the chance' thường đi kèm thể phủ định để giải thích việc chưa từng trải nghiệm điều gì trước đó."
+  },
+  {
+    "title": "Bị động tiếp diễn (Present Continuous Passive) trong câu trả lời gián tiếp",
+    "rule": "is/are + being + V3/ed",
+    "analysis": "Thay vì đưa ra một ngày tháng cụ thể cho 'When', câu trả lời đưa ra trạng thái hiện tại của sự việc để giải thích vì sao chưa thể ấn định ngày."
+  },
+  {
+    "title": "Câu hỏi 'Who' với câu trả lời bác bỏ tiền đề (Overriding Assumption)",
+    "rule": "Who is doing X? -> Nobody needs to do X because circumstances changed",
+    "analysis": "Một bẫy kinh điển: người hỏi cho rằng cần có người làm hành động X, nhưng người đáp làm rõ rằng hành động X không cần thiết nữa."
+  },
+  {
+    "title": "Mệnh đề quan hệ rút gọn làm rõ tân ngữ (Relative Clause)",
+    "rule": "the red roses (that came in this morning)",
+    "analysis": "Đại từ quan hệ 'that' thay thế cho danh từ 'roses' làm chủ ngữ trong mệnh đề phụ bổ nghĩa."
+  },
+  {
+    "title": "Cấu trúc đưa ra đề xuất với 'Why don't we...?'",
+    "rule": "Why don't we + V-bare...? (Lời rủ rê, gợi ý)",
+    "analysis": "Một câu trần thuật đưa ra thông tin hấp dẫn về sản phẩm/dịch vụ thường được nối tiếp bởi một lời đề xuất trải nghiệm."
+  },
+  {
+    "title": "Bẫy từ vựng đồng âm (Word Association Trap)",
+    "rule": "car pool (đi chung xe) dễ bị nhầm với pool (bể bơi)",
+    "analysis": "ETS thường xuyên gài bẫy thí sinh thiếu tập trung bằng các từ phát âm tương tự nhau hoặc trường từ vựng liên quan sai ngữ cảnh."
+  },
+  {
+    "title": "Câu hỏi 'Where' với câu trả lời hướng dẫn kiểm tra nguồn thông tin",
+    "rule": "Where is X? -> Check your email / It was sent to you",
+    "analysis": "Rất phổ biến trong đề thi: câu trả lời không đưa ra phòng ốc cụ thể mà hướng dẫn đối phương mở email, tài liệu hoặc hỏi người phụ trách."
+  },
+  {
+    "title": "Thì Hiện tại tiếp diễn chỉ tương lai gần (Present Continuous for Near Future)",
+    "rule": "S + is/are + arriving soon",
+    "analysis": "Diễn tả một sự việc đã được lên lịch trình chắc chắn sẽ xảy ra trong tương lai gần."
+  },
+  {
+    "title": "Bẫy từ phát âm gần giống (Near-homophone Trap)",
+    "rule": "contract /ˈkɒntrækt/ vs contact /ˈkɒntækt/",
+    "analysis": "Thí sinh không chú ý dễ bị phương án (B) đánh lừa vì âm thanh tương đồng giữa 'contract' và 'contact lens'."
+  },
+  {
+    "title": "Cấu trúc diễn tả sở thích với 'like + V-ing'",
+    "rule": "S + like + V-ing / to V",
+    "analysis": "Dùng để trả lời gián tiếp cho câu hỏi về công việc mong muốn: nêu rõ sở thích làm việc trong môi trường công nghệ."
+  },
+  {
+    "title": "Thank someone for V-ing",
+    "rule": "Thank someone + for + V-ing",
+    "analysis": "Bày tỏ lòng cảm ơn vì việc gì."
+  },
+  {
+    "title": "Would you mind V-ing",
+    "rule": "Would you mind + V-ing?",
+    "analysis": "Lời nhờ vả lịch sự."
+  },
+  {
+    "title": "Recommend + S + V-bare",
+    "rule": "recommend (that) S + V",
+    "analysis": "Thức giả định sau động từ khuyên bảo."
+  },
+  {
+    "title": "Từ vựng chỉ phòng ban",
+    "rule": "Inference from keywords",
+    "analysis": "Kế toán gắn liền với chi phí và hóa đơn."
+  },
+  {
+    "title": "Paraphrase phủ định",
+    "rule": "didn't include = is missing",
+    "analysis": "Hành động không nộp kèm đồng nghĩa bị thiếu."
+  },
+  {
+    "title": "Quyết định tức thì với Will",
+    "rule": "I'll + V",
+    "analysis": "Quyết định đưa ra ngay tại thời điểm nói."
+  },
+  {
+    "title": "Thuật ngữ hàng hải",
+    "rule": "Maritime vocabulary",
+    "analysis": "Nhận diện ngành nghề qua từ vựng đặc thù."
+  },
+  {
+    "title": "Cấu trúc Not... until",
+    "rule": "won't V until clause",
+    "analysis": "Hành động chỉ diễn ra sau khi điều kiện thỏa mãn."
+  },
+  {
+    "title": "Paraphrase động từ Call",
+    "rule": "call = place a call",
+    "analysis": "Dùng cụm động từ tương đương."
+  },
+  {
+    "title": "Cấu trúc chỉ mục đích",
+    "rule": "To + V-bare",
+    "analysis": "Trả lời cho câu hỏi Why."
+  },
+  {
+    "title": "Đề nghị với Is it possible to",
+    "rule": "Is it possible to + V",
+    "analysis": "Yêu cầu lịch sự."
+  },
+  {
+    "title": "Đề nghị giúp đỡ với Let me",
+    "rule": "Let me + V",
+    "analysis": "Chủ động đề xuất hành động."
+  },
+  {
+    "title": "Suy luận địa điểm",
+    "rule": "store + electronics -> electronics store",
+    "analysis": "Kết hợp từ khóa để xác định nơi chốn."
+  },
+  {
+    "title": "Danh từ ghép chỉ sự kiện",
+    "rule": "launch + event = launch event",
+    "analysis": "Danh từ bổ nghĩa danh từ."
+  },
+  {
+    "title": "Gợi ý với Why don't you",
+    "rule": "Why don't you + V",
+    "analysis": "Câu đề xuất hành động."
+  },
+  {
+    "title": "Suy luận lĩnh vực kinh doanh",
+    "rule": "cakes, cookies, pies -> food production",
+    "analysis": "Nhận diện ngành nghề sản xuất bánh ngọt."
+  },
+  {
+    "title": "So sánh hơn với tính từ",
+    "rule": "outdated compared to...",
+    "analysis": "So sánh đặc điểm sản phẩm với đối thủ cạnh tranh."
+  },
+  {
+    "title": "Thì Tương lai đơn",
+    "rule": "I'll + V",
+    "analysis": "Quyết định hành động vào tuần sau."
+  },
+  {
+    "title": "Cấu trúc calling to see if",
+    "rule": "calling to see if + clause",
+    "analysis": "Gọi điện để thăm dò khả năng hợp tác."
+  },
+  {
+    "title": "Quá khứ phân từ làm tính từ",
+    "rule": "redesigned + website",
+    "analysis": "Bổ nghĩa cho website với nghĩa đã được thiết kế lại."
+  },
+  {
+    "title": "Cụm danh từ chuyên ngành thiết kế",
+    "rule": "online portfolio",
+    "analysis": "Chỉ tập hợp các sản phẩm đã từng thực hiện."
+  },
+  {
+    "title": "Cấu trúc be about to V",
+    "rule": "be about to + V (sắp sửa làm gì)",
+    "analysis": "Diễn tả hành động sắp diễn ra thì bị gián đoạn."
+  },
+  {
+    "title": "Giới từ chỉ mục đích For",
+    "rule": "pack for + Event",
+    "analysis": "Chuẩn bị đồ đạc cho một sự kiện."
+  },
+  {
+    "title": "Động từ Grab mang nghĩa thân mật",
+    "rule": "grab = take / get quickly",
+    "analysis": "Hành động lấy nhanh vật gì."
+  },
+  {
+    "title": "Cụm danh từ Career path/advice",
+    "rule": "career + noun",
+    "analysis": "Chỉ các vấn đề liên quan đến con đường phát triển nghề nghiệp."
+  },
+  {
+    "title": "Cụm từ Work one's way up",
+    "rule": "work one's way up to + position",
+    "analysis": "Nỗ lực thăng tiến từ vị trí thấp lên vị trí cao."
+  },
+  {
+    "title": "Paraphrase Look over = Review",
+    "rule": "look over = review",
+    "analysis": "Thay thế cụm động từ bằng ngoại động từ tương đương."
+  },
+  {
+    "title": "Chủ đề M&A trong kinh doanh",
+    "rule": "merger and acquisition",
+    "analysis": "Chủ đề cốt lõi thường gặp trong Part 3."
+  },
+  {
+    "title": "Câu hỏi hàm ngôn (Inference / Attitude Question)",
+    "rule": "Why does the speaker say '...'?",
+    "analysis": "Phân tích ngữ cảnh đằng sau để xác định thái độ hoài nghi của người nói."
+  },
+  {
+    "title": "Mệnh đề danh từ với Whether",
+    "rule": "address + whether + clause",
+    "analysis": "Bày tỏ sự quan tâm đến một khả năng có thể xảy ra."
+  },
+  {
+    "title": "Động từ Give với 2 tân ngữ",
+    "rule": "give + someone + something",
+    "analysis": "Cấu trúc tặng quà cho người nhận."
+  },
+  {
+    "title": "Kỹ năng làm câu hỏi Graphic",
+    "rule": "metal bottle with wide mouth = Wide-Mouthed Steel Water Bottle ($24)",
+    "analysis": "Đối chiếu mô tả của người nói với thông tin trong bảng biểu."
+  },
+  {
+    "title": "Câu mệnh lệnh chỉ dẫn với Just",
+    "rule": "Just send me + Noun",
+    "analysis": "Hướng dẫn khách hàng thao tác đơn giản."
+  },
+  {
+    "title": "Mệnh đề quan hệ xác định",
+    "rule": "drawings that will be included",
+    "analysis": "Bổ nghĩa cho tác phẩm nghệ thuật sẽ được đưa vào triển lãm."
+  },
+  {
+    "title": "Đối chiếu bảng đồ họa",
+    "rule": "Artist: Claudia Hoffman -> Artwork: Stormy Sea",
+    "analysis": "Liên kết tên nghệ sĩ trong lời thoại với tên tranh trong bảng."
+  },
+  {
+    "title": "Cụm từ Right away",
+    "rule": "right away = immediately",
+    "analysis": "Diễn tả hành động làm ngay không chậm trễ."
+  },
+  {
+    "title": "Suy luận nghề nghiệp từ thuật ngữ truyền thông",
+    "rule": "cover + press conference + deadline + news report -> Journalists",
+    "analysis": "Nhận diện nhà báo qua các thuật ngữ tác nghiệp đưa tin."
+  },
+  {
+    "title": "Đối chiếu bản đồ đồ họa",
+    "rule": "Site D connected to electrical grid -> Site D completed",
+    "analysis": "Xác định địa điểm đã thi công xong qua chi tiết đã hòa lưới điện."
+  },
+  {
+    "title": "Paraphrase Jobs = Work opportunities",
+    "rule": "jobs = work opportunities",
+    "analysis": "Diễn đạt lại từ 'jobs' bằng cụm danh từ tương đương 'work opportunities'."
+  },
+  {
+    "title": "Cấu trúc lời chào tổng đài",
+    "rule": "You have reached + Organization",
+    "analysis": "Mẫu câu chuẩn khi gọi điện đến tổng đài tự động."
+  },
+  {
+    "title": "Động từ khuyết thiếu Must chỉ sự bắt buộc",
+    "rule": "must + V-bare",
+    "analysis": "Quy định bắt buộc đối với tất cả cư dân."
+  },
+  {
+    "title": "Mệnh đề quan hệ rút gọn bị động",
+    "rule": "map (that was) mailed last week",
+    "analysis": "Bổ nghĩa cho bản đồ chỉ dẫn đỗ xe."
+  },
+  {
+    "title": "Paraphrase Maintain = Maintenance",
+    "rule": "maintain (v) -> maintenance (n)",
+    "analysis": "Chuyển đổi từ loại khi diễn đạt chủ đề bài nói."
+  },
+  {
+    "title": "Cụm tính từ ghép High-quality",
+    "rule": "high + quality",
+    "analysis": "Đóng vai trò tính từ bổ nghĩa cho danh từ gear."
+  },
+  {
+    "title": "Collocation với Conduct",
+    "rule": "conduct an inspection / survey",
+    "analysis": "Thực hiện việc thanh tra, kiểm tra thực tế."
+  },
+  {
+    "title": "Tự giới thiệu chức danh",
+    "rule": "I'm X, your + Role",
+    "analysis": "Xác định danh tính người nói ngay đầu câu."
+  },
+  {
+    "title": "Paraphrase Deliver a lecture",
+    "rule": "deliver a lecture = a lecture will begin",
+    "analysis": "Diễn đạt lại hành động thuyết giảng."
+  },
+  {
+    "title": "Đồng vị ngữ danh từ (Appositive Noun Phrase)",
+    "rule": "book, 'Title', ...",
+    "analysis": "Tên sách đặt trong ngoặc đơn đóng vai trò đồng vị ngữ."
+  },
+  {
+    "title": "Paraphrase Benefit = Fund-raising",
+    "rule": "benefit concert = fund-raising concert",
+    "analysis": "Cụm từ tương đương trong chủ đề hoạt động cộng đồng."
+  },
+  {
+    "title": "Danh từ hóa hành động (Nominalization)",
+    "rule": "expand (v) -> expansion (n)",
+    "analysis": "Dùng danh từ expansion để chỉ dự án xây dựng mở rộng."
+  },
+  {
+    "title": "Động từ khuyến khích kết hợp to-V",
+    "rule": "encourage + someone + to V",
+    "analysis": "Khuyến khích người nghe chi tiêu tại quầy giải khát."
+  },
+  {
+    "title": "Rút gọn mệnh đề phân từ",
+    "rule": "sessions focused on...",
+    "analysis": "Phân từ quá khứ focused bổ nghĩa cho sessions."
+  },
+  {
+    "title": "Câu hỏi hàm ngôn tình huống",
+    "rule": "If you lack materials -> Erina is at the back",
+    "analysis": "Chỉ dẫn hành động giải quyết sự thiếu tài liệu."
+  },
+  {
+    "title": "Paraphrase Icebreaker = Introductory activity",
+    "rule": "icebreaker = introductory activity",
+    "analysis": "Thuật ngữ tương đương chỉ hoạt động làm quen mở đầu khóa học."
+  },
+  {
+    "title": "Từ vựng mỹ thuật lịch sử",
+    "rule": "mosaic tiles = artwork",
+    "analysis": "Nhận diện thể loại tác phẩm nghệ thuật đặc thù."
+  },
+  {
+    "title": "Lời xin lỗi lịch sự trong ngành dịch vụ",
+    "rule": "apologize because + clause",
+    "analysis": "Nêu nguyên nhân của sự bất tiện cho khách tham quan."
+  },
+  {
+    "title": "Câu mệnh lệnh chỉ dẫn an toàn",
+    "rule": "Please + V-bare (use handrails)",
+    "analysis": "Yêu cầu hành khách bảo đảm an toàn khi di chuyển."
+  },
+  {
+    "title": "Cụm danh từ ngành quảng cáo",
+    "rule": "commercials + advertising contract -> advertising campaign",
+    "analysis": "Xác định trọng tâm nội dung kinh doanh."
+  },
+  {
+    "title": "Câu hỏi hàm ngôn về áp lực công việc",
+    "rule": "which means this is a priority -> tight deadline",
+    "analysis": "Suy luận về áp lực tiến độ hoàn thành trước giải đấu."
+  },
+  {
+    "title": "Cụm từ thời gian In just a moment",
+    "rule": "In just a moment, I'll + V",
+    "analysis": "Diễn tả hành động chuẩn bị thực hiện ngay tức khắc."
+  },
+  {
+    "title": "Xác định đối tượng lắng nghe",
+    "rule": "nurses + hospital -> hospital",
+    "analysis": "Lời mở đầu trực tiếp chỉ rõ đối tượng và địa điểm."
+  },
+  {
+    "title": "Thì Hiện tại hoàn thành tiếp diễn",
+    "rule": "have been receiving + Noun",
+    "analysis": "Diễn tả hành động tiếp nhận phản ánh liên tục diễn ra từ gần đây."
+  },
+  {
+    "title": "Cụm liên từ In the meantime",
+    "rule": "in the meantime = meanwhile",
+    "analysis": "Nêu giải pháp tạm thời trong khi chờ đợi phê duyệt."
+  },
+  {
+    "title": "Kỹ năng giải câu hỏi bản đồ",
+    "rule": "the hill on the north side = Location 1 (Hill)",
+    "analysis": "Khớp phương hướng 'north' và địa danh 'hill' trên sơ đồ."
+  },
+  {
+    "title": "Cấu trúc Don't forget to V",
+    "rule": "Don't forget to + V-bare",
+    "analysis": "Lời nhắc nhở nhẹ nhàng nhưng dứt khoát."
+  },
+  {
+    "title": "Danh động từ làm tân ngữ sau giới từ",
+    "rule": "importance of + V-ing",
+    "analysis": "Nhấn mạnh ý nghĩa của việc xét nghiệm đất."
+  },
+  {
+    "title": "Đối chiếu bảng thời gian biểu",
+    "rule": "September -> Row: September-October -> Depth: 12 inches",
+    "analysis": "Đối chiếu mốc tháng hiện tại với bảng dữ liệu để tìm thông số."
+  },
+  {
+    "title": "Cấu trúc Consider V-ing",
+    "rule": "consider + V-ing",
+    "analysis": "Cân nhắc việc thực hiện một hành động có lợi."
+  },
+  {
+    "title": "Tính từ sở hữu đứng trước danh từ (Possessive Adjectives)",
+    "rule": "Possessive Adjective (his/her/their/my/our) + Noun",
+    "analysis": "Khi khoảng trống nằm ngay trước một cụm danh từ hoặc danh từ chính và không có mạo từ (a/an/the), ta luôn chọn tính từ sở hữu để bổ nghĩa."
+  },
+  {
+    "title": "Phân từ làm tính từ bổ nghĩa cho danh từ (Participle as Adjective)",
+    "rule": "Mạo từ + (V-ing / V-ed) + Noun",
+    "analysis": "'Connecting' đóng vai trò tính từ chỉ đặc tính chủ động của chuyến bay (chuyến bay mang tính kết nối hành trình tiếp theo)."
+  },
+  {
+    "title": "Cấu trúc song hành với liên từ 'and' (Parallel Structure)",
+    "rule": "Adj + and + Adj + Noun",
+    "analysis": "'Fresh' (Adj) and 'tasty' (Adj) cùng bổ nghĩa cho danh từ chỉ thức ăn 'donuts'."
+  },
+  {
+    "title": "Cụm danh từ đo lường định lượng (Collective / Quantifying Noun Phrases)",
+    "rule": "the widest selection of + Plural Noun",
+    "analysis": "Cụm 'a/the selection of' luôn đi kèm danh từ số nhiều đếm được hoặc danh từ không đếm được để chỉ sự phong phú của mặt hàng."
+  },
+  {
+    "title": "Quá khứ phân từ làm tính từ (Past Participle as Adjective)",
+    "rule": "V-ed + Noun (mang nghĩa bị động / trạng thái hoàn tất)",
+    "analysis": "'Updated software' mang ý nghĩa phần mềm đã được nâng cấp bởi đội ngũ kỹ thuật viên."
+  },
+  {
+    "title": "Giới từ chỉ thời gian đi với V-ing (Preposition of Time + Gerund)",
+    "rule": "before / after / since + V-ing",
+    "analysis": "Khi hai mệnh đề có cùng chủ ngữ ngầm định, mệnh đề trạng ngữ thời gian có thể rút gọn về dạng Giới từ + V-ing."
+  },
+  {
+    "title": "Vị trí của trạng từ thể cách (Adverb of Manner)",
+    "rule": "S + V + O + Adverb",
+    "analysis": "Trạng từ thể cách thường đứng ở cuối câu sau tân ngữ để mô tả cách thức tiến hành của hành động."
+  },
+  {
+    "title": "Danh từ ghép song hành làm chủ ngữ (Compound Noun Subject)",
+    "rule": "Noun + Noun -> Compound Noun; N1 (plural) and N2 (plural) + Plural Verb (are)",
+    "analysis": "'Brake system inspections' là danh từ ghép chỉ hạng mục công việc trong gói bảo dưỡng xe hơi."
+  },
+  {
+    "title": "Giới từ chỉ thời hạn kéo dài 'Until'",
+    "rule": "open / valid / last + until + Time Point",
+    "analysis": "'Until' nhấn mạnh trạng thái (open) tiếp diễn liên tục không ngắt quãng cho đến thời điểm mốc."
+  },
+  {
+    "title": "Vị trí của tính từ vị ngữ (Predicative Adjective)",
+    "rule": "S (noun) + have/has been + Adjective",
+    "analysis": "Tính từ đứng sau động từ to be ở thì hiện tại hoàn thành đóng vai trò vị ngữ miêu tả đặc điểm tình hình của chủ ngữ."
+  },
+  {
+    "title": "Collocation của động từ Make với Danh từ hành động",
+    "rule": "make + deliveries / reservations / decisions / investments",
+    "analysis": "Động từ 'make' kết hợp với danh từ để diễn đạt hành động cụ thể."
+  },
+  {
+    "title": "Cấu trúc Danh từ + to-infinitive",
+    "rule": "Noun (authority / ability / permission / right) + to V-bare",
+    "analysis": "Động từ nguyên mẫu có 'to' đóng vai trò bổ ngữ làm rõ nội dung quyền hạn của danh từ đứng trước."
+  },
+  {
+    "title": "Cụm động từ (Phrasal Verb) với Look",
+    "rule": "look for + Noun (tìm kiếm) vs look at (nhìn vào) vs look after (chăm sóc)",
+    "analysis": "Đi kèm giới từ 'for' sau 'is looking' tạo thành thì hiện tại tiếp diễn diễn tả nỗ lực nghiên cứu tìm kiếm giải pháp hiện tại."
+  },
+  {
+    "title": "Trạng từ bổ nghĩa cho động từ thường (Adverb modifying Verb)",
+    "rule": "Verb + Object + Adverb of Manner (-ly)",
+    "analysis": "'Perfect' là tính từ bổ nghĩa danh từ; khi bổ nghĩa cho động từ 'fits' bắt buộc phải chuyển sang dạng trạng từ 'perfectly'."
+  },
+  {
+    "title": "Cấu trúc với động từ nối Prove to be",
+    "rule": "S + prove to be + (adv) + Adjective",
+    "analysis": "Động từ 'prove to be' đóng vai trò linking verb, thành phần vị ngữ theo sau bắt buộc là tính từ (helpful)."
+  },
+  {
+    "title": "Giới từ chỉ thời gian 'During'",
+    "rule": "during + Time Period (the summer / the month / the presentation)",
+    "analysis": "Khác với 'for' đi với con số (for 3 weeks), 'during' đi với danh từ chỉ một thời kỳ hoặc sự kiện xác định."
+  },
+  {
+    "title": "Cấu trúc Enough với Tính từ và Trạng từ",
+    "rule": "Adjective / Adverb + enough + to-infinitive",
+    "analysis": "Tính từ hoặc trạng từ luôn đứng TRƯỚC 'enough', trái ngược với danh từ đứng SAU 'enough' (enough money/time)."
+  },
+  {
+    "title": "Danh từ ghép chỉ nghề nghiệp / chức vụ (Compound Noun for Job Title)",
+    "rule": "Noun (event) + Noun (organizer) = Job Title",
+    "analysis": "Cấu trúc danh từ ghép kết hợp danh từ chỉ lĩnh vực (event) và danh từ chỉ người thực hiện (organizer)."
+  },
+  {
+    "title": "Vị trí của trạng từ trong cấu trúc Bị động tương lai",
+    "rule": "will be + Adverb + V3/ed",
+    "analysis": "Trạng từ đứng giữa trợ động từ 'be' và quá khứ phân từ 'closed' để bổ nghĩa trực tiếp cho hành động bị động."
+  },
+  {
+    "title": "Cấu trúc giới từ tương quan chỉ phạm vi (Correlative Prepositional Phrase)",
+    "rule": "from + N1 + to + N2",
+    "analysis": "Dùng để liệt kê biên độ phong phú của các sự vụ từ trường hợp thông thường đến trường hợp phức tạp."
+  },
+  {
+    "title": "Trạng từ đứng giữa Be và Động từ phân từ (Adverb in Passive Voice)",
+    "rule": "be + Adverb + V3/ed",
+    "analysis": "Cấu trúc kinh điển trong Part 5: trạng từ xen giữa động từ to be và phân từ để chỉ mức độ hoặc tính chất của hành động bị động."
+  },
+  {
+    "title": "Cụm thời gian chỉ tương lai với 'Next'",
+    "rule": "over / during the next + Period of Time (year / decade / few months)",
+    "analysis": "'The next year' chỉ khoảng thời gian kéo dài 12 tháng kể từ thời điểm hiện tại trở đi."
+  },
+  {
+    "title": "Sự hòa hợp giữa Đại từ bất định và Động từ mệnh đề quan hệ (Subject-Verb Agreement)",
+    "rule": "Anyone / Everyone / Someone + who + Singular Verb (V-s/es)",
+    "analysis": "'Anyone' là đại từ số ít không xác định, đòi hỏi động từ trong mệnh đề quan hệ 'who' phải chia theo ngôi thứ ba số ít (needs)."
+  },
+  {
+    "title": "Vị trí của trạng từ Already trong thì Hiện tại hoàn thành",
+    "rule": "have/has + already + V3/ed",
+    "analysis": "'Already' dùng trong câu khẳng định đặt giữa trợ động từ 'have' và động từ chính 'begun' để nhấn mạnh tính hiện thực của sự việc."
+  },
+  {
+    "title": "Collocation động từ Meet đi với Danh từ mục tiêu/tiêu chuẩn",
+    "rule": "meet + standards / requirements / deadlines / expectations / demand",
+    "analysis": "Động từ 'meet' khi đi với các danh từ mang tính chuẩn mực mang nghĩa đáp ứng, hoàn thành đúng quy định."
+  },
+  {
+    "title": "Đại từ chỉ số lượng đi với 'of the' (Partitive Quantifiers)",
+    "rule": "Some / Many / Most / All + of the + Plural Noun + Plural Verb",
+    "analysis": "'Some of the board members' làm chủ ngữ số nhiều đi với động từ số nhiều 'have'."
+  },
+  {
+    "title": "Ngoại động từ với Tân ngữ danh từ trừu tượng",
+    "rule": "Subject + require + Abstract Noun (collaboration / effort / attention)",
+    "analysis": "'Require' là ngoại động từ chỉ nhu cầu thiết yếu của một dự án để có thể đi đến thành công."
+  },
+  {
+    "title": "Mệnh đề trạng ngữ chỉ thời gian và thể Bị động",
+    "rule": "Until + S + has been V3/ed (diễn tả hành động hoàn thành làm điều kiện tiên quyết)",
+    "analysis": "Không bao giờ dùng 'will' sau các liên từ chỉ thời gian (when, until, as soon as, before, after)."
+  },
+  {
+    "title": "Cụm giới từ chỉ nguyên nhân 'In light of'",
+    "rule": "In light of + Noun Phrase, Clause",
+    "analysis": "Đóng vai trò trạng ngữ nguyên nhân tương đương với 'Because of / Considering'."
+  },
+  {
+    "title": "Tính từ bổ nghĩa cho danh từ không đếm được",
+    "rule": "Adjective + Uncountable Noun (information)",
+    "analysis": "'Information' là danh từ không đếm được, kết hợp với tính từ 'supplemental' để tạo thành cụm danh từ chuyên ngành tài chính/ngân hàng."
+  },
+  {
+    "title": "Chọn câu điền vào đoạn văn (Sentence Insertion)",
+    "content": "Cần dựa vào tính mạch lạc (coherence). Câu điền vào phải kết nối giữa lời mời tham quan ở câu trước và nội dung giảng dạy ('We will teach you...') ở câu sau."
+  },
+  {
+    "title": "Mệnh đề quan hệ xác định (Defining Relative Clause)",
+    "content": "Sử dụng 'that' làm đại từ quan hệ thay thế cho danh từ chỉ vật số ít 'garden' và đóng vai trò chủ ngữ đi cùng động từ chia số ít 'uses'."
+  },
+  {
+    "title": "Liên từ chuyển tiếp (Transition Phrases)",
+    "content": "'Best of all' đứng đầu câu bổ nghĩa cho toàn bộ mệnh đề, nhấn mạnh mặt tích cực nhất trong chuỗi thông tin."
+  },
+  {
+    "title": "Đại từ nhân xưng thay thế (Pronoun Reference)",
+    "content": "Đại từ 'they' quy chiếu chính xác về danh từ số nhiều 'rain gardens' đã nhắc ở câu trước."
+  },
+  {
+    "title": "Vị trí của Tính từ trước Danh từ",
+    "content": "Trước danh từ 'designs' cần tính từ đuôi '-ing' ('amazing') để chỉ bản chất gây ấn tượng của sự vật."
+  },
+  {
+    "title": "Từ vựng phù hợp ngữ cảnh khen ngợi",
+    "content": "'receive attention' (nhận được sự chú ý) là collocation chuẩn đi cùng mạng xã hội khi nội dung thành công."
+  },
+  {
+    "title": "Tính mạch lạc giữa các ý (Coherence & Logic)",
+    "content": "Sự linh hoạt (flexibility) tương ứng trực tiếp với sự thấu hiểu các trở ngại/trì hoãn (delays)."
+  },
+  {
+    "title": "To-Infinitive bổ nghĩa cho Danh từ chỉ mục đích",
+    "content": "Cụm danh từ 'The auction to benefit X' có cấu trúc Noun + To-V để chỉ mục đích của danh từ đó trong khi câu đã có vị ngữ chính 'is coming up'."
+  },
+  {
+    "title": "Đại từ chỉ vật làm chủ ngữ câu bị động",
+    "content": "'It' thay thế trực tiếp cho danh từ 'your Mena Chin Library card' làm chủ ngữ cho vị ngữ 'must be renewed'."
+  },
+  {
+    "title": "Đại từ chỉ định liên kết (Demonstrative Reference)",
+    "content": "'This' ở câu sau quy chiếu đến đối tượng 'Renewal' được đề cập ở câu trước."
+  },
+  {
+    "title": "Đảo ngữ câu điều kiện loại 1 (Inversion with Should)",
+    "content": "Cấu trúc: 'Should + S + V(bare), S + will/may/can + V'. 'Should you decide...' = 'If you decide...'."
+  },
+  {
+    "title": "Phân từ quá khứ làm tính từ (Past Participle as Adjective)",
+    "content": "'the specified date': Past participle 'specified' đứng trước danh từ 'date' bổ nghĩa mang nét nghĩa bị động (ngày được định sẵn)."
+  },
+  {
+    "title": "Cấu trúc thư tiếp thị thương mại (Sales Letter Opening)",
+    "content": "'I would like to introduce...' là mẫu câu chuẩn mực để mở đầu phần giới thiệu doanh nghiệp trong thư gửi khách hàng tiềm năng."
+  },
+  {
+    "title": "Giới từ + V-ing",
+    "content": "Sau giới từ 'in' bắt buộc động từ đi sau phải ở dạng V-ing ('in creating')."
+  },
+  {
+    "title": "Trạng từ liên kết củng cố lập luận (Conjunctive Adverb 'Indeed')",
+    "content": "'Indeed' đứng đầu câu ngăn cách bởi dấu phẩy, dùng để bổ sung minh chứng mạnh mẽ khẳng định thêm ý trước."
+  },
+  {
+    "title": "Sự hòa hợp Chủ ngữ - Động từ với 'Every + Noun'",
+    "content": "'Every + danh từ số ít' luôn luôn đi kèm với động từ số ít ở thì hiện tại đơn: 'every image receives'."
+  },
+  {
+    "title": "Mệnh lệnh thức (Imperative Form)",
+    "content": "Sử dụng động từ nguyên thể không 'to' đầu câu ('Verify...', 'Assemble...', 'Follow...') để đưa ra chỉ dẫn kỹ thuật."
+  },
+  {
+    "title": "Kỹ năng đọc suy luận chi tiết (Inference Question)",
+    "content": "Tìm kiếm manh mối từ các từ vựng chuyên ngành trong bài: 'wood or cushioning', 'screws or bolts', 'assembly'."
+  },
+  {
+    "title": "Từ ghép với tiền tố 'inter-'",
+    "content": "Tiền tố 'inter-' nghĩa là 'giữa/liên kết' (interoffice = giữa các văn phòng, international = quốc tế)."
+  },
+  {
+    "title": "Giới từ chỉ thời gian 'before' và 'after'",
+    "content": "'before 11:00 A.M.' có nghĩa là trước 11 giờ, nên chính xác lúc 11:00 A.M. không thuộc khoảng thời gian được khuyến nghị."
+  },
+  {
+    "title": "Rút gọn mệnh đề phân từ (Past Participle Clause)",
+    "content": "'Built in 1897, it was the home of...' là mệnh đề phân từ quá khứ rút gọn mang nghĩa bị động: '(Being) built in 1897'."
+  },
+  {
+    "title": "Paraphrase trong bài thi TOEIC",
+    "content": "'plan far in advance to get a seat' được diễn đạt lại (paraphrase) thành 'very popular with local residents'."
+  },
+  {
+    "title": "Câu hỏi suy luận ý người nói trong đoạn chat (Chat Inference)",
+    "content": "Phân tích ngữ cảnh của lời thoại ngay trước đó: yêu cầu mua đồ ăn -> lời đáp xác nhận thực hiện yêu cầu đó."
+  },
+  {
+    "title": "Cụm từ 'be out'",
+    "content": "'be out' mang nghĩa là đang ra ngoài (không có mặt tại văn phòng/nơi làm việc)."
+  },
+  {
+    "title": "Phân biệt Danh từ 'produce' và Động từ 'produce'",
+    "content": "Khi là danh từ, 'produce' trọng âm rơi vào âm tiết thứ nhất /ˈprɒd.juːs/, mang nghĩa 'nông sản'."
+  },
+  {
+    "title": "Hiện tại hoàn thành diễn tả kết quả hiện tại",
+    "content": "'has yielded a substantial harvest': diễn tả hành động đã diễn ra và để lại kết quả cụ thể ở hiện tại."
+  },
+  {
+    "title": "Từ loại kép: Collection and Distribution",
+    "content": "'collection' (thu gom) và 'distribution' (phân phối) tạo thành quy trình hoàn chỉnh trong chuỗi cung ứng từ thiện."
+  },
+  {
+    "title": "Cấu trúc 'ask that someone + V(bare)'",
+    "content": "Thức giả định (subjunctive mood): 'We ask that you adhere...' động từ 'adhere' ở dạng nguyên thể."
+  },
+  {
+    "title": "Paraphrase từ vựng",
+    "content": "'storing it in a locker for just $2' -> 'put in a locked box for a fee'."
+  },
+  {
+    "title": "Cấu trúc 'refrain from + V-ing'",
+    "content": "Sau cụm 'refrain from' luôn đi cùng Danh động từ (V-ing)."
+  },
+  {
+    "title": "Nhận diện mục đích thư tín qua câu yêu cầu",
+    "content": "Câu mang câu mệnh lệnh lịch sự ('Please review and return...') thường chứa mục đích chính (main purpose) của bức thư/email."
+  },
+  {
+    "title": "Thì Hiện tại Hoàn thành suy luận thói quen",
+    "content": "'chose us for a fourth year' -> khẳng định mối quan hệ khách hàng lâu năm."
+  },
+  {
+    "title": "Kỹ năng suy luận từ 'sample of the recipe'",
+    "content": "Tạo mẫu (sample) để kiểm tra một công thức phối vị riêng -> New flavor combination."
+  },
+  {
+    "title": "Câu hỏi từ vựng đồng nghĩa trong ngữ cảnh (Vocabulary in Context)",
+    "content": "'judge' ở đây mang nghĩa phán đoán, đánh giá sau khi kiểm chứng ('determined')."
+  },
+  {
+    "title": "Paraphrase cụm từ đánh giá",
+    "content": "'all of the reviews were excellent' -> 'rated very highly'."
+  },
+  {
+    "title": "Nghĩa của động từ 'run' với máy móc",
+    "content": "Động từ 'run' khi đi với chủ ngữ máy móc thiết bị mang nghĩa 'vận hành' (= operate)."
+  },
+  {
+    "title": "Mệnh đề quan hệ không xác định với 'which'",
+    "content": "', which is very important to me' dùng đại từ quan hệ 'which' thay thế cho toàn bộ mệnh đề đứng trước."
+  },
+  {
+    "title": "Cụm giới từ 'regardless of'",
+    "content": "'regardless of + Noun/Noun clause' mang nghĩa 'bất kể, không màng tới'."
+  },
+  {
+    "title": "Dạng câu hỏi NOT/TRUE",
+    "content": "Phương pháp loại trừ: tìm thấy 3 chi tiết xuất hiện trong bài, phương án còn lại là đáp án cần chọn."
+  },
+  {
+    "title": "Paraphrase tạp chí chuyên ngành",
+    "content": "'Travel Vista Journal' được quy về khái niệm danh từ chung: 'trade publication'."
+  },
+  {
+    "title": "Mối liên kết từ vựng (Lexical Cohesion)",
+    "content": "'positions available' -> 'Our openings cover a broad range...' -> 'regardless of your background'."
+  },
+  {
+    "title": "Paraphrase đối tượng nhận tài liệu",
+    "content": "'distribution to our many partner stores' -> 'sent to multiple locations'."
+  },
+  {
+    "title": "Đại từ quy chiếu trong hội thoại chat",
+    "content": "'that' quy chiếu ngược lại cụm danh từ 'information from the user studies' ở câu trước."
+  },
+  {
+    "title": "Kỹ năng suy luận chức danh nghề nghiệp",
+    "content": "Người phụ trách gửi báo cáo kết quả thử nghiệm của phòng R&D -> Chuyên viên nghiên cứu sản phẩm (Product Researcher)."
+  },
+  {
+    "title": "Giới từ chỉ ngày trong tuần",
+    "content": "Sử dụng 'on' trước các thứ trong tuần: 'on Thursday', 'on Friday'."
+  },
+  {
+    "title": "Cấu trúc 'join together to + V'",
+    "content": "'join together to do something': cùng nhau liên kết để thực hiện mục tiêu kinh doanh chung."
+  },
+  {
+    "title": "Đa nghĩa của động từ 'reflect'",
+    "content": "'reflect' có thể là phản xạ ánh sáng hoặc suy ngẫm ('reflect on'), nhưng khi đi với tân ngữ trừu tượng thì mang nghĩa 'phản ánh/thể hiện' (= show)."
+  },
+  {
+    "title": "Cách dùng từ 'several'",
+    "content": "'several meal options' bao gồm các gói khẩu phần (2, 4, 6 người) và món chay (vegetarian)."
+  },
+  {
+    "title": "Câu hỏi liên kết thông tin 2 đoạn (Cross-text Reference)",
+    "content": "Liên kết chi tiết chủ sở hữu Enriqua's ở Đoạn 1 với bài review trải nghiệm ăn tại Enriqua's ở Đoạn 2."
+  },
+  {
+    "title": "Paraphrase cụm 'call in advance for a table'",
+    "content": "'call in advance for a table' được diễn đạt bằng danh từ 'take reservations'."
+  },
+  {
+    "title": "Cấu trúc 'neither... nor...' hoặc 'neither arrangement'",
+    "content": "'Neither arrangement is necessary' dùng 'Neither' cho hai sự lựa chọn phủ định cả hai."
+  },
+  {
+    "title": "Paraphrase quan hệ gia đình",
+    "content": "'sister and her children' -> 'family members'."
+  },
+  {
+    "title": "Bị động với 'damage done by'",
+    "content": "Rút gọn mệnh đề quan hệ dạng bị động: 'damage (which was) done by inattentive baggage handlers'."
+  },
+  {
+    "title": "Câu hỏi nối thông tin 2 văn bản (Double Passage Cross-check)",
+    "content": "Đối chiếu: 'deliver your items' (Email) + '2 instrument cases: 1 mandolin, 1 guitar' (Ticket) -> Món hàng mua là nhạc cụ."
+  },
+  {
+    "title": "Giới từ chỉ phương tiện 'by + vehicle'",
+    "content": "Sử dụng 'by boat / by car / by plane' để nói về phương thức di chuyển."
+  },
+  {
+    "title": "Cấu trúc bị động chỉ người giảng dạy",
+    "content": "'are taught by recognized professionals' -> 'led by industry professionals'."
+  },
+  {
+    "title": "Cụm giới từ 'Upon + Noun'",
+    "content": "'Upon + Noun/V-ing' có nghĩa là 'ngay sau khi / vào lúc'."
+  },
+  {
+    "title": "Thì Hiện tại Hoàn thành suy luận kinh nghiệm",
+    "content": "'has previously taken' thể hiện trải nghiệm đã từng diễn ra trong quá khứ."
+  },
+  {
+    "title": "Nối mã số khóa học (Cross-referencing Course Codes)",
+    "content": "Khớp mã định danh 'TTA1504' giữa bài quảng cáo và tiêu đề diễn đàn học viên."
+  },
+  {
+    "title": "Paraphrase từ vựng Triple Passage",
+    "content": "'vivid images of baked goods' (Forum) -> 'Browse photos of our delicious treats' (Section 2)."
+  },
+  {
+    "title": "Hiện tại hoàn thành tiếp diễn với khoảng thời gian",
+    "content": "'has been serving... for six months now' = mở cửa hoạt động được 6 tháng."
+  },
+  {
+    "title": "So sánh nhất 'most famous'",
+    "content": "'most famous' được dùng để nhấn mạnh nét đặc trưng nổi tiếng nhất."
+  },
+  {
+    "title": "Kỹ thuật liên kết thông tin suy luận logic (Cross-text Logic)",
+    "content": "Khớp thời gian tổ chức sự kiện nhạc sống ('Friday night') với mục đích của khách ('keen to enjoy live music') -> Ngày khách đến là thứ Sáu."
+  },
+  {
+    "title": "Cụm 'live up to expectations'",
+    "content": "'fail to live up to expectations': không đáp ứng được sự mong đợi của ai."
+  },
+  {
+    "title": "Khớp chức danh và họ tên (Title and Name Matching)",
+    "content": "'The head chef' (Review) + 'Head Chef Adio Brown' (Email) -> Mr. Brown."
+  },
+  {
+    "title": "Kỹ năng suy luận từ danh sách vật tư",
+    "content": "Tập hợp các danh từ: soil, gravel, decorative stone, paving stone -> Landscaping (cảnh quan)."
+  },
+  {
+    "title": "So khớp số liệu đa văn bản (Cross-document Numerical Matching)",
+    "content": "So sánh con số: $4,650 > $4,000 -> hưởng ưu đãi 10% discount."
+  },
+  {
+    "title": "Cấu trúc 'switch to + Noun'",
+    "content": "'switch to something': chuyển hẳn sang một phương thức hoặc hệ thống mới."
+  },
+  {
+    "title": "Nối mốc thời gian suy luận thời lượng",
+    "content": "'founded over twenty years ago' + 'one of our very first customers' -> là khách hàng khoảng 20 năm."
+  },
+  {
+    "title": "Cấu trúc nhờ cậy lịch sự",
+    "content": "'I would appreciate it if you could please + V': Mẫu câu trang trọng yêu cầu đồng nghiệp hỗ trợ xử lý công việc."
+  },
+  {
+    "title": "Thì Hiện tại Tiếp diễn & Thể Bị động Part 1",
+    "rule": "S + is/are + V-ing / being + V3",
+    "analysis": "Dùng để miêu tả hành động đang diễn ra của người hoặc trạng thái vật đang chịu tác động."
+  },
+  {
+    "title": "Chiến thuật xử lý câu hỏi Part 2",
+    "rule": "Xác định loại câu hỏi (Wh-, Yes/No, Lựa chọn, Đề nghị)",
+    "analysis": "Tập trung lắng nghe từ để hỏi ở đầu câu để loại trừ ngay các phương án trả lời lạc đề."
+  },
+  {
+    "title": "Kỹ năng nghe bắt thông tin chi tiết (Detail Question)",
+    "rule": "Focus on key nouns and action verbs",
+    "analysis": "Lắng nghe từ khóa xuất hiện trong câu hỏi để xác định thời điểm người nói nhắc tới manh mối."
+  },
+  {
+    "title": "Kỹ năng nghe bài nói ngắn Part 4",
+    "rule": "Topic, Details, Next Action structure",
+    "analysis": "Bài nói TOEIC Part 4 gồm 3 phần: Giới thiệu chủ đề, chi tiết triển khai, và hành động tiếp theo người nghe cần làm."
+  },
+  {
+    "title": "Quy tắc ngữ pháp Part 5",
+    "rule": "Subject + Verb + Object / Complement",
+    "analysis": "Xác định từ loại hoặc dạng động từ phù hợp để hoàn thiện cấu trúc câu."
+  },
+  {
+    "title": "Kỹ thuật điền từ / câu Part 6",
+    "content": "Đọc câu trước và câu sau để xác định thì của động từ, liên từ hoặc câu văn phù hợp với mạch tư duy."
+  },
+  {
+    "title": "Kỹ năng làm bài đọc hiểu Part 7",
+    "content": "Xác định từ khóa trong câu hỏi, định vị thông tin liên quan trong đoạn văn và đối chiếu ngữ nghĩa."
+  }
+]

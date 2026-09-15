@@ -1,0 +1,1835 @@
+[
+  {
+    "id": 32,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "W-Am: Thank you so much for organizing the annual company picnic, Jingdao. Everybody seemed to enjoy it.\nM-Au: Well, we deserved it after working so hard this year.\nW-Am: I agree. The food was great, by the way. Especially the peach pie you made. Would you mind sharing the recipe? It was delicious.\nM-Au: I found the recipe online. I'll send you a link to the Web page. There's a really helpful video that walks you through all the steps. I recommend you watch it first.\nW-Am: All right, thanks.",
+    "passageVi": "Nữ: Cảm ơn bạn rất nhiều vì đã tổ chức buổi dã ngoại thường niên của công ty nhé, Jingdao. Mọi người đều rất thích nó.\nNam: À, chúng ta xứng đáng sau một năm làm việc chăm chỉ mà.\nNữ: Tôi đồng ý. Tiện thể thì đồ ăn rất tuyệt, đặc biệt là món bánh nướng đào bạn làm. Bạn có phiền chia sẻ công thức không? Nó rất ngon.\nNam: Tôi tìm thấy công thức trên mạng đấy. Tôi sẽ gửi cho bạn đường link trang web. Có một video rất hữu ích hướng dẫn từng bước. Tôi khuyên bạn nên xem video trước.\nNữ: Được rồi, cảm ơn bạn.",
+    "questionText": "What event does the woman mention?",
+    "questionTextVi": "Người phụ nữ nhắc đến sự kiện nào?",
+    "options": {
+      "A": "A job fair",
+      "B": "A cooking class",
+      "C": "A fund-raiser",
+      "D": "A company picnic"
+    },
+    "optionsVi": {
+      "A": "Hội chợ việc làm",
+      "B": "Lớp học nấu ăn",
+      "C": "Buổi gây quỹ",
+      "D": "Buổi dã ngoại công ty"
+    },
+    "correctAnswer": "D",
+    "explanation": "Người phụ nữ mở đầu bằng lời cảm ơn: 'Thank you so much for organizing the annual company picnic' -> (D) A company picnic.",
+    "vocabulary": [
+      {
+        "word": "annual",
+        "ipa": "/ˈæn.ju.əl/",
+        "pos": "adj",
+        "meaning": "thường niên",
+        "example": "annual picnic"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "company picnic",
+        "meaning": "buổi dã ngoại công ty"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Thank someone for V-ing",
+        "rule": "Thank someone + for + V-ing",
+        "analysis": "Bày tỏ lòng cảm ơn vì việc gì."
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "W-Am: Thank you so much for organizing the annual company picnic, Jingdao. Everybody seemed to enjoy it.\nM-Au: Well, we deserved it after working so hard this year.\nW-Am: I agree. The food was great, by the way. Especially the peach pie you made. Would you mind sharing the recipe? It was delicious.\nM-Au: I found the recipe online. I'll send you a link to the Web page. There's a really helpful video that walks you through all the steps. I recommend you watch it first.\nW-Am: All right, thanks.",
+    "passageVi": "Nữ: Cảm ơn bạn rất nhiều vì đã tổ chức buổi dã ngoại thường niên của công ty nhé, Jingdao. Mọi người đều rất thích nó.\nNam: À, chúng ta xứng đáng sau một năm làm việc chăm chỉ mà.\nNữ: Tôi đồng ý. Tiện thể thì đồ ăn rất tuyệt, đặc biệt là món bánh nướng đào bạn làm. Bạn có phiền chia sẻ công thức không? Nó rất ngon.\nNam: Tôi tìm thấy công thức trên mạng đấy. Tôi sẽ gửi cho bạn đường link trang web. Có một video rất hữu ích hướng dẫn từng bước. Tôi khuyên bạn nên xem video trước.\nNữ: Được rồi, cảm ơn bạn.",
+    "questionText": "What does the woman ask for?",
+    "questionTextVi": "Người phụ nữ yêu cầu điều gì?",
+    "options": {
+      "A": "A guest list",
+      "B": "A dessert recipe",
+      "C": "A business card",
+      "D": "A promotional code"
+    },
+    "optionsVi": {
+      "A": "Danh sách khách mời",
+      "B": "Công thức món tráng miệng",
+      "C": "Danh thiếp",
+      "D": "Mã khuyến mãi"
+    },
+    "correctAnswer": "B",
+    "explanation": "Người phụ nữ xin công thức bánh peach pie ('Would you mind sharing the recipe?'). Bánh peach pie là món tráng miệng (dessert) -> (B).",
+    "vocabulary": [
+      {
+        "word": "recipe",
+        "ipa": "/ˈres.ɪ.pi/",
+        "pos": "n",
+        "meaning": "công thức nấu ăn",
+        "example": "peach pie recipe"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "dessert recipe",
+        "meaning": "công thức làm món tráng miệng"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Would you mind V-ing",
+        "rule": "Would you mind + V-ing?",
+        "analysis": "Lời nhờ vả lịch sự."
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "W-Am: Thank you so much for organizing the annual company picnic, Jingdao. Everybody seemed to enjoy it.\nM-Au: Well, we deserved it after working so hard this year.\nW-Am: I agree. The food was great, by the way. Especially the peach pie you made. Would you mind sharing the recipe? It was delicious.\nM-Au: I found the recipe online. I'll send you a link to the Web page. There's a really helpful video that walks you through all the steps. I recommend you watch it first.\nW-Am: All right, thanks.",
+    "passageVi": "Nữ: Cảm ơn bạn rất nhiều vì đã tổ chức buổi dã ngoại thường niên của công ty nhé, Jingdao. Mọi người đều rất thích nó.\nNam: À, chúng ta xứng đáng sau một năm làm việc chăm chỉ mà.\nNữ: Tôi đồng ý. Tiện thể thì đồ ăn rất tuyệt, đặc biệt là món bánh nướng đào bạn làm. Bạn có phiền chia sẻ công thức không? Nó rất ngon.\nNam: Tôi tìm thấy công thức trên mạng đấy. Tôi sẽ gửi cho bạn đường link trang web. Có một video rất hữu ích hướng dẫn từng bước. Tôi khuyên bạn nên xem video trước.\nNữ: Được rồi, cảm ơn bạn.",
+    "questionText": "What does the man recommend doing?",
+    "questionTextVi": "Người đàn ông khuyên nên làm gì?",
+    "options": {
+      "A": "Returning some merchandise",
+      "B": "Watching a video",
+      "C": "Creating an account",
+      "D": "Reading a review"
+    },
+    "optionsVi": {
+      "A": "Trả hàng",
+      "B": "Xem một video",
+      "C": "Tạo tài khoản",
+      "D": "Đọc đánh giá"
+    },
+    "correctAnswer": "B",
+    "explanation": "Người đàn ông nói: 'There's a really helpful video... I recommend you watch it first' -> (B) Watching a video.",
+    "vocabulary": [
+      {
+        "word": "recommend",
+        "ipa": "/ˌrek.əˈmend/",
+        "pos": "v",
+        "meaning": "khuyên, đề xuất",
+        "example": "recommend watching"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "walk through steps",
+        "meaning": "hướng dẫn từng bước"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Recommend + S + V-bare",
+        "rule": "recommend (that) S + V",
+        "analysis": "Thức giả định sau động từ khuyên bảo."
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "M-Cn: I’d like to finish calculating the company’s expense reports for the month. Have you finished reviewing the travel reimbursement forms?\nW-Am: Almost. I'm checking the final batch now. But I noticed that Mr. Rossi didn't include his hotel receipt with his submission.\nM-Cn: That's a problem because the accounting guidelines strictly require all original receipts for lodging.\nW-Am: I'll call Mr. Rossi right now to see if he can email us a scanned copy.",
+    "passageVi": "Nam: Tôi muốn tính xong báo cáo chi phí tháng này. Bạn đã xem xong các biểu mẫu hoàn trả chi phí đi lại chưa?\nNữ: Gần xong rồi. Tôi đang kiểm tra đợt cuối. Nhưng ông Rossi không nộp kèm hóa đơn khách sạn.\nNam: Đó là vấn đề vì quy chế kế toán bắt buộc phải có biên lai gốc cho chi phí lưu trú.\nNữ: Tôi sẽ gọi ông Rossi ngay xem ông ấy có thể gửi bản scan qua email được không.",
+    "questionText": "What department do the speakers most likely work in?",
+    "questionTextVi": "Những người nói có nhiều khả năng làm việc ở bộ phận nào nhất?",
+    "options": {
+      "A": "Accounting",
+      "B": "Research and development",
+      "C": "Maintenance",
+      "D": "Marketing"
+    },
+    "optionsVi": {
+      "A": "Kế toán",
+      "B": "Nghiên cứu & phát triển",
+      "C": "Bảo trì",
+      "D": "Tiếp thị"
+    },
+    "correctAnswer": "A",
+    "explanation": "Nhắc tới 'expense reports', 'travel reimbursement', 'accounting guidelines' -> (A) Accounting.",
+    "vocabulary": [
+      {
+        "word": "reimbursement",
+        "ipa": "/ˌriː.ɪmˈbɜːs.mənt/",
+        "pos": "n",
+        "meaning": "khoản hoàn tiền",
+        "example": "travel reimbursement"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "expense report",
+        "meaning": "báo cáo chi tiêu công tác"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Từ vựng chỉ phòng ban",
+        "rule": "Inference from keywords",
+        "analysis": "Kế toán gắn liền với chi phí và hóa đơn."
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "M-Cn: I’d like to finish calculating the company’s expense reports for the month. Have you finished reviewing the travel reimbursement forms?\nW-Am: Almost. I'm checking the final batch now. But I noticed that Mr. Rossi didn't include his hotel receipt with his submission.\nM-Cn: That's a problem because the accounting guidelines strictly require all original receipts for lodging.\nW-Am: I'll call Mr. Rossi right now to see if he can email us a scanned copy.",
+    "passageVi": "Nam: Tôi muốn tính xong báo cáo chi phí tháng này. Bạn đã xem xong các biểu mẫu hoàn trả chi phí đi lại chưa?\nNữ: Gần xong rồi. Tôi đang kiểm tra đợt cuối. Nhưng ông Rossi không nộp kèm hóa đơn khách sạn.\nNam: Đó là vấn đề vì quy chế kế toán bắt buộc phải có biên lai gốc cho chi phí lưu trú.\nNữ: Tôi sẽ gọi ông Rossi ngay xem ông ấy có thể gửi bản scan qua email được không.",
+    "questionText": "What problem does the woman mention?",
+    "questionTextVi": "Người phụ nữ đề cập đến vấn đề gì?",
+    "options": {
+      "A": "A report has not been submitted.",
+      "B": "An invoice is not accurate.",
+      "C": "A receipt is missing.",
+      "D": "An order has not been delivered."
+    },
+    "optionsVi": {
+      "A": "Báo cáo chưa nộp",
+      "B": "Hóa đơn sai",
+      "C": "Thiếu một biên lai",
+      "D": "Đơn hàng chưa giao"
+    },
+    "correctAnswer": "C",
+    "explanation": "Người phụ nữ nói: 'Mr. Rossi didn't include his hotel receipt' -> (C) A receipt is missing.",
+    "vocabulary": [
+      {
+        "word": "receipt",
+        "ipa": "/rɪˈsiːt/",
+        "pos": "n",
+        "meaning": "biên lai, hóa đơn",
+        "example": "hotel receipt"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "missing receipt",
+        "meaning": "hóa đơn bị thất lạc/thiếu"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Paraphrase phủ định",
+        "rule": "didn't include = is missing",
+        "analysis": "Hành động không nộp kèm đồng nghĩa bị thiếu."
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "M-Cn: I’d like to finish calculating the company’s expense reports for the month. Have you finished reviewing the travel reimbursement forms?\nW-Am: Almost. I'm checking the final batch now. But I noticed that Mr. Rossi didn't include his hotel receipt with his submission.\nM-Cn: That's a problem because the accounting guidelines strictly require all original receipts for lodging.\nW-Am: I'll call Mr. Rossi right now to see if he can email us a scanned copy.",
+    "passageVi": "Nam: Tôi muốn tính xong báo cáo chi phí tháng này. Bạn đã xem xong các biểu mẫu hoàn trả chi phí đi lại chưa?\nNữ: Gần xong rồi. Tôi đang kiểm tra đợt cuối. Nhưng ông Rossi không nộp kèm hóa đơn khách sạn.\nNam: Đó là vấn đề vì quy chế kế toán bắt buộc phải có biên lai gốc cho chi phí lưu trú.\nNữ: Tôi sẽ gọi ông Rossi ngay xem ông ấy có thể gửi bản scan qua email được không.",
+    "questionText": "What does the woman say she will do?",
+    "questionTextVi": "Người phụ nữ nói cô ấy sẽ làm gì?",
+    "options": {
+      "A": "Attend a meeting",
+      "B": "Contact a coworker",
+      "C": "Print some documents",
+      "D": "Reschedule an appointment"
+    },
+    "optionsVi": {
+      "A": "Dự họp",
+      "B": "Liên lạc với một đồng nghiệp",
+      "C": "In tài liệu",
+      "D": "Đổi lịch hẹn"
+    },
+    "correctAnswer": "B",
+    "explanation": "Người phụ nữ nói: 'I'll call Mr. Rossi right now' (ông Rossi là đồng nghiệp) -> (B) Contact a coworker.",
+    "vocabulary": [
+      {
+        "word": "coworker",
+        "ipa": "/ˈkəʊˌwɜː.kər/",
+        "pos": "n",
+        "meaning": "đồng nghiệp",
+        "example": "contact coworker"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "scanned copy",
+        "meaning": "bản quét điện tử"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Quyết định tức thì với Will",
+        "rule": "I'll + V",
+        "analysis": "Quyết định đưa ra ngay tại thời điểm nói."
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "M-Au: Good morning, Damilola. How’s everything up here on deck?\nW-Br: Hi, Pedro. It was an uneventful night, and our cargo ship still hasn’t moved yet.\nM-Au: Hmm, I hope the fog over the harbor lifts soon.\nW-Br: Yeah, me too. The ship won’t be able to leave until the weather improves.\nM-Au: I hope we won’t get too far behind schedule. I’ll be sure to call the port authority soon for an update on when we'll be cleared to leave.\nW-Br: Sounds good.",
+    "passageVi": "Nam: Chào buổi sáng Damilola. Mọi thứ trên boong tàu thế nào rồi?\nNữ: Chào Pedro. Một đêm trôi qua êm đềm, và tàu chở hàng của chúng ta vẫn chưa di chuyển.\nNam: Ừm, tôi hy vọng sương mù trên cảng sớm tan đi.\nNữ: Tôi cũng vậy. Tàu sẽ không thể rời đi cho đến khi thời tiết tốt hơn.\nNam: Hy vọng chúng ta không bị trễ lịch trình quá. Tôi chắc chắn sẽ gọi cho chính quyền cảng để cập nhật thời gian được phép rời đi.\nNữ: Nghe hay đấy.",
+    "questionText": "What industry do the speakers most likely work in?",
+    "questionTextVi": "Những người nói có nhiều khả năng làm việc trong ngành nào nhất?",
+    "options": {
+      "A": "Shipping",
+      "B": "Manufacturing",
+      "C": "Hospitality",
+      "D": "Meteorology"
+    },
+    "optionsVi": {
+      "A": "Vận tải biển",
+      "B": "Sản xuất",
+      "C": "Nhà hàng khách sạn",
+      "D": "Khí tượng học"
+    },
+    "correctAnswer": "A",
+    "explanation": "Có các từ 'on deck', 'cargo ship', 'harbor', 'port authority' -> (A) Shipping.",
+    "vocabulary": [
+      {
+        "word": "cargo ship",
+        "ipa": "/ˈkɑː.ɡəʊ ʃɪp/",
+        "pos": "n",
+        "meaning": "tàu chở hàng",
+        "example": "large cargo ship"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "cargo ship",
+        "meaning": "tàu vận tải hàng hóa"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Thuật ngữ hàng hải",
+        "rule": "Maritime vocabulary",
+        "analysis": "Nhận diện ngành nghề qua từ vựng đặc thù."
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "M-Au: Good morning, Damilola. How’s everything up here on deck?\nW-Br: Hi, Pedro. It was an uneventful night, and our cargo ship still hasn’t moved yet.\nM-Au: Hmm, I hope the fog over the harbor lifts soon.\nW-Br: Yeah, me too. The ship won’t be able to leave until the weather improves.\nM-Au: I hope we won’t get too far behind schedule. I’ll be sure to call the port authority soon for an update on when we'll be cleared to leave.\nW-Br: Sounds good.",
+    "passageVi": "Nam: Chào buổi sáng Damilola. Mọi thứ trên boong tàu thế nào rồi?\nNữ: Chào Pedro. Một đêm trôi qua êm đềm, và tàu chở hàng của chúng ta vẫn chưa di chuyển.\nNam: Ừm, tôi hy vọng sương mù trên cảng sớm tan đi.\nNữ: Tôi cũng vậy. Tàu sẽ không thể rời đi cho đến khi thời tiết tốt hơn.\nNam: Hy vọng chúng ta không bị trễ lịch trình quá. Tôi chắc chắn sẽ gọi cho chính quyền cảng để cập nhật thời gian được phép rời đi.\nNữ: Nghe hay đấy.",
+    "questionText": "What is the reason for a delay?",
+    "questionTextVi": "Lý do của sự chậm trễ là gì?",
+    "options": {
+      "A": "A schedule was written incorrectly.",
+      "B": "Some equipment is not properly set up.",
+      "C": "Weather conditions are poor.",
+      "D": "A delivery was late."
+    },
+    "optionsVi": {
+      "A": "Lịch trình viết sai",
+      "B": "Thiết bị chưa lắp đặt",
+      "C": "Thời tiết xấu",
+      "D": "Giao hàng muộn"
+    },
+    "correctAnswer": "C",
+    "explanation": "Họ nhắc tới sương mù dày đặc ('fog over the harbor') và thời tiết xấu ('until the weather improves') -> (C) Weather conditions are poor.",
+    "vocabulary": [
+      {
+        "word": "fog",
+        "ipa": "/fɒɡ/",
+        "pos": "n",
+        "meaning": "sương mù",
+        "example": "dense fog"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "poor weather",
+        "meaning": "thời tiết xấu"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cấu trúc Not... until",
+        "rule": "won't V until clause",
+        "analysis": "Hành động chỉ diễn ra sau khi điều kiện thỏa mãn."
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "M-Au: Good morning, Damilola. How’s everything up here on deck?\nW-Br: Hi, Pedro. It was an uneventful night, and our cargo ship still hasn’t moved yet.\nM-Au: Hmm, I hope the fog over the harbor lifts soon.\nW-Br: Yeah, me too. The ship won’t be able to leave until the weather improves.\nM-Au: I hope we won’t get too far behind schedule. I’ll be sure to call the port authority soon for an update on when we'll be cleared to leave.\nW-Br: Sounds good.",
+    "passageVi": "Nam: Chào buổi sáng Damilola. Mọi thứ trên boong tàu thế nào rồi?\nNữ: Chào Pedro. Một đêm trôi qua êm đềm, và tàu chở hàng của chúng ta vẫn chưa di chuyển.\nNam: Ừm, tôi hy vọng sương mù trên cảng sớm tan đi.\nNữ: Tôi cũng vậy. Tàu sẽ không thể rời đi cho đến khi thời tiết tốt hơn.\nNam: Hy vọng chúng ta không bị trễ lịch trình quá. Tôi chắc chắn sẽ gọi cho chính quyền cảng để cập nhật thời gian được phép rời đi.\nNữ: Nghe hay đấy.",
+    "questionText": "What does the man say he will do?",
+    "questionTextVi": "Người đàn ông nói anh ấy sẽ làm gì?",
+    "options": {
+      "A": "Update a shift schedule",
+      "B": "Clear a work space",
+      "C": "Complete a checklist",
+      "D": "Place a call"
+    },
+    "optionsVi": {
+      "A": "Cập nhật ca làm",
+      "B": "Dọn không gian làm việc",
+      "C": "Hoàn tất danh sách kiểm tra",
+      "D": "Thực hiện một cuộc gọi"
+    },
+    "correctAnswer": "D",
+    "explanation": "Người đàn ông nói: 'I’ll be sure to call the port authority soon' -> (D) Place a call.",
+    "vocabulary": [
+      {
+        "word": "port authority",
+        "ipa": "/pɔːt ɔːˈθɒr.ə.ti/",
+        "pos": "n",
+        "meaning": "chính quyền cảng",
+        "example": "contact port authority"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "place a call",
+        "meaning": "thực hiện cuộc gọi"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Paraphrase động từ Call",
+        "rule": "call = place a call",
+        "analysis": "Dùng cụm động từ tương đương."
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "W-Br: Hi. I’ve made a reservation to meet with some clients for lunch today. It’s under Cohen.\nM-Au: Oh, yes. I see your reservation. Welcome to Bistro Moderne. We have a table ready for you inside.\nW-Br: Actually, since the weather is so pleasant today, is it possible to sit outside on the patio instead?\nM-Au: Let me check with our host to see if an outdoor table is available right now.",
+    "passageVi": "Nữ: Xin chào. Tôi đã đặt bàn để gặp khách hàng ăn trưa hôm nay, tên là Cohen.\nNam: À vâng. Tôi thấy bàn của bạn rồi. Chào mừng đến Bistro Moderne. Chúng tôi có một bàn trong nhà sẵn sàng cho bạn.\nNữ: Thực ra hôm nay trời đẹp lắm, liệu chúng tôi có thể ngồi ngoài sân hiên được không?\nNam: Để tôi kiểm tra với nhân viên lễ tân xem có bàn ngoài trời trống ngay bây giờ không nhé.",
+    "questionText": "Why is the woman at the restaurant?",
+    "questionTextVi": "Tại sao người phụ nữ lại ở nhà hàng?",
+    "options": {
+      "A": "To apply for a job",
+      "B": "To make a delivery",
+      "C": "To dine with clients",
+      "D": "To cater an event"
+    },
+    "optionsVi": {
+      "A": "Nộp đơn xin việc",
+      "B": "Giao hàng",
+      "C": "Dùng bữa với khách hàng",
+      "D": "Phục vụ tiệc"
+    },
+    "correctAnswer": "C",
+    "explanation": "Người phụ nữ nói: 'to meet with some clients for lunch today' -> (C) To dine with clients.",
+    "vocabulary": [
+      {
+        "word": "dine",
+        "ipa": "/daɪn/",
+        "pos": "v",
+        "meaning": "dùng bữa, ăn tối/trưa",
+        "example": "dine with clients"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "dine with clients",
+        "meaning": "ăn trưa cùng khách hàng"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cấu trúc chỉ mục đích",
+        "rule": "To + V-bare",
+        "analysis": "Trả lời cho câu hỏi Why."
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "W-Br: Hi. I’ve made a reservation to meet with some clients for lunch today. It’s under Cohen.\nM-Au: Oh, yes. I see your reservation. Welcome to Bistro Moderne. We have a table ready for you inside.\nW-Br: Actually, since the weather is so pleasant today, is it possible to sit outside on the patio instead?\nM-Au: Let me check with our host to see if an outdoor table is available right now.",
+    "passageVi": "Nữ: Xin chào. Tôi đã đặt bàn để gặp khách hàng ăn trưa hôm nay, tên là Cohen.\nNam: À vâng. Tôi thấy bàn của bạn rồi. Chào mừng đến Bistro Moderne. Chúng tôi có một bàn trong nhà sẵn sàng cho bạn.\nNữ: Thực ra hôm nay trời đẹp lắm, liệu chúng tôi có thể ngồi ngoài sân hiên được không?\nNam: Để tôi kiểm tra với nhân viên lễ tân xem có bàn ngoài trời trống ngay bây giờ không nhé.",
+    "questionText": "What does the woman request?",
+    "questionTextVi": "Người phụ nữ yêu cầu điều gì?",
+    "options": {
+      "A": "A window seat",
+      "B": "A children's menu",
+      "C": "A private room",
+      "D": "An outdoor table"
+    },
+    "optionsVi": {
+      "A": "Chỗ cạnh cửa sổ",
+      "B": "Thực đơn trẻ em",
+      "C": "Phòng riêng",
+      "D": "Bàn ngoài trời"
+    },
+    "correctAnswer": "D",
+    "explanation": "Người phụ nữ hỏi: 'is it possible to sit outside on the patio instead?' -> (D) An outdoor table.",
+    "vocabulary": [
+      {
+        "word": "patio",
+        "ipa": "/ˈpæt.i.əʊ/",
+        "pos": "n",
+        "meaning": "sân hiên",
+        "example": "outdoor patio"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "outdoor table",
+        "meaning": "bàn ngoài trời"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Đề nghị với Is it possible to",
+        "rule": "Is it possible to + V",
+        "analysis": "Yêu cầu lịch sự."
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "W-Br: Hi. I’ve made a reservation to meet with some clients for lunch today. It’s under Cohen.\nM-Au: Oh, yes. I see your reservation. Welcome to Bistro Moderne. We have a table ready for you inside.\nW-Br: Actually, since the weather is so pleasant today, is it possible to sit outside on the patio instead?\nM-Au: Let me check with our host to see if an outdoor table is available right now.",
+    "passageVi": "Nữ: Xin chào. Tôi đã đặt bàn để gặp khách hàng ăn trưa hôm nay, tên là Cohen.\nNam: À vâng. Tôi thấy bàn của bạn rồi. Chào mừng đến Bistro Moderne. Chúng tôi có một bàn trong nhà sẵn sàng cho bạn.\nNữ: Thực ra hôm nay trời đẹp lắm, liệu chúng tôi có thể ngồi ngoài sân hiên được không?\nNam: Để tôi kiểm tra với nhân viên lễ tân xem có bàn ngoài trời trống ngay bây giờ không nhé.",
+    "questionText": "What does the man offer to do?",
+    "questionTextVi": "Người đàn ông đề nghị làm gì?",
+    "options": {
+      "A": "Check availability",
+      "B": "Bring some menus",
+      "C": "Call a manager",
+      "D": "Pour some water"
+    },
+    "optionsVi": {
+      "A": "Kiểm tra bàn trống",
+      "B": "Mang thực đơn ra",
+      "C": "Gọi quản lý",
+      "D": "Rót nước"
+    },
+    "correctAnswer": "A",
+    "explanation": "Người đàn ông nói: 'Let me check with our host to see if an outdoor table is available' -> (A) Check availability.",
+    "vocabulary": [
+      {
+        "word": "available",
+        "ipa": "/əˈveɪ.lə.bəl/",
+        "pos": "adj",
+        "meaning": "có sẵn, còn trống",
+        "example": "table available"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "check availability",
+        "meaning": "kiểm tra tình trạng còn trống"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Đề nghị giúp đỡ với Let me",
+        "rule": "Let me + V",
+        "analysis": "Chủ động đề xuất hành động."
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "W-Am: Thank you both for coming here today to demonstrate your company’s new compact printer. I know the store will be busy because we're holding a special launch event for our electronics department.\nM-Cn: We brought plenty of promotional flyers to hand out to customers.\nW-Am: Great. Why don't you set up your display table near the main entrance? That way, shoppers will see your demonstration as soon as they walk in.",
+    "passageVi": "Nữ: Cảm ơn các bạn đã đến trình diễn máy in nhỏ gọn mới. Cửa hàng sẽ đông vì sự kiện ra mắt cho khu điện tử.\nNam: Chúng tôi mang nhiều tờ rơi quảng cáo để phát cho khách.\nNữ: Tuyệt, các bạn hãy đặt bàn trưng bày gần cửa chính nhé. Khách sẽ thấy ngay khi bước vào.",
+    "questionText": "Where does the woman most likely work?",
+    "questionTextVi": "Người phụ nữ có nhiều khả năng làm việc ở đâu nhất?",
+    "options": {
+      "A": "At a university",
+      "B": "At a publishing company",
+      "C": "At an electronics store",
+      "D": "At a grocery store"
+    },
+    "optionsVi": {
+      "A": "Trường đại học",
+      "B": "Nhà xuất bản",
+      "C": "Cửa hàng đồ điện tử",
+      "D": "Cửa hàng tạp hóa"
+    },
+    "correctAnswer": "C",
+    "explanation": "Người phụ nữ nói về cửa hàng và khu điện tử ('our electronics department') -> (C) At an electronics store.",
+    "vocabulary": [
+      {
+        "word": "compact",
+        "ipa": "/kəmˈpækt/",
+        "pos": "adj",
+        "meaning": "nhỏ gọn",
+        "example": "compact printer"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "electronics store",
+        "meaning": "cửa hàng điện máy"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Suy luận địa điểm",
+        "rule": "store + electronics -> electronics store",
+        "analysis": "Kết hợp từ khóa để xác định nơi chốn."
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "W-Am: Thank you both for coming here today to demonstrate your company’s new compact printer. I know the store will be busy because we're holding a special launch event for our electronics department.\nM-Cn: We brought plenty of promotional flyers to hand out to customers.\nW-Am: Great. Why don't you set up your display table near the main entrance? That way, shoppers will see your demonstration as soon as they walk in.",
+    "passageVi": "Nữ: Cảm ơn các bạn đã đến trình diễn máy in nhỏ gọn mới. Cửa hàng sẽ đông vì sự kiện ra mắt cho khu điện tử.\nNam: Chúng tôi mang nhiều tờ rơi quảng cáo để phát cho khách.\nNữ: Tuyệt, các bạn hãy đặt bàn trưng bày gần cửa chính nhé. Khách sẽ thấy ngay khi bước vào.",
+    "questionText": "What does Murat ask about?",
+    "questionTextVi": "Sự kiện gì đang diễn ra tại cửa hàng?",
+    "options": {
+      "A": "How much an item costs",
+      "B": "When an event will begin",
+      "C": "How many people will participate",
+      "D": "A product launch event"
+    },
+    "optionsVi": {
+      "A": "Giá hàng",
+      "B": "Thời gian bắt đầu",
+      "C": "Số người tham dự",
+      "D": "Sự kiện ra mắt sản phẩm"
+    },
+    "correctAnswer": "D",
+    "explanation": "Người phụ nữ đề cập cửa hàng đang có 'a special launch event' -> (D) A product launch event.",
+    "vocabulary": [
+      {
+        "word": "launch",
+        "ipa": "/lɔːntʃ/",
+        "pos": "n",
+        "meaning": "sự ra mắt",
+        "example": "launch event"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "product launch",
+        "meaning": "ra mắt sản phẩm mới"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Danh từ ghép chỉ sự kiện",
+        "rule": "launch + event = launch event",
+        "analysis": "Danh từ bổ nghĩa danh từ."
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "W-Am: Thank you both for coming here today to demonstrate your company’s new compact printer. I know the store will be busy because we're holding a special launch event for our electronics department.\nM-Cn: We brought plenty of promotional flyers to hand out to customers.\nW-Am: Great. Why don't you set up your display table near the main entrance? That way, shoppers will see your demonstration as soon as they walk in.",
+    "passageVi": "Nữ: Cảm ơn các bạn đã đến trình diễn máy in nhỏ gọn mới. Cửa hàng sẽ đông vì sự kiện ra mắt cho khu điện tử.\nNam: Chúng tôi mang nhiều tờ rơi quảng cáo để phát cho khách.\nNữ: Tuyệt, các bạn hãy đặt bàn trưng bày gần cửa chính nhé. Khách sẽ thấy ngay khi bước vào.",
+    "questionText": "What does the woman suggest doing?",
+    "questionTextVi": "Người phụ nữ gợi ý điều gì?",
+    "options": {
+      "A": "Offering a discount",
+      "B": "Displaying informational materials",
+      "C": "Holding a contest",
+      "D": "Visiting a registration table"
+    },
+    "optionsVi": {
+      "A": "Giảm giá",
+      "B": "Trưng bày bàn tài liệu thông tin",
+      "C": "Tổ chức cuộc thi",
+      "D": "Đến bàn đăng ký"
+    },
+    "correctAnswer": "B",
+    "explanation": "Người phụ nữ gợi ý đặt bàn giới thiệu và phát tờ rơi: 'set up your display table near the main entrance' -> (B) Displaying informational materials.",
+    "vocabulary": [
+      {
+        "word": "flyer",
+        "ipa": "/ˈflaɪ.ər/",
+        "pos": "n",
+        "meaning": "tờ rơi",
+        "example": "promotional flyers"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "display table",
+        "meaning": "bàn trưng bày"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Gợi ý với Why don't you",
+        "rule": "Why don't you + V",
+        "analysis": "Câu đề xuất hành động."
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "W-Am: Gizem and Hector, I’m very pleased with the sales of our brands of cakes, pies, and cookies this past holiday season. Any thoughts on how to maintain this momentum?\nM-Cn: Well, our customer survey revealed that buyers loved the taste, but several mentioned that our cardboard packaging looks outdated compared to competitors.\nM-Au: I agree. If we redesign the boxes with modern graphics and brighter colors, it could attract younger consumers.\nW-Am: Good point. I’ll schedule a meeting with our graphic design agency next Tuesday.",
+    "passageVi": "Nữ: Gizem và Hector, tôi rất hài lòng với doanh số các nhãn hiệu bánh ngọt, bánh nướng và bánh quy trong kỳ nghỉ vừa qua. Có ý kiến gì để duy trì đà tăng này không?\nNam 1: Khảo sát khách hàng cho thấy họ thích hương vị, nhưng nhiều người bảo bao bì bìa các-tông trông lỗi thời so với đối thủ.\nNam 2: Tôi đồng ý. Nếu chúng ta thiết kế lại hộp với đồ họa hiện đại và màu sắc tươi sáng hơn, nó có thể thu hút người tiêu dùng trẻ.\nNữ: Ý kiến hay. Tôi sẽ lên lịch họp với công ty thiết kế đồ họa vào thứ Ba tới.",
+    "questionText": "What type of industry do the speakers most likely work in?",
+    "questionTextVi": "Những người nói có nhiều khả năng làm việc trong ngành nào nhất?",
+    "options": {
+      "A": "Textile manufacturing",
+      "B": "Food production",
+      "C": "Health care",
+      "D": "Hospitality"
+    },
+    "optionsVi": {
+      "A": "Dệt may",
+      "B": "Sản xuất thực phẩm / Bánh kẹo",
+      "C": "Y tế",
+      "D": "Khách sạn"
+    },
+    "correctAnswer": "B",
+    "explanation": "Họ nói về 'cakes, pies, and cookies', 'taste' -> (B) Food production (Sản xuất thực phẩm).",
+    "vocabulary": [
+      {
+        "word": "momentum",
+        "ipa": "/məˈmen.təm/",
+        "pos": "n",
+        "meaning": "đà phát triển",
+        "example": "maintain momentum"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "food production",
+        "meaning": "sản xuất thực phẩm"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Suy luận lĩnh vực kinh doanh",
+        "rule": "cakes, cookies, pies -> food production",
+        "analysis": "Nhận diện ngành nghề sản xuất bánh ngọt."
+      }
+    ]
+  },
+  {
+    "id": 48,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "W-Am: Gizem and Hector, I’m very pleased with the sales of our brands of cakes, pies, and cookies this past holiday season. Any thoughts on how to maintain this momentum?\nM-Cn: Well, our customer survey revealed that buyers loved the taste, but several mentioned that our cardboard packaging looks outdated compared to competitors.\nM-Au: I agree. If we redesign the boxes with modern graphics and brighter colors, it could attract younger consumers.\nW-Am: Good point. I’ll schedule a meeting with our graphic design agency next Tuesday.",
+    "passageVi": "Nữ: Gizem và Hector, tôi rất hài lòng với doanh số các nhãn hiệu bánh ngọt, bánh nướng và bánh quy trong kỳ nghỉ vừa qua. Có ý kiến gì để duy trì đà tăng này không?\nNam 1: Khảo sát khách hàng cho thấy họ thích hương vị, nhưng nhiều người bảo bao bì bìa các-tông trông lỗi thời so với đối thủ.\nNam 2: Tôi đồng ý. Nếu chúng ta thiết kế lại hộp với đồ họa hiện đại và màu sắc tươi sáng hơn, nó có thể thu hút người tiêu dùng trẻ.\nNữ: Ý kiến hay. Tôi sẽ lên lịch họp với công ty thiết kế đồ họa vào thứ Ba tới.",
+    "questionText": "What business challenge are the speakers discussing?",
+    "questionTextVi": "Thách thức kinh doanh nào đang được thảo luận?",
+    "options": {
+      "A": "Lack of qualified staff",
+      "B": "Rising production costs",
+      "C": "Outdated product packaging",
+      "D": "Increased shipping delays"
+    },
+    "optionsVi": {
+      "A": "Thiếu nhân sự",
+      "B": "Chi phí sản xuất tăng",
+      "C": "Bao bì sản phẩm bị lỗi thời",
+      "D": "Giao hàng chậm"
+    },
+    "correctAnswer": "C",
+    "explanation": "Người nói nêu vấn đề: 'our cardboard packaging looks outdated compared to competitors' -> (C) Outdated product packaging.",
+    "vocabulary": [
+      {
+        "word": "outdated",
+        "ipa": "/ˌaʊtˈdeɪ.tɪd/",
+        "pos": "adj",
+        "meaning": "lỗi thời, cũ kỹ",
+        "example": "outdated packaging"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "redesign packaging",
+        "meaning": "thiết kế lại bao bì"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "So sánh hơn với tính từ",
+        "rule": "outdated compared to...",
+        "analysis": "So sánh đặc điểm sản phẩm với đối thủ cạnh tranh."
+      }
+    ]
+  },
+  {
+    "id": 49,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "W-Am: Gizem and Hector, I’m very pleased with the sales of our brands of cakes, pies, and cookies this past holiday season. Any thoughts on how to maintain this momentum?\nM-Cn: Well, our customer survey revealed that buyers loved the taste, but several mentioned that our cardboard packaging looks outdated compared to competitors.\nM-Au: I agree. If we redesign the boxes with modern graphics and brighter colors, it could attract younger consumers.\nW-Am: Good point. I’ll schedule a meeting with our graphic design agency next Tuesday.",
+    "passageVi": "Nữ: Gizem và Hector, tôi rất hài lòng với doanh số các nhãn hiệu bánh ngọt, bánh nướng và bánh quy trong kỳ nghỉ vừa qua. Có ý kiến gì để duy trì đà tăng này không?\nNam 1: Khảo sát khách hàng cho thấy họ thích hương vị, nhưng nhiều người bảo bao bì bìa các-tông trông lỗi thời so với đối thủ.\nNam 2: Tôi đồng ý. Nếu chúng ta thiết kế lại hộp với đồ họa hiện đại và màu sắc tươi sáng hơn, nó có thể thu hút người tiêu dùng trẻ.\nNữ: Ý kiến hay. Tôi sẽ lên lịch họp với công ty thiết kế đồ họa vào thứ Ba tới.",
+    "questionText": "What will the woman do next week?",
+    "questionTextVi": "Người phụ nữ sẽ làm gì vào tuần tới?",
+    "options": {
+      "A": "Meet with a graphic design agency",
+      "B": "Negotiate a supplier contract",
+      "C": "Upgrade some machinery",
+      "D": "Train a new employee"
+    },
+    "optionsVi": {
+      "A": "Họp với công ty thiết kế đồ họa",
+      "B": "Đàm phán hợp đồng",
+      "C": "Nâng cấp máy móc",
+      "D": "Đào tạo nhân viên mới"
+    },
+    "correctAnswer": "A",
+    "explanation": "Người phụ nữ chốt: 'I’ll schedule a meeting with our graphic design agency next Tuesday' -> (A) Meet with a graphic design agency.",
+    "vocabulary": [
+      {
+        "word": "agency",
+        "ipa": "/ˈeɪ.dʒən.si/",
+        "pos": "n",
+        "meaning": "đại lý, công ty dịch vụ",
+        "example": "design agency"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "schedule a meeting",
+        "meaning": "lên lịch họp"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Thì Tương lai đơn",
+        "rule": "I'll + V",
+        "analysis": "Quyết định hành động vào tuần sau."
+      }
+    ]
+  },
+  {
+    "id": 50,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "M-Au: Hi, Bianca. I’m calling to see if you’d have time to work on a project for my marketing firm. We’ve expanded a lot in the past year, and we recently signed a contract with a client who needs a completely redesigned corporate website.\nW-Am: That sounds intriguing! What’s the timeline?\nM-Au: The launch date is scheduled for late November. I know you've created award-winning sites before. Could you send me some links to your latest work so I can show them to our creative director?\nW-Am: Sure, I’ll email my online portfolio this afternoon.",
+    "passageVi": "Nam: Chào Bianca. Tôi gọi xem bạn có thời gian làm dự án cho công ty tiếp thị của tôi không. Chúng tôi mở rộng nhiều và vừa ký hợp đồng với khách hàng cần thiết kế lại toàn bộ website doanh nghiệp.\nNữ: Nghe hấp dẫn đấy! Tiến độ thời gian thế nào?\nNam: Ngày ra mắt dự kiến cuối tháng 11. Bạn có thể gửi tôi một số link trang web mới nhất bạn làm để tôi đưa giám đốc sáng tạo xem không?\nNữ: Chắc chắn rồi, chiều nay tôi sẽ gửi portfolio qua email.",
+    "questionText": "Why is the man calling?",
+    "questionTextVi": "Tại sao người đàn ông lại gọi điện?",
+    "options": {
+      "A": "To request an invoice",
+      "B": "To cancel an appointment",
+      "C": "To offer freelance project work",
+      "D": "To ask for legal advice"
+    },
+    "optionsVi": {
+      "A": "Đòi hóa đơn",
+      "B": "Hủy cuộc hẹn",
+      "C": "Đề nghị dự án làm việc tự do",
+      "D": "Hỏi tư vấn luật"
+    },
+    "correctAnswer": "C",
+    "explanation": "Người đàn ông gọi để hỏi Bianca có nhận dự án không: 'I’m calling to see if you’d have time to work on a project' -> (C) To offer freelance project work.",
+    "vocabulary": [
+      {
+        "word": "intriguing",
+        "ipa": "/ɪnˈtriː.ɡɪŋ/",
+        "pos": "adj",
+        "meaning": "hấp dẫn, thú vị",
+        "example": "intriguing project"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "work on a project",
+        "meaning": "thực hiện/làm một dự án"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cấu trúc calling to see if",
+        "rule": "calling to see if + clause",
+        "analysis": "Gọi điện để thăm dò khả năng hợp tác."
+      }
+    ]
+  },
+  {
+    "id": 51,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "M-Au: Hi, Bianca. I’m calling to see if you’d have time to work on a project for my marketing firm. We’ve expanded a lot in the past year, and we recently signed a contract with a client who needs a completely redesigned corporate website.\nW-Am: That sounds intriguing! What’s the timeline?\nM-Au: The launch date is scheduled for late November. I know you've created award-winning sites before. Could you send me some links to your latest work so I can show them to our creative director?\nW-Am: Sure, I’ll email my online portfolio this afternoon.",
+    "passageVi": "Nam: Chào Bianca. Tôi gọi xem bạn có thời gian làm dự án cho công ty tiếp thị của tôi không. Chúng tôi mở rộng nhiều và vừa ký hợp đồng với khách hàng cần thiết kế lại toàn bộ website doanh nghiệp.\nNữ: Nghe hấp dẫn đấy! Tiến độ thời gian thế nào?\nNam: Ngày ra mắt dự kiến cuối tháng 11. Bạn có thể gửi tôi một số link trang web mới nhất bạn làm để tôi đưa giám đốc sáng tạo xem không?\nNữ: Chắc chắn rồi, chiều nay tôi sẽ gửi portfolio qua email.",
+    "questionText": "What does the client need?",
+    "questionTextVi": "Khách hàng của công ty cần điều gì?",
+    "options": {
+      "A": "An accounting audit",
+      "B": "A legal contract",
+      "C": "A social media campaign",
+      "D": "A redesigned website"
+    },
+    "optionsVi": {
+      "A": "Kiểm toán kế toán",
+      "B": "Hợp đồng pháp lý",
+      "C": "Chiến dịch mạng xã hội",
+      "D": "Thiết kế lại trang web"
+    },
+    "correctAnswer": "D",
+    "explanation": "Người đàn ông nói khách hàng cần: 'needs a completely redesigned corporate website' -> (D) A redesigned website.",
+    "vocabulary": [
+      {
+        "word": "corporate",
+        "ipa": "/ˈkɔː.pər.ət/",
+        "pos": "adj",
+        "meaning": "thuộc doanh nghiệp",
+        "example": "corporate website"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "redesigned website",
+        "meaning": "trang web được thiết kế lại"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Quá khứ phân từ làm tính từ",
+        "rule": "redesigned + website",
+        "analysis": "Bổ nghĩa cho website với nghĩa đã được thiết kế lại."
+      }
+    ]
+  },
+  {
+    "id": 52,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "M-Au: Hi, Bianca. I’m calling to see if you’d have time to work on a project for my marketing firm. We’ve expanded a lot in the past year, and we recently signed a contract with a client who needs a completely redesigned corporate website.\nW-Am: That sounds intriguing! What’s the timeline?\nM-Au: The launch date is scheduled for late November. I know you've created award-winning sites before. Could you send me some links to your latest work so I can show them to our creative director?\nW-Am: Sure, I’ll email my online portfolio this afternoon.",
+    "passageVi": "Nam: Chào Bianca. Tôi gọi xem bạn có thời gian làm dự án cho công ty tiếp thị của tôi không. Chúng tôi mở rộng nhiều và vừa ký hợp đồng với khách hàng cần thiết kế lại toàn bộ website doanh nghiệp.\nNữ: Nghe hấp dẫn đấy! Tiến độ thời gian thế nào?\nNam: Ngày ra mắt dự kiến cuối tháng 11. Bạn có thể gửi tôi một số link trang web mới nhất bạn làm để tôi đưa giám đốc sáng tạo xem không?\nNữ: Chắc chắn rồi, chiều nay tôi sẽ gửi portfolio qua email.",
+    "questionText": "What does the woman promise to send?",
+    "questionTextVi": "Người phụ nữ hứa sẽ gửi cái gì?",
+    "options": {
+      "A": "An online portfolio",
+      "B": "A price quote",
+      "C": "A business contract",
+      "D": "A letter of reference"
+    },
+    "optionsVi": {
+      "A": "Hồ sơ năng lực trực tuyến",
+      "B": "Bảng báo giá",
+      "C": "Hợp đồng kinh doanh",
+      "D": "Thư giới thiệu"
+    },
+    "correctAnswer": "A",
+    "explanation": "Người phụ nữ đáp: 'I’ll email my online portfolio this afternoon' -> (A) An online portfolio.",
+    "vocabulary": [
+      {
+        "word": "portfolio",
+        "ipa": "/ˌpɔːtˈfəʊ.li.əʊ/",
+        "pos": "n",
+        "meaning": "hồ sơ năng lực/tác phẩm mẫu",
+        "example": "online portfolio"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "online portfolio",
+        "meaning": "hồ sơ năng lực thiết kế trực tuyến"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cụm danh từ chuyên ngành thiết kế",
+        "rule": "online portfolio",
+        "analysis": "Chỉ tập hợp các sản phẩm đã từng thực hiện."
+      }
+    ]
+  },
+  {
+    "id": 53,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "W-Br: Hey, Koji? We were about to pack van number five for the music festival when we noticed it’s got a flat tire.\nM-Au: Oh. That’s not good. The festival organizers expect us to arrive by one o’clock to set up the sound stage.\nW-Br: Right, and the repair shop won't be able to fix the tire for at least two hours. Is there another company vehicle available?\nM-Au: Yes, van number three in the south parking lot is free. I'll grab the keys from the dispatch office right now.",
+    "passageVi": "Nữ: Này Koji, chúng tôi đang chuẩn bị chất đồ lên xe van số 5 để đi lễ hội âm nhạc thì thấy xe bị xẹp lốp.\nNam: Ồ, tệ thật đấy. Ban tổ chức lễ hội mong chúng ta đến trước 1 giờ để dựng sân khấu âm thanh.\nNữ: Đúng vậy, mà xưởng sửa chữa ít nhất 2 tiếng nữa mới vá xong. Có xe công ty nào khác trống không?\nNam: Có, xe van số 3 ở bãi đỗ xe phía nam đang rảnh. Tôi sẽ lấy chìa khóa từ phòng điều vận ngay bây giờ.",
+    "questionText": "What problem do the speakers face?",
+    "questionTextVi": "Những người nói gặp phải vấn đề gì?",
+    "options": {
+      "A": "A vehicle has a flat tire.",
+      "B": "A road is closed.",
+      "C": "Some sound equipment is broken.",
+      "D": "A key is missing."
+    },
+    "optionsVi": {
+      "A": "Xe bị xẹp lốp",
+      "B": "Đường bị chặn",
+      "C": "Thiết bị âm thanh hỏng",
+      "D": "Mất chìa khóa"
+    },
+    "correctAnswer": "A",
+    "explanation": "Người phụ nữ nói: 'van number five... got a flat tire' (xe van số 5 bị xẹp lốp) -> (A) A vehicle has a flat tire.",
+    "vocabulary": [
+      {
+        "word": "flat tire",
+        "ipa": "/flæt ˈtaɪər/",
+        "pos": "n",
+        "meaning": "lốp xe bị xẹp/thủng",
+        "example": "replace a flat tire"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "have a flat tire",
+        "meaning": "bị xẹp lốp xe"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cấu trúc be about to V",
+        "rule": "be about to + V (sắp sửa làm gì)",
+        "analysis": "Diễn tả hành động sắp diễn ra thì bị gián đoạn."
+      }
+    ]
+  },
+  {
+    "id": 54,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "W-Br: Hey, Koji? We were about to pack van number five for the music festival when we noticed it’s got a flat tire.\nM-Au: Oh. That’s not good. The festival organizers expect us to arrive by one o’clock to set up the sound stage.\nW-Br: Right, and the repair shop won't be able to fix the tire for at least two hours. Is there another company vehicle available?\nM-Au: Yes, van number three in the south parking lot is free. I'll grab the keys from the dispatch office right now.",
+    "passageVi": "Nữ: Này Koji, chúng tôi đang chuẩn bị chất đồ lên xe van số 5 để đi lễ hội âm nhạc thì thấy xe bị xẹp lốp.\nNam: Ồ, tệ thật đấy. Ban tổ chức lễ hội mong chúng ta đến trước 1 giờ để dựng sân khấu âm thanh.\nNữ: Đúng vậy, mà xưởng sửa chữa ít nhất 2 tiếng nữa mới vá xong. Có xe công ty nào khác trống không?\nNam: Có, xe van số 3 ở bãi đỗ xe phía nam đang rảnh. Tôi sẽ lấy chìa khóa từ phòng điều vận ngay bây giờ.",
+    "questionText": "Where are the speakers going?",
+    "questionTextVi": "Những người nói đang chuẩn bị đi đâu?",
+    "options": {
+      "A": "To a sports match",
+      "B": "To a music festival",
+      "C": "To a trade show",
+      "D": "To a film premiere"
+    },
+    "optionsVi": {
+      "A": "Trận đấu thể thao",
+      "B": "Lễ hội âm nhạc",
+      "C": "Hội chợ thương mại",
+      "D": "Buổi công chiếu phim"
+    },
+    "correctAnswer": "B",
+    "explanation": "Họ nói: 'pack van number five for the music festival' -> (B) To a music festival.",
+    "vocabulary": [
+      {
+        "word": "festival",
+        "ipa": "/ˈfes.tɪ.vəl/",
+        "pos": "n",
+        "meaning": "lễ hội",
+        "example": "music festival"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "music festival",
+        "meaning": "lễ hội âm nhạc"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Giới từ chỉ mục đích For",
+        "rule": "pack for + Event",
+        "analysis": "Chuẩn bị đồ đạc cho một sự kiện."
+      }
+    ]
+  },
+  {
+    "id": 55,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "W-Br: Hey, Koji? We were about to pack van number five for the music festival when we noticed it’s got a flat tire.\nM-Au: Oh. That’s not good. The festival organizers expect us to arrive by one o’clock to set up the sound stage.\nW-Br: Right, and the repair shop won't be able to fix the tire for at least two hours. Is there another company vehicle available?\nM-Au: Yes, van number three in the south parking lot is free. I'll grab the keys from the dispatch office right now.",
+    "passageVi": "Nữ: Này Koji, chúng tôi đang chuẩn bị chất đồ lên xe van số 5 để đi lễ hội âm nhạc thì thấy xe bị xẹp lốp.\nNam: Ồ, tệ thật đấy. Ban tổ chức lễ hội mong chúng ta đến trước 1 giờ để dựng sân khấu âm thanh.\nNữ: Đúng vậy, mà xưởng sửa chữa ít nhất 2 tiếng nữa mới vá xong. Có xe công ty nào khác trống không?\nNam: Có, xe van số 3 ở bãi đỗ xe phía nam đang rảnh. Tôi sẽ lấy chìa khóa từ phòng điều vận ngay bây giờ.",
+    "questionText": "What will the man do next?",
+    "questionTextVi": "Người đàn ông sẽ làm gì tiếp theo?",
+    "options": {
+      "A": "Call a repair garage",
+      "B": "Cancel the delivery",
+      "C": "Get keys for another van",
+      "D": "Rent a truck"
+    },
+    "optionsVi": {
+      "A": "Gọi gara sửa xe",
+      "B": "Hủy giao hàng",
+      "C": "Lấy chìa khóa chiếc xe van khác",
+      "D": "Thuê xe tải"
+    },
+    "correctAnswer": "C",
+    "explanation": "Người đàn ông bảo xe số 3 đang trống và nói: 'I'll grab the keys from the dispatch office right now' -> (C) Get keys for another van.",
+    "vocabulary": [
+      {
+        "word": "dispatch office",
+        "ipa": "/dɪˈspætʃ ˈɒf.ɪs/",
+        "pos": "n",
+        "meaning": "phòng điều vận xe/giao nhận",
+        "example": "dispatch office"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "grab the keys",
+        "meaning": "lấy chìa khóa xe"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Động từ Grab mang nghĩa thân mật",
+        "rule": "grab = take / get quickly",
+        "analysis": "Hành động lấy nhanh vật gì."
+      }
+    ]
+  },
+  {
+    "id": 56,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "M-Cn: Thanks for taking my call. As I mentioned in my e-mail, I’m interested in working in your field. But I’m talking to some professionals to get career advice before making a transition into journalism.\nW-Br: I’d be happy to share my experience. I started as a copy editor at a small local paper twenty years ago and worked my way up to senior editor here at the Daily Tribune.\nM-Cn: That’s inspiring! What advice do you have for someone starting out?\nW-Br: The best way is to publish articles wherever you can to build clips. If you email me some of your recent writing samples, I can look over them and give you honest feedback.",
+    "passageVi": "Nam: Cảm ơn đã nhận cuộc gọi. Như tôi đã nói trong email, tôi quan tâm đến việc làm việc trong ngành của bạn. Tôi đang xin lời khuyên nghề nghiệp trước khi chuyển hướng sang làm báo chí.\nNữ: Tôi rất sẵn lòng. Tôi bắt đầu làm biên tập viên hiệu đính cho một tờ báo nhỏ 20 năm trước và đã vươn lên thành biên tập viên cao cấp tại Daily Tribune.\nNam: Thật truyền cảm hứng! Bạn có lời khuyên nào cho người mới bắt đầu không?\nNữ: Cách tốt nhất là viết và đăng bài ở bất kỳ đâu để tích lũy tác phẩm. Nếu bạn gửi vài bài viết gần đây, tôi có thể xem qua và góp ý chân thành cho bạn.",
+    "questionText": "Why is the man calling the woman?",
+    "questionTextVi": "Tại sao người đàn ông gọi điện cho người phụ nữ?",
+    "options": {
+      "A": "To plan a company event",
+      "B": "To confirm a deadline",
+      "C": "To discuss a career path",
+      "D": "To accept a job offer"
+    },
+    "optionsVi": {
+      "A": "Lên kế hoạch sự kiện",
+      "B": "Xác nhận thời hạn",
+      "C": "Thảo luận về định hướng nghề nghiệp",
+      "D": "Chấp nhận lời mời làm việc"
+    },
+    "correctAnswer": "C",
+    "explanation": "Người đàn ông nói: 'get career advice before making a transition into journalism' -> (C) To discuss a career path.",
+    "vocabulary": [
+      {
+        "word": "transition",
+        "ipa": "/trænˈzɪʃ.ən/",
+        "pos": "n, v",
+        "meaning": "sự chuyển đổi",
+        "example": "career transition"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "career advice",
+        "meaning": "lời khuyên về sự nghiệp"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cụm danh từ Career path/advice",
+        "rule": "career + noun",
+        "analysis": "Chỉ các vấn đề liên quan đến con đường phát triển nghề nghiệp."
+      }
+    ]
+  },
+  {
+    "id": 57,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "M-Cn: Thanks for taking my call. As I mentioned in my e-mail, I’m interested in working in your field. But I’m talking to some professionals to get career advice before making a transition into journalism.\nW-Br: I’d be happy to share my experience. I started as a copy editor at a small local paper twenty years ago and worked my way up to senior editor here at the Daily Tribune.\nM-Cn: That’s inspiring! What advice do you have for someone starting out?\nW-Br: The best way is to publish articles wherever you can to build clips. If you email me some of your recent writing samples, I can look over them and give you honest feedback.",
+    "passageVi": "Nam: Cảm ơn đã nhận cuộc gọi. Như tôi đã nói trong email, tôi quan tâm đến việc làm việc trong ngành của bạn. Tôi đang xin lời khuyên nghề nghiệp trước khi chuyển hướng sang làm báo chí.\nNữ: Tôi rất sẵn lòng. Tôi bắt đầu làm biên tập viên hiệu đính cho một tờ báo nhỏ 20 năm trước và đã vươn lên thành biên tập viên cao cấp tại Daily Tribune.\nNam: Thật truyền cảm hứng! Bạn có lời khuyên nào cho người mới bắt đầu không?\nNữ: Cách tốt nhất là viết và đăng bài ở bất kỳ đâu để tích lũy tác phẩm. Nếu bạn gửi vài bài viết gần đây, tôi có thể xem qua và góp ý chân thành cho bạn.",
+    "questionText": "Who most likely is the woman?",
+    "questionTextVi": "Người phụ nữ nhiều khả năng là ai nhất?",
+    "options": {
+      "A": "A newspaper editor",
+      "B": "A university professor",
+      "C": "A delivery person",
+      "D": "A professional actor"
+    },
+    "optionsVi": {
+      "A": "Biên tập viên báo chí",
+      "B": "Giáo sư đại học",
+      "C": "Nhân viên giao hàng",
+      "D": "Diễn viên chuyên nghiệp"
+    },
+    "correctAnswer": "A",
+    "explanation": "Người phụ nữ giới thiệu: 'worked my way up to senior editor here at the Daily Tribune' -> (A) A newspaper editor.",
+    "vocabulary": [
+      {
+        "word": "editor",
+        "ipa": "/ˈed.ɪ.tər/",
+        "pos": "n",
+        "meaning": "biên tập viên",
+        "example": "senior editor"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "newspaper editor",
+        "meaning": "biên tập viên tòa soạn báo"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cụm từ Work one's way up",
+        "rule": "work one's way up to + position",
+        "analysis": "Nỗ lực thăng tiến từ vị trí thấp lên vị trí cao."
+      }
+    ]
+  },
+  {
+    "id": 58,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "M-Cn: Thanks for taking my call. As I mentioned in my e-mail, I’m interested in working in your field. But I’m talking to some professionals to get career advice before making a transition into journalism.\nW-Br: I’d be happy to share my experience. I started as a copy editor at a small local paper twenty years ago and worked my way up to senior editor here at the Daily Tribune.\nM-Cn: That’s inspiring! What advice do you have for someone starting out?\nW-Br: The best way is to publish articles wherever you can to build clips. If you email me some of your recent writing samples, I can look over them and give you honest feedback.",
+    "passageVi": "Nam: Cảm ơn đã nhận cuộc gọi. Như tôi đã nói trong email, tôi quan tâm đến việc làm việc trong ngành của bạn. Tôi đang xin lời khuyên nghề nghiệp trước khi chuyển hướng sang làm báo chí.\nNữ: Tôi rất sẵn lòng. Tôi bắt đầu làm biên tập viên hiệu đính cho một tờ báo nhỏ 20 năm trước và đã vươn lên thành biên tập viên cao cấp tại Daily Tribune.\nNam: Thật truyền cảm hứng! Bạn có lời khuyên nào cho người mới bắt đầu không?\nNữ: Cách tốt nhất là viết và đăng bài ở bất kỳ đâu để tích lũy tác phẩm. Nếu bạn gửi vài bài viết gần đây, tôi có thể xem qua và góp ý chân thành cho bạn.",
+    "questionText": "What will the woman most likely do next?",
+    "questionTextVi": "Người phụ nữ nhiều khả năng sẽ làm gì tiếp theo?",
+    "options": {
+      "A": "Negotiate a contract",
+      "B": "Explain an office policy",
+      "C": "Review a résumé",
+      "D": "Review some writing samples"
+    },
+    "optionsVi": {
+      "A": "Đàm phán hợp đồng",
+      "B": "Giải thích nội quy",
+      "C": "Xem sơ yếu lý lịch",
+      "D": "Xem qua các bài viết mẫu"
+    },
+    "correctAnswer": "D",
+    "explanation": "Người phụ nữ bảo: 'If you email me some of your recent writing samples, I can look over them' (look over = review) -> (D) Review some writing samples.",
+    "vocabulary": [
+      {
+        "word": "sample",
+        "ipa": "/ˈsɑːm.pəl/",
+        "pos": "n",
+        "meaning": "bản mẫu, tác phẩm mẫu",
+        "example": "writing samples"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "look over",
+        "meaning": "xem xét, rà soát qua"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Paraphrase Look over = Review",
+        "rule": "look over = review",
+        "analysis": "Thay thế cụm động từ bằng ngoại động từ tương đương."
+      }
+    ]
+  },
+  {
+    "id": 59,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "M-Au: Hi, Karen! I just read the article on the company Web site about the proposed merger with QZ Corporation.\nW-Am: Yeah, it looks like we’re going to combine operations by the end of next fiscal year. But they also talked about it last year and nothing ever came of it.\nM-Au: Well, this time the board of directors already approved the agreement. Management is holding an all-hands meeting on Friday to answer employee questions about department restructuring.\nW-Am: Good. I hope they address whether any jobs will be relocated to their headquarters in Chicago.",
+    "passageVi": "Nam: Chào Karen! Tôi vừa đọc bài báo trên website công ty về đề xuất sáp nhập với Tập đoàn QZ.\nNữ: Vâng, có vẻ như chúng ta sẽ hợp nhất hoạt động vào cuối năm tài chính tới. Nhưng năm ngoái họ cũng nói thế rồi chả đi đến đâu.\nNam: Lần này thì ban giám đốc đã thông qua thỏa thuận rồi. Ban quản lý sẽ họp toàn thể nhân viên vào thứ Sáu để giải đáp thắc mắc về việc tái cơ cấu.\nNữ: Tốt quá. Tôi hy vọng họ sẽ nói rõ liệu có vị trí nào bị chuyển đến trụ sở chính ở Chicago không.",
+    "questionText": "What are the speakers mainly discussing?",
+    "questionTextVi": "Những người nói chủ yếu thảo luận về vấn đề gì?",
+    "options": {
+      "A": "A new transportation route",
+      "B": "A company merger",
+      "C": "A public relations initiative",
+      "D": "A medical facility design"
+    },
+    "optionsVi": {
+      "A": "Tuyến đường mới",
+      "B": "Vụ sáp nhập công ty",
+      "C": "Sáng kiến quan hệ công chúng",
+      "D": "Thiết kế cơ sở y tế"
+    },
+    "correctAnswer": "B",
+    "explanation": "Họ nói về 'proposed merger with QZ Corporation' (đề xuất sáp nhập công ty) -> (B) A company merger.",
+    "vocabulary": [
+      {
+        "word": "merger",
+        "ipa": "/ˈmɜː.dʒər/",
+        "pos": "n",
+        "meaning": "sự sáp nhập doanh nghiệp",
+        "example": "corporate merger"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "company merger",
+        "meaning": "vụ sáp nhập công ty"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Chủ đề M&A trong kinh doanh",
+        "rule": "merger and acquisition",
+        "analysis": "Chủ đề cốt lõi thường gặp trong Part 3."
+      }
+    ]
+  },
+  {
+    "id": 60,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "M-Au: Hi, Karen! I just read the article on the company Web site about the proposed merger with QZ Corporation.\nW-Am: Yeah, it looks like we’re going to combine operations by the end of next fiscal year. But they also talked about it last year and nothing ever came of it.\nM-Au: Well, this time the board of directors already approved the agreement. Management is holding an all-hands meeting on Friday to answer employee questions about department restructuring.\nW-Am: Good. I hope they address whether any jobs will be relocated to their headquarters in Chicago.",
+    "passageVi": "Nam: Chào Karen! Tôi vừa đọc bài báo trên website công ty về đề xuất sáp nhập với Tập đoàn QZ.\nNữ: Vâng, có vẻ như chúng ta sẽ hợp nhất hoạt động vào cuối năm tài chính tới. Nhưng năm ngoái họ cũng nói thế rồi chả đi đến đâu.\nNam: Lần này thì ban giám đốc đã thông qua thỏa thuận rồi. Ban quản lý sẽ họp toàn thể nhân viên vào thứ Sáu để giải đáp thắc mắc về việc tái cơ cấu.\nNữ: Tốt quá. Tôi hy vọng họ sẽ nói rõ liệu có vị trí nào bị chuyển đến trụ sở chính ở Chicago không.",
+    "questionText": "Why does the woman say, \"they also talked about it last year\"?",
+    "questionTextVi": "Tại sao người phụ nữ lại nói: \"họ cũng đã nói về điều đó năm ngoái\"?",
+    "options": {
+      "A": "To express doubt",
+      "B": "To explain a process",
+      "C": "To make a recommendation",
+      "D": "To update some information"
+    },
+    "optionsVi": {
+      "A": "Bày tỏ sự hoài nghi",
+      "B": "Giải thích quy trình",
+      "C": "Đưa ra lời khuyên",
+      "D": "Cập nhật thông tin"
+    },
+    "correctAnswer": "A",
+    "explanation": "Người phụ nữ nói năm ngoái cũng bàn rồi chẳng đâu vào đâu ('nothing ever came of it') nhằm bày tỏ sự nghi ngờ về tính xác thực -> (A) To express doubt.",
+    "vocabulary": [
+      {
+        "word": "doubt",
+        "ipa": "/daʊt/",
+        "pos": "n, v",
+        "meaning": "sự hoài nghi, nghi ngờ",
+        "example": "express doubt"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "express doubt",
+        "meaning": "bày tỏ sự nghi ngờ"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu hỏi hàm ngôn (Inference / Attitude Question)",
+        "rule": "Why does the speaker say '...'?",
+        "analysis": "Phân tích ngữ cảnh đằng sau để xác định thái độ hoài nghi của người nói."
+      }
+    ]
+  },
+  {
+    "id": 61,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": null,
+    "passage": "M-Au: Hi, Karen! I just read the article on the company Web site about the proposed merger with QZ Corporation.\nW-Am: Yeah, it looks like we’re going to combine operations by the end of next fiscal year. But they also talked about it last year and nothing ever came of it.\nM-Au: Well, this time the board of directors already approved the agreement. Management is holding an all-hands meeting on Friday to answer employee questions about department restructuring.\nW-Am: Good. I hope they address whether any jobs will be relocated to their headquarters in Chicago.",
+    "passageVi": "Nam: Chào Karen! Tôi vừa đọc bài báo trên website công ty về đề xuất sáp nhập với Tập đoàn QZ.\nNữ: Vâng, có vẻ như chúng ta sẽ hợp nhất hoạt động vào cuối năm tài chính tới. Nhưng năm ngoái họ cũng nói thế rồi chả đi đến đâu.\nNam: Lần này thì ban giám đốc đã thông qua thỏa thuận rồi. Ban quản lý sẽ họp toàn thể nhân viên vào thứ Sáu để giải đáp thắc mắc về việc tái cơ cấu.\nNữ: Tốt quá. Tôi hy vọng họ sẽ nói rõ liệu có vị trí nào bị chuyển đến trụ sở chính ở Chicago không.",
+    "questionText": "What does the woman want to know?",
+    "questionTextVi": "Người phụ nữ muốn biết điều gì tại cuộc họp?",
+    "options": {
+      "A": "Paying a certification fee",
+      "B": "Training additional staff",
+      "C": "Upgrading some technology",
+      "D": "Whether positions will be relocated to another city"
+    },
+    "optionsVi": {
+      "A": "Phí chứng chỉ",
+      "B": "Đào tạo nhân sự",
+      "C": "Nâng cấp công nghệ",
+      "D": "Liệu có chuyển vị trí sang thành phố khác không"
+    },
+    "correctAnswer": "D",
+    "explanation": "Người phụ nữ nói: 'I hope they address whether any jobs will be relocated to their headquarters in Chicago' (Chicago = another city) -> (D) Whether positions will be relocated to another city.",
+    "vocabulary": [
+      {
+        "word": "relocate",
+        "ipa": "/ˌriː.ləʊˈkeɪt/",
+        "pos": "v",
+        "meaning": "chuyển địa điểm, di dời",
+        "example": "relocate to Chicago"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "relocate to headquarters",
+        "meaning": "chuyển đến làm việc tại trụ sở chính"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Mệnh đề danh từ với Whether",
+        "rule": "address + whether + clause",
+        "analysis": "Bày tỏ sự quan tâm đến một khả năng có thể xảy ra."
+      }
+    ]
+  },
+  {
+    "id": 62,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": "assets/images/graphic_q62_64.png",
+    "passage": "M-Au: Thanks for calling Customized Concepts. How can I help you?\nW-Am: My company wants to give every employee a gift, something practical for daily use at work. What do you suggest from your promotional drinkware catalog?\nM-Au: I recommend the metal bottle with the wide-mouthed lid. It’s easier to clean than the one with the straw, and it keeps beverages cold for twelve hours.\nW-Am: OK, that sounds great. And you could put our company logo on them, right?\nM-Au: Definitely. Just send me your graphic file, and I’ll send you a digital proof before we start manufacturing.",
+    "passageVi": "Nam: Cảm ơn đã gọi cho Customized Concepts. Tôi có thể giúp gì cho bạn?\nNữ: Công ty tôi muốn tặng quà cho mọi nhân viên, thứ gì đó thiết thực dùng hàng ngày. Bạn gợi ý món gì trong danh mục bình ly?\nNam: Tôi khuyên nên chọn bình kim loại nắp miệng rộng. Dễ rửa hơn bình có ống hút và giữ lạnh 12 tiếng.\nNữ: Tuyệt. Các bạn in logo công ty lên đó được chứ?\nNam: Chắc chắn rồi. Chỉ cần gửi file đồ họa, tôi sẽ gửi bản in thử kỹ thuật số trước khi sản xuất.",
+    "questionText": "Who is a gift for?",
+    "questionTextVi": "Món quà này dành cho ai?",
+    "options": {
+      "A": "Donors",
+      "B": "Volunteers",
+      "C": "Employees",
+      "D": "Clients"
+    },
+    "optionsVi": {
+      "A": "Nhà hảo tâm",
+      "B": "Tình nguyện viên",
+      "C": "Nhân viên công ty",
+      "D": "Khách hàng"
+    },
+    "correctAnswer": "C",
+    "explanation": "Người phụ nữ nói: 'My company wants to give every employee a gift' -> (C) Employees.",
+    "vocabulary": [
+      {
+        "word": "practical",
+        "ipa": "/ˈpræk.tɪ.kəl/",
+        "pos": "adj",
+        "meaning": "thiết thực, thực tế",
+        "example": "practical gift"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "give employees a gift",
+        "meaning": "tặng quà cho nhân viên"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Động từ Give với 2 tân ngữ",
+        "rule": "give + someone + something",
+        "analysis": "Cấu trúc tặng quà cho người nhận."
+      }
+    ]
+  },
+  {
+    "id": 63,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": "assets/images/graphic_q62_64.png",
+    "passage": "M-Au: Thanks for calling Customized Concepts. How can I help you?\nW-Am: My company wants to give every employee a gift, something practical for daily use at work. What do you suggest from your promotional drinkware catalog?\nM-Au: I recommend the metal bottle with the wide-mouthed lid. It’s easier to clean than the one with the straw, and it keeps beverages cold for twelve hours.\nW-Am: OK, that sounds great. And you could put our company logo on them, right?\nM-Au: Definitely. Just send me your graphic file, and I’ll send you a digital proof before we start manufacturing.",
+    "passageVi": "Nam: Cảm ơn đã gọi cho Customized Concepts. Tôi có thể giúp gì cho bạn?\nNữ: Công ty tôi muốn tặng quà cho mọi nhân viên, thứ gì đó thiết thực dùng hàng ngày. Bạn gợi ý món gì trong danh mục bình ly?\nNam: Tôi khuyên nên chọn bình kim loại nắp miệng rộng. Dễ rửa hơn bình có ống hút và giữ lạnh 12 tiếng.\nNữ: Tuyệt. Các bạn in logo công ty lên đó được chứ?\nNam: Chắc chắn rồi. Chỉ cần gửi file đồ họa, tôi sẽ gửi bản in thử kỹ thuật số trước khi sản xuất.",
+    "questionText": "Look at the graphic. What is the price of the item the man recommends?",
+    "questionTextVi": "Nhìn vào biểu đồ. Giá của sản phẩm mà người đàn ông khuyên chọn là bao nhiêu?",
+    "options": {
+      "A": "$21",
+      "B": "$18",
+      "C": "$24",
+      "D": "$15"
+    },
+    "optionsVi": {
+      "A": "$21",
+      "B": "$18",
+      "C": "$24",
+      "D": "$15"
+    },
+    "correctAnswer": "C",
+    "explanation": "Người đàn ông khuyên: 'the metal bottle with the wide-mouthed lid'. Nhìn vào bảng hình ảnh, 'Wide-Mouthed Steel Water Bottle' có giá là $24 -> (C) $24.",
+    "vocabulary": [
+      {
+        "word": "steel",
+        "ipa": "/stiːl/",
+        "pos": "n",
+        "meaning": "thép, kim loại",
+        "example": "steel bottle"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "wide-mouthed",
+        "meaning": "miệng rộng (dễ vệ sinh)"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Kỹ năng làm câu hỏi Graphic",
+        "rule": "metal bottle with wide mouth = Wide-Mouthed Steel Water Bottle ($24)",
+        "analysis": "Đối chiếu mô tả của người nói với thông tin trong bảng biểu."
+      }
+    ]
+  },
+  {
+    "id": 64,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": "assets/images/graphic_q62_64.png",
+    "passage": "M-Au: Thanks for calling Customized Concepts. How can I help you?\nW-Am: My company wants to give every employee a gift, something practical for daily use at work. What do you suggest from your promotional drinkware catalog?\nM-Au: I recommend the metal bottle with the wide-mouthed lid. It’s easier to clean than the one with the straw, and it keeps beverages cold for twelve hours.\nW-Am: OK, that sounds great. And you could put our company logo on them, right?\nM-Au: Definitely. Just send me your graphic file, and I’ll send you a digital proof before we start manufacturing.",
+    "passageVi": "Nam: Cảm ơn đã gọi cho Customized Concepts. Tôi có thể giúp gì cho bạn?\nNữ: Công ty tôi muốn tặng quà cho mọi nhân viên, thứ gì đó thiết thực dùng hàng ngày. Bạn gợi ý món gì trong danh mục bình ly?\nNam: Tôi khuyên nên chọn bình kim loại nắp miệng rộng. Dễ rửa hơn bình có ống hút và giữ lạnh 12 tiếng.\nNữ: Tuyệt. Các bạn in logo công ty lên đó được chứ?\nNam: Chắc chắn rồi. Chỉ cần gửi file đồ họa, tôi sẽ gửi bản in thử kỹ thuật số trước khi sản xuất.",
+    "questionText": "What is the woman going to send to the man?",
+    "questionTextVi": "Người phụ nữ sẽ gửi cái gì cho người đàn ông?",
+    "options": {
+      "A": "A graphic file",
+      "B": "A list of names",
+      "C": "A delivery address",
+      "D": "An account number"
+    },
+    "optionsVi": {
+      "A": "Một tệp hình ảnh đồ họa (logo)",
+      "B": "Danh sách tên",
+      "C": "Địa chỉ giao hàng",
+      "D": "Số tài khoản"
+    },
+    "correctAnswer": "A",
+    "explanation": "Người đàn ông bảo: 'Just send me your graphic file' để in logo -> (A) A graphic file.",
+    "vocabulary": [
+      {
+        "word": "proof",
+        "ipa": "/pruːf/",
+        "pos": "n",
+        "meaning": "bản in thử, bằng chứng",
+        "example": "digital proof"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "graphic file",
+        "meaning": "tệp thiết kế đồ họa"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu mệnh lệnh chỉ dẫn với Just",
+        "rule": "Just send me + Noun",
+        "analysis": "Hướng dẫn khách hàng thao tác đơn giản."
+      }
+    ]
+  },
+  {
+    "id": 65,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": "assets/images/graphic_q65_67.png",
+    "passage": "W-Br: Yun, I just finished recording the audio guide for the pencil drawings that’ll be included in our modern art exhibit next week.\nM-Cn: Oh, good. But actually, Claudia Hoffman called this morning to say that the frame of her drawing 'Stormy Sea' got cracked during transit. She won’t have time to fix it before the opening.\nW-Br: That’s unfortunate. I guess we won't be able to display it then.\nM-Cn: Right. So could you edit the recording to take out the part where you discuss her piece?\nW-Br: I'll do that right now so the guide will be ready on time.",
+    "passageVi": "Nữ: Yun, tôi vừa thu âm xong phần hướng dẫn bằng âm thanh cho các bức tranh vẽ chì trong triển lãm nghệ thuật hiện đại tuần tới.\nNam: Tốt quá. Nhưng sáng nay Claudia Hoffman gọi báo là khung bức tranh 'Stormy Sea' của cô ấy bị nứt khi vận chuyển. Cô ấy không kịp sửa trước ngày mở màn.\nNữ: Tiếc quá. Vậy chắc chúng ta không thể trưng bày nó rồi.\nNam: Đúng vậy. Bạn có thể chỉnh sửa bản thu âm để bỏ phần thuyết minh về tác phẩm đó không?\nNữ: Tôi sẽ làm ngay để hướng dẫn kịp tiến độ.",
+    "questionText": "What type of art will be displayed in an exhibit?",
+    "questionTextVi": "Loại hình nghệ thuật nào sẽ được trưng bày trong triển lãm?",
+    "options": {
+      "A": "Clay sculptures",
+      "B": "Oil paintings",
+      "C": "Black-and-white photographs",
+      "D": "Pencil drawings"
+    },
+    "optionsVi": {
+      "A": "Tượng điêu khắc đất sét",
+      "B": "Tranh sơn dầu",
+      "C": "Ảnh đen trắng",
+      "D": "Tranh vẽ bằng bút chì"
+    },
+    "correctAnswer": "D",
+    "explanation": "Người phụ nữ nói: 'audio guide for the pencil drawings that’ll be included in our modern art exhibit' -> (D) Pencil drawings.",
+    "vocabulary": [
+      {
+        "word": "drawing",
+        "ipa": "/ˈdrɔː.ɪŋ/",
+        "pos": "n",
+        "meaning": "bức vẽ, tranh vẽ",
+        "example": "pencil drawings"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "pencil drawings",
+        "meaning": "tranh vẽ bằng bút chì"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Mệnh đề quan hệ xác định",
+        "rule": "drawings that will be included",
+        "analysis": "Bổ nghĩa cho tác phẩm nghệ thuật sẽ được đưa vào triển lãm."
+      }
+    ]
+  },
+  {
+    "id": 66,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": "assets/images/graphic_q65_67.png",
+    "passage": "W-Br: Yun, I just finished recording the audio guide for the pencil drawings that’ll be included in our modern art exhibit next week.\nM-Cn: Oh, good. But actually, Claudia Hoffman called this morning to say that the frame of her drawing 'Stormy Sea' got cracked during transit. She won’t have time to fix it before the opening.\nW-Br: That’s unfortunate. I guess we won't be able to display it then.\nM-Cn: Right. So could you edit the recording to take out the part where you discuss her piece?\nW-Br: I'll do that right now so the guide will be ready on time.",
+    "passageVi": "Nữ: Yun, tôi vừa thu âm xong phần hướng dẫn bằng âm thanh cho các bức tranh vẽ chì trong triển lãm nghệ thuật hiện đại tuần tới.\nNam: Tốt quá. Nhưng sáng nay Claudia Hoffman gọi báo là khung bức tranh 'Stormy Sea' của cô ấy bị nứt khi vận chuyển. Cô ấy không kịp sửa trước ngày mở màn.\nNữ: Tiếc quá. Vậy chắc chúng ta không thể trưng bày nó rồi.\nNam: Đúng vậy. Bạn có thể chỉnh sửa bản thu âm để bỏ phần thuyết minh về tác phẩm đó không?\nNữ: Tôi sẽ làm ngay để hướng dẫn kịp tiến độ.",
+    "questionText": "Look at the graphic. Which piece of artwork will no longer be included?",
+    "questionTextVi": "Nhìn vào biểu đồ. Tác phẩm nghệ thuật nào sẽ không còn được đưa vào triển lãm?",
+    "options": {
+      "A": "A Careful Glance",
+      "B": "Promises",
+      "C": "Stormy Sea",
+      "D": "The Moment"
+    },
+    "optionsVi": {
+      "A": "A Careful Glance",
+      "B": "Promises",
+      "C": "Stormy Sea",
+      "D": "The Moment"
+    },
+    "correctAnswer": "C",
+    "explanation": "Người đàn ông nói bức tranh của Claudia Hoffman bị nứt khung ('the frame of her drawing 'Stormy Sea' got cracked'). Đối chiếu bảng: Claudia Hoffman vẽ 'Stormy Sea' -> (C) Stormy Sea.",
+    "vocabulary": [
+      {
+        "word": "cracked",
+        "ipa": "/krækt/",
+        "pos": "adj",
+        "meaning": "bị nứt, rạn vỡ",
+        "example": "cracked frame"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "in transit",
+        "meaning": "trong quá trình vận chuyển"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Đối chiếu bảng đồ họa",
+        "rule": "Artist: Claudia Hoffman -> Artwork: Stormy Sea",
+        "analysis": "Liên kết tên nghệ sĩ trong lời thoại với tên tranh trong bảng."
+      }
+    ]
+  },
+  {
+    "id": 67,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": "assets/images/graphic_q65_67.png",
+    "passage": "W-Br: Yun, I just finished recording the audio guide for the pencil drawings that’ll be included in our modern art exhibit next week.\nM-Cn: Oh, good. But actually, Claudia Hoffman called this morning to say that the frame of her drawing 'Stormy Sea' got cracked during transit. She won’t have time to fix it before the opening.\nW-Br: That’s unfortunate. I guess we won't be able to display it then.\nM-Cn: Right. So could you edit the recording to take out the part where you discuss her piece?\nW-Br: I'll do that right now so the guide will be ready on time.",
+    "passageVi": "Nữ: Yun, tôi vừa thu âm xong phần hướng dẫn bằng âm thanh cho các bức tranh vẽ chì trong triển lãm nghệ thuật hiện đại tuần tới.\nNam: Tốt quá. Nhưng sáng nay Claudia Hoffman gọi báo là khung bức tranh 'Stormy Sea' của cô ấy bị nứt khi vận chuyển. Cô ấy không kịp sửa trước ngày mở màn.\nNữ: Tiếc quá. Vậy chắc chúng ta không thể trưng bày nó rồi.\nNam: Đúng vậy. Bạn có thể chỉnh sửa bản thu âm để bỏ phần thuyết minh về tác phẩm đó không?\nNữ: Tôi sẽ làm ngay để hướng dẫn kịp tiến độ.",
+    "questionText": "What does the woman say she will do right away?",
+    "questionTextVi": "Người phụ nữ nói cô ấy sẽ làm gì ngay lập tức?",
+    "options": {
+      "A": "Speak with an artist",
+      "B": "Edit a recording",
+      "C": "Clean a gallery space",
+      "D": "Greet some visitors"
+    },
+    "optionsVi": {
+      "A": "Nói chuyện với nghệ sĩ",
+      "B": "Chỉnh sửa bản thu âm",
+      "C": "Dọn dẹp phòng trưng bày",
+      "D": "Chào đón khách tham quan"
+    },
+    "correctAnswer": "B",
+    "explanation": "Người đàn ông nhờ: 'edit the recording to take out the part...'. Người phụ nữ đáp: 'I'll do that right now' -> (B) Edit a recording.",
+    "vocabulary": [
+      {
+        "word": "recording",
+        "ipa": "/rɪˈkɔː.dɪŋ/",
+        "pos": "n",
+        "meaning": "bản ghi âm",
+        "example": "audio recording"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "edit a recording",
+        "meaning": "cắt ghép, chỉnh sửa bản thu âm"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cụm từ Right away",
+        "rule": "right away = immediately",
+        "analysis": "Diễn tả hành động làm ngay không chậm trễ."
+      }
+    ]
+  },
+  {
+    "id": 68,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": "assets/images/graphic_q68_70.png",
+    "passage": "M-Cn: I’m glad we were assigned to cover the press conference earlier today. I counted seven other major media networks there, so this offshore wind energy project is huge news.\nW-Am: Definitely. The government spokesperson announced that Site D off the coast of Winston has been officially connected to the electrical grid, while construction at the other three locations is still underway.\nM-Cn: Right. Our deadline is five P.M. For our news report, I suggest focusing on the thousands of construction and maintenance jobs this initiative has created for coastal towns.",
+    "passageVi": "Nam: Tôi rất vui vì chúng ta được phân công đưa tin về buổi họp báo sáng nay. Có tới 7 đài truyền thông lớn khác ở đó, dự án điện gió ngoài khơi này là tin chấn động.\nNữ: Chắc chắn rồi. Người phát ngôn chính phủ tuyên bố Địa điểm D ngoài khơi Winston đã chính thức hòa lưới điện, trong khi 3 điểm còn lại vẫn đang xây dựng.\nNam: Đúng. Hạn nộp bài của chúng ta là 5 giờ chiều. Trong bản tin, tôi đề xuất tập trung vào hàng ngàn việc làm xây dựng và bảo trì mà dự án mang lại cho các thị trấn ven biển.",
+    "questionText": "Who most likely are the speakers?",
+    "questionTextVi": "Những người nói có nhiều khả năng là ai nhất?",
+    "options": {
+      "A": "Urban planners",
+      "B": "Journalists",
+      "C": "Engineers",
+      "D": "Environmental scientists"
+    },
+    "optionsVi": {
+      "A": "Nhà quy hoạch đô thị",
+      "B": "Nhà báo / Phóng viên",
+      "C": "Kỹ sư",
+      "D": "Nhà khoa học môi trường"
+    },
+    "correctAnswer": "B",
+    "explanation": "Họ nói: 'assigned to cover the press conference', 'media networks', 'our deadline is five P.M.', 'our news report' -> (B) Journalists (Nhà báo/phóng viên).",
+    "vocabulary": [
+      {
+        "word": "press conference",
+        "ipa": "/ˈpres ˌkɒn.fər.əns/",
+        "pos": "n",
+        "meaning": "buổi họp báo",
+        "example": "cover a press conference"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "cover a press conference",
+        "meaning": "đưa tin về một cuộc họp báo"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Suy luận nghề nghiệp từ thuật ngữ truyền thông",
+        "rule": "cover + press conference + deadline + news report -> Journalists",
+        "analysis": "Nhận diện nhà báo qua các thuật ngữ tác nghiệp đưa tin."
+      }
+    ]
+  },
+  {
+    "id": 69,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": "assets/images/graphic_q68_70.png",
+    "passage": "M-Cn: I’m glad we were assigned to cover the press conference earlier today. I counted seven other major media networks there, so this offshore wind energy project is huge news.\nW-Am: Definitely. The government spokesperson announced that Site D off the coast of Winston has been officially connected to the electrical grid, while construction at the other three locations is still underway.\nM-Cn: Right. Our deadline is five P.M. For our news report, I suggest focusing on the thousands of construction and maintenance jobs this initiative has created for coastal towns.",
+    "passageVi": "Nam: Tôi rất vui vì chúng ta được phân công đưa tin về buổi họp báo sáng nay. Có tới 7 đài truyền thông lớn khác ở đó, dự án điện gió ngoài khơi này là tin chấn động.\nNữ: Chắc chắn rồi. Người phát ngôn chính phủ tuyên bố Địa điểm D ngoài khơi Winston đã chính thức hòa lưới điện, trong khi 3 điểm còn lại vẫn đang xây dựng.\nNam: Đúng. Hạn nộp bài của chúng ta là 5 giờ chiều. Trong bản tin, tôi đề xuất tập trung vào hàng ngàn việc làm xây dựng và bảo trì mà dự án mang lại cho các thị trấn ven biển.",
+    "questionText": "Look at the graphic. Which site has already been completed?",
+    "questionTextVi": "Nhìn vào biểu đồ. Địa điểm nào đã được hoàn thành?",
+    "options": {
+      "A": "Site A",
+      "B": "Site B",
+      "C": "Site C",
+      "D": "Site D"
+    },
+    "optionsVi": {
+      "A": "Địa điểm A",
+      "B": "Địa điểm B",
+      "C": "Địa điểm C",
+      "D": "Địa điểm D"
+    },
+    "correctAnswer": "D",
+    "explanation": "Người phụ nữ nói: 'Site D off the coast of Winston has been officially connected to the electrical grid, while construction at the other three locations is still underway' -> (D) Site D đã hoàn thành và nối lưới điện.",
+    "vocabulary": [
+      {
+        "word": "grid",
+        "ipa": "/ɡrɪd/",
+        "pos": "n",
+        "meaning": "lưới điện quốc gia",
+        "example": "electrical grid"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "connected to the grid",
+        "meaning": "được hòa vào mạng lưới điện"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Đối chiếu bản đồ đồ họa",
+        "rule": "Site D connected to electrical grid -> Site D completed",
+        "analysis": "Xác định địa điểm đã thi công xong qua chi tiết đã hòa lưới điện."
+      }
+    ]
+  },
+  {
+    "id": 70,
+    "part": 3,
+    "partName": "Part 3: Conversations",
+    "audio": "assets/audio/part3.mp3",
+    "image": "assets/images/graphic_q68_70.png",
+    "passage": "M-Cn: I’m glad we were assigned to cover the press conference earlier today. I counted seven other major media networks there, so this offshore wind energy project is huge news.\nW-Am: Definitely. The government spokesperson announced that Site D off the coast of Winston has been officially connected to the electrical grid, while construction at the other three locations is still underway.\nM-Cn: Right. Our deadline is five P.M. For our news report, I suggest focusing on the thousands of construction and maintenance jobs this initiative has created for coastal towns.",
+    "passageVi": "Nam: Tôi rất vui vì chúng ta được phân công đưa tin về buổi họp báo sáng nay. Có tới 7 đài truyền thông lớn khác ở đó, dự án điện gió ngoài khơi này là tin chấn động.\nNữ: Chắc chắn rồi. Người phát ngôn chính phủ tuyên bố Địa điểm D ngoài khơi Winston đã chính thức hòa lưới điện, trong khi 3 điểm còn lại vẫn đang xây dựng.\nNam: Đúng. Hạn nộp bài của chúng ta là 5 giờ chiều. Trong bản tin, tôi đề xuất tập trung vào hàng ngàn việc làm xây dựng và bảo trì mà dự án mang lại cho các thị trấn ven biển.",
+    "questionText": "What does the man suggest focusing on?",
+    "questionTextVi": "Người đàn ông gợi ý tập trung vào điều gì?",
+    "options": {
+      "A": "Work opportunities",
+      "B": "Wind turbine costs",
+      "C": "Supply chain issues",
+      "D": "Power capacity"
+    },
+    "optionsVi": {
+      "A": "Cơ hội việc làm",
+      "B": "Chi phí tua bin gió",
+      "C": "Vấn đề chuỗi cung ứng",
+      "D": "Công suất phát điện"
+    },
+    "correctAnswer": "A",
+    "explanation": "Người đàn ông đề xuất: 'I suggest focusing on the thousands of construction and maintenance jobs this initiative has created' (jobs = work opportunities) -> (A) Work opportunities.",
+    "vocabulary": [
+      {
+        "word": "initiative",
+        "ipa": "/ɪˈnɪʃ.ə.tɪv/",
+        "pos": "n",
+        "meaning": "sáng kiến, dự án lớn",
+        "example": "green energy initiative"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "focus on work opportunities",
+        "meaning": "tập trung vào cơ hội việc làm"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Paraphrase Jobs = Work opportunities",
+        "rule": "jobs = work opportunities",
+        "analysis": "Diễn đạt lại từ 'jobs' bằng cụm danh từ tương đương 'work opportunities'."
+      }
+    ]
+  }
+]

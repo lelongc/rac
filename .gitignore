@@ -10,3 +10,8 @@ node_modules/
 target/
 .idea/
 .vscode/
+
+# Large PDF files exceeding GitHub limits (>50MB/100MB)
+iuh/toeic/2024/1/ETS 2024 - READING.pdf
+iuh/toeic/2024/1/giai/script nghe_0001.pdf
+iuh/toeic/2024/1/ETS 2024 - LISTENING.pdf

@@ -1,0 +1,1447 @@
+[
+  {
+    "id": 7,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "How old is this building?",
+    "questionTextVi": "Tòa nhà này bao nhiêu năm tuổi rồi?",
+    "options": {
+      "A": "To ship some materials.",
+      "B": "About ten years old.",
+      "C": "Company offices, I think."
+    },
+    "optionsVi": {
+      "A": "Để vận chuyển một số nguyên vật liệu.",
+      "B": "Khoảng mười năm tuổi.",
+      "C": "Các văn phòng công ty, tôi nghĩ vậy."
+    },
+    "correctAnswer": "B",
+    "explanation": "Câu hỏi bắt đầu bằng từ để hỏi 'How old' nhằm hỏi về tuổi tác/thời gian tồn tại của một công trình. Phương án (B) 'About ten years old' trả lời trực diện và chính xác số tuổi. (A) trả lời cho câu hỏi mục đích 'Why / What for'; (C) trả lời cho câu hỏi 'What is inside...'.",
+    "transcript": "W-Br How old is this building? M-Au (A) To ship some materials. (B) About ten years old. (C) Company offices, I think.",
+    "transcriptVi": "Nữ: Tòa nhà này bao nhiêu tuổi rồi? Nam: (A) Để vận chuyển vật liệu. (B) Khoảng mười năm tuổi. (C) Văn phòng công ty, tôi nghĩ vậy.",
+    "vocabulary": [
+      {
+        "word": "how old",
+        "ipa": "/haʊ əʊld/",
+        "pos": "phr",
+        "meaning": "bao nhiêu tuổi, bao nhiêu năm",
+        "example": "How old is the structure?"
+      },
+      {
+        "word": "material",
+        "ipa": "/məˈtɪə.ri.əl/",
+        "pos": "n",
+        "meaning": "vật liệu, tài liệu",
+        "example": "Building materials have increased in price."
+      },
+      {
+        "word": "ship",
+        "ipa": "/ʃɪp/",
+        "pos": "v",
+        "meaning": "giao hàng, vận chuyển",
+        "example": "The goods will be shipped tomorrow."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "ten years old",
+        "meaning": "mười năm tuổi"
+      },
+      {
+        "phrase": "ship materials",
+        "meaning": "vận chuyển vật liệu xây dựng/hàng hóa"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu hỏi 'How old' (Wh-question with How old)",
+        "rule": "How old + be + S?",
+        "analysis": "Hỏi về số lượng thời gian tồn tại của người hoặc vật. Câu trả lời chuẩn thường đi kèm con số chỉ thời gian và cụm 'years old'."
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "Can you come to my jazz performance tonight?",
+    "questionTextVi": "Tối nay bạn có thể đến buổi biểu diễn nhạc jazz của tôi không?",
+    "options": {
+      "A": "I’m sorry I was late for the meeting.",
+      "B": "Mostly just local musicians.",
+      "C": "Sure, I’ll be there!"
+    },
+    "optionsVi": {
+      "A": "Tôi xin lỗi vì đã đến trễ cuộc họp.",
+      "B": "Hầu hết chỉ là các nhạc sĩ địa phương.",
+      "C": "Chắc chắn rồi, tôi sẽ đến đó!"
+    },
+    "correctAnswer": "C",
+    "explanation": "Câu hỏi lời mời 'Can you come to... tonight?' cần một câu phản hồi đồng ý hoặc từ chối lịch sự. (C) 'Sure, I’ll be there!' thể hiện sự đồng ý nhiệt tình. (A) nói về việc đi muộn một cuộc họp trong quá khứ; (B) bẫy liên tưởng từ vựng 'jazz' -> 'musicians' nhưng không trả lời câu hỏi mời mọc.",
+    "transcript": "W-Am Can you come to my jazz performance tonight? M-Cn (A) I’m sorry I was late for the meeting. (B) Mostly just local musicians. (C) Sure, I’ll be there!",
+    "transcriptVi": "Nữ: Tối nay bạn có thể đến buổi biểu diễn jazz của tôi không? Nam: (A) Xin lỗi vì tôi đến muộn cuộc họp. (B) Hầu như chỉ là nhạc sĩ địa phương. (C) Chắc chắn rồi, tôi sẽ đến!",
+    "vocabulary": [
+      {
+        "word": "performance",
+        "ipa": "/pəˈfɔː.məns/",
+        "pos": "n",
+        "meaning": "buổi biểu diễn, hiệu suất",
+        "example": "She gave a stunning piano performance."
+      },
+      {
+        "word": "musician",
+        "ipa": "/mjuːˈzɪʃ.ən/",
+        "pos": "n",
+        "meaning": "nhạc sĩ, nghệ sĩ biểu diễn âm nhạc",
+        "example": "Talented musicians from all over the world."
+      },
+      {
+        "word": "tonight",
+        "ipa": "/təˈnaɪt/",
+        "pos": "adv, n",
+        "meaning": "tối nay",
+        "example": "What are your plans for tonight?"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "come to a performance",
+        "meaning": "đến tham dự một buổi biểu diễn"
+      },
+      {
+        "phrase": "be there",
+        "meaning": "có mặt ở đó"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu hỏi đề nghị / Lời mời với 'Can you...'",
+        "rule": "Can you + V-bare...? -> Phản hồi: Sure / I'd love to / I'm afraid I can't...",
+        "analysis": "Dạng câu hỏi Yes/No đóng vai trò làm lời mời (Invitation/Request). Câu trả lời chấp nhận thường dùng các từ tán thành như Sure, Definitely, Of course."
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "Which apartment submitted a work order?",
+    "questionTextVi": "Căn hộ nào đã nộp phiếu yêu cầu sửa chữa?",
+    "options": {
+      "A": "It’s what you did for a living.",
+      "B": "Submit your assignment here.",
+      "C": "It came from the tenants in B23."
+    },
+    "optionsVi": {
+      "A": "Đó là nghề nghiệp kiếm sống của bạn.",
+      "B": "Hãy nộp bài tập của bạn ở đây.",
+      "C": "Nó đến từ những người thuê ở phòng B23."
+    },
+    "correctAnswer": "C",
+    "explanation": "Câu hỏi bắt đầu bằng 'Which apartment' hỏi về đối tượng cụ thể (căn hộ nào). Phương án (C) 'It came from the tenants in B23' trả lời chính xác số căn hộ (B23) và chủ thể (người thuê nhà). (A) bẫy từ 'work' -> 'did for a living'; (B) bẫy lặp từ 'submit/assignment'.",
+    "transcript": "W-Br Which apartment submitted a work order? W-Am (A) It’s what you did for a living. (B) Submit your assignment here. (C) It came from the tenants in B23.",
+    "transcriptVi": "Nữ 1: Căn hộ nào đã nộp đơn yêu cầu sửa chữa? Nữ 2: (A) Đó là công việc kiếm sống của bạn. (B) Hãy nộp bài tập ở đây. (C) Phiếu đó từ người thuê ở căn B23.",
+    "vocabulary": [
+      {
+        "word": "work order",
+        "ipa": "/ˈwɜːk ˌɔː.dər/",
+        "pos": "n",
+        "meaning": "phiếu yêu cầu sửa chữa/bảo trì",
+        "example": "The supervisor approved the maintenance work order."
+      },
+      {
+        "word": "submit",
+        "ipa": "/səbˈmɪt/",
+        "pos": "v",
+        "meaning": "nộp, đệ trình",
+        "example": "Please submit your receipts by Friday."
+      },
+      {
+        "word": "tenant",
+        "ipa": "/ˈten.ənt/",
+        "pos": "n",
+        "meaning": "người thuê nhà/căn hộ",
+        "example": "Tenants must pay rent on the first of each month."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "submit a work order",
+        "meaning": "nộp đơn/phiếu yêu cầu sửa chữa"
+      },
+      {
+        "phrase": "do something for a living",
+        "meaning": "làm nghề gì để kiếm sống"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu hỏi lựa chọn xác định 'Which + Noun'",
+        "rule": "Which + Noun + V + O?",
+        "analysis": "Từ hỏi 'Which' yêu cầu chỉ ra đích danh đối tượng trong một phạm vi xác định (tên phòng, số nhà, mã hiệu cụ thể như 'B23')."
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "Will you contact the vendor about changing our delivery date?",
+    "questionTextVi": "Bạn sẽ liên hệ với nhà cung cấp về việc đổi ngày giao hàng chứ?",
+    "options": {
+      "A": "Of course, I’ll take care of it.",
+      "B": "An e-mail receipt.",
+      "C": "Could I get change for a dollar?"
+    },
+    "optionsVi": {
+      "A": "Tất nhiên rồi, tôi sẽ lo liệu việc đó.",
+      "B": "Một biên lai gửi qua thư điện tử.",
+      "C": "Tôi có thể đổi tiền lẻ cho một đô la được không?"
+    },
+    "correctAnswer": "A",
+    "explanation": "Câu hỏi yêu cầu nhờ vả 'Will you contact...?' (Bạn sẽ liên hệ... chứ?). Phương án (A) 'Of course, I’ll take care of it' nhận lời giúp đỡ một cách lịch sự và tự nhiên. (B) không liên quan; (C) bẫy từ nhiều nghĩa 'change' (đổi ngày -> đổi tiền lẻ).",
+    "transcript": "M-Cn Will you contact the vendor about changing our delivery date? W-Br (A) Of course, I’ll take care of it. (B) An e-mail receipt. (C) Could I get change for a dollar?",
+    "transcriptVi": "Nam: Bạn sẽ liên hệ với nhà cung cấp để đổi ngày giao hàng chứ? Nữ: (A) Dĩ nhiên rồi, tôi sẽ giải quyết việc đó. (B) Biên lai qua email. (C) Cho tôi đổi 1 đô la tiền lẻ được không?",
+    "vocabulary": [
+      {
+        "word": "vendor",
+        "ipa": "/ˈven.dər/",
+        "pos": "n",
+        "meaning": "nhà cung cấp, người bán hàng",
+        "example": "We source components from an approved vendor."
+      },
+      {
+        "word": "take care of",
+        "ipa": "/teɪk keər əv/",
+        "pos": "phr v",
+        "meaning": "lo liệu, giải quyết, chăm sóc",
+        "example": "Don't worry about the reservations; I'll take care of them."
+      },
+      {
+        "word": "delivery date",
+        "ipa": "/dɪˈlɪv.ər.i deɪt/",
+        "pos": "n",
+        "meaning": "ngày giao hàng",
+        "example": "The estimated delivery date is next Tuesday."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "take care of something",
+        "meaning": "chịu trách nhiệm xử lý/lo liệu việc gì"
+      },
+      {
+        "phrase": "delivery date",
+        "meaning": "ngày hẹn giao hàng"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu yêu cầu với 'Will you...?'",
+        "rule": "Will you + V-bare...? -> Câu trả lời đồng ý: Of course / Certainly / Sure",
+        "analysis": "Dạng câu nhờ vả trong môi trường công sở. Cụm 'take care of it' là phản hồi kinh điển khi nhận một nhiệm vụ được giao phó."
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "Why was the maintenance worker here?",
+    "questionTextVi": "Tại sao nhân viên bảo trì lại ở đây?",
+    "options": {
+      "A": "No, he didn’t.",
+      "B": "From three o’clock until four.",
+      "C": "Because a light needed to be fixed."
+    },
+    "optionsVi": {
+      "A": "Không, anh ấy đã không làm vậy.",
+      "B": "Từ ba giờ đến bốn giờ.",
+      "C": "Bởi vì một bóng đèn cần được sửa chữa."
+    },
+    "correctAnswer": "C",
+    "explanation": "Câu hỏi bắt đầu bằng 'Why' hỏi lý do/nguyên nhân. Phương án (C) 'Because a light needed to be fixed' trả lời trực tiếp lý do tại sao người thợ bảo trì xuất hiện. (A) bẫy trả lời No cho câu hỏi Wh-; (B) trả lời cho câu hỏi 'How long / From when to when'.",
+    "transcript": "M-Au Why was the maintenance worker here? W-Am (A) No, he didn’t. (B) From three o’clock until four. (C) Because a light needed to be fixed.",
+    "transcriptVi": "Nam: Tại sao nhân viên bảo trì lại ở đây vậy? Nữ: (A) Không, anh ấy không làm. (B) Từ 3 giờ đến 4 giờ. (C) Vì có một chiếc bóng đèn cần được sửa.",
+    "vocabulary": [
+      {
+        "word": "maintenance",
+        "ipa": "/ˈmeɪn.tən.əns/",
+        "pos": "n",
+        "meaning": "bảo trì, bảo dưỡng",
+        "example": "Routine maintenance is scheduled for the weekend."
+      },
+      {
+        "word": "fix",
+        "ipa": "/fɪks/",
+        "pos": "v",
+        "meaning": "sửa chữa, khắc phục",
+        "example": "The technician fixed the air conditioning unit."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "maintenance worker",
+        "meaning": "nhân viên bảo trì kỹ thuật"
+      },
+      {
+        "phrase": "need to be fixed",
+        "meaning": "cần được sửa chữa"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu hỏi nguyên nhân 'Why' và bị động với Need",
+        "rule": "Why + was/were + S...? -> Because + clause / To + V",
+        "analysis": "Cấu trúc bị động: S (vật) + need + to be V3/ed (a light needed to be fixed = bóng đèn cần được sửa)."
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "Did management make a hiring decision yet?",
+    "questionTextVi": "Ban quản lý đã đưa ra quyết định tuyển dụng chưa?",
+    "options": {
+      "A": "Put it on the highest shelf.",
+      "B": "The personnel department.",
+      "C": "Yes, they chose Jacob Borgman."
+    },
+    "optionsVi": {
+      "A": "Hãy đặt nó lên chiếc kệ cao nhất.",
+      "B": "Phòng nhân sự.",
+      "C": "Rồi, họ đã chọn Jacob Borgman."
+    },
+    "correctAnswer": "C",
+    "explanation": "Câu hỏi Yes/No ở thì quá khứ đơn 'Did management make a hiring decision yet?'. Phương án (C) 'Yes, they chose Jacob Borgman' xác nhận đã có quyết định ('Yes') và bổ sung chi tiết người được chọn. (A) là câu mệnh lệnh không liên quan; (B) bẫy liên tưởng 'hiring' -> 'personnel department'.",
+    "transcript": "W-Am Did management make a hiring decision yet? M-Cn (A) Put it on the highest shelf. (B) The personnel department. (C) Yes, they chose Jacob Borgman.",
+    "transcriptVi": "Nữ: Ban quản lý đã ra quyết định tuyển dụng chưa? Nam: (A) Hãy đặt nó lên kệ cao nhất. (B) Phòng nhân sự. (C) Rồi, họ đã chọn Jacob Borgman.",
+    "vocabulary": [
+      {
+        "word": "management",
+        "ipa": "/ˈmæn.ɪdʒ.mənt/",
+        "pos": "n",
+        "meaning": "ban giám đốc, ban quản lý",
+        "example": "Management decided to approve the expansion budget."
+      },
+      {
+        "word": "hiring decision",
+        "ipa": "/ˈhaɪə.rɪŋ dɪˈsɪʒ.ən/",
+        "pos": "n",
+        "meaning": "quyết định tuyển dụng nhân sự",
+        "example": "The hiring decision will be announced next Monday."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "make a decision",
+        "meaning": "đưa ra quyết định"
+      },
+      {
+        "phrase": "personnel department",
+        "meaning": "phòng ban nhân sự"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu hỏi Yes/No thì Quá khứ đơn",
+        "rule": "Did + S + V-bare...? -> Yes/No + details",
+        "analysis": "Đại từ 'they' trong phương án đúng thay thế chính xác cho danh từ tập hợp 'management'."
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "Do you want to eat here in our cafeteria or go out?",
+    "questionTextVi": "Bạn muốn ăn ở căng tin này hay đi ra ngoài?",
+    "options": {
+      "A": "He went there yesterday.",
+      "B": "Well, maybe a sandwich.",
+      "C": "Let’s eat here."
+    },
+    "optionsVi": {
+      "A": "Anh ấy đã đến đó ngày hôm qua.",
+      "B": "À, có lẽ là một chiếc bánh mì kẹp.",
+      "C": "Chúng ta hãy ăn ở đây đi."
+    },
+    "correctAnswer": "C",
+    "explanation": "Câu hỏi lựa chọn 'eat here... or go out?'. Phương án (C) 'Let’s eat here' chọn một trong hai phương án được đưa ra (ăn tại đây). (A) bẫy ngôi 'He' và thì quá khứ; (B) nói về món ăn chứ không trả lời về địa điểm.",
+    "transcript": "M-Cn Do you want to eat here in our cafeteria or go out? W-Am (A) He went there yesterday. (B) Well, maybe a sandwich. (C) Let’s eat here.",
+    "transcriptVi": "Nam: Bạn muốn ăn ở căng tin công ty hay đi ra ngoài? Nữ: (A) Anh ấy đã đến đó hôm qua. (B) Chà, có lẽ là bánh sandwich. (C) Chúng ta hãy ăn ở đây đi.",
+    "vocabulary": [
+      {
+        "word": "cafeteria",
+        "ipa": "/ˌkæf.əˈtɪə.ri.ə/",
+        "pos": "n",
+        "meaning": "quán ăn tự phục vụ, căng tin",
+        "example": "Employees gather in the cafeteria during lunchtime."
+      },
+      {
+        "word": "go out",
+        "ipa": "/ɡəʊ aʊt/",
+        "pos": "phr v",
+        "meaning": "đi ra ngoài",
+        "example": "Would you like to go out for a coffee?"
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "eat in the cafeteria",
+        "meaning": "ăn uống trong căng tin"
+      },
+      {
+        "phrase": "go out to eat",
+        "meaning": "ra ngoài ăn uống"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu hỏi lựa chọn 'A or B' (Alternative Question)",
+        "rule": "Do you want to X or Y? -> Không trả lời bằng Yes/No; chọn X, Y hoặc đưa ra ý kiến thứ 3",
+        "analysis": "Sử dụng cấu trúc đề xuất 'Let's + V-bare' (Let's eat here) để chọn phương án thứ nhất."
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "Didn’t you e-mail the employment contract to Mr. Patel yesterday?",
+    "questionTextVi": "Không phải bạn đã gửi email hợp đồng lao động cho ông Patel hôm qua rồi sao?",
+    "options": {
+      "A": "Yes, I would agree.",
+      "B": "No, I’ll send it now.",
+      "C": "Check the employee manual."
+    },
+    "optionsVi": {
+      "A": "Vâng, tôi đồng ý.",
+      "B": "Chưa, tôi sẽ gửi nó ngay bây giờ.",
+      "C": "Hãy kiểm tra cuốn sổ tay nhân viên."
+    },
+    "correctAnswer": "B",
+    "explanation": "Câu hỏi phủ định 'Didn’t you e-mail... yesterday?'. Phương án (B) 'No, I’ll send it now' trả lời đúng trọng tâm rằng hành động đó chưa diễn ra ('No') và đưa ra giải pháp khắc phục ngay lập tức ('I'll send it now'). (A) không ăn nhập nội dung; (C) bẫy liên tưởng 'employment' -> 'employee manual'.",
+    "transcript": "M-Au Didn’t you e-mail the employment contract to Mr. Patel yesterday? W-Br (A) Yes, I would agree. (B) No, I’ll send it now. (C) Check the employee manual.",
+    "transcriptVi": "Nam: Bạn đã gửi hợp đồng lao động qua email cho ông Patel hôm qua chưa? Nữ: (A) Vâng, tôi đồng ý. (B) Chưa, tôi sẽ gửi ngay bây giờ. (C) Hãy xem cẩm nang nhân viên.",
+    "vocabulary": [
+      {
+        "word": "employment contract",
+        "ipa": "/ɪmˈplɔɪ.mənt ˈkɒn.trækt/",
+        "pos": "n",
+        "meaning": "hợp đồng lao động",
+        "example": "He signed a two-year employment contract."
+      },
+      {
+        "word": "manual",
+        "ipa": "/ˈmæn.ju.əl/",
+        "pos": "n",
+        "meaning": "sách hướng dẫn, cẩm nang",
+        "example": "Consult the user manual for troubleshooting instructions."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "employment contract",
+        "meaning": "hợp đồng làm việc/lao động"
+      },
+      {
+        "phrase": "employee manual",
+        "meaning": "sổ tay hướng dẫn dành cho nhân viên"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu hỏi phủ định (Negative Question)",
+        "rule": "Didn't you + V...? -> No = Chưa làm; Yes = Đã làm",
+        "analysis": "Trong tiếng Anh, trả lời 'No' với câu hỏi phủ định nghĩa là sự việc đó chưa diễn ra trong thực tế."
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "Our division’s picnic is this Saturday, right?",
+    "questionTextVi": "Buổi dã ngoại của bộ phận chúng ta là vào thứ Bảy tuần này, đúng không?",
+    "options": {
+      "A": "There’s a lot of rain in the forecast.",
+      "B": "Sure, I like salad.",
+      "C": "At the end of this corridor."
+    },
+    "optionsVi": {
+      "A": "Dự báo thời tiết báo trời sẽ mưa to.",
+      "B": "Chắc chắn rồi, tôi thích món salad.",
+      "C": "Ở cuối hành lang này."
+    },
+    "correctAnswer": "A",
+    "explanation": "Câu hỏi xác nhận thông tin về buổi dã ngoại thứ Bảy. Phương án (A) 'There’s a lot of rain in the forecast' là câu trả lời gián tiếp thường gặp trong TOEIC (ngụ ý buổi dã ngoại ngoài trời có thể bị hoãn hoặc bị hủy do mưa bão). (B) bẫy liên tưởng dã ngoại -> ăn salad; (C) trả lời câu hỏi vị trí 'Where'.",
+    "transcript": "M-Au Our division’s picnic is this Saturday, right? M-Cn (A) There’s a lot of rain in the forecast. (B) Sure, I like salad. (C) At the end of this corridor.",
+    "transcriptVi": "Nam 1: Buổi dã ngoại của phòng mình diễn ra vào thứ Bảy này đúng không? Nam 2: (A) Dự báo thời tiết có nhiều mưa. (B) Chắc chắn rồi, tôi thích salad. (C) Ở cuối hành lang này.",
+    "vocabulary": [
+      {
+        "word": "division",
+        "ipa": "/dɪˈvɪʒ.ən/",
+        "pos": "n",
+        "meaning": "bộ phận, phòng ban trong tổ chức",
+        "example": "The sales division reached record performance."
+      },
+      {
+        "word": "forecast",
+        "ipa": "/ˈfɔː.kɑːst/",
+        "pos": "n, v",
+        "meaning": "dự báo thời tiết/kinh tế",
+        "example": "According to the weather forecast, temperatures will drop."
+      },
+      {
+        "word": "corridor",
+        "ipa": "/ˈkɒr.ɪ.dɔːr/",
+        "pos": "n",
+        "meaning": "hành lang lối đi",
+        "example": "Her office is situated at the far end of the corridor."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "in the forecast",
+        "meaning": "trong dự báo thời tiết"
+      },
+      {
+        "phrase": "company picnic",
+        "meaning": "buổi dã ngoại công ty"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu hỏi đuôi / câu xác nhận ngữ điệu (Tag / Confirmation Question)",
+        "rule": "Statement, right? -> Câu trả lời gián tiếp (Indirect Response)",
+        "analysis": "Đặc trưng đề thi ETS hiện đại: không trả lời Yes/No trực tiếp mà đưa ra tình huống thực tế ảnh hưởng tới kế hoạch."
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "Would you like coffee or tea?",
+    "questionTextVi": "Bạn muốn dùng cà phê hay trà?",
+    "options": {
+      "A": "Just water, please.",
+      "B": "In the break room.",
+      "C": "Ten dollars."
+    },
+    "optionsVi": {
+      "A": "Chỉ nước lọc thôi, cảm ơn bạn.",
+      "B": "Trong phòng nghỉ ngơi.",
+      "C": "Mười đô la."
+    },
+    "correctAnswer": "A",
+    "explanation": "Câu hỏi đưa ra lựa chọn đồ uống 'coffee or tea?'. Phương án (A) 'Just water, please' lịch sự từ chối cả 2 món và yêu cầu món đồ uống khác (nước lọc). Đây là phản xạ giao tiếp tự nhiên kinh điển trong TOEIC. (B) trả lời 'Where'; (C) trả lời 'How much'.",
+    "transcript": "W-Br Would you like coffee or tea? W-Am (A) Just water, please. (B) In the break room. (C) Ten dollars.",
+    "transcriptVi": "Nữ 1: Bạn muốn dùng cà phê hay trà? Nữ 2: (A) Cho tôi nước lọc thôi, cảm ơn. (B) Ở trong phòng nghỉ. (C) Mười đô la.",
+    "vocabulary": [
+      {
+        "word": "break room",
+        "ipa": "/ˈbreɪk ˌruːm/",
+        "pos": "n",
+        "meaning": "phòng giải lao của nhân viên",
+        "example": "Free coffee is available in the break room."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "would like",
+        "meaning": "muốn (lịch sự hơn want)"
+      },
+      {
+        "phrase": "break room",
+        "meaning": "phòng nghỉ giữa giờ"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu hỏi lựa chọn từ chối cả hai (Alternative Offer - Third Choice)",
+        "rule": "Would you like A or B? -> Neither / Just C, please",
+        "analysis": "Người nghe có quyền chọn phương án thứ ba khi cả hai lựa chọn ban đầu đều không phù hợp."
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "We achieved our sales targets this month.",
+    "questionTextVi": "Tháng này chúng ta đã đạt được chỉ tiêu doanh số.",
+    "options": {
+      "A": "That’s excellent news!",
+      "B": "A few times a day.",
+      "C": "To the end of April."
+    },
+    "optionsVi": {
+      "A": "Đó thật là một tin tức tuyệt vời!",
+      "B": "Vài lần một ngày.",
+      "C": "Cho đến cuối tháng Tư."
+    },
+    "correctAnswer": "A",
+    "explanation": "Câu trần thuật thông báo một thành tích tích cực của công ty. Phản hồi hợp lý nhất là lời tán thưởng (A) 'That’s excellent news!'. (B) trả lời câu hỏi tần suất 'How often'; (C) trả lời mốc thời gian 'Until when'.",
+    "transcript": "W-Am We achieved our sales targets this month. M-Cn (A) That’s excellent news! (B) A few times a day. (C) To the end of April.",
+    "transcriptVi": "Nữ: Chúng ta đã đạt được mục tiêu doanh số trong tháng này. Nam: (A) Đó là tin tuyệt vời! (B) Một vài lần mỗi ngày. (C) Cho đến cuối tháng Tư.",
+    "vocabulary": [
+      {
+        "word": "achieve",
+        "ipa": "/əˈtʃiːv/",
+        "pos": "v",
+        "meaning": "đạt được, hoàn thành mục tiêu",
+        "example": "The firm achieved remarkable growth this quarter."
+      },
+      {
+        "word": "sales target",
+        "ipa": "/seɪlz ˈtɑː.ɡɪt/",
+        "pos": "n",
+        "meaning": "chỉ tiêu doanh số bán hàng",
+        "example": "Every team exceeded its annual sales target."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "achieve a target",
+        "meaning": "đạt được mục tiêu đã đề ra"
+      },
+      {
+        "phrase": "excellent news",
+        "meaning": "tin mừng, tin tức rất tốt"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Phản hồi câu trần thuật (Statement Response)",
+        "rule": "Statement expressing good result -> Congratulatory / Positive reaction",
+        "analysis": "Khi nghe một câu kể về tin vui, phản ứng phù hợp luôn là lời khen ngợi hoặc chúc mừng."
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "How often do you travel for your job?",
+    "questionTextVi": "Bạn có thường xuyên phải đi công tác vì công việc không?",
+    "options": {
+      "A": "It turned out well.",
+      "B": "Yes, I did find one.",
+      "C": "About once a month."
+    },
+    "optionsVi": {
+      "A": "Mọi chuyện diễn ra rất tốt đẹp.",
+      "B": "Vâng, tôi đã tìm được một cái.",
+      "C": "Khoảng mỗi tháng một lần."
+    },
+    "correctAnswer": "C",
+    "explanation": "Câu hỏi với 'How often' dùng để hỏi về tần suất. Phương án (C) 'About once a month' (Khoảng một tháng một lần) trả lời trực tiếp tần suất. (A) bình luận kết quả; (B) bẫy trả lời Yes cho câu hỏi Wh-.",
+    "transcript": "M-Au How often do you travel for your job? W-Br (A) It turned out well. (B) Yes, I did find one. (C) About once a month.",
+    "transcriptVi": "Nam: Bạn có thường đi công tác không? Nữ: (A) Kết quả diễn ra tốt đẹp. (B) Có, tôi đã tìm thấy một cái. (C) Khoảng mỗi tháng một lần.",
+    "vocabulary": [
+      {
+        "word": "how often",
+        "ipa": "/haʊ ˈɒf.ən/",
+        "pos": "phr",
+        "meaning": "tần suất bao lâu một lần",
+        "example": "How often do you inspect the machinery?"
+      },
+      {
+        "word": "turn out",
+        "ipa": "/tɜːn aʊt/",
+        "pos": "phr v",
+        "meaning": "hóa ra, diễn biến kết quả",
+        "example": "The conference turned out to be a major success."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "travel for work/job",
+        "meaning": "đi công tác vì lý do công việc"
+      },
+      {
+        "phrase": "once a month",
+        "meaning": "mỗi tháng một lần"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu hỏi tần suất 'How often'",
+        "rule": "How often + do/does + S + V? -> Trả lời: once/twice/three times a week/month...",
+        "analysis": "Dấu hiệu nhận biết câu trả lời đúng cho 'How often' là các cụm từ chỉ tần suất như 'once a month', 'every day', 'rarely'."
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "We should hike the Wildflower Trail today.",
+    "questionTextVi": "Hôm nay chúng ta nên đi leo đường mòn Wildflower đi.",
+    "options": {
+      "A": "This seat is available.",
+      "B": "I didn’t bring boots.",
+      "C": "At the visitors’ center."
+    },
+    "optionsVi": {
+      "A": "Chỗ ngồi này còn trống.",
+      "B": "Tôi đã không mang giày ủng leo núi.",
+      "C": "Tại trung tâm đón tiếp khách."
+    },
+    "correctAnswer": "B",
+    "explanation": "Câu đề xuất 'We should hike...'. Phương án (B) 'I didn’t bring boots' là lời từ chối gián tiếp (vì không đem giày chuyên dụng nên không thể đi bộ leo núi được). (A) bẫy từ 'seat'; (C) trả lời câu hỏi địa điểm 'Where'.",
+    "transcript": "W-Br We should hike the Wildflower Trail today. M-Cn (A) This seat is available. (B) I didn’t bring boots. (C) At the visitors’ center.",
+    "transcriptVi": "Nữ: Hôm nay chúng ta nên đi bộ đường mòn Wildflower. Nam: (A) Chỗ ngồi này còn trống. (B) Tôi không đem theo ủng. (C) Ở trung tâm du khách.",
+    "vocabulary": [
+      {
+        "word": "hike",
+        "ipa": "/haɪk/",
+        "pos": "v, n",
+        "meaning": "đi bộ đường dài, leo núi dã ngoại",
+        "example": "We hiked through the national park."
+      },
+      {
+        "word": "trail",
+        "ipa": "/treɪl/",
+        "pos": "n",
+        "meaning": "đường mòn, lối đi trong rừng",
+        "example": "Follow the marked trail to the summit."
+      },
+      {
+        "word": "boots",
+        "ipa": "/buːts/",
+        "pos": "n",
+        "meaning": "ủng, giày cổ cao chuyên dụng",
+        "example": "Wear sturdy hiking boots on the rocky path."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "hiking boots",
+        "meaning": "giày leo núi chuyên dụng"
+      },
+      {
+        "phrase": "visitors' center",
+        "meaning": "trung tâm thông tin dành cho du khách"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Lời đề xuất với 'We should...' và từ chối gián tiếp",
+        "rule": "We should + V -> Indirect refusal by giving an obstacle",
+        "analysis": "Cách từ chối tinh tế trong bài thi TOEIC: nêu ra một trở ngại thực tế (không có trang bị phù hợp) thay vì nói No thẳng thừng."
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "You’ve booked a hotel in London, haven’t you?",
+    "questionTextVi": "Bạn đã đặt khách sạn ở Luân Đôn rồi, đúng không?",
+    "options": {
+      "A": "Very enjoyable, thanks.",
+      "B": "He usually takes the train.",
+      "C": "Yes, I made a reservation last week."
+    },
+    "optionsVi": {
+      "A": "Rất thú vị, cảm ơn bạn.",
+      "B": "Anh ấy thường đi tàu hỏa.",
+      "C": "Vâng, tôi đã đặt phòng từ tuần trước rồi."
+    },
+    "correctAnswer": "C",
+    "explanation": "Câu hỏi đuôi thì hiện tại hoàn thành 'You’ve booked... haven’t you?'. Phương án (C) 'Yes, I made a reservation last week' xác nhận bằng 'Yes' và lặp lại ý 'book a hotel' bằng cụm từ đồng nghĩa 'made a reservation'. (A) khen ngợi trải nghiệm; (B) bẫy chủ ngữ 'He'.",
+    "transcript": "M-Au You’ve booked a hotel in London, haven’t you? W-Am (A) Very enjoyable, thanks. (B) He usually takes the train. (C) Yes, I made a reservation last week.",
+    "transcriptVi": "Nam: Bạn đã đặt phòng khách sạn ở Luân Đôn rồi đúng không? Nữ: (A) Rất thú vị, cảm ơn. (B) Anh ấy thường đi tàu. (C) Vâng, tôi đã đặt phòng tuần trước.",
+    "vocabulary": [
+      {
+        "word": "book",
+        "ipa": "/bʊk/",
+        "pos": "v",
+        "meaning": "đặt chỗ, đặt trước",
+        "example": "I'd like to book a flight to Chicago."
+      },
+      {
+        "word": "reservation",
+        "ipa": "/ˌrez.əˈveɪ.ʃən/",
+        "pos": "n",
+        "meaning": "sự đặt chỗ trước",
+        "example": "We have a dinner reservation for four at eight o'clock."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "make a reservation",
+        "meaning": "thực hiện việc đặt chỗ trước (đồng nghĩa với book)"
+      },
+      {
+        "phrase": "book a hotel",
+        "meaning": "đặt phòng khách sạn"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu hỏi đuôi (Tag Question) và Paraphrasing",
+        "rule": "S + have V3/ed..., haven't they/you? -> Paraphrase 'book' = 'make a reservation'",
+        "analysis": "Kỹ thuật bẫy phổ biến trong TOEIC: đáp án đúng thường sử dụng từ đồng nghĩa (synonyms) thay vì lặp lại y nguyên từ trong câu hỏi."
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "Are there any tickets left for tonight’s concert?",
+    "questionTextVi": "Còn chiếc vé nào cho buổi hòa nhạc tối nay không?",
+    "options": {
+      "A": "It’s sold out.",
+      "B": "He’s a concert violinist.",
+      "C": "On the left."
+    },
+    "optionsVi": {
+      "A": "Nó đã bán hết sạch rồi.",
+      "B": "Anh ấy là một nghệ sĩ vĩ cầm hòa nhạc.",
+      "C": "Ở phía bên tay trái."
+    },
+    "correctAnswer": "A",
+    "explanation": "Câu hỏi 'Are there any tickets left...?' (Còn vé không?). Phương án (A) 'It’s sold out' thông báo buổi diễn đã hết vé (sold out = không còn vé nào). (B) bẫy lặp từ 'concert'; (C) bẫy từ đồng âm khác nghĩa 'left' (còn lại vs bên trái).",
+    "transcript": "W-Am Are there any tickets left for tonight’s concert? M-Au (A) It’s sold out. (B) He’s a concert violinist. (C) On the left.",
+    "transcriptVi": "Nữ: Còn vé nào cho buổi hòa nhạc tối nay không? Nam: (A) Đã bán hết vé rồi. (B) Anh ấy là nghệ sĩ vĩ cầm. (C) Ở phía bên trái.",
+    "vocabulary": [
+      {
+        "word": "sold out",
+        "ipa": "/ˌsəʊld ˈaʊt/",
+        "pos": "adj, phr",
+        "meaning": "bán hết sạch vé/hàng",
+        "example": "All tickets for the festival were sold out within hours."
+      },
+      {
+        "word": "violinist",
+        "ipa": "/ˌvaɪəˈlɪn.ɪst/",
+        "pos": "n",
+        "meaning": "nghệ sĩ chơi đàn vĩ cầm (violin)",
+        "example": "An internationally acclaimed violinist."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "tickets left",
+        "meaning": "vé còn sót lại/chưa bán hết"
+      },
+      {
+        "phrase": "be sold out",
+        "meaning": "cháy vé, hết hàng"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Bẫy từ đồng âm khác nghĩa (Homophone / Polysemy Trap)",
+        "rule": "left (quá khứ của leave = còn lại) vs left (hướng bên trái)",
+        "analysis": "Phương án (C) bẫy người nghe bắt từ 'left' rồi trả lời vị trí 'On the left'. Cần hiểu đúng nghĩa ngữ cảnh của 'tickets left'."
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "Haven’t you used this software before?",
+    "questionTextVi": "Trước đây bạn chưa từng dùng phần mềm này sao?",
+    "options": {
+      "A": "Can I take your order?",
+      "B": "I haven’t had the chance.",
+      "C": "About a two-hour flight."
+    },
+    "optionsVi": {
+      "A": "Tôi có thể ghi món cho bạn không?",
+      "B": "Tôi chưa có cơ hội dùng thử.",
+      "C": "Chuyến bay kéo dài khoảng hai tiếng."
+    },
+    "correctAnswer": "B",
+    "explanation": "Câu hỏi phủ định 'Haven’t you used this software before?'. Phương án (B) 'I haven’t had the chance' (Tôi chưa có dịp/cơ hội) giải thích lý do tại sao chưa dùng phần mềm này. (A) là câu hỏi của nhân viên phục vụ bàn; (C) trả lời câu hỏi thời gian bay.",
+    "transcript": "W-Br Haven’t you used this software before? M-Cn (A) Can I take your order? (B) I haven’t had the chance. (C) About a two-hour flight.",
+    "transcriptVi": "Nữ: Trước đây bạn chưa dùng phần mềm này à? Nam: (A) Tôi có thể nhận gọi món của bạn không? (B) Tôi chưa có cơ hội thử. (C) Chuyến bay khoảng 2 tiếng.",
+    "vocabulary": [
+      {
+        "word": "chance",
+        "ipa": "/tʃɑːns/",
+        "pos": "n",
+        "meaning": "cơ hội, dịp may",
+        "example": "She had the chance to study abroad."
+      },
+      {
+        "word": "software",
+        "ipa": "/ˈsɒft.weər/",
+        "pos": "n",
+        "meaning": "phần mềm vi tính",
+        "example": "The developers are testing the new accounting software."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "have the chance to do something",
+        "meaning": "có cơ hội/dịp làm điều gì"
+      },
+      {
+        "phrase": "take someone's order",
+        "meaning": "ghi nhận món ăn khách gọi"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Thì Hiện tại hoàn thành diễn tả trải nghiệm (Experience in Present Perfect)",
+        "rule": "Haven't you + V3/ed + before? -> I haven't had the chance yet",
+        "analysis": "Cụm 'have the chance' thường đi kèm thể phủ định để giải thích việc chưa từng trải nghiệm điều gì trước đó."
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "When is the new blender going to be released?",
+    "questionTextVi": "Khi nào chiếc máy xay mới sẽ được ra mắt thị trường?",
+    "options": {
+      "A": "Only with fruits and vegetables.",
+      "B": "In the kitchen cabinet.",
+      "C": "The prototype is still being tested."
+    },
+    "optionsVi": {
+      "A": "Chỉ dùng với các loại trái cây và rau củ.",
+      "B": "Ở trong ngăn tủ bếp.",
+      "C": "Mẫu thử nghiệm vẫn đang được kiểm tra."
+    },
+    "correctAnswer": "C",
+    "explanation": "Câu hỏi thời gian 'When is the new blender going to be released?'. Phương án (C) 'The prototype is still being tested' (Mẫu thử nghiệm vẫn đang được test) là câu trả lời gián tiếp cực kỳ thông minh: vì sản phẩm chưa hoàn thiện kiểm thử nên chưa có ngày ra mắt chính xác. (A) bẫy liên tưởng máy xay sinh tố -> trái cây; (B) trả lời câu hỏi 'Where'.",
+    "transcript": "M-Au When is the new blender going to be released? W-Br (A) Only with fruits and vegetables. (B) In the kitchen cabinet. (C) The prototype is still being tested.",
+    "transcriptVi": "Nam: Khi nào máy xay sinh tố mới sẽ ra mắt? Nữ: (A) Chỉ với trái cây và rau. (B) Trong tủ bếp. (C) Bản nguyên mẫu vẫn đang trong giai đoạn thử nghiệm.",
+    "vocabulary": [
+      {
+        "word": "blender",
+        "ipa": "/ˈblen.dər/",
+        "pos": "n",
+        "meaning": "máy xay sinh tố",
+        "example": "Put the chopped berries into the electric blender."
+      },
+      {
+        "word": "release",
+        "ipa": "/rɪˈliːs/",
+        "pos": "v, n",
+        "meaning": "phát hành, ra mắt thị trường",
+        "example": "The mobile phone will be released next month."
+      },
+      {
+        "word": "prototype",
+        "ipa": "/ˈprəʊ.tə.taɪp/",
+        "pos": "n",
+        "meaning": "mẫu thử nghiệm đầu tiên, nguyên mẫu",
+        "example": "Engineers are building a working prototype of the device."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "be released",
+        "meaning": "được tung ra thị trường"
+      },
+      {
+        "phrase": "under test / being tested",
+        "meaning": "đang trong quá trình thử nghiệm"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Bị động tiếp diễn (Present Continuous Passive) trong câu trả lời gián tiếp",
+        "rule": "is/are + being + V3/ed",
+        "analysis": "Thay vì đưa ra một ngày tháng cụ thể cho 'When', câu trả lời đưa ra trạng thái hiện tại của sự việc để giải thích vì sao chưa thể ấn định ngày."
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "Who’s picking up our clients at the airport?",
+    "questionTextVi": "Ai là người sẽ đi đón khách hàng của chúng ta tại sân bay?",
+    "options": {
+      "A": "They decided to drive.",
+      "B": "At terminal 2.",
+      "C": "It’s a marketing position."
+    },
+    "optionsVi": {
+      "A": "Họ đã quyết định tự lái xe rồi.",
+      "B": "Tại nhà ga số 2.",
+      "C": "Đó là một vị trí làm việc trong ngành tiếp thị."
+    },
+    "correctAnswer": "A",
+    "explanation": "Câu hỏi với 'Who' hỏi về người đi đón khách. Phương án (A) 'They decided to drive' (Họ quyết định tự lái xe đến) ngụ ý khách tự di chuyển nên không cần ai đón cả. Đây là kiểu câu trả lời loại bỏ tiền đề câu hỏi rất hay gặp. (B) bẫy liên tưởng sân bay -> terminal; (C) không liên quan.",
+    "transcript": "M-Au Who’s picking up our clients at the airport? W-Am (A) They decided to drive. (B) At terminal 2. (C) It’s a marketing position.",
+    "transcriptVi": "Nam: Ai sẽ đón khách hàng của chúng ta ở sân bay? Nữ: (A) Họ đã quyết định tự lái xe rồi. (B) Tại nhà ga số 2. (C) Đó là vị trí tiếp thị.",
+    "vocabulary": [
+      {
+        "word": "pick up",
+        "ipa": "/pɪk ʌp/",
+        "pos": "phr v",
+        "meaning": "đón ai đó bằng xe",
+        "example": "Can you pick me up at the station?"
+      },
+      {
+        "word": "client",
+        "ipa": "/ˈklaɪ.ənt/",
+        "pos": "n",
+        "meaning": "khách hàng đối tác",
+        "example": "We strive to maintain strong relationships with our clients."
+      },
+      {
+        "word": "terminal",
+        "ipa": "/ˈtɜː.mɪ.nəl/",
+        "pos": "n",
+        "meaning": "nhà ga sân bay/bến tàu",
+        "example": "International flights depart from Terminal 3."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "pick someone up",
+        "meaning": "đón ai bằng ô tô/xe máy"
+      },
+      {
+        "phrase": "decide to do something",
+        "meaning": "quyết định làm việc gì"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu hỏi 'Who' với câu trả lời bác bỏ tiền đề (Overriding Assumption)",
+        "rule": "Who is doing X? -> Nobody needs to do X because circumstances changed",
+        "analysis": "Một bẫy kinh điển: người hỏi cho rằng cần có người làm hành động X, nhưng người đáp làm rõ rằng hành động X không cần thiết nữa."
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "Where are the red roses that came in this morning?",
+    "questionTextVi": "Những bông hoa hồng đỏ chuyển đến sáng nay đang ở đâu rồi?",
+    "options": {
+      "A": "About three liters of water.",
+      "B": "No, I didn’t check out the sale.",
+      "C": "I needed some for a large bouquet."
+    },
+    "optionsVi": {
+      "A": "Khoảng ba lít nước.",
+      "B": "Không, tôi đã không kiểm tra đợt giảm giá.",
+      "C": "Tôi cần dùng một ít cho một bó hoa lớn."
+    },
+    "correctAnswer": "C",
+    "explanation": "Câu hỏi vị trí 'Where are the red roses...?'. Phương án (C) 'I needed some for a large bouquet' gián tiếp giải thích vị trí của số hoa hồng: người nói đã lấy chúng để cắm vào một bó hoa lớn. (A) bẫy đo lường thể tích; (B) bẫy trả lời No cho câu hỏi Where.",
+    "transcript": "M-Cn Where are the red roses that came in this morning? M-Au (A) About three liters of water. (B) No, I didn’t check out the sale. (C) I needed some for a large bouquet.",
+    "transcriptVi": "Nam 1: Những bông hồng đỏ nhập về sáng nay đâu rồi? Nam 2: (A) Khoảng 3 lít nước. (B) Không, tôi không xem đợt sale. (C) Tôi đã cần dùng một ít cho một bó hoa to.",
+    "vocabulary": [
+      {
+        "word": "bouquet",
+        "ipa": "/buˈkeɪ/",
+        "pos": "n",
+        "meaning": "bó hoa",
+        "example": "He ordered a lovely bouquet of lilies for her birthday."
+      },
+      {
+        "word": "come in",
+        "ipa": "/kʌm ɪn/",
+        "pos": "phr v",
+        "meaning": "(hàng hóa) nhập về, chuyển đến",
+        "example": "A new shipment of textbooks came in today."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "a large bouquet",
+        "meaning": "một bó hoa lớn"
+      },
+      {
+        "phrase": "come in this morning",
+        "meaning": "được chuyển tới vào sáng nay"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Mệnh đề quan hệ rút gọn làm rõ tân ngữ (Relative Clause)",
+        "rule": "the red roses (that came in this morning)",
+        "analysis": "Đại từ quan hệ 'that' thay thế cho danh từ 'roses' làm chủ ngữ trong mệnh đề phụ bổ nghĩa."
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "This film has been nominated for several awards.",
+    "questionTextVi": "Bộ phim này đã được đề cử cho một vài giải thưởng.",
+    "options": {
+      "A": "Why don’t we go see it?",
+      "B": "After the announcement.",
+      "C": "He made a great speech."
+    },
+    "optionsVi": {
+      "A": "Tại sao chúng ta không đi xem nó nhỉ?",
+      "B": "Sau khi có thông báo.",
+      "C": "Anh ấy đã có một bài phát biểu tuyệt vời."
+    },
+    "correctAnswer": "A",
+    "explanation": "Câu trần thuật thông báo bộ phim được đề cử nhiều giải thưởng. Phản hồi hợp lý nhất là rủ rê đi xem phim đó: (A) 'Why don’t we go see it?'. (B) trả lời câu hỏi thời gian 'When'; (C) bẫy liên tưởng giải thưởng -> 'speech'.",
+    "transcript": "M-Au This film has been nominated for several awards. W-Am (A) Why don’t we go see it? (B) After the announcement. (C) He made a great speech.",
+    "transcriptVi": "Nam: Bộ phim này đã được đề cử cho nhiều giải thưởng. Nữ: (A) Sao chúng mình không đi xem nó nhỉ? (B) Sau thông báo. (C) Anh ấy đã có bài phát biểu hay.",
+    "vocabulary": [
+      {
+        "word": "nominate",
+        "ipa": "/ˈnɒm.ɪ.neɪt/",
+        "pos": "v",
+        "meaning": "đề cử",
+        "example": "The actress was nominated for best performance."
+      },
+      {
+        "word": "award",
+        "ipa": "/əˈwɔːd/",
+        "pos": "n",
+        "meaning": "giải thưởng",
+        "example": "The company won an environmental design award."
+      },
+      {
+        "word": "announcement",
+        "ipa": "/əˈnaʊns.mənt/",
+        "pos": "n",
+        "meaning": "thông báo, tuyên bố",
+        "example": "Listen carefully to the public address announcement."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "be nominated for an award",
+        "meaning": "được đề cử giải thưởng"
+      },
+      {
+        "phrase": "why don't we do something",
+        "meaning": "tại sao chúng ta không làm gì đó (lời rủ rê)"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cấu trúc đưa ra đề xuất với 'Why don't we...?'",
+        "rule": "Why don't we + V-bare...? (Lời rủ rê, gợi ý)",
+        "analysis": "Một câu trần thuật đưa ra thông tin hấp dẫn về sản phẩm/dịch vụ thường được nối tiếp bởi một lời đề xuất trải nghiệm."
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "Who’s interested in starting a car pool program?",
+    "questionTextVi": "Ai quan tâm đến việc bắt đầu chương trình đi chung xe?",
+    "options": {
+      "A": "Thanks, but I can’t swim.",
+      "B": "Clara’s already organizing one.",
+      "C": "It’s a very interesting article."
+    },
+    "optionsVi": {
+      "A": "Cảm ơn, nhưng tôi không biết bơi.",
+      "B": "Clara đã đang đứng ra tổ chức một nhóm rồi.",
+      "C": "Đó là một bài báo rất thú vị."
+    },
+    "correctAnswer": "B",
+    "explanation": "Câu hỏi 'Who’s interested...' (Ai quan tâm...). Phương án (B) nêu rõ tên người quan tâm và chủ động thực hiện ('Clara’s already organizing one'). (A) bẫy đồng âm 'car pool' -> 'swimming pool' -> 'swim'; (C) bẫy từ cùng gốc 'interested' -> 'interesting article'.",
+    "transcript": "M-Cn Who’s interested in starting a car pool program? W-Br (A) Thanks, but I can’t swim. (B) Clara’s already organizing one. (C) It’s a very interesting article.",
+    "transcriptVi": "Nam: Ai quan tâm đến việc lập nhóm đi chung xe không? Nữ: (A) Cảm ơn, nhưng tôi không biết bơi. (B) Clara đang đứng ra tổ chức một nhóm rồi đấy. (C) Đó là bài báo rất thú vị.",
+    "vocabulary": [
+      {
+        "word": "car pool",
+        "ipa": "/ˈkɑː ˌpuːl/",
+        "pos": "n",
+        "meaning": "nhóm đi chung xe hơi để tiết kiệm chi phí/bảo vệ môi trường",
+        "example": "Joining a car pool cut my commuting costs in half."
+      },
+      {
+        "word": "organize",
+        "ipa": "/ˈɔː.ɡən.aɪz/",
+        "pos": "v",
+        "meaning": "tổ chức, sắp xếp",
+        "example": "She organized the annual fundraising gala."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "car pool program",
+        "meaning": "chương trình/phong trào đi chung xe"
+      },
+      {
+        "phrase": "be interested in",
+        "meaning": "quan tâm, có hứng thú với"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Bẫy từ vựng đồng âm (Word Association Trap)",
+        "rule": "car pool (đi chung xe) dễ bị nhầm với pool (bể bơi)",
+        "analysis": "ETS thường xuyên gài bẫy thí sinh thiếu tập trung bằng các từ phát âm tương tự nhau hoặc trường từ vựng liên quan sai ngữ cảnh."
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "Where will I teach my workshop this month?",
+    "questionTextVi": "Tháng này tôi sẽ giảng dạy buổi hội thảo của mình ở đâu?",
+    "options": {
+      "A": "We just sent an e-mail to all instructors.",
+      "B": "Five to seven months.",
+      "C": "Yes, it’s a beautiful building."
+    },
+    "optionsVi": {
+      "A": "Chúng tôi vừa gửi email cho tất cả các giảng viên.",
+      "B": "Năm đến bảy tháng.",
+      "C": "Vâng, đó là một tòa nhà rất đẹp."
+    },
+    "correctAnswer": "A",
+    "explanation": "Câu hỏi hỏi vị trí 'Where will I teach...?'. Phương án (A) 'We just sent an e-mail to all instructors' chỉ dẫn người hỏi kiểm tra email vừa được gửi tới giảng viên (thông tin phòng học nằm trong email đó). (B) bẫy lặp từ 'month' và trả lời cho 'How long'; (C) bẫy trả lời Yes cho câu hỏi Where.",
+    "transcript": "W-Br Where will I teach my workshop this month? M-Cn (A) We just sent an e-mail to all instructors. (B) Five to seven months. (C) Yes, it’s a beautiful building.",
+    "transcriptVi": "Nữ: Tháng này tôi sẽ dạy lớp hội thảo ở đâu? Nam: (A) Chúng tôi vừa gửi email thông báo cho tất cả giảng viên. (B) 5 đến 7 tháng. (C) Vâng, tòa nhà đẹp.",
+    "vocabulary": [
+      {
+        "word": "workshop",
+        "ipa": "/ˈwɜːk.ʃɒp/",
+        "pos": "n",
+        "meaning": "buổi hội thảo chuyên đề, khóa đào tạo thực hành",
+        "example": "He registered for a digital marketing workshop."
+      },
+      {
+        "word": "instructor",
+        "ipa": "/ɪnˈstrʌk.tər/",
+        "pos": "n",
+        "meaning": "giảng viên, người hướng dẫn",
+        "example": "The fitness instructor demonstrated the routine."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "teach a workshop",
+        "meaning": "đứng lớp/giảng dạy một buổi hội thảo"
+      },
+      {
+        "phrase": "send an email to someone",
+        "meaning": "gửi email cho ai đó"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu hỏi 'Where' với câu trả lời hướng dẫn kiểm tra nguồn thông tin",
+        "rule": "Where is X? -> Check your email / It was sent to you",
+        "analysis": "Rất phổ biến trong đề thi: câu trả lời không đưa ra phòng ốc cụ thể mà hướng dẫn đối phương mở email, tài liệu hoặc hỏi người phụ trách."
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "Why are we moving these sweaters to the back of the store?",
+    "questionTextVi": "Tại sao chúng ta lại chuyển những chiếc áo len này ra phía sau cửa hàng?",
+    "options": {
+      "A": "In the new shopping mall.",
+      "B": "Yes, they come in other colors.",
+      "C": "Our spring merchandise is arriving soon."
+    },
+    "optionsVi": {
+      "A": "Trong trung tâm thương mại mới.",
+      "B": "Vâng, chúng có các màu sắc khác nữa.",
+      "C": "Hàng hóa mùa xuân của chúng ta sắp được chuyển đến rồi."
+    },
+    "correctAnswer": "C",
+    "explanation": "Câu hỏi lý do 'Why are we moving these sweaters...?'. Phương án (C) 'Our spring merchandise is arriving soon' giải thích lý do thuyết phục: hàng thời trang mùa xuân sắp về nên cần dọn chỗ ở phía trước và chuyển đồ len mùa đông về phía sau. (A) trả lời 'Where'; (B) bẫy trả lời Yes cho câu hỏi Why.",
+    "transcript": "M-Cn Why are we moving these sweaters to the back of the store? W-Am (A) In the new shopping mall. (B) Yes, they come in other colors. (C) Our spring merchandise is arriving soon.",
+    "transcriptVi": "Nam: Tại sao chúng ta lại dọn mấy chiếc áo len này ra sau cửa hàng? Nữ: (A) Ở trung tâm mua sắm mới. (B) Vâng, có màu khác nữa. (C) Hàng hóa mùa xuân sắp nhập về rồi.",
+    "vocabulary": [
+      {
+        "word": "sweater",
+        "ipa": "/ˈswet.ər/",
+        "pos": "n",
+        "meaning": "áo len",
+        "example": "Cashmere sweaters are on special promotion."
+      },
+      {
+        "word": "merchandise",
+        "ipa": "/ˈmɜː.tʃən.daɪs/",
+        "pos": "n",
+        "meaning": "hàng hóa thương mại",
+        "example": "The shop carries a vast array of sporting merchandise."
+      },
+      {
+        "word": "back of the store",
+        "ipa": "/bæk əv ðə stɔːr/",
+        "pos": "phr",
+        "meaning": "khu vực phía sau cửa hàng",
+        "example": "Fitting rooms are located at the back of the store."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "spring merchandise",
+        "meaning": "hàng hóa bộ sưu tập mùa xuân"
+      },
+      {
+        "phrase": "arrive soon",
+        "meaning": "sắp cập bến/sắp chuyển đến nơi"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Thì Hiện tại tiếp diễn chỉ tương lai gần (Present Continuous for Near Future)",
+        "rule": "S + is/are + arriving soon",
+        "analysis": "Diễn tả một sự việc đã được lên lịch trình chắc chắn sẽ xảy ra trong tương lai gần."
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "Would you be interested in working on some of these contracts?",
+    "questionTextVi": "Bạn có hứng thú phụ trách một vài hợp đồng này không?",
+    "options": {
+      "A": "Thank you for meeting me.",
+      "B": "A contact lens prescription.",
+      "C": "I have very limited time."
+    },
+    "optionsVi": {
+      "A": "Cảm ơn vì đã gặp tôi.",
+      "B": "Đơn kính áp tròng.",
+      "C": "Tôi đang có rất ít thời gian rảnh."
+    },
+    "correctAnswer": "C",
+    "explanation": "Lời đề nghị công việc 'Would you be interested in working on some of these contracts?'. Phương án (C) 'I have very limited time' là lời từ chối khéo léo (vì quỹ thời gian quá hạn hẹp nên không thể nhận thêm việc). (A) là câu cảm ơn khi gặp mặt; (B) bẫy từ đồng âm 'contracts' -> 'contact lens'.",
+    "transcript": "W-Br Would you be interested in working on some of these contracts? M-Au (A) Thank you for meeting me. (B) A contact lens prescription. (C) I have very limited time.",
+    "transcriptVi": "Nữ: Bạn có hứng thú làm việc với một số hợp đồng này không? Nam: (A) Cảm ơn đã gặp tôi. (B) Đơn thuốc kính áp tròng. (C) Thời gian của tôi rất hạn chế.",
+    "vocabulary": [
+      {
+        "word": "contract",
+        "ipa": "/ˈkɒn.trækt/",
+        "pos": "n",
+        "meaning": "hợp đồng giao kèo",
+        "example": "The lawyer reviewed all contract clauses."
+      },
+      {
+        "word": "prescription",
+        "ipa": "/prɪˈskrɪp.ʃən/",
+        "pos": "n",
+        "meaning": "đơn thuốc, toa thuốc/kính",
+        "example": "You need a prescription to buy this medication."
+      },
+      {
+        "word": "limited",
+        "ipa": "/ˈlɪm.ɪ.tɪd/",
+        "pos": "adj",
+        "meaning": "có hạn, hạn chế",
+        "example": "We have limited resources for this campaign."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "work on a contract",
+        "meaning": "làm việc/xử lý hồ sơ hợp đồng"
+      },
+      {
+        "phrase": "limited time",
+        "meaning": "thời gian có hạn"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Bẫy từ phát âm gần giống (Near-homophone Trap)",
+        "rule": "contract /ˈkɒntrækt/ vs contact /ˈkɒntækt/",
+        "analysis": "Thí sinh không chú ý dễ bị phương án (B) đánh lừa vì âm thanh tương đồng giữa 'contract' và 'contact lens'."
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "part": 2,
+    "partName": "Part 2: Question - Response",
+    "audio": "assets/audio/part2.mp3",
+    "questionText": "What type of job are you looking for?",
+    "questionTextVi": "Bạn đang tìm kiếm loại công việc như thế nào?",
+    "options": {
+      "A": "No, at ten A.M.",
+      "B": "I really like working with computers.",
+      "C": "Just a resume is needed."
+    },
+    "optionsVi": {
+      "A": "Không, vào lúc mười giờ sáng.",
+      "B": "Tôi thực sự thích làm việc với máy tính.",
+      "C": "Chỉ cần một bản sơ yếu lý lịch thôi."
+    },
+    "correctAnswer": "B",
+    "explanation": "Câu hỏi về định hướng nghề nghiệp 'What type of job are you looking for?'. Phương án (B) 'I really like working with computers' nêu rõ sở thích và lĩnh vực công việc mong muốn (ngành máy tính/công nghệ thông tin). (A) bẫy trả lời No cho câu hỏi What; (C) bẫy từ vựng liên quan 'resume' trong chủ đề xin việc.",
+    "transcript": "M-Cn What type of job are you looking for? W-Am (A) No, at ten A.M. (B) I really like working with computers. (C) Just a resume is needed.",
+    "transcriptVi": "Nam: Bạn đang tìm loại công việc nào? Nữ: (A) Không, vào lúc 10 giờ sáng. (B) Tôi rất thích làm việc với máy tính. (C) Chỉ cần nộp sơ yếu lý lịch.",
+    "vocabulary": [
+      {
+        "word": "look for",
+        "ipa": "/lʊk fɔːr/",
+        "pos": "phr v",
+        "meaning": "tìm kiếm",
+        "example": "She is actively looking for job openings."
+      },
+      {
+        "word": "resume",
+        "ipa": "/ˈrez.juː.meɪ/",
+        "pos": "n",
+        "meaning": "sơ yếu lý lịch, hồ sơ xin việc",
+        "example": "Submit your resume and cover letter."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "look for a job",
+        "meaning": "tìm việc làm"
+      },
+      {
+        "phrase": "work with computers",
+        "meaning": "làm việc trong lĩnh vực máy tính"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cấu trúc diễn tả sở thích với 'like + V-ing'",
+        "rule": "S + like + V-ing / to V",
+        "analysis": "Dùng để trả lời gián tiếp cho câu hỏi về công việc mong muốn: nêu rõ sở thích làm việc trong môi trường công nghệ."
+      }
+    ]
+  }
+]

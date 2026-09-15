@@ -1,0 +1,958 @@
+[
+  {
+    "id": 131,
+    "part": 6,
+    "partName": "Part 6: Text Completion",
+    "passageId": "p6_1",
+    "passageTitle": "Announcement: Maxley Heights Center for Horticulture",
+    "passageText": "Come to the Maxley Heights Center for Horticulture and learn how to create a beautiful, eco-friendly garden for your home or business. [131]. We will teach you how to plant a rain garden, which is simply a shallow sunken garden [132] a special soil mix to filter pollutants from rainwater flowing from nearby roads and rooftops. These gardens can be landscaped with native plants and flowers. [133], rain gardens are always beneficial to the local environment. Among other things, [134] improve drainage and protect rivers and streams. To register, visit www.maxley-horticulture.org.",
+    "passageTextVi": "Hãy đến với Trung tâm Làm vườn Maxley Heights và học cách tạo ra một khu vườn tuyệt đẹp, thân thiện với môi trường cho gia đình hoặc doanh nghiệp của bạn. [131]. Chúng tôi sẽ hướng dẫn bạn cách trồng một 'vườn mưa', đơn giản là một khu vườn trũng nông sử dụng hỗn hợp đất đặc biệt để lọc các chất ô nhiễm từ nước mưa chảy ra từ các con đường và mái nhà lân cận. Những khu vườn này có thể được tạo cảnh quan bằng các loài cây và hoa bản địa. [133], các vườn mưa luôn mang lại lợi ích cho môi trường địa phương. Trong số nhiều lợi ích khác, [134] cải thiện khả năng thoát nước và bảo vệ các dòng sông, con suối. Để đăng ký, vui lòng truy cập www.maxley-horticulture.org.",
+    "pageImage": "assets/images/rc_page_5.png",
+    "questionText": "Select the best answer for blank [131]:",
+    "questionTextVi": "Chọn câu văn phù hợp nhất để điền vào chỗ trống [131]:",
+    "options": {
+      "A": "Children of all ages will enjoy the new exhibits.",
+      "B": "Learn about rainfall patterns across the region.",
+      "C": "Build a set of simple patio furniture with easy-to-acquire materials.",
+      "D": "Next Saturday at 4 P.M., we are hosting a free workshop for the public."
+    },
+    "optionsVi": {
+      "A": "Trẻ em ở mọi lứa tuổi sẽ thích thú với các khu triển lãm mới.",
+      "B": "Tìm hiểu về các mô hình lượng mưa trên toàn khu vực.",
+      "C": "Đóng một bộ đồ nội thất sân vườn đơn giản bằng vật liệu dễ tìm.",
+      "D": "Thứ Bảy tới vào lúc 4 giờ chiều, chúng tôi sẽ tổ chức một buổi hội thảo miễn phí cho cộng đồng."
+    },
+    "correctAnswer": "D",
+    "explanation": "Câu trước mời gọi mọi người đến trung tâm học làm vườn: 'Come to the Maxley Heights Center for Horticulture and learn...'. Câu liền sau giới thiệu nội dung buổi học: 'We will teach you how to plant a rain garden...'. Do đó, câu liên kết hợp lý nhất về thời gian và sự kiện là (D): 'Next Saturday at 4 P.M., we are hosting a free workshop for the public.' (Vào thứ Bảy tới lúc 4 giờ chiều, chúng tôi tổ chức buổi hội thảo miễn phí cho công chúng).",
+    "vocabulary": [
+      {
+        "word": "horticulture",
+        "ipa": "/ˈhɔː.tɪˌkʌl.tʃər/",
+        "pos": "n",
+        "meaning": "nghề làm vườn, nghệ thuật làm vườn",
+        "example": "She studied horticulture at the local agricultural college."
+      },
+      {
+        "word": "eco-friendly",
+        "ipa": "/ˌiː.kəʊˈfrend.li/",
+        "pos": "adj",
+        "meaning": "thân thiện với môi trường",
+        "example": "We use eco-friendly gardening techniques."
+      },
+      {
+        "word": "shallow",
+        "ipa": "/ˈʃæl.əʊ/",
+        "pos": "adj",
+        "meaning": "nông, cạn",
+        "example": "A shallow basin was dug for the pond."
+      },
+      {
+        "word": "pollutant",
+        "ipa": "/pəˈluː.tənt/",
+        "pos": "n",
+        "meaning": "chất gây ô nhiễm",
+        "example": "Plants absorb hazardous pollutants from the air."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "eco-friendly garden",
+        "meaning": "khu vườn thân thiện với môi trường"
+      },
+      {
+        "phrase": "host a workshop",
+        "meaning": "tổ chức một buổi hội thảo/tập huấn"
+      }
+    ],
+    "grammarPoints": [
+      {
+        "title": "Chọn câu điền vào đoạn văn (Sentence Insertion)",
+        "content": "Cần dựa vào tính mạch lạc (coherence). Câu điền vào phải kết nối giữa lời mời tham quan ở câu trước và nội dung giảng dạy ('We will teach you...') ở câu sau."
+      }
+    ]
+  },
+  {
+    "id": 132,
+    "part": 6,
+    "partName": "Part 6: Text Completion",
+    "passageId": "p6_1",
+    "passageTitle": "Announcement: Maxley Heights Center for Horticulture",
+    "passageText": "Come to the Maxley Heights Center for Horticulture and learn how to create a beautiful, eco-friendly garden for your home or business. [131]. We will teach you how to plant a rain garden, which is simply a shallow sunken garden [132] a special soil mix to filter pollutants from rainwater flowing from nearby roads and rooftops. These gardens can be landscaped with native plants and flowers. [133], rain gardens are always beneficial to the local environment. Among other things, [134] improve drainage and protect rivers and streams. To register, visit www.maxley-horticulture.org.",
+    "passageTextVi": "Hãy đến với Trung tâm Làm vườn Maxley Heights và học cách tạo ra một khu vườn tuyệt đẹp, thân thiện với môi trường cho gia đình hoặc doanh nghiệp của bạn. [131]. Chúng tôi sẽ hướng dẫn bạn cách trồng một 'vườn mưa', đơn giản là một khu vườn trũng nông sử dụng hỗn hợp đất đặc biệt để lọc các chất ô nhiễm từ nước mưa chảy ra từ các con đường và mái nhà lân cận...",
+    "pageImage": "assets/images/rc_page_5.png",
+    "questionText": "Select the best answer for blank [132]:",
+    "questionTextVi": "Chọn phương án phù hợp nhất cho chỗ trống [132]:",
+    "options": {
+      "A": "to use",
+      "B": "used to",
+      "C": "by using",
+      "D": "that uses"
+    },
+    "optionsVi": {
+      "A": "để sử dụng",
+      "B": "đã từng / quen với",
+      "C": "bằng cách sử dụng",
+      "D": "mà sử dụng (mệnh đề quan hệ)"
+    },
+    "correctAnswer": "D",
+    "explanation": "Chỗ trống cần một mệnh đề quan hệ để bổ nghĩa cho danh từ đi trước 'a shallow sunken garden' (một khu vườn trũng nông). Đại từ quan hệ 'that' thay thế cho khu vườn và làm chủ ngữ cho động từ 'uses': 'that uses a special soil mix' (mà sử dụng một hỗn hợp đất đặc biệt). Vì vậy chọn (D).",
+    "vocabulary": [
+      {
+        "word": "sunken",
+        "ipa": "/ˈsʌŋ.kən/",
+        "pos": "adj",
+        "meaning": "trũng xuống, chìm xuống",
+        "example": "They relaxed in the sunken seating area."
+      },
+      {
+        "word": "filter",
+        "ipa": "/ˈfɪl.tər/",
+        "pos": "v",
+        "meaning": "lọc",
+        "example": "The membrane filters impurities from water."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "special soil mix",
+        "meaning": "hỗn hợp đất chuyên dụng"
+      },
+      {
+        "phrase": "filter pollutants",
+        "meaning": "lọc chất ô nhiễm"
+      }
+    ],
+    "grammarPoints": [
+      {
+        "title": "Mệnh đề quan hệ xác định (Defining Relative Clause)",
+        "content": "Sử dụng 'that' làm đại từ quan hệ thay thế cho danh từ chỉ vật số ít 'garden' và đóng vai trò chủ ngữ đi cùng động từ chia số ít 'uses'."
+      }
+    ]
+  },
+  {
+    "id": 133,
+    "part": 6,
+    "partName": "Part 6: Text Completion",
+    "passageId": "p6_1",
+    "passageTitle": "Announcement: Maxley Heights Center for Horticulture",
+    "passageText": "Come to the Maxley Heights Center for Horticulture and learn how to create a beautiful, eco-friendly garden for your home or business. [131]. We will teach you how to plant a rain garden, which is simply a shallow sunken garden [132] a special soil mix to filter pollutants from rainwater flowing from nearby roads and rooftops. These gardens can be landscaped with native plants and flowers. [133], rain gardens are always beneficial to the local environment. Among other things, [134] improve drainage and protect rivers and streams. To register, visit www.maxley-horticulture.org.",
+    "passageTextVi": "Hãy đến với Trung tâm Làm vườn Maxley Heights... Những khu vườn này có thể được tạo cảnh quan bằng các loài cây và hoa bản địa. [133], các vườn mưa luôn mang lại lợi ích cho môi trường địa phương. Trong số nhiều lợi ích khác, [134] cải thiện khả năng thoát nước...",
+    "pageImage": "assets/images/rc_page_5.png",
+    "questionText": "Select the best answer for blank [133]:",
+    "questionTextVi": "Chọn phương án phù hợp nhất cho chỗ trống [133]:",
+    "options": {
+      "A": "Best of all",
+      "B": "For example",
+      "C": "In any event",
+      "D": "As a matter of fact"
+    },
+    "optionsVi": {
+      "A": "Tuyệt vời nhất là / Điểm cộng lớn nhất là",
+      "B": "Ví dụ như",
+      "C": "Dù trong bất kỳ tình huống nào",
+      "D": "Trên thực tế / Thực ra"
+    },
+    "correctAnswer": "A",
+    "explanation": "Đoạn văn đang liệt kê các ưu điểm của vườn mưa (đẹp, trồng cây bản địa, có ích cho môi trường). Cụm liên từ (A) 'Best of all' (Tuyệt vời nhất là / Điều đáng mừng nhất là) dùng để giới thiệu điểm nổi bật và giá trị nhất: 'Best of all, rain gardens are always beneficial to the local environment.'",
+    "vocabulary": [
+      {
+        "word": "beneficial",
+        "ipa": "/ˌben.ɪˈfɪʃ.əl/",
+        "pos": "adj",
+        "meaning": "có lợi, mang lại lợi ích",
+        "example": "A balanced diet is beneficial to overall health."
+      },
+      {
+        "word": "native",
+        "ipa": "/ˈneɪ.tɪv/",
+        "pos": "adj",
+        "meaning": "bản địa, tự nhiên tại địa phương",
+        "example": "Plant native species to conserve water."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "best of all",
+        "meaning": "tuyệt vời nhất là, điều tốt nhất là"
+      },
+      {
+        "phrase": "beneficial to the environment",
+        "meaning": "có lợi cho môi trường"
+      }
+    ],
+    "grammarPoints": [
+      {
+        "title": "Liên từ chuyển tiếp (Transition Phrases)",
+        "content": "'Best of all' đứng đầu câu bổ nghĩa cho toàn bộ mệnh đề, nhấn mạnh mặt tích cực nhất trong chuỗi thông tin."
+      }
+    ]
+  },
+  {
+    "id": 134,
+    "part": 6,
+    "partName": "Part 6: Text Completion",
+    "passageId": "p6_1",
+    "passageTitle": "Announcement: Maxley Heights Center for Horticulture",
+    "passageText": "Come to the Maxley Heights Center for Horticulture and learn how to create a beautiful, eco-friendly garden for your home or business. [131]. We will teach you how to plant a rain garden, which is simply a shallow sunken garden [132] a special soil mix to filter pollutants from rainwater flowing from nearby roads and rooftops. These gardens can be landscaped with native plants and flowers. [133], rain gardens are always beneficial to the local environment. Among other things, [134] improve drainage and protect rivers and streams. To register, visit www.maxley-horticulture.org.",
+    "passageTextVi": "Hãy đến với Trung tâm Làm vườn Maxley Heights... Trong số nhiều lợi ích khác, [134] cải thiện khả năng thoát nước và bảo vệ các dòng sông, con suối...",
+    "pageImage": "assets/images/rc_page_5.png",
+    "questionText": "Select the best answer for blank [134]:",
+    "questionTextVi": "Chọn phương án phù hợp nhất cho chỗ trống [134]:",
+    "options": {
+      "A": "we",
+      "B": "they",
+      "C": "both",
+      "D": "yours"
+    },
+    "optionsVi": {
+      "A": "chúng tôi",
+      "B": "chúng (các khu vườn mưa)",
+      "C": "cả hai",
+      "D": "của bạn"
+    },
+    "correctAnswer": "B",
+    "explanation": "Chỗ trống cần một đại từ nhân xưng chủ ngữ số nhiều thay thế cho danh từ 'rain gardens' ở câu liền trước: 'Among other things, they improve drainage and protect rivers and streams' (Trong số nhiều điều khác, chúng cải thiện khả năng thoát nước và bảo vệ các dòng sông). Do đó chọn (B) 'they'.",
+    "vocabulary": [
+      {
+        "word": "drainage",
+        "ipa": "/ˈdreɪ.nɪdʒ/",
+        "pos": "n",
+        "meaning": "sự thoát nước, hệ thống tiêu nước",
+        "example": "The area suffers from poor drainage after heavy rains."
+      },
+      {
+        "word": "stream",
+        "ipa": "/striːm/",
+        "pos": "n",
+        "meaning": "con suối",
+        "example": "Clear water flows through the mountain stream."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "among other things",
+        "meaning": "trong số những điều khác, cùng với nhiều yếu tố khác"
+      },
+      {
+        "phrase": "improve drainage",
+        "meaning": "cải thiện sự thoát nước"
+      }
+    ],
+    "grammarPoints": [
+      {
+        "title": "Đại từ nhân xưng thay thế (Pronoun Reference)",
+        "content": "Đại từ 'they' quy chiếu chính xác về danh từ số nhiều 'rain gardens' đã nhắc ở câu trước."
+      }
+    ]
+  },
+  {
+    "id": 135,
+    "part": 6,
+    "partName": "Part 6: Text Completion",
+    "passageId": "p6_2",
+    "passageTitle": "Letter: Tokyo Fashion Week Opening Gala",
+    "passageText": "31 July\nAkwasi Dombo\nFourth Avenue GA 105\nAccra, Ghana\n\nDear Mr. Dombo,\nThank you for your support in helping me to plan the opening gala for Tokyo's fashion week. The event was a huge success, and I was honored to work with you. I know that our attendees follow your work closely, and they loved the [135] designs you contributed for this event. Your designs received a lot of [136] on social media. Shows like this will keep Tokyo on the map as a premier fashion centre. [137]. I realize that the multiple delays made the planning no easy task. The auction [138] our Young Designers Award program is coming up soon and I look forward to working with you on that as well.\n\nSincerely,\nAsahi Ishioka\nDirector, Japanese Guild of Fashion Designers",
+    "passageTextVi": "Ngày 31 tháng 7\nAkwasi Dombo\nĐại lộ Thứ tư GA 105\nAccra, Ghana\n\nKính gửi ông Dombo,\nCảm ơn sự hỗ trợ của ông trong việc giúp tôi lên kế hoạch cho đêm dạ tiệc khai mạc tuần lễ thời trang Tokyo. Sự kiện đã thành công vang dội, và tôi rất vinh dự được làm việc cùng ông. Tôi biết rằng những người tham dự theo dõi rất sát sao các tác phẩm của ông, và họ vô cùng yêu thích những thiết kế [135] mà ông đã đóng góp cho sự kiện này. Các thiết kế của ông đã nhận được rất nhiều [136] trên mạng xã hội. Những buổi trình diễn như thế này sẽ giữ vững vị thế của Tokyo trên bản đồ như một trung tâm thời trang hàng đầu. [137]. Tôi nhận thấy rằng nhiều sự trì hoãn đã khiến việc lên kế hoạch không hề dễ dàng. Buổi đấu giá [138] chương trình Giải thưởng Nhà thiết kế Trẻ của chúng tôi sắp diễn ra và tôi rất mong được tiếp tục làm việc cùng ông.\n\nTrân trọng,\nAsahi Ishioka\nGiám đốc, Hiệp hội các Nhà thiết kế Thời trang Nhật Bản",
+    "pageImage": "assets/images/rc_page_6.png",
+    "questionText": "Select the best answer for blank [135]:",
+    "questionTextVi": "Chọn phương án phù hợp nhất cho chỗ trống [135]:",
+    "options": {
+      "A": "amazed",
+      "B": "amazement",
+      "C": "amazing",
+      "D": "amazingly"
+    },
+    "optionsVi": {
+      "A": "kinh ngạc (cảm xúc con người)",
+      "B": "sự kinh ngạc (danh từ)",
+      "C": "tuyệt vời, đáng kinh ngạc (tính từ chủ động chỉ tính chất sự vật)",
+      "D": "một cách đáng kinh ngạc (phó từ)"
+    },
+    "correctAnswer": "C",
+    "explanation": "Chỗ trống đứng trước danh từ 'designs' (những mẫu thiết kế) nên cần một tính từ miêu tả tính chất đặc sắc của vật. Phân từ 'amazing' (tuyệt vời, đáng kinh ngạc) là tính từ phù hợp bổ nghĩa cho 'designs'. Dạng bị động 'amazed' chỉ dùng cho cảm xúc của người.",
+    "vocabulary": [
+      {
+        "word": "gala",
+        "ipa": "/ˈɡɑː.lə/",
+        "pos": "n",
+        "meaning": "đêm dạ hội, lễ hội đặc biệt",
+        "example": "The annual charity gala was held at the grand hotel."
+      },
+      {
+        "word": "attendee",
+        "ipa": "/ə.tenˈdiː/",
+        "pos": "n",
+        "meaning": "người tham dự",
+        "example": "Over five hundred attendees registered for the event."
+      },
+      {
+        "word": "contribute",
+        "ipa": "/kənˈtrɪb.juːt/",
+        "pos": "v",
+        "meaning": "đóng góp, cống hiến",
+        "example": "Local artists contributed works for the exhibition."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "opening gala",
+        "meaning": "đêm hội khai mạc"
+      },
+      {
+        "phrase": "huge success",
+        "meaning": "thành công vang dội"
+      }
+    ],
+    "grammarPoints": [
+      {
+        "title": "Vị trí của Tính từ trước Danh từ",
+        "content": "Trước danh từ 'designs' cần tính từ đuôi '-ing' ('amazing') để chỉ bản chất gây ấn tượng của sự vật."
+      }
+    ]
+  },
+  {
+    "id": 136,
+    "part": 6,
+    "partName": "Part 6: Text Completion",
+    "passageId": "p6_2",
+    "passageTitle": "Letter: Tokyo Fashion Week Opening Gala",
+    "passageText": "31 July\nAkwasi Dombo\nFourth Avenue GA 105\nAccra, Ghana\n\nDear Mr. Dombo,\nThank you for your support in helping me to plan the opening gala for Tokyo's fashion week. The event was a huge success, and I was honored to work with you. I know that our attendees follow your work closely, and they loved the [135] designs you contributed for this event. Your designs received a lot of [136] on social media. Shows like this will keep Tokyo on the map as a premier fashion centre. [137]. I realize that the multiple delays made the planning no easy task. The auction [138] our Young Designers Award program is coming up soon and I look forward to working with you on that as well.\n\nSincerely,\nAsahi Ishioka\nDirector, Japanese Guild of Fashion Designers",
+    "passageTextVi": "...Các thiết kế của ông đã nhận được rất nhiều [136] trên mạng xã hội. Những buổi trình diễn như thế này sẽ giữ vững vị thế của Tokyo trên bản đồ như một trung tâm thời trang hàng đầu...",
+    "pageImage": "assets/images/rc_page_6.png",
+    "questionText": "Select the best answer for blank [136]:",
+    "questionTextVi": "Chọn phương án phù hợp nhất cho chỗ trống [136]:",
+    "options": {
+      "A": "attention",
+      "B": "proposals",
+      "C": "innovation",
+      "D": "criticism"
+    },
+    "optionsVi": {
+      "A": "sự chú ý, quan tâm",
+      "B": "các đề xuất",
+      "C": "sự đổi mới sáng tạo",
+      "D": "sự chỉ trích"
+    },
+    "correctAnswer": "A",
+    "explanation": "Cụm 'receive a lot of attention on social media' mang ý nghĩa tự nhiên và chính xác nhất trong ngữ cảnh những mẫu thiết kế thời trang được yêu thích và lan tỏa rộng rãi trên mạng xã hội. Các phương án khác không phù hợp ngữ cảnh khen ngợi.",
+    "vocabulary": [
+      {
+        "word": "attention",
+        "ipa": "/əˈten.ʃən/",
+        "pos": "n",
+        "meaning": "sự chú ý, quan tâm",
+        "example": "His new project attracted significant public attention."
+      },
+      {
+        "word": "premier",
+        "ipa": "/ˈprem.i.ər/",
+        "pos": "adj",
+        "meaning": "hàng đầu, bậc nhất",
+        "example": "This is one of the premier research institutions in Europe."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "receive attention",
+        "meaning": "nhận được sự chú ý"
+      },
+      {
+        "phrase": "on social media",
+        "meaning": "trên mạng xã hội"
+      }
+    ],
+    "grammarPoints": [
+      {
+        "title": "Từ vựng phù hợp ngữ cảnh khen ngợi",
+        "content": "'receive attention' (nhận được sự chú ý) là collocation chuẩn đi cùng mạng xã hội khi nội dung thành công."
+      }
+    ]
+  },
+  {
+    "id": 137,
+    "part": 6,
+    "partName": "Part 6: Text Completion",
+    "passageId": "p6_2",
+    "passageTitle": "Letter: Tokyo Fashion Week Opening Gala",
+    "passageText": "31 July\nAkwasi Dombo\nFourth Avenue GA 105\nAccra, Ghana\n\nDear Mr. Dombo,\nThank you for your support in helping me to plan the opening gala for Tokyo's fashion week. The event was a huge success, and I was honored to work with you. I know that our attendees follow your work closely, and they loved the [135] designs you contributed for this event. Your designs received a lot of [136] on social media. Shows like this will keep Tokyo on the map as a premier fashion centre. [137]. I realize that the multiple delays made the planning no easy task. The auction [138] our Young Designers Award program is coming up soon and I look forward to working with you on that as well.\n\nSincerely,\nAsahi Ishioka\nDirector, Japanese Guild of Fashion Designers",
+    "passageTextVi": "...Những buổi trình diễn như thế này sẽ giữ vững vị thế của Tokyo trên bản đồ như một trung tâm thời trang hàng đầu. [137]. Tôi nhận thấy rằng nhiều sự trì hoãn đã khiến việc lên kế hoạch không hề dễ dàng...",
+    "pageImage": "assets/images/rc_page_6.png",
+    "questionText": "Select the best answer for blank [137]:",
+    "questionTextVi": "Chọn câu văn phù hợp nhất để điền vào chỗ trống [137]:",
+    "options": {
+      "A": "Several other events have gone surprisingly well.",
+      "B": "Thank you also for your flexibility in planning the event.",
+      "C": "Please stop by our office the next time you are in the city.",
+      "D": "Tokyo is a top tourism destination for many reasons."
+    },
+    "optionsVi": {
+      "A": "Một vài sự kiện khác cũng đã diễn ra tốt đẹp đến bất ngờ.",
+      "B": "Cũng xin cảm ơn ông vì sự linh hoạt trong quá trình lên kế hoạch cho sự kiện.",
+      "C": "Xin vui lòng ghé qua văn phòng chúng tôi vào lần tới khi ông đến thành phố.",
+      "D": "Tokyo là một điểm đến du lịch hàng đầu vì nhiều lý do."
+    },
+    "correctAnswer": "B",
+    "explanation": "Câu ngay phía sau viết: 'I realize that the multiple delays made the planning no easy task' (Tôi nhận thấy việc bị trì hoãn nhiều lần đã khiến công tác chuẩn bị không hề dễ dàng). Khi có nhiều sự chậm trễ, việc đối tác tỏ ra linh hoạt là điều đáng cảm ơn nhất. Vì thế câu (B) 'Thank you also for your flexibility in planning the event' là sự kết nối hoàn hảo nhất.",
+    "vocabulary": [
+      {
+        "word": "flexibility",
+        "ipa": "/ˌflek.səˈbɪl.ə.ti/",
+        "pos": "n",
+        "meaning": "sự linh hoạt, mềm dẻo",
+        "example": "We appreciated the staff's flexibility during schedule changes."
+      },
+      {
+        "word": "delay",
+        "ipa": "/dɪˈleɪ/",
+        "pos": "n",
+        "meaning": "sự trì hoãn, chậm trễ",
+        "example": "Flights suffered delays due to severe fog."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "flexibility in planning",
+        "meaning": "sự linh hoạt trong việc lên kế hoạch"
+      },
+      {
+        "phrase": "no easy task",
+        "meaning": "nhiệm vụ không hề dễ dàng"
+      }
+    ],
+    "grammarPoints": [
+      {
+        "title": "Tính mạch lạc giữa các ý (Coherence & Logic)",
+        "content": "Sự linh hoạt (flexibility) tương ứng trực tiếp với sự thấu hiểu các trở ngại/trì hoãn (delays)."
+      }
+    ]
+  },
+  {
+    "id": 138,
+    "part": 6,
+    "partName": "Part 6: Text Completion",
+    "passageId": "p6_2",
+    "passageTitle": "Letter: Tokyo Fashion Week Opening Gala",
+    "passageText": "31 July\nAkwasi Dombo\nFourth Avenue GA 105\nAccra, Ghana\n\nDear Mr. Dombo,\nThank you for your support in helping me to plan the opening gala for Tokyo's fashion week. The event was a huge success, and I was honored to work with you. I know that our attendees follow your work closely, and they loved the [135] designs you contributed for this event. Your designs received a lot of [136] on social media. Shows like this will keep Tokyo on the map as a premier fashion centre. [137]. I realize that the multiple delays made the planning no easy task. The auction [138] our Young Designers Award program is coming up soon and I look forward to working with you on that as well.\n\nSincerely,\nAsahi Ishioka\nDirector, Japanese Guild of Fashion Designers",
+    "passageTextVi": "...Buổi đấu giá [138] chương trình Giải thưởng Nhà thiết kế Trẻ của chúng tôi sắp diễn ra và tôi rất mong được tiếp tục làm việc cùng ông...",
+    "pageImage": "assets/images/rc_page_6.png",
+    "questionText": "Select the best answer for blank [138]:",
+    "questionTextVi": "Chọn phương án phù hợp nhất cho chỗ trống [138]:",
+    "options": {
+      "A": "will benefit",
+      "B": "to benefit",
+      "C": "has benefited",
+      "D": "benefits"
+    },
+    "optionsVi": {
+      "A": "sẽ mang lại lợi ích cho (thì tương lai)",
+      "B": "nhằm mang lại lợi ích / hỗ trợ cho (động từ nguyên mẫu chỉ mục đích)",
+      "C": "đã mang lại lợi ích cho (hiện tại hoàn thành)",
+      "D": "mang lại lợi ích cho (hiện tại đơn)"
+    },
+    "correctAnswer": "B",
+    "explanation": "Câu này đã có động từ chính là 'is coming up soon' (đang sắp diễn ra). Vì vậy chỗ trống không thể chia như một vị ngữ thứ hai mà phải dùng dạng to-infinitive chỉ mục đích bổ nghĩa cho danh từ chủ ngữ 'The auction': 'The auction to benefit our Young Designers Award program...' (Buổi đấu giá nhằm gây quỹ/hỗ trợ chương trình Giải thưởng Nhà thiết kế Trẻ). Do đó chọn (B).",
+    "vocabulary": [
+      {
+        "word": "auction",
+        "ipa": "/ˈɔːk.ʃən/",
+        "pos": "n",
+        "meaning": "buổi đấu giá",
+        "example": "The painting was sold at an art auction."
+      },
+      {
+        "word": "look forward to",
+        "ipa": "/lʊk ˈfɔː.wəd tuː/",
+        "pos": "phrasal verb",
+        "meaning": "trông đợi, mong chờ",
+        "example": "I look forward to meeting you again soon."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "auction to benefit",
+        "meaning": "buổi đấu giá nhằm gây quỹ/giúp ích cho"
+      },
+      {
+        "phrase": "look forward to + V-ing",
+        "meaning": "mong đợi làm việc gì"
+      }
+    ],
+    "grammarPoints": [
+      {
+        "title": "To-Infinitive bổ nghĩa cho Danh từ chỉ mục đích",
+        "content": "Cụm danh từ 'The auction to benefit X' có cấu trúc Noun + To-V để chỉ mục đích của danh từ đó trong khi câu đã có vị ngữ chính 'is coming up'."
+      }
+    ]
+  },
+  {
+    "id": 139,
+    "part": 6,
+    "partName": "Part 6: Text Completion",
+    "passageId": "p6_3",
+    "passageTitle": "E-mail: Mena Chin Library Card Expiration",
+    "passageText": "From: Patron Services <patronservices@menachinlibrary.org>\nTo: Edgar Hughes <hughese98@villachesta.com>\nSubject: Card expiration date approaching\nDate: December 3\n\nDear Mr. Hughes,\nPlease be advised that your Mena Chin Library card will expire one month from today. [139] must be renewed if you intend to keep your membership for the coming year. [140]. This can be done at the information desk at any branch location. [141] you decide to close your account, no action is necessary. Failure to complete your renewal by the [142] date will result in the expiration of your library privileges.\n\nIf you have any questions about this notice, or about general library services, you may reply directly to this e-mail.\n\nSincerely,\nPatron Services",
+    "passageTextVi": "Từ: Dịch vụ Độc giả <patronservices@menachinlibrary.org>\nĐến: Edgar Hughes <hughese98@villachesta.com>\nTiêu đề: Ngày hết hạn thẻ sắp đến\nNgày: 3 tháng 12\n\nKính gửi ông Hughes,\nXin lưu ý rằng thẻ Thư viện Mena Chin của ông sẽ hết hạn sau một tháng nữa kể từ hôm nay. [139] phải được gia hạn nếu ông có ý định duy trì tư cách thành viên cho năm tới. [140]. Việc này có thể được thực hiện tại quầy thông tin ở bất kỳ chi nhánh nào. [141] ông quyết định đóng tài khoản, ông không cần phải làm gì cả. Nếu không hoàn tất việc gia hạn trước ngày [142], các đặc quyền thư viện của ông sẽ hết hiệu lực.\n\nNếu ông có bất kỳ thắc mắc nào về thông báo này hoặc về các dịch vụ chung của thư viện, ông có thể trả lời trực tiếp email này.\n\nTrân trọng,\nBộ phận Dịch vụ Độc giả",
+    "pageImage": "assets/images/rc_page_7.png",
+    "questionText": "Select the best answer for blank [139]:",
+    "questionTextVi": "Chọn phương án phù hợp nhất cho chỗ trống [139]:",
+    "options": {
+      "A": "It",
+      "B": "You",
+      "C": "Our",
+      "D": "Each"
+    },
+    "optionsVi": {
+      "A": "Nó (đại từ số ít)",
+      "B": "Bạn (đại từ nhân xưng)",
+      "C": "Của chúng tôi (tính từ sở hữu)",
+      "D": "Mỗi một"
+    },
+    "correctAnswer": "A",
+    "explanation": "Câu trước nói về 'your Mena Chin Library card' (thẻ thư viện của bạn - danh từ số ít chỉ vật). Câu sau cần đại từ làm chủ ngữ cho thể bị động 'must be renewed' (phải được gia hạn). Thẻ thư viện phải được gia hạn nên đại từ phù hợp duy nhất là (A) 'It'.",
+    "vocabulary": [
+      {
+        "word": "expire",
+        "ipa": "/ɪkˈspaɪər/",
+        "pos": "v",
+        "meaning": "hết hạn",
+        "example": "My passport will expire next month."
+      },
+      {
+        "word": "renew",
+        "ipa": "/rɪˈnjuː/",
+        "pos": "v",
+        "meaning": "gia hạn, làm mới",
+        "example": "You must renew your driver's license every five years."
+      },
+      {
+        "word": "membership",
+        "ipa": "/ˈmem.bə.ʃɪp/",
+        "pos": "n",
+        "meaning": "tư cách thành viên",
+        "example": "Library membership is free for all residents."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "library card",
+        "meaning": "thẻ thư viện"
+      },
+      {
+        "phrase": "must be renewed",
+        "meaning": "phải được gia hạn"
+      }
+    ],
+    "grammarPoints": [
+      {
+        "title": "Đại từ chỉ vật làm chủ ngữ câu bị động",
+        "content": "'It' thay thế trực tiếp cho danh từ 'your Mena Chin Library card' làm chủ ngữ cho vị ngữ 'must be renewed'."
+      }
+    ]
+  },
+  {
+    "id": 140,
+    "part": 6,
+    "partName": "Part 6: Text Completion",
+    "passageId": "p6_3",
+    "passageTitle": "E-mail: Mena Chin Library Card Expiration",
+    "passageText": "From: Patron Services <patronservices@menachinlibrary.org>\nTo: Edgar Hughes <hughese98@villachesta.com>\nSubject: Card expiration date approaching\nDate: December 3\n\nDear Mr. Hughes,\nPlease be advised that your Mena Chin Library card will expire one month from today. [139] must be renewed if you intend to keep your membership for the coming year. [140]. This can be done at the information desk at any branch location. [141] you decide to close your account, no action is necessary. Failure to complete your renewal by the [142] date will result in the expiration of your library privileges.\n\nIf you have any questions about this notice, or about general library services, you may reply directly to this e-mail.\n\nSincerely,\nPatron Services",
+    "passageTextVi": "...Thẻ phải được gia hạn nếu ông có ý định duy trì tư cách thành viên cho năm tới. [140]. Việc này có thể được thực hiện tại quầy thông tin ở bất kỳ chi nhánh nào...",
+    "pageImage": "assets/images/rc_page_7.png",
+    "questionText": "Select the best answer for blank [140]:",
+    "questionTextVi": "Chọn câu văn phù hợp nhất để điền vào chỗ trống [140]:",
+    "options": {
+      "A": "To sign up for a card, visit your local library branch.",
+      "B": "For questions about library membership, please visit our Web site.",
+      "C": "Renewal must be completed at least one week before your card expires.",
+      "D": "You may opt out of this program at any time."
+    },
+    "optionsVi": {
+      "A": "Để đăng ký thẻ mới, hãy đến chi nhánh thư viện địa phương.",
+      "B": "Để biết thêm thông tin về tư cách thành viên, hãy truy cập trang web.",
+      "C": "Việc gia hạn phải được hoàn tất ít nhất một tuần trước khi thẻ của bạn hết hạn.",
+      "D": "Bạn có thể từ chối tham gia chương trình này bất cứ lúc nào."
+    },
+    "correctAnswer": "C",
+    "explanation": "Câu ngay sau đó là: 'This can be done at the information desk at any branch location' (Việc này có thể thực hiện tại quầy thông tin ở bất cứ chi nhánh nào). Đại từ chỉ định 'This' liên kết trực tiếp với hành động 'Renewal' (sự gia hạn) trong câu (C): 'Renewal must be completed at least one week before your card expires.'",
+    "vocabulary": [
+      {
+        "word": "renewal",
+        "ipa": "/rɪˈnjuː.əl/",
+        "pos": "n",
+        "meaning": "sự gia hạn, đổi mới",
+        "example": "The contract is subject to annual renewal."
+      },
+      {
+        "word": "branch",
+        "ipa": "/brɑːntʃ/",
+        "pos": "n",
+        "meaning": "chi nhánh",
+        "example": "The bank opened a new branch downtown."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "information desk",
+        "meaning": "quầy thông tin"
+      },
+      {
+        "phrase": "branch location",
+        "meaning": "địa điểm chi nhánh"
+      }
+    ],
+    "grammarPoints": [
+      {
+        "title": "Đại từ chỉ định liên kết (Demonstrative Reference)",
+        "content": "'This' ở câu sau quy chiếu đến đối tượng 'Renewal' được đề cập ở câu trước."
+      }
+    ]
+  },
+  {
+    "id": 141,
+    "part": 6,
+    "partName": "Part 6: Text Completion",
+    "passageId": "p6_3",
+    "passageTitle": "E-mail: Mena Chin Library Card Expiration",
+    "passageText": "From: Patron Services <patronservices@menachinlibrary.org>\nTo: Edgar Hughes <hughese98@villachesta.com>\nSubject: Card expiration date approaching\nDate: December 3\n\nDear Mr. Hughes,\nPlease be advised that your Mena Chin Library card will expire one month from today. [139] must be renewed if you intend to keep your membership for the coming year. [140]. This can be done at the information desk at any branch location. [141] you decide to close your account, no action is necessary. Failure to complete your renewal by the [142] date will result in the expiration of your library privileges.\n\nIf you have any questions about this notice, or about general library services, you may reply directly to this e-mail.\n\nSincerely,\nPatron Services",
+    "passageTextVi": "...[141] ông quyết định đóng tài khoản, ông không cần phải làm gì cả. Nếu không hoàn tất việc gia hạn trước ngày [142], các đặc quyền thư viện của ông sẽ hết hiệu lực...",
+    "pageImage": "assets/images/rc_page_7.png",
+    "questionText": "Select the best answer for blank [141]:",
+    "questionTextVi": "Chọn từ phù hợp nhất cho chỗ trống [141]:",
+    "options": {
+      "A": "Also",
+      "B": "Should",
+      "C": "Because",
+      "D": "Although"
+    },
+    "optionsVi": {
+      "A": "Ngoài ra (liên từ)",
+      "B": "Nếu (đảo ngữ câu điều kiện loại 1 với Should)",
+      "C": "Bởi vì",
+      "D": "Mặc dù"
+    },
+    "correctAnswer": "B",
+    "explanation": "Đây là hiện tượng đảo ngữ của câu điều kiện loại 1 (Inversion of conditional sentence type 1): 'Should you decide to close your account...' tương đương với 'If you decide to close your account...' (Nếu bạn quyết định đóng tài khoản, không cần thao tác nào). Do đó chọn (B) 'Should'.",
+    "vocabulary": [
+      {
+        "word": "privilege",
+        "ipa": "/ˈprɪv.əl.ɪdʒ/",
+        "pos": "n",
+        "meaning": "đặc quyền, quyền lợi",
+        "example": "Senior members enjoy special borrowing privileges."
+      },
+      {
+        "word": "inversion",
+        "ipa": "/ɪnˈvɜː.ʃən/",
+        "pos": "n",
+        "meaning": "sự đảo ngữ",
+        "example": "Inversion is frequently tested in TOEIC Part 6."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "no action is necessary",
+        "meaning": "không cần phải thực hiện hành động nào"
+      },
+      {
+        "phrase": "library privileges",
+        "meaning": "quyền lợi mượn sách thư viện"
+      }
+    ],
+    "grammarPoints": [
+      {
+        "title": "Đảo ngữ câu điều kiện loại 1 (Inversion with Should)",
+        "content": "Cấu trúc: 'Should + S + V(bare), S + will/may/can + V'. 'Should you decide...' = 'If you decide...'."
+      }
+    ]
+  },
+  {
+    "id": 142,
+    "part": 6,
+    "partName": "Part 6: Text Completion",
+    "passageId": "p6_3",
+    "passageTitle": "E-mail: Mena Chin Library Card Expiration",
+    "passageText": "From: Patron Services <patronservices@menachinlibrary.org>\nTo: Edgar Hughes <hughese98@villachesta.com>\nSubject: Card expiration date approaching\nDate: December 3\n\nDear Mr. Hughes,\nPlease be advised that your Mena Chin Library card will expire one month from today. [139] must be renewed if you intend to keep your membership for the coming year. [140]. This can be done at the information desk at any branch location. [141] you decide to close your account, no action is necessary. Failure to complete your renewal by the [142] date will result in the expiration of your library privileges.\n\nIf you have any questions about this notice, or about general library services, you may reply directly to this e-mail.\n\nSincerely,\nPatron Services",
+    "passageTextVi": "...Nếu không hoàn tất việc gia hạn trước ngày [142], các đặc quyền thư viện của ông sẽ hết hiệu lực...",
+    "pageImage": "assets/images/rc_page_7.png",
+    "questionText": "Select the best answer for blank [142]:",
+    "questionTextVi": "Chọn phương án phù hợp nhất cho chỗ trống [142]:",
+    "options": {
+      "A": "specifically",
+      "B": "specifics",
+      "C": "specified",
+      "D": "specificity"
+    },
+    "optionsVi": {
+      "A": "một cách cụ thể (trạng từ)",
+      "B": "các chi tiết cụ thể (danh từ số nhiều)",
+      "C": "được chỉ định, quy định (phân từ 2 đóng vai trò tính từ)",
+      "D": "tính cụ thể (danh từ)"
+    },
+    "correctAnswer": "C",
+    "explanation": "Chỗ trống đứng giữa mạo từ 'the' và danh từ 'date' nên cần một tính từ hoặc quá khứ phân từ mang nghĩa bị động để bổ nghĩa cho danh từ. 'The specified date' nghĩa là 'ngày đã được chỉ định/nêu rõ'. Do đó chọn phân từ (C) 'specified'.",
+    "vocabulary": [
+      {
+        "word": "specify",
+        "ipa": "/ˈspes.ɪ.faɪ/",
+        "pos": "v",
+        "meaning": "chỉ định, nêu rõ",
+        "example": "The contract specifies the exact delivery date."
+      },
+      {
+        "word": "specified",
+        "ipa": "/ˈspes.ɪ.faɪd/",
+        "pos": "adj",
+        "meaning": "được chỉ định, được ghi rõ",
+        "example": "Deliveries must be made by the specified deadline."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "specified date",
+        "meaning": "ngày đã được quy định/chỉ rõ"
+      },
+      {
+        "phrase": "failure to complete",
+        "meaning": "không thể hoàn thành"
+      }
+    ],
+    "grammarPoints": [
+      {
+        "title": "Phân từ quá khứ làm tính từ (Past Participle as Adjective)",
+        "content": "'the specified date': Past participle 'specified' đứng trước danh từ 'date' bổ nghĩa mang nét nghĩa bị động (ngày được định sẵn)."
+      }
+    ]
+  },
+  {
+    "id": 143,
+    "part": 6,
+    "partName": "Part 6: Text Completion",
+    "passageId": "p6_4",
+    "passageTitle": "Letter: Droplight Studio Photography Services",
+    "passageText": "April 7\nNaomi Burwell\n43 Waymire Road\nSouth Portland, ME 04109\n\nDear Ms. Burwell,\nI am Omar Ridha, the manager of Droplight Studio. [143]. We offer a full range of photography services for real estate professionals like you. We take pride in composing interior and exterior shots that make a property look its best. Droplight Studio spares no effort in [144] superior digital images. [145], our professional-grade equipment, lighting, and staging techniques allow us to highlight the best features of a property. And once the photo shoot is over, every image [146] expert editing. All these services come standard in every package.\n\nPlease visit our Web site to view our work as well as our pricing and scheduling information. We are happy to work with you to customize orders.\n\nSincerely,\nOmar Ridha, Droplight Studio",
+    "passageTextVi": "Ngày 7 tháng 4\nNaomi Burwell\n43 Đường Waymire\nSouth Portland, ME 04109\n\nKính gửi bà Burwell,\nTôi là Omar Ridha, người quản lý của Droplight Studio. [143]. Chúng tôi cung cấp đầy đủ các dịch vụ nhiếp ảnh cho các chuyên gia bất động sản như bà. Chúng tôi tự hào tạo nên những góc chụp nội thất và ngoại thất giúp bất động sản đạt vẻ đẹp tối ưu nhất. Droplight Studio không ngừng nỗ lực trong việc [144] những hình ảnh kỹ thuật số chất lượng vượt trội. [145], các thiết bị chuyên nghiệp, hệ thống ánh sáng và kỹ thuật dàn dựng của chúng tôi cho phép làm nổi bật những điểm đắt giá nhất của bất động sản. Và sau khi buổi chụp hình kết thúc, mỗi bức ảnh [146] sự chỉnh sửa chuyên nghiệp. Tất cả những dịch vụ này đều là tiêu chuẩn trong mọi gói chụp.\n\nXin vui lòng truy cập trang web của chúng tôi để xem tác phẩm cũng như thông tin giá cả và đặt lịch. Chúng tôi rất sẵn lòng hợp tác với bà để tùy chỉnh các gói dịch vụ.\n\nTrân trọng,\nOmar Ridha, Droplight Studio",
+    "pageImage": "assets/images/rc_page_8.png",
+    "questionText": "Select the best answer for blank [143]:",
+    "questionTextVi": "Chọn câu văn phù hợp nhất để điền vào chỗ trống [143]:",
+    "options": {
+      "A": "I would like to introduce you to our business.",
+      "B": "Great photographs can make your property stand out.",
+      "C": "We are looking forward to your visit.",
+      "D": "It was the first studio of its kind to open in this area."
+    },
+    "optionsVi": {
+      "A": "Tôi muốn giới thiệu với bà về doanh nghiệp của chúng tôi.",
+      "B": "Những bức ảnh tuyệt vời có thể làm cho bất động sản của bạn nổi bật.",
+      "C": "Chúng tôi rất mong đợi chuyến thăm của bà.",
+      "D": "Đó là studio đầu tiên thuộc loại hình này mở tại khu vực này."
+    },
+    "correctAnswer": "A",
+    "explanation": "Bức thư mở đầu bằng việc người quản lý tự xưng: 'I am Omar Ridha, the manager of Droplight Studio.' Câu liền sau giới thiệu dịch vụ: 'We offer a full range of photography services for real estate professionals like you.' Vì thế, câu liên kết tự nhiên nhất ở phần mở đầu thư chào hàng là (A): 'I would like to introduce you to our business.' (Tôi xin trân trọng giới thiệu với bà về doanh nghiệp của chúng tôi).",
+    "vocabulary": [
+      {
+        "word": "real estate",
+        "ipa": "/ˈrɪəl ɪˌsteɪt/",
+        "pos": "n",
+        "meaning": "bất động sản",
+        "example": "She works as a real estate agent in Portland."
+      },
+      {
+        "word": "compose",
+        "ipa": "/kəmˈpəʊz/",
+        "pos": "v",
+        "meaning": "sắp đặt bố cục, cấu thành",
+        "example": "The photographer composed the shot carefully."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "a full range of",
+        "meaning": "đầy đủ các loại, toàn bộ dịch vụ"
+      },
+      {
+        "phrase": "real estate professionals",
+        "meaning": "các chuyên gia bất động sản"
+      }
+    ],
+    "grammarPoints": [
+      {
+        "title": "Cấu trúc thư tiếp thị thương mại (Sales Letter Opening)",
+        "content": "'I would like to introduce...' là mẫu câu chuẩn mực để mở đầu phần giới thiệu doanh nghiệp trong thư gửi khách hàng tiềm năng."
+      }
+    ]
+  },
+  {
+    "id": 144,
+    "part": 6,
+    "partName": "Part 6: Text Completion",
+    "passageId": "p6_4",
+    "passageTitle": "Letter: Droplight Studio Photography Services",
+    "passageText": "April 7\nNaomi Burwell\n43 Waymire Road\nSouth Portland, ME 04109\n\nDear Ms. Burwell,\nI am Omar Ridha, the manager of Droplight Studio. [143]. We offer a full range of photography services for real estate professionals like you. We take pride in composing interior and exterior shots that make a property look its best. Droplight Studio spares no effort in [144] superior digital images. [145], our professional-grade equipment, lighting, and staging techniques allow us to highlight the best features of a property. And once the photo shoot is over, every image [146] expert editing. All these services come standard in every package.\n\nPlease visit our Web site to view our work as well as our pricing and scheduling information. We are happy to work with you to customize orders.\n\nSincerely,\nOmar Ridha, Droplight Studio",
+    "passageTextVi": "...Droplight Studio không ngừng nỗ lực trong việc [144] những hình ảnh kỹ thuật số chất lượng vượt trội...",
+    "pageImage": "assets/images/rc_page_8.png",
+    "questionText": "Select the best answer for blank [144]:",
+    "questionTextVi": "Chọn phương án phù hợp nhất cho chỗ trống [144]:",
+    "options": {
+      "A": "researching",
+      "B": "creating",
+      "C": "purchasing",
+      "D": "displaying"
+    },
+    "optionsVi": {
+      "A": "nghiên cứu",
+      "B": "tạo ra, chụp ảnh",
+      "C": "mua sắm",
+      "D": "trưng bày"
+    },
+    "correctAnswer": "B",
+    "explanation": "Studio nhiếp ảnh nỗ lực trong việc 'tạo ra' (creating) những hình ảnh kỹ thuật số chất lượng vượt trội. Cụm 'spare no effort in creating superior digital images' mang ý nghĩa tự nhiên và chính xác nhất. Do đó chọn (B).",
+    "vocabulary": [
+      {
+        "word": "spare no effort",
+        "ipa": "/speər nəʊ ˈef.ət/",
+        "pos": "idiom",
+        "meaning": "không tiếc công sức, nỗ lực hết mình",
+        "example": "The medical team spared no effort to save the patient."
+      },
+      {
+        "word": "superior",
+        "ipa": "/suːˈpɪə.ri.ər/",
+        "pos": "adj",
+        "meaning": "vượt trội, chất lượng cao",
+        "example": "This model offers superior performance and battery life."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "spare no effort in V-ing",
+        "meaning": "không tiếc công sức làm việc gì"
+      },
+      {
+        "phrase": "digital images",
+        "meaning": "hình ảnh kỹ thuật số"
+      }
+    ],
+    "grammarPoints": [
+      {
+        "title": "Giới từ + V-ing",
+        "content": "Sau giới từ 'in' bắt buộc động từ đi sau phải ở dạng V-ing ('in creating')."
+      }
+    ]
+  },
+  {
+    "id": 145,
+    "part": 6,
+    "partName": "Part 6: Text Completion",
+    "passageId": "p6_4",
+    "passageTitle": "Letter: Droplight Studio Photography Services",
+    "passageText": "April 7\nNaomi Burwell\n43 Waymire Road\nSouth Portland, ME 04109\n\nDear Ms. Burwell,\nI am Omar Ridha, the manager of Droplight Studio. [143]. We offer a full range of photography services for real estate professionals like you. We take pride in composing interior and exterior shots that make a property look its best. Droplight Studio spares no effort in [144] superior digital images. [145], our professional-grade equipment, lighting, and staging techniques allow us to highlight the best features of a property. And once the photo shoot is over, every image [146] expert editing. All these services come standard in every package.\n\nPlease visit our Web site to view our work as well as our pricing and scheduling information. We are happy to work with you to customize orders.\n\nSincerely,\nOmar Ridha, Droplight Studio",
+    "passageTextVi": "...Droplight Studio nỗ lực tạo ra những hình ảnh tuyệt hảo. [145], thiết bị chuyên nghiệp, ánh sáng và kỹ thuật dàn dựng cho phép chúng tôi tôn lên những điểm sáng nhất của bất động sản...",
+    "pageImage": "assets/images/rc_page_8.png",
+    "questionText": "Select the best answer for blank [145]:",
+    "questionTextVi": "Chọn phương án phù hợp nhất cho chỗ trống [145]:",
+    "options": {
+      "A": "If not",
+      "B": "By comparison",
+      "C": "Otherwise",
+      "D": "Indeed"
+    },
+    "optionsVi": {
+      "A": "Nếu không",
+      "B": "Khi so sánh",
+      "C": "Nếu không thì",
+      "D": "Thật vậy, quả thực (phó từ nhấn mạnh tính xác thực)"
+    },
+    "correctAnswer": "D",
+    "explanation": "Trạng từ liên kết 'Indeed' (Thật vậy / Quả thực) được dùng để củng cố và nhấn mạnh thêm cho câu khẳng định trước đó ('spares no effort in creating superior digital images. Indeed, our professional-grade equipment...'). Do đó chọn (D).",
+    "vocabulary": [
+      {
+        "word": "indeed",
+        "ipa": "/ɪnˈdiːd/",
+        "pos": "adv",
+        "meaning": "thật vậy, quả thực",
+        "example": "It was indeed a remarkable achievement."
+      },
+      {
+        "word": "staging",
+        "ipa": "/ˈsteɪ.dʒɪŋ/",
+        "pos": "n",
+        "meaning": "dàn dựng, bài trí không gian",
+        "example": "Home staging helps buyers visualize living in the space."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "professional-grade equipment",
+        "meaning": "thiết bị cấp độ chuyên nghiệp"
+      },
+      {
+        "phrase": "highlight the best features",
+        "meaning": "làm nổi bật những nét đẹp nhất"
+      }
+    ],
+    "grammarPoints": [
+      {
+        "title": "Trạng từ liên kết củng cố lập luận (Conjunctive Adverb 'Indeed')",
+        "content": "'Indeed' đứng đầu câu ngăn cách bởi dấu phẩy, dùng để bổ sung minh chứng mạnh mẽ khẳng định thêm ý trước."
+      }
+    ]
+  },
+  {
+    "id": 146,
+    "part": 6,
+    "partName": "Part 6: Text Completion",
+    "passageId": "p6_4",
+    "passageTitle": "Letter: Droplight Studio Photography Services",
+    "passageText": "April 7\nNaomi Burwell\n43 Waymire Road\nSouth Portland, ME 04109\n\nDear Ms. Burwell,\nI am Omar Ridha, the manager of Droplight Studio. [143]. We offer a full range of photography services for real estate professionals like you. We take pride in composing interior and exterior shots that make a property look its best. Droplight Studio spares no effort in [144] superior digital images. [145], our professional-grade equipment, lighting, and staging techniques allow us to highlight the best features of a property. And once the photo shoot is over, every image [146] expert editing. All these services come standard in every package.\n\nPlease visit our Web site to view our work as well as our pricing and scheduling information. We are happy to work with you to customize orders.\n\nSincerely,\nOmar Ridha, Droplight Studio",
+    "passageTextVi": "...Và sau khi buổi chụp hình kết thúc, mỗi bức ảnh [146] sự chỉnh sửa chuyên nghiệp. Tất cả những dịch vụ này đều là tiêu chuẩn trong mọi gói chụp...",
+    "pageImage": "assets/images/rc_page_8.png",
+    "questionText": "Select the best answer for blank [146]:",
+    "questionTextVi": "Chọn phương án phù hợp nhất cho chỗ trống [146]:",
+    "options": {
+      "A": "receives",
+      "B": "is receiving",
+      "C": "had received",
+      "D": "had to receive"
+    },
+    "optionsVi": {
+      "A": "nhận được (thì hiện tại đơn, ngôi thứ ba số ít)",
+      "B": "đang nhận được (hiện tại tiếp diễn)",
+      "C": "đã từng nhận được (quá khứ hoàn thành)",
+      "D": "đã phải nhận"
+    },
+    "correctAnswer": "A",
+    "explanation": "Chủ ngữ là 'every image' (mỗi hình ảnh - danh từ đếm được số ít đi với every). Câu diễn tả một quy trình dịch vụ tiêu chuẩn và sự thật hiển nhiên trong cam kết của công ty: 'once the photo shoot is over, every image receives expert editing' (mỗi bức ảnh đều nhận được sự biên tập chuyên nghiệp). Do đó dùng thì hiện tại đơn chia theo chủ ngữ số ít là 'receives'. Chọn (A).",
+    "vocabulary": [
+      {
+        "word": "photo shoot",
+        "ipa": "/ˈfəʊ.təʊ ʃuːt/",
+        "pos": "n",
+        "meaning": "buổi chụp hình",
+        "example": "The fashion photo shoot lasted six hours."
+      },
+      {
+        "word": "standard",
+        "ipa": "/ˈstæn.dəd/",
+        "pos": "adj",
+        "meaning": "tiêu chuẩn, thông lệ",
+        "example": "Wi-Fi access comes standard in all rooms."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "expert editing",
+        "meaning": "sự chỉnh sửa chuyên nghiệp"
+      },
+      {
+        "phrase": "come standard",
+        "meaning": "đi kèm như tiêu chuẩn mặc định"
+      }
+    ],
+    "grammarPoints": [
+      {
+        "title": "Sự hòa hợp Chủ ngữ - Động từ với 'Every + Noun'",
+        "content": "'Every + danh từ số ít' luôn luôn đi kèm với động từ số ít ở thì hiện tại đơn: 'every image receives'."
+      }
+    ]
+  }
+]

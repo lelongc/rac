@@ -1,0 +1,2046 @@
+[
+  {
+    "id": 1,
+    "part": 1,
+    "partName": "Part 1: Photographs",
+    "audio": "assets/audio/test5/part1.mp3",
+    "image": "assets/images/test5/q1.png",
+    "questionText": "Look at the picture marked No. 1 in your test book and choose the best statement:",
+    "questionTextVi": "Nhìn vào bức tranh số 1 trong sách bài thi và chọn câu miêu tả đúng nhất:",
+    "options": {
+      "A": "The worker is carrying some plants.",
+      "B": "The worker is reading a sign.",
+      "C": "The worker is pushing a cart.",
+      "D": "The worker is writing some notes."
+    },
+    "optionsVi": {
+      "A": "(A) Người công nhân đang mang vác một số chậu cây.",
+      "B": "(B) Người công nhân đang đọc một tấm biển báo.",
+      "C": "(C) Người công nhân đang đẩy một chiếc xe chở hàng.",
+      "D": "(D) Người công nhân đang ghi chép một số ghi chú."
+    },
+    "correctAnswer": "D",
+    "explanation": "Phương án (D) miêu tả chính xác hành động trong bức ảnh: Người phụ nữ làm việc tại vườn ươm cây đang cầm bảng kẹp tài liệu và cầm bút ghi chép ('is writing some notes'). Cô ấy không mang vác cây (loại A), không đọc biển báo (loại B) và chiếc xe đẩy đang đứng yên chứ không ai đang đẩy (loại C).",
+    "transcript": "(A) The worker is carrying some plants.\n(B) The worker is reading a sign.\n(C) The worker is pushing a cart.\n(D) The worker is writing some notes.",
+    "transcriptVi": "Người nói:\n(A) Người công nhân đang mang vác một số chậu cây.\n(B) Người công nhân đang đọc một tấm biển báo.\n(C) Người công nhân đang đẩy một chiếc xe chở hàng.\n(D) Người công nhân đang ghi chép một số ghi chú.",
+    "vocabulary": [
+      {
+        "word": "write some notes",
+        "ipa": "/raɪt sʌm nəʊts/",
+        "pos": "phr",
+        "meaning": "ghi chép thông tin, ghi chú",
+        "example": "The inspector is writing some notes on the evaluation clipboard."
+      },
+      {
+        "word": "push a cart",
+        "ipa": "/pʊʃ ə kɑːt/",
+        "pos": "phr",
+        "meaning": "đẩy xe chở hàng",
+        "example": "Workers push heavy carts through the nursery aisles."
+      },
+      {
+        "word": "carry plants",
+        "ipa": "/ˈkær.i plɑːnts/",
+        "pos": "phr",
+        "meaning": "mang vác cây cảnh",
+        "example": "The gardener is carefully carrying several potted plants."
+      },
+      {
+        "word": "read a sign",
+        "ipa": "/riːd ə saɪn/",
+        "pos": "phr",
+        "meaning": "đọc biển báo",
+        "example": "Visitors should stop to read the safety warning sign."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "write some notes",
+        "meaning": "ghi chép ghi chú"
+      },
+      {
+        "phrase": "push a cart",
+        "meaning": "đẩy xe hàng"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Thì hiện tại tiếp diễn chủ động",
+        "rule": "S + is/are + V-ing",
+        "analysis": "Diễn tả hành động đang thực hiện của người làm trọng tâm bức ảnh."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q1.mp3",
+    "audioLabel": "Nghe câu 1"
+  },
+  {
+    "id": 2,
+    "part": 1,
+    "partName": "Part 1: Photographs",
+    "audio": "assets/audio/test5/part1.mp3",
+    "image": "assets/images/test5/q2.png",
+    "questionText": "Look at the picture marked No. 2 in your test book and choose the best statement:",
+    "questionTextVi": "Nhìn vào bức tranh số 2 trong sách bài thi và chọn câu miêu tả đúng nhất:",
+    "options": {
+      "A": "Some of the people are pulling suitcases.",
+      "B": "Some of the people are relaxing on benches.",
+      "C": "Some of the people are putting luggage onto a rack.",
+      "D": "Some of the people are waiting in line to purchase a ticket."
+    },
+    "optionsVi": {
+      "A": "(A) Một số người đang kéo vali hành lý.",
+      "B": "(B) Một số người đang ngồi thư giãn trên ghế băng.",
+      "C": "(C) Một số người đang đặt hành lý lên giá để đồ.",
+      "D": "(D) Một số người đang xếp hàng để mua vé."
+    },
+    "correctAnswer": "A",
+    "explanation": "Phương án (A) miêu tả đúng hành động của các du khách: Một nhóm người đang đi bộ trên lối đi lát đá và kéo vali kéo theo sau ('pulling suitcases'). Không có ai đang ngồi trên ghế băng, không có giá để đồ, và không có hàng người mua vé.",
+    "transcript": "(A) Some of the people are pulling suitcases.\n(B) Some of the people are relaxing on benches.\n(C) Some of the people are putting luggage onto a rack.\n(D) Some of the people are waiting in line to purchase a ticket.",
+    "transcriptVi": "Người nói:\n(A) Một số người đang kéo vali hành lý.\n(B) Một số người đang thư giãn trên ghế băng.\n(C) Một số người đang đặt hành lý lên giá đồ.\n(D) Một số người đang xếp hàng mua vé.",
+    "vocabulary": [
+      {
+        "word": "pull a suitcase",
+        "ipa": "/pʊl ə ˈsuːt.keɪs/",
+        "pos": "phr",
+        "meaning": "kéo vali kéo du lịch",
+        "example": "Travelers were pulling heavy suitcases toward the hotel lobby."
+      },
+      {
+        "word": "luggage rack",
+        "ipa": "/ˈlʌɡ.ɪdʒ ræk/",
+        "pos": "n",
+        "meaning": "giá để hành lý (trên tàu, xe)",
+        "example": "Passengers stored their carry-on bags on the overhead luggage rack."
+      },
+      {
+        "word": "wait in line",
+        "ipa": "/weɪt ɪn laɪn/",
+        "pos": "phr",
+        "meaning": "xếp hàng chờ đợi",
+        "example": "Commuters must wait in line patiently at the ticket counter."
+      },
+      {
+        "word": "relax on benches",
+        "ipa": "/rɪˈlæks ɒn ˈbentʃ.ɪz/",
+        "pos": "phr",
+        "meaning": "nghỉ ngơi, thư giãn trên ghế băng",
+        "example": "Tourists rested and relaxed on wooden park benches."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "pull suitcases",
+        "meaning": "kéo vali hành lý"
+      },
+      {
+        "phrase": "wait in line to purchase",
+        "meaning": "xếp hàng để mua vé"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Đại từ chỉ lượng 'Some of the people'",
+        "rule": "Some of the + Plural Noun + are + V-ing",
+        "analysis": "Dùng để miêu tả hành động của một nhóm người cụ thể trong bức ảnh đám đông."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q2.mp3",
+    "audioLabel": "Nghe câu 2"
+  },
+  {
+    "id": 3,
+    "part": 1,
+    "partName": "Part 1: Photographs",
+    "audio": "assets/audio/test5/part1.mp3",
+    "image": "assets/images/test5/q3.png",
+    "questionText": "Look at the picture marked No. 3 in your test book and choose the best statement:",
+    "questionTextVi": "Nhìn vào bức tranh số 3 trong sách bài thi và chọn câu miêu tả đúng nhất:",
+    "options": {
+      "A": "She’s looking into her backpack.",
+      "B": "She’s tying the laces of her boots.",
+      "C": "She’s hiking on an outdoor path.",
+      "D": "She’s walking out of a tunnel."
+    },
+    "optionsVi": {
+      "A": "(A) Cô ấy đang nhìn vào trong ba lô của mình.",
+      "B": "(B) Cô ấy đang buộc dây giày ống của mình.",
+      "C": "(C) Cô ấy đang đi bộ đường dài trên con đường mòn ngoài trời.",
+      "D": "(D) Cô ấy đang bước ra khỏi một đường hầm."
+    },
+    "correctAnswer": "C",
+    "explanation": "Phương án (C) miêu tả chính xác hành động: Người phụ nữ trang phục dã ngoại đang cầm gậy leo núi và đi bộ dọc theo con đường mòn ngoài thiên nhiên ('hiking on an outdoor path'). Cô ấy không nhìn vào ba lô, không cúi xuống buộc dây giày và không có đường hầm nào.",
+    "transcript": "(A) She’s looking into her backpack.\n(B) She’s tying the laces of her boots.\n(C) She’s hiking on an outdoor path.\n(D) She’s walking out of a tunnel.",
+    "transcriptVi": "Người nói:\n(A) Cô ấy đang nhìn vào trong ba lô của mình.\n(B) Cô ấy đang buộc dây giày của mình.\n(C) Cô ấy đang đi bộ dã ngoại trên đường mòn ngoài trời.\n(D) Cô ấy đang bước ra khỏi đường hầm.",
+    "vocabulary": [
+      {
+        "word": "hike",
+        "ipa": "/haɪk/",
+        "pos": "v",
+        "meaning": "đi bộ đường dài, leo núi dã ngoại",
+        "example": "She enjoys hiking on scenic mountain paths on weekends."
+      },
+      {
+        "word": "outdoor path",
+        "ipa": "/ˈaʊt.dɔːr pɑːθ/",
+        "pos": "n",
+        "meaning": "con đường mòn ngoài trời",
+        "example": "The marked outdoor path leads directly to the waterfall."
+      },
+      {
+        "word": "backpack",
+        "ipa": "/ˈbæk.pæk/",
+        "pos": "n",
+        "meaning": "ba lô đeo lưng",
+        "example": "She packed extra water bottles inside her sturdy backpack."
+      },
+      {
+        "word": "tie laces",
+        "ipa": "/taɪ leɪsɪz/",
+        "pos": "phr",
+        "meaning": "buộc dây giày",
+        "example": "He knelt down on one knee to tie the laces of his boots."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "hiking on an outdoor path",
+        "meaning": "đi bộ trên đường mòn ngoài trời"
+      },
+      {
+        "phrase": "tying the laces",
+        "meaning": "buộc dây giày"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cụm giới từ chỉ địa điểm ngoài trời",
+        "rule": "on an outdoor path / in the woods",
+        "analysis": "Bổ ngữ chỉ không gian tự nhiên làm nổi bật bối cảnh hoạt động dã ngoại."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q3.mp3",
+    "audioLabel": "Nghe câu 3"
+  },
+  {
+    "id": 4,
+    "part": 1,
+    "partName": "Part 1: Photographs",
+    "audio": "assets/audio/test5/part1.mp3",
+    "image": "assets/images/test5/q4.png",
+    "questionText": "Look at the picture marked No. 4 in your test book and choose the best statement:",
+    "questionTextVi": "Nhìn vào bức tranh số 4 trong sách bài thi và chọn câu miêu tả đúng nhất:",
+    "options": {
+      "A": "He’s holding the handle of a shopping cart.",
+      "B": "He’s plugging a cord into a wall outlet.",
+      "C": "He’s looking into a kitchen cupboard.",
+      "D": "He’s kneeling down on a tile floor."
+    },
+    "optionsVi": {
+      "A": "(A) Anh ấy đang cầm tay cầm của xe đẩy mua sắm.",
+      "B": "(B) Anh ấy đang cắm dây điện vào ổ cắm trên tường.",
+      "C": "(C) Anh ấy đang nhìn vào trong tủ bếp.",
+      "D": "(D) Anh ấy đang quỳ gối trên sàn lát gạch."
+    },
+    "correctAnswer": "D",
+    "explanation": "Phương án (D) miêu tả chính xác tư thế của người đàn ông: Anh ấy đang quỳ một gối trên sàn nhà lát gạch men ('kneeling down on a tile floor'). Bức ảnh không có xe đẩy siêu thị, không cắm phích cắm điện, và không có tủ bếp.",
+    "transcript": "(A) He’s holding the handle of a shopping cart.\n(B) He’s plugging a cord into a wall outlet.\n(C) He’s looking into a kitchen cupboard.\n(D) He’s kneeling down on a tile floor.",
+    "transcriptVi": "Người nói:\n(A) Anh ấy đang cầm tay cầm xe mua sắm.\n(B) Anh ấy đang cắm dây điện vào ổ cắm tường.\n(C) Anh ấy đang nhìn vào trong tủ bếp.\n(D) Anh ấy đang quỳ gối trên sàn lát gạch.",
+    "vocabulary": [
+      {
+        "word": "kneel down",
+        "ipa": "/niːl daʊn/",
+        "pos": "phr v",
+        "meaning": "quỳ gối xuống sàn",
+        "example": "The technician was kneeling down on the floor to inspect the plumbing."
+      },
+      {
+        "word": "tile floor",
+        "ipa": "/taɪl flɔːr/",
+        "pos": "n",
+        "meaning": "sàn nhà lát gạch men đá hoa",
+        "example": "The ceramic tile floor was scrubbed and polished clean."
+      },
+      {
+        "word": "wall outlet",
+        "ipa": "/wɔːl ˈaʊt.let/",
+        "pos": "n",
+        "meaning": "ổ cắm điện gắn tường",
+        "example": "Plug the heavy appliance into the nearest grounded wall outlet."
+      },
+      {
+        "word": "cupboard",
+        "ipa": "/ˈkʌb.əd/",
+        "pos": "n",
+        "meaning": "tủ bát đĩa, chạn chén",
+        "example": "Dishes and glassware are stored in the overhead kitchen cupboard."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "kneel down on the floor",
+        "meaning": "quỳ gối trên sàn"
+      },
+      {
+        "phrase": "tile floor",
+        "meaning": "sàn lát gạch"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Động từ chỉ tư thế cơ thể (Postural Verbs)",
+        "rule": "kneel / bend / lean + Preposition",
+        "analysis": "'is kneeling down on' miêu tả trực tiếp tư thế làm việc của nhân vật."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q4.mp3",
+    "audioLabel": "Nghe câu 4"
+  },
+  {
+    "id": 5,
+    "part": 1,
+    "partName": "Part 1: Photographs",
+    "audio": "assets/audio/test5/part1.mp3",
+    "image": "assets/images/test5/q5.png",
+    "questionText": "Look at the picture marked No. 5 in your test book and choose the best statement:",
+    "questionTextVi": "Nhìn vào bức tranh số 5 trong sách bài thi và chọn câu miêu tả đúng nhất:",
+    "options": {
+      "A": "Seats have been arranged under some umbrellas.",
+      "B": "Some street signs are being taken down.",
+      "C": "Some bushes are being trimmed.",
+      "D": "Some chairs are being folded and stacked."
+    },
+    "optionsVi": {
+      "A": "(A) Ghế ngồi đã được sắp xếp bên dưới những chiếc ô dù.",
+      "B": "(B) Một số biển báo đường phố đang được tháo dỡ.",
+      "C": "(C) Một số bụi cây đang được cắt tỉa.",
+      "D": "(D) Một số chiếc ghế đang được gấp lại và xếp chồng lên."
+    },
+    "correctAnswer": "A",
+    "explanation": "Phương án (A) miêu tả chính xác trạng thái tĩnh tại khu vực cà phê ngoài trời: Các bộ bàn ghế đã được bài trí ngăn nắp bên dưới những tán ô che nắng ('Seats have been arranged under some umbrellas'). Các phương án khác dùng dạng bị động tiếp diễn 'being + V3' nhưng không có người nào đang thực hiện hành động cắt tỉa hay tháo dỡ trong ảnh.",
+    "transcript": "(A) Seats have been arranged under some umbrellas.\n(B) Some street signs are being taken down.\n(C) Some bushes are being trimmed.\n(D) Some chairs are being folded and stacked.",
+    "transcriptVi": "Người nói:\n(A) Ghế ngồi đã được sắp xếp dưới những chiếc ô dù.\n(B) Một số biển báo đường phố đang được tháo dỡ.\n(C) Một số bụi cây đang được cắt tỉa.\n(D) Một số chiếc ghế đang được gấp lại và xếp chồng.",
+    "vocabulary": [
+      {
+        "word": "arranged under umbrellas",
+        "ipa": "/əˈreɪndʒd ˈʌn.dər ʌmˈbrel.əz/",
+        "pos": "phr",
+        "meaning": "được sắp xếp bên dưới những chiếc ô",
+        "example": "Dining tables and seats have been arranged under large umbrellas."
+      },
+      {
+        "word": "take down",
+        "ipa": "/teɪk daʊn/",
+        "pos": "phr v",
+        "meaning": "tháo dỡ xuống (biển báo, rèm)",
+        "example": "Workers arrived early to take down the temporary event signs."
+      },
+      {
+        "word": "trim bushes",
+        "ipa": "/trɪm ˈbʊʃ.ɪz/",
+        "pos": "phr",
+        "meaning": "cắt tỉa hàng rào cây bụi",
+        "example": "The landscape crew will trim the garden bushes tomorrow."
+      },
+      {
+        "word": "fold and stack",
+        "ipa": "/fəʊld ænd stæk/",
+        "pos": "phr",
+        "meaning": "gấp lại và xếp chồng lên",
+        "example": "Chairs were folded and stacked against the storage wall."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "under some umbrellas",
+        "meaning": "dưới những chiếc ô che"
+      },
+      {
+        "phrase": "arranged neatly",
+        "meaning": "được sắp đặt ngăn nắp"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Phân biệt Bị động Hoàn thành (Hiện trạng) và Bị động Tiếp diễn",
+        "rule": "have been + V3 (Trạng thái) VS being + V3 (Đang bị tác động)",
+        "analysis": "Bức ảnh không có người (người thợ làm vườn, thợ tháo dỡ) nên các phương án có 'being + V3' đều bị loại trừ."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q5.mp3",
+    "audioLabel": "Nghe câu 5"
+  },
+  {
+    "id": 6,
+    "part": 1,
+    "partName": "Part 1: Photographs",
+    "audio": "assets/audio/test5/part1.mp3",
+    "image": "assets/images/test5/q6.png",
+    "questionText": "Look at the picture marked No. 6 in your test book and choose the best statement:",
+    "questionTextVi": "Nhìn vào bức tranh số 6 trong sách bài thi và chọn câu miêu tả đúng nhất:",
+    "options": {
+      "A": "Some cushions have been laid on the floor.",
+      "B": "Books have been piled up by a glass door.",
+      "C": "A light fixture is suspended from the ceiling.",
+      "D": "A rug has been rolled up against a wall."
+    },
+    "optionsVi": {
+      "A": "(A) Một số chiếc đệm đã được đặt trên sàn nhà.",
+      "B": "(B) Những cuốn sách đã được xếp chồng lên nhau bên cạnh cửa kính.",
+      "C": "(C) Một bộ đèn chiếu sáng được treo từ trần nhà.",
+      "D": "(D) Một tấm thảm đã được cuộn lại dựa vào tường."
+    },
+    "correctAnswer": "B",
+    "explanation": "Phương án (B) miêu tả đúng chi tiết rõ nét nhất trong phòng: Các chồng sách được xếp gọn gàng trên sàn nhà cạnh cánh cửa kính đón sáng ('Books have been piled up by a glass door'). Không có đệm trên sàn, đèn không treo từ trần nhà, và thảm trải phẳng chứ không cuộn lại.",
+    "transcript": "(A) Some cushions have been laid on the floor.\n(B) Books have been piled up by a glass door.\n(C) A light fixture is suspended from the ceiling.\n(D) A rug has been rolled up against a wall.",
+    "transcriptVi": "Người nói:\n(A) Một số chiếc đệm đã được đặt trên sàn nhà.\n(B) Những cuốn sách đã được xếp chồng bên cạnh cửa kính.\n(C) Một bộ đèn chiếu sáng được treo từ trần nhà.\n(D) Một tấm thảm đã được cuộn lại dựa vào tường.",
+    "vocabulary": [
+      {
+        "word": "pile up",
+        "ipa": "/paɪl ʌp/",
+        "pos": "phr v",
+        "meaning": "xếp chồng lên nhau thành đống",
+        "example": "Reference books have been piled up neatly beside the desk."
+      },
+      {
+        "word": "glass door",
+        "ipa": "/ɡlɑːs dɔːr/",
+        "pos": "n",
+        "meaning": "cửa ra vào bằng kính",
+        "example": "Natural light pours in through the expansive glass door."
+      },
+      {
+        "word": "light fixture",
+        "ipa": "/laɪt ˈfɪks.tʃər/",
+        "pos": "n",
+        "meaning": "bộ đèn chiếu sáng cố định",
+        "example": "An antique bronze light fixture hangs above the dining table."
+      },
+      {
+        "word": "roll up",
+        "ipa": "/rəʊl ʌp/",
+        "pos": "phr v",
+        "meaning": "cuộn tròn lại",
+        "example": "The Persian rug was rolled up before floor refinishing began."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "piled up by a glass door",
+        "meaning": "xếp chồng bên cạnh cửa kính"
+      },
+      {
+        "phrase": "suspended from the ceiling",
+        "meaning": "treo lơ lửng từ trần nhà"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cấu trúc bị động chỉ vị trí đồ vật tĩnh",
+        "rule": "have/has been + V3 + by/near + Noun",
+        "analysis": "'have been piled up by a glass door' miêu tả vị trí tương quan giữa sách và cửa kính."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q6.mp3",
+    "audioLabel": "Nghe câu 6"
+  },
+  {
+    "id": 7,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "There’s a meeting in the conference room soon, right?",
+    "questionTextVi": "Sắp có một cuộc họp ở phòng hội nghị, đúng không?",
+    "options": {
+      "A": "Yes, it’s for the whole department.",
+      "B": "No, put it in the closet.",
+      "C": "The rent is too high."
+    },
+    "optionsVi": {
+      "A": "(A) Đúng vậy, cuộc họp dành cho toàn thể phòng ban.",
+      "B": "(B) Không, hãy cất nó vào trong tủ đồ.",
+      "C": "(C) Giá thuê quá đắt đỏ."
+    },
+    "correctAnswer": "A",
+    "explanation": "Câu hỏi xác nhận thông tin: 'There’s a meeting... right?'. Phương án (A) xác nhận 'Yes' và bổ sung thông tin đối tượng tham gia: 'it’s for the whole department' (Dành cho cả phòng ban). Phương án (B) và (C) bẫy từ 'room' (closet, rent).",
+    "transcript": "Speaker: There’s a meeting in the conference room soon, right?\n(A) Yes, it’s for the whole department.\n(B) No, put it in the closet.\n(C) The rent is too high.",
+    "transcriptVi": "Người hỏi: Sắp có một cuộc họp ở phòng hội nghị, đúng không?\n(A) Đúng vậy, cuộc họp dành cho toàn bộ phòng ban.\n(B) Không, hãy cất nó vào tủ đồ.\n(C) Tiền thuê nhà quá cao.",
+    "vocabulary": [
+      {
+        "word": "conference room",
+        "ipa": "/ˈkɒn.fər.əns ˌruːm/",
+        "pos": "n",
+        "meaning": "phòng họp hội nghị",
+        "example": "The executive board will convene in the main conference room."
+      },
+      {
+        "word": "whole department",
+        "ipa": "/həʊl dɪˈpɑːt.mənt/",
+        "pos": "n",
+        "meaning": "toàn bộ phòng ban",
+        "example": "The orientation session was organized for the whole department."
+      },
+      {
+        "word": "closet",
+        "ipa": "/ˈklɒz.ɪt/",
+        "pos": "n",
+        "meaning": "tủ quần áo, buồng để đồ",
+        "example": "Extra office supplies are stored inside the hallway closet."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "meeting in the conference room",
+        "meaning": "họp ở phòng hội nghị"
+      },
+      {
+        "phrase": "whole department",
+        "meaning": "toàn thể phòng ban"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu hỏi xác nhận với từ nối 'Right?'",
+        "rule": "Statement + right? -> Yes + Details",
+        "analysis": "'Right?' ở cuối câu đóng vai trò như một câu hỏi đuôi tìm kiếm sự đồng thuận hoặc xác nhận."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q7.mp3",
+    "audioLabel": "Nghe câu 7"
+  },
+  {
+    "id": 8,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "Why hasn’t the mural in the lobby been painted yet?",
+    "questionTextVi": "Tại sao bức tranh tường ở sảnh vẫn chưa được vẽ vậy?",
+    "options": {
+      "A": "Red and yellow.",
+      "B": "Please pick up the ladder.",
+      "C": "Because the artist is out of town."
+    },
+    "optionsVi": {
+      "A": "(A) Màu đỏ và màu vàng.",
+      "B": "(B) Làm ơn hãy nhấc chiếc thang lên.",
+      "C": "(C) Bởi vì người họa sĩ đang đi công tác xa."
+    },
+    "correctAnswer": "C",
+    "explanation": "Câu hỏi lý do 'Why hasn’t... been painted yet?'. Phương án (C) giải thích nguyên nhân chậm trễ trực tiếp: 'Because the artist is out of town' (Bởi vì nghệ sĩ vắng nhà). Phương án (A) nói về màu sắc; (B) bẫy từ liên tưởng hội họa 'ladder' (chiếc thang).",
+    "transcript": "Speaker: Why hasn’t the mural in the lobby been painted yet?\n(A) Red and yellow.\n(B) Please pick up the ladder.\n(C) Because the artist is out of town.",
+    "transcriptVi": "Người hỏi: Tại sao bức tranh tường ở sảnh vẫn chưa được vẽ vậy?\n(A) Màu đỏ và vàng.\n(B) Làm ơn hãy cất thang đi.\n(C) Bởi vì họa sĩ hiện đang đi vắng khỏi thành phố.",
+    "vocabulary": [
+      {
+        "word": "mural",
+        "ipa": "/ˈmjʊə.rəl/",
+        "pos": "n",
+        "meaning": "bức tranh tường khổ lớn",
+        "example": "The community commissioned a colorful mural for the civic center lobby."
+      },
+      {
+        "word": "out of town",
+        "ipa": "/ˌaʊt əv ˈtaʊn/",
+        "pos": "phr",
+        "meaning": "đi vắng, đi công tác xa nhà",
+        "example": "The creative director is currently out of town until next Tuesday."
+      },
+      {
+        "word": "ladder",
+        "ipa": "/ˈlæd.ər/",
+        "pos": "n",
+        "meaning": "cái thang đứng",
+        "example": "Please place the step ladder securely against the sturdy wall."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "mural in the lobby",
+        "meaning": "bức bích họa ở sảnh"
+      },
+      {
+        "phrase": "out of town",
+        "meaning": "đi vắng, đi xa"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu hỏi nguyên nhân 'Why' và liên từ 'Because'",
+        "rule": "Why hasn't + S + V3...? -> Because + Clause",
+        "analysis": "Giải thích trực tiếp lý do khách quan khiến công việc chưa thể hoàn thành."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q8.mp3",
+    "audioLabel": "Nghe câu 8"
+  },
+  {
+    "id": 9,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "Do you prefer writing in the morning or the afternoon?",
+    "questionTextVi": "Bạn thích viết bài vào buổi sáng hay buổi chiều hơn?",
+    "options": {
+      "A": "My publisher requested edits.",
+      "B": "Thanks for providing a solution.",
+      "C": "Mornings are usually better for me."
+    },
+    "optionsVi": {
+      "A": "(A) Nhà xuất bản của tôi đã yêu cầu chỉnh sửa.",
+      "B": "(B) Cảm ơn vì đã đưa ra một giải pháp.",
+      "C": "(C) Buổi sáng thường phù hợp hơn đối với tôi."
+    },
+    "correctAnswer": "C",
+    "explanation": "Câu hỏi lựa chọn 'in the morning or the afternoon?'. Phương án (C) đưa ra lựa chọn rõ ràng: 'Mornings are usually better for me' (Buổi sáng thích hợp hơn). Phương án (A) và (B) không đưa ra lựa chọn thời gian.",
+    "transcript": "Speaker: Do you prefer writing in the morning or the afternoon?\n(A) My publisher requested edits.\n(B) Thanks for providing a solution.\n(C) Mornings are usually better for me.",
+    "transcriptVi": "Người hỏi: Bạn thích viết bài vào buổi sáng hay buổi chiều hơn?\n(A) Nhà xuất bản của tôi yêu cầu chỉnh sửa.\n(B) Cảm ơn bạn vì đã đưa ra giải pháp.\n(C) Buổi sáng thường tốt hơn đối với tôi.",
+    "vocabulary": [
+      {
+        "word": "prefer",
+        "ipa": "/prɪˈfɜːr/",
+        "pos": "v",
+        "meaning": "ưa chuộng hơn, thích hơn",
+        "example": "Many freelance authors prefer working in quiet morning hours."
+      },
+      {
+        "word": "publisher",
+        "ipa": "/ˈpʌb.lɪ.ʃər/",
+        "pos": "n",
+        "meaning": "nhà xuất bản sách báo",
+        "example": "The manuscript was accepted for publication by a renowned publisher."
+      },
+      {
+        "word": "edit",
+        "ipa": "/ˈed.ɪt/",
+        "pos": "n/v",
+        "meaning": "sự chỉnh sửa, biên tập bản thảo",
+        "example": "The editor suggested several minor edits to the concluding chapter."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "prefer writing in the morning",
+        "meaning": "thích viết vào buổi sáng hơn"
+      },
+      {
+        "phrase": "better for me",
+        "meaning": "phù hợp với tôi hơn"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Động từ biểu thị sở thích 'Prefer A or B'",
+        "rule": "Do you prefer + V-ing + A or B? -> [Choice] is better.",
+        "analysis": "Mẫu câu lựa chọn thời gian quen thuộc trong Part 2."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q9.mp3",
+    "audioLabel": "Nghe câu 9"
+  },
+  {
+    "id": 10,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "I suggest we paint the waiting room light blue.",
+    "questionTextVi": "Tôi đề xuất chúng ta nên sơn phòng chờ màu xanh nhạt.",
+    "options": {
+      "A": "Doctor Park has an opening at three.",
+      "B": "That’s a good idea.",
+      "C": "I prefer the red jacket."
+    },
+    "optionsVi": {
+      "A": "(A) Bác sĩ Park có một lịch hẹn trống lúc ba giờ.",
+      "B": "(B) Đó là một ý tưởng hay đấy.",
+      "C": "(C) Tôi thích chiếc áo khoác màu đỏ hơn."
+    },
+    "correctAnswer": "B",
+    "explanation": "Câu đưa ra gợi ý: 'I suggest we paint...'. Phương án (B) đồng tình và khen ngợi lời đề xuất: 'That’s a good idea' (Đó là một ý kiến hay). Phương án (A) nói về lịch khám bệnh; (C) bẫy từ 'color' (blue -> red jacket).",
+    "transcript": "Speaker: I suggest we paint the waiting room light blue.\n(A) Doctor Park has an opening at three.\n(B) That’s a good idea.\n(C) I prefer the red jacket.",
+    "transcriptVi": "Người nói: Tôi đề xuất chúng ta nên sơn phòng chờ màu xanh nhạt.\n(A) Bác sĩ Park có một lịch hẹn trống lúc ba giờ.\n(B) Đó là một ý tưởng hay đấy.\n(C) Tôi thích chiếc áo khoác màu đỏ hơn.",
+    "vocabulary": [
+      {
+        "word": "waiting room",
+        "ipa": "/ˈweɪ.tɪŋ ˌruːm/",
+        "pos": "n",
+        "meaning": "phòng chờ (khám bệnh, ga tàu)",
+        "example": "Patients can sit comfortably in the newly renovated waiting room."
+      },
+      {
+        "word": "suggest",
+        "ipa": "/səˈdʒest/",
+        "pos": "v",
+        "meaning": "gợi ý, đề xuất phương án",
+        "example": "The interior decorator suggested light pastel colors for the lobby."
+      },
+      {
+        "word": "have an opening",
+        "ipa": "/hæv ən ˈəʊ.pən.ɪŋ/",
+        "pos": "phr",
+        "meaning": "có khoảng trống thời gian, có chỗ trống",
+        "example": "The dental clinic has an opening early tomorrow morning."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "paint the waiting room",
+        "meaning": "sơn phòng chờ"
+      },
+      {
+        "phrase": "that's a good idea",
+        "meaning": "đó là một ý hay"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cách phản hồi lời đề nghị / đề xuất",
+        "rule": "I suggest + Clause -> That's a good / great idea.",
+        "analysis": "Cách đồng ý tự nhiên và lịch sự với ý kiến của đồng nghiệp."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q10.mp3",
+    "audioLabel": "Nghe câu 10"
+  },
+  {
+    "id": 11,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "Did you know that the music school is closed on Sundays?",
+    "questionTextVi": "Bạn có biết rằng trường âm nhạc đóng cửa vào các ngày Chủ nhật không?",
+    "options": {
+      "A": "Forty dollars an hour.",
+      "B": "No, I didn’t know that.",
+      "C": "I saw the piano recital."
+    },
+    "optionsVi": {
+      "A": "(A) Bốn mươi đô la một giờ.",
+      "B": "(B) Không, tôi không hề biết điều đó.",
+      "C": "(C) Tôi đã xem buổi độc tấu dương cầm."
+    },
+    "correctAnswer": "B",
+    "explanation": "Câu hỏi Yes/No với 'Did you know that...?'. Phương án (B) trả lời trực tiếp và trung thực: 'No, I didn’t know that' (Không, tôi không biết). Phương án (A) trả lời chi phí học phí (How much); (C) bẫy từ liên tưởng trường nhạc (piano recital).",
+    "transcript": "Speaker: Did you know that the music school is closed on Sundays?\n(A) Forty dollars an hour.\n(B) No, I didn’t know that.\n(C) I saw the piano recital.",
+    "transcriptVi": "Người hỏi: Bạn có biết trường âm nhạc đóng cửa vào Chủ nhật không?\n(A) Bốn mươi đô la một giờ.\n(B) Không, tôi không biết điều đó.\n(C) Tôi đã xem buổi độc tấu dương cầm.",
+    "vocabulary": [
+      {
+        "word": "closed on Sundays",
+        "ipa": "/kləʊzd ɒn ˈsʌn.deɪz/",
+        "pos": "phr",
+        "meaning": "đóng cửa vào các ngày Chủ nhật",
+        "example": "Most specialized music schools remain closed on Sundays."
+      },
+      {
+        "word": "recital",
+        "ipa": "/rɪˈsaɪ.təl/",
+        "pos": "n",
+        "meaning": "buổi độc tấu, biểu diễn nhạc cụ",
+        "example": "The talented students performed brilliantly at the annual piano recital."
+      },
+      {
+        "word": "per hour",
+        "ipa": "/pɜːr aʊər/",
+        "pos": "phr",
+        "meaning": "mỗi giờ, theo tiếng",
+        "example": "Private instrumental lessons cost fifty dollars per hour."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "music school",
+        "meaning": "trường dạy nhạc"
+      },
+      {
+        "phrase": "piano recital",
+        "meaning": "buổi độc tấu đàn piano"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Mẫu câu hỏi thông tin 'Did you know that...'",
+        "rule": "Did you know that + Clause? -> Yes/No, I didn't know that.",
+        "analysis": "Hỏi về mức độ hiểu biết của đối phương trước một sự việc có thật."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q11.mp3",
+    "audioLabel": "Nghe câu 11"
+  },
+  {
+    "id": 12,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "How do I find the office manager?",
+    "questionTextVi": "Làm thế nào để tôi có thể tìm gặp được người quản lý văn phòng?",
+    "options": {
+      "A": "The receptionist would know.",
+      "B": "Desk lamps and headsets.",
+      "C": "Twelve euros."
+    },
+    "optionsVi": {
+      "A": "(A) Nhân viên lễ tân chắc sẽ biết đấy.",
+      "B": "(B) Đèn bàn và tai nghe chụp tai.",
+      "C": "(C) Mười hai euro."
+    },
+    "correctAnswer": "A",
+    "explanation": "Câu hỏi tìm người 'How do I find...?'. Phương án (A) hướng dẫn người hỏi liên hệ người thứ ba có thông tin: 'The receptionist would know' (Lễ tân sẽ biết). Phương án (B) kể tên đồ dùng văn phòng; (C) trả lời về giá tiền.",
+    "transcript": "Speaker: How do I find the office manager?\n(A) The receptionist would know.\n(B) Desk lamps and headsets.\n(C) Twelve euros.",
+    "transcriptVi": "Người hỏi: Làm sao để tôi tìm gặp được quản lý văn phòng?\n(A) Nhân viên lễ tân chắc sẽ biết đấy.\n(B) Đèn bàn và tai nghe.\n(C) Mười hai euro.",
+    "vocabulary": [
+      {
+        "word": "receptionist",
+        "ipa": "/rɪˈsep.ʃən.ɪst/",
+        "pos": "n",
+        "meaning": "nhân viên lễ tân tiếp khách",
+        "example": "The receptionist politely directed the client to the conference room."
+      },
+      {
+        "word": "office manager",
+        "ipa": "/ˈɒf.ɪs ˈmæn.ɪ.dʒər/",
+        "pos": "n",
+        "meaning": "trưởng phòng/quản lý hành chính văn phòng",
+        "example": "Please submit supply requests directly to the office manager."
+      },
+      {
+        "word": "headset",
+        "ipa": "/ˈhed.set/",
+        "pos": "n",
+        "meaning": "tai nghe có kèm micrô thoại",
+        "example": "Customer support agents use noise-canceling headsets."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "office manager",
+        "meaning": "quản lý văn phòng"
+      },
+      {
+        "phrase": "receptionist would know",
+        "meaning": "lễ tân sẽ biết"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Đưa ra sự trợ giúp bằng cách chỉ dẫn sang người thứ ba",
+        "rule": "How do I find X? -> [Third party] would know.",
+        "analysis": "Dùng 'would know' để phỏng đoán rằng lễ tân là người có trách nhiệm nắm lịch trình."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q12.mp3",
+    "audioLabel": "Nghe câu 12"
+  },
+  {
+    "id": 13,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "When did you place the order for the lumber?",
+    "questionTextVi": "Bạn đã đặt đơn mua gỗ xây dựng từ khi nào vậy?",
+    "options": {
+      "A": "Yes, it’s a great place for hiking.",
+      "B": "It’s out of stock right now.",
+      "C": "The warehouse on William Street."
+    },
+    "optionsVi": {
+      "A": "(A) Vâng, đó là một địa điểm tuyệt vời để đi bộ dã ngoại.",
+      "B": "(B) Hiện tại mặt hàng đó đang hết hàng.",
+      "C": "(C) Nhà kho ở trên đường William."
+    },
+    "correctAnswer": "B",
+    "explanation": "Câu hỏi thời gian đặt hàng: 'When did you place the order for the lumber?'. Phương án (B) giải thích lý do vì sao chưa thể đặt được đơn: 'It’s out of stock right now' (Hiện tại gỗ đang hết hàng nên chưa đặt được). Bẫy (A) đồng âm 'place' (place an order -> place for hiking); (C) trả lời địa điểm kho bãi.",
+    "transcript": "Speaker: When did you place the order for the lumber?\n(A) Yes, it’s a great place for hiking.\n(B) It’s out of stock right now.\n(C) The warehouse on William Street.",
+    "transcriptVi": "Người hỏi: Bạn đã đặt đơn mua gỗ xây dựng từ khi nào vậy?\n(A) Vâng, đó là nơi tuyệt vời để leo núi.\n(B) Hiện tại mặt hàng đó đang hết hàng.\n(C) Nhà kho ở phố William.",
+    "vocabulary": [
+      {
+        "word": "place an order",
+        "ipa": "/pleɪs ən ˈɔː.dər/",
+        "pos": "phr",
+        "meaning": "đặt một đơn hàng",
+        "example": "The purchasing coordinator will place the order before five o'clock."
+      },
+      {
+        "word": "lumber",
+        "ipa": "/ˈlʌm.bər/",
+        "pos": "n",
+        "meaning": "gỗ xẻ, gỗ nguyên liệu xây dựng",
+        "example": "The construction crew requires high-grade lumber for framing."
+      },
+      {
+        "word": "out of stock",
+        "ipa": "/aʊt əv stɒk/",
+        "pos": "phr",
+        "meaning": "hết hàng dự trữ trong kho",
+        "example": "Treated lumber is currently out of stock at all regional yards."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "place the order for",
+        "meaning": "đặt đơn mua cho"
+      },
+      {
+        "phrase": "out of stock right now",
+        "meaning": "hiện đang hết hàng"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu trả lời gián tiếp phủ định tiền đề câu hỏi 'When'",
+        "rule": "When did you order? -> [Item] is out of stock.",
+        "analysis": "Giải thích rằng đơn hàng thực tế chưa hề được đặt vì lý do khan hiếm hàng."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q13.mp3",
+    "audioLabel": "Nghe câu 13"
+  },
+  {
+    "id": 14,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "Where is the new packaging machine?",
+    "questionTextVi": "Chiếc máy đóng gói mới đang ở đâu vậy?",
+    "options": {
+      "A": "Ten packages a minute.",
+      "B": "We met last Thursday.",
+      "C": "We decided to keep the old one."
+    },
+    "optionsVi": {
+      "A": "(A) Mười gói mỗi phút.",
+      "B": "(B) Chúng tôi đã gặp nhau vào thứ Năm tuần trước.",
+      "C": "(C) Chúng tôi đã quyết định giữ lại chiếc máy cũ."
+    },
+    "correctAnswer": "C",
+    "explanation": "Câu hỏi vị trí 'Where is the new packaging machine?'. Phương án (C) đưa ra lời giải thích gián tiếp bất ngờ: 'We decided to keep the old one' (Chúng tôi quyết định giữ lại chiếc cũ, đồng nghĩa với việc không mua máy mới). Bẫy (A) lặp lại từ 'package' (tốc độ đóng gói); (B) nói về cuộc họp.",
+    "transcript": "Speaker: Where is the new packaging machine?\n(A) Ten packages a minute.\n(B) We met last Thursday.\n(C) We decided to keep the old one.",
+    "transcriptVi": "Người hỏi: Chiếc máy đóng gói mới đang ở đâu vậy?\n(A) Mười gói mỗi phút.\n(B) Chúng tôi đã gặp nhau vào thứ Năm tuần trước.\n(C) Chúng tôi đã quyết định giữ lại chiếc máy cũ.",
+    "vocabulary": [
+      {
+        "word": "packaging machine",
+        "ipa": "/ˈpæk.ɪ.dʒɪŋ məˈʃiːn/",
+        "pos": "n",
+        "meaning": "máy đóng gói bao bì sản phẩm",
+        "example": "The automated packaging machine seals hundreds of boxes per hour."
+      },
+      {
+        "word": "decide to keep",
+        "ipa": "/dɪˈsaɪd tuː kiːp/",
+        "pos": "phr",
+        "meaning": "quyết định giữ lại",
+        "example": "Management decided to keep the durable existing equipment."
+      },
+      {
+        "word": "old one",
+        "ipa": "/əʊld wʌn/",
+        "pos": "phr",
+        "meaning": "chiếc cũ (thay thế cho machine)",
+        "example": "Rather than buying a new laptop, she repaired her old one."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "packaging machine",
+        "meaning": "máy đóng gói"
+      },
+      {
+        "phrase": "keep the old one",
+        "meaning": "giữ lại chiếc máy cũ"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Bác bỏ tiền đề của câu hỏi 'Where'",
+        "rule": "Where is the new X? -> We decided to keep the old one.",
+        "analysis": "Mẫu bẫy thường gặp khi người trả lời thông báo không có món đồ mới nào tồn tại."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q14.mp3",
+    "audioLabel": "Nghe câu 14"
+  },
+  {
+    "id": 15,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "I’ll be out of the office this afternoon.",
+    "questionTextVi": "Chiều nay tôi sẽ không có mặt ở văn phòng.",
+    "options": {
+      "A": "An awfully long commute.",
+      "B": "OK—I’ll update your schedule.",
+      "C": "It’s right down the hallway."
+    },
+    "optionsVi": {
+      "A": "(A) Một quãng đường đi làm dài khủng khiếp.",
+      "B": "(B) Được rồi—tôi sẽ cập nhật lịch trình của bạn.",
+      "C": "(C) Nó nằm ngay ở cuối hành lang."
+    },
+    "correctAnswer": "B",
+    "explanation": "Câu trần thuật thông báo vắng mặt: 'I’ll be out of the office...'. Phương án (B) phản hồi rất chuyên nghiệp và hợp lý: 'OK—I’ll update your schedule' (Được rồi, tôi sẽ cập nhật lịch làm việc của bạn). Phương án (A) nói về việc đi lại commute; (C) chỉ phương hướng.",
+    "transcript": "Speaker: I’ll be out of the office this afternoon.\n(A) An awfully long commute.\n(B) OK—I’ll update your schedule.\n(C) It’s right down the hallway.",
+    "transcriptVi": "Người nói: Chiều nay tôi sẽ không có mặt ở văn phòng.\n(A) Một quãng đường đi làm dài khủng khiếp.\n(B) Được rồi—tôi sẽ cập nhật lịch trình của bạn.\n(C) Nó ở ngay cuối hành lang.",
+    "vocabulary": [
+      {
+        "word": "out of the office",
+        "ipa": "/aʊt əv ði ˈɒf.ɪs/",
+        "pos": "phr",
+        "meaning": "vắng mặt ở văn phòng, đi công tác",
+        "example": "The sales representative is out of the office attending a trade show."
+      },
+      {
+        "word": "update schedule",
+        "ipa": "/ʌpˈdeɪt ˈʃedʒ.uːl/",
+        "pos": "phr",
+        "meaning": "cập nhật lịch biểu làm việc",
+        "example": "The executive assistant will promptly update your appointment schedule."
+      },
+      {
+        "word": "commute",
+        "ipa": "/kəˈmjuːt/",
+        "pos": "n/v",
+        "meaning": "quãng đường đi làm hằng ngày",
+        "example": "She endures an hour-long subway commute each morning."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "out of the office",
+        "meaning": "vắng mặt ở văn phòng"
+      },
+      {
+        "phrase": "update your schedule",
+        "meaning": "cập nhật lịch trình của bạn"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Phản hồi thông báo vắng mặt nơi công sở",
+        "rule": "Statement of absence -> Acknowledgment & Action",
+        "analysis": "Thể hiện kỹ năng văn phòng chuyên nghiệp qua hành động cập nhật hệ thống lịch làm việc."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q15.mp3",
+    "audioLabel": "Nghe câu 15"
+  },
+  {
+    "id": 16,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "Are you taking a vacation once this project is over?",
+    "questionTextVi": "Bạn có đi nghỉ mát sau khi dự án này kết thúc không?",
+    "options": {
+      "A": "Yes—I’m planning a trip to Barcelona.",
+      "B": "This is your second time, isn’t it?",
+      "C": "Blueprints for a high-rise building."
+    },
+    "optionsVi": {
+      "A": "(A) Có chứ—tôi đang lên kế hoạch cho một chuyến đi tới Barcelona.",
+      "B": "(B) Đây là lần thứ hai của bạn, phải không?",
+      "C": "(C) Bản thiết kế chi tiết cho một tòa nhà cao tầng."
+    },
+    "correctAnswer": "A",
+    "explanation": "Câu hỏi Yes/No: 'Are you taking a vacation...?'. Phương án (A) trả lời 'Yes' và hồ hởi chia sẻ kế hoạch du lịch cụ thể: 'I’m planning a trip to Barcelona'. Phương án (B) hỏi ngược lại không đúng trọng tâm; (C) bẫy từ 'project' (blueprints).",
+    "transcript": "Speaker: Are you taking a vacation once this project is over?\n(A) Yes—I’m planning a trip to Barcelona.\n(B) This is your second time, isn’t it?\n(C) Blueprints for a high-rise building.",
+    "transcriptVi": "Người hỏi: Bạn có đi nghỉ mát sau khi dự án này kết thúc không?\n(A) Có chứ—tôi đang lên kế hoạch đi Barcelona.\n(B) Đây là lần thứ hai của bạn, đúng không?\n(C) Bản vẽ thiết kế cho tòa nhà cao tầng.",
+    "vocabulary": [
+      {
+        "word": "take a vacation",
+        "ipa": "/teɪk ə vəˈkeɪ.ʃən/",
+        "pos": "phr",
+        "meaning": "đi nghỉ dưỡng, nghỉ phép",
+        "example": "Hardworking engineers certainly deserve to take a relaxing vacation."
+      },
+      {
+        "word": "plan a trip",
+        "ipa": "/plæn ə trɪp/",
+        "pos": "phr",
+        "meaning": "lên kế hoạch cho một chuyến đi",
+        "example": "We are currently planning a summer trip across southern Europe."
+      },
+      {
+        "word": "blueprints",
+        "ipa": "/ˈbluː.prɪnts/",
+        "pos": "n",
+        "meaning": "bản thiết kế kiến trúc kỹ thuật",
+        "example": "Architects finalized the blueprints for the commercial complex."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "take a vacation",
+        "meaning": "đi nghỉ mát"
+      },
+      {
+        "phrase": "project is over",
+        "meaning": "dự án kết thúc"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Mệnh đề trạng ngữ thời gian với liên từ 'Once'",
+        "rule": "Once + S + V (= as soon as)",
+        "analysis": "'once this project is over' biểu thị thời điểm ngay sau khi dự án hoàn thành."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q16.mp3",
+    "audioLabel": "Nghe câu 16"
+  },
+  {
+    "id": 17,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "Let’s post the sales report to our team’s Web page.",
+    "questionTextVi": "Chúng ta hãy đăng bản báo cáo doanh số lên trang web của nhóm mình nhé.",
+    "options": {
+      "A": "We’re sharing a taxi to the airport.",
+      "B": "I can do that.",
+      "C": "A recent hiring decision."
+    },
+    "optionsVi": {
+      "A": "(A) Chúng tôi đang đi chung một chiếc taxi ra sân bay.",
+      "B": "(B) Tôi có thể làm việc đó được.",
+      "C": "(C) Một quyết định tuyển dụng gần đây."
+    },
+    "correctAnswer": "B",
+    "explanation": "Câu rủ/đề xuất bắt đầu bằng 'Let’s...'. Phương án (B) sẵn sàng tình nguyện đảm nhận việc đăng tải báo cáo: 'I can do that' (Tôi có thể làm việc đó). Phương án (A) và (C) không ăn nhập nội dung.",
+    "transcript": "Speaker: Let’s post the sales report to our team’s Web page.\n(A) We’re sharing a taxi to the airport.\n(B) I can do that.\n(C) A recent hiring decision.",
+    "transcriptVi": "Người nói: Chúng ta hãy đăng báo cáo doanh số lên trang web nhóm nhé.\n(A) Chúng tôi đang đi chung taxi ra sân bay.\n(B) Tôi có thể làm việc đó.\n(C) Một quyết định tuyển dụng gần đây.",
+    "vocabulary": [
+      {
+        "word": "post",
+        "ipa": "/pəʊst/",
+        "pos": "v",
+        "meaning": "đăng tải bài viết/tài liệu trực tuyến",
+        "example": "The marketing manager will post the monthly updates on the website."
+      },
+      {
+        "word": "sales report",
+        "ipa": "/seɪlz rɪˈpɔːt/",
+        "pos": "n",
+        "meaning": "bản báo cáo doanh thu bán hàng",
+        "example": "Review the quarterly sales report before the executive briefing."
+      },
+      {
+        "word": "hiring decision",
+        "ipa": "/ˈhaɪə.rɪŋ dɪˈsɪʒ.ən/",
+        "pos": "n",
+        "meaning": "quyết định tuyển dụng nhân sự",
+        "example": "The recruitment team finalized its hiring decision this morning."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "post to a Web page",
+        "meaning": "đăng lên trang web"
+      },
+      {
+        "phrase": "I can do that",
+        "meaning": "tôi có thể làm được việc đó"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Đề xuất hành động với 'Let's' và câu nhận lời",
+        "rule": "Let's + V-bare... -> I can do that / Sure.",
+        "analysis": "Nhận lời thực hiện nhiệm vụ được đề xuất một cách chủ động."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q17.mp3",
+    "audioLabel": "Nghe câu 17"
+  },
+  {
+    "id": 18,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "Which airline are you planning on using?",
+    "questionTextVi": "Bạn đang dự định bay bằng hãng hàng không nào?",
+    "options": {
+      "A": "The usual one.",
+      "B": "A one-way ticket.",
+      "C": "Yes, you can use mine."
+    },
+    "optionsVi": {
+      "A": "(A) Hãng hàng không quen thuộc như mọi khi.",
+      "B": "(B) Một chiếc vé một chiều.",
+      "C": "(C) Vâng, bạn có thể dùng cái của tôi."
+    },
+    "correctAnswer": "A",
+    "explanation": "Câu hỏi lựa chọn hãng bay 'Which airline...?'. Phương án (A) trả lời ngắn gọn và quen thuộc: 'The usual one' (Hãng bay quen thuộc). Bẫy (B) nói về loại vé (one-way ticket); (C) trả lời Yes/No cho câu hỏi Wh-.",
+    "transcript": "Speaker: Which airline are you planning on using?\n(A) The usual one.\n(B) A one-way ticket.\n(C) Yes, you can use mine.",
+    "transcriptVi": "Người hỏi: Bạn đang dự định bay bằng hãng hàng không nào?\n(A) Hãng quen thuộc như mọi khi.\n(B) Vé một chiều.\n(C) Vâng, bạn có thể dùng của tôi.",
+    "vocabulary": [
+      {
+        "word": "airline",
+        "ipa": "/ˈeə.laɪn/",
+        "pos": "n",
+        "meaning": "hãng hàng không",
+        "example": "Which regional airline offers the best frequent flyer rewards?"
+      },
+      {
+        "word": "usual one",
+        "ipa": "/ˈjuː.ʒu.əl wʌn/",
+        "pos": "phr",
+        "meaning": "cái quen thuộc, như mọi khi",
+        "example": "I booked tickets with the usual one we fly with on business trips."
+      },
+      {
+        "word": "one-way ticket",
+        "ipa": "/ˌwʌn.weɪ ˈtɪk.ɪt/",
+        "pos": "n",
+        "meaning": "vé máy bay một chiều",
+        "example": "He purchased a one-way ticket because his return date was flexible."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "which airline",
+        "meaning": "hãng hàng không nào"
+      },
+      {
+        "phrase": "plan on using",
+        "meaning": "dự định sử dụng"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cụm danh từ rút gọn 'The usual one'",
+        "rule": "Which + Noun? -> The usual one (= airline).",
+        "analysis": "Cách nói ngắn gọn thường dùng khi người nghe và người nói cùng có thói quen chung."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q18.mp3",
+    "audioLabel": "Nghe câu 18"
+  },
+  {
+    "id": 19,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "Where’s this shipment of parts being sent?",
+    "questionTextVi": "Lô hàng linh kiện này đang được gửi tới đâu vậy?",
+    "options": {
+      "A": "Around five thirty this evening.",
+      "B": "To the assembly plant in Dublin.",
+      "C": "Just half the order."
+    },
+    "optionsVi": {
+      "A": "(A) Khoảng 5 giờ rưỡi chiều nay.",
+      "B": "(B) Tới nhà máy lắp ráp ở Dublin.",
+      "C": "(C) Chỉ một nửa đơn hàng thôi."
+    },
+    "correctAnswer": "B",
+    "explanation": "Câu hỏi địa điểm 'Where’s this shipment... being sent?'. Phương án (B) chỉ đích danh nơi tiếp nhận hàng hóa: 'To the assembly plant in Dublin'. Phương án (A) trả lời thời gian (When); (C) trả lời số lượng (How much).",
+    "transcript": "Speaker: Where’s this shipment of parts being sent?\n(A) Around five thirty this evening.\n(B) To the assembly plant in Dublin.\n(C) Just half the order.",
+    "transcriptVi": "Người hỏi: Lô hàng linh kiện này đang được gửi tới đâu vậy?\n(A) Khoảng năm giờ rưỡi chiều nay.\n(B) Tới nhà máy lắp ráp ở Dublin.\n(C) Chỉ một nửa đơn hàng thôi.",
+    "vocabulary": [
+      {
+        "word": "shipment",
+        "ipa": "/ˈʃɪp.mənt/",
+        "pos": "n",
+        "meaning": "lô hàng vận chuyển",
+        "example": "The international freight shipment cleared customs without delay."
+      },
+      {
+        "word": "assembly plant",
+        "ipa": "/əˈsem.bli plɑːnt/",
+        "pos": "n",
+        "meaning": "nhà máy lắp ráp công nghiệp",
+        "example": "Electronic components are delivered to the vehicle assembly plant."
+      },
+      {
+        "word": "spare parts",
+        "ipa": "/speər pɑːts/",
+        "pos": "n",
+        "meaning": "linh kiện phụ tùng thay thế",
+        "example": "Keep critical replacement parts in local warehouse stock."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "shipment of parts",
+        "meaning": "lô hàng linh kiện"
+      },
+      {
+        "phrase": "assembly plant",
+        "meaning": "nhà máy lắp ráp"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu hỏi nơi chốn với giới từ chỉ hướng 'To'",
+        "rule": "Where is X being sent? -> To + Destination",
+        "analysis": "Trả lời trực tiếp đích đến của quá trình vận chuyển."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q19.mp3",
+    "audioLabel": "Nghe câu 19"
+  },
+  {
+    "id": 20,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "Who paid for lunch?",
+    "questionTextVi": "Ai đã thanh toán cho bữa ăn trưa vậy?",
+    "options": {
+      "A": "I just ate.",
+      "B": "It closes at five.",
+      "C": "Alberto did."
+    },
+    "optionsVi": {
+      "A": "(A) Tôi vừa mới ăn xong.",
+      "B": "(B) Nó đóng cửa lúc năm giờ.",
+      "C": "(C) Alberto đã trả tiền rồi."
+    },
+    "correctAnswer": "C",
+    "explanation": "Câu hỏi 'Who paid for lunch?' (Ai trả tiền?). Phương án (C) nêu rõ đối tượng thanh toán: 'Alberto did' (thay thế cho Alberto paid for lunch). Phương án (A) nói về việc ăn no; (B) nói về giờ đóng cửa quán.",
+    "transcript": "Speaker: Who paid for lunch?\n(A) I just ate.\n(B) It closes at five.\n(C) Alberto did.",
+    "transcriptVi": "Người hỏi: Ai đã thanh toán cho bữa ăn trưa vậy?\n(A) Tôi vừa mới ăn xong.\n(B) Cửa hàng đóng cửa lúc năm giờ.\n(C) Alberto đã thanh toán đấy.",
+    "vocabulary": [
+      {
+        "word": "pay for lunch",
+        "ipa": "/peɪ fɔːr lʌntʃ/",
+        "pos": "phr",
+        "meaning": "thanh toán hóa đơn bữa trưa",
+        "example": "The visiting client offered to pay for lunch at the cafe."
+      },
+      {
+        "word": "treat",
+        "ipa": "/triːt/",
+        "pos": "v",
+        "meaning": "mời, đãi ai ăn uống",
+        "example": "Our team supervisor treated everyone to a delicious lunch."
+      },
+      {
+        "word": "split the bill",
+        "ipa": "/splɪt ðə bɪl/",
+        "pos": "phr",
+        "meaning": "chia đều tiền hóa đơn thanh toán",
+        "example": "Colleagues often split the bill when dining together."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "paid for lunch",
+        "meaning": "đã trả tiền ăn trưa"
+      },
+      {
+        "phrase": "just ate",
+        "meaning": "vừa mới ăn xong"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Trợ động từ quá khứ 'did' thay thế vị ngữ",
+        "rule": "Who + V-ed? -> [Name] + did.",
+        "analysis": "'did' tránh lặp lại cụm 'paid for lunch'."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q20.mp3",
+    "audioLabel": "Nghe câu 20"
+  },
+  {
+    "id": 21,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "How many employees work in your department?",
+    "questionTextVi": "Có bao nhiêu nhân viên làm việc trong phòng ban của bạn?",
+    "options": {
+      "A": "I don’t mind taking notes at the meeting.",
+      "B": "A couple dozen, I think.",
+      "C": "It’s seven meters long."
+    },
+    "optionsVi": {
+      "A": "(A) Tôi không phiền khi phải ghi chép tại cuộc họp.",
+      "B": "(B) Khoảng một hai tá người, tôi nghĩ vậy.",
+      "C": "(C) Chiều dài của nó là bảy mét."
+    },
+    "correctAnswer": "B",
+    "explanation": "Câu hỏi số lượng người: 'How many employees...?'. Phương án (B) đưa ra con số ước lượng phù hợp: 'A couple dozen, I think' (Khoảng 20–30 người, tức một vài tá). Phương án (A) nói về ghi chép biên bản; (C) trả lời chiều dài (How long).",
+    "transcript": "Speaker: How many employees work in your department?\n(A) I don’t mind taking notes at the meeting.\n(B) A couple dozen, I think.\n(C) It’s seven meters long.",
+    "transcriptVi": "Người hỏi: Có bao nhiêu nhân viên làm việc trong phòng ban của bạn?\n(A) Tôi không phiền khi ghi chép ở cuộc họp.\n(B) Khoảng vài tá người, tôi nghĩ thế.\n(C) Nó dài bảy mét.",
+    "vocabulary": [
+      {
+        "word": "couple dozen",
+        "ipa": "/ə ˈkʌp.əl ˈdʌz.ən/",
+        "pos": "phr",
+        "meaning": "khoảng vài tá (khoảng 20–30 người/vật)",
+        "example": "There are a couple dozen dedicated specialists in our IT department."
+      },
+      {
+        "word": "department",
+        "ipa": "/dɪˈpɑːt.mənt/",
+        "pos": "n",
+        "meaning": "phòng ban, bộ phận công ty",
+        "example": "The marketing department achieved its annual targets early."
+      },
+      {
+        "word": "take notes",
+        "ipa": "/teɪk nəʊts/",
+        "pos": "phr",
+        "meaning": "ghi chép biên bản cuộc họp",
+        "example": "The administrative assistant will take detailed meeting notes."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "how many employees",
+        "meaning": "có bao nhiêu nhân viên"
+      },
+      {
+        "phrase": "a couple dozen",
+        "meaning": "khoảng vài tá"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Từ chỉ số lượng ước lượng 'A couple dozen'",
+        "rule": "How many + Noun? -> A couple dozen / Around 20",
+        "analysis": "Dùng 'dozen' (tá = 12) để ước lượng số lượng người một cách tự nhiên."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q21.mp3",
+    "audioLabel": "Nghe câu 21"
+  },
+  {
+    "id": 22,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "We should leave for our training course soon, shouldn’t we?",
+    "questionTextVi": "Chúng ta nên xuất phát đi tới khóa đào tạo sớm thôi nhỉ?",
+    "options": {
+      "A": "We still have a few minutes.",
+      "B": "There’s a map on the wall.",
+      "C": "Two sessions per day."
+    },
+    "optionsVi": {
+      "A": "(A) Chúng ta vẫn còn một vài phút nữa cơ mà.",
+      "B": "(B) Có một tấm bản đồ ở trên tường.",
+      "C": "(C) Hai phiên học mỗi ngày."
+    },
+    "correctAnswer": "A",
+    "explanation": "Câu hỏi đuôi đề xuất khởi hành: 'We should leave... soon, shouldn’t we?'. Phương án (A) trấn an rằng chưa cần vội: 'We still have a few minutes' (Vẫn còn vài phút nữa, chưa muộn). Phương án (B) nói về bản đồ; (C) nói về số buổi học.",
+    "transcript": "Speaker: We should leave for our training course soon, shouldn’t we?\n(A) We still have a few minutes.\n(B) There’s a map on the wall.\n(C) Two sessions per day.",
+    "transcriptVi": "Người hỏi: Chúng ta nên xuất phát tới khóa đào tạo sớm thôi nhỉ?\n(A) Chúng ta vẫn còn vài phút nữa.\n(B) Có một tấm bản đồ trên tường.\n(C) Hai buổi học mỗi ngày.",
+    "vocabulary": [
+      {
+        "word": "leave for",
+        "ipa": "/liːv fɔːr/",
+        "pos": "phr v",
+        "meaning": "khởi hành, xuất phát đi đâu",
+        "example": "We should leave for the international conference center before peak traffic."
+      },
+      {
+        "word": "training course",
+        "ipa": "/ˈtreɪ.nɪŋ kɔːs/",
+        "pos": "n",
+        "meaning": "khóa đào tạo, lớp tập huấn",
+        "example": "All customer service associates attended a communication training course."
+      },
+      {
+        "word": "a few minutes",
+        "ipa": "/ə fjuː ˈmɪn.ɪts/",
+        "pos": "phr",
+        "meaning": "một vài phút",
+        "example": "The shuttle bus departs in a few minutes from bay three."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "leave for our training",
+        "meaning": "khởi hành đi đào tạo"
+      },
+      {
+        "phrase": "still have a few minutes",
+        "meaning": "vẫn còn vài phút"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Phản hồi câu hỏi giục giã bằng việc đính chính thời gian",
+        "rule": "We should leave soon? -> We still have [time].",
+        "analysis": "Bày tỏ rằng vẫn còn đủ thời gian nên chưa cần phải vội vã."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q22.mp3",
+    "audioLabel": "Nghe câu 22"
+  },
+  {
+    "id": 23,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "Isn’t there a limit on travel expenses?",
+    "questionTextVi": "Không có định mức giới hạn cho chi phí đi lại công tác sao?",
+    "options": {
+      "A": "To fix the vending machine.",
+      "B": "One hundred dollars per day.",
+      "C": "Next to the travel agency."
+    },
+    "optionsVi": {
+      "A": "(A) Để sửa chiếc máy bán hàng tự động.",
+      "B": "(B) Một trăm đô la mỗi ngày.",
+      "C": "(C) Bên cạnh đại lý du lịch."
+    },
+    "correctAnswer": "B",
+    "explanation": "Câu hỏi phủ định về mức trần chi tiêu: 'Isn’t there a limit on travel expenses?'. Phương án (B) cung cấp trực tiếp con số định mức chi tiêu: 'One hundred dollars per day' (100 USD/ngày). Phương án (A) nêu mục đích sửa máy; (C) bẫy từ 'travel' (travel agency).",
+    "transcript": "Speaker: Isn’t there a limit on travel expenses?\n(A) To fix the vending machine.\n(B) One hundred dollars per day.\n(C) Next to the travel agency.",
+    "transcriptVi": "Người hỏi: Không có định mức giới hạn chi phí công tác sao?\n(A) Để sửa máy bán hàng tự động.\n(B) Một trăm đô la mỗi ngày.\n(C) Cạnh đại lý du lịch.",
+    "vocabulary": [
+      {
+        "word": "travel expenses",
+        "ipa": "/ˈtræv.əl ɪkˈspen.sɪz/",
+        "pos": "n",
+        "meaning": "chi phí công tác, chi phí đi lại",
+        "example": "Employees must submit receipts for all business travel expenses."
+      },
+      {
+        "word": "limit",
+        "ipa": "/ˈlɪm.ɪt/",
+        "pos": "n/v",
+        "meaning": "giới hạn, hạn mức quy định",
+        "example": "The corporate finance policy sets a daily per diem limit."
+      },
+      {
+        "word": "per day",
+        "ipa": "/pɜːr deɪ/",
+        "pos": "phr",
+        "meaning": "mỗi ngày, theo ngày",
+        "example": "Meals are reimbursed up to fifty dollars per day."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "limit on travel expenses",
+        "meaning": "định mức giới hạn chi phí công tác"
+      },
+      {
+        "phrase": "per day",
+        "meaning": "mỗi ngày"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cung cấp số liệu cụ thể cho câu hỏi hạn mức",
+        "rule": "Isn't there a limit...? -> [Amount] per [unit]",
+        "analysis": "Trả lời thẳng bằng con số định mức tài chính cho phép theo quy định công ty."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q23.mp3",
+    "audioLabel": "Nghe câu 23"
+  },
+  {
+    "id": 24,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "When should I tell the director that I’m interested in the management position?",
+    "questionTextVi": "Khi nào tôi nên nói với giám đốc rằng tôi quan tâm đến vị trí quản lý?",
+    "options": {
+      "A": "Yes, we’re extending our business hours.",
+      "B": "Didn’t Andrey direct the play?",
+      "C": "I’m not on the hiring team."
+    },
+    "optionsVi": {
+      "A": "(A) Vâng, chúng tôi đang kéo dài giờ làm việc.",
+      "B": "(B) Không phải Andrey đã đạo diễn vở kịch đó sao?",
+      "C": "(C) Tôi không nằm trong hội đồng tuyển dụng."
+    },
+    "correctAnswer": "C",
+    "explanation": "Câu hỏi xin lời khuyên thời điểm: 'When should I tell the director...?'. Phương án (C) khéo léo từ chối đưa ra lời khuyên vì mình không có thẩm quyền: 'I’m not on the hiring team' (Tôi không phụ trách tuyển dụng nên không rõ). Bẫy (A) trả lời Yes cho câu hỏi When; (B) bẫy từ 'director' (đạo diễn vở kịch).",
+    "transcript": "Speaker: When should I tell the director that I’m interested in the management position?\n(A) Yes, we’re extending our business hours.\n(B) Didn’t Andrey direct the play?\n(C) I’m not on the hiring team.",
+    "transcriptVi": "Người hỏi: Khi nào tôi nên nói với giám đốc rằng tôi muốn ứng tuyển vị trí quản lý?\n(A) Vâng, chúng tôi đang mở rộng giờ kinh doanh.\n(B) Có phải Andrey đã đạo diễn vở kịch không?\n(C) Tôi không nằm trong ban tuyển dụng.",
+    "vocabulary": [
+      {
+        "word": "management position",
+        "ipa": "/ˈmæn.ɪdʒ.mənt pəˈzɪʃ.ən/",
+        "pos": "n",
+        "meaning": "vị trí quản lý, cấp quản trị",
+        "example": "She applied for an internal promotion to a regional management position."
+      },
+      {
+        "word": "hiring team",
+        "ipa": "/ˈhaɪə.rɪŋ tiːm/",
+        "pos": "n",
+        "meaning": "hội đồng tuyển dụng nhân sự",
+        "example": "The hiring team conducts structured interviews with top candidates."
+      },
+      {
+        "word": "interested in",
+        "ipa": "/ˈɪn.trəs.tɪd ɪn/",
+        "pos": "phr",
+        "meaning": "quan tâm, có hứng thú với",
+        "example": "Several senior staff members are genuinely interested in the role."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "management position",
+        "meaning": "vị trí quản lý"
+      },
+      {
+        "phrase": "on the hiring team",
+        "meaning": "nằm trong ban tuyển dụng"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Mẫu câu từ chối tư vấn vì không có thẩm quyền",
+        "rule": "When should I...? -> I'm not in charge / on the team.",
+        "analysis": "Một dạng phản hồi gián tiếp rất phổ biến trong đề thi TOEIC."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q24.mp3",
+    "audioLabel": "Nghe câu 24"
+  },
+  {
+    "id": 25,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "The layout of the footwear department has changed.",
+    "questionTextVi": "Cách bố trí gian hàng giày dép đã thay đổi rồi.",
+    "options": {
+      "A": "There’s a charging station in the cafe.",
+      "B": "Yes, a three-bedroom apartment.",
+      "C": "The store has a new manager."
+    },
+    "optionsVi": {
+      "A": "(A) Có một trạm sạc điện thoại ở trong quán cà phê.",
+      "B": "(B) Vâng, một căn hộ có ba phòng ngủ.",
+      "C": "(C) Cửa hàng mới có người quản lý mới đấy."
+    },
+    "correctAnswer": "C",
+    "explanation": "Câu trần thuật nhận xét cách bài trí thay đổi: 'The layout... has changed'. Phương án (C) giải thích nguyên nhân đằng sau sự thay đổi: 'The store has a new manager' (Cửa hàng có quản lý mới nên họ đã thay đổi cách bài trí). Phương án (A) và (B) lạc đề.",
+    "transcript": "Speaker: The layout of the footwear department has changed.\n(A) There’s a charging station in the cafe.\n(B) Yes, a three-bedroom apartment.\n(C) The store has a new manager.",
+    "transcriptVi": "Người nói: Cách bố trí gian hàng giày dép đã thay đổi rồi.\n(A) Có một trạm sạc ở quán cà phê.\n(B) Vâng, căn hộ ba phòng ngủ.\n(C) Cửa hàng vừa có quản lý mới đấy.",
+    "vocabulary": [
+      {
+        "word": "layout",
+        "ipa": "/ˈleɪ.aʊt/",
+        "pos": "n",
+        "meaning": "bố cục, sơ đồ bài trí mặt bằng",
+        "example": "The modern floor layout optimizes customer movement throughout the store."
+      },
+      {
+        "word": "footwear",
+        "ipa": "/ˈfʊt.weər/",
+        "pos": "n",
+        "meaning": "giày dép, đồ đi chân",
+        "example": "The retailer expanded its casual athletic footwear selection."
+      },
+      {
+        "word": "charging station",
+        "ipa": "/ˈtʃɑː.dʒɪŋ ˌsteɪ.ʃən/",
+        "pos": "n",
+        "meaning": "trạm sạc pin thiết bị",
+        "example": "Customers can use free mobile charging stations in the lounge."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "footwear department",
+        "meaning": "gian hàng giày dép"
+      },
+      {
+        "phrase": "store has a new manager",
+        "meaning": "cửa hàng có quản lý mới"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Đưa ra lời giải thích nguồn gốc cho câu trần thuật",
+        "rule": "Observation of change -> Underlying reason",
+        "analysis": "Giải thích nguyên nhân dẫn đến việc thay đổi cách sắp đặt cửa hàng."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q25.mp3",
+    "audioLabel": "Nghe câu 25"
+  },
+  {
+    "id": 26,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "Can you look at this month’s revenue report?",
+    "questionTextVi": "Bạn có thể xem qua bản báo cáo doanh thu tháng này được không?",
+    "options": {
+      "A": "The news program is informative.",
+      "B": "I have some free time tomorrow afternoon.",
+      "C": "He started that position in July."
+    },
+    "optionsVi": {
+      "A": "(A) Chương trình thời sự cung cấp rất nhiều thông tin.",
+      "B": "(B) Chiều mai tôi có chút thời gian rảnh rỗi.",
+      "C": "(C) Anh ấy đã bắt đầu vị trí đó vào tháng Bảy."
+    },
+    "correctAnswer": "B",
+    "explanation": "Câu nhờ vả 'Can you look at...?'. Phương án (B) đưa ra thời điểm mình có thể giúp xem báo cáo: 'I have some free time tomorrow afternoon' (Chiều mai tôi rảnh thì tôi sẽ xem). Phương án (A) nói về chương trình tin tức; (C) nói về nhân sự.",
+    "transcript": "Speaker: Can you look at this month’s revenue report?\n(A) The news program is informative.\n(B) I have some free time tomorrow afternoon.\n(C) He started that position in July.",
+    "transcriptVi": "Người hỏi: Bạn có thể xem qua báo cáo doanh thu tháng này không?\n(A) Chương trình tin tức cung cấp nhiều thông tin bổ ích.\n(B) Chiều mai tôi có chút thời gian rảnh.\n(C) Anh ấy đã bắt đầu vị trí đó vào tháng Bảy.",
+    "vocabulary": [
+      {
+        "word": "revenue report",
+        "ipa": "/ˈrev.ən.juː rɪˈpɔːt/",
+        "pos": "n",
+        "meaning": "báo cáo doanh thu tài chính",
+        "example": "The finance officer presented the audited quarterly revenue report."
+      },
+      {
+        "word": "informative",
+        "ipa": "/ɪnˈfɔː.mə.tɪv/",
+        "pos": "adj",
+        "meaning": "bổ ích, nhiều thông tin giá trị",
+        "example": "The keynote lecture was extraordinarily engaging and informative."
+      },
+      {
+        "word": "free time",
+        "ipa": "/friː taɪm/",
+        "pos": "n",
+        "meaning": "thời gian rảnh rỗi",
+        "example": "I will review your draft proposal during my free time tomorrow."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "revenue report",
+        "meaning": "báo cáo doanh thu"
+      },
+      {
+        "phrase": "free time tomorrow afternoon",
+        "meaning": "thời gian rảnh chiều mai"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Hẹn thời gian thực hiện khi nhận lời nhờ vả",
+        "rule": "Can you check X? -> I have free time at [Time].",
+        "analysis": "Hàm ý chấp nhận xem tài liệu nhưng vào thời điểm rảnh rỗi trong tương lai gần."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q26.mp3",
+    "audioLabel": "Nghe câu 26"
+  },
+  {
+    "id": 27,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "Why haven’t the windows been replaced yet?",
+    "questionTextVi": "Tại sao các ô cửa sổ vẫn chưa được thay thế vậy?",
+    "options": {
+      "A": "Not too much wind, no.",
+      "B": "Look in the filing cabinet.",
+      "C": "Did you see the cost estimate?"
+    },
+    "optionsVi": {
+      "A": "(A) Gió không lớn lắm đâu, không.",
+      "B": "(B) Hãy tìm trong tủ đựng hồ sơ.",
+      "C": "(C) Bạn đã xem bản dự toán chi phí chưa?"
+    },
+    "correctAnswer": "C",
+    "explanation": "Câu hỏi 'Why haven’t the windows been replaced yet?'. Phương án (C) phản vấn lại bằng câu hỏi ám chỉ lý do chi phí quá đắt đỏ: 'Did you see the cost estimate?' (Bạn đã thấy dự toán chi phí chưa? Nó đắt quá nên chưa thay được). Bẫy (A) đồng âm giữa 'window' (cửa sổ) và 'wind' (gió).",
+    "transcript": "Speaker: Why haven’t the windows been replaced yet?\n(A) Not too much wind, no.\n(B) Look in the filing cabinet.\n(C) Did you see the cost estimate?",
+    "transcriptVi": "Người hỏi: Tại sao các cửa sổ vẫn chưa được thay thế vậy?\n(A) Không có nhiều gió lắm đâu.\n(B) Hãy tìm trong tủ hồ sơ.\n(C) Bạn đã thấy bản dự toán chi phí chưa?",
+    "vocabulary": [
+      {
+        "word": "cost estimate",
+        "ipa": "/kɒst ˈes.tɪ.mət/",
+        "pos": "n",
+        "meaning": "bản dự toán chi phí, bảng báo giá",
+        "example": "The contractor submitted a detailed cost estimate for window replacement."
+      },
+      {
+        "word": "replace",
+        "ipa": "/rɪˈpleɪs/",
+        "pos": "v",
+        "meaning": "thay thế vật cũ bằng vật mới",
+        "example": "The maintenance team will replace broken window panes tomorrow."
+      },
+      {
+        "word": "filing cabinet",
+        "ipa": "/ˈfaɪ.lɪŋ ˌkæb.ɪ.nət/",
+        "pos": "n",
+        "meaning": "tủ đựng hồ sơ tài liệu văn phòng",
+        "example": "Invoices are organized alphabetically inside the steel filing cabinet."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "cost estimate",
+        "meaning": "dự toán chi phí"
+      },
+      {
+        "phrase": "windows been replaced",
+        "meaning": "cửa sổ được thay thế"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Dùng câu hỏi ngược để gợi ý lý do tài chính",
+        "rule": "Why hasn't X been done? -> Did you see the cost...?",
+        "analysis": "Hàm ý rằng việc chưa thể tiến hành là do chi phí ước tính vượt ngoài ngân sách."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q27.mp3",
+    "audioLabel": "Nghe câu 27"
+  },
+  {
+    "id": 28,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "Isn’t your suitcase going to be heavier than the permitted weight?",
+    "questionTextVi": "Chiếc vali của bạn có vượt quá trọng lượng cho phép không đấy?",
+    "options": {
+      "A": "The building permit arrived today.",
+      "B": "There are seats in the lobby.",
+      "C": "I’ll have to pay a little bit extra."
+    },
+    "optionsVi": {
+      "A": "(A) Giấy phép xây dựng đã đến vào ngày hôm nay.",
+      "B": "(B) Có các chỗ ngồi ở sảnh chờ.",
+      "C": "(C) Tôi sẽ phải trả thêm một chút phí phụ thu."
+    },
+    "correctAnswer": "C",
+    "explanation": "Câu hỏi lo ngại quá cước hành lý: 'Isn’t your suitcase going to be heavier...?'. Phương án (C) chấp nhận thực tế và sẵn sàng trả phí quá tải: 'I’ll have to pay a little bit extra' (Tôi sẽ phải trả thêm phí thôi). Bẫy (A) lặp lại từ gốc 'permit' (permitted weight -> building permit).",
+    "transcript": "Speaker: Isn’t your suitcase going to be heavier than the permitted weight?\n(A) The building permit arrived today.\n(B) There are seats in the lobby.\n(C) I’ll have to pay a little bit extra.",
+    "transcriptVi": "Người hỏi: Chiếc vali của bạn có nặng quá trọng lượng cho phép không đấy?\n(A) Giấy phép xây dựng đã gửi đến hôm nay.\n(B) Có chỗ ngồi ở sảnh.\n(C) Tôi sẽ phải trả thêm một chút phí phụ thu.",
+    "vocabulary": [
+      {
+        "word": "permitted weight",
+        "ipa": "/pəˈmɪt.ɪd weɪt/",
+        "pos": "n",
+        "meaning": "trọng lượng cho phép, quy định mức cân",
+        "example": "Baggage exceeding the permitted weight is subject to airline surcharges."
+      },
+      {
+        "word": "pay extra",
+        "ipa": "/peɪ ˈek.strə/",
+        "pos": "phr",
+        "meaning": "trả thêm phụ phí",
+        "example": "Passengers must pay extra for heavy or oversized luggage."
+      },
+      {
+        "word": "building permit",
+        "ipa": "/ˈbɪl.dɪŋ pəˌmɪt/",
+        "pos": "n",
+        "meaning": "giấy phép thi công xây dựng",
+        "example": "The city council approved the commercial building permit."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "permitted weight",
+        "meaning": "trọng lượng cho phép"
+      },
+      {
+        "phrase": "pay a little bit extra",
+        "meaning": "trả thêm một chút phí"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Mẫu câu thừa nhận kết quả không mong muốn",
+        "rule": "Isn't X over limit? -> I'll have to pay extra.",
+        "analysis": "Người nói thừa nhận vali vượt trọng lượng và chấp nhận giải pháp đóng phạt quá cân."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q28.mp3",
+    "audioLabel": "Nghe câu 28"
+  },
+  {
+    "id": 29,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "Who manufactures the engines for our machines?",
+    "questionTextVi": "Ai/Đơn vị nào sản xuất động cơ cho các cỗ máy của chúng ta vậy?",
+    "options": {
+      "A": "Koji is in charge of supplier contracts.",
+      "B": "I’m sorry—the storage room is full.",
+      "C": "That’s a cargo airplane."
+    },
+    "optionsVi": {
+      "A": "(A) Koji phụ trách các hợp đồng với nhà cung cấp đấy.",
+      "B": "(B) Tôi xin lỗi—phòng kho chứa đồ đã chật kín rồi.",
+      "C": "(C) Đó là một chiếc máy bay chở hàng."
+    },
+    "correctAnswer": "A",
+    "explanation": "Câu hỏi đối tác sản xuất: 'Who manufactures the engines...?'. Phương án (A) chỉ dẫn tới người phụ trách nắm thông tin nhà cung ứng: 'Koji is in charge of supplier contracts' (Koji phụ trách hợp đồng nhà cung cấp, hãy hỏi anh ấy). Phương án (B) và (C) không liên quan.",
+    "transcript": "Speaker: Who manufactures the engines for our machines?\n(A) Koji is in charge of supplier contracts.\n(B) I’m sorry—the storage room is full.\n(C) That’s a cargo airplane.",
+    "transcriptVi": "Người hỏi: Ai sản xuất động cơ cho các máy móc của chúng ta vậy?\n(A) Koji phụ trách hợp đồng nhà cung cấp đấy.\n(B) Tôi xin lỗi—phòng kho đã đầy rồi.\n(C) Đó là chiếc máy bay chở hàng.",
+    "vocabulary": [
+      {
+        "word": "manufacture",
+        "ipa": "/ˌmæn.jəˈfæk.tʃər/",
+        "pos": "v",
+        "meaning": "sản xuất, chế tạo công nghiệp",
+        "example": "Specialized engineering companies manufacture heavy diesel engines."
+      },
+      {
+        "word": "be in charge of",
+        "ipa": "/bi ɪn tʃɑːdʒ əv/",
+        "pos": "phr",
+        "meaning": "phụ trách, chịu trách nhiệm chính",
+        "example": "Ms. Tanaka is in charge of reviewing all supplier contracts."
+      },
+      {
+        "word": "supplier contract",
+        "ipa": "/səˈplaɪ.ər ˈkɒn.trækt/",
+        "pos": "n",
+        "meaning": "hợp đồng ký kết với nhà cung cấp",
+        "example": "The legal department finalized long-term supplier contracts."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "manufactures the engines",
+        "meaning": "chế tạo động cơ"
+      },
+      {
+        "phrase": "in charge of contracts",
+        "meaning": "chịu trách nhiệm hợp đồng"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Gián tiếp giới thiệu người phụ trách lĩnh vực",
+        "rule": "Who manufactures X? -> [Person] is in charge of [Domain].",
+        "analysis": "Cách điều hướng câu hỏi đến người có thẩm quyền cao nhất về vấn đề đó."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q29.mp3",
+    "audioLabel": "Nghe câu 29"
+  },
+  {
+    "id": 30,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "Should we meet at the department store on Fifth Street or the one on Grover Lane?",
+    "questionTextVi": "Chúng ta nên gặp nhau ở cửa hàng bách hóa trên phố Fifth hay cái ở ngõ Grover?",
+    "options": {
+      "A": "Let’s ask Patricia first.",
+      "B": "No, I don’t mind.",
+      "C": "How much does it cost?"
+    },
+    "optionsVi": {
+      "A": "(A) Chúng ta hãy hỏi ý kiến của Patricia trước đã nhé.",
+      "B": "(B) Không, tôi không bận tâm đâu.",
+      "C": "(C) Nó có giá bao nhiêu tiền?"
+    },
+    "correctAnswer": "A",
+    "explanation": "Câu hỏi lựa chọn địa điểm gặp gỡ: '...Fifth Street or Grover Lane?'. Phương án (A) đề xuất tham khảo ý kiến người thứ ba trước khi chốt địa điểm: 'Let’s ask Patricia first'. Phương án (B) trả lời 'No' cho câu hỏi lựa chọn; (C) hỏi về giá tiền.",
+    "transcript": "Speaker: Should we meet at the department store on Fifth Street or the one on Grover Lane?\n(A) Let’s ask Patricia first.\n(B) No, I don’t mind.\n(C) How much does it cost?",
+    "transcriptVi": "Người hỏi: Chúng ta nên gặp nhau ở cửa hàng bách hóa trên phố Fifth hay phố Grover?\n(A) Hãy hỏi ý kiến Patricia trước đã.\n(B) Không, tôi không bận tâm.\n(C) Nó có giá bao nhiêu tiền?",
+    "vocabulary": [
+      {
+        "word": "department store",
+        "ipa": "/dɪˈpɑːt.mənt ˌstɔːr/",
+        "pos": "n",
+        "meaning": "cửa hàng bách hóa tổng hợp",
+        "example": "The flagship department store carries luxury designer brands."
+      },
+      {
+        "word": "ask first",
+        "ipa": "/ɑːsk fɜːst/",
+        "pos": "phr",
+        "meaning": "hỏi ý kiến trước tiên",
+        "example": "Let’s ask the project coordinator first before booking venues."
+      },
+      {
+        "word": "don't mind",
+        "ipa": "/dəʊnt maɪnd/",
+        "pos": "phr",
+        "meaning": "không phiền, không bận tâm",
+        "example": "I don't mind staying late to finalize the accounting ledgers."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "department store",
+        "meaning": "cửa hàng bách hóa"
+      },
+      {
+        "phrase": "ask Patricia first",
+        "meaning": "hỏi Patricia trước"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Trì hoãn quyết định trong câu hỏi lựa chọn",
+        "rule": "Should we meet at A or B? -> Let's ask [Person] first.",
+        "analysis": "Thể hiện sự tôn trọng ý kiến đồng đội bằng cách tham khảo ý kiến trước khi quyết định."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q30.mp3",
+    "audioLabel": "Nghe câu 30"
+  },
+  {
+    "id": 31,
+    "part": 2,
+    "partName": "Part 2: Question-Response",
+    "audio": "assets/audio/test5/part2.mp3",
+    "questionText": "Which band is playing at the club tonight?",
+    "questionTextVi": "Ban nhạc nào sẽ biểu diễn ở câu lạc bộ tối nay vậy?",
+    "options": {
+      "A": "There’s always a comedy show on Thursday nights.",
+      "B": "Yes, I’ve played the piano for many years.",
+      "C": "Their number one hit."
+    },
+    "optionsVi": {
+      "A": "(A) Vào các tối thứ Năm thì luôn luôn là chương trình hài kịch cơ mà.",
+      "B": "(B) Vâng, tôi đã chơi đàn piano nhiều năm rồi.",
+      "C": "(C) Bản nhạc hit số một của họ."
+    },
+    "correctAnswer": "A",
+    "explanation": "Câu hỏi 'Which band is playing...?'. Phương án (A) đính chính lại lịch biểu rằng tối nay không có ban nhạc nào biểu diễn mà là chương trình hài kịch: 'There’s always a comedy show on Thursday nights' (Tối thứ Năm luôn là diễn hài kịch). Bẫy (B) lặp từ 'play'; (C) lặp liên tưởng âm nhạc 'hit'.",
+    "transcript": "Speaker: Which band is playing at the club tonight?\n(A) There’s always a comedy show on Thursday nights.\n(B) Yes, I’ve played the piano for many years.\n(C) Their number one hit.",
+    "transcriptVi": "Người hỏi: Ban nhạc nào biểu diễn ở câu lạc bộ tối nay vậy?\n(A) Luôn có chương trình hài kịch vào các tối thứ Năm mà.\n(B) Vâng, tôi đã chơi piano nhiều năm rồi.\n(C) Bản hit số một của họ.",
+    "vocabulary": [
+      {
+        "word": "comedy show",
+        "ipa": "/ˈkɒm.ə.di ʃəʊ/",
+        "pos": "n",
+        "meaning": "buổi biểu diễn hài kịch độc thoại",
+        "example": "The downtown venue hosts an entertaining comedy show every Thursday."
+      },
+      {
+        "word": "band",
+        "ipa": "/bænd/",
+        "pos": "n",
+        "meaning": "ban nhạc biểu diễn",
+        "example": "A popular indie rock band is scheduled to tour internationally."
+      },
+      {
+        "word": "number one hit",
+        "ipa": "/ˌnʌm.bər ˈwʌn hɪt/",
+        "pos": "n",
+        "meaning": "bản nhạc thành công nhất, bài hát hit số một",
+        "example": "Their debut single rapidly became a national number one hit."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "playing at the club",
+        "meaning": "biểu diễn ở câu lạc bộ"
+      },
+      {
+        "phrase": "comedy show",
+        "meaning": "chương trình hài kịch"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Bác bỏ giả định sai của người hỏi",
+        "rule": "Which band is playing? -> There's a comedy show instead.",
+        "analysis": "Chỉ ra rằng người hỏi đã nhầm lịch sự kiện tối nay."
+      }
+    ],
+    "audioClip": "assets/audio/test5/cuts/q31.mp3",
+    "audioLabel": "Nghe câu 31"
+  }
+]

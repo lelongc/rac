@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ETS TOEIC 2024 Pro Master (Full 10 Tests) | Luyện đề, Giải chi tiết & Học từ vựng</title>
+
+  <!-- Google Fonts & Phosphor Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="app-container">
+
+    <!-- Top Navigation Bar -->
+    <header class="top-navbar">
+      <div class="brand-section">
+        <div class="brand-logo">
+          <span>ET</span>
+        </div>
+        <div class="brand-info">
+          <div class="test-switcher-wrap">
+            <label for="testSelect" class="test-select-label"><i class="ph-bold ph-stack"></i></label>
+            <select id="testSelect" class="test-select-dropdown" title="Chọn đề thi (Test 1 - 10)">
+              <option value="1">ETS 2024 • Test 1</option>
+              <option value="2">ETS 2024 • Test 2</option>
+              <option value="3">ETS 2024 • Test 3</option>
+              <option value="4">ETS 2024 • Test 4</option>
+              <option value="5">ETS 2024 • Test 5</option>
+              <option value="6">ETS 2024 • Test 6</option>
+              <option value="7">ETS 2024 • Test 7</option>
+              <option value="8">ETS 2024 • Test 8</option>
+              <option value="9">ETS 2024 • Test 9</option>
+              <option value="10">ETS 2024 • Test 10</option>
+            </select>
+          </div>
+          <span class="brand-subtext" id="brandSubtext">FULL 200 CÂU • BẢNG ĐIỂM THỰC 990 • GIẢI CHI TIẾT</span>
+        </div>
+      </div>
+
+      <!-- Mode Switcher -->
+      <nav class="nav-modes">
+        <button class="mode-btn active" data-mode="practice">
+          <i class="ph-bold ph-lightning"></i> Luyện tập
+        </button>
+        <button class="mode-btn" data-mode="exam">
+          <i class="ph-bold ph-timer"></i> Thi thử (120p)
+        </button>
+        <button class="mode-btn" data-mode="flashcard">
+          <i class="ph-bold ph-cards"></i> Flashcards (500+ từ)
+        </button>
+        <button class="mode-btn" data-mode="grammar">
+          <i class="ph-bold ph-notebook"></i> Ngữ pháp
+        </button>
+      </nav>
+
+      <!-- Progress & Actions -->
+      <div class="nav-actions">
+        <div class="progress-pill">
+          <span id="progressText">0 / 200 (0%)</span>
+          <div class="progress-bar-mini">
+            <div class="progress-bar-fill" id="progressFill"></div>
+          </div>
+        </div>
+        <button class="icon-btn-text" id="btnOpenHistory" title="Xem lịch sử kết quả thi thử">
+          <i class="ph-bold ph-clock-counter-clockwise"></i>
+          <span>Lịch sử thi</span>
+        </button>
+        <button class="icon-btn" id="themeToggle" title="Chuyển đổi Sáng / Tối">
+          <i class="ph-bold ph-sun"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Sticky Audio Player Bar (Parts 1 - 4) -->
+    <section class="audio-player-bar" id="audioPlayerBar">
+      <div class="audio-track-info">
+        <span class="audio-badge">Audio</span>
+        <span class="audio-track-name" id="audioTrackName">Part 1: Photographs</span>
+      </div>
+
+      <div class="audio-controls-center">
+        <div class="audio-btns">
+          <button class="btn-player" id="audioRewind" title="Lùi lại 5 giây">
+            <i class="ph-bold ph-rewind-5"></i>
+          </button>
+          <button class="btn-player btn-play-pause" id="audioPlayPause" title="Phát / Dừng">
+            <i class="ph-bold ph-play" id="playPauseIcon"></i>
+          </button>
+          <button class="btn-player" id="audioForward" title="Tua tới 5 giây">
+            <i class="ph-bold ph-fast-forward-5"></i>
+          </button>
+        </div>
+
+        <div class="timeline-box">
+          <span class="time-text" id="audioCurrentTime">00:00</span>
+          <input type="range" class="timeline-slider" id="audioTimeline" min="0" max="100" value="0" />
+          <span class="time-text" id="audioTotalTime">00:00</span>
+        </div>
+      </div>
+
+      <div class="audio-controls-right">
+        <select class="speed-select" id="audioSpeed" title="Tốc độ nghe">
+          <option value="0.8">0.8x</option>
+          <option value="1.0" selected>1.0x (Chuẩn)</option>
+          <option value="1.2">1.2x (Nâng cao)</option>
+          <option value="1.5">1.5x</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- Sub-header: Part Tabs & Question Filter -->
+    <section class="part-nav-bar" id="partNavBar">
+      <div class="part-tabs">
+        <button class="part-tab active" data-part="all">Tất cả Part <span class="badge">200</span></button>
+        <button class="part-tab" data-part="1">Part 1 <span class="badge">6</span></button>
+        <button class="part-tab" data-part="2">Part 2 <span class="badge">25</span></button>
+        <button class="part-tab" data-part="3">Part 3 <span class="badge">39</span></button>
+        <button class="part-tab" data-part="4">Part 4 <span class="badge">30</span></button>
+        <button class="part-tab" data-part="5">Part 5 <span class="badge">30</span></button>
+        <button class="part-tab" data-part="6">Part 6 <span class="badge">16</span></button>
+        <button class="part-tab" data-part="7">Part 7 <span class="badge">54</span></button>
+      </div>
+
+      <div class="filter-group">
+        <i class="ph-bold ph-funnel" style="color: var(--text-muted);"></i>
+        <select class="filter-select" id="questionFilter">
+          <option value="all">Tất cả câu hỏi</option>
+          <option value="unanswered">Câu chưa làm</option>
+          <option value="answered">Câu đã làm</option>
+          <option value="flagged">Đã gắn cờ 🚩</option>
+          <option value="wrong">Câu làm sai ❌</option>
+        </select>
+        <button class="btn-action-sm btn-danger-sm" id="btnResetPracticeBar" title="Xóa toàn bộ câu trả lời đã làm để làm lại từ đầu" style="white-space: nowrap;">
+          <i class="ph-bold ph-arrow-counter-clockwise"></i> Xóa làm lại
+        </button>
+      </div>
+    </section>
+
+    <!-- Main Container -->
+    <main class="main-layout">
+      <!-- Left / Center Content View -->
+      <section class="content-area">
+
+        <!-- 1. Questions View (Practice & Exam) -->
+        <div id="questionsView" style="display: flex; flex-direction: column; gap: 1.5rem;">
+          <div id="reviewBannerContainer"></div>
+          <div id="questionsList" style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <!-- Rendered by app.js -->
+          </div>
+        </div>
+
+        <!-- 2. Flashcard View -->
+        <div id="flashcardView" style="display: none;" class="flashcard-wrapper">
+          <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <select class="filter-select" id="fcPartFilter">
+                <option value="all">Toàn bộ từ vựng (366 từ)</option>
+                <option value="starred">Đã gắn sao ⭐</option>
+                <option value="1">Part 1: Photographs</option>
+                <option value="2">Part 2: Question-Response</option>
+                <option value="3">Part 3: Conversations</option>
+                <option value="4">Part 4: Short Talks</option>
+                <option value="5">Part 5: Incomplete Sentences</option>
+                <option value="6">Part 6: Text Completion</option>
+                <option value="7">Part 7: Reading Comprehension</option>
+              </select>
+              <button class="btn-action-sm" id="fcShuffle" title="Trộn ngẫu nhiên">
+                <i class="ph-bold ph-shuffle"></i> Trộn thẻ
+              </button>
+            </div>
+            <span class="q-part-badge" id="fcCounter">1 / 366</span>
+          </div>
+
+          <!-- 3D Flippable Card -->
+          <div class="flashcard-3d" id="flashcard3D">
+            <div class="flashcard-inner">
+              <!-- Front Side -->
+              <div class="flashcard-front">
+                <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                  <span class="q-part-badge" id="fcPartBadge">Part 1</span>
+                  <div style="display: flex; gap: 0.5rem;">
+                    <button class="icon-btn" id="fcSpeak" title="Nghe phát âm">
+                      <i class="ph-fill ph-speaker-high"></i>
+                    </button>
+                    <button class="icon-btn" id="fcStar" title="Gắn sao từ này">
+                      <i class="ph-bold ph-star"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div style="margin: auto 0; text-align: center;">
+                  <div class="fc-word" id="fcWord">Word</div>
+                  <div class="fc-ipa" id="fcIpa">/wɜːd/</div>
+                  <span class="vocab-pos" id="fcPos">[noun]</span>
+                </div>
+
+                <div class="fc-hint">
+                  <i class="ph-bold ph-arrows-clockwise"></i> Nhấp vào thẻ hoặc bấm phím Space / Mũi tên để lật xem nghĩa
+                </div>
+              </div>
+
+              <!-- Back Side -->
+              <div class="flashcard-back">
+                <div style="margin: auto 0; text-align: center;">
+                  <div class="fc-meaning" id="fcMeaning">Định nghĩa tiếng Việt</div>
+                  <div class="fc-example" id="fcExample">“Ví dụ câu mẫu ứng dụng trong bài thi”</div>
+                </div>
+                <div class="fc-hint">
+                  <i class="ph-bold ph-arrow-counter-clockwise"></i> Nhấp lại để quay lại từ vựng
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <div class="flashcard-controls">
+            <button class="btn-action-sm" id="fcPrev" style="padding: 0.7rem 1.25rem; font-size: 0.9rem;">
+              <i class="ph-bold ph-arrow-left"></i> Từ trước
+            </button>
+            <button class="btn-action-sm" id="fcFlipBtn" style="padding: 0.7rem 1.5rem; font-size: 0.9rem; background: var(--accent-gradient); color: #fff; border: none;">
+              <i class="ph-bold ph-arrows-clockwise"></i> Lật thẻ
+            </button>
+            <button class="btn-action-sm" id="fcNext" style="padding: 0.7rem 1.25rem; font-size: 0.9rem;">
+              Từ kế tiếp <i class="ph-bold ph-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- 3. Grammar Notebook View -->
+        <div id="grammarView" style="display: none;">
+          <div style="margin-bottom: 1.5rem;">
+            <h2 style="font-size: 1.5rem; font-weight: 800; color: #fff;">Sổ tay Ngữ pháp & Chiến thuật làm bài</h2>
+            <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 0.25rem;">
+              Tổng hợp toàn bộ 70 điểm ngữ pháp cốt lõi, bẫy đề thi và mẹo giải nhanh xuất hiện trong Đề ETS 2024 Test 1.
+            </p>
+          </div>
+          <div id="grammarContainer" style="display: flex; flex-direction: column; gap: 1rem;">
+            <!-- Rendered by app.js -->
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Right Column: Sidebar & Question Palette -->
+      <aside class="sidebar-sticky" id="sidebarColumn">
+        <!-- Exam Timer Box -->
+        <div class="sidebar-panel timer-box" id="examTimerBox" style="display: none;">
+          <div class="timer-label">Thời gian làm bài còn lại</div>
+          <div class="timer-display" id="timerDisplay">02:00:00</div>
+          <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem;">
+            Chuẩn thời gian thi thật: 45 phút Listening + 75 phút Reading
+          </p>
+        </div>
+
+        <!-- Palette Panel -->
+        <div class="sidebar-panel">
+          <div class="palette-header" style="display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <span class="palette-title">Bảng câu hỏi</span>
+              <span class="palette-stats" id="paletteStats">0 / 200</span>
+            </div>
+            <button class="btn-action-sm btn-danger-sm" id="btnClearAnswersQuick" title="Xóa câu trả lời đã làm để làm lại từ đầu" style="padding: 0.25rem 0.6rem; font-size: 0.78rem;">
+              <i class="ph-bold ph-arrow-counter-clockwise"></i> Xóa làm lại
+            </button>
+          </div>
+
+          <div class="palette-grid" id="paletteGrid">
+            <!-- 200 numbers generated by app.js -->
+          </div>
+
+          <div class="sidebar-actions-group">
+            <button class="btn-submit-test" id="btnSubmitTest">
+              <i class="ph-bold ph-check-circle"></i> <span id="btnSubmitText">Nộp bài & Chấm điểm ETS</span>
+            </button>
+            <div class="sidebar-dual-btns">
+              <button class="btn-action-sm btn-clear-answers" id="btnClearAnswers" title="Xóa các lựa chọn để làm lại">
+                <i class="ph-bold ph-arrow-counter-clockwise"></i> <span id="clearBtnText">Làm lại từ đầu</span>
+              </button>
+              <button class="btn-action-sm" id="btnSidebarHistory" title="Xem lịch sử các lần thi thử">
+                <i class="ph-bold ph-clock-counter-clockwise"></i> Lịch sử thi
+              </button>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+  </div>
+
+  <!-- Score Modal -->
+  <div class="modal-overlay" id="scoreModal">
+    <div class="modal-card">
+      <button class="modal-close" id="closeScoreModal">&times;</button>
+      <div class="score-header">
+        <h2 style="font-size: 1.6rem; font-weight: 800; color: #fff; margin-bottom: 0.5rem;">KẾT QUẢ BÀI THI TOEIC</h2>
+        <p style="color: var(--text-secondary); font-size: 0.85rem;">Quy đổi theo Bảng điểm Chuẩn ETS 2024</p>
+      </div>
+
+      <div class="score-badge-circle">
+        <div class="score-num" id="modalTotalScore">0</div>
+        <div class="score-total">/ 990 Điểm</div>
+      </div>
+
+      <div class="score-grid">
+        <div class="score-box">
+          <h4>Listening Comprehension</h4>
+          <div class="score-val" id="modalLCScore" style="color: #6366f1;">0 / 495</div>
+        </div>
+        <div class="score-box">
+          <h4>Reading Comprehension</h4>
+          <div class="score-val" id="modalRCScore" style="color: #ec4899;">0 / 495</div>
+        </div>
+      </div>
+
+      <h4 style="margin-bottom: 0.75rem; color: var(--text-secondary); font-size: 0.9rem;">Độ chính xác từng Part:</h4>
+      <div class="vocab-cards-grid" id="partBreakdownGrid" style="margin-bottom: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));">
+        <!-- Rendered by app.js -->
+      </div>
+
+      <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+        <button class="btn-submit-test" id="btnReviewAfterScore" style="flex: 1; background: var(--bg-secondary); border: 1px solid var(--border-color); color: #fff;">
+          <i class="ph-bold ph-eye"></i> Xem lại câu làm sai & Giải thích
+        </button>
+        <button class="btn-action-sm" id="btnOpenHistoryFromScore" style="padding: 0.8rem 1.25rem; font-size: 0.95rem;">
+          <i class="ph-bold ph-clock-counter-clockwise"></i> Lịch sử thi
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Exam History Modal -->
+  <div class="modal-overlay" id="examHistoryModal">
+    <div class="modal-card modal-card-history">
+      <button class="modal-close" id="closeExamHistoryModal">&times;</button>
+      <div class="history-modal-header">
+        <div class="history-title-wrap">
+          <div class="history-icon-badge">
+            <i class="ph-bold ph-chart-line-up"></i>
+          </div>
+          <div>
+            <h2>LỊCH SỬ KẾT QUẢ THI THỬ</h2>
+            <p>Bảng tổng hợp điểm số các lần nộp bài thi 120 phút theo chuẩn thang điểm ETS</p>
+          </div>
+        </div>
+        <div class="history-top-controls">
+          <select id="historyFilterSelect" class="filter-select" title="Lọc theo bài thi">
+            <option value="all">Tất cả bài thi</option>
+            <option value="1">ETS 2024 • Test 1</option>
+            <option value="2">ETS 2024 • Test 2</option>
+            <option value="3">ETS 2024 • Test 3</option>
+            <option value="4">ETS 2024 • Test 4</option>
+            <option value="5">ETS 2024 • Test 5</option>
+            <option value="6">ETS 2024 • Test 6</option>
+            <option value="7">ETS 2024 • Test 7</option>
+            <option value="8">ETS 2024 • Test 8</option>
+            <option value="9">ETS 2024 • Test 9</option>
+            <option value="10">ETS 2024 • Test 10</option>
+          </select>
+          <button class="btn-action-sm btn-danger-sm" id="btnClearAllHistoryBtn" title="Xóa toàn bộ lịch sử thi thử">
+            <i class="ph-bold ph-trash"></i> Xóa lịch sử thi
+          </button>
+        </div>
+      </div>
+
+      <!-- Overview KPI Cards -->
+      <div class="history-stats-bar" id="historyStatsBar">
+        <!-- Injected by app.js -->
+      </div>
+
+      <!-- Attempts List -->
+      <div class="history-list" id="historyList">
+        <!-- Injected by app.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Enhanced Interactive Lightbox Modal -->
+  <div class="lightbox-overlay" id="imageZoomModal">
+    <div class="lightbox-toolbar">
+      <div class="lightbox-info">
+        <i class="ph-bold ph-image" style="font-size: 1.2rem; color: var(--accent-primary);"></i>
+        <span class="lightbox-title" id="lightboxTitle">Hình ảnh chi tiết</span>
+        <span class="lightbox-scale" id="lightboxScale">100%</span>
+      </div>
+      <div class="lightbox-tools">
+        <button class="lightbox-btn" id="btnZoomIn" title="Phóng to (+)">
+          <i class="ph-bold ph-magnifying-glass-plus"></i> Phóng to
+        </button>
+        <button class="lightbox-btn" id="btnZoomOut" title="Thu nhỏ (-)">
+          <i class="ph-bold ph-magnifying-glass-minus"></i> Thu nhỏ
+        </button>
+        <button class="lightbox-btn" id="btnZoomReset" title="Đặt lại kích thước chuẩn (100%)">
+          <i class="ph-bold ph-arrows-out-cardinal"></i> Đặt lại
+        </button>
+        <button class="lightbox-btn" id="btnZoomFit" title="Vừa màn hình">
+          <i class="ph-bold ph-arrows-horizontal"></i> Vừa vặn
+        </button>
+        <button class="lightbox-btn" id="btnZoomOpenNew" title="Mở ảnh gốc trong tab mới">
+          <i class="ph-bold ph-arrow-square-out"></i> Tab mới
+        </button>
+        <button class="lightbox-btn lightbox-close" id="closeZoomModal" title="Đóng (ESC)">
+          <i class="ph-bold ph-x"></i>
+        </button>
+      </div>
+    </div>
+    <div class="lightbox-canvas" id="lightboxCanvas">
+      <img src="" alt="Zoomed Image" class="lightbox-img" id="zoomedImage" draggable="false" />
+    </div>
+    <div class="lightbox-hint">
+      <span><i class="ph-bold ph-mouse"></i> Cuộn chuột để phóng to/thu nhỏ (50% - 500%) • Bấm giữ chuột để kéo di chuyển • Nhấp đúp để phóng to 2x • Phím ESC để đóng</span>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/storage.js?v=20240914_fix"></script>
+  <script src="js/audio.js?v=20240914_fix"></script>
+  <script src="js/flashcard.js?v=20240914_fix"></script>
+  <script src="js/app.js?v=20240914_fix"></script>
+</body>
+</html>

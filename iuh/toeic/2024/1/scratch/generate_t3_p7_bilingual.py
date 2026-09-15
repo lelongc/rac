@@ -1,0 +1,726 @@
+import json, sys
+sys.stdout.reconfigure(encoding='utf-8')
+
+p7_passages_vi = {
+    "147_148": {
+        "title": "Quảng cáo: Sự kiện kỷ niệm 20 năm của Medillo Shoes",
+        "textVi": (
+            "Medillo Shoes Kỷ niệm 20 năm tại Cape Town!\n"
+            "Địa chỉ: 246 Breda Place, Wynberg, Cape Town 7800\n"
+            "Điện thoại: 021 555 0149 | Website: www.medilloshoes.co.za\n"
+            "Công việc của bạn có đòi hỏi bạn phải đứng cả ngày không? Hãy tìm kiếm sự hỗ trợ êm ái mà đôi chân bạn cần!\n"
+            "Tại Medillo Shoes, chúng tôi chuyên về giày dép thoải mái, nâng đỡ tốt mà vẫn thời trang, phù hợp cho bất kỳ môi trường công sở kinh doanh hoặc cơ sở y tế nào.\n"
+            "Hãy ghé thăm chúng tôi vào ngày 10 tháng 5 để được giảm giá 20% khi mua một hoặc nhiều đôi giày trong sự kiện kỷ niệm này.\n"
+            "Nếu bạn cần hỗ trợ tìm đôi giày phù hợp nhất với nhu cầu công việc của mình, các chuyên gia giày dép của chúng tôi luôn sẵn sàng hỗ trợ. Đặt lịch tư vấn miễn phí tại www.medilloshoes.co.za để tránh phải chờ đợi lâu."
+        )
+    },
+    "149_150": {
+        "title": "Email: Neil Cullen thông báo lịch công tác tuần tới tới Đội ngũ Bán hàng",
+        "textVi": (
+            "Gửi tới: Đội ngũ Bán hàng\n"
+            "Người gửi: Neil Cullen\n"
+            "Ngày: 10 tháng 4\n"
+            "Chủ đề: Lịch trình làm việc của tôi tuần tới\n"
+            "Kính gửi toàn thể đội ngũ,\n"
+            "Tôi sẽ vắng mặt ở văn phòng vào tuần tới, từ ngày 15 đến ngày 19 tháng 4, để tham dự hội nghị của Liên minh Công nghệ Quốc gia tại Glasgow. "
+            "Trong thời gian vắng mặt, tôi sẽ chỉ kiểm tra email và thư thoại không thường xuyên. "
+            "Đối với bất kỳ vấn đề khẩn cấp nào, vui lòng liên hệ với trợ lý của tôi, Christina Choo. "
+            "Nếu bạn có câu hỏi cụ thể về tài khoản khách hàng Ezenx Industries, vui lòng gửi email cho Mya Soroka. "
+            "Tôi sẽ trở lại văn phòng vào ngày 22 tháng 4 và hẹn gặp lại tất cả các bạn khi đó.\n"
+            "Trân trọng,\nNeil Cullen, Giám đốc Bán hàng và Tiếp thị, Công nghệ Shallok"
+        )
+    },
+    "151_152": {
+        "title": "Thông báo: Thay đổi thời gian tiếp nhận hồ sơ cấp phép xây dựng thành phố Bryanton",
+        "textVi": (
+            "THÀNH PHỐ BRYANTON\n"
+            "Văn phòng Cấp phép Xây dựng\n"
+            "Thông báo gửi người dân và các nhà thầu làm việc tại Bryanton:\n"
+            "Bắt đầu từ thứ Hai, ngày 1 tháng 7, Văn phòng Cấp phép Xây dựng Thành phố Bryanton, tọa lạc tại số 912 Đại lộ Fir, sẽ mở cửa từ thứ Hai đến thứ Năm, 9:00 sáng đến 5:00 chiều. "
+            "Đơn xin cấp giấy phép sẽ không còn được tiếp nhận vào các ngày thứ Sáu hoặc thứ Bảy. "
+            "Thời gian xử lý trung bình cho hồ sơ xin cấp phép vẫn là ba ngày làm việc. "
+            "Với sự thay đổi này, thành phố sẽ giảm chi phí vận hành trong khi vẫn duy trì các tiêu chuẩn phục vụ chất lượng cao cho người dân."
+        )
+    },
+    "153_155": {
+        "title": "Hóa đơn & Giấy xác nhận đặt chỗ: Chuyến tham quan Sông Thames (River Thames Tours)",
+        "textVi": (
+            "River Thames Tours - Xác nhận đặt chỗ trực tuyến (https://www.riverthamestours.uk/order/confirmation)\n"
+            "Cảm ơn bạn đã đặt tour tham quan Sông Thames với chúng tôi. Chúng tôi rất mong được đón tiếp bạn lên tàu.\n"
+            "Mỗi chuyến tham quan kéo dài 3 giờ. Chuyến đi của bạn bao gồm một bữa trưa nhẹ phục vụ lúc 1:00 chiều. Vui lòng tham khảo trang web của chúng tôi để xem thực đơn. "
+            "Nếu bạn có bất kỳ yêu cầu ăn kiêng đặc biệt nào và muốn yêu cầu suất ăn riêng, vui lòng liên hệ với giám đốc trải nghiệm khách hàng của chúng tôi, Martin Torma, ít nhất 48 giờ trước chuyến đi.\n"
+            "Việc đặt chỗ này cũng cho phép bạn được giảm giá 10% cho tour đi bộ do Edgerton Walking Tours tổ chức — chỉ cần cung cấp mã xác nhận của bạn khi đặt chỗ.\n"
+            "Tên: Lewis Califf | Ngày mua: 18 tháng 4 | Mã xác nhận: H102057 | Khởi hành: Ngày 1 tháng 5, 11:30 sáng | Số lượng: 4 vé | Tổng tiền: £180.00 | Thanh toán: Thẻ tín dụng đuôi 1037\n"
+            "Xin lưu ý: Cổng lên tàu đóng 10 phút trước giờ khởi hành."
+        )
+    },
+    "156_157": {
+        "title": "Chuỗi tin nhắn: Michiko Saunders và Jacob Kwon (Mua thêm giấy in và chuẩn bị đón khách)",
+        "textVi": (
+            "Michiko Saunders [8:06 sáng]: Chào Jacob. Anh đang trên đường tới văn phòng phải không?\n"
+            "Jacob Kwon [8:08 sáng]: Đúng rồi. Khoảng 25 phút nữa tôi sẽ có mặt ở đó.\n"
+            "Michiko Saunders [8:10 sáng]: OK. Tôi vừa bắt đầu in bản đề xuất thiết kế cho Tập đoàn Dansby thì chúng ta hết giấy in. Mà tận thứ Tư tuần sau mới có đợt giao giấy tiếp theo.\n"
+            "Jacob Kwon [8:12 sáng]: Tôi nhìn thấy một cửa hàng văn phòng phẩm ở ngay bên kia đường. Cửa hàng vừa mới mở cửa phục vụ hôm nay.\n"
+            "Michiko Saunders [8:13 sáng]: Tuyệt vời quá. Ba tập giấy in là đủ dùng rồi.\n"
+            "Jacob Kwon [8:15 sáng]: OK. Nhân tiện, khi nào các đại diện từ Tập đoàn Dansby sẽ đến văn phòng chúng ta? Tôi cũng có thể mua thêm ít cà phê và đồ ăn nhẹ cho cuộc họp đó."
+        )
+    },
+    "158_160": {
+        "title": "Thư ngỏ: Dịch vụ Doanh nghiệp Kipbank gửi bà Madeline Omar",
+        "textVi": (
+            "Dịch vụ Doanh nghiệp Kipbank\n"
+            "Địa chỉ: 548 Sycamore Lake Road, Green Bay, WI 54301\n"
+            "Ngày 2 tháng 4\n"
+            "Kính gửi bà Madeline Omar,\n"
+            "Công ty Thiết kế Nội thất Passionflower\n"
+            "Địa chỉ: 1556 Deer Run Road, Green Bay, WI 54301\n"
+            "Kính gửi bà Omar,\n"
+            "Một ngày của người làm chủ doanh nghiệp luôn bận rộn với việc cân đối các nhu cầu, đòi hỏi và nguyện vọng của khách hàng, nhân viên và các nhà cung cấp. — [1] —. "
+            "Hãy để Kipbank tìm kiếm các giải pháp thích hợp cho doanh nghiệp nhỏ của bạn để bạn có thể tập trung vào sản phẩm và con người của mình. "
+            "Kipbank cung cấp tài khoản thanh toán, thẻ tín dụng doanh nghiệp, các khoản vay kinh doanh cũng như dịch vụ kế toán và trả lương. — [2] —. "
+            "Vào mùa thu này, chúng tôi cũng sẽ bổ sung thêm các chuyên gia hoạch định tài chính vào đội ngũ của mình để giúp bạn và nhân viên lập kế hoạch cho tương lai. "
+            "Với thẻ tín dụng doanh nghiệp của chúng tôi, khách hàng của Kipbank có thể tận dụng các ưu đãi tiết kiệm tiền từ các đối tác khách sạn, văn phòng phẩm và hãng hàng không được chọn lọc. — [3] —. "
+            "Những ưu đãi này được tự động áp dụng cho các giao dịch mua đủ điều kiện. Và chủ doanh nghiệp có thể đặt hạn mức chi tiêu cho từng thẻ. — [4] —. "
+            "Vui lòng gọi cho chúng tôi theo số 920-555-0122 để đặt lịch hẹn hoặc ghé thăm khi thuận tiện. Chúng tôi rất mong được gặp bạn và mang đến cho doanh nghiệp của bạn dịch vụ vượt trội.\n"
+            "Trân trọng,\nThomas Piskorksi, Dịch vụ Chăm sóc Khách hàng Kipbank"
+        )
+    },
+    "161_163": {
+        "title": "Bài báo: Tập đoàn Carila vinh dự nhận Giải thưởng Doanh nghiệp Waldenstone",
+        "textVi": (
+            "OTTAWA (22 tháng 5) — Tạp chí Đánh giá Kinh doanh đã bổ sung một hạng mục mới vào hệ thống giải thưởng kinh doanh quốc tế danh giá của mình trong năm nay. "
+            "Giải thưởng Doanh nghiệp Waldenstone được trao tặng cho doanh nghiệp có tầm nhìn xa trong việc phát triển các chiến lược giúp đảm bảo sự tồn tại và phát triển bền vững lâu dài của công ty. "
+            "Giải thưởng năm nay đã được trao cho Tập đoàn Carila, một tên tuổi lớn trong lĩnh vực điện tử. "
+            "Dưới sự dẫn dắt của Tổng Giám đốc Điều hành (CEO) Atsak Kakar, Tập đoàn Carila đã từ bờ vực phá sản vươn lên đạt mức lợi nhuận cao chỉ trong vòng ba năm. "
+            "'Việc giành được giải thưởng này là niềm vinh dự to lớn, không chỉ đối với cá nhân tôi mà còn đối với toàn thể công ty', ông Kakar phát biểu khi nhận giải. "
+            "'Mọi người đã nỗ lực làm việc không ngừng nghỉ để đưa công ty trở lại nền tảng tài chính vững chắc. Giải pháp dài hạn đã mang lại giá trị đặc biệt xuất sắc cho các cổ đông của chúng tôi.'"
+        )
+    },
+    "164_167": {
+        "title": "Quảng cáo: Chương trình ưu đãi giới thiệu khách hàng mới của Commbolt Internet",
+        "textVi": (
+            "Commbolt dành cho tất cả mọi người!\n"
+            "Là một khách hàng của Commbolt, bạn luôn kỳ vọng những điều tốt nhất: internet tốc độ cao đáng tin cậy, các gói giá rõ ràng minh bạch và dịch vụ khách hàng đỉnh cao từ các chuyên gia thân thiện, luôn tận tâm đáp ứng mọi nhu cầu của bạn. — [1] — "
+            "Không giống như các đối thủ cạnh tranh, chúng tôi cam kết không bao giờ ràng buộc bạn vào những hợp đồng cứng nhắc hoặc đột ngột tăng hóa đơn hàng tháng mà không thông báo trước. "
+            "Tại Commbolt, chúng tôi hiểu bạn có nhiều lựa chọn khi tìm nhà cung cấp dịch vụ Internet. — [2] — "
+            "Để bày tỏ lòng biết ơn đối với sự trung thành của bạn, chúng tôi cung cấp khoản tiền thưởng giới thiệu đặc biệt trong thời gian có hạn. "
+            "Cách thức tham gia vô cùng đơn giản. — [3] — "
+            "Bạn có thể sử dụng email, mạng xã hội hoặc thậm chí tin nhắn văn bản để giới thiệu cho mọi người về Commbolt. "
+            "Khi một người dùng mới đăng ký sử dụng mã giới thiệu của bạn, cả hai người đều sẽ nhận được tiền thưởng tích lũy vào tài khoản. "
+            "Nhận ngay $10 khi người được giới thiệu đăng ký gói cước $45/tháng, và nhận $20 cho gói cước $60/tháng. "
+            "Tin tuyệt vời nhất là gì? — [4] — Không có giới hạn về số tiền thưởng; bạn giới thiệu càng nhiều người, bạn càng nhận được nhiều tiền. "
+            "Mã giới thiệu độc quyền của bạn là XA4Rl 77."
+        )
+    },
+    "168_171": {
+        "title": "Trang web: Dịch vụ Ẩm thực & Tiệc Sarah's Catering",
+        "textVi": (
+            "Trang web: https://www.sarahscatering.com\n"
+            "Sarah's Catering – Điều bạn phục vụ là điều quan trọng nhất\n"
+            "Sarah's Catering là một công ty do gia đình sở hữu và vận hành. Công ty được thành lập cách đây mười năm với sứ mệnh cung cấp các dịch vụ tiệc lưu động chất lượng cao nhất trong cộng đồng chúng ta. "
+            "Chúng tôi hợp tác chặt chẽ với những người trồng trọt địa phương và chỉ sử dụng các nguyên liệu tươi ngon nhất. "
+            "Thực đơn của chúng tôi có thể điều chỉnh linh hoạt theo khẩu vị hoặc nhu cầu ăn kiêng của khách hàng. Ví dụ, chúng tôi có thể chuẩn bị các món ăn chay, thuần chay và không chứa gluten.\n"
+            "Chúng tôi cung cấp dịch vụ tiệc cho các buổi sinh nhật, tiệc cưới, cuộc họp công ty, tiệc lễ của doanh nghiệp và nhiều loại sự kiện khác. "
+            "Từ việc lên kế hoạch thực đơn và chuẩn bị thức ăn cho đến việc bố trí nhân viên phục vụ và nhân viên dọn dẹp vệ sinh cho sự kiện, Sarah's Catering đều đảm nhiệm trọn gói. "
+            "Sarah's Catering có thể phục vụ bữa trưa ngay tại văn phòng của bạn cho nhóm tối thiểu từ 20 người. "
+            "Chúng tôi mang đến những lựa chọn ngon miệng để biến bữa ăn của tập thể thành một trải nghiệm hài lòng.\n"
+            "Chúng tôi luôn sẵn sàng phục vụ bạn! Đặt hàng nhanh chóng và đơn giản. Truy cập www.sarahscatering.com/quote để yêu cầu báo giá chi phí cho sự kiện tiếp theo của bạn.\n"
+            "Đánh giá từ khách hàng:\n"
+            "- 'Làm việc với Sarah's Catering rất dễ dàng, đồ ăn thì tuyệt ngon! Mọi người trong văn phòng đều khen ngợi thức ăn rất chất lượng.' — Glen Liu, Công ty Bất động sản Perkins\n"
+            "- 'Mọi thứ đều hoàn hảo, và đội ngũ nhân viên là tuyệt vời nhất.' — Annie Pierce, Công ty Tiếp thị Kania"
+        )
+    },
+    "172_175": {
+        "title": "Thảo luận trực tuyến: Marcus Steuber, Brinda Rajan và Joshua Borg (Sắp xếp cuộc họp tác giả và nhà in)",
+        "textVi": (
+            "Marcus Steuber [10:41 sáng]: Chúng ta vẫn có kế hoạch tổ chức cuộc họp qua video với tác giả hôm nay chứ? Tôi vẫn chưa nhận được thư mời họp.\n"
+            "Brinda Rajan [10:42 sáng]: Tôi thấy cuộc họp đã có trên lịch làm việc của tôi. Để tôi chuyển tiếp cho anh; có vẻ như trợ lý biên tập của chúng ta đã không đưa anh vào danh sách.\n"
+            "Marcus Steuber [10:43 sáng]: Cảm ơn, tôi vừa nhận được rồi. Tuy nhiên, khung giờ này lại không phù hợp với tôi. Tôi có một cuộc hẹn với Hazel Luong để thảo luận về các vấn đề in ấn tại nhà máy ở Singapore của chúng ta.\n"
+            "Brinda Rajan [10:44 sáng]: Anh có thể hoãn cuộc hẹn đó lại được không? Tác giả mới mà chúng ta đang làm việc cùng thực sự cần sự hướng dẫn của anh về thiết kế và định dạng cuốn sách cuối cùng. Anh là biên tập viên sản xuất giàu kinh nghiệm nhất của chúng ta.\n"
+            "Marcus Steuber [10:45 sáng]: Để tôi kiểm tra lại với người giám sát của mình. Tôi sẽ thêm ông Borg vào cuộc trò chuyện này.\n"
+            "Joshua Borg [10:47 sáng]: Chào cả nhóm. Marcus, anh nên ưu tiên cuộc hẹn của mình với Hazel. Tôi sẽ đến thăm nhà máy vào tuần tới và cần giải quyết dứt điểm các vấn đề in ấn đó trước. Brinda, cô có thể dời cuộc gọi với cô Benoit sang sáng mai được không?\n"
+            "Brinda Rajan [10:49 sáng]: Vâng, tôi sẽ liên hệ với cô ấy ngay bây giờ để hẹn lại lịch."
+        )
+    },
+    "176_180": {
+        "title": "Lịch trình & Tin nhắn thông báo: Lễ hội Âm nhạc Rambling River Festival",
+        "textVi": (
+            "Lễ hội Rambling River Festival - Lịch trình các sự kiện âm nhạc\n"
+            "Thứ Sáu, ngày 8 tháng 9:\n"
+            "- Johanna Greenblatt • 3:30 chiều\n"
+            "- Chương trình Phát thanh Bethesda Radio giới thiệu Ban nhạc Blass Brothers • 8:00 tối (được ghi hình tại Nhà hát Bramley)\n"
+            "Thứ Bảy, ngày 9 tháng 9:\n"
+            "- Ban nhạc The Rolling Dozen • 6:30 tối\n"
+            "- Jefferson Cage • 7:45 tối\n"
+            "Tất cả các sự kiện diễn ra tại Sân khấu Ngoài trời Công viên Bethesda trừ khi có ghi chú khác. Quý khán giả có thể thoải mái mang theo bạt dã ngoại.\n"
+            "---\n"
+            "Tin nhắn từ Ban tổ chức Lễ hội Rambling River Festival, ngày 8 tháng 9, 9:14 sáng:\n"
+            "Buổi biểu diễn chiều nay sẽ diễn ra tại Hội trường Cole Hall do dự báo thời tiết xấu có mưa bão. Các vật dụng cồng kềnh không được phép mang vào, nhưng dịch vụ gửi áo khoác sẽ được phục vụ miễn phí. "
+            "Buổi biểu diễn tối nay sẽ được dời sang 2:30 chiều ngày mai; ban nhạc địa phương Kirschau sẽ biểu diễn thế chỗ vào khung giờ ban đầu tối nay. "
+            "Chúng tôi kỳ vọng toàn bộ chương trình ngày thứ Bảy sẽ diễn ra bình thường tại Sân khấu Ngoài trời Công viên Bethesda."
+        )
+    },
+    "181_185": {
+        "title": "Email & Bài báo: Khảo sát và nâng cấp ứng dụng Ngân hàng Di động Ogden Bank",
+        "textVi": (
+            "Email nội bộ:\n"
+            "Gửi tới: Tất cả Quản lý Chi nhánh | Người gửi: Fran Corliss | Ngày: 7 tháng 4 | Chủ đề: Kết quả khảo sát về ngân hàng di động\n"
+            "Chào mọi người, Ngân hàng Ogden gần đây đã tiến hành khảo sát khách hàng liên quan đến ngân hàng di động. Dưới đây là một số điểm then chốt: Hơn 95% khách hàng của chúng tôi sở hữu thiết bị di động. Tuy nhiên, dù sự quan tâm đến ngân hàng di động là rất lớn, chỉ có 39% khách hàng của chúng tôi sử dụng ứng dụng. Một số khách hàng viện dẫn lo ngại về bảo mật (23%), nhưng phần lớn (78%) cho rằng ứng dụng hoạt động không tốt. Một cuộc họp bắt buộc dành cho tất cả các quản lý chi nhánh sẽ được tổ chức tại trụ sở chính của chúng tôi vào ngày 12 tháng 4 lúc 4:00 chiều để cùng thảo luận các chiến lược ứng phó với thách thức này.\n"
+            "Fran Corliss, Giám đốc Ngân hàng Di động, Ogden Bank\n"
+            "---\n"
+            "Bài báo: Bước tiến mạnh mẽ cho Ngân hàng Di động (Tác giả Edward Panzius)\n"
+            "FLEMINGTON (18 tháng 5) — Ngân hàng Ogden đã triển khai những cải tiến lớn cho ứng dụng ngân hàng di động của mình. Ngân hàng đã mở rộng các tính năng có thể thực hiện qua ứng dụng và giúp ứng dụng dễ sử dụng hơn rất nhiều. 'Nhiều chủ tài khoản của chúng tôi từng nản lòng vì một ứng dụng thô kệch và hạn chế', cô Alys DeFreese, quản lý chi nhánh Flemington của Ogden Bank chia sẻ. 'Giờ đây họ có thể làm gần như mọi tác vụ trên app như khi gọi điện thoại hay đến trực tiếp chi nhánh. Đây là minh chứng cho sự nỗ lực phục vụ khách hàng của chúng tôi.' Theo cô DeFreese, chỉ trong vài tuần sau khi nâng cấp, 20% chủ tài khoản đã chuyển sang gửi séc và thanh toán hóa đơn trực tuyến. Cô dự đoán con số này sẽ tiếp tục tăng. 'Sự tiện lợi đã tạo ra khác biệt lớn đối với tôi', chủ tài khoản Yair Baum nhận xét. Khách hàng Maria Reed nói thêm: 'Tôi đánh giá cao sự linh hoạt khi có thể giao dịch ngân hàng mọi lúc mọi nơi.'"
+        )
+    },
+    "186_190": {
+        "title": "Thông báo, Trang web & Email: Câu lạc bộ Sách Thư viện Westwood",
+        "textVi": (
+            "Thông báo Thư viện Westwood:\n"
+            "Thư viện Westwood vui mừng thông báo thành lập Câu lạc bộ Sách mở cửa cho toàn bộ hội viên thư viện. Câu lạc bộ sẽ họp mặt vào ngày thứ Năm cuối cùng của mỗi tháng, từ 7:00 đến 9:00 tối tại Phòng Họp Harrison, để thảo luận về một cuốn sách do một nhân viên chuyên môn của chúng tôi lựa chọn. "
+            "Từ tháng 1 đến tháng 6, chúng tôi sẽ đọc các tác phẩm phi hư cấu (nonfiction) mới xuất bản, và từ tháng 7 đến tháng 12, chúng tôi sẽ tập trung vào các tiểu thuyết văn học đương đại. "
+            "Thông tin chi tiết truy cập www.westwoodlibrary.org.\n"
+            "---\n"
+            "Trang web: https://www.westwoodlibrary.org/bookclub\n"
+            "Danh sách sách được chọn cho nửa đầu năm:\n"
+            "- Tháng 1: Wild Open Range (tác giả Jaxon McDonald)\n"
+            "- Tháng 2: The Journey of a Song (tác giả Lucy Xi)\n"
+            "- Tháng 3: Due North: Adventures in Alaska's Northern Territory (tác giả Isabel Beck)\n"
+            "- Tháng 4: The Art of Mindful Carpentry (tác giả Peter Landers)\n"
+            "- Tháng 5: Mary Swan: A Legend Before Her Time (tác giả Kai Noble)\n"
+            "- Tháng 6: Sẽ được thông báo sau\n"
+            "---\n"
+            "Email: Gửi cô Lisa Calle <lcalle@worldmail.com> | Người gửi: Gail Frey | Ngày: 27 tháng 3 | Chủ đề: Câu lạc bộ sách\n"
+            "Thưa cô Calle, Thật tuyệt vời khi được thấy cô chủ trì câu lạc bộ sách vào tối hôm qua. Cuốn sách Due North của tác giả Beck khá dày và thật là một thử thách để đọc xong trước buổi gặp. Tuy nhiên, tôi phải cảm ơn cô vì đã chọn cuốn sách đó bởi vì nó đã khơi dậy niềm đam mê từ thuở thơ ấu của tôi về việc du lịch đến Alaska. Trên thực tế, tôi đã tìm kiếm một số tour du lịch rồi! Buổi họp câu lạc bộ rất đông người và tôi hầu như không có cơ hội nói chuyện với cô. Chúng ta nên gặp nhau trò chuyện sớm nhé. Có lẽ chúng ta có thể thử nhà hàng Pháp mới trên phố Looper."
+        )
+    },
+    "191_195": {
+        "title": "Email & Hóa đơn: Đơn đặt bánh sinh nhật tại Tiệm bánh George Street Sweets",
+        "textVi": (
+            "Email xác nhận đơn hàng:\n"
+            "Người gửi: Tatiana Schwartz <orders@georgestreetsweets.co.uk> | Người nhận: Alejandro Ordaz | Ngày: 28 tháng 4 | Chủ đề: Xác nhận đơn hàng số 47892\n"
+            "Kính gửi ông Ordaz, Cảm ơn ông đã đặt hàng tại George Street Sweets. Hóa đơn của ông được đính kèm theo thư này. Nếu quý khách có bất kỳ câu hỏi nào hoặc cần thay đổi đơn hàng, vui lòng phản hồi email này hoặc gọi số (091) 498 0172. Lưu ý rằng chúng tôi không thể giải quyết các yêu cầu thay đổi đơn hàng được gửi ít hơn 48 giờ trước thời gian nhận hàng đã lên lịch. Nếu đến nhận hàng trực tiếp, chúng tôi tọa lạc tại số 29 Phố George. Chỗ đỗ xe có sẵn ngay bên cạnh, phía sau Cửa hàng Xe đạp Spike. Chúng tôi nhận giao hàng tận nơi cho khách hàng trong phạm vi bán kính 10 km tính từ cửa hàng với mức phí £2.50. Xin lưu ý các trường hợp hủy đơn hàng trong vòng 24 giờ trước thời gian nhận hoặc giao hàng sẽ không được hoàn tiền.\n"
+            "---\n"
+            "Hóa đơn số: 47892 | Ngày đặt: 28 tháng 4 | Ngày giờ giao hàng: Ngày 2 tháng 5, 11:30 sáng | Địa điểm giao: Số 2 Spen Lane, Phòng Doanh nghiệp Suite 202 | Phương thức thanh toán: Thẻ tín dụng – Alejandro Ordaz | Yêu cầu trang trí riêng: Không có | Sản phẩm: 1 bánh tròn 18-inch (vị sô cô la phủ kem vani) - £32.00; 1 bộ nến - £5.00; Phí giao hàng: £2.50; Tổng cộng: £39.50\n"
+            "---\n"
+            "Email phản hồi:\n"
+            "Người gửi: Alejandro Ordaz | Người nhận: Tatiana Schwartz | Ngày: 29 tháng 4\n"
+            "Kính gửi cô Schwartz, Tôi đã nhận được email xác nhận và hóa đơn, và tôi phát hiện một sai sót. Có vẻ như người tiếp nhận cuộc gọi điện thoại khi tôi đặt hàng đã không ghi lại thông điệp tôi yêu cầu. Nội dung trang trí riêng mà tôi chỉ định là dòng chữ 'Happy Retirement' (Chúc mừng Nghỉ hưu) được viết trên mặt bánh. Tôi hy vọng vẫn có thể kịp bổ sung dòng chữ này. Vui lòng phản hồi email này để xác nhận. Ngoài ra, số lượng khách mời sẽ đông hơn dự kiến ban đầu, nên tôi có thể sẽ liên hệ lại cửa hàng để đặt thêm."
+        )
+    },
+    "196_200": {
+        "title": "Email, Bản khảo sát & Báo cáo tư vấn: Giải pháp cắt giảm chi phí tại Woolf Flooring",
+        "textVi": (
+            "Email nội bộ Woolf Flooring:\n"
+            "Người gửi: Iqbal Grewal, Giám đốc Chuyển đổi Kinh doanh | Ngày: 12 tháng 6 | Chủ đề: Khảo sát tiết kiệm chi phí\n"
+            "Thưa toàn thể đồng nghiệp, Tại Woolf Flooring, chúng tôi đang tìm cách giảm chi phí vận hành hàng ngày mà không làm giảm chất lượng sản phẩm, dịch vụ khách hàng hoặc tinh thần làm việc của nhân viên. Chúng tôi tìm kiếm ý kiến đóng góp từ các nhân viên được chọn lọc thuộc nhiều phòng ban khác nhau thông qua một khảo sát trực tuyến tại www.surveyquest.com.au/109820. Tất cả những người được chọn tham gia khảo sát đều đã gắn bó với công ty ít nhất mười năm và do đó rất am hiểu các quy trình vận hành của chúng ta. Hạn chót hoàn thành khảo sát là ngày 19 tháng 6. Xin lưu ý khảo sát này chỉ dành riêng cho những người nhận được email này. Vui lòng không chuyển tiếp email này cho người khác hoặc đăng liên kết khảo sát ở nơi khác. Chúng tôi cũng dự định thuê các chuyên gia tư vấn độc lập bên ngoài để rà soát toàn bộ hoạt động và viết báo cáo đánh giá. Chúng tôi hiểu rằng một số đồng nghiệp không đồng ý với cách tiếp cận này; tuy nhiên, chúng tôi nhận định rằng việc có được góc nhìn khách quan từ bên ngoài là một khoản đầu tư xứng đáng giúp tiết kiệm chi phí về lâu dài.\n"
+            "---\n"
+            "Phiếu khảo sát tiết kiệm chi phí:\n"
+            "Ngày: 18 tháng 6 | Người điền: Beth Mair, Quản lý Bán hàng\n"
+            "Nội dung: 'Tôi nhận thấy một số nhân viên lấy một đôi găng tay dùng một lần mới mỗi khi họ quay trở lại làm việc sau giờ nghỉ. Họ hoàn toàn có thể sử dụng cùng một đôi đó trong suốt cả ngày làm việc. Bằng cách giới hạn việc sử dụng găng tay ở mức một đôi mỗi ngày, Woolf Flooring sẽ tiết kiệm được hàng nghìn đô la mỗi năm, đồng thời giảm thiểu lượng rác thải. Một chính sách mới liên quan đến việc sử dụng đồ bảo hộ cá nhân sẽ rất dễ triển khai ngay lập tức và chỉ cần gửi một email thông báo giải thích cho toàn công ty.'\n"
+            "---\n"
+            "Báo cáo tóm tắt từ Công ty Tư vấn Miyoko Consulting:\n"
+            "Cảm ơn quý vị đã tạo điều kiện cho chúng tôi rà soát hoạt động của quý vị trong những tuần qua. Dưới đây là danh sách các khuyến nghị chính của chúng tôi:\n"
+            "1. Nhân viên không phải lúc nào cũng sử dụng sơn nhuộm gỗ và các vật liệu khác một cách hiệu quả nhất. Cần dành thêm thời gian đào tạo về vấn đề này.\n"
+            "2. Nhân viên có thể chú ý hơn đến chi phí tiền điện — ví dụ: tắt tất cả đèn và máy móc khi không sử dụng.\n"
+            "3. Một số nhà cung cấp dịch vụ Internet đang có chương trình giá ưu đãi. Việc chuyển đổi sang một trong những nhà cung cấp này có thể tiết kiệm khoản tiền đáng kể.\n"
+            "4. Cần nỗ lực hơn nữa để tái sử dụng vật tư — ví dụ: một số thiết bị bảo hộ cá nhân cơ bản có thể được sử dụng nhiều hơn một lần."
+        )
+    }
+}
+
+p7_questions_vi = {
+    "147": {
+        "qVi": "Điều gì sẽ diễn ra tại Medillo Shoes vào ngày 10 tháng 5?",
+        "optVi": {
+            "A": "(A) Tất cả các đôi giày sẽ được giảm giá.",
+            "B": "(B) Các nhân viên bán hàng phụ tá sẽ được tuyển dụng.",
+            "C": "(C) Một kiểu dáng giày sẽ ngừng sản xuất.",
+            "D": "(D) Giờ mở cửa hoạt động sẽ được kéo dài."
+        }
+    },
+    "148": {
+        "qVi": "Thông tin nào được chỉ ra về Medillo Shoes?",
+        "optVi": {
+            "A": "(A) Cửa hàng đã kinh doanh được mười năm.",
+            "B": "(B) Cửa hàng chuyên về giày thể thao.",
+            "C": "(C) Cửa hàng tọa lạc bên cạnh một trung tâm y tế.",
+            "D": "(D) Cửa hàng cho phép khách hàng đặt lịch hẹn trước."
+        }
+    },
+    "149": {
+        "qVi": "Mục đích của email này là gì?",
+        "optVi": {
+            "A": "(A) Để đăng ký tham dự một hội nghị",
+            "B": "(B) Để thông báo về một tài khoản khách hàng mới",
+            "C": "(C) Để lên lịch một cuộc họp",
+            "D": "(D) Để thông báo cho đồng nghiệp biết về sự vắng mặt"
+        }
+    },
+    "150": {
+        "qVi": "Điều gì rất có thể đúng về cô Soroka?",
+        "optVi": {
+            "A": "(A) Cô ấy sẽ đi công tác cùng ông Cullen.",
+            "B": "(B) Cô ấy phụ trách tài khoản khách hàng Ezenx Industries.",
+            "C": "(C) Cô ấy là cấp trên giám sát của cô Choo.",
+            "D": "(D) Cô ấy sẽ vắng mặt ở văn phòng cho đến ngày 22 tháng 4."
+        }
+    },
+    "151": {
+        "qVi": "Văn phòng Cấp phép Xây dựng đang thực hiện thay đổi gì?",
+        "optVi": {
+            "A": "(A) Văn phòng đang chuyển đến một địa điểm mới.",
+            "B": "(B) Văn phòng đang đơn giản hóa quy trình xin cấp phép.",
+            "C": "(C) Văn phòng giảm số ngày tiếp nhận đơn xin cấp phép.",
+            "D": "(D) Văn phòng tăng thời gian xử lý đơn xin cấp phép."
+        }
+    },
+    "152": {
+        "qVi": "Theo bản thông báo, tại sao sự thay đổi này lại được thực hiện?",
+        "optVi": {
+            "A": "(A) Để tiết kiệm ngân sách cho thành phố",
+            "B": "(B) Để thu hút thêm nhiều cư dân",
+            "C": "(C) Để nâng cao chất lượng dịch vụ",
+            "D": "(D) Để giảm bớt số lượng đơn xin cấp phép mới"
+        }
+    },
+    "153": {
+        "qVi": "Thông tin nào được chỉ ra về chuyến tham quan sông?",
+        "optVi": {
+            "A": "(A) Chuyến tham quan kéo dài một giờ.",
+            "B": "(B) Chuyến tham quan đi kèm với một bữa ăn.",
+            "C": "(C) Chuyến tham quan có thể đổi lại lịch trình.",
+            "D": "(D) Vé của tour bán hết rất nhanh."
+        }
+    },
+    "154": {
+        "qVi": "Ông Califf đã mua bao nhiêu vé?",
+        "optVi": {
+            "A": "(A) 1",
+            "B": "(B) 2",
+            "C": "(C) 4",
+            "D": "(D) 6"
+        }
+    },
+    "155": {
+        "qVi": "Làm thế nào để khách hàng nhận được giảm giá cho tour đi bộ?",
+        "optVi": {
+            "A": "(A) Bằng cách đặt chỗ trước trực tuyến",
+            "B": "(B) Bằng cách thanh toán bằng thẻ tín dụng",
+            "C": "(C) Bằng cách xin phiếu giảm giá từ thuyền trưởng",
+            "D": "(D) Bằng cách cung cấp mã xác nhận đặt chỗ"
+        }
+    },
+    "156": {
+        "qVi": "Vào lúc 8:12 sáng, anh Kwon có ý gì khi viết: 'I see an office supply store across the street'?",
+        "optVi": {
+            "A": "(A) Anh ấy cần giúp đỡ tìm đường tới một tòa nhà.",
+            "B": "(B) Anh ấy có thể ghé mua một ít giấy in.",
+            "C": "(C) Anh ấy sẽ tìm mua một chiếc máy in mới.",
+            "D": "(D) Anh ấy chuẩn bị đàm phán một lịch giao hàng."
+        }
+    },
+    "157": {
+        "qVi": "Cô Saunders rất có thể sẽ làm gì tiếp theo?",
+        "optVi": {
+            "A": "(A) Dời lịch một cuộc họp",
+            "B": "(B) Chuẩn bị một số đồ ăn thức uống nhẹ",
+            "C": "(C) Kiểm tra giờ đối tác đến văn phòng",
+            "D": "(D) Chỉnh sửa bản đề xuất thiết kế"
+        }
+    },
+    "158": {
+        "qVi": "Điều gì được gợi ý về bà Omar?",
+        "optVi": {
+            "A": "(A) Bà ấy là một nhân viên kế toán.",
+            "B": "(B) Bà ấy làm việc cho ông Piskorksi.",
+            "C": "(C) Bà ấy điều hành một công ty nhỏ.",
+            "D": "(D) Bà ấy là một khách hàng của Kipbank."
+        }
+    },
+    "159": {
+        "qVi": "Thông tin nào được nêu về thẻ tín dụng doanh nghiệp?",
+        "optVi": {
+            "A": "(A) Thẻ có nhiều màu sắc đa dạng.",
+            "B": "(B) Thẻ yêu cầu đóng phí thường niên.",
+            "C": "(C) Thẻ bao gồm ưu đãi giảm giá cho một số giao dịch mua.",
+            "D": "(D) Thẻ có thể được sử dụng để mua sắm đồ cá nhân."
+        }
+    },
+    "160": {
+        "qVi": "Câu văn sau phù hợp nhất ở vị trí nào: 'Everyday financial details only add more distractions.'?",
+        "optVi": {
+            "A": "(A) Vị trí [1]",
+            "B": "(B) Vị trí [2]",
+            "C": "(C) Vị trí [3]",
+            "D": "(D) Vị trí [4]"
+        }
+    },
+    "161": {
+        "qVi": "Mục đích của bài báo là gì?",
+        "optVi": {
+            "A": "(A) Khắc họa chân dung một doanh nghiệp mới mở",
+            "B": "(B) Phân tích một xu hướng trong ngành công nghiệp điện tử",
+            "C": "(C) Làm nổi bật thành tựu xuất sắc của một công ty",
+            "D": "(D) Thảo luận về những thay đổi trong hợp đồng lao động"
+        }
+    },
+    "162": {
+        "qVi": "Điều gì được gợi ý về Tập đoàn Carila?",
+        "optVi": {
+            "A": "(A) Công ty không còn phát triển thiết bị điện tử nữa.",
+            "B": "(B) Công ty từng là một doanh nghiệp gặp nhiều khó khăn khủng hoảng.",
+            "C": "(C) Công ty đã không thể thu hút thêm nhiều khách hàng.",
+            "D": "(D) Công ty đang tìm kiếm người thay thế vị trí Tổng giám đốc (CEO)."
+        }
+    },
+    "163": {
+        "qVi": "Từ 'solution' trong đoạn 3, dòng 6 gần nghĩa nhất với từ nào?",
+        "optVi": {
+            "A": "(A) hỗn hợp",
+            "B": "(B) bằng chứng",
+            "C": "(C) phát ngôn / tuyên bố",
+            "D": "(D) câu trả lời / giải pháp (answer)"
+        }
+    },
+    "164": {
+        "qVi": "Quảng cáo đề cập đến lợi ích nào của dịch vụ Commbolt?",
+        "optVi": {
+            "A": "(A) Mức giá thấp của nó",
+            "B": "(B) Dịch vụ khách hàng xuất sắc của nó",
+            "C": "(C) Các hợp đồng cam kết trọn đời",
+            "D": "(D) Lịch lắp đặt thuận tiện"
+        }
+    },
+    "165": {
+        "qVi": "Số tiền tối đa khách hàng có thể nhận được khi một người được giới thiệu đăng ký dịch vụ là bao nhiêu?",
+        "optVi": {
+            "A": "(A) $10.00",
+            "B": "(B) $20.00",
+            "C": "(C) $45.00",
+            "D": "(D) $60.00"
+        }
+    },
+    "166": {
+        "qVi": "Điều gì là đúng về chương trình khuyến mãi của Commbolt?",
+        "optVi": {
+            "A": "(A) Không được phép đăng tải trên mạng xã hội.",
+            "B": "(B) Không thưởng tiền cho nhiều hơn ba lượt giới thiệu.",
+            "C": "(C) Dự kiến sẽ diễn ra trong suốt một năm trọn vẹn.",
+            "D": "(D) Tặng thưởng cho cả khách hàng mới lẫn khách hàng hiện tại."
+        }
+    },
+    "167": {
+        "qVi": "Câu văn sau phù hợp nhất ở vị trí nào: 'Just share your unique referral code with friends and family.'?",
+        "optVi": {
+            "A": "(A) Vị trí [1]",
+            "B": "(B) Vị trí [2]",
+            "C": "(C) Vị trí [3]",
+            "D": "(D) Vị trí [4]"
+        }
+    },
+    "168": {
+        "qVi": "Thông tin nào được chỉ ra về Sarah's Catering?",
+        "optVi": {
+            "A": "(A) Công ty sử dụng các nông sản có nguồn gốc tại địa phương.",
+            "B": "(B) Công ty đã hoạt động được 20 năm.",
+            "C": "(C) Công ty chủ yếu chuyên về phục vụ tiệc cưới.",
+            "D": "(D) Công ty có một phòng ăn phục vụ tại chỗ."
+        }
+    },
+    "169": {
+        "qVi": "Từ 'taste' trong đoạn 1, dòng 4 gần nghĩa nhất với từ nào?",
+        "optVi": {
+            "A": "(A) sở thích / khẩu vị (preference)",
+            "B": "(B) mẫu thử",
+            "C": "(C) trải nghiệm",
+            "D": "(D) hương vị"
+        }
+    },
+    "170": {
+        "qVi": "Dịch vụ nào được đề cập là do Sarah's Catering cung cấp?",
+        "optVi": {
+            "A": "(A) Lên kế hoạch hoạt động giải trí",
+            "B": "(B) Trình diễn nấu ăn",
+            "C": "(C) Dọn dẹp vệ sinh sau các bữa ăn",
+            "D": "(D) Cho thuê bàn và ghế"
+        }
+    },
+    "171": {
+        "qVi": "Ông Liu rất có thể là ai?",
+        "optVi": {
+            "A": "(A) Một nhân viên của Sarah's Catering",
+            "B": "(B) Một người quản lý sự kiện chuyên nghiệp",
+            "C": "(C) Một khách hàng của Sarah's Catering",
+            "D": "(D) Một trợ lý tại một công ty tiếp thị"
+        }
+    },
+    "172": {
+        "qVi": "Tại sao anh Steuber lại viết tin nhắn cho cô Rajan?",
+        "optVi": {
+            "A": "(A) Để mời cô ấy tham dự một sự kiện chuyên môn",
+            "B": "(B) Để kiểm tra tình trạng của một cuộc họp",
+            "C": "(C) Để lên kế hoạch đi lại cho chuyến công tác",
+            "D": "(D) Để hỏi về hiệu suất làm việc của một trợ lý"
+        }
+    },
+    "173": {
+        "qVi": "Vào lúc 10:45 sáng, anh Steuber có ý gì khi viết: 'Let me check with my supervisor'?",
+        "optVi": {
+            "A": "(A) Anh ấy cần sự phê duyệt cuối cùng về bản thiết kế sách.",
+            "B": "(B) Anh ấy muốn xin lời khuyên/ý kiến về việc đổi cuộc hẹn.",
+            "C": "(C) Anh ấy cần quyền truy cập vào lịch làm việc công ty.",
+            "D": "(D) Anh ấy không chắc chắn về cách thêm người vào nhóm chat."
+        }
+    },
+    "174": {
+        "qVi": "Cô Benoit rất có thể là ai?",
+        "optVi": {
+            "A": "(A) Một nhà văn / tác giả sách",
+            "B": "(B) Một nhà thiết kế",
+            "C": "(C) Một biên tập viên sản xuất",
+            "D": "(D) Một quản lý xưởng in"
+        }
+    },
+    "175": {
+        "qVi": "Cô Rajan có thể sẽ làm gì tiếp theo?",
+        "optVi": {
+            "A": "(A) Gợi ý các giải pháp cho sự cố in ấn",
+            "B": "(B) Sắp xếp đi thăm nhà máy ở Singapore",
+            "C": "(C) Tham dự cuộc họp với cô Luong",
+            "D": "(D) Dời lại lịch của cuộc họp qua video"
+        }
+    },
+    "176": {
+        "qVi": "Ai ban đầu được lên lịch biểu diễn tại Nhà hát Bramley?",
+        "optVi": {
+            "A": "(A) Johanna Greenblatt",
+            "B": "(B) Ban nhạc The Blass Brothers Band",
+            "C": "(C) Ban nhạc The Rolling Dozen",
+            "D": "(D) Jefferson Cage"
+        }
+    },
+    "177": {
+        "qVi": "Bản lịch trình gợi ý điều gì về Lễ hội Rambling River Festival?",
+        "optVi": {
+            "A": "(A) Lễ hội diễn ra thường niên hàng năm.",
+            "B": "(B) Lễ hội yêu cầu phải có vé mới được vào cửa.",
+            "C": "(C) Lễ hội có sự góp mặt của các gian hàng ẩm thực địa phương.",
+            "D": "(D) Lễ hội chủ yếu là một sự kiện diễn ra ngoài trời."
+        }
+    },
+    "178": {
+        "qVi": "Theo tin nhắn, khán giả có thể làm gì tại Hội trường Cole Hall?",
+        "optVi": {
+            "A": "(A) Gửi áo khoác (coat-check)",
+            "B": "(B) Cất giữ các đồ đạc cồng kềnh",
+            "C": "(C) Mua vé xem hòa nhạc",
+            "D": "(D) Nhận bản lịch trình sự kiện"
+        }
+    },
+    "179": {
+        "qVi": "Trong tin nhắn, từ 'pushed' ở đoạn 2, dòng 1 gần nghĩa nhất với từ nào?",
+        "optVi": {
+            "A": "(A) di dời / lùi lịch (moved)",
+            "B": "(B) kéo dài ra",
+            "C": "(C) xoay xở / quản lý",
+            "D": "(D) gây áp lực"
+        }
+    },
+    "180": {
+        "qVi": "Khi nào ban nhạc Kirschau sẽ biểu diễn?",
+        "optVi": {
+            "A": "(A) Lúc 3:30 chiều thứ Sáu",
+            "B": "(B) Lúc 8:00 tối thứ Sáu",
+            "C": "(C) Lúc 2:30 chiều thứ Bảy",
+            "D": "(D) Lúc 6:30 tối thứ Bảy"
+        }
+    },
+    "181": {
+        "qVi": "Một mục đích của email là gì?",
+        "optVi": {
+            "A": "(A) Cung cấp chi tiết về chính sách bảo mật mới",
+            "B": "(B) Đề xuất một khảo sát về thói quen giao dịch ngân hàng",
+            "C": "(C) Yêu cầu nhân viên ngân hàng dùng thử ứng dụng",
+            "D": "(D) Thông báo cho các cấp quản lý về một vấn đề khó khăn của công ty"
+        }
+    },
+    "182": {
+        "qVi": "Theo email, tỷ lệ phần trăm khách hàng của ngân hàng sử dụng ứng dụng di động là bao nhiêu?",
+        "optVi": {
+            "A": "(A) 23 phần trăm",
+            "B": "(B) 39 phần trăm",
+            "C": "(C) 78 phần trăm",
+            "D": "(D) 95 phần trăm"
+        }
+    },
+    "183": {
+        "qVi": "Trong bài báo, từ 'anticipates' ở đoạn 3, dòng 5 gần nghĩa nhất với từ nào?",
+        "optVi": {
+            "A": "(A) cân nhắc",
+            "B": "(B) đợi chờ",
+            "C": "(C) chuẩn bị cho",
+            "D": "(D) kỳ vọng / dự đoán (expects)"
+        }
+    },
+    "184": {
+        "qVi": "Ai rất có thể đã tham dự cuộc họp tại trụ sở Ogden Bank vào ngày 12 tháng 4?",
+        "optVi": {
+            "A": "(A) Ông Panzius",
+            "B": "(B) Cô DeFreese",
+            "C": "(C) Ông Baum",
+            "D": "(D) Cô Reed"
+        }
+    },
+    "185": {
+        "qVi": "Thông tin nào được gợi ý về ban lãnh đạo Ngân hàng Ogden?",
+        "optVi": {
+            "A": "(A) Thích chủ tài khoản giao dịch trực tiếp hơn.",
+            "B": "(B) Đang cân nhắc miễn phí tài khoản cho khách hàng mới.",
+            "C": "(C) Đang trong quá trình tuyển dụng thêm nhân sự.",
+            "D": "(D) Ưu tiên các cải tiến nâng cao trải nghiệm của khách hàng."
+        }
+    },
+    "186": {
+        "qVi": "Mục đích của bản thông báo là gì?",
+        "optVi": {
+            "A": "(A) Giới thiệu nổi bật một số cuốn sách trong thư viện",
+            "B": "(B) Thông báo việc thay đổi giờ mở cửa của thư viện",
+            "C": "(C) Quảng bá một hoạt động diễn ra tại thư viện",
+            "D": "(D) Giới thiệu một cán bộ thủ thư mới"
+        }
+    },
+    "187": {
+        "qVi": "Thông tin nào được gợi ý về cuốn sách 'Wild Open Range'?",
+        "optVi": {
+            "A": "(A) Đây là một tựa sách bán chạy nhất.",
+            "B": "(B) Đây là một tác phẩm phi hư cấu (nonfiction).",
+            "C": "(C) Cuốn sách được xuất bản cách đây mười năm.",
+            "D": "(D) Cuốn sách được giảm giá dành riêng cho hội viên."
+        }
+    },
+    "188": {
+        "qVi": "Tác giả nào rất có thể đã viết về một nhân vật nổi tiếng?",
+        "optVi": {
+            "A": "(A) Jaxon McDonald",
+            "B": "(B) Lucy Xi",
+            "C": "(C) Peter Landers",
+            "D": "(D) Kai Noble"
+        }
+    },
+    "189": {
+        "qVi": "Có thể kết luận điều gì về cô Calle?",
+        "optVi": {
+            "A": "(A) Cô ấy là một nhân viên của thư viện.",
+            "B": "(B) Cô ấy từng viết bài đánh giá sách.",
+            "C": "(C) Cô ấy là cấp trên của cô Frey.",
+            "D": "(D) Cô ấy ưa thích thể loại tiểu thuyết lịch sử."
+        }
+    },
+    "190": {
+        "qVi": "Cô Frey chỉ ra điều gì về cuốn sách mà cô đã đọc?",
+        "optVi": {
+            "A": "(A) Cuốn sách thảo luận một chủ đề xa lạ với cô.",
+            "B": "(B) Cuốn sách có những phần mà cô cho rằng không chính xác.",
+            "C": "(C) Cuốn sách dễ đọc trong khoảng thời gian có hạn.",
+            "D": "(D) Cuốn sách khơi dậy một sở thích cũ thời thơ ấu của cô."
+        }
+    },
+    "191": {
+        "qVi": "Một chính sách của George Street Sweets là gì?",
+        "optVi": {
+            "A": "(A) Các đơn hàng không được phép thay đổi.",
+            "B": "(B) Đơn đặt ít hơn 48 giờ trước giờ nhận sẽ chịu thêm phụ phí.",
+            "C": "(C) Đơn hàng bắt buộc phải thanh toán khi đặt.",
+            "D": "(D) Các đơn hàng bị hủy trong vòng 24 giờ trước giờ nhận sẽ không được hoàn tiền."
+        }
+    },
+    "192": {
+        "qVi": "Thông tin nào được gợi ý về tòa nhà tại số 2 Spen Lane?",
+        "optVi": {
+            "A": "(A) Tòa nhà có chỗ đậu xe phía sau một tiệm xe đạp.",
+            "B": "(B) Tòa nhà nằm trong phạm vi bán kính 10 km từ tiệm George Street Sweets.",
+            "C": "(C) Đây là một tòa nhà chung cư dành cho cư dân.",
+            "D": "(D) Tòa nhà thuộc sở hữu của cô Schwartz."
+        }
+    },
+    "193": {
+        "qVi": "Có thể kết luận điều gì về chiếc bánh kem?",
+        "optVi": {
+            "A": "(A) Chiếc bánh vẫn chưa được thanh toán tiền.",
+            "B": "(B) Chiếc bánh sẽ chỉ có lớp kem phủ sô cô la.",
+            "C": "(C) Chiếc bánh đã được đặt qua điện thoại.",
+            "D": "(D) Chiếc bánh có chứa kem lạnh."
+        }
+    },
+    "194": {
+        "qVi": "Trong email thứ hai, ông Ordaz yêu cầu điều gì?",
+        "optVi": {
+            "A": "(A) Hoàn tiền toàn bộ",
+            "B": "(B) Đổi sang một hương vị khác",
+            "C": "(C) Một câu trả lời xác nhận qua email",
+            "D": "(D) Thêm một cây nến nữa"
+        }
+    },
+    "195": {
+        "qVi": "Ông Ordaz đề cập điều gì về sự kiện trong email của mình?",
+        "optVi": {
+            "A": "(A) Sự kiện sẽ diễn ra vào ngày 29 tháng 4.",
+            "B": "(B) Đây là một bữa tiệc kỷ niệm ngày cưới.",
+            "C": "(C) Giờ bắt đầu sự kiện đã thay đổi.",
+            "D": "(D) Quy mô sự kiện sẽ đông khách hơn dự kiến ban đầu."
+        }
+    },
+    "196": {
+        "qVi": "Trong email của mình, ông Grewal chỉ ra điều gì về bản khảo sát?",
+        "optVi": {
+            "A": "(A) Bản khảo sát không có ngày hết hạn.",
+            "B": "(B) Bản khảo sát yêu cầu phải có mật khẩu đăng nhập.",
+            "C": "(C) Bản khảo sát có thể được hoàn thành trên giấy.",
+            "D": "(D) Bản khảo sát không được chia sẻ cho người khác."
+        }
+    },
+    "197": {
+        "qVi": "Theo email, một số nhân viên của Woolf Flooring không đồng ý với điều gì?",
+        "optVi": {
+            "A": "(A) Kế hoạch thuê các chuyên gia tư vấn bên ngoài",
+            "B": "(B) Cách thức mà bản khảo sát được thiết kế",
+            "C": "(C) Cách thức báo cáo ngân sách được trình bày",
+            "D": "(D) Các phòng ban được lựa chọn để đóng góp ý kiến"
+        }
+    },
+    "198": {
+        "qVi": "Có thể kết luận điều gì về cô Mair?",
+        "optVi": {
+            "A": "(A) Cô ấy thường xuyên đưa ra các ý tưởng đổi mới.",
+            "B": "(B) Cô ấy đã làm việc tại Woolf Flooring trong nhiều năm.",
+            "C": "(C) Cô ấy sẽ hỗ trợ thu thập các ý kiến phản hồi.",
+            "D": "(D) Cô ấy làm việc ở bộ phận sản xuất."
+        }
+    },
+    "199": {
+        "qVi": "Trong bản khảo sát, cô Mair lưu ý điều gì về đề xuất của mình?",
+        "optVi": {
+            "A": "(A) Đề xuất có thể yêu cầu trang bị một số thiết bị mới.",
+            "B": "(B) Đề xuất đã vận hành tốt tại các công ty khác.",
+            "C": "(C) Đề xuất có thể được triển khai áp dụng ngay lập tức.",
+            "D": "(D) Đề xuất đã từng được gửi tới ban quản lý trước đây."
+        }
+    },
+    "200": {
+        "qVi": "Khuyến nghị nào của Công ty Tư vấn Miyoko Consulting tương ứng với đề xuất của cô Mair?",
+        "optVi": {
+            "A": "(A) Khuyến nghị 1",
+            "B": "(B) Khuyến nghị 2",
+            "C": "(C) Khuyến nghị 3",
+            "D": "(D) Khuyến nghị 4"
+        }
+    }
+}
+
+with open('scratch/t3_p7_bilingual.json', 'w', encoding='utf-8') as f:
+    json.dump({
+        "p7_passages_vi": p7_passages_vi,
+        "p7_questions_vi": p7_questions_vi
+    }, f, ensure_ascii=False, indent=2)
+
+print(f"Generated scratch/t3_p7_bilingual.json successfully with {len(p7_passages_vi)} passages and {len(p7_questions_vi)} questions!")

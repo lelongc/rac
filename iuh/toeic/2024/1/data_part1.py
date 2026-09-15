@@ -1,0 +1,259 @@
+# Data for TOEIC ETS 2024 Test 1 - Part 1 (Questions 1 - 6)
+
+PART1_QUESTIONS = [
+    {
+        "id": 1,
+        "part": 1,
+        "partName": "Part 1: Photographs",
+        "audio": "assets/audio/part1.mp3",
+        "image": "assets/images/q1.png",
+        "questionText": "Look at the picture marked No. 1 in your test book.",
+        "questionTextVi": "Nhìn vào bức tranh được đánh dấu số 1 trong cuốn sách bài thi của bạn.",
+        "options": {
+            "A": "She’s eating in a picnic area.",
+            "B": "She’s waiting in line at a food truck.",
+            "C": "She’s wiping off a bench.",
+            "D": "She’s throwing away a plate."
+        },
+        "optionsVi": {
+            "A": "Cô ấy đang ăn ở một khu vực dã ngoại.",
+            "B": "Cô ấy đang xếp hàng ở một xe tải bán đồ ăn.",
+            "C": "Cô ấy đang lau sạch một chiếc ghế dài.",
+            "D": "Cô ấy đang vứt một chiếc đĩa đi."
+        },
+        "correctAnswer": "A",
+        "explanation": "Trong bức ảnh, một người phụ nữ đang ngồi tại bàn dã ngoại ngoài trời và đang dùng bữa. Phương án (A) miêu tả chính xác nhất hành động đang diễn ra. Các phương án khác không phù hợp: (B) không có xe bán thức ăn nào trong ảnh; (C) cô ấy không lau ghế; (D) cô ấy đang cầm đồ ăn chứ không vứt đĩa.",
+        "transcript": "M-Cn (A) She’s eating in a picnic area. (B) She’s waiting in line at a food truck. (C) She’s wiping off a bench. (D) She’s throwing away a plate.",
+        "transcriptVi": "Nam: (A) Cô ấy đang ăn ở khu dã ngoại. (B) Cô ấy đang xếp hàng tại xe đồ ăn. (C) Cô ấy đang lau chùi ghế dài. (D) Cô ấy đang vứt chiếc đĩa.",
+        "vocabulary": [
+            { "word": "picnic area", "ipa": "/ˈpɪk.nɪk ˈeə.ri.ə/", "pos": "n", "meaning": "khu vực dã ngoại, cắm trại", "example": "We sat down for lunch in the picnic area." },
+            { "word": "wait in line", "ipa": "/weɪt ɪn laɪn/", "pos": "phr", "meaning": "xếp hàng chờ đợi", "example": "Customers had to wait in line for 20 minutes." },
+            { "word": "wipe off", "ipa": "/waɪp ɒf/", "pos": "phr v", "meaning": "lau sạch, lau chùi", "example": "Please wipe off the dust on the table." },
+            { "word": "throw away", "ipa": "/θrəʊ əˈweɪ/", "pos": "phr v", "meaning": "vứt bỏ, ném đi", "example": "Don't throw away that document." },
+            { "word": "bench", "ipa": "/bentʃ/", "pos": "n", "meaning": "ghế dài (thường đặt ở công viên)", "example": "An elderly man was resting on the park bench." }
+        ],
+        "collocations": [
+            { "phrase": "wait in line", "meaning": "xếp hàng chờ lượt" },
+            { "phrase": "wipe off something", "meaning": "lau sạch bề mặt của vật gì đó" }
+        ],
+        "grammar": [
+            {
+                "title": "Thì Hiện tại tiếp diễn (Present Continuous)",
+                "rule": "S + is/am/are + V-ing",
+                "analysis": "Dùng để diễn tả hành động đang diễn ra của nhân vật ngay tại thời điểm được chụp lại trong bức ảnh."
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "part": 1,
+        "partName": "Part 1: Photographs",
+        "audio": "assets/audio/part1.mp3",
+        "image": "assets/images/q2.png",
+        "questionText": "Look at the picture marked No. 2 in your test book.",
+        "questionTextVi": "Nhìn vào bức tranh được đánh dấu số 2 trong cuốn sách bài thi của bạn.",
+        "options": {
+            "A": "The man is brushing snow off the roof of a car.",
+            "B": "The man is standing in the snow beside a car.",
+            "C": "The man is shoveling snow from a walkway.",
+            "D": "The man is running through the snow."
+        },
+        "optionsVi": {
+            "A": "Người đàn ông đang quét tuyết khỏi nóc xe ô tô.",
+            "B": "Người đàn ông đang đứng trong tuyết bên cạnh một chiếc xe ô tô.",
+            "C": "Người đàn ông đang xúc tuyết khỏi lối đi.",
+            "D": "Người đàn ông đang chạy qua tuyết."
+        },
+        "correctAnswer": "B",
+        "explanation": "Trong bức ảnh, một người đàn ông mặc áo ấm đứng bên cạnh chiếc xe ô tô bị tuyết phủ kín và tay đang cầm vào tay nắm cửa xe. Phương án (B) phản ánh chính xác trạng thái và vị trí của người đàn ông. Các phương án khác sai: (A) anh ấy không quét tuyết trên nóc; (C) không có dụng cụ xúc tuyết; (D) người đàn ông đang đứng yên chứ không chạy.",
+        "transcript": "W-Br (A) The man is brushing snow off the roof of a car. (B) The man is standing in the snow beside a car. (C) The man is shoveling snow from a walkway. (D) The man is running through the snow.",
+        "transcriptVi": "Nữ: (A) Người đàn ông đang quét tuyết khỏi nóc xe ô tô. (B) Người đàn ông đang đứng trong tuyết cạnh xe ô tô. (C) Người đàn ông đang xúc tuyết khỏi lối đi. (D) Người đàn ông đang chạy qua tuyết.",
+        "vocabulary": [
+            { "word": "brush off", "ipa": "/brʌʃ ɒf/", "pos": "phr v", "meaning": "quét sạch, phủi sạch", "example": "He brushed snow off his coat." },
+            { "word": "beside", "ipa": "/bɪˈsaɪd/", "pos": "prep", "meaning": "bên cạnh", "example": "The chair was placed beside the window." },
+            { "word": "shovel", "ipa": "/ˈʃʌv.əl/", "pos": "v, n", "meaning": "xúc tuyết, cái xẻng", "example": "Workers are shoveling snow off the pavement." },
+            { "word": "walkway", "ipa": "/ˈwɔːk.weɪ/", "pos": "n", "meaning": "lối đi bộ", "example": "Keep the walkway clear of obstacles." }
+        ],
+        "collocations": [
+            { "phrase": "stand beside", "meaning": "đứng bên cạnh ai/cái gì" },
+            { "phrase": "brush snow off", "meaning": "quét tuyết ra khỏi bề mặt nào đó" }
+        ],
+        "grammar": [
+            {
+                "title": "Giới từ chỉ vị trí (Preposition of Place)",
+                "rule": "beside + Noun (tương đương với 'next to')",
+                "analysis": "Xác định chính xác mối quan hệ không gian giữa chủ thể (the man) và vật thể mốc (a car)."
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "part": 1,
+        "partName": "Part 1: Photographs",
+        "audio": "assets/audio/part1.mp3",
+        "image": "assets/images/q3.png",
+        "questionText": "Look at the picture marked No. 3 in your test book.",
+        "questionTextVi": "Nhìn vào bức tranh được đánh dấu số 3 trong cuốn sách bài thi của bạn.",
+        "options": {
+            "A": "Some workers are hanging art in a gallery.",
+            "B": "Two of the people are having a conversation.",
+            "C": "One of the men is rearranging cushions on a sofa.",
+            "D": "One of the men is painting a picture."
+        },
+        "optionsVi": {
+            "A": "Một vài công nhân đang treo tranh nghệ thuật trong phòng tranh.",
+            "B": "Hai người trong số họ đang trò chuyện với nhau.",
+            "C": "Một người đàn ông đang xếp lại những chiếc gối tựa trên ghế sofa.",
+            "D": "Một người đàn ông đang vẽ một bức tranh."
+        },
+        "correctAnswer": "B",
+        "explanation": "Trong bức tranh chụp một căn phòng, có hai người đang đứng đối diện và nói chuyện với nhau. Phương án (B) 'having a conversation' là miêu tả hoàn toàn khớp với thực tế. Các phương án (A), (C), (D) nêu những hành động không hề xảy ra trong ảnh.",
+        "transcript": "M-Au (A) Some workers are hanging art in a gallery. (B) Two of the people are having a conversation. (C) One of the men is rearranging cushions on a sofa. (D) One of the men is painting a picture.",
+        "transcriptVi": "Nam: (A) Một số công nhân đang treo tranh trong phòng tranh. (B) Hai người đang trò chuyện. (C) Một người đàn ông đang sắp xếp lại gối tựa trên sofa. (D) Một người đàn ông đang vẽ tranh.",
+        "vocabulary": [
+            { "word": "conversation", "ipa": "/ˌkɒn.vəˈseɪ.ʃən/", "pos": "n", "meaning": "cuộc trò chuyện, đàm thoại", "example": "They were deep in conversation." },
+            { "word": "rearrange", "ipa": "/ˌriː.əˈreɪndʒ/", "pos": "v", "meaning": "sắp xếp lại, bố trí lại", "example": "We need to rearrange the chairs for the seminar." },
+            { "word": "cushion", "ipa": "/ˈkʊʃ.ən/", "pos": "n", "meaning": "gối đệm tựa lưng", "example": "There are three decorative cushions on the couch." },
+            { "word": "gallery", "ipa": "/ˈɡæl.ər.i/", "pos": "n", "meaning": "phòng trưng bày nghệ thuật", "example": "The gallery features paintings by modern artists." }
+        ],
+        "collocations": [
+            { "phrase": "have a conversation", "meaning": "tiến hành trò chuyện, đối thoại" },
+            { "phrase": "hang art", "meaning": "treo tranh ảnh nghệ thuật" }
+        ],
+        "grammar": [
+            {
+                "title": "Cụm định lượng xác định đối tượng (Partitive Pronoun Structure)",
+                "rule": "Two of the people / One of the men + V",
+                "analysis": "Cấu trúc thường xuyên xuất hiện trong Part 1 để chỉ một bộ phận người thực hiện hành động trong một nhóm lớn."
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "part": 1,
+        "partName": "Part 1: Photographs",
+        "audio": "assets/audio/part1.mp3",
+        "image": "assets/images/q4.png",
+        "questionText": "Look at the picture marked No. 4 in your test book.",
+        "questionTextVi": "Nhìn vào bức tranh được đánh dấu số 4 trong cuốn sách bài thi của bạn.",
+        "options": {
+            "A": "Vehicles are entering a parking garage.",
+            "B": "Clothes hangers are scattered on the ground.",
+            "C": "Empty racks are lined up next to a building.",
+            "D": "Clothing is being displayed under a tent."
+        },
+        "optionsVi": {
+            "A": "Các phương tiện giao thông đang đi vào nhà để xe.",
+            "B": "Các móc treo quần áo nằm rải rác trên mặt đất.",
+            "C": "Những chiếc giá treo đồ trống rỗng được xếp thẳng hàng cạnh tòa nhà.",
+            "D": "Quần áo đang được trưng bày bên dưới một chiếc lều."
+        },
+        "correctAnswer": "D",
+        "explanation": "Bức tranh chụp một quầy bán quần áo dã chiến ngoài trời dưới mái lều bạt (canopy/tent), với nhiều bộ quần áo được treo trên móc để khách chọn lựa. Phương án (D) miêu tả chuẩn xác tình trạng hàng hóa. (A) không có xe cộ; (B) móc áo treo gọn gàng chứ không vương vãi trên đất; (C) các giá treo đầy ắp quần áo chứ không hề 'empty'.",
+        "transcript": "W-Am (A) Vehicles are entering a parking garage. (B) Clothes hangers are scattered on the ground. (C) Empty racks are lined up next to a building. (D) Clothing is being displayed under a tent.",
+        "transcriptVi": "Nữ: (A) Xe cộ đang vào bãi đỗ xe. (B) Móc treo quần áo vương vãi trên mặt đất. (C) Các giá treo trống rỗng xếp hàng cạnh tòa nhà. (D) Quần áo đang được trưng bày dưới lều.",
+        "vocabulary": [
+            { "word": "display", "ipa": "/dɪˈspleɪ/", "pos": "v, n", "meaning": "trưng bày, triển lãm", "example": "The merchandise is neatly displayed." },
+            { "word": "scattered", "ipa": "/ˈskæt.əd/", "pos": "adj", "meaning": "rải rác, vương vãi khắp nơi", "example": "Papers were scattered all over the desk." },
+            { "word": "rack", "ipa": "/ræk/", "pos": "n", "meaning": "giá treo đồ, kệ", "example": "He put the jacket back onto the display rack." },
+            { "word": "tent", "ipa": "/tent/", "pos": "n", "meaning": "lều, rạp ngoài trời", "example": "They erected a tent for the outdoor market." }
+        ],
+        "collocations": [
+            { "phrase": "clothes hanger", "meaning": "móc treo quần áo" },
+            { "phrase": "line up", "meaning": "xếp thành hàng ngay ngắn" },
+            { "phrase": "under a tent", "meaning": "dưới mái rạp/lều" }
+        ],
+        "grammar": [
+            {
+                "title": "Thể Bị động tiếp diễn chỉ trạng thái trưng bày",
+                "rule": "is/are being + V3/ed (đặc biệt với 'display')",
+                "analysis": "Trong TOEIC Part 1, 'is being displayed' được dùng để miêu tả trạng thái hàng hóa đang được bày biện để khách xem, không nhất thiết phải có người đang trực tiếp cầm đặt vào."
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "part": 1,
+        "partName": "Part 1: Photographs",
+        "audio": "assets/audio/part1.mp3",
+        "image": "assets/images/q5.png",
+        "questionText": "Look at the picture marked No. 5 in your test book.",
+        "questionTextVi": "Nhìn vào bức tranh được đánh dấu số 5 trong cuốn sách bài thi của bạn.",
+        "options": {
+            "A": "Potted plants have been suspended from a ceiling.",
+            "B": "Chairs have been stacked in front of an entryway.",
+            "C": "A computer station has been set up on a desk.",
+            "D": "A rug has been rolled up against a wall."
+        },
+        "optionsVi": {
+            "A": "Những chậu cây đã được treo lơ lửng từ trần nhà.",
+            "B": "Những chiếc ghế đã được xếp chồng lên nhau phía trước lối vào.",
+            "C": "Một góc làm việc máy tính đã được thiết lập trên bàn làm việc.",
+            "D": "Một tấm thảm đã được cuộn lại dựa vào tường."
+        },
+        "correctAnswer": "C",
+        "explanation": "Bức tranh chụp không gian làm việc với một bàn làm việc trang bị đầy đủ màn hình máy tính, bàn phím và chuột. Phương án (C) 'A computer station has been set up on a desk' miêu tả hoàn hảo trạng thái tĩnh của đồ vật trong phòng. Các phương án khác sai: (A) không có chậu cây nào treo trên trần; (B) ghế không hề bị xếp chồng lên nhau; (D) tấm thảm được trải phẳng chứ không hề cuộn lại.",
+        "transcript": "W-Br (A) Potted plants have been suspended from a ceiling. (B) Chairs have been stacked in front of an entryway. (C) A computer station has been set up on a desk. (D) A rug has been rolled up against a wall.",
+        "transcriptVi": "Nữ: (A) Các chậu cây được treo từ trần nhà. (B) Ghế được xếp chồng trước lối vào. (C) Một bàn máy tính được thiết lập trên bàn làm việc. (D) Tấm thảm được cuộn lại dựa vào tường.",
+        "vocabulary": [
+            { "word": "suspend", "ipa": "/səˈspend/", "pos": "v", "meaning": "treo lên lơ lửng, đình chỉ", "example": "Lamps were suspended from the high ceiling." },
+            { "word": "potted plant", "ipa": "/ˈpɒt.ɪd plɑːnt/", "pos": "n", "meaning": "cây trồng trong chậu", "example": "She bought several potted plants for her balcony." },
+            { "word": "stack", "ipa": "/stæk/", "pos": "v, n", "meaning": "xếp chồng lên nhau, chồng (hàng hóa)", "example": "Please stack the boxes against the wall." },
+            { "word": "entryway", "ipa": "/ˈen.tri.weɪ/", "pos": "n", "meaning": "lối vào, tiền sảnh", "example": "Leave your shoes in the entryway." },
+            { "word": "roll up", "ipa": "/rəʊl ʌp/", "pos": "phr v", "meaning": "cuộn tròn lại", "example": "He rolled up the blueprint." }
+        ],
+        "collocations": [
+            { "phrase": "be suspended from", "meaning": "được treo lơ lửng từ..." },
+            { "phrase": "set up on a desk", "meaning": "được thiết lập/bày biện trên bàn" }
+        ],
+        "grammar": [
+            {
+                "title": "Bị động Hiện tại hoàn thành chỉ trạng thái tĩnh của vật (Present Perfect Passive for Object State)",
+                "rule": "have/has + been + V3/ed",
+                "analysis": "Cực kỳ phổ biến trong TOEIC Part 1 khi miêu tả khung cảnh không có người: đồ vật đã được ai đó sắp đặt sẵn từ trước và duy trì trạng thái đó."
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "part": 1,
+        "partName": "Part 1: Photographs",
+        "audio": "assets/audio/part1.mp3",
+        "image": "assets/images/q6.png",
+        "questionText": "Look at the picture marked No. 6 in your test book.",
+        "questionTextVi": "Nhìn vào bức tranh được đánh dấu số 6 trong cuốn sách bài thi của bạn.",
+        "options": {
+            "A": "One of the men is sweeping a patio.",
+            "B": "One of the men is replacing some flooring.",
+            "C": "A door has been taken off its frame.",
+            "D": "A light fixture has been left on the ground."
+        },
+        "optionsVi": {
+            "A": "Một người đàn ông đang quét sân hiên.",
+            "B": "Một người đàn ông đang thay một phần sàn nhà.",
+            "C": "Một cánh cửa đã được tháo rời khỏi khung cửa của nó.",
+            "D": "Một thiết bị chiếu sáng đã bị bỏ lại trên mặt đất."
+        },
+        "correctAnswer": "C",
+        "explanation": "Trong bức ảnh, hai người thợ đang thực hiện công việc sửa chữa/xây dựng, và một cánh cửa đã được gỡ hoàn toàn ra khỏi khung cửa (frame) dựng bên cạnh. Phương án (C) 'A door has been taken off its frame' là câu miêu tả hoàn toàn chuẩn xác. Các phương án khác sai: (A) không ai quét sân hiên; (B) không ai đang thay sàn nhà; (D) không có đèn nào nằm dưới đất.",
+        "transcript": "M-Cn (A) One of the men is sweeping a patio. (B) One of the men is replacing some flooring. (C) A door has been taken off its frame. (D) A light fixture has been left on the ground.",
+        "transcriptVi": "Nam: (A) Một người đàn ông đang quét sân hiên. (B) Một người đàn ông đang thay sàn nhà. (C) Cánh cửa đã được tháo khỏi khung. (D) Thiết bị chiếu sáng bị để trên mặt đất.",
+        "vocabulary": [
+            { "word": "patio", "ipa": "/ˈpæt.i.əʊ/", "pos": "n", "meaning": "sân hiên ngoài trời (lát gạch)", "example": "We enjoyed dinner on the patio." },
+            { "word": "flooring", "ipa": "/ˈflɔː.rɪŋ/", "pos": "n", "meaning": "vật liệu lót sàn, sàn nhà", "example": "They installed hardwood flooring throughout the house." },
+            { "word": "frame", "ipa": "/freɪm/", "pos": "n", "meaning": "khung, khuôn (cửa, ảnh)", "example": "A sturdy metal door frame." },
+            { "word": "light fixture", "ipa": "/laɪt ˈfɪks.tʃər/", "pos": "n", "meaning": "bộ đèn chiếu sáng cố định", "example": "The electrician replaced the faulty light fixture." }
+        ],
+        "collocations": [
+            { "phrase": "take off its frame", "meaning": "tháo dỡ rời ra khỏi khung" },
+            { "phrase": "light fixture", "meaning": "thiết bị đèn cố định trên trần/tường" }
+        ],
+        "grammar": [
+            {
+                "title": "Cụm động từ dạng Bị động (Phrasal Verb Passive)",
+                "rule": "S + has been + taken off + O",
+                "analysis": "Hành động 'take off' (tháo ra) được chuyển thành thể bị động 'has been taken off its frame' để diễn đạt trạng thái cánh cửa đã được gỡ ra khỏi bản lề/khung cửa."
+            }
+        ]
+    }
+]

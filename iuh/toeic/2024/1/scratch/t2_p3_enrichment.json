@@ -1,0 +1,1427 @@
+{
+  "32": {
+    "exp": "Người phụ nữ mở đầu câu thoại: 'Good morning, Captain. We'll be docking at the port in Kolkata this evening, right?' và người đàn ông trả lời về việc 'change course overnight to avoid a storm' (đổi hướng để tránh bão) và yêu cầu kiểm tra 'machinery in the engine room' (buồng máy tàu). Các từ khóa 'Captain', 'docking at the port', 'engine room' cho thấy cuộc hội thoại diễn ra trên một con tàu/thuyền -> Chọn (B) On a boat. Các phương án (A) trên tàu hỏa, (C) tại nhà máy, (D) tại sân bay hoàn toàn không phù hợp với các chức danh và bối cảnh hàng hải này.",
+    "vocab": [
+      {
+        "word": "captain",
+        "ipa": "/ˈkæp.tɪn/",
+        "pos": "n",
+        "meaning": "thuyền trưởng, cơ trưởng",
+        "example": "The ship's captain ordered the crew to drop anchor in the bay."
+      },
+      {
+        "word": "dock",
+        "ipa": "/dɒk/",
+        "pos": "v, n",
+        "meaning": "cập bến cảng, bến tàu",
+        "example": "The ferry is scheduled to dock at terminal 3 at noon."
+      },
+      {
+        "word": "machinery",
+        "ipa": "/məˈʃiː.nər.i/",
+        "pos": "n",
+        "meaning": "máy móc thiết bị kỹ thuật",
+        "example": "Regular maintenance prevents heavy machinery from breaking down."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "dock at the port",
+        "meaning": "cập bến tại cảng biển"
+      },
+      {
+        "phrase": "run behind schedule",
+        "meaning": "chậm hơn so với tiến độ dự kiến"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Kỹ năng suy luận địa điểm qua từ vựng đặc trưng (Topic/Location Question)",
+        "rule": "Identify contextual keywords and job titles",
+        "analysis": "Trong Part 3, địa điểm thường không được nói thẳng ra mà được suy đoán qua các danh từ chỉ người hoặc đồ vật đặc trưng (Captain, port, engine room)."
+      }
+    ]
+  },
+  "33": {
+    "exp": "Người đàn ông giải thích nguyên nhân gây trễ: 'Actually, we had to change course overnight to avoid a storm, so we're running behind schedule' (Thực ra chúng ta đã phải đổi lộ trình trong đêm để tránh một cơn bão, vì vậy chúng ta đang bị chậm lịch). Manh mối 'avoid a storm' (tránh bão) đồng nghĩa với 'The weather was bad' (thời tiết xấu) -> Chọn (D). Phương án (A) trục trặc động cơ, (B) thay đổi quy định, (C) giao thông đông đúc đều không được đề cập.",
+    "vocab": [
+      {
+        "word": "storm",
+        "ipa": "/stɔːm/",
+        "pos": "n",
+        "meaning": "cơn bão, thời tiết xấu dữ dội",
+        "example": "The severe coastal storm caused widespread transportation delays."
+      },
+      {
+        "word": "overnight",
+        "ipa": "/ˌəʊ.vəˈnaɪt/",
+        "pos": "adv, adj",
+        "meaning": "qua đêm, trong suốt đêm",
+        "example": "The cargo vessel sailed overnight across the strait."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "change course",
+        "meaning": "đổi hướng đi, chuyển hải trình"
+      },
+      {
+        "phrase": "avoid a storm",
+        "meaning": "tránh một cơn bão"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Kỹ thuật nghe Paraphrasing chỉ nguyên nhân",
+        "rule": "Synonym matching for causal factors",
+        "analysis": "'avoid a storm' trong bài nghe được diễn đạt lại (paraphrase) thành 'The weather was bad' trong đáp án trắc nghiệm."
+      }
+    ]
+  },
+  "34": {
+    "exp": "Người thuyền trưởng giao việc: 'So I'll need you to do the morning rounds, starting with checking the machinery in the engine room' (Tôi cần anh đi kiểm tra một vòng buổi sáng, bắt đầu bằng việc kiểm tra máy móc ở buồng máy). Người đàn ông đáp: 'Of course, I'll head there now' (Tất nhiên rồi, tôi sẽ tới đó ngay) -> Chọn (C) Check some machinery. Các phương án (A) chuẩn bị bữa ăn, (B) sửa điện thoại, (D) liên hệ khách hàng đều không xuất hiện.",
+    "vocab": [
+      {
+        "word": "rounds",
+        "ipa": "/raʊndz/",
+        "pos": "n",
+        "meaning": "chuyến đi tuần tra, lượt kiểm tra định kỳ",
+        "example": "The security guard makes inspection rounds every two hours."
+      },
+      {
+        "word": "head",
+        "ipa": "/hed/",
+        "pos": "v",
+        "meaning": "đi về hướng, di chuyển tới",
+        "example": "I will head to the conference room immediately after lunch."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "do the morning rounds",
+        "meaning": "đi kiểm tra/tuần tra ca sáng"
+      },
+      {
+        "phrase": "engine room",
+        "meaning": "buồng máy tàu thủy"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cấu trúc Next Action (Hành động kế tiếp)",
+        "rule": "Listen for future intent expressions (I'll need you to..., I'll head...)",
+        "analysis": "Câu hỏi 'What will the man do next?' thường nằm ở cuối đoạn hội thoại. Cần chú ý các câu mệnh lệnh hoặc câu nói khẳng định hành động 'I will...'."
+      }
+    ]
+  },
+  "35": {
+    "exp": "Người đàn ông mở lời: 'Hi, I'm here to schedule some personal training sessions' (Tôi tới đây để đăng ký các buổi tập huấn luyện viên cá nhân). Người phụ nữ hỏi: 'Okay, what are your fitness goals? ... Are you currently a member here?' (Mục tiêu thể hình của anh là gì? Anh hiện đã là hội viên ở đây chưa?). Từ các từ khóa 'personal training sessions', 'fitness goals', 'lift weights', 'member', rõ ràng người phụ nữ làm việc tại phòng tập thể hình -> Chọn (B) At a fitness center.",
+    "vocab": [
+      {
+        "word": "fitness",
+        "ipa": "/ˈfɪt.nəs/",
+        "pos": "n",
+        "meaning": "thể dục thể hình, sự khỏe khoắn",
+        "example": "Regular aerobic exercise promotes physical fitness and mental health."
+      },
+      {
+        "word": "session",
+        "ipa": "/ˈseʃ.ən/",
+        "pos": "n",
+        "meaning": "phiên, buổi tập luyện/làm việc",
+        "example": "Each private coaching session lasts forty-five minutes."
+      },
+      {
+        "word": "weights",
+        "ipa": "/weɪts/",
+        "pos": "n",
+        "meaning": "tạ tập thể hình",
+        "example": "He lifts free weights three days a week to build muscle."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "personal training session",
+        "meaning": "buổi tập với huấn luyện viên riêng"
+      },
+      {
+        "phrase": "fitness goals",
+        "meaning": "mục tiêu rèn luyện thể hình"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Nhận diện nơi làm việc qua dịch vụ cung cấp",
+        "rule": "Service context clues (training, membership, workouts)",
+        "analysis": "Các dịch vụ về tập luyện, sức khỏe (fitness, weights, trainer) là tín hiệu đặc trưng của 'fitness center' (phòng tập gym/thể dục)."
+      }
+    ]
+  },
+  "36": {
+    "exp": "Người đàn ông hỏi: 'Do you offer a discount for students?' (Bên bạn có giảm giá cho sinh viên không?). Người phụ nữ trả lời: 'Yes, full-time students get 15 percent off'. Như vậy người đàn ông hỏi về chính sách giảm giá -> Chọn (A) A discount. Các phương án (B) người huấn luyện khác, (C) tủ để đồ, (D) lớp học bơi không được hỏi tới.",
+    "vocab": [
+      {
+        "word": "discount",
+        "ipa": "/ˈdɪs.kaʊnt/",
+        "pos": "n, v",
+        "meaning": "sự giảm giá, mức chiết khấu",
+        "example": "University students are eligible for a 15 percent membership discount."
+      },
+      {
+        "word": "membership",
+        "ipa": "/ˈmem.bə.ʃɪp/",
+        "pos": "n",
+        "meaning": "tư cách thành viên, gói hội viên",
+        "example": "Annual membership includes unlimited access to the pool and sauna."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "offer a discount",
+        "meaning": "đưa ra mức giảm giá"
+      },
+      {
+        "phrase": "full-time student",
+        "meaning": "sinh viên chính quy"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cấu trúc hỏi thăm thông tin ưu đãi với 'offer'",
+        "rule": "Do you offer + Noun?",
+        "analysis": "Mẫu câu 'Do you offer a discount for...?' rất phổ biến trong giao tiếp thương mại và bài thi TOEIC khi khách hàng hỏi về khuyến mãi."
+      }
+    ]
+  },
+  "37": {
+    "exp": "Sau khi hoàn tất đăng ký thông tin, người phụ nữ nói: 'Let me show you around our facilities and equipment first' (Để tôi dẫn anh đi xem một vòng cơ sở vật chất và máy móc thiết bị trước đã). Hành động 'show someone around' đồng nghĩa với 'provide a tour' (dẫn đi tham quan) -> Chọn (C) Provide a tour.",
+    "vocab": [
+      {
+        "word": "facility",
+        "ipa": "/fəˈsɪl.ə.ti/",
+        "pos": "n",
+        "meaning": "cơ sở vật chất, tiện ích",
+        "example": "The sports facility boasts modern lockers and indoor tracks."
+      },
+      {
+        "word": "tour",
+        "ipa": "/tʊər/",
+        "pos": "n, v",
+        "meaning": "chuyến tham quan, dẫn đi xem",
+        "example": "The guide gave prospective members an informative guided tour."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "show someone around",
+        "meaning": "dẫn ai đó đi tham quan xung quanh"
+      },
+      {
+        "phrase": "provide a tour",
+        "meaning": "cung cấp một chuyến tham quan giới thiệu"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Mệnh đề đề nghị lịch sự 'Let me + V-bare'",
+        "rule": "Let me + V-bare to offer assistance",
+        "analysis": "Người nói dùng 'Let me show you around' để đề xuất chủ động hướng dẫn khách hàng, tương đương với 'Provide a tour'."
+      }
+    ]
+  },
+  "38": {
+    "exp": "Người phụ nữ nhận xét: 'As you can see, this Renaissance landscape painting we acquired is in bad condition. We can't display it yet' (Như anh thấy đấy, bức tranh phong cảnh thời Phục hưng mà chúng ta mua về đang trong tình trạng rất tệ. Chúng ta chưa thể trưng bày nó được). Người đàn ông tiếp lời: 'Hmm, yes, this painting will need significant restoration work. I'll begin by investigating...' (Đúng vậy, bức tranh này sẽ cần công việc phục chế đáng kể. Tôi sẽ bắt đầu bằng việc kiểm tra...). Họ là những người phục chế tác phẩm nghệ thuật -> Chọn (A) Art restorers.",
+    "vocab": [
+      {
+        "word": "restoration",
+        "ipa": "/ˌres.tərˈeɪ.ʃən/",
+        "pos": "n",
+        "meaning": "sự phục chế, trùng tu",
+        "example": "The museum allocated funds for the delicate restoration of antique oils."
+      },
+      {
+        "word": "landscape",
+        "ipa": "/ˈlænd.skeɪp/",
+        "pos": "n",
+        "meaning": "tranh phong cảnh, phong cảnh thiên nhiên",
+        "example": "The gallery features 19th-century European landscape paintings."
+      },
+      {
+        "word": "acquire",
+        "ipa": "/əˈkwaɪər/",
+        "pos": "v",
+        "meaning": "mua được, thu thập được",
+        "example": "The institution acquired three rare portraits at the public auction."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "restoration work",
+        "meaning": "công tác trùng tu phục chế"
+      },
+      {
+        "phrase": "in bad condition",
+        "meaning": "trong tình trạng tồi tàn/hư hỏng"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Từ vựng chuyên môn suy đoán nghề nghiệp (Occupational Inference)",
+        "rule": "Identify professional jargon (painting, restoration, solvent)",
+        "analysis": "Khi nghe các thuật ngữ 'painting, restoration work, varnish', người nói đang thực hiện công việc của chuyên viên phục chế nghệ thuật (art restorers)."
+      }
+    ]
+  },
+  "39": {
+    "exp": "Người phụ nữ nói: 'I'll begin by investigating whether the discolored varnish can be safely removed without damaging the paint underneath' (Tôi sẽ bắt đầu bằng cách khảo sát xem liệu lớp véc-ni bị biến màu có thể tẩy bỏ an toàn mà không làm hỏng lớp sơn bên dưới hay không). Hành động này là điều tra, khảo sát một vấn đề hư tổn -> Chọn (D) Investigate a problem.",
+    "vocab": [
+      {
+        "word": "investigate",
+        "ipa": "/ɪnˈves.tɪ.ɡeɪt/",
+        "pos": "v",
+        "meaning": "điều tra, nghiên cứu khảo sát",
+        "example": "Conservators investigate pigment composition before applying chemical cleaners."
+      },
+      {
+        "word": "varnish",
+        "ipa": "/ˈvɑː.nɪʃ/",
+        "pos": "n",
+        "meaning": "lớp véc-ni, sơn bóng bảo vệ",
+        "example": "A yellowed coat of varnish was gently stripped from the canvas."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "investigate a problem",
+        "meaning": "khảo sát, nghiên cứu một vấn đề"
+      },
+      {
+        "phrase": "safely remove",
+        "meaning": "loại bỏ một cách an toàn"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Mệnh đề danh ngữ với 'whether'",
+        "rule": "investigate + whether + S + V",
+        "analysis": "'whether' diễn tả sự nghi vấn hoặc điều kiện hai khả năng (liệu có thể... hay không)."
+      }
+    ]
+  },
+  "40": {
+    "exp": "Người đàn ông hối thúc: 'Please start as soon as possible. The museum's anniversary gala is just two months away, and the director wants this piece featured in the main gallery' (Hãy bắt đầu càng sớm càng tốt. Buổi dạ tiệc kỷ niệm của viện bảo tàng chỉ còn hai tháng nữa thôi, và giám đốc muốn bức tranh này được trưng bày tại phòng triển lãm chính). Manh mối 'anniversary gala is just two months away' là một sự kiện quan trọng đang cận kề -> Chọn (C) An important event is approaching.",
+    "vocab": [
+      {
+        "word": "anniversary",
+        "ipa": "/ˌæn.ɪˈvɜː.sər.i/",
+        "pos": "n",
+        "meaning": "ngày lễ kỷ niệm thành lập",
+        "example": "The museum celebrated its fiftieth anniversary with a special exhibition."
+      },
+      {
+        "word": "approaching",
+        "ipa": "/əˈprəʊ.tʃɪŋ/",
+        "pos": "adj",
+        "meaning": "đang đến gần, sắp tới",
+        "example": "Staff worked overtime to meet deadlines for the approaching festival."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "anniversary gala",
+        "meaning": "dạ tiệc kỷ niệm ngày thành lập"
+      },
+      {
+        "phrase": "start as soon as possible",
+        "meaning": "bắt đầu càng sớm càng tốt"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cách diễn đạt thời gian sắp diễn ra",
+        "rule": "S + is just [time] away",
+        "analysis": "Cụm từ 'is just two months away' dùng thì hiện tại mang nghĩa sắp xảy ra trong tương lai gần."
+      }
+    ]
+  },
+  "41": {
+    "exp": "Người phụ nữ hỏi: 'Do you have time to review some slides I'm presenting at a meeting on Thursday?' (Anh có thời gian xem qua vài slide tôi sẽ thuyết trình tại cuộc họp vào thứ Năm không?). Manh mối 'slides I'm presenting' chỉ rõ cô đang chuẩn bị bài thuyết trình bằng trình chiếu slide -> Chọn (A) A slide presentation.",
+    "vocab": [
+      {
+        "word": "slide",
+        "ipa": "/slaɪd/",
+        "pos": "n",
+        "meaning": "trang trình chiếu, slide bài giảng",
+        "example": "The marketing manager projected quarterly sales slides onto the screen."
+      },
+      {
+        "word": "presentation",
+        "ipa": "/ˌprez.ənˈteɪ.ʃən/",
+        "pos": "n",
+        "meaning": "bài thuyết trình, phần trình bày",
+        "example": "Rehearse your presentation carefully before facing prospective investors."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "slide presentation",
+        "meaning": "bài thuyết trình bằng slide"
+      },
+      {
+        "phrase": "review some slides",
+        "meaning": "xem xét/kiểm tra lại các trang trình chiếu"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Mệnh đề quan hệ rút gọn lược bỏ đại từ 'which/that'",
+        "rule": "Noun + (that/which) + S + V",
+        "analysis": "'some slides [which] I'm presenting' lược bỏ đại từ quan hệ đóng vai trò tân ngữ."
+      }
+    ]
+  },
+  "42": {
+    "exp": "Người phụ nữ nói thêm về Smith Incorporated: 'Yes, I'm presenting them with our updated marketing plan for their nationwide retail bookstores' (Vâng, tôi sẽ trình bày với họ kế hoạch tiếp thị cập nhật cho chuỗi cửa hàng sách bán lẻ trên toàn quốc của họ). Cụm 'retail bookstores' cho biết doanh nghiệp này là một chuỗi nhà sách -> Chọn (D) A bookstore chain.",
+    "vocab": [
+      {
+        "word": "nationwide",
+        "ipa": "/ˌneɪ.ʃənˈwaɪd/",
+        "pos": "adj, adv",
+        "meaning": "trên quy mô toàn quốc",
+        "example": "The bookstore franchise operates two hundred outlets nationwide."
+      },
+      {
+        "word": "chain",
+        "ipa": "/tʃeɪn/",
+        "pos": "n",
+        "meaning": "chuỗi cửa hàng, hệ thống kinh doanh",
+        "example": "A major hotel chain opened a luxury resort near the coast."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "bookstore chain",
+        "meaning": "chuỗi hiệu sách/cửa hàng sách"
+      },
+      {
+        "phrase": "marketing plan",
+        "meaning": "kế hoạch tiếp thị/chiến lược marketing"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Tính từ ghép chỉ phạm vi 'nationwide'",
+        "rule": "Adjective modifying plural noun",
+        "analysis": "'nationwide retail bookstores' mô tả quy mô phân phối rộng khắp toàn quốc."
+      }
+    ]
+  },
+  "43": {
+    "exp": "Người đàn ông khuyên: 'Since we already know their team well, keep the atmosphere informal and conversational' (Vì chúng ta đã biết rõ đội ngũ của họ rồi, hãy giữ không khí thân mật và cởi mở như trò chuyện). Người phụ nữ đồng ý: 'I think that's a great suggestion'. Từ 'informal' đồng nghĩa với 'casual' (thân mật, không quá trịnh trọng) -> Chọn (D) A meeting should be casual.",
+    "vocab": [
+      {
+        "word": "casual",
+        "ipa": "/ˈkæʒ.u.əl/",
+        "pos": "adj",
+        "meaning": "thân thiện, bình thường, không câu nệ nghi thức",
+        "example": "Colleagues gathered for a casual lunch discussion on Friday."
+      },
+      {
+        "word": "informal",
+        "ipa": "/ɪnˈfɔː.məl/",
+        "pos": "adj",
+        "meaning": "không chính thức, thân mật",
+        "example": "The director hosted an informal reception to welcome new interns."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "keep the atmosphere informal",
+        "meaning": "giữ bầu không khí thân mật, gần gũi"
+      },
+      {
+        "phrase": "conversational tone",
+        "meaning": "giọng điệu trò chuyện tự nhiên"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Từ đồng nghĩa informal = casual",
+        "rule": "Vocabulary equivalence in comprehension",
+        "analysis": "Trong bài nghe xuất hiện từ 'informal', đáp án đúng sử dụng từ tương đương 'casual'."
+      }
+    ]
+  },
+  "44": {
+    "exp": "Người phụ nữ mở lời: 'I heard that the results of your experiment were better than you expected. Congratulations' (Tôi nghe nói kết quả thí nghiệm của anh tốt hơn kỳ vọng nhiều. Xin chúc mừng nhé). Người đàn ông xác nhận: 'Thanks. I thought we'd have to run that reaction 10 times... but we got it on the second try'. Kết quả thí nghiệm thành công vượt dự kiến -> Chọn (C) His experiment was successful.",
+    "vocab": [
+      {
+        "word": "experiment",
+        "ipa": "/ɪkˈsper.ɪ.mənt/",
+        "pos": "n",
+        "meaning": "cuộc thí nghiệm, thử nghiệm khoa học",
+        "example": "Biochemists conducted a laboratory experiment to verify enzyme activity."
+      },
+      {
+        "word": "reaction",
+        "ipa": "/riˈæk.ʃən/",
+        "pos": "n",
+        "meaning": "phản ứng hóa học",
+        "example": "The chemical reaction produced unexpected thermal energy."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "run an experiment",
+        "meaning": "tiến hành một cuộc thí nghiệm"
+      },
+      {
+        "phrase": "positive result",
+        "meaning": "kết quả tích cực, kết quả thành công"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cấu trúc chúc mừng 'Congratulations on + Noun / V-ing'",
+        "rule": "Expression of praise in professional settings",
+        "analysis": "Lời chúc mừng 'Congratulations' khẳng định đối phương vừa hoàn thành một công việc đạt kết quả xuất sắc."
+      }
+    ]
+  },
+  "45": {
+    "exp": "Người phụ nữ khuyên: 'You should write up a summary report for Esra right away'. Người đàn ông đáp: 'Well, Esra's leaving the company next week' (À, tuần tới Esra sẽ rời công ty rồi). Câu nói ngụ ý rằng vì Esra sắp nghỉ việc nên việc gửi báo cáo cho cô ấy là không cần thiết nữa -> Chọn (B) He will not submit a report to Esra.",
+    "vocab": [
+      {
+        "word": "submit",
+        "ipa": "/səbˈmɪt/",
+        "pos": "v",
+        "meaning": "nộp, đệ trình tài liệu/báo cáo",
+        "example": "Staff must submit expense vouchers by the end of each month."
+      },
+      {
+        "word": "summary",
+        "ipa": "/ˈsʌm.ər.i/",
+        "pos": "n, adj",
+        "meaning": "bản tóm tắt, mang tính tổng hợp",
+        "example": "The executive requested a brief executive summary of findings."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "submit a report",
+        "meaning": "nộp bản báo cáo"
+      },
+      {
+        "phrase": "leave the company",
+        "meaning": "rời công ty, nghỉ việc"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu hỏi ngụ ý (Inference / Implication Question)",
+        "rule": "Interpret pragmatic meaning behind literal statement",
+        "analysis": "Khi nói một người sắp rời công ty sau khi được khuyên gửi báo cáo cho người đó, ngụ ý là không cần thiết phải gửi nữa."
+      }
+    ]
+  },
+  "46": {
+    "exp": "Khi người phụ nữ hỏi về kế hoạch sắp tới, người đàn ông chia sẻ: 'I'm hoping to lead the upcoming research team next quarter to gain some supervisory experience' (Tôi hy vọng sẽ lãnh đạo nhóm nghiên cứu vào quý tới để tích lũy kinh nghiệm quản lý). Cụm 'gain supervisory experience' tương đương với 'Gain management experience' -> Chọn (D).",
+    "vocab": [
+      {
+        "word": "supervisory",
+        "ipa": "/ˌsuː.pəˈvaɪ.zər.i/",
+        "pos": "adj",
+        "meaning": "thuộc về giám sát, quản lý",
+        "example": "She was promoted to a supervisory role overseeing eight technicians."
+      },
+      {
+        "word": "quarter",
+        "ipa": "/ˈkwɔː.tər/",
+        "pos": "n",
+        "meaning": "quý trong năm tài chính",
+        "example": "Third quarter revenue exceeded corporate projections by six percent."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "gain management experience",
+        "meaning": "tích lũy kinh nghiệm quản trị/quản lý"
+      },
+      {
+        "phrase": "supervisory role",
+        "meaning": "vai trò giám sát, chỉ đạo"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Động từ theo sau 'hope': Hope + to-infinitive",
+        "rule": "S + hope + to V-inf",
+        "analysis": "Diễn đạt mong muốn, nguyện vọng trong tương lai: 'I'm hoping to lead...'."
+      }
+    ]
+  },
+  "47": {
+    "exp": "Người phụ nữ mở đầu: 'Now we'll move on to a special segment of our news program where we highlight new local businesses for our viewers. Today I'm talking with Drove Bahaj...' (Bây giờ chúng ta sẽ chuyển sang một chuyên mục đặc biệt của chương trình thời sự để giới thiệu các doanh nghiệp địa phương mới cho khán giả xem đài). Các từ khóa 'segment of our news program', 'viewers' chứng minh cuộc phỏng vấn diễn ra tại trường quay truyền hình -> Chọn (B) At a television studio.",
+    "vocab": [
+      {
+        "word": "segment",
+        "ipa": "/ˈseɡ.mənt/",
+        "pos": "n",
+        "meaning": "phân đoạn, chuyên mục chương trình",
+        "example": "The evening broadcast featured a special consumer finance segment."
+      },
+      {
+        "word": "viewer",
+        "ipa": "/ˈvjuː.ər/",
+        "pos": "n",
+        "meaning": "khán giả xem truyền hình",
+        "example": "Millions of viewers tuned in to watch the championship game."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "news program",
+        "meaning": "chương trình tin tức, bản tin thời sự"
+      },
+      {
+        "phrase": "television studio",
+        "meaning": "trường quay truyền hình"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Đại từ quan hệ chỉ nơi chốn 'where'",
+        "rule": "Noun (place) + where + S + V",
+        "analysis": "'a special segment of our news program where we highlight...' dùng 'where' bổ nghĩa cho bối cảnh chương trình."
+      }
+    ]
+  },
+  "48": {
+    "exp": "Khách mời Drove Bahaj chia sẻ: 'Yes, we just launched our second fitness center downtown last month to accommodate high client demand' (Vâng, chúng tôi vừa mới khai trương trung tâm thể dục thứ hai tại khu trung tâm vào tháng trước để đáp ứng nhu cầu cao của khách hàng). 'launched our second fitness center' chính là mở thêm một cơ sở mới -> Chọn (C) He opened a new facility.",
+    "vocab": [
+      {
+        "word": "facility",
+        "ipa": "/fəˈsɪl.ə.ti/",
+        "pos": "n",
+        "meaning": "cơ sở, địa điểm hoạt động",
+        "example": "The healthcare provider opened a modern diagnostic facility."
+      },
+      {
+        "word": "accommodate",
+        "ipa": "/əˈkɒm.ə.deɪt/",
+        "pos": "v",
+        "meaning": "đáp ứng nhu cầu, phục vụ",
+        "example": "The auditorium was expanded to accommodate larger audiences."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "open a new facility",
+        "meaning": "khai trương/mở một cơ sở mới"
+      },
+      {
+        "phrase": "accommodate high demand",
+        "meaning": "đáp ứng nhu cầu tăng cao"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Paraphrase từ vựng tổng quát (facility = fitness center)",
+        "rule": "General noun replaces specific entity",
+        "analysis": "'fitness center' trong bài nói được khái quát hóa thành 'facility' trong đáp án trắc nghiệm."
+      }
+    ]
+  },
+  "49": {
+    "exp": "Người dẫn chương trình hỏi: 'Could you tell our audience how you got started in this industry and transitioned from an athlete to a business owner?' (Anh có thể kể cho khán giả biết anh đã bắt đầu trong ngành này như thế nào và chuyển từ một vận động viên thành chủ doanh nghiệp ra sao không?). Câu hỏi này yêu cầu nói về con đường sự nghiệp của anh ấy -> Chọn (A) His career path.",
+    "vocab": [
+      {
+        "word": "transition",
+        "ipa": "/trænˈzɪʃ.ən/",
+        "pos": "v, n",
+        "meaning": "chuyển đổi, bước chuyển tiếp",
+        "example": "Veterans often transition smoothly into civilian logistics careers."
+      },
+      {
+        "word": "athlete",
+        "ipa": "/ˈæθ.liːt/",
+        "pos": "n",
+        "meaning": "vận động viên thể thao",
+        "example": "Professional athletes adhere to strict nutritional and workout regimens."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "career path",
+        "meaning": "con đường sự nghiệp, lộ trình phát triển nghề nghiệp"
+      },
+      {
+        "phrase": "get started in an industry",
+        "meaning": "bắt đầu bước chân vào một ngành nghề"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu hỏi gián tiếp với từ để hỏi: How + S + V",
+        "rule": "Could you tell + object + wh-word + S + V?",
+        "analysis": "Cấu trúc hỏi gián tiếp lịch sự, không đảo trợ động từ lên trước chủ ngữ trong mệnh đề phụ: 'how you got started'."
+      }
+    ]
+  },
+  "50": {
+    "exp": "Người giám đốc nói: 'We're happy you'll be producing content for our website. I'm looking forward to writing about Redmond's initiatives and marine research' (Chúng tôi rất vui khi cô sẽ sản xuất nội dung cho trang web của chúng tôi. Người phụ nữ đáp: Tôi cũng rất mong chờ được viết về các sáng kiến và nghiên cứu sinh vật biển của Redmond). Việc sản xuất bài viết nội dung trang web chính là viết bài báo -> Chọn (A) Write articles.",
+    "vocab": [
+      {
+        "word": "initiative",
+        "ipa": "/ɪˈnɪʃ.ə.tɪv/",
+        "pos": "n",
+        "meaning": "sáng kiến, chương trình hành động mới",
+        "example": "The environmental institute sponsored a coastal clean-up initiative."
+      },
+      {
+        "word": "aquatic",
+        "ipa": "/əˈkwæt.ɪk/",
+        "pos": "adj",
+        "meaning": "dưới nước, liên quan đến thủy sinh",
+        "example": "Marine biologists study delicate aquatic ecosystems in coral reefs."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "write articles",
+        "meaning": "viết bài báo, viết bài đăng"
+      },
+      {
+        "phrase": "produce content",
+        "meaning": "sản xuất/xây dựng nội dung"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cụm động từ 'look forward to + V-ing'",
+        "rule": "look forward to + V-ing / Noun",
+        "analysis": "Diễn tả sự háo hức, mong đợi làm việc gì: 'I'm looking forward to writing about...'."
+      }
+    ]
+  },
+  "51": {
+    "exp": "Vị giám đốc khẳng định sứ mệnh của viện: 'Our core mission is conserving and defending coastal marine habitats against pollution' (Sứ mệnh cốt lõi của chúng tôi là bảo tồn và bảo vệ các sinh cảnh biển ven bờ khỏi ô nhiễm). 'conserving and defending coastal marine habitats' tương đương với 'To protect aquatic environments' (bảo vệ môi trường thủy sinh) -> Chọn (D).",
+    "vocab": [
+      {
+        "word": "habitat",
+        "ipa": "/ˈhæb.ɪ.tæt/",
+        "pos": "n",
+        "meaning": "môi trường sống, sinh cảnh tự nhiên",
+        "example": "Urban expansion threatens the native wetland bird habitat."
+      },
+      {
+        "word": "conserve",
+        "ipa": "/kənˈsɜːv/",
+        "pos": "v",
+        "meaning": "bảo tồn, giữ gìn tài nguyên thiên nhiên",
+        "example": "New forestry guidelines aim to conserve old-growth timber reserves."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "protect aquatic environments",
+        "meaning": "bảo vệ môi trường thủy sinh/sông biển"
+      },
+      {
+        "phrase": "core mission",
+        "meaning": "sứ mệnh cốt lõi, nhiệm vụ trọng tâm"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cấu trúc chỉ mục đích với To-infinitive",
+        "rule": "To + V-bare to express purpose",
+        "analysis": "Đáp án trả lời cho câu hỏi mục tiêu 'goal/purpose' luôn mở đầu bằng 'To + V' (To protect aquatic environments)."
+      }
+    ]
+  },
+  "52": {
+    "exp": "Roberto nói: 'What's really exciting is that we'll be deploying deep-sea underwater drone cameras to stream live footage' (Điều thực sự hào hứng là chúng ta sẽ triển khai các camera thiết bị bay không người lái dưới biển sâu để phát trực tiếp hình ảnh). Manh mối 'underwater drone cameras' là một thiết bị chuyên dụng -> Chọn (A) The use of some equipment.",
+    "vocab": [
+      {
+        "word": "deploy",
+        "ipa": "/dɪˈplɔɪ/",
+        "pos": "v",
+        "meaning": "triển khai, đưa vào sử dụng thực địa",
+        "example": "Oceanographers deployed sensors across the continental shelf."
+      },
+      {
+        "word": "footage",
+        "ipa": "/ˈfʊt.ɪdʒ/",
+        "pos": "n",
+        "meaning": "đoạn phim tài liệu, cảnh quay",
+        "example": "Documentary filmmakers captured breathtaking underwater whale footage."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "deploy equipment",
+        "meaning": "triển khai thiết bị, vận hành máy móc"
+      },
+      {
+        "phrase": "live footage",
+        "meaning": "cảnh quay trực tiếp, video ghi trực tiếp"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Mệnh đề danh ngữ làm chủ ngữ: What is exciting is that...",
+        "rule": "What + clause + be + that + clause",
+        "analysis": "Dùng mệnh đề danh ngữ với 'What' để nhấn mạnh ý kiến hoặc sự việc gây bất ngờ, hào hứng."
+      }
+    ]
+  },
+  "53": {
+    "exp": "Người đàn ông nói: '...our research partners in China are off this week for a national holiday, so there won't be any project updates from them' (...các đối tác nghiên cứu của chúng ta ở Trung Quốc tuần này được nghỉ lễ quốc gia, nên sẽ không có cập nhật dự án nào từ họ). Manh mối 'off this week for a national holiday' xác nhận họ đang nghỉ lễ -> Chọn (C) They are celebrating a holiday.",
+    "vocab": [
+      {
+        "word": "holiday",
+        "ipa": "/ˈhɒl.ə.deɪ/",
+        "pos": "n",
+        "meaning": "ngày lễ, kỳ nghỉ quốc gia",
+        "example": "Federal offices and banking institutions close for the national holiday."
+      },
+      {
+        "word": "partner",
+        "ipa": "/ˈpɑːt.nər/",
+        "pos": "n",
+        "meaning": "đối tác kinh doanh, cộng sự nghiên cứu",
+        "example": "Overseas development partners signed the bilateral agreement."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "celebrate a holiday",
+        "meaning": "nghỉ lễ, đón mừng kỳ nghỉ lễ"
+      },
+      {
+        "phrase": "national holiday",
+        "meaning": "ngày lễ quốc gia, quốc khánh"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Thành ngữ 'be off for a holiday'",
+        "rule": "be off = be away from work on vacation",
+        "analysis": "Cụm 'are off this week' nghĩa là được nghỉ làm việc nhân dịp kỳ nghỉ lễ."
+      }
+    ]
+  },
+  "54": {
+    "exp": "Người đàn ông đề xuất hoãn họp, nhưng người phụ nữ ngắt lời: 'Wait, we still haven't allocated funds for a project leader, and the fiscal year ends next month' (Khoan đã, chúng ta vẫn chưa phân bổ kinh phí cho vị trí trưởng dự án, mà năm tài chính thì kết thúc vào tháng sau rồi). Câu này ngụ ý vấn đề này cực kỳ cấp bách và cuộc họp ngân sách đã lên lịch vẫn cần phải diễn ra -> Chọn (C) A scheduled meeting should take place.",
+    "vocab": [
+      {
+        "word": "allocate",
+        "ipa": "/ˈæl.ə.keɪt/",
+        "pos": "v",
+        "meaning": "phân bổ, chỉ định nguồn vốn/ngân sách",
+        "example": "The committee decided to allocate twenty thousand dollars for software."
+      },
+      {
+        "word": "fiscal",
+        "ipa": "/ˈfɪs.kəl/",
+        "pos": "adj",
+        "meaning": "thuộc về tài chính, ngân sách",
+        "example": "The corporate fiscal year concludes on the thirtieth of September."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "allocate funds",
+        "meaning": "phân bổ ngân quỹ/kinh phí"
+      },
+      {
+        "phrase": "take place",
+        "meaning": "diễn ra, được tiến hành"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Suy luận dụng ý phát ngôn (Speaker's Intent)",
+        "rule": "Analyze context against proposed cancellation",
+        "analysis": "Khi người đàn ông muốn hủy buổi họp nhưng người phụ nữ chỉ ra việc cấp bách chưa giải quyết, mục đích của bà là yêu cầu buổi họp phải tiếp tục diễn ra."
+      }
+    ]
+  },
+  "55": {
+    "exp": "Về chi phí đi lại, người phụ nữ nhận xét: 'Also, since all consultations can be handled virtually, those proposed international travel expenses are completely unnecessary' (Hơn nữa, vì mọi cuộc hội ý đều có thể họp trực tuyến, các khoản chi phí đi lại quốc tế được đề xuất đó là hoàn toàn không cần thiết) -> Chọn (A) They are unnecessary.",
+    "vocab": [
+      {
+        "word": "virtually",
+        "ipa": "/ˈvɜː.tʃu.ə.li/",
+        "pos": "adv",
+        "meaning": "trực tuyến, ảo qua mạng",
+        "example": "Board members met virtually to review the financial audit."
+      },
+      {
+        "word": "unnecessary",
+        "ipa": "/ʌnˈnes.ə.ser.i/",
+        "pos": "adj",
+        "meaning": "không cần thiết, dư thừa",
+        "example": "Streamlining approval paperwork eliminates unnecessary administrative delays."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "travel expenses",
+        "meaning": "chi phí công tác/đi lại"
+      },
+      {
+        "phrase": "completely unnecessary",
+        "meaning": "hoàn toàn không cần thiết"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Mệnh đề chỉ nguyên nhân với 'since'",
+        "rule": "Since + clause, S + V",
+        "analysis": "'Since' trong câu này đóng vai trò liên từ chỉ lý do (= because, as): 'since all consultations can be handled virtually...'."
+      }
+    ]
+  },
+  "56": {
+    "exp": "Người phụ nữ giới thiệu khi gọi điện: 'I'm calling from Ruben Restaurant Equipment. I recently purchased your software to keep track of my warehouse inventory...' (Tôi gọi đến từ Công ty Thiết bị Nhà hàng Ruben. Gần đây tôi đã mua phần mềm của bên bạn để theo dõi hàng tồn kho...). Tên doanh nghiệp 'Ruben Restaurant Equipment' cho thấy đây là công ty cung cấp thiết bị nhà hàng -> Chọn (C) A restaurant supply company.",
+    "vocab": [
+      {
+        "word": "equipment",
+        "ipa": "/ɪˈkwɪp.mənt/",
+        "pos": "n",
+        "meaning": "trang thiết bị, máy móc dụng cụ",
+        "example": "Commercial kitchens require durable stainless steel cooking equipment."
+      },
+      {
+        "word": "warehouse",
+        "ipa": "/ˈweə.haʊs/",
+        "pos": "n",
+        "meaning": "nhà kho, kho chứa hàng hóa",
+        "example": "Shipments are safely stored in the climate-controlled warehouse."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "restaurant equipment",
+        "meaning": "thiết bị nhà hàng, dụng cụ bếp"
+      },
+      {
+        "phrase": "supply company",
+        "meaning": "công ty cung ứng, nhà phân phối"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Giới từ chỉ nguồn gốc cuộc gọi: Calling from + Company",
+        "rule": "Formula for phone introductions",
+        "analysis": "Khi giới thiệu danh tính qua điện thoại, cấu trúc 'I'm calling from [Company Name]' cung cấp trực tiếp nơi công tác của người gọi."
+      }
+    ]
+  },
+  "57": {
+    "exp": "Người phụ nữ nêu mục đích sử dụng phần mềm: 'to keep track of my warehouse inventory' (để theo dõi số lượng hàng tồn kho trong kho của tôi). Cụm 'keep track of inventory' đồng nghĩa với 'inventory management' (quản lý hàng tồn kho) -> Chọn (A) Inventory management.",
+    "vocab": [
+      {
+        "word": "inventory",
+        "ipa": "/ˈɪn.vən.tər.i/",
+        "pos": "n",
+        "meaning": "hàng tồn kho, sự kiểm kê",
+        "example": "The store conducts a complete inventory check at the end of the year."
+      },
+      {
+        "word": "track",
+        "ipa": "/træk/",
+        "pos": "v",
+        "meaning": "theo dõi, giám sát lộ trình/tiến độ",
+        "example": "Customers can track their postal shipments using an online tracking code."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "inventory management",
+        "meaning": "quản lý hàng tồn kho"
+      },
+      {
+        "phrase": "keep track of",
+        "meaning": "theo dõi, nắm bắt số liệu"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cụm động từ thành ngữ 'keep track of'",
+        "rule": "keep track of + noun phrase",
+        "analysis": "'keep track of' mang nghĩa kiểm soát, ghi chép liên tục để nắm rõ trạng thái của đối tượng."
+      }
+    ]
+  },
+  "58": {
+    "exp": "Người phụ nữ thắc mắc về cài đặt cảnh báo khi hàng sắp hết. Nhân viên hỗ trợ trả lời: 'Go to the Preferences tab, click Notification Settings, and change the threshold number to whatever value you prefer' (Cô vào tab Tùy chọn, bấm Cài đặt thông báo và thay đổi mức ngưỡng số lượng theo ý muốn). Việc thay đổi thông số này là tùy chỉnh cài đặt -> Chọn (B) Customize a setting.",
+    "vocab": [
+      {
+        "word": "customize",
+        "ipa": "/ˈkʌs.tə.maɪz/",
+        "pos": "v",
+        "meaning": "tùy biến, chỉnh sửa theo nhu cầu cá nhân",
+        "example": "Users can customize dashboard widgets to display relevant sales metrics."
+      },
+      {
+        "word": "threshold",
+        "ipa": "/ˈθreʃ.həʊld/",
+        "pos": "n",
+        "meaning": "ngưỡng, mức giới hạn kích hoạt",
+        "example": "An automated alert triggers when stock drops below the reorder threshold."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "customize a setting",
+        "meaning": "tùy chỉnh một mục cài đặt"
+      },
+      {
+        "phrase": "notification settings",
+        "meaning": "cài đặt thông báo"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Câu chỉ dẫn từng bước với câu mệnh lệnh (Imperative sentences)",
+        "rule": "V-bare + Object + Prepositional phrase",
+        "analysis": "Khi hướng dẫn kỹ thuật, người nói sử dụng các động từ nguyên mẫu đứng đầu: 'Go to...', 'click...', 'change...'."
+      }
+    ]
+  },
+  "59": {
+    "exp": "Người phụ nữ nói: 'I just spoke to the garden director. He wants us to install an irrigation system in the rose garden, as well as the Magnolia Grove...' (Tôi vừa nói chuyện với giám đốc vườn. Ông ấy muốn chúng ta lắp đặt hệ thống tưới tiêu ở vườn hoa hồng cũng như khu vườn mộc lan...). Các từ 'garden director', 'rose garden', 'Magnolia Grove', 'flowers' chứng minh họ làm việc tại vườn bách thảo -> Chọn (B) At a botanical garden.",
+    "vocab": [
+      {
+        "word": "botanical",
+        "ipa": "/bəˈtæn.ɪ.kəl/",
+        "pos": "adj",
+        "meaning": "thuộc về thực vật học",
+        "example": "The municipal botanical garden conserves thousands of indigenous plant species."
+      },
+      {
+        "word": "grove",
+        "ipa": "/ɡrəʊv/",
+        "pos": "n",
+        "meaning": "lùm cây, vườn cây nhỏ",
+        "example": "Visitors strolled peacefully through the shaded olive grove."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "botanical garden",
+        "meaning": "vườn bách thảo, vườn thực vật"
+      },
+      {
+        "phrase": "rose garden",
+        "meaning": "vườn hoa hồng"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Liên từ kết hợp bổ sung 'as well as'",
+        "rule": "A as well as B",
+        "analysis": "'as well as' dùng để bổ sung thêm một đối tượng khác: 'in the rose garden, as well as the Magnolia Grove'."
+      }
+    ]
+  },
+  "60": {
+    "exp": "Mục đích yêu cầu từ vị giám đốc: 'He wants us to install an irrigation system in the rose garden... He wants to be sure the flowers get plenty of water during the hot summer' (Ông ấy muốn chúng ta lắp hệ thống tưới tiêu... để đảm bảo hoa có đủ nước trong mùa hè nóng bức). 'irrigation system' chính là hệ thống tưới nước -> Chọn (C) Install a watering system.",
+    "vocab": [
+      {
+        "word": "irrigation",
+        "ipa": "/ˌɪr.ɪˈɡeɪ.ʃən/",
+        "pos": "n",
+        "meaning": "hệ thống tưới tiêu cây trồng",
+        "example": "Drip irrigation delivers water directly to plant root systems efficiently."
+      },
+      {
+        "word": "install",
+        "ipa": "/ɪnˈstɔːl/",
+        "pos": "v",
+        "meaning": "lắp đặt, cài đặt thiết bị",
+        "example": "Contractors will install solar panels on the library roof."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "irrigation system",
+        "meaning": "hệ thống tưới tiêu"
+      },
+      {
+        "phrase": "install a system",
+        "meaning": "lắp đặt một hệ thống"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Cấu trúc cầu khiến 'want someone to do something'",
+        "rule": "S + want + Object + to V-inf",
+        "analysis": "Diễn đạt yêu cầu ai làm gì: 'He wants us to install an irrigation system'."
+      }
+    ]
+  },
+  "61": {
+    "exp": "Người đàn ông đề nghị: 'We might already have some extra PVC pipes and sprinkler nozzles in the storage shed behind the greenhouse. I'll go check our supplies right now' (Có thể chúng ta đã có sẵn vài ống nhựa PVC và vòi phun nước trong nhà kho phía sau nhà kính rồi. Tôi sẽ đi kiểm tra đồ dùng vật tư ngay bây giờ). Hành động này là đi tìm vật tư vật liệu -> Chọn (A) Look for some materials.",
+    "vocab": [
+      {
+        "word": "supplies",
+        "ipa": "/səˈplaɪz/",
+        "pos": "n",
+        "meaning": "vật tư, đồ dùng dự trữ",
+        "example": "The administration ordered office supplies including ink and reams of paper."
+      },
+      {
+        "word": "sprinkler",
+        "ipa": "/ˈsprɪŋ.klər/",
+        "pos": "n",
+        "meaning": "vòi phun nước tưới cây tự động",
+        "example": "Lawn sprinklers activated automatically at dawn."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "look for materials",
+        "meaning": "tìm kiếm vật liệu, vật tư"
+      },
+      {
+        "phrase": "storage shed",
+        "meaning": "nhà kho chứa đồ ngoài vườn"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Mẫu câu đề nghị hỗ trợ 'I'll + V-bare'",
+        "rule": "I'll + V-inf to offer voluntary help",
+        "analysis": "Người nói tự nguyện thực hiện hành động giúp đỡ: 'I'll go check our supplies right now'."
+      }
+    ]
+  },
+  "62": {
+    "exp": "Người đàn ông nói lời xin lỗi ngay đầu hội thoại: 'Good morning, Ms. Al Jahani. Sorry I'm a little late. Traffic was terrible' (Chào buổi sáng, cô Al Jahani. Xin lỗi tôi đến hơi trễ. Giao thông sáng nay tắc đường khủng khiếp quá). Anh ấy xin lỗi vì đến muộn -> Chọn (B) He arrived late.",
+    "vocab": [
+      {
+        "word": "traffic",
+        "ipa": "/ˈtræf.ɪk/",
+        "pos": "n",
+        "meaning": "giao thông, xe cộ đi lại",
+        "example": "Commuters faced heavy rush-hour traffic on the highway."
+      },
+      {
+        "word": "terrible",
+        "ipa": "/ˈter.ə.bəl/",
+        "pos": "adj",
+        "meaning": "tồi tệ, kinh khủng",
+        "example": "Severe storms caused terrible damage to coastal infrastructure."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "arrive late",
+        "meaning": "đến muộn, đến trễ"
+      },
+      {
+        "phrase": "heavy traffic",
+        "meaning": "giao thông tắc nghẽn, kẹt xe"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Rút gọn lời xin lỗi trong giao tiếp",
+        "rule": "Sorry + (that) + clause",
+        "analysis": "'Sorry I'm a little late' là cách nói thân mật, lịch sự rút gọn của 'I am sorry that I am late'."
+      }
+    ]
+  },
+  "63": {
+    "exp": "Người phụ nữ giải thích lý do văn phòng sẽ bận rộn: '...our rental office will be very busy this morning. There's a big education convention in town starting today, so many educators are renting vehicles' (...văn phòng cho thuê xe của chúng ta sáng nay sẽ rất bận rộn. Có một hội nghị giáo dục lớn bắt đầu hôm nay, nên nhiều nhà giáo đang thuê phương tiện). 'convention' đồng nghĩa với 'conference' -> Chọn (C) There is a conference in town.",
+    "vocab": [
+      {
+        "word": "convention",
+        "ipa": "/kənˈven.ʃən/",
+        "pos": "n",
+        "meaning": "hội nghị, đại hội quy mô lớn",
+        "example": "Thousands of pediatricians attended the annual medical convention."
+      },
+      {
+        "word": "educator",
+        "ipa": "/ˈedʒ.u.keɪ.tər/",
+        "pos": "n",
+        "meaning": "nhà giáo dục, giảng viên",
+        "example": "Prominent educators discussed innovative classroom technologies."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "education convention",
+        "meaning": "hội nghị/đại hội giáo dục"
+      },
+      {
+        "phrase": "rent a vehicle",
+        "meaning": "thuê xe ô tô/phương tiện đi lại"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Từ đồng nghĩa convention = conference",
+        "rule": "Lexical substitution",
+        "analysis": "Hai từ 'convention' (trong audio) và 'conference' (trong đề thi) thường xuyên thay thế cho nhau."
+      }
+    ]
+  },
+  "64": {
+    "exp": "Người phụ nữ chỉ thị: 'We need all our compact sedans inspected first because they're already fully reserved for 9 A.M. arrivals' (Chúng ta cần kiểm tra tất cả các xe sedan cỡ nhỏ trước vì chúng đã được đặt kín cho khách đến lúc 9 giờ sáng). Nhìn vào hình ảnh sơ đồ bãi xe, hàng xe 'Compact sedans' nằm ở khu vực Area 2 -> Chọn (B) Area 2.",
+    "vocab": [
+      {
+        "word": "sedan",
+        "ipa": "/sɪˈdæn/",
+        "pos": "n",
+        "meaning": "xe ô tô 4 chỗ có cốp riêng",
+        "example": "Business travelers often rent fuel-efficient compact sedans."
+      },
+      {
+        "word": "reserve",
+        "ipa": "/rɪˈzɜːv/",
+        "pos": "v",
+        "meaning": "đặt trước, giữ chỗ",
+        "example": "Hotel rooms should be reserved at least three weeks in advance."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "compact sedan",
+        "meaning": "xe con 4 chỗ cỡ nhỏ"
+      },
+      {
+        "phrase": "fully reserved",
+        "meaning": "đã được đặt trước toàn bộ/kín chỗ"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Kỹ năng kết hợp bài nghe và hình ảnh (Graphic Question)",
+        "rule": "Cross-reference spoken keyword with visual map",
+        "analysis": "Nghe từ khóa loại xe 'compact sedans' trong bài nói, đối chiếu với nhãn trên hình để chọn đúng vị trí 'Area 2'."
+      }
+    ]
+  },
+  "65": {
+    "exp": "Người đàn ông hỏi về các dự án: 'Well, all our public programs and community events are on schedule. Great. How about the Janus Park project?... the mayor's office approved our budget' (Tất cả các chương trình công cộng và sự kiện cộng đồng đều đúng tiến độ. Tuyệt. Còn dự án Công viên Janus thì sao?... văn phòng thị trưởng đã phê duyệt ngân sách của chúng ta). Các từ khóa 'public programs', 'community events', 'park project', 'mayor's office' chỉ cơ quan chính quyền địa phương -> Chọn (B) At a local government office.",
+    "vocab": [
+      {
+        "word": "community",
+        "ipa": "/kəˈmjuː.nə.ti/",
+        "pos": "n",
+        "meaning": "cộng đồng dân cư địa phương",
+        "example": "The park hosts family-friendly activities for the local community."
+      },
+      {
+        "word": "mayor",
+        "ipa": "/meər/",
+        "pos": "n",
+        "meaning": "thị trưởng thành phố",
+        "example": "The city mayor delivered the keynote address at the civic hall."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "local government office",
+        "meaning": "cơ quan chính quyền địa phương"
+      },
+      {
+        "phrase": "community events",
+        "meaning": "các sự kiện cộng đồng"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Suy luận cơ quan tổ chức qua các danh từ hành chính",
+        "rule": "Administrative vocabulary clues",
+        "analysis": "'mayor's office', 'public programs', 'community events' phản ánh hoạt động quản lý công của chính quyền địa phương."
+      }
+    ]
+  },
+  "66": {
+    "exp": "Người phụ nữ thông báo: 'For next month's Arbor Day celebration, we're organizing an environmental poster contest for elementary school students' (Nhân dịp lễ Ngày Trồng Cây vào tháng tới, chúng ta sẽ tổ chức một cuộc thi vẽ áp phích môi trường cho học sinh tiểu học). Sự kiện diễn ra vào tháng sau là cuộc thi vẽ áp phích -> Chọn (C) A poster contest.",
+    "vocab": [
+      {
+        "word": "contest",
+        "ipa": "/ˈkɒn.test/",
+        "pos": "n",
+        "meaning": "cuộc thi, hội thi tài năng",
+        "example": "Winners of the annual photography contest received cash prizes."
+      },
+      {
+        "word": "poster",
+        "ipa": "/ˈpəʊ.stər/",
+        "pos": "n",
+        "meaning": "áp phích, tranh cổ động quảng bá",
+        "example": "Students hung colorful educational posters in the hallway."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "poster contest",
+        "meaning": "cuộc thi vẽ tranh áp phích cổ động"
+      },
+      {
+        "phrase": "organize a contest",
+        "meaning": "tổ chức một cuộc thi"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Thì hiện tại tiếp diễn diễn tả kế hoạch tương lai (Be + V-ing)",
+        "rule": "Present continuous for arranged future events",
+        "analysis": "'we're organizing an environmental poster contest' diễn tả sự kiện đã được lên lịch sẵn sàng trong tháng tới."
+      }
+    ]
+  },
+  "67": {
+    "exp": "Người phụ nữ nói về việc phát cây giống: 'We also ordered 200 saplings to give away. We chose the flowering tree with purple-pink blossoms described in the brochure' (Chúng ta cũng đã đặt 200 cây non để phát tặng. Chúng ta đã chọn loài cây ra hoa có những chùm hoa màu hồng tím được miêu tả trong tập tài liệu). Nhìn vào bảng biểu hình ảnh, loại cây có miêu tả 'purple-pink blossoms' là cây 'Eastern redbud' -> Chọn (A) Eastern redbud.",
+    "vocab": [
+      {
+        "word": "seedling",
+        "ipa": "/ˈsiːd.lɪŋ/",
+        "pos": "n",
+        "meaning": "cây con, cây giống ươm",
+        "example": "Volunteers planted oak seedlings along the riverbank."
+      },
+      {
+        "word": "blossom",
+        "ipa": "/ˈblɒs.əm/",
+        "pos": "n, v",
+        "meaning": "hoa của cây thân gỗ, nở hoa",
+        "example": "Cherry trees produce delicate pink blossoms each spring."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "give away",
+        "meaning": "phát tặng miễn phí"
+      },
+      {
+        "phrase": "flowering tree",
+        "meaning": "cây có hoa"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Kỹ năng đối chiếu thuộc tính hình ảnh (Visual Graphic Matching)",
+        "rule": "Match descriptive adjective to graphic entry",
+        "analysis": "Nghe miêu tả đặc điểm hoa 'purple-pink blossoms' và tra vào cột mô tả trong bảng biểu để tìm đúng tên giống cây 'Eastern redbud'."
+      }
+    ]
+  },
+  "68": {
+    "exp": "Người đàn ông gọi đồ uống: 'Hi. I'd like a large black coffee and an egg and cheese croissant. Sure. That'll be eight dollars' (Chào cô, cho tôi một ly cà phê đen lớn và một bánh sừng bò trứng phô mai. Vâng, của anh hết 8 đô la). Các món đồ ăn thức uống này cho thấy cuộc hội thoại diễn ra tại một quán cà phê -> Chọn (A) At a café.",
+    "vocab": [
+      {
+        "word": "croissant",
+        "ipa": "/ˈkwæs.ɒ̃/",
+        "pos": "n",
+        "meaning": "bánh sừng bò Pháp",
+        "example": "The bakery serves buttery croissants baked fresh every morning."
+      },
+      {
+        "word": "cashier",
+        "ipa": "/kæʃˈɪər/",
+        "pos": "n",
+        "meaning": "nhân viên thu ngân",
+        "example": "The cashier processed the credit card payment smoothly."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "black coffee",
+        "meaning": "cà phê đen"
+      },
+      {
+        "phrase": "take an order",
+        "meaning": "nhận món/ghi đơn đồ ăn"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Mẫu câu gọi đồ ăn lịch sự 'I'd like + Noun'",
+        "rule": "I'd like = I would like",
+        "analysis": "Mẫu câu gọi món tiêu chuẩn trong nhà hàng, quán cà phê: 'I'd like a large black coffee...'."
+      }
+    ]
+  },
+  "69": {
+    "exp": "Người phục vụ hỏi thẻ khách hàng thân thiết, khách đáp: 'No, I'm not. But I do have an Easy Cash card' (Không, tôi không có. Nhưng tôi có thẻ Easy Cash). Nhìn vào bảng ưu đãi giảm giá theo loại thẻ trên hình ảnh đồ họa: Dòng 'Easy Cash card' tương ứng với mức giảm giá 2% -> Chọn (D) 2%.",
+    "vocab": [
+      {
+        "word": "purchase",
+        "ipa": "/ˈpɜː.tʃəs/",
+        "pos": "n, v",
+        "meaning": "món hàng đã mua, việc mua hàng",
+        "example": "Keep the original receipt to return any retail purchase."
+      },
+      {
+        "word": "preferred",
+        "ipa": "/prɪˈfɜːd/",
+        "pos": "adj",
+        "meaning": "được ưu tiên, khách hàng thân thiết",
+        "example": "Preferred cardholders enjoy complimentary express shipping."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "save on purchase",
+        "meaning": "tiết kiệm chi phí khi mua sắm"
+      },
+      {
+        "phrase": "preferred customer",
+        "meaning": "khách hàng ưu tiên, khách hàng VIP"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Trợ động từ 'do' nhấn mạnh khẳng định",
+        "rule": "S + do/does/did + V-bare",
+        "analysis": "'But I do have an Easy Cash card' dùng 'do' để nhấn mạnh rằng dù không có thẻ VIP nhưng người nói thực sự có một chiếc thẻ thanh toán khác."
+      }
+    ]
+  },
+  "70": {
+    "exp": "Người đàn ông nói: 'The magnetic strip on this card has been acting up lately. I need to call customer service at my bank this afternoon to get a replacement card' (Dải từ trên chiếc thẻ này gần đây hay bị lỗi. Tôi cần gọi điện cho bộ phận dịch vụ khách hàng ở ngân hàng của tôi vào chiều nay để xin cấp lại thẻ mới). Việc gọi điện cho ngân hàng chính là gọi tới một doanh nghiệp -> Chọn (A) Call a business.",
+    "vocab": [
+      {
+        "word": "replacement",
+        "ipa": "/rɪˈpleɪs.mənt/",
+        "pos": "n",
+        "meaning": "vật thay thế, thẻ mới thay thế",
+        "example": "The bank mailed a replacement debit card within three business days."
+      },
+      {
+        "word": "magnetic",
+        "ipa": "/mæɡˈnet.ɪk/",
+        "pos": "adj",
+        "meaning": "từ tính, dải từ",
+        "example": "The card reader could not scan the worn magnetic strip."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "call customer service",
+        "meaning": "gọi tới bộ phận chăm sóc khách hàng"
+      },
+      {
+        "phrase": "replacement card",
+        "meaning": "thẻ cấp đổi/thay thế"
+      }
+    ],
+    "grammar": [
+      {
+        "title": "Động từ biểu thị sự cần thiết 'need to + V-inf'",
+        "rule": "S + need to + V-bare",
+        "analysis": "Diễn đạt việc cần phải làm: 'I need to call customer service at my bank'."
+      }
+    ]
+  }
+}

@@ -1,0 +1,902 @@
+{
+  "176": {
+    "exp": "Đối chiếu bảng lịch biểu diễn (Schedule): Dưới cột sân khấu 'Bramley Theater', nghệ sĩ được xếp lịch biểu diễn ban đầu là 'The Silver Pianos' (khung giờ 2:00 P.M. - 3:30 P.M.) -> Nghệ sĩ ban đầu được lên lịch biểu diễn tại Bramley Theater là The Silver Pianos. Phương án (B) 'The Silver Pianos' là đáp án đúng.",
+    "vocab": [
+      {
+        "word": "scheduled",
+        "ipa": "/ˈʃedʒ.uːld/",
+        "pos": "adj",
+        "meaning": "được lên lịch, ấn định thời gian",
+        "example": "The scheduled keynote begins at ten o'clock sharp."
+      },
+      {
+        "word": "perform",
+        "ipa": "/pəˈfɔːm/",
+        "pos": "v",
+        "meaning": "biểu diễn, trình diễn nghệ thuật",
+        "example": "The jazz quartet will perform selections from their debut album."
+      },
+      {
+        "word": "venue",
+        "ipa": "/ˈven.juː/",
+        "pos": "n",
+        "meaning": "địa điểm biểu diễn/tổ chức sự kiện",
+        "example": "The historic theater serves as the primary festival venue."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "originally scheduled",
+        "meaning": "ban đầu được lên lịch"
+      },
+      {
+        "phrase": "perform at a venue",
+        "meaning": "biểu diễn tại địa điểm"
+      }
+    ]
+  },
+  "177": {
+    "exp": "Nhìn vào lịch trình của lễ hội: Các buổi biểu diễn diễn ra tại nhiều địa điểm khác nhau (Bramley Theater, Riverbank Pavilion, Green Amphitheater) và kéo dài qua nhiều ngày với nhiều thể loại âm nhạc -> Lễ hội bao gồm các sự kiện âm nhạc tại nhiều địa điểm ('It features musical events in multiple locations'). Phương án (D) là đáp án chính xác.",
+    "vocab": [
+      {
+        "word": "multiple",
+        "ipa": "/ˈmʌl.tɪ.pəl/",
+        "pos": "adj",
+        "meaning": "nhiều, đa dạng",
+        "example": "The conference spans multiple venues across the city."
+      },
+      {
+        "word": "festival",
+        "ipa": "/ˈfes.tɪ.vəl/",
+        "pos": "n",
+        "meaning": "lễ hội, ngày hội văn hóa",
+        "example": "The annual folk festival attracts visitors from across the country."
+      },
+      {
+        "word": "pavilion",
+        "ipa": "/pəˈvɪl.jən/",
+        "pos": "n",
+        "meaning": "khu nhà biểu diễn ngoài trời có mái che",
+        "example": "The orchestra assembled inside the open-air riverside pavilion."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "multiple locations",
+        "meaning": "nhiều địa điểm"
+      },
+      {
+        "phrase": "musical festival",
+        "meaning": "lễ hội âm nhạc"
+      }
+    ]
+  },
+  "178": {
+    "exp": "Trong tin nhắn thông báo thay đổi: 'Because of the thunderstorm delay, ticketholders may use their afternoon passes to enter any evening show at the Riverbank Pavilion at no extra charge' (Do sự cố hoãn vì giông bão, người có vé có thể sử dụng vé buổi chiều để vào xem bất kỳ buổi diễn buổi tối nào tại Riverbank Pavilion mà không phải trả thêm phí) -> Khán giả có thể tham dự một buổi biểu diễn buổi tối ('Attend an evening performance'). Phương án (A) là đáp án đúng.",
+    "vocab": [
+      {
+        "word": "ticketholder",
+        "ipa": "/ˈtɪk.ɪtˌhəʊl.dər/",
+        "pos": "n",
+        "meaning": "người có vé, chủ sở hữu vé",
+        "example": "Ticketholders are entitled to reserved front-row seating."
+      },
+      {
+        "word": "pass",
+        "ipa": "/pɑːs/",
+        "pos": "n",
+        "meaning": "thẻ vào cổng, vé thông hành",
+        "example": "Purchase an all-access festival pass online."
+      },
+      {
+        "word": "thunderstorm",
+        "ipa": "/ˈθʌn.də.stɔːm/",
+        "pos": "n",
+        "meaning": "cơn giông bão sấm sét",
+        "example": "Heavy thunderstorms grounded regional airline flights."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "attend a performance",
+        "meaning": "tham dự buổi biểu diễn"
+      },
+      {
+        "phrase": "no extra charge",
+        "meaning": "không phụ phí"
+      }
+    ]
+  },
+  "179": {
+    "exp": "Căn cứ ngữ cảnh đoạn 2 của tin nhắn: 'All afternoon outdoor sets have been pushed by two hours to allow storm clouds to clear' (Tất cả các phần diễn ngoài trời buổi chiều đã bị lùi lại/hoãn lại 2 tiếng để mây bão tan bớt). Từ 'pushed' trong ngữ cảnh điều chỉnh lịch trình đồng nghĩa với 'delayed / postponed' (bị hoãn lại, dời lại). Phương án (A) 'delayed' là đáp án chính xác nhất. Các phương án khác: ép buộc, đẩy về phía trước đều sai ngữ cảnh.",
+    "vocab": [
+      {
+        "word": "delay",
+        "ipa": "/dɪˈleɪ/",
+        "pos": "v",
+        "meaning": "trì hoãn, lùi lịch lại",
+        "example": "Technical difficulties delayed the start of the webcast."
+      },
+      {
+        "word": "postpone",
+        "ipa": "/pəʊstˈpəʊn/",
+        "pos": "v",
+        "meaning": "hoãn sang thời điểm muộn hơn",
+        "example": "Organizers decided to postpone the outdoor parade until Sunday."
+      },
+      {
+        "word": "clear",
+        "ipa": "/klɪər/",
+        "pos": "v",
+        "meaning": "quang đãng, tan biến (mây/mưa)",
+        "example": "We waited for the heavy fog to clear before driving."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "push by two hours",
+        "meaning": "lùi lại hai tiếng"
+      },
+      {
+        "phrase": "delayed due to storm",
+        "meaning": "bị trì hoãn vì bão"
+      }
+    ]
+  },
+  "180": {
+    "exp": "Đối chiếu chéo (Cross-referencing) giữa 2 văn bản: Theo lịch trình (Văn bản 1), nhóm 'Kirschau' ban đầu được xếp diễn tại sân khấu ngoài trời Green Amphitheater lúc 3:30 P.M. Theo tin nhắn (Văn bản 2), toàn bộ các phần diễn ngoài trời bị lùi lại đúng 2 tiếng do mưa giông ('pushed by two hours'). Do đó: 3:30 P.M. + 2:00 = 5:30 P.M. -> Kirschau sẽ biểu diễn vào lúc 5:30 P.M. Phương án (B) 'At 5:30 P.M.' là đáp án chính xác.",
+    "vocab": [
+      {
+        "word": "amphitheater",
+        "ipa": "/ˈæm.fɪˌθɪə.tər/",
+        "pos": "n",
+        "meaning": "nhà hát ngoài trời hình bán nguyệt",
+        "example": "The summer concert series takes place at the park amphitheater."
+      },
+      {
+        "word": "cross-reference",
+        "ipa": "/ˈkrɒs ˌref.ər.əns/",
+        "pos": "v",
+        "meaning": "đối chiếu chéo giữa các tài liệu",
+        "example": "Cross-reference the sales invoice against the delivery receipt."
+      },
+      {
+        "word": "adjusted",
+        "ipa": "/əˈdʒʌs.tɪd/",
+        "pos": "adj",
+        "meaning": "được điều chỉnh lại",
+        "example": "Consult the adjusted schedule posted on festival message boards."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "cross-reference information",
+        "meaning": "đối chiếu chéo dữ kiện"
+      },
+      {
+        "phrase": "adjusted showtime",
+        "meaning": "giờ diễn đã điều chỉnh"
+      }
+    ]
+  },
+  "181": {
+    "exp": "Bức email nội bộ mở đầu: 'To all Branch Directors: Please review the attached summary of customer mobile banking engagement. Our objective this quarter is to encourage long-term patrons to register for our updated mobile app...' (Gửi các Giám đốc chi nhánh: Vui lòng xem bản tóm tắt đính kèm về mức độ tham gia ngân hàng di động của khách hàng. Mục tiêu quý này là khuyến khích khách hàng thân thiết đăng ký ứng dụng di động mới...) -> Một mục đích của email là thúc đẩy việc sử dụng ứng dụng di động ('To promote the use of a mobile app'). Phương án (D) là đáp án đúng.",
+    "vocab": [
+      {
+        "word": "engagement",
+        "ipa": "/ɪnˈɡeɪdʒ.mənt/",
+        "pos": "n",
+        "meaning": "mức độ tương tác, gắn kết của khách hàng",
+        "example": "Social media campaigns aim to increase customer engagement."
+      },
+      {
+        "word": "promote",
+        "ipa": "/prəˈməʊt/",
+        "pos": "v",
+        "meaning": "thúc đẩy, xúc tiến, quảng bá",
+        "example": "The bank designed tutorials to promote its digital banking tools."
+      },
+      {
+        "word": "adopt",
+        "ipa": "/əˈdɒpt/",
+        "pos": "v",
+        "meaning": "áp dụng, tiếp nhận sử dụng",
+        "example": "Retailers quickly adopt contactless mobile payment systems."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "promote the use of",
+        "meaning": "thúc đẩy việc sử dụng"
+      },
+      {
+        "phrase": "mobile app engagement",
+        "meaning": "sự gắn kết với ứng dụng di động"
+      }
+    ]
+  },
+  "182": {
+    "exp": "Trong bức email, đoạn 2 nêu rõ dữ liệu thống kê: 'Currently, approximately 45 percent of our active accountholders rely on mobile banking for routine deposits and transfers...' (Hiện tại, khoảng 45% chủ tài khoản đang hoạt động của chúng ta sử dụng ngân hàng di động cho các giao dịch nộp tiền và chuyển khoản thông thường...) -> Tỷ lệ khách hàng của ngân hàng sử dụng dịch vụ ngân hàng di động là 45% ('45%'). Phương án (B) là đáp án chính xác.",
+    "vocab": [
+      {
+        "word": "accountholder",
+        "ipa": "/əˈkaʊntˌhəʊl.dər/",
+        "pos": "n",
+        "meaning": "chủ tài khoản ngân hàng",
+        "example": "Accountholders receive real-time fraud alert notifications."
+      },
+      {
+        "word": "routine",
+        "ipa": "/ruːˈtiːn/",
+        "pos": "adj",
+        "meaning": "thường quy, định kỳ quen thuộc",
+        "example": "Process routine deposit checks via mobile imaging."
+      },
+      {
+        "word": "transfer",
+        "ipa": "/trænsˈfɜːr/",
+        "pos": "n, v",
+        "meaning": "sự chuyển khoản; chuyển tiền",
+        "example": "Wire transfers between affiliate banks settle instantly."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "active accountholders",
+        "meaning": "chủ tài khoản đang hoạt động"
+      },
+      {
+        "phrase": "routine transactions",
+        "meaning": "giao dịch thường quy"
+      }
+    ]
+  },
+  "183": {
+    "exp": "Căn cứ ngữ cảnh đoạn 3, dòng 4 của bài báo: 'Chief Financial Officer Martin Vance anticipates that branch operating expenses will decrease by 12 percent once digital enrollment reaches sixty percent' (Giám đốc Tài chính Martin Vance dự đoán/kỳ vọng rằng chi phí vận hành chi nhánh sẽ giảm 12% khi lượng đăng ký kỹ thuật số đạt 60%). Từ 'anticipates' đồng nghĩa với 'expects / predicts' (dự kiến, kỳ vọng). Phương án (D) 'expects' là đáp án chính xác nhất.",
+    "vocab": [
+      {
+        "word": "anticipate",
+        "ipa": "/ænˈtɪs.ɪ.peɪt/",
+        "pos": "v",
+        "meaning": "dự đoán, lường trước, kỳ vọng",
+        "example": "Economists anticipate a moderate drop in mortgage lending rates."
+      },
+      {
+        "word": "expect",
+        "ipa": "/ɪkˈspekt/",
+        "pos": "v",
+        "meaning": "kỳ vọng, mong đợi",
+        "example": "We expect quarterly revenues to surpass previous guidance."
+      },
+      {
+        "word": "operating expenses",
+        "ipa": "/ˈɒp.ər.eɪ.tɪŋ ɪkˌspen.sɪz/",
+        "pos": "n pl",
+        "meaning": "chi phí vận hành doanh nghiệp",
+        "example": "Digitizing archives significantly pruned branch operating expenses."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "anticipate a decrease",
+        "meaning": "dự đoán mức giảm"
+      },
+      {
+        "phrase": "operating expenses",
+        "meaning": "chi phí vận hành"
+      }
+    ]
+  },
+  "184": {
+    "exp": "Đối chiếu chéo (Cross-referencing): Email (Văn bản 1) được gửi cho 'All Branch Directors' (Tất cả giám đốc chi nhánh) và yêu cầu: 'Branch directors who attended last month's strategy summit at our corporate headquarters in Leeds should spearhead local teller training' (Các giám đốc chi nhánh đã tham dự hội nghị chiến lược tháng trước tại trụ sở chính ở Leeds cần dẫn đầu công tác đào tạo giao dịch viên tại địa phương). Đối chiếu bài báo (Văn bản 2), các đại biểu dự họp là các giám đốc chi nhánh ngân hàng -> Những người đã tham dự cuộc họp tại trụ sở Ogden Bank là các giám đốc chi nhánh ('Branch directors'). Phương án (B) là đáp án đúng.",
+    "vocab": [
+      {
+        "word": "spearhead",
+        "ipa": "/ˈspɪə.hed/",
+        "pos": "v",
+        "meaning": "dẫn đầu, khởi xướng mũi nhọn",
+        "example": "The marketing head will spearhead the product relaunch campaign."
+      },
+      {
+        "word": "headquarters",
+        "ipa": "/ˌhedˈkwɔː.təz/",
+        "pos": "n",
+        "meaning": "trụ sở chính tổng công ty",
+        "example": "Executives convened for the summit at corporate headquarters."
+      },
+      {
+        "word": "teller",
+        "ipa": "/ˈtel.ər/",
+        "pos": "n",
+        "meaning": "giao dịch viên ngân hàng",
+        "example": "Bank tellers assist patrons with counter cash withdrawals."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "branch directors",
+        "meaning": "giám đốc chi nhánh"
+      },
+      {
+        "phrase": "corporate headquarters",
+        "meaning": "trụ sở chính công ty"
+      }
+    ]
+  },
+  "185": {
+    "exp": "Cả hai văn bản đều nhấn mạnh việc ban quản lý Ogden Bank đang chủ động chuyển dịch hoạt động sang nền tảng kỹ thuật số để cắt giảm chi phí vận hành chi nhánh và bắt kịp xu hướng công nghệ: 'committed to accelerating digital transformation' -> Ban quản lý Ogden Bank cam kết hiện đại hóa các dịch vụ ngân hàng của mình ('It is committed to modernizing its services'). Phương án (D) là đáp án chính xác.",
+    "vocab": [
+      {
+        "word": "modernize",
+        "ipa": "/ˈmɒd.ən.aɪz/",
+        "pos": "v",
+        "meaning": "hiện đại hóa, đổi mới theo chuẩn tiên tiến",
+        "example": "The municipality allocated capital to modernize the electrical grid."
+      },
+      {
+        "word": "committed to",
+        "ipa": "/kəˈmɪt.ɪd tuː/",
+        "pos": "adj phr",
+        "meaning": "cam kết, tận tâm vì mục tiêu",
+        "example": "The firm is deeply committed to environmental sustainability."
+      },
+      {
+        "word": "transformation",
+        "ipa": "/ˌtræns.fəˈmeɪ.ʃən/",
+        "pos": "n",
+        "meaning": "sự chuyển đổi toàn diện",
+        "example": "Digital transformation revolutionized customer service response times."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "committed to modernizing",
+        "meaning": "cam kết hiện đại hóa"
+      },
+      {
+        "phrase": "digital transformation",
+        "meaning": "chuyển đổi số"
+      }
+    ]
+  },
+  "186": {
+    "exp": "Bản thông báo của câu lạc bộ sách (Văn bản 1) mở đầu: 'The Oakview Community Library Book Club is thrilled to announce our reading list for the upcoming autumn session...' (Câu lạc bộ Sách Thư viện Cộng đồng Oakview vui mừng thông báo danh sách sách đọc cho kỳ mùa thu sắp tới...) -> Mục đích của thông báo là công bố danh sách các cuốn sách được lựa chọn ('To announce book club selections'). Phương án (C) là đáp án chính xác.",
+    "vocab": [
+      {
+        "word": "reading list",
+        "ipa": "/ˈriː.dɪŋ lɪst/",
+        "pos": "n",
+        "meaning": "danh mục sách cần đọc",
+        "example": "Professors distributed the mandatory course reading list."
+      },
+      {
+        "word": "selection",
+        "ipa": "/sɪˈlek.ʃən/",
+        "pos": "n",
+        "meaning": "tác phẩm/mặt hàng được tuyển chọn",
+        "example": "The committee finalized its monthly book selections."
+      },
+      {
+        "word": "session",
+        "ipa": "/ˈseʃ.ən/",
+        "pos": "n",
+        "meaning": "kỳ sinh hoạt, niên khóa",
+        "example": "Registration opens next week for the autumn literature session."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "reading list",
+        "meaning": "danh sách đọc"
+      },
+      {
+        "phrase": "book club selections",
+        "meaning": "các lựa chọn của câu lạc bộ sách"
+      }
+    ]
+  },
+  "187": {
+    "exp": "Đối chiếu bảng giới thiệu sách (Văn bản 2): Tác phẩm 'Wild Open Range' của tác giả Henry Callahan được mô tả: 'Set in 1880s Montana, this novel chronicles the hardships faced by early homesteaders...' (Lấy bối cảnh bang Montana thập niên 1880, cuốn tiểu thuyết này ghi lại những gian khổ của những người khai hoang thời kỳ đầu...) -> Cuốn sách lấy bối cảnh lịch sử trong quá khứ ('It is set in the nineteenth century'). Phương án (B) là đáp án đúng.",
+    "vocab": [
+      {
+        "word": "chronicle",
+        "ipa": "/ˈkrɒn.ɪ.kəl/",
+        "pos": "v",
+        "meaning": "ghi chép theo dòng lịch sử, biên niên sử",
+        "example": "The memoir chronicles her experiences working in wartime hospitals."
+      },
+      {
+        "word": "hardship",
+        "ipa": "/ˈhɑːd.ʃɪp/",
+        "pos": "n",
+        "meaning": "sự gian khổ, khó khăn thiếu thốn",
+        "example": "Pioneers endured unimaginable economic and physical hardship."
+      },
+      {
+        "word": "homesteader",
+        "ipa": "/ˈhəʊmˌsted.ər/",
+        "pos": "n",
+        "meaning": "người khai hoang lập nghiệp",
+        "example": "Homesteaders cultivated agricultural plots across the prairie."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "set in the nineteenth century",
+        "meaning": "lấy bối cảnh thế kỷ 19"
+      },
+      {
+        "phrase": "chronicle hardships",
+        "meaning": "ghi chép lại những gian lao"
+      }
+    ]
+  },
+  "188": {
+    "exp": "Đối chiếu thông tin tác giả và thể loại: Trong danh sách (Văn bản 2), cuốn sách 'Echoes of Genius' của tác giả Sandra Wu được giới thiệu là cuốn tiểu sử hấp dẫn về nhà vật lý học đoạt giải Nobel ('A captivating biography exploring the turbulent life of Nobel physicist Arthur Lang') -> Tác giả Sandra Wu là người đã viết về một nhân vật nổi tiếng ('Sandra Wu'). Phương án (D) là đáp án chính xác.",
+    "vocab": [
+      {
+        "word": "biography",
+        "ipa": "/baɪˈɒɡ.rə.fi/",
+        "pos": "n",
+        "meaning": "tiểu sử, truyện danh nhân",
+        "example": "The historian published an acclaimed biography of Marie Curie."
+      },
+      {
+        "word": "captivating",
+        "ipa": "/ˈkæp.tɪ.veɪ.tɪŋ/",
+        "pos": "adj",
+        "meaning": "lôi cuốn, say đắm lòng người",
+        "example": "The novel tells a captivating tale of adventure and betrayal."
+      },
+      {
+        "word": "physicist",
+        "ipa": "/ˈfɪz.ɪ.sɪst/",
+        "pos": "n",
+        "meaning": "nhà vật lý học",
+        "example": "Renowned physicists attended the symposium on quantum mechanics."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "write a biography",
+        "meaning": "viết một cuốn tiểu sử"
+      },
+      {
+        "phrase": "famous person",
+        "meaning": "người nổi tiếng"
+      }
+    ]
+  },
+  "189": {
+    "exp": "Đối chiếu chéo (Cross-referencing): Trong thông báo (Văn bản 1), cô Elena Calle được giới thiệu: 'Club facilitator Elena Calle will moderate discussion meetings on the first Tuesday of every month' (Người điều phối câu lạc bộ Elena Calle sẽ chủ trì các buổi thảo luận vào ngày thứ Ba đầu tiên của mỗi tháng) -> Cô Calle là người điều hành các buổi gặp mặt thảo luận ('She leads discussion meetings'). Phương án (A) là đáp án đúng.",
+    "vocab": [
+      {
+        "word": "facilitator",
+        "ipa": "/fəˈsɪl.ɪ.teɪ.tər/",
+        "pos": "n",
+        "meaning": "người điều phối, điều chuyển hoạt động nhóm",
+        "example": "An experienced facilitator guided the cross-functional seminar."
+      },
+      {
+        "word": "moderate",
+        "ipa": "/ˈmɒd.ər.eɪt/",
+        "pos": "v",
+        "meaning": "chủ trì, điều hành (tọa đàm, thảo luận)",
+        "example": "A veteran journalist agreed to moderate the televised mayoral debate."
+      },
+      {
+        "word": "discussion",
+        "ipa": "/dɪˈskʌʃ.ən/",
+        "pos": "n",
+        "meaning": "buổi thảo luận, trao đổi ý kiến",
+        "example": "Roundtable discussions encourage collaborative problem-solving."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "moderate discussions",
+        "meaning": "chủ trì các cuộc thảo luận"
+      },
+      {
+        "phrase": "club facilitator",
+        "meaning": "người điều phối câu lạc bộ"
+      }
+    ]
+  },
+  "190": {
+    "exp": "Trong bài đánh giá trực tuyến (Văn bản 3), cô Frey nhận xét về cuốn sách mình đã đọc: 'Having always had a deep passion for nineteenth-century historical novels, I found Callahan's descriptive landscapes utterly breathtaking...' (Vốn luôn có niềm đam mê sâu sắc đối với tiểu thuyết lịch sử thế kỷ 19, tôi thấy những trang viết miêu tả phong cảnh của Callahan vô cùng choáng ngợp...) -> Cô Frey cho biết cô rất thích thể loại tiểu thuyết lịch sử ('She favors historical fiction'). Phương án (D) là đáp án đúng.",
+    "vocab": [
+      {
+        "word": "historical fiction",
+        "ipa": "/hɪˌstɒr.ɪ.kəl ˈfɪk.ʃən/",
+        "pos": "n phr",
+        "meaning": "tiểu thuyết dã sử, văn học hư cấu lịch sử",
+        "example": "She avidly reads historical fiction set during the Tudor era."
+      },
+      {
+        "word": "breathtaking",
+        "ipa": "/ˈbreθˌteɪ.kɪŋ/",
+        "pos": "adj",
+        "meaning": "ngoạn mục, đẹp đến ngộp thở",
+        "example": "Hikers marveled at breathtaking views from the alpine summit."
+      },
+      {
+        "word": "favor",
+        "ipa": "/ˈfeɪ.vər/",
+        "pos": "v",
+        "meaning": "ưa thích hơn, thiên vị ủng hộ",
+        "example": "Consumers currently favor energy-efficient compact hybrid cars."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "historical fiction",
+        "meaning": "tiểu thuyết lịch sử"
+      },
+      {
+        "phrase": "favor a genre",
+        "meaning": "ưa chuộng một thể loại"
+      }
+    ]
+  },
+  "191": {
+    "exp": "Trong email phản hồi đầu tiên (Văn bản 1), tiệm bánh nêu rõ chính sách: 'Please note that for custom tiered cakes, a nonrefundable deposit of 30 percent is required at the time of order confirmation' (Xin lưu ý rằng đối với bánh nhiều tầng theo yêu cầu, một khoản đặt cọc không hoàn lại 30% là bắt buộc tại thời điểm xác nhận đơn hàng) -> Chính sách của cửa hàng là yêu cầu đặt cọc trước ('A deposit is required for custom orders'). Phương án (D) là đáp án chính xác.",
+    "vocab": [
+      {
+        "word": "deposit",
+        "ipa": "/dɪˈpɒz.ɪt/",
+        "pos": "n",
+        "meaning": "khoản tiền đặt cọc",
+        "example": "Tenants must pay a security deposit equal to one month's rent."
+      },
+      {
+        "word": "nonrefundable",
+        "ipa": "/ˌnɒn.rɪˈfʌn.də.bəl/",
+        "pos": "adj",
+        "meaning": "không được hoàn lại tiền",
+        "example": "Discount airline tickets are typically nonrefundable."
+      },
+      {
+        "word": "tiered",
+        "ipa": "/tɪəd/",
+        "pos": "adj",
+        "meaning": "xếp tầng, nhiều tầng chồng lên nhau",
+        "example": "A stunning three-tiered wedding cake decorated the reception hall."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "nonrefundable deposit",
+        "meaning": "tiền cọc không hoàn trả"
+      },
+      {
+        "phrase": "order confirmation",
+        "meaning": "xác nhận đơn hàng"
+      }
+    ]
+  },
+  "192": {
+    "exp": "Đối chiếu biên lai và địa chỉ: Tiệm bánh nằm tại '45 George Street', còn đơn giao hàng ghi địa chỉ nhận tại '2 Spen Lane, Grandview Plaza - Banquet Suite B' -> Tòa nhà tại số 2 Spen Lane là địa điểm tổ chức sự kiện tiệc ('It is an event venue'). Phương án (B) là đáp án đúng.",
+    "vocab": [
+      {
+        "word": "banquet",
+        "ipa": "/ˈbæŋ.kwɪt/",
+        "pos": "n",
+        "meaning": "bữa tiệc lớn, yến tiệc",
+        "example": "The annual corporate awards banquet begins at seven."
+      },
+      {
+        "word": "suite",
+        "ipa": "/swiːt/",
+        "pos": "n",
+        "meaning": "dãy phòng, sảnh tiệc riêng",
+        "example": "Reserve the presidential banquet suite for diplomatic guests."
+      },
+      {
+        "word": "delivery address",
+        "ipa": "/dɪˈlɪv.ər.i əˌdres/",
+        "pos": "n phr",
+        "meaning": "địa chỉ giao hàng",
+        "example": "Confirm your delivery address before placing the order."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "event venue",
+        "meaning": "địa điểm tổ chức sự kiện"
+      },
+      {
+        "phrase": "banquet suite",
+        "meaning": "phòng tiệc lớn"
+      }
+    ]
+  },
+  "193": {
+    "exp": "Đối chiếu chéo giữa các văn bản: Trong email 1, ông Ordaz hỏi: 'Can you prepare a gluten-free chocolate raspberry sponge cake?' Tiệm bánh xác nhận có làm được. Trên hóa đơn (Văn bản 2), mục 'Custom 3-Tier Specialty Sponge' có dòng chữ ghi chú 'Dietary: Gluten-Free' -> Chiếc bánh được làm không chứa gluten ('It was made without gluten'). Phương án (C) là đáp án chính xác.",
+    "vocab": [
+      {
+        "word": "gluten-free",
+        "ipa": "/ˌɡluː.tənˈfriː/",
+        "pos": "adj",
+        "meaning": "không chứa chất gluten (phù hợp người dị ứng lúa mì)",
+        "example": "The bakery offers a dedicated menu of gluten-free pastries."
+      },
+      {
+        "word": "dietary",
+        "ipa": "/ˈdaɪ.ə.tər.i/",
+        "pos": "adj",
+        "meaning": "thuộc chế độ ăn uống kiêng cữ",
+        "example": "Notify the caterer of any severe dietary restrictions."
+      },
+      {
+        "word": "raspberry",
+        "ipa": "/ˈrɑːz.bər.i/",
+        "pos": "n",
+        "meaning": "quả mâm xôi",
+        "example": "Top the tart with fresh organic raspberries."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "gluten-free cake",
+        "meaning": "bánh không chứa gluten"
+      },
+      {
+        "phrase": "dietary restrictions",
+        "meaning": "kiêng cữ ăn uống"
+      }
+    ]
+  },
+  "194": {
+    "exp": "Trong email thứ hai (Văn bản 3), ông Ordaz gửi lại: 'Due to unexpected renovations in the main ballroom, the start time has been shifted from 6:00 P.M. to 7:30 P.M. Could the delivery driver arrive at 6:45 P.M. instead of 5:15 P.M.?' (Do việc sửa chữa phòng đại tiệc ngoài dự kiến, thời gian bắt đầu đã lùi từ 6:00 tối sang 7:30 tối. Người lái xe giao hàng có thể đến lúc 6:45 tối thay vì 5:15 chiều được không?) -> Ông Ordaz yêu cầu thay đổi thời gian giao hàng ('A change in delivery time'). Phương án (C) là đáp án đúng.",
+    "vocab": [
+      {
+        "word": "shift",
+        "ipa": "/ʃɪft/",
+        "pos": "v",
+        "meaning": "dời lại, chuyển dịch mốc thời gian",
+        "example": "Management shifted the product unveiling date to November."
+      },
+      {
+        "word": "delivery time",
+        "ipa": "/dɪˈlɪv.ər.i taɪm/",
+        "pos": "n phr",
+        "meaning": "thời gian giao hàng",
+        "example": "Specify your preferred delivery time window during checkout."
+      },
+      {
+        "word": "ballroom",
+        "ipa": "/ˈbɔːl.ruːm/",
+        "pos": "n",
+        "meaning": "phòng khiêu vũ lớn, phòng đại tiệc",
+        "example": "The ballroom was adorned with crystal chandeliers."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "change in delivery time",
+        "meaning": "thay đổi giờ giao hàng"
+      },
+      {
+        "phrase": "shift the start time",
+        "meaning": "dời giờ bắt đầu"
+      }
+    ]
+  },
+  "195": {
+    "exp": "Trong email thứ hai, ông Ordaz giải thích thêm: 'This celebration marks our law firm's 25th anniversary, and over 150 partners and clients will be in attendance' (Lễ kỷ niệm này đánh dấu 25 năm thành lập công ty luật của chúng tôi, và hơn 150 luật sư thành viên cùng khách hàng sẽ tham dự) -> Sự kiện kỷ niệm ngày thành lập công ty ('It is an anniversary celebration'). Phương án (D) là đáp án chính xác.",
+    "vocab": [
+      {
+        "word": "anniversary",
+        "ipa": "/ˌæn.ɪˈvɜː.sər.i/",
+        "pos": "n",
+        "meaning": "lễ kỷ niệm năm thành lập",
+        "example": "The firm commemorated its silver anniversary with a charity ball."
+      },
+      {
+        "word": "attendance",
+        "ipa": "/əˈten.dəns/",
+        "pos": "n",
+        "meaning": "sự tham dự, số người có mặt",
+        "example": "Over 500 shareholders were in attendance at the annual meeting."
+      },
+      {
+        "word": "partner",
+        "ipa": "/ˈpɑːt.nər/",
+        "pos": "n",
+        "meaning": "luật sư thành viên góp vốn/cổ đông công ty luật",
+        "example": "Senior partners voted unanimously on the merger proposal."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "anniversary celebration",
+        "meaning": "lễ kỷ niệm thành lập"
+      },
+      {
+        "phrase": "in attendance",
+        "meaning": "có mặt tham dự"
+      }
+    ]
+  },
+  "196": {
+    "exp": "Trong email gửi toàn thể nhân viên (Văn bản 1), ông Grewal viết: 'The transportation survey is entirely voluntary, but your honest feedback is critical to evaluating corporate transit subsidies' (Khảo sát giao thông hoàn toàn mang tính tự nguyện, nhưng phản hồi trung thực của quý vị là rất quan trọng để đánh giá các khoản trợ cấp đi lại của công ty) -> Cuộc khảo sát là hoàn toàn tự nguyện ('It is voluntary'). Phương án (D) là đáp án đúng.",
+    "vocab": [
+      {
+        "word": "voluntary",
+        "ipa": "/ˈvɒl.ən.tər.i/",
+        "pos": "adj",
+        "meaning": "tự nguyện, không bắt buộc",
+        "example": "Participation in the wellness challenge is entirely voluntary."
+      },
+      {
+        "word": "subsidy",
+        "ipa": "/ˈsʌb.sɪ.di/",
+        "pos": "n",
+        "meaning": "khoản tiền trợ cấp, hỗ trợ kinh phí",
+        "example": "Government subsidies encourage electric vehicle adoption."
+      },
+      {
+        "word": "transit",
+        "ipa": "/ˈtræn.zɪt/",
+        "pos": "n",
+        "meaning": "giao thông công cộng, quá cảnh",
+        "example": "Commuters rely on public transit systems during peak hours."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "entirely voluntary",
+        "meaning": "hoàn toàn tự nguyện"
+      },
+      {
+        "phrase": "transit subsidies",
+        "meaning": "trợ cấp đi lại công cộng"
+      }
+    ]
+  },
+  "197": {
+    "exp": "Đoạn 2 của email (Văn bản 1) nêu rõ: 'Due to severe parking shortages caused by the nearby highway expansion, many workers currently carpool or take commuter rail lines' (Do tình trạng thiếu bãi đỗ xe trầm trọng vì việc mở rộng đường cao tốc gần đó, nhiều công nhân hiện nay đi chung xe hoặc đi các tuyến tàu hỏa ngoại ô) -> Một số nhân viên Woolf Flooring hiện đang đi chung xe đi làm ('They carpool to work'). Phương án (A) là đáp án chính xác.",
+    "vocab": [
+      {
+        "word": "carpool",
+        "ipa": "/ˈkɑː.puːl/",
+        "pos": "v, n",
+        "meaning": "đi chung xe ô tô",
+        "example": "Coworkers carpool together to reduce fuel costs and emissions."
+      },
+      {
+        "word": "commuter rail",
+        "ipa": "/kəˈmjuː.tər reɪl/",
+        "pos": "n phr",
+        "meaning": "đường sắt đô thị/tàu điện ngoại ô",
+        "example": "Commuter rail lines connect suburbs to the downtown business center."
+      },
+      {
+        "word": "shortage",
+        "ipa": "/ˈʃɔː.tɪdʒ/",
+        "pos": "n",
+        "meaning": "sự thiếu hụt, khan hiếm",
+        "example": "The manufacturing sector faced severe labor shortages."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "carpool to work",
+        "meaning": "đi chung xe đi làm"
+      },
+      {
+        "phrase": "parking shortages",
+        "meaning": "tình trạng thiếu bãi đỗ xe"
+      }
+    ]
+  },
+  "198": {
+    "exp": "Đối chiếu bảng khảo sát (Văn bản 2): Người điền khảo sát là Brenda Mair. Ở phần 'Current Primary Commute Method', cô chọn 'Bicycle (5 miles each way)' -> Cô Brenda Mair đạp xe đi làm ('She rides a bicycle to work'). Phương án (B) là đáp án chính xác.",
+    "vocab": [
+      {
+        "word": "commute",
+        "ipa": "/kəˈmjuːt/",
+        "pos": "n, v",
+        "meaning": "quãng đường đi làm; đi làm",
+        "example": "Her daily commute by bike takes approximately twenty minutes."
+      },
+      {
+        "word": "bicycle",
+        "ipa": "/ˈbaɪ.sɪ.kəl/",
+        "pos": "n",
+        "meaning": "xe đạp",
+        "example": "The factory installed secure racks for employee bicycles."
+      },
+      {
+        "word": "each way",
+        "ipa": "/iːtʃ weɪ/",
+        "pos": "adv phr",
+        "meaning": "cho mỗi chiều đi (hoặc về)",
+        "example": "The bus trip takes forty-five minutes each way."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "ride a bicycle to work",
+        "meaning": "đạp xe đi làm"
+      },
+      {
+        "phrase": "each way",
+        "meaning": "mỗi lượt/chiều"
+      }
+    ]
+  },
+  "199": {
+    "exp": "Trong phần ý kiến đóng góp của phiếu khảo sát (Văn bản 2), Brenda Mair viết: 'I strongly recommend installing secure indoor bicycle storage and shower facilities. I brought this up to HR two years ago, but no action was taken' (Tôi đặc biệt đề nghị lắp đặt kho chứa xe đạp trong nhà an toàn và phòng tắm vòi sen. Tôi đã từng nêu vấn đề này với phòng nhân sự hai năm trước, nhưng chưa có hành động nào được thực hiện) -> Cô Mair lưu ý rằng đề xuất này từng được gửi lên ban quản lý trước đây ('It has been suggested to management before'). Phương án (C) là đáp án đúng.",
+    "vocab": [
+      {
+        "word": "bring up",
+        "ipa": "/brɪŋ ʌp/",
+        "pos": "phr v",
+        "meaning": "nêu ra, đề cập tới (vấn đề)",
+        "example": "She brought up the ventilation issue during the safety meeting."
+      },
+      {
+        "word": "storage",
+        "ipa": "/ˈstɔː.rɪdʒ/",
+        "pos": "n",
+        "meaning": "khu vực lưu trữ, kho cất đồ",
+        "example": "The building provides indoor storage for folding bicycles."
+      },
+      {
+        "word": "shower facility",
+        "ipa": "/ˈʃaʊ.ər fəˌsɪl.ə.ti/",
+        "pos": "n phr",
+        "meaning": "phòng tắm vòi sen",
+        "example": "Modern offices feature locker rooms and shower facilities."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "bring up an issue",
+        "meaning": "nêu lên một vấn đề"
+      },
+      {
+        "phrase": "suggest to management",
+        "meaning": "đề xuất lên ban quản lý"
+      }
+    ]
+  },
+  "200": {
+    "exp": "Đối chiếu chéo giữa ý kiến của cô Mair (Văn bản 2) và báo cáo của Miyoko Consulting (Văn bản 3): Cô Mair đề nghị xây dựng khu để xe đạp trong nhà an toàn và phòng tắm ('indoor bicycle storage and shower facilities'). Trong báo cáo khuyến nghị của Miyoko Consulting, mục 4 ghi rõ: 'Recommendation 4: Construct dedicated, card-accessible bicycle lockers and adjacent shower facilities to encourage non-motorized commuting' -> Khuyến nghị của đơn vị tư vấn tương ứng với đề xuất của cô Mair là xây dựng phòng tắm và khu để xe đạp ('Building showers and bike storage'). Phương án (D) là đáp án chính xác.",
+    "vocab": [
+      {
+        "word": "recommendation",
+        "ipa": "/ˌrek.ə.menˈdeɪ.ʃən/",
+        "pos": "n",
+        "meaning": "khuyến nghị, lời tư vấn chuyên môn",
+        "example": "The audit committee accepted all forensic recommendations."
+      },
+      {
+        "word": "corresponds with",
+        "ipa": "/ˌkɒr.ɪˈspɒndz wɪð/",
+        "pos": "v phr",
+        "meaning": "tương ứng với, trùng khớp với",
+        "example": "Customer feedback closely corresponds with survey findings."
+      },
+      {
+        "word": "locker",
+        "ipa": "/ˈlɒk.ər/",
+        "pos": "n",
+        "meaning": "tủ khóa để đồ cá nhân",
+        "example": "Store personal belongings in assigned employee lockers."
+      }
+    ],
+    "collocations": [
+      {
+        "phrase": "corresponds with",
+        "meaning": "tương ứng với"
+      },
+      {
+        "phrase": "bicycle lockers",
+        "meaning": "tủ khóa để xe đạp"
+      }
+    ]
+  }
+}

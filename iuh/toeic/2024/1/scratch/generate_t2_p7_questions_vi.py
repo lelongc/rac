@@ -1,0 +1,229 @@
+# scratch/generate_t2_p7_questions_vi.py: Generate complete questions & options translations for Test 2 Part 7
+import json
+import sys
+
+sys.stdout.reconfigure(encoding='utf-8')
+
+p7_q_vi = {
+    147: {
+        "qVi": "Điều gì là đúng về Trung tâm Kinh doanh Savan?",
+        "optVi": {"A": "(A) Trung tâm làm việc hỗ trợ các doanh nghiệp nhỏ.", "B": "(B) Trung tâm xuất bản bản tin hàng tuần.", "C": "(C) Trung tâm vừa ra mắt một trang web mới.", "D": "(D) Trung tâm đang tìm kiếm các đề xuất chủ đề hội thảo."}
+    },
+    148: {
+        "qVi": "Thông tin nào được chỉ ra về buổi hội thảo trực tuyến?",
+        "optVi": {"A": "(A) Hội thảo được tổ chức trực tiếp tại khán phòng.", "B": "(B) Hội thảo đưa ra lời khuyên về việc sáng tạo nội dung quảng bá.", "C": "(C) Hội thảo yêu cầu phải trả phí tham gia.", "D": "(D) Hội thảo chỉ dành riêng cho hội viên cao cấp."}
+    },
+    149: {
+        "qVi": "Điều gì được đề cập về sự kiện Dine Out Darville?",
+        "optVi": {"A": "(A) Sự kiện kéo dài trong vòng một tuần.", "B": "(B) Khách hàng bắt buộc phải đặt bàn trước trực tuyến.", "C": "(C) Sự kiện chỉ dành riêng cho cư dân địa phương.", "D": "(D) Sự kiện được tổ chức tại công viên trung tâm."}
+    },
+    150: {
+        "qVi": "Mặt hàng nào KHÔNG được bao gồm trong các suất ăn giảm giá?",
+        "optVi": {"A": "(A) Món khai vị", "B": "(B) Món chính", "C": "(C) Món tráng miệng", "D": "(D) Đồ uống / nước giải khát"}
+    },
+    151: {
+        "qVi": "Công ty Rainsy LLC hoạt động trong lĩnh vực gì?",
+        "optVi": {"A": "(A) Công ty lưu trữ và phân tích thông tin người tiêu dùng.", "B": "(B) Công ty sản xuất thiết bị phần cứng máy tính.", "C": "(C) Công ty cung cấp dịch vụ giao hàng chặng cuối.", "D": "(D) Công ty tư vấn thiết kế kiến trúc cảnh quan."}
+    },
+    152: {
+        "qVi": "Những ai sẽ làm việc tại cơ sở mới ở Dade?",
+        "optVi": {"A": "(A) Toàn bộ nhân viên mới được tuyển dụng.", "B": "(B) Chỉ các giám đốc điều hành cấp cao.", "C": "(C) Khoảng một nửa lực lượng lao động của Rainsy.", "D": "(D) Đội ngũ kỹ thuật viên máy chủ độc lập."}
+    },
+    153: {
+        "qVi": "Điều gì được gợi ý về loại giấy mà anh Liu đang tìm mua?",
+        "optVi": {"A": "(A) Giấy có màu xanh da trời nhạt.", "B": "(B) Giấy là loại giấy bóng cao cấp.", "C": "(C) Giấy chỉ bán theo khổ cực lớn.", "D": "(D) Giấy được làm từ vật liệu tái chế 100%."}
+    },
+    154: {
+        "qVi": "Lúc 9:49 sáng, cô Bhat có ý gì khi viết: 'OK, forget it'?",
+        "optVi": {"A": "(A) Cô ấy đã tìm thấy tập tài liệu bị thất lạc.", "B": "(B) Cô ấy cho rằng anh Liu không nên mua giấy tại cửa hàng Biz Plus.", "C": "(C) Cô ấy muốn dời lại cuộc họp quảng cáo.", "D": "(D) Cô ấy đã thanh toán hóa đơn bằng thẻ tín dụng."}
+    },
+    155: {
+        "qVi": "Tại sao bà Otney lại viết bức thư này?",
+        "optVi": {"A": "(A) Để khiếu nại về dịch vụ thư viện.", "B": "(B) Để mời ông Croft tham gia một ban giám khảo.", "C": "(C) Để xin tài trợ kinh phí nghiên cứu.", "D": "(D) Để hồi đáp một câu hỏi/thư thăm dò từ ông Croft."}
+    },
+    156: {
+        "qVi": "Một điều mà bà Otney đã yêu cầu là gì?",
+        "optVi": {"A": "(A) Danh sách tên các diễn giả tham gia.", "B": "(B) Bản sao ngân sách chi tiêu của hội đồng thành phố.", "C": "(C) Địa điểm vị trí của một số thư viện chi nhánh.", "D": "(D) Mẫu khảo sát ý kiến người cao tuổi."}
+    },
+    157: {
+        "qVi": "Câu văn sau đây phù hợp nhất ở vị trí nào: 'This is something I would be happy to arrange.'?",
+        "optVi": {"A": "(A) Vị trí [1]", "B": "(B) Vị trí [2]", "C": "(C) Vị trí [3]", "D": "(D) Vị trí [4]"}
+    },
+    158: {
+        "qVi": "Tại sao mẩu quảng cáo này rất có thể được tạo ra?",
+        "optVi": {"A": "(A) Để thông báo về việc đóng cửa một chi nhánh.", "B": "(B) Để giới thiệu một bác sĩ nhãn khoa mới.", "C": "(C) Để công bố một phát minh kính mắt mới.", "D": "(D) Để quảng bá một chương trình giảm giá có thời hạn."}
+    },
+    159: {
+        "qVi": "Điều gì được nêu về các cửa hàng Claro Vision?",
+        "optVi": {"A": "(A) Họ mở cửa phục vụ 24/7.", "B": "(B) Họ chỉ nhận thanh toán bằng tiền mặt.", "C": "(C) Họ yêu cầu đặt lịch hẹn trước 1 tuần.", "D": "(D) Họ cung cấp dịch vụ nắn chỉnh gọng kính hoàn toàn miễn phí."}
+    },
+    160: {
+        "qVi": "Điều gì được khẳng định về các buổi kiểm tra thị lực?",
+        "optVi": {"A": "(A) Chúng diễn ra trong vòng 10 phút.", "B": "(B) Chúng được thực hiện bởi các chuyên gia có chứng chỉ chuyên môn.", "C": "(C) Chúng chỉ dành cho trẻ em dưới 12 tuổi.", "D": "(D) Chúng được bảo hiểm hoàn tiền 100%."}
+    },
+    161: {
+        "qVi": "Mục đích của bức thư là gì?",
+        "optVi": {"A": "(A) Để thông báo tăng giá thuê nhà.", "B": "(B) Để yêu cầu sửa chữa khẩn cấp.", "C": "(C) Để cung cấp thông tin chi tiết về hợp đồng thuê nhà.", "D": "(D) Để mời tham gia cuộc họp cư dân tòa nhà."}
+    },
+    162: {
+        "qVi": "Theo bức thư, cô Balakrishnan phải trả thêm khoản phí gì mỗi tháng?",
+        "optVi": {"A": "(A) Tiền sử dụng internet tốc độ cao.", "B": "(B) Tiền dọn vệ sinh hành lang.", "C": "(C) Tiền bảo trì thang máy.", "D": "(D) Tiền thuê một vị trí đỗ xe ô tô riêng."}
+    },
+    163: {
+        "qVi": "Bà Tan rất có thể là ai?",
+        "optVi": {"A": "(A) Một luật sư tư vấn bất động sản.", "B": "(B) Một người quản lý tài sản / tòa nhà.", "C": "(C) Một nhà thiết kế nội thất.", "D": "(D) Một nhân viên ngân hàng cho vay mua nhà."}
+    },
+    164: {
+        "qVi": "Tại sao ông Hagel lại viết bức thư điện tử này?",
+        "optVi": {"A": "(A) Để hủy bỏ một đơn đặt hàng kính.", "B": "(B) Để xin ứng tuyển vị trí giám đốc thu mua.", "C": "(C) Để yêu cầu hoàn lại tiền hàng lỗi.", "D": "(D) Để đàm phán, thương lượng các điều khoản hợp đồng."}
+    },
+    165: {
+        "qVi": "Điều gì được chỉ ra về công ty Qualiview Ltd.?",
+        "optVi": {"A": "(A) Công ty sản xuất lốp xe ô tô.", "B": "(B) Công ty sản xuất kính và cửa sổ dành cho xe hơi.", "C": "(C) Công ty chuyên cung cấp dịch vụ sửa chữa động cơ.", "D": "(D) Công ty vừa mới sáp nhập với một tập đoàn lớn."}
+    },
+    166: {
+        "qVi": "Từ 'address' trong đoạn 2, dòng 2 gần nghĩa nhất với từ nào?",
+        "optVi": {"A": "(A) respond to (giải quyết, phản hồi, thảo luận)", "B": "(B) mail to (gửi thư đến)", "C": "(C) speak to (nói chuyện với)", "D": "(D) locate (định vị)"}
+    },
+    167: {
+        "qVi": "Khi nào thì ông Hagel có thời gian rảnh vào tuần tới?",
+        "optVi": {"A": "(A) Vào chiều thứ Hai", "B": "(B) Vào cả ngày thứ Ba", "C": "(C) Vào buổi sáng thứ Tư", "D": "(D) Vào sáng thứ Sáu"}
+    },
+    168: {
+        "qVi": "Điều gì được đề cập về các thùng công-ten-nơ vận tải đường biển?",
+        "optVi": {"A": "(A) Chúng có kích thước không đạt chuẩn.", "B": "(B) Chúng đang trong tình trạng khan hiếm, thiếu hụt.", "C": "(C) Chúng đang bị tăng thuế nhập khẩu.", "D": "(D) Chúng chỉ được phép chở thực phẩm."}
+    },
+    169: {
+        "qVi": "Ông Lam cho biết điều gì là cần thiết để giải quyết tình hình hiện nay?",
+        "optVi": {"A": "(A) Tăng giá cước vận tải biển.", "B": "(B) Đóng cửa một số bến cảng nhỏ.", "C": "(C) Cắt giảm sản lượng sản xuất.", "D": "(D) Sự trao đổi giao tiếp minh bạch giữa các bên bị ảnh hưởng."}
+    },
+    170: {
+        "qVi": "Công ty Fezker sản xuất loại trang phục nào?",
+        "optVi": {"A": "(A) Trang phục dạ tiệc sang trọng", "B": "(B) Trang phục thể thao và đồ vận động", "C": "(C) Đồng phục học sinh", "D": "(D) Quần áo bảo hộ lao động"}
+    },
+    171: {
+        "qVi": "Câu văn sau đây phù hợp nhất ở vị trí nào: 'These markets are supplied using more readily available truck and train transportation.'?",
+        "optVi": {"A": "(A) Vị trí [1]", "B": "(B) Vị trí [2]", "C": "(C) Vị trí [3]", "D": "(D) Vị trí [4]"}
+    },
+    172: {
+        "qVi": "Những người viết tin nhắn rất có thể làm việc trong ngành nghề nào?",
+        "optVi": {"A": "(A) Ngành xây dựng công trình", "B": "(B) Ngành năng lượng tái tạo", "C": "(C) Ngành chế tạo máy móc", "D": "(D) Ngành vận tải hàng không"}
+    },
+    173: {
+        "qVi": "Tại sao ông Wendel lại bắt đầu cuộc thảo luận này?",
+        "optVi": {"A": "(A) Để thông báo về việc thay đổi nhân sự.", "B": "(B) Để phê duyệt một hóa đơn thanh toán.", "C": "(C) Để nhận thông tin cập nhật về tiến độ công việc.", "D": "(D) Để lên lịch kiểm tra an toàn lao động."}
+    },
+    174: {
+        "qVi": "Điều gì được chỉ ra về dự án Riverview?",
+        "optVi": {"A": "(A) Dự án đã gặp phải nhiều lần chậm tiến độ.", "B": "(B) Dự án đã hoàn thành trước thời hạn cam kết.", "C": "(C) Dự án vừa được cấp thêm ngân sách lớn.", "D": "(D) Dự án đã thay đổi toàn bộ bản thiết kế ban đầu."}
+    },
+    175: {
+        "qVi": "Lúc 7:58 sáng, anh Zuniga có ý gì khi viết: 'Will do'?",
+        "optVi": {"A": "(A) Anh ấy sẽ đặt mua thêm xi măng.", "B": "(B) Anh ấy sẽ gọi điện cho cơ quan khí tượng.", "C": "(C) Anh ấy sẽ tự mình thi công phần khung thép.", "D": "(D) Anh ấy sẽ chia sẻ kết quả cuộc họp với tổng thầu cho ông Wendel."}
+    },
+    176: {
+        "qVi": "Bức thư điện tử chỉ ra điều gì về sản phẩm kem của Karabel Industries?",
+        "optVi": {"A": "(A) Hiện tại sản phẩm chỉ bán tại các siêu thị lớn.", "B": "(B) Màu sắc của sản phẩm có thể thay đổi dễ dàng.", "C": "(C) Sản phẩm không chứa chất béo.", "D": "(D) Sản phẩm có giá thành sản xuất rất đắt đỏ."}
+    },
+    177: {
+        "qVi": "Bà Kerluke tuyên bố rằng bà ấy muốn làm điều gì?",
+        "optVi": {"A": "(A) Ký hợp đồng với một đối tác quảng cáo.", "B": "(B) Tổ chức một cuộc họp nhóm toàn thể.", "C": "(C) Đi công tác khảo sát thị trường.", "D": "(D) Tuyển thêm các chuyên gia thử vị giác."}
+    },
+    178: {
+        "qVi": "Điều gì được gợi ý về phòng thí nghiệm Fatior Labs?",
+        "optVi": {"A": "(A) Họ vừa chuyển địa điểm phòng thí nghiệm.", "B": "(B) Họ từ chối nhận các đơn hàng thử nghiệm thực phẩm.", "C": "(C) Họ sẽ thực hiện thêm một đợt kiểm nghiệm vị giác cho Karabel Industries.", "D": "(D) Họ là công ty con thuộc tập đoàn Karabel."}
+    },
+    179: {
+        "qVi": "Dựa vào phiếu khảo sát, Karabel Industries rất có thể sẽ điều chỉnh hương vị kem nào?",
+        "optVi": {"A": "(A) Hương Vani Truyền Thống", "B": "(B) Hương Dâu Tây Rừng", "C": "(C) Hương Sô-cô-la Bạc Hà", "D": "(D) Hương Đậu Phộng Giòn (Peanut Brittle)"}
+    },
+    180: {
+        "qVi": "Có thể rút ra kết luận gì về người tham gia số 54?",
+        "optVi": {"A": "(A) Người tham gia là một đầu bếp chuyên nghiệp.", "B": "(B) Người tham gia ở trong độ tuổi từ 25 đến 40.", "C": "(C) Người tham gia bị dị ứng với các loại hạt.", "D": "(D) Người tham gia mua kem hàng ngày."}
+    },
+    181: {
+        "qVi": "Theo trang web tuyển dụng, người trúng tuyển sẽ có thể làm gì?",
+        "optVi": {"A": "(A) Làm việc từ xa hoàn toàn 100%.", "B": "(B) Đi du lịch nước ngoài miễn phí.", "C": "(C) Tự chọn mức lương khởi điểm.", "D": "(D) Làm việc bán thời gian vào các buổi tối."}
+    },
+    182: {
+        "qVi": "Trên trang web, từ 'suit' trong đoạn 2, dòng 4 gần nghĩa nhất với từ nào?",
+        "optVi": {"A": "(A) alter (thay đổi)", "B": "(B) inspect (thanh tra)", "C": "(C) wear (mặc trang phục)", "D": "(D) satisfy (thỏa mãn, đáp ứng đúng yêu cầu)"}
+    },
+    183: {
+        "qVi": "Điều gì được chỉ ra về cô Annie Smith?",
+        "optVi": {"A": "(A) Cô ấy chưa từng có kinh nghiệm thiết kế.", "B": "(B) Cô ấy hiện đang sinh sống tại Montreal.", "C": "(C) Cô ấy đã nộp hồ sơ muộn hơn hạn chót quy định.", "D": "(D) Cô ấy yêu cầu mức lương quá cao."}
+    },
+    184: {
+        "qVi": "Theo bức thư, một trong những trách nhiệm của cô Smith tại MODA là gì?",
+        "optVi": {"A": "(A) Đàm phán giá cả với các đại lý bán lẻ.", "B": "(B) Quản trị cơ sở dữ liệu khách hàng.", "C": "(C) Quản lý toàn bộ quy trình sản xuất và xuất bản ấn phẩm.", "D": "(D) Lên lịch phỏng vấn các người mẫu thời trang."}
+    },
+    185: {
+        "qVi": "Medesheen rất có thể là cái gì?",
+        "optVi": {"A": "(A) Một thương hiệu nước hoa xa xỉ", "B": "(B) Một trang blog về thời trang và phong cách sống", "C": "(C) Một trường đại học nghệ thuật", "D": "(D) Một kênh truyền hình cáp thương mại"}
+    },
+    186: {
+        "qVi": "Tại sao ông Nakashima lại gửi bức thư điện tử đầu tiên?",
+        "optVi": {"A": "(A) Ông ấy muốn hủy bỏ một đơn hàng đã đặt.", "B": "(B) Hàng hóa giao đến bị hư hỏng.", "C": "(C) Ông ấy nhận được một hóa đơn không đủ chi tiết từng khoản mục.", "D": "(D) Ông ấy muốn thay đổi địa chỉ giao hàng."}
+    },
+    187: {
+        "qVi": "Theo bức thư điện tử thứ hai, ông Nakashima sẽ nhận được gì cho đơn hàng kế tiếp?",
+        "optVi": {"A": "(A) Giao hàng hỏa tốc miễn phí.", "B": "(B) Một món quà tặng văn phòng phẩm kèm theo.", "C": "(C) Hai năm bảo hành thiết bị bổ sung.", "D": "(D) Một khoản chiết khấu giảm giá 15%."}
+    },
+    188: {
+        "qVi": "Đối với mặt hàng nào, ông Higgins gợi ý ông Nakashima nên chọn tính năng 'Đặt hàng định kỳ'?",
+        "optVi": {"A": "(A) Giấy in photocopy", "B": "(B) Hộp mực in laser", "C": "(C) Bút dạ quang và kẹp giấy", "D": "(D) Thư mục hồ sơ lưu trữ"}
+    },
+    189: {
+        "qVi": "Ông Higgins sẽ đề nghị đội ngũ kỹ thuật trang web nghiên cứu điều gì?",
+        "optVi": {"A": "(A) Rút ngắn thời gian tải trang thanh toán.", "B": "(B) Cung cấp tùy chọn gửi hóa đơn tự động tới nhiều địa chỉ email.", "C": "(C) Cho phép thanh toán qua ví điện tử.", "D": "(D) Tích hợp tính năng theo dõi vị trí tài xế giao hàng."}
+    },
+    190: {
+        "qVi": "Khách hàng cần xuất trình điều gì khi muốn đổi trả hàng tại cửa hàng Fowler Office Supplies?",
+        "optVi": {"A": "(A) Căn cước công dân có gắn chip", "B": "(B) Thẻ tín dụng đã dùng để mua hàng", "C": "(C) Bao bì hộp gốc còn nguyên vẹn", "D": "(D) Mã số đơn hàng 9 chữ số"}
+    },
+    191: {
+        "qVi": "Mục đích của bài báo kinh tế là gì?",
+        "optVi": {"A": "(A) Để cảnh báo về tình trạng suy thoái bán lẻ.", "B": "(B) Để thông báo về việc khai trương các chi nhánh cửa hàng bách hóa mới.", "C": "(C) Để công bố báo cáo tài chính quý.", "D": "(D) Để giới thiệu một giám đốc điều hành mới."}
+    },
+    192: {
+        "qVi": "Trang web chỉ ra điều gì về thương hiệu Crawford and Duval?",
+        "optVi": {"A": "(A) Công ty chỉ bán hàng qua mạng.", "B": "(B) Công ty sản xuất toàn bộ sản phẩm tại địa phương.", "C": "(C) Công ty có tuyển dụng các nhà thiết kế nội thất chuyên nghiệp trực thuộc đội ngũ.", "D": "(D) Công ty chuyên cung cấp đồ gia dụng giá rẻ."}
+    },
+    193: {
+        "qVi": "Theo biên lai mua hàng, điều gì được nêu về chiếc chăn mỏng?",
+        "optVi": {"A": "(A) Nó có thể giặt sạch bằng máy giặt.", "B": "(B) Nó được làm thủ công bằng tay 100%.", "C": "(C) Nó chỉ được bảo hành trong 30 ngày.", "D": "(D) Nó phải được giặt khô tại tiệm chuyên dụng."}
+    },
+    194: {
+        "qVi": "Cô Fong rất có thể đã thực hiện việc mua sắm ở đâu?",
+        "optVi": {"A": "(A) Tại một tiệm bánh ngọt", "B": "(B) Tại một đại lý đồ gỗ thanh lý", "C": "(C) Tại một hiệu sách trực tuyến", "D": "(D) Trong một cửa hàng bách hóa tổng hợp cao cấp"}
+    },
+    195: {
+        "qVi": "Điều gì được gợi ý về cô Mei-Lin Fong?",
+        "optVi": {"A": "(A) Cô ấy là nhân viên của Crawford and Duval.", "B": "(B) Cô ấy là hội viên của Câu lạc bộ Mua sắm Thường xuyên.", "C": "(C) Cô ấy vừa mới chuyển đến thành phố này.", "D": "(D) Cô ấy đã thanh toán hóa đơn bằng tiền mặt."}
+    },
+    196: {
+        "qVi": "Trang web đầu tiên chỉ ra điều gì về hoạt động 'Scavenger Hunt' (Truy tìm mật thư)?",
+        "optVi": {"A": "(A) Hoạt động chỉ tổ chức vào mùa hè.", "B": "(B) Hoạt động dành cho nhóm từ 500 người trở lên.", "C": "(C) Hoạt động yêu cầu người chơi phải tự chuẩn bị xe đạp.", "D": "(D) Hoạt động mất 3 tiếng đồng hồ để hoàn thành."}
+    },
+    197: {
+        "qVi": "Sự kiện nào phù hợp nhất cho một tập thể có quy mô trên 200 người tham gia?",
+        "optVi": {"A": "(A) Ngày hội trò chơi tập thể (Game Day)", "B": "(B) Cuộc đua thuyền vượt chướng ngại vật", "C": "(C) Trò chơi giải cứu phòng kín (Escape Room)", "D": "(D) Thử thách tìm đường quanh thành phố (City Quest)"}
+    },
+    198: {
+        "qVi": "Điều gì được gợi ý về bà Karen Peterson?",
+        "optVi": {"A": "(A) Bà ấy là giám đốc nhân sự tại Osawa.", "B": "(B) Bà ấy sẽ nhận được mã giảm giá 10% cho lần đặt dịch vụ tiếp theo.", "C": "(C) Bà ấy đã yêu cầu hoàn lại toàn bộ tiền vé.", "D": "(D) Bà ấy đã được thăng chức sau chuyến đi."}
+    },
+    199: {
+        "qVi": "Có thể rút ra kết luận gì về công ty Whitten Tech?",
+        "optVi": {"A": "(A) Họ đã hủy chuyến dã ngoại vì thời tiết xấu.", "B": "(B) Họ đã vượt ngân sách chi tiêu dự kiến.", "C": "(C) Họ không thể đăng ký được hoạt động ưu tiên lựa chọn số 1 của mình.", "D": "(D) Họ đã từng hợp tác với Osawa nhiều lần trước đó."}
+    },
+    200: {
+        "qVi": "Theo bài đánh giá, điều gì là đáng thất vọng nhất về sự kiện?",
+        "optVi": {"A": "(A) Chất lượng đồ ăn trưa quá tệ.", "B": "(B) Sự thiếu hụt thông tin cảnh báo trước về quãng đường đi bộ quá dài.", "C": "(C) Thái độ không chuyên nghiệp của các hướng dẫn viên.", "D": "(D) Địa điểm tổ chức quá xa trung tâm thành phố."}
+    }
+}
+
+with open('scratch/t2_p7_questions_vi.json', 'w', encoding='utf-8') as f:
+    json.dump({str(k): v for k, v in p7_q_vi.items()}, f, ensure_ascii=False, indent=2)
+
+print(f"Generated complete Vietnamese translations for all {len(p7_q_vi)} questions in Test 2 Part 7!")
