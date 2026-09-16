@@ -269,8 +269,29 @@ tìm hiểu cách nhúng dữ liệu vào trang , cách chia theo quy định c�
 </div>
 ```
 
+
+
+
+
+
+
+
 [github.com/baphuc/basic_web](https://github.com/baphuc/basic_web)
+
 
 github.com/baphuc/independent_web
 
 dựa vào link trên , thêm , sửa , xóa
+
+để làm bài 2 có mấy bước 
+
+b1 , tạo web mồi , chứa falculty list 
+
+b2 , xử lý sự kiện web service trả về json
+
+
+b3 , làm cái edit delete
+
+b4 làm cái , phân trang , navigation
+
+b5 làm sorting ,
