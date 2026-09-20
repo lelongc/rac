@@ -36,7 +36,7 @@ public class FacultyController {
     }
 
     @GetMapping(value = {"/api/faculties/{id}", "/faculties/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Faculty> getFacultyById(@PathVariable Long id) {
+    public ResponseEntity<Faculty> getFacultyById(@PathVariable("id") Long id) {
         return facultyService.getFacultyById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -45,7 +45,7 @@ public class FacultyController {
     // 2. Lấy danh sách sinh viên theo khoa (hỗ trợ tìm kiếm theo từ khóa)
     @GetMapping(value = {"/api/faculties/{facultyId}/students", "/faculties/{facultyId}/students"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Student>> getStudents(
-            @PathVariable Long facultyId,
+            @PathVariable("facultyId") Long facultyId,
             @RequestParam(name = "keyword", required = false) String keyword) {
         if (keyword != null && !keyword.trim().isEmpty()) {
             return ResponseEntity.ok(facultyService.searchStudents(facultyId, keyword));
@@ -58,7 +58,7 @@ public class FacultyController {
     // 3. Thêm sinh viên vào khoa
     @PostMapping(value = {"/api/faculties/{facultyId}/students", "/faculties/{facultyId}/students"})
     public ResponseEntity<Student> addStudent(
-            @PathVariable Long facultyId,
+            @PathVariable("facultyId") Long facultyId,
             @RequestBody Student student) {
         Optional<Student> created = facultyService.addStudentToFaculty(facultyId, student);
         return created.map(s -> ResponseEntity.status(HttpStatus.CREATED).body(s))
@@ -68,8 +68,8 @@ public class FacultyController {
     // 4. Sửa thông tin sinh viên
     @PutMapping(value = {"/api/faculties/{facultyId}/students/{studentId}", "/faculties/{facultyId}/students/{studentId}"})
     public ResponseEntity<Student> updateStudent(
-            @PathVariable Long facultyId,
-            @PathVariable Long studentId,
+            @PathVariable("facultyId") Long facultyId,
+            @PathVariable("studentId") Long studentId,
             @RequestBody Student student) {
         Optional<Student> updated = facultyService.updateStudent(facultyId, studentId, student);
         return updated.map(ResponseEntity::ok)
@@ -78,7 +78,7 @@ public class FacultyController {
 
     @PutMapping(value = {"/api/students/{studentId}", "/students/{studentId}"})
     public ResponseEntity<Student> updateStudentDirect(
-            @PathVariable Long studentId,
+            @PathVariable("studentId") Long studentId,
             @RequestBody Student student) {
         Optional<Student> updated = facultyService.updateStudent(studentId, student);
         return updated.map(ResponseEntity::ok)
@@ -88,8 +88,8 @@ public class FacultyController {
     // 5. Xóa sinh viên
     @DeleteMapping(value = {"/api/faculties/{facultyId}/students/{studentId}", "/faculties/{facultyId}/students/{studentId}"})
     public ResponseEntity<Void> deleteStudent(
-            @PathVariable Long facultyId,
-            @PathVariable Long studentId) {
+            @PathVariable("facultyId") Long facultyId,
+            @PathVariable("studentId") Long studentId) {
         boolean deleted = facultyService.deleteStudentFromFaculty(facultyId, studentId);
         if (deleted) {
             return ResponseEntity.noContent().build();
@@ -98,7 +98,7 @@ public class FacultyController {
     }
 
     @DeleteMapping(value = {"/api/students/{studentId}", "/students/{studentId}"})
-    public ResponseEntity<Void> deleteStudentDirect(@PathVariable Long studentId) {
+    public ResponseEntity<Void> deleteStudentDirect(@PathVariable("studentId") Long studentId) {
         boolean deleted = facultyService.deleteStudent(studentId);
         if (deleted) {
             return ResponseEntity.noContent().build();
