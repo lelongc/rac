@@ -1,1 +1,5 @@
-f
+Bài tập
+1. Xây dựng lớp học sinh, biết rằng mỗi học sinh có:
+Thành phần dữ liệu: mã số, họ tên, điểm trung bình
+Phương thức: set(), get(), input(), output(), rank() - xếp loại cho học sinh theo dtb.
+Viết phương thức main(): tạo một đối tượng học sinh, nhập thông tin cho học sinh, xuất thông tin cùng xếp loại của học sinh.
