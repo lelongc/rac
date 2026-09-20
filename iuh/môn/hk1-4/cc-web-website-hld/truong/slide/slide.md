@@ -289,5 +289,20 @@ b4 làm cái , phân trang , navigation
 
 b5 làm sorting ,tập tin
 
-
 thymeleaf để hiển thị thêm sửa xóa , mvc
+
+
+giữa kì , 
+
+b1 danh sách 
+
+b2 item , gọi webservice trả json , load về table 
+
+b3 thêm nút xóa ,sửa ,thêm, tìm kiếm
+
+spa 
+
+
+b4 phân trang
+
+b5 sorting
