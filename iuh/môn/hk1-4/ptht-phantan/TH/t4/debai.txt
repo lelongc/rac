@@ -1,0 +1,63 @@
+HƯỚNG DẪN THỰC HÀNH SOCKET
+(TRƯỜNG HỢP MULTI-CLIENT)
+BÀI TOÁN: Sử dụng Socket TCP, xây dựng Server để có thể lắng nghe các kết nối của các client.
+
+GIẢI QUYẾT BÀI TOÁN
+Giải pháp
+Giả sử Server đang lắng nghe tại Port=6789
+
+```java
+ServerSocket server = new ServerSocket(6789);
+
+```
+
+Để Server có thể đáp ứng yêu cầu lắng nghe nhiều client kết nối cùng lúc, thì câu lệnh lắng nghe kết nối từ Client (ví dụ server.accept()) sẽ được cải tiến như sau:
+
+```java
+while(true) {
+    // Tạo Thread để thực hiện lệnh server.accept();, với tham số truyền vào Thread là “client” socket.
+}
+
+```
+
+Coding
+Bài tập: Cải tiến EchoServer2.java để Server làm nhiệm vụ trung gian cho client có thể gửi Message đến các client khác.
+
+---
+
+**Đoạn code được trích xuất từ trong ảnh (Mã nguồn EchoServer2 ban đầu):**
+
+```java
+public class EchoServer2 extends Thread {
+    protected Socket clientSocket;
+    public static void main(String[] args) throws IOException {
+        ServerSocket serverSocket = null;
+        try {
+            serverSocket = new ServerSocket(10008);
+            System.out.println ("Connection Socket Created");
+            try {
+                while (true)
+                {
+                    System.out.println ("Waiting for Connection");
+                    new EchoServer2 (serverSocket.accept());
+                }
+            } catch (IOException e) {
+                System.err.println("Accept failed.");
+                System.exit(1);
+            }
+        } catch (IOException e) {
+            System.err.println("Could not listen on port: 10008.");
+            System.exit(1);
+        }
+    }
+    private EchoServer2 (Socket clientSoc){
+        clientSocket = clientSoc;
+        start();
+    }
+    public void run(){
+        System.out.println ("New Communication Thread Started");
+    }
+}
+
+```
+
