@@ -22,8 +22,14 @@ public class FacultyController {
     // 1. CÁC HÀM XỬ LÝ GIAO DIỆN KHOA (FACULTY)
     // ==========================================
 
-    // Hiển thị danh sách tất cả các khoa
-    @GetMapping({"/", "/faculties"})
+    // Giao diện Single Page (SPA) gọi Web Service theo chuẩn đề thi của thầy
+    @GetMapping({"/", "/spa"})
+    public String showSpaPage() {
+        return "spa"; // Tìm file templates/spa.html
+    }
+
+    // Hiển thị danh sách tất cả các khoa (Bản MVC cũ để đối chiếu nếu cần)
+    @GetMapping("/mvc")
     public String listFaculties(Model model) {
         model.addAttribute("faculties", facultyService.getAllFaculties());
         return "faculty_list"; // Tìm file templates/faculty_list.html

@@ -1,87 +1,58 @@
 # HƯỚNG DẪN CHẠY VÀ ÔN THI GIỮA KỲ: DỰ ÁN `gk`
-## CHUẨN MÔ HÌNH SPRING BOOT MVC + THYMELEAF (FULL CRUD)
-
-> **Dự án này đã được tối ưu tinh gọn 100% cho mục đích ÔN THI GIỮA KỲ:**  
-> Đã **loại bỏ hoàn toàn REST API** để tránh gây nhầm lẫn. Bạn chỉ cần tập trung vào **Spring MVC + Thymeleaf** (hiển thị bảng biểu, nút Thêm, Sửa, Xóa trên trình duyệt).
-
----
-
-## 1. THÔNG TIN DỰ ÁN & CỔNG CHẠY
-- **Vị trí thư mục:** `d:\folder\rac\iuh\môn\hk1-4\cc-web-website-hld\truong\bt\gk`
-- **Cổng chạy (Port):** `8084` *(cấu hình trong `application.properties` để không đụng hàng với các bài cũ)*.
-- **File kích hoạt chính (Main):** `src/main/java/com/example/gk/GkApplication.java`.
+## CHUẨN ĐỀ THI GIỮA KỲ: SINGLE PAGE APPLICATION + WEB SERVICES (REST API)
+**Môn:** Xây dựng website hướng dịch vụ - IUH  
+**Dành cho kỳ thi:** Thi Giữa Kỳ
 
 ---
 
-## 2. CÁCH IMPORT VÀ CHẠY TRÊN ECLIPSE (3 BƯỚC)
-
-### Bước 1: Import vào Eclipse
-1. Trong Eclipse, chọn menu **File** ➔ **Import...** (hoặc chuột phải vào khoảng trống Package Explorer ➔ chọn **Import...**).
-2. Chọn **General** ➔ **Existing Projects into Workspace** ➔ bấm **Next**.
-3. Tại dòng **Select root directory**, bấm **Browse...** chọn thư mục:
-   `d:\folder\rac\iuh\môn\hk1-4\cc-web-website-hld\truong\bt\gk`
-4. Eclipse sẽ thấy tick chọn `[✔] gk` ➔ bấm **Finish**.
-
-### Bước 2: Khởi động ứng dụng
-1. Mở theo đường dẫn: `gk` ➔ `src/main/java` ➔ `com.example.gk` ➔ **`GkApplication.java`**.
-2. Nhấp **chuột phải** vào `GkApplication.java` ➔ chọn **Run As** ➔ **Spring Boot App** (hoặc **Java Application**).
-3. Khi thấy Console hiện thông báo:
-   ```
-   >> UNG DUNG THI GIUA KY (MVC THYMELEAF) DANG CHAY!
-   >> TRUY CAP TAI CONG: http://localhost:8084/faculties
-   ```
-   là server đã khởi động thành công!
+## ⚠️ LƯU Ý SỐNG CÒN TỪ VIDEO DẶN DÒ CỦA THẦY:
+1. **Bài thi giữa kỳ là SINGLE PAGE APPLICATION (SPA) gọi WEB SERVICE (REST API trả về JSON).**
+2. **KHÔNG DÙNG Form Submit truyền thống (SSR)** làm tải lại toàn bộ trang web.
+3. **Quy trình chuẩn 3 bước:**
+   - **Bước 1:** Tải danh sách Khoa vào **Combobox** (`<select>`) bằng API `GET /api/faculties`.
+   - **Bước 2:** Bắt sự kiện `onchange` khi chọn Khoa $\to$ gọi API `GET /api/faculties/{id}/students` $\to$ đổ dữ liệu vào **Table** (`<table>`).
+   - **Bước 3:** Đầy đủ bộ **CRUD (Thêm mới, Sửa, Xóa)** qua Web Service:
+     + Thêm mới sinh viên: Gọi `POST /api/faculties/{id}/students`.
+     + Sửa sinh viên: Gọi `PUT /api/faculties/{id}/students/{studentId}`.
+     + Xóa sinh viên: Gọi `DELETE /api/faculties/{id}/students/{studentId}`.
+   - **BƯỚC 4 & 5 (Phân trang & Sắp xếp): THẦY NÓI RÕ LÀ KHÔNG THI GIỮA KỲ (Dành cho Cuối kỳ).**
+4. **Lúc thi, thầy sẽ cung cấp sẵn Web Service (Backend).** Sinh viên chủ yếu tập trung viết mã Frontend (HTML + JavaScript Fetch API).
+5. Để bạn luyện tập thực chiến ở nhà y như trong phòng thi, dự án này đã được tích hợp sẵn cả **Backend Web Service (`FacultyRestController.java`)** và **Frontend Single Page (`spa.html` / `index.html`)**!
 
 ---
 
-## 3. CÁC ĐƯỜNG DẪN KIỂM TRA TRÊN TRÌNH DUYỆT (CHROME / EDGE)
+## 🚀 1. CÁCH KHỞI ĐỘNG DỰ ÁN TRÊN MÁY
 
-Mở trình duyệt, truy cập:
-- **Trang chủ / Danh sách tất cả các Khoa:**
-  👉 `http://localhost:8084/` hoặc `http://localhost:8084/faculties`
-- **Form thêm Khoa mới:**
-  👉 `http://localhost:8084/faculties/new`
-- **Xem danh sách sinh viên Khoa Công Nghệ Thông Tin (ID = 1):**
-  👉 `http://localhost:8084/faculties/1/students`
-- **Form thêm sinh viên mới vào Khoa 1:**
-  👉 `http://localhost:8084/faculties/1/students/new`
-
-*(Trên giao diện web, mỗi dòng đều có sẵn nút **Sửa**, **Xóa**, **Xem SV** để bạn nhấn thử trực tiếp!)*
-
----
-
-## 4. TẤT CẢ FILE TRONG DỰ ÁN NÀY (ĐÃ LƯỢC BỎ REST API)
-
-Dự án chỉ còn đúng 5 file Java và 4 file HTML cực kỳ gọn gàng:
-
-```
-gk/
-├── src/main/java/com/example/gk/
-│   ├── GkApplication.java             <-- File main khởi động Spring Boot
-│   │
-│   ├── model/                         <-- TẦNG MODEL (DỮ LIỆU)
-│   │   ├── Faculty.java               <-- Thực thể Khoa (id, name, students)
-│   │   └── Student.java               <-- Thực thể Sinh viên (id, name, email)
-│   │
-│   ├── service/                       <-- TẦNG SERVICE (BẾP NẤU NGHIỆP VỤ)
-│   │   └── FacultyService.java        <-- Chứa 3 khoa mẫu và các hàm Thêm/Sửa/Xóa
-│   │
-│   └── controller/                    <-- TẦNG CONTROLLER (TIẾP TÂN MVC)
-│       └── FacultyController.java     <-- Duy nhất 1 Controller (@Controller) trả về HTML
-│
-└── src/main/resources/
-    ├── application.properties         <-- Cấu hình port 8084
-    └── templates/                     <-- TẦNG VIEW (GIAO DIỆN THYMELEAF)
-        ├── faculty_list.html          <-- Bảng hiển thị danh sách các Khoa
-        ├── faculty_form.html          <-- Form nhập thêm/sửa Khoa
-        ├── faculty_students.html      <-- Bảng danh sách sinh viên theo Khoa
-        └── student_form.html          <-- Form nhập thêm/sửa Sinh viên
+### Cách 1: Chạy bằng dòng lệnh Terminal
+Mở terminal tại thư mục dự án `d:\folder\rac\iuh\môn\hk1-4\cc-web-website-hld\truong\bt\gk` và gõ:
+```bash
+./mvnw spring-boot:run
 ```
 
+### Cách 2: Chạy trong Eclipse IDE
+1. Mở Eclipse $\to$ Import dự án: **File** $\to$ **Import...** $\to$ **Existing Projects into Workspace** $\to$ Chọn thư mục `gk`.
+2. Mở file: `src/main/java/com/example/gk/GkApplication.java`.
+3. Chuột phải vào `GkApplication.java` $\to$ **Run As** $\to$ **Spring Boot App** (hoặc **Java Application**).
+
 ---
 
-## 5. TÓM TẮT 3 CÚ PHÁP THYMELEAF QUAN TRỌNG NHẤT CẦN NHỚ:
+## 🌐 2. ĐƯỜNG DẪN TRUY CẬP TRÊN TRÌNH DUYỆT (PORT: 8084)
 
-1. **`th:each="item : ${list}"`** : Vòng lặp foreach duyệt danh sách in ra từng dòng `<tr>`.
-2. **`th:text="${item.name}"`** : In giá trị biến ra thẻ HTML (ví dụ tên khoa, tên sinh viên).
-3. **`th:href="@{/faculties/edit/{id}(id=${f.id})}"`** : Tạo đường link động truyền mã ID vào URL.
+Mở trình duyệt (Chrome / Edge / Cốc Cốc) và truy cập:
+
+* 🌟 **Giao diện thi Giữa kỳ (Single Page Web Service - CHUẨN 100% THEO Ý THẦY):**  
+  👉 **`http://localhost:8084/`** hoặc **`http://localhost:8084/spa`**  
+  *(Tại đây bạn sẽ thấy Combobox Khoa, Bảng Table sinh viên và Form CRUD thêm/sửa/xóa chạy hoàn toàn không reload trang!)*
+
+* 🔍 **Kiểm tra Web Service (REST API trả về JSON thô của Server):**  
+  - Danh sách Khoa: `http://localhost:8084/api/faculties`  
+  - Sinh viên khoa CNTT (ID=1): `http://localhost:8084/api/faculties/1/students`  
+  - Sinh viên khoa Cơ Khí (ID=2): `http://localhost:8084/api/faculties/2/students`  
+
+---
+
+## 📂 3. CÁC TÀI LIỆU QUAN TRỌNG ĐÃ CHUẨN BỊ CHO BẠN:
+
+1. 📄 **[`note-gk.md`](note-gk.md):** Bản chép lời nguyên văn từng câu chữ của thầy từ video `gk.mp4`, đối chiếu thuật ngữ kỹ thuật và phân tích chi tiết tiêu chí chấm điểm của thầy.
+2. 📄 **[`DE_CUONG_ON_THI_GIUA_KY.md`](DE_CUONG_ON_THI_GIUA_KY.md):** Đề cương ôn thi giữa kỳ toàn diện gồm lý thuyết Web Service, "bảng phao code" JavaScript Fetch API chuẩn 3 bước, các bẫy lỗi thường gặp trong phòng thi và cách xử lý.
+3. 💻 **[`src/main/resources/templates/spa.html`](src/main/resources/templates/spa.html):** Toàn bộ mã nguồn giao diện Single Page chuẩn 3 bước với chú thích tiếng Việt chi tiết từng dòng.
