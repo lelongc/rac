@@ -291,17 +291,17 @@ b5 làm sorting ,tập tin
 
 thymeleaf để hiển thị thêm sửa xóa , mvc
 
+giữa kì ,
 
-giữa kì , 
+b1 danh sách
 
-b1 danh sách 
-
-b2 item , gọi webservice trả json , load về table 
+b2 item , gọi webservice trả json , load về table
 
 b3 thêm nút xóa ,sửa ,thêm, tìm kiếm
 
-spa 
+spa
 
+biết cách gọi rest api , lấy json đưa lên table , thêm xóa sửa tìm kiếm 
 
 b4 phân trang
 
