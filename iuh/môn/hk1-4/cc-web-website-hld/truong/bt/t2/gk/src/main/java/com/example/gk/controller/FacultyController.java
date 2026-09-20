@@ -3,13 +3,16 @@ package com.example.gk.controller;
 import com.example.gk.model.Faculty;
 import com.example.gk.model.Student;
 import com.example.gk.service.FacultyService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
+@RequestMapping("/api")
+@CrossOrigin(origins = "*")
 public class FacultyController {
 
     private final FacultyService facultyService;
@@ -18,117 +21,80 @@ public class FacultyController {
         this.facultyService = facultyService;
     }
 
-    // ==========================================
-    // 1. CÁC HÀM XỬ LÝ GIAO DIỆN KHOA (FACULTY)
-    // ==========================================
-
-    // Hiển thị danh sách tất cả các khoa
-    @GetMapping({"/", "/faculties"})
-    public String listFaculties(Model model) {
-        model.addAttribute("faculties", facultyService.getAllFaculties());
-        return "faculty_list"; // Tìm file templates/faculty_list.html
+    // 1. Lấy danh sách tất cả khoa
+    @GetMapping("/faculties")
+    public List<Faculty> getAllFaculties() {
+        return facultyService.getAllFaculties();
     }
 
-    // Mở trang form thêm khoa mới
-    @GetMapping("/faculties/new")
-    public String showNewFacultyForm(Model model) {
-        model.addAttribute("faculty", new Faculty());
-        model.addAttribute("isEdit", false);
-        return "faculty_form"; // Tìm file templates/faculty_form.html
+    @GetMapping("/faculties/{id}")
+    public ResponseEntity<Faculty> getFacultyById(@PathVariable Long id) {
+        return facultyService.getFacultyById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    // Mở trang form chỉnh sửa thông tin khoa
-    @GetMapping("/faculties/edit/{id}")
-    public String showEditFacultyForm(@PathVariable("id") Long id, Model model) {
-        Optional<Faculty> facultyOpt = facultyService.getFacultyById(id);
-        if (facultyOpt.isPresent()) {
-            model.addAttribute("faculty", facultyOpt.get());
-            model.addAttribute("isEdit", true);
-            return "faculty_form";
+    // 2. Lấy danh sách sinh viên theo khoa (hỗ trợ tìm kiếm theo từ khóa)
+    @GetMapping("/faculties/{facultyId}/students")
+    public ResponseEntity<List<Student>> getStudents(
+            @PathVariable Long facultyId,
+            @RequestParam(name = "keyword", required = false) String keyword) {
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            return ResponseEntity.ok(facultyService.searchStudents(facultyId, keyword));
         }
-        return "redirect:/faculties";
+        return facultyService.getStudentsByFacultyId(facultyId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    // Nhận dữ liệu submit từ Form để lưu khoa (Cả Thêm mới và Sửa)
-    @PostMapping("/faculties/save")
-    public String saveFaculty(@ModelAttribute("faculty") Faculty faculty) {
-        if (faculty.getId() == null) {
-            facultyService.addFaculty(faculty);
-        } else {
-            facultyService.updateFaculty(faculty.getId(), faculty);
+    // 3. Thêm sinh viên vào khoa
+    @PostMapping("/faculties/{facultyId}/students")
+    public ResponseEntity<Student> addStudent(
+            @PathVariable Long facultyId,
+            @RequestBody Student student) {
+        Optional<Student> created = facultyService.addStudentToFaculty(facultyId, student);
+        return created.map(s -> ResponseEntity.status(HttpStatus.CREATED).body(s))
+                      .orElse(ResponseEntity.notFound().build());
+    }
+
+    // 4. Cập nhật thông tin sinh viên
+    @PutMapping("/faculties/{facultyId}/students/{studentId}")
+    public ResponseEntity<Student> updateStudent(
+            @PathVariable Long facultyId,
+            @PathVariable Long studentId,
+            @RequestBody Student student) {
+        Optional<Student> updated = facultyService.updateStudent(facultyId, studentId, student);
+        return updated.map(ResponseEntity::ok)
+                      .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/students/{studentId}")
+    public ResponseEntity<Student> updateStudentDirect(
+            @PathVariable Long studentId,
+            @RequestBody Student student) {
+        Optional<Student> updated = facultyService.updateStudent(studentId, student);
+        return updated.map(ResponseEntity::ok)
+                      .orElse(ResponseEntity.notFound().build());
+    }
+
+    // 5. Xóa sinh viên
+    @DeleteMapping("/faculties/{facultyId}/students/{studentId}")
+    public ResponseEntity<Void> deleteStudent(
+            @PathVariable Long facultyId,
+            @PathVariable Long studentId) {
+        boolean deleted = facultyService.deleteStudentFromFaculty(facultyId, studentId);
+        if (deleted) {
+            return ResponseEntity.noContent().build();
         }
-        return "redirect:/faculties";
+        return ResponseEntity.notFound().build();
     }
 
-    // Xóa một khoa theo ID
-    @GetMapping("/faculties/delete/{id}")
-    public String deleteFaculty(@PathVariable("id") Long id) {
-        facultyService.deleteFaculty(id);
-        return "redirect:/faculties";
-    }
-
-    // ==========================================
-    // 2. CÁC HÀM XỬ LÝ GIAO DIỆN SINH VIÊN (STUDENT)
-    // ==========================================
-
-    // Xem danh sách sinh viên của 1 khoa
-    @GetMapping("/faculties/{id}/students")
-    public String viewFacultyStudents(@PathVariable("id") Long id, Model model) {
-        Optional<Faculty> facultyOpt = facultyService.getFacultyById(id);
-        if (facultyOpt.isPresent()) {
-            model.addAttribute("faculty", facultyOpt.get());
-            model.addAttribute("students", facultyOpt.get().getStudents());
-            return "faculty_students"; // Tìm file templates/faculty_students.html
+    @DeleteMapping("/students/{studentId}")
+    public ResponseEntity<Void> deleteStudentDirect(@PathVariable Long studentId) {
+        boolean deleted = facultyService.deleteStudent(studentId);
+        if (deleted) {
+            return ResponseEntity.noContent().build();
         }
-        return "redirect:/faculties";
-    }
-
-    // Mở trang form thêm sinh viên mới vào khoa
-    @GetMapping("/faculties/{facultyId}/students/new")
-    public String showNewStudentForm(@PathVariable("facultyId") Long facultyId, Model model) {
-        Optional<Faculty> facultyOpt = facultyService.getFacultyById(facultyId);
-        if (facultyOpt.isEmpty()) {
-            return "redirect:/faculties";
-        }
-        model.addAttribute("faculty", facultyOpt.get());
-        model.addAttribute("student", new Student());
-        model.addAttribute("isEdit", false);
-        return "student_form"; // Tìm file templates/student_form.html
-    }
-
-    // Mở trang form chỉnh sửa sinh viên
-    @GetMapping("/faculties/{facultyId}/students/edit/{studentId}")
-    public String showEditStudentForm(@PathVariable("facultyId") Long facultyId,
-                                      @PathVariable("studentId") Long studentId,
-                                      Model model) {
-        Optional<Faculty> facultyOpt = facultyService.getFacultyById(facultyId);
-        Optional<Student> studentOpt = facultyService.getStudentById(facultyId, studentId);
-        if (facultyOpt.isPresent() && studentOpt.isPresent()) {
-            model.addAttribute("faculty", facultyOpt.get());
-            model.addAttribute("student", studentOpt.get());
-            model.addAttribute("isEdit", true);
-            return "student_form";
-        }
-        return "redirect:/faculties/" + facultyId + "/students";
-    }
-
-    // Nhận dữ liệu submit từ Form để lưu sinh viên
-    @PostMapping("/faculties/{facultyId}/students/save")
-    public String saveStudent(@PathVariable("facultyId") Long facultyId,
-                              @ModelAttribute("student") Student student) {
-        if (student.getId() == null) {
-            facultyService.addStudentToFaculty(facultyId, student);
-        } else {
-            facultyService.updateStudent(facultyId, student.getId(), student);
-        }
-        return "redirect:/faculties/" + facultyId + "/students";
-    }
-
-    // Xóa sinh viên khỏi khoa
-    @GetMapping("/faculties/{facultyId}/students/delete/{studentId}")
-    public String deleteStudent(@PathVariable("facultyId") Long facultyId,
-                                @PathVariable("studentId") Long studentId) {
-        facultyService.deleteStudentFromFaculty(facultyId, studentId);
-        return "redirect:/faculties/" + facultyId + "/students";
+        return ResponseEntity.notFound().build();
     }
 }
