@@ -2,520 +2,296 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ôn Thi Giữa Kỳ: Bài 2 SPA Web Service (IUH)</title>
+    <title>Bài 2: SPA Quản lý Sinh viên theo Khoa</title>
     <style>
-        :root {
-            --primary: #1d4ed8;
-            --primary-hover: #1e40af;
-            --success: #16a34a;
-            --danger: #dc2626;
-            --warning: #d97706;
-            --info: #0284c7;
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-            --border: #cbd5e1;
-            --text: #0f172a;
-        }
-
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            padding: 20px;
+            font-family: Arial, sans-serif;
+            margin: 20px auto;
+            max-width: 800px;
+            line-height: 1.5;
         }
-
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
+        h2, h3 {
+            margin-top: 0;
+            color: #333;
         }
-
-        .header-banner {
-            background: linear-gradient(135deg, #1e3a8a, #2563eb);
-            color: white;
-            padding: 22px 28px;
-            border-radius: 12px;
-            margin-bottom: 24px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        .box {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
         }
-
-        .header-banner h1 {
-            margin: 0 0 6px 0;
-            font-size: 22px;
-        }
-
-        .header-banner p {
-            margin: 0;
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 16px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #f1f5f9;
-        }
-
-        .step-tag {
-            background: var(--primary);
-            color: white;
-            font-weight: 700;
-            font-size: 12px;
-            padding: 4px 10px;
-            border-radius: 6px;
-        }
-
-        .card-title {
-            margin: 0;
-            font-size: 16px;
-            font-weight: 700;
-            color: #1e293b;
-        }
-
-        .form-row {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 12px;
-            flex-wrap: wrap;
-        }
-
-        .form-group {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        label {
-            display: block;
-            font-weight: 600;
-            font-size: 13px;
-            margin-bottom: 6px;
-            color: #475569;
-        }
-
-        select, input[type="text"], input[type="email"] {
-            width: 100%;
-            padding: 9px 12px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 14px;
-            box-sizing: border-box;
-            outline: none;
-            transition: all 0.2s;
-        }
-
-        select:focus, input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-        }
-
-        button {
-            padding: 9px 16px;
-            font-size: 13px;
-            font-weight: 600;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-primary:hover { background: var(--primary-hover); }
-
-        .btn-success { background: var(--success); color: white; }
-        .btn-success:hover { background: #15803d; }
-
-        .btn-warning { background: var(--warning); color: white; padding: 5px 10px; font-size: 12px; }
-        .btn-warning:hover { background: #b45309; }
-
-        .btn-danger { background: var(--danger); color: white; padding: 5px 10px; font-size: 12px; }
-        .btn-danger:hover { background: #b91c1c; }
-
-        .btn-info { background: var(--info); color: white; }
-        .btn-info:hover { background: #0369a1; }
-
-        .btn-cancel { background: #64748b; color: white; }
-        .btn-cancel:hover { background: #475569; }
-
         table {
-            width: 100%;
             border-collapse: collapse;
+            width: 100%;
             margin-top: 10px;
-            font-size: 14px;
         }
-
         th, td {
-            padding: 10px 12px;
+            border: 1px solid #ccc;
+            padding: 8px;
             text-align: left;
-            border-bottom: 1px solid var(--border);
         }
-
         th {
-            background-color: #f8fafc;
-            color: #334155;
-            font-weight: 700;
+            background-color: #f4f4f4;
         }
-
-        tr:hover { background-color: #f1f5f9; }
-
-        .empty-row {
-            text-align: center;
-            padding: 24px;
-            color: #64748b;
-            font-style: italic;
+        input, select {
+            padding: 6px;
+            margin: 4px 6px 4px 0;
         }
-
-        .badge-faculty {
-            background: #e0e7ff;
-            color: #3730a3;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 13px;
+        button {
+            padding: 6px 12px;
+            margin-right: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- Header -->
-    <div class="header-banner">
-        <h1>BÀI THI GIỮA KỲ: BÀI 2 SINGLE PAGE WEB SERVICE (IUH)</h1>
-        <p>Môn: Xây dựng website hướng dịch vụ | Giảng viên: Thầy Trương Bá Phúc</p>
+    <h2>BÀI 2: QUẢN LÝ SINH VIÊN THEO KHOA (WEB SERVICE - SPA)</h2>
+
+    <!-- ======================================================== -->
+    <!-- BƯỚC 1: COMBOBOX CHỌN KHOA                              -->
+    <!-- ======================================================== -->
+    <div class="box">
+        <h3>Bước 1: Danh sách Khoa</h3>
+        <label for="facultySelect"><strong>Chọn Khoa: </strong></label>
+        <select id="facultySelect" onchange="onFacultyChange()">
+            <option value="">-- Vui lòng chọn Khoa --</option>
+        </select>
     </div>
 
-    <!-- =================================================================== -->
-    <!-- BƯỚC 1: DANH SÁCH TRONG COMBOBOX (GỌI WEB SERVICE LẤY KHOA) -->
-    <!-- =================================================================== -->
-    <div class="card">
-        <div class="card-header">
-            <span class="step-tag">BƯỚC 1</span>
-            <h2 class="card-title">Danh Sách Khoa (Combobox)</h2>
-        </div>
-        <div class="form-group">
-            <label for="facultySelect">Chọn một Khoa từ danh sách:</label>
-            <select id="facultySelect" onchange="onFacultyChange()">
-                <option value="">-- Đang tải danh sách Khoa từ Web Service... --</option>
-            </select>
-        </div>
+    <!-- ======================================================== -->
+    <!-- BƯỚC 3: TÌM KIẾM SINH VIÊN TRONG KHOA                   -->
+    <!-- ======================================================== -->
+    <div class="box">
+        <h3>Bước 3: Tìm kiếm Sinh viên</h3>
+        <input type="text" id="keyword" placeholder="Nhập tên hoặc email..." onkeyup="searchStudents()">
+        <button onclick="searchStudents()">Tìm kiếm</button>
+        <button onclick="resetSearch()">Xóa tìm kiếm</button>
     </div>
 
-    <!-- =================================================================== -->
-    <!-- BƯỚC 3 (TÌM KIẾM & FORM THÊM/SỬA): THAO TÁC TRÊN DỮ LIỆU -->
-    <!-- =================================================================== -->
-    <div class="card" id="crudCard" style="display: none;">
-        <div class="card-header">
-            <span class="step-tag">BƯỚC 3</span>
-            <h2 class="card-title" id="formTitle">Thêm Sinh Viên Mới</h2>
-        </div>
-
-        <!-- 3.1: KHỐI TÌM KIẾM (SEARCH) -->
-        <div class="form-row" style="align-items: flex-end; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px dashed var(--border);">
-            <div class="form-group" style="flex: 3;">
-                <label for="searchKeyword">🔍 Tìm kiếm sinh viên trong khoa (theo Tên hoặc Email):</label>
-                <input type="text" id="searchKeyword" placeholder="Nhập từ khóa tìm kiếm (gõ vào lọc ngay)..." oninput="searchStudents()">
-            </div>
-            <div style="margin-bottom: 1px;">
-                <button class="btn-info" onclick="searchStudents()">Tìm Kiếm</button>
-                <button class="btn-cancel" onclick="clearSearch()">Xóa Lọc</button>
-            </div>
-        </div>
-
-        <!-- 3.2: FORM THÊM / SỬA (ADD / EDIT) -->
+    <!-- ======================================================== -->
+    <!-- BƯỚC 3: FORM THÊM / SỬA SINH VIÊN                       -->
+    <!-- ======================================================== -->
+    <div class="box">
+        <h3 id="formTitle">Bước 3: Thêm Sinh viên mới</h3>
         <input type="hidden" id="studentId">
-        <div class="form-row">
-            <div class="form-group">
-                <label for="studentName">Họ và Tên Sinh Viên:</label>
-                <input type="text" id="studentName" placeholder="Nhập tên sinh viên...">
-            </div>
-            <div class="form-group">
-                <label for="studentEmail">Email Sinh Viên:</label>
-                <input type="email" id="studentEmail" placeholder="Nhập email...">
-            </div>
-        </div>
 
-        <div style="display: flex; gap: 8px;">
-            <button id="btnSave" class="btn-primary" onclick="saveStudent()">➕ Thêm Sinh Viên</button>
-            <button id="btnCancelEdit" class="btn-cancel" onclick="resetForm()" style="display: none;">✕ Hủy Sửa</button>
-        </div>
+        <label>Họ tên: </label>
+        <input type="text" id="studentName" placeholder="Nhập họ tên sinh viên">
+
+        <label>Email: </label>
+        <input type="email" id="studentEmail" placeholder="Nhập email sinh viên">
+
+        <button id="btnSave" onclick="saveStudent()">Thêm</button>
+        <button id="btnCancel" onclick="resetForm()" style="display: none;">Hủy</button>
     </div>
 
-    <!-- =================================================================== -->
-    <!-- BƯỚC 2: ITEM -> GỌI WEBSERVICE TRẢ VỀ JSON -> LOAD VỀ TABLE -->
-    <!-- =================================================================== -->
-    <div class="card">
-        <div class="card-header" style="justify-content: space-between;">
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <span class="step-tag">BƯỚC 2</span>
-                <h2 class="card-title">Bảng Sinh Viên Của Khoa Đã Chọn (Table)</h2>
-            </div>
-            <span id="facultyNameDisplay" class="badge-faculty">Chưa chọn Khoa</span>
-        </div>
-
+    <!-- ======================================================== -->
+    <!-- BƯỚC 2: BẢNG DANH SÁCH SINH VIÊN (TABLE)                -->
+    <!-- ======================================================== -->
+    <div class="box">
+        <h3>Bước 2: Danh sách Sinh viên thuộc Khoa</h3>
         <table>
             <thead>
                 <tr>
                     <th style="width: 10%;">ID</th>
-                    <th style="width: 40%;">Họ và Tên</th>
+                    <th style="width: 40%;">Họ tên</th>
                     <th style="width: 30%;">Email</th>
-                    <th style="width: 20%; text-align: center;">Hành Động (Sửa / Xóa)</th>
+                    <th style="width: 20%;">Hành động</th>
                 </tr>
             </thead>
             <tbody id="studentTableBody">
                 <tr>
-                    <td colspan="4" class="empty-row">Vui lòng chọn 1 Khoa ở Bước 1 để hiển thị danh sách sinh viên.</td>
+                    <td colspan="4" style="text-align: center;">Vui lòng chọn Khoa ở Bước 1</td>
                 </tr>
             </tbody>
         </table>
     </div>
-</div>
 
-<!-- ======================================================================= -->
-<!-- JAVASCRIPT GỌI WEB SERVICE (ĐÚNG 3 BƯỚC THẦY DẶN) -->
-<!-- ======================================================================= -->
-<script>
-    // URL Web Service (Tự động thích ứng khi chạy qua Server http://localhost:8084 hoặc chạy file độc lập file://)
-    const API_BASE_URL = (window.location.origin && window.location.origin.startsWith('http')) 
-        ? `${window.location.origin}/api` 
-        : 'http://localhost:8084/api';
+    <!-- ======================================================== -->
+    <!-- JAVASCRIPT GỌI WEB SERVICE (FETCH API)                   -->
+    <!-- ======================================================== -->
+    <script>
+        const API_URL = '/api';
 
-    // Biến lưu trữ danh sách sinh viên hiện tại trong bộ nhớ
-    let currentStudents = [];
+        // Tự động tải danh sách Khoa khi trang web vừa mở
+        window.onload = function() {
+            loadFaculties();
+        };
 
-    // Tự động load Bước 1 khi mở trang
-    window.addEventListener('DOMContentLoaded', () => {
-        loadFaculties();
-    });
+        // ========================================================
+        // BƯỚC 1: Load danh sách Khoa vào Combobox
+        // ========================================================
+        function loadFaculties() {
+            fetch(`${API_URL}/faculties`)
+                .then(response => response.json())
+                .then(faculties => {
+                    const select = document.getElementById('facultySelect');
+                    select.innerHTML = '<option value="">-- Vui lòng chọn Khoa --</option>';
+                    faculties.forEach(f => {
+                        select.innerHTML += `<option value="${f.id}">${f.name}</option>`;
+                    });
+                })
+                .catch(err => console.error('Lỗi tải danh sách khoa:', err));
+        }
 
-    // =========================================================================
-    // B1: DANH SÁCH (GỌI WEBSERVICE LẤY DANH SÁCH KHOA ĐỔ VÀO COMBOBOX)
-    // =========================================================================
-    async function loadFaculties() {
-        try {
-            const res = await fetch(`${API_BASE_URL}/faculties`);
-            const faculties = await res.json();
+        // ========================================================
+        // BƯỚC 2: Khi chọn Khoa -> Gọi Web Service trả JSON -> Load Table
+        // ========================================================
+        function onFacultyChange() {
+            const facultyId = document.getElementById('facultySelect').value;
+            if (!facultyId) {
+                document.getElementById('studentTableBody').innerHTML = 
+                    '<tr><td colspan="4" style="text-align: center;">Vui lòng chọn Khoa ở Bước 1</td></tr>';
+                return;
+            }
+            loadStudents(facultyId);
+            resetForm();
+        }
 
-            const select = document.getElementById('facultySelect');
-            select.innerHTML = '<option value="">-- Vui lòng chọn một Khoa --</option>';
+        function loadStudents(facultyId, keyword = '') {
+            let url = `${API_URL}/faculties/${facultyId}/students`;
+            if (keyword) {
+                url += `?keyword=${encodeURIComponent(keyword)}`;
+            }
 
-            faculties.forEach(f => {
-                const opt = document.createElement('option');
-                opt.value = f.id;
-                opt.textContent = `${f.name} (Mã: ${f.id})`;
-                select.appendChild(opt);
+            fetch(url)
+                .then(response => response.json())
+                .then(students => {
+                    renderTable(students);
+                })
+                .catch(err => console.error('Lỗi tải danh sách sinh viên:', err));
+        }
+
+        function renderTable(students) {
+            const tbody = document.getElementById('studentTableBody');
+            if (!students || students.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Khoa này hiện chưa có sinh viên nào</td></tr>';
+                return;
+            }
+
+            let html = '';
+            students.forEach(s => {
+                html += `
+                    <tr>
+                        <td>${s.id}</td>
+                        <td>${s.name}</td>
+                        <td>${s.email}</td>
+                        <td>
+                            <button onclick="editStudent(${s.id}, '${s.name}', '${s.email}')">Sửa</button>
+                            <button onclick="deleteStudent(${s.id})">Xóa</button>
+                        </td>
+                    </tr>
+                `;
             });
-        } catch (err) {
-            console.error('Lỗi B1 loadFaculties:', err);
-        }
-    }
-
-    // =========================================================================
-    // B2: ITEM (CHỌN 1 ITEM TRONG COMBOBOX -> GỌI WEBSERVICE TRẢ VỀ JSON -> LOAD TABLE)
-    // =========================================================================
-    async function onFacultyChange() {
-        const select = document.getElementById('facultySelect');
-        const facultyId = select.value;
-        const facultyText = select.options[select.selectedIndex]?.text || 'Chưa chọn';
-
-        const crudCard = document.getElementById('crudCard');
-        const displayBadge = document.getElementById('facultyNameDisplay');
-        const tbody = document.getElementById('studentTableBody');
-
-        // Nếu chưa chọn khoa
-        if (!facultyId) {
-            crudCard.style.display = 'none';
-            displayBadge.textContent = 'Chưa chọn Khoa';
-            tbody.innerHTML = '<tr><td colspan="4" class="empty-row">Vui lòng chọn 1 Khoa ở Bước 1.</td></tr>';
-            return;
+            tbody.innerHTML = html;
         }
 
-        displayBadge.textContent = facultyText;
-        crudCard.style.display = 'block';
-        resetForm();
-        clearSearch();
-
-        // Gọi Web Service tải danh sách sinh viên của khoa đã chọn
-        await fetchStudents(facultyId);
-    }
-
-    async function fetchStudents(facultyId) {
-        const tbody = document.getElementById('studentTableBody');
-        tbody.innerHTML = '<tr><td colspan="4" class="empty-row">Đang tải dữ liệu từ Web Service...</td></tr>';
-
-        try {
-            const res = await fetch(`${API_BASE_URL}/faculties/${facultyId}/students`);
-            const students = await res.json();
-            currentStudents = students;
-            renderTable(students);
-        } catch (err) {
-            console.error('Lỗi B2 fetchStudents:', err);
-            tbody.innerHTML = '<tr><td colspan="4" class="empty-row" style="color:red;">Lỗi khi kết nối Web Service!</td></tr>';
-        }
-    }
-
-    // Hàm render dữ liệu JSON vào Table
-    function renderTable(students) {
-        const tbody = document.getElementById('studentTableBody');
-        tbody.innerHTML = '';
-
-        if (!students || students.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="4" class="empty-row">Khoa này hiện chưa có sinh viên nào.</td></tr>';
-            return;
+        // ========================================================
+        // BƯỚC 3: TÌM KIẾM SINH VIÊN
+        // ========================================================
+        function searchStudents() {
+            const facultyId = document.getElementById('facultySelect').value;
+            if (!facultyId) return;
+            const keyword = document.getElementById('keyword').value.trim();
+            loadStudents(facultyId, keyword);
         }
 
-        students.forEach(s => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td><strong>#${s.id}</strong></td>
-                <td>${s.name}</td>
-                <td>${s.email}</td>
-                <td style="text-align: center;">
-                    <button class="btn-warning" onclick="editStudent(${s.id})">✏️ Sửa</button>
-                    <button class="btn-danger" onclick="deleteStudent(${s.id})">🗑️ Xóa</button>
-                </td>
-            `;
-            tbody.appendChild(tr);
-        });
-    }
-
-    // =========================================================================
-    // B3: THÊM NÚT XÓA, SỬA, THÊM, TÌM KIẾM
-    // =========================================================================
-
-    // 1. TÌM KIẾM (SEARCH)
-    function searchStudents() {
-        const keyword = document.getElementById('searchKeyword').value.trim().toLowerCase();
-        if (!keyword) {
-            renderTable(currentStudents);
-            return;
-        }
-        // Lọc trực tiếp trên mảng sinh viên đã load từ Web Service
-        const filtered = currentStudents.filter(s =>
-            (s.name && s.name.toLowerCase().includes(keyword)) ||
-            (s.email && s.email.toLowerCase().includes(keyword))
-        );
-        renderTable(filtered);
-    }
-
-    function clearSearch() {
-        document.getElementById('searchKeyword').value = '';
-        renderTable(currentStudents);
-    }
-
-    // 2. THÊM / SỬA SINH VIÊN (POST / PUT)
-    async function saveStudent() {
-        const facultyId = document.getElementById('facultySelect').value;
-        const studentId = document.getElementById('studentId').value;
-        const name = document.getElementById('studentName').value.trim();
-        const email = document.getElementById('studentEmail').value.trim();
-
-        if (!name || !email) {
-            alert('Vui lòng nhập đầy đủ Họ tên và Email sinh viên!');
-            return;
+        function resetSearch() {
+            document.getElementById('keyword').value = '';
+            const facultyId = document.getElementById('facultySelect').value;
+            if (facultyId) {
+                loadStudents(facultyId);
+            }
         }
 
-        const data = { name: name, email: email };
+        // ========================================================
+        // BƯỚC 3: THÊM MỚI (POST) & SỬA (PUT) SINH VIÊN
+        // ========================================================
+        function saveStudent() {
+            const facultyId = document.getElementById('facultySelect').value;
+            if (!facultyId) {
+                alert('Vui lòng chọn Khoa ở Bước 1 trước!');
+                return;
+            }
 
-        try {
-            let res;
-            if (!studentId) {
-                // THÊM MỚI (POST)
-                res = await fetch(`${API_BASE_URL}/faculties/${facultyId}/students`, {
+            const id = document.getElementById('studentId').value;
+            const name = document.getElementById('studentName').value.trim();
+            const email = document.getElementById('studentEmail').value.trim();
+
+            if (!name || !email) {
+                alert('Vui lòng nhập đầy đủ Họ tên và Email!');
+                return;
+            }
+
+            const studentData = { name: name, email: email };
+
+            if (!id) {
+                // 1. THÊM MỚI (POST)
+                fetch(`${API_URL}/faculties/${facultyId}/students`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
+                    body: JSON.stringify(studentData)
+                })
+                .then(response => response.json())
+                .then(() => {
+                    resetForm();
+                    loadStudents(facultyId);
+                })
+                .catch(err => alert('Lỗi thêm sinh viên: ' + err));
             } else {
-                // SỬA (PUT)
-                res = await fetch(`${API_BASE_URL}/faculties/${facultyId}/students/${studentId}`, {
+                // 2. SỬA / CẬP NHẬT (PUT)
+                fetch(`${API_URL}/faculties/${facultyId}/students/${id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
+                    body: JSON.stringify(studentData)
+                })
+                .then(response => response.json())
+                .then(() => {
+                    resetForm();
+                    loadStudents(facultyId);
+                })
+                .catch(err => alert('Lỗi sửa sinh viên: ' + err));
             }
-
-            if (res.ok) {
-                alert(studentId ? 'Cập nhật sinh viên thành công!' : 'Thêm sinh viên mới thành công!');
-                resetForm();
-                await fetchStudents(facultyId); // Load lại table
-            } else {
-                alert('Lỗi khi gửi yêu cầu tới Web Service!');
-            }
-        } catch (err) {
-            console.error('Lỗi saveStudent:', err);
-            alert('Lỗi: ' + err.message);
         }
-    }
 
-    // 3. ĐƯA DỮ LIỆU LÊN FORM ĐỂ SỬA (EDIT)
-    function editStudent(id) {
-        const student = currentStudents.find(s => s.id === id);
-        if (!student) return;
+        // Đổ dữ liệu dòng cần sửa lên Form
+        function editStudent(id, name, email) {
+            document.getElementById('studentId').value = id;
+            document.getElementById('studentName').value = name;
+            document.getElementById('studentEmail').value = email;
+            document.getElementById('formTitle').innerText = 'Bước 3: Sửa Sinh viên (ID: ' + id + ')';
+            document.getElementById('btnSave').innerText = 'Cập nhật';
+            document.getElementById('btnCancel').style.display = 'inline-block';
+        }
 
-        document.getElementById('studentId').value = student.id;
-        document.getElementById('studentName').value = student.name;
-        document.getElementById('studentEmail').value = student.email;
+        // Đưa form về trạng thái Thêm mới ban đầu
+        function resetForm() {
+            document.getElementById('studentId').value = '';
+            document.getElementById('studentName').value = '';
+            document.getElementById('studentEmail').value = '';
+            document.getElementById('formTitle').innerText = 'Bước 3: Thêm Sinh viên mới';
+            document.getElementById('btnSave').innerText = 'Thêm';
+            document.getElementById('btnCancel').style.display = 'none';
+        }
 
-        document.getElementById('formTitle').textContent = `Chỉnh Sửa Sinh Viên (#${student.id})`;
-        const btnSave = document.getElementById('btnSave');
-        btnSave.textContent = '💾 Lưu Cập Nhật';
-        btnSave.className = 'btn-success';
-        document.getElementById('btnCancelEdit').style.display = 'inline-flex';
+        // ========================================================
+        // BƯỚC 3: XÓA SINH VIÊN (DELETE)
+        // ========================================================
+        function deleteStudent(studentId) {
+            const facultyId = document.getElementById('facultySelect').value;
+            if (!confirm('Bạn có chắc chắn muốn xóa sinh viên ID ' + studentId + ' không?')) {
+                return;
+            }
 
-        document.getElementById('studentName').focus();
-    }
-
-    // 4. XÓA SINH VIÊN (DELETE)
-    async function deleteStudent(studentId) {
-        if (!confirm(`Bạn có chắc muốn xóa sinh viên #${studentId} không?`)) return;
-
-        const facultyId = document.getElementById('facultySelect').value;
-
-        try {
-            const res = await fetch(`${API_BASE_URL}/faculties/${facultyId}/students/${studentId}`, {
+            fetch(`${API_URL}/faculties/${facultyId}/students/${studentId}`, {
                 method: 'DELETE'
-            });
-
-            if (res.ok) {
-                alert('Đã xóa sinh viên thành công!');
-                await fetchStudents(facultyId); // Load lại table
-            } else {
-                alert('Không thể xóa sinh viên!');
-            }
-        } catch (err) {
-            console.error('Lỗi deleteStudent:', err);
-            alert('Lỗi: ' + err.message);
+            })
+            .then(() => {
+                loadStudents(facultyId);
+            })
+            .catch(err => alert('Lỗi xóa sinh viên: ' + err));
         }
-    }
-
-    // 5. RESET FORM VỀ TRẠNG THÁI THÊM MỚI
-    function resetForm() {
-        document.getElementById('studentId').value = '';
-        document.getElementById('studentName').value = '';
-        document.getElementById('studentEmail').value = '';
-
-        document.getElementById('formTitle').textContent = 'Thêm Sinh Viên Mới';
-        const btnSave = document.getElementById('btnSave');
-        btnSave.textContent = '➕ Thêm Sinh Viên';
-        btnSave.className = 'btn-primary';
-        document.getElementById('btnCancelEdit').style.display = 'none';
-    }
-</script>
-
+    </script>
 </body>
 </html>

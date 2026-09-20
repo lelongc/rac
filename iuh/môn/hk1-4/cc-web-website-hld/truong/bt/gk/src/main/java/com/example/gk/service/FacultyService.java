@@ -146,4 +146,32 @@ public class FacultyService {
         }
         return false;
     }
+
+    // [SỬA TRỰC TIẾP] Cập nhật sinh viên theo ID (không cần ID khoa)
+    public Optional<Student> updateStudent(Long studentId, Student updatedStudent) {
+        for (Faculty f : faculties) {
+            for (Student s : f.getStudents()) {
+                if (s.getId().equals(studentId)) {
+                    if (updatedStudent.getName() != null && !updatedStudent.getName().isBlank()) {
+                        s.setName(updatedStudent.getName());
+                    }
+                    if (updatedStudent.getEmail() != null && !updatedStudent.getEmail().isBlank()) {
+                        s.setEmail(updatedStudent.getEmail());
+                    }
+                    return Optional.of(s);
+                }
+            }
+        }
+        return Optional.empty();
+    }
+
+    // [XÓA TRỰC TIẾP] Xóa sinh viên theo ID (không cần ID khoa)
+    public boolean deleteStudent(Long studentId) {
+        for (Faculty f : faculties) {
+            if (f.getStudents().removeIf(s -> s.getId().equals(studentId))) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
