@@ -3,15 +3,17 @@ package com.example.gk.controller;
 import com.example.gk.model.Faculty;
 import com.example.gk.model.Student;
 import com.example.gk.service.FacultyService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
 @CrossOrigin(origins = "*")
 public class FacultyController {
 
@@ -21,13 +23,19 @@ public class FacultyController {
         this.facultyService = facultyService;
     }
 
-    // 1. Lấy danh sách tất cả khoa
-    @GetMapping("/faculties")
+    // Khi người dùng mở trên trình duyệt các đường dẫn như /faculties, /faculty... -> Tự động chuyển về trang giao diện chính (/)
+    @GetMapping(value = {"/faculties", "/faculty", "/students", "/student"}, produces = MediaType.TEXT_HTML_VALUE)
+    public void redirectToHome(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/");
+    }
+
+    // 1. Lấy danh sách tất cả khoa (hỗ trợ cả /api/faculties và /faculties)
+    @GetMapping(value = {"/api/faculties", "/faculties"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Faculty> getAllFaculties() {
         return facultyService.getAllFaculties();
     }
 
-    @GetMapping("/faculties/{id}")
+    @GetMapping(value = {"/api/faculties/{id}", "/faculties/{id}"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Faculty> getFacultyById(@PathVariable Long id) {
         return facultyService.getFacultyById(id)
                 .map(ResponseEntity::ok)
@@ -35,7 +43,7 @@ public class FacultyController {
     }
 
     // 2. Lấy danh sách sinh viên theo khoa (hỗ trợ tìm kiếm theo từ khóa)
-    @GetMapping("/faculties/{facultyId}/students")
+    @GetMapping(value = {"/api/faculties/{facultyId}/students", "/faculties/{facultyId}/students"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Student>> getStudents(
             @PathVariable Long facultyId,
             @RequestParam(name = "keyword", required = false) String keyword) {
@@ -48,7 +56,7 @@ public class FacultyController {
     }
 
     // 3. Thêm sinh viên vào khoa
-    @PostMapping("/faculties/{facultyId}/students")
+    @PostMapping(value = {"/api/faculties/{facultyId}/students", "/faculties/{facultyId}/students"})
     public ResponseEntity<Student> addStudent(
             @PathVariable Long facultyId,
             @RequestBody Student student) {
@@ -57,8 +65,8 @@ public class FacultyController {
                       .orElse(ResponseEntity.notFound().build());
     }
 
-    // 4. Cập nhật thông tin sinh viên
-    @PutMapping("/faculties/{facultyId}/students/{studentId}")
+    // 4. Sửa thông tin sinh viên
+    @PutMapping(value = {"/api/faculties/{facultyId}/students/{studentId}", "/faculties/{facultyId}/students/{studentId}"})
     public ResponseEntity<Student> updateStudent(
             @PathVariable Long facultyId,
             @PathVariable Long studentId,
@@ -68,7 +76,7 @@ public class FacultyController {
                       .orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/students/{studentId}")
+    @PutMapping(value = {"/api/students/{studentId}", "/students/{studentId}"})
     public ResponseEntity<Student> updateStudentDirect(
             @PathVariable Long studentId,
             @RequestBody Student student) {
@@ -78,7 +86,7 @@ public class FacultyController {
     }
 
     // 5. Xóa sinh viên
-    @DeleteMapping("/faculties/{facultyId}/students/{studentId}")
+    @DeleteMapping(value = {"/api/faculties/{facultyId}/students/{studentId}", "/faculties/{facultyId}/students/{studentId}"})
     public ResponseEntity<Void> deleteStudent(
             @PathVariable Long facultyId,
             @PathVariable Long studentId) {
@@ -89,7 +97,7 @@ public class FacultyController {
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/students/{studentId}")
+    @DeleteMapping(value = {"/api/students/{studentId}", "/students/{studentId}"})
     public ResponseEntity<Void> deleteStudentDirect(@PathVariable Long studentId) {
         boolean deleted = facultyService.deleteStudent(studentId);
         if (deleted) {
