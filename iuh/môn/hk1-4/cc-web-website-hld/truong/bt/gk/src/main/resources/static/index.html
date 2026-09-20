@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Bài 2: SPA Quản lý Sinh viên theo Khoa</title>
+    <title>Quản lý Sinh viên theo Khoa</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -46,34 +46,28 @@
 </head>
 <body>
 
-    <h2>BÀI 2: QUẢN LÝ SINH VIÊN THEO KHOA (WEB SERVICE - SPA)</h2>
+    <h2>QUẢN LÝ SINH VIÊN THEO KHOA</h2>
 
-    <!-- ======================================================== -->
-    <!-- BƯỚC 1: COMBOBOX CHỌN KHOA                              -->
-    <!-- ======================================================== -->
+    <!-- CHỌN KHOA -->
     <div class="box">
-        <h3>Bước 1: Danh sách Khoa</h3>
-        <label for="facultySelect"><strong>Chọn Khoa: </strong></label>
+        <h3>Chọn Khoa</h3>
+        <label for="facultySelect"><strong>Khoa: </strong></label>
         <select id="facultySelect" onchange="onFacultyChange()">
             <option value="">-- Vui lòng chọn Khoa --</option>
         </select>
     </div>
 
-    <!-- ======================================================== -->
-    <!-- BƯỚC 3: TÌM KIẾM SINH VIÊN TRONG KHOA                   -->
-    <!-- ======================================================== -->
+    <!-- TÌM KIẾM SINH VIÊN -->
     <div class="box">
-        <h3>Bước 3: Tìm kiếm Sinh viên</h3>
+        <h3>Tìm kiếm Sinh viên</h3>
         <input type="text" id="keyword" placeholder="Nhập tên hoặc email..." onkeyup="searchStudents()">
         <button onclick="searchStudents()">Tìm kiếm</button>
         <button onclick="resetSearch()">Xóa tìm kiếm</button>
     </div>
 
-    <!-- ======================================================== -->
-    <!-- BƯỚC 3: FORM THÊM / SỬA SINH VIÊN                       -->
-    <!-- ======================================================== -->
+    <!-- FORM THÊM / SỬA SINH VIÊN -->
     <div class="box">
-        <h3 id="formTitle">Bước 3: Thêm Sinh viên mới</h3>
+        <h3 id="formTitle">Thêm Sinh viên mới</h3>
         <input type="hidden" id="studentId">
 
         <label>Họ tên: </label>
@@ -86,11 +80,9 @@
         <button id="btnCancel" onclick="resetForm()" style="display: none;">Hủy</button>
     </div>
 
-    <!-- ======================================================== -->
-    <!-- BƯỚC 2: BẢNG DANH SÁCH SINH VIÊN (TABLE)                -->
-    <!-- ======================================================== -->
+    <!-- BẢNG DANH SÁCH SINH VIÊN -->
     <div class="box">
-        <h3>Bước 2: Danh sách Sinh viên thuộc Khoa</h3>
+        <h3>Danh sách Sinh viên</h3>
         <table>
             <thead>
                 <tr>
@@ -102,26 +94,21 @@
             </thead>
             <tbody id="studentTableBody">
                 <tr>
-                    <td colspan="4" style="text-align: center;">Vui lòng chọn Khoa ở Bước 1</td>
+                    <td colspan="4" style="text-align: center;">Vui lòng chọn Khoa</td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <!-- ======================================================== -->
-    <!-- JAVASCRIPT GỌI WEB SERVICE (FETCH API)                   -->
-    <!-- ======================================================== -->
+    <!-- JAVASCRIPT GỌI API -->
     <script>
         const API_URL = '/api';
 
-        // Tự động tải danh sách Khoa khi trang web vừa mở
         window.onload = function() {
             loadFaculties();
         };
 
-        // ========================================================
-        // BƯỚC 1: Load danh sách Khoa vào Combobox
-        // ========================================================
+        // 1. Tải danh sách Khoa vào Combobox
         function loadFaculties() {
             fetch(`${API_URL}/faculties`)
                 .then(response => response.json())
@@ -135,14 +122,12 @@
                 .catch(err => console.error('Lỗi tải danh sách khoa:', err));
         }
 
-        // ========================================================
-        // BƯỚC 2: Khi chọn Khoa -> Gọi Web Service trả JSON -> Load Table
-        // ========================================================
+        // 2. Khi chọn Khoa -> Lấy danh sách Sinh viên -> Đổ vào Table
         function onFacultyChange() {
             const facultyId = document.getElementById('facultySelect').value;
             if (!facultyId) {
                 document.getElementById('studentTableBody').innerHTML = 
-                    '<tr><td colspan="4" style="text-align: center;">Vui lòng chọn Khoa ở Bước 1</td></tr>';
+                    '<tr><td colspan="4" style="text-align: center;">Vui lòng chọn Khoa</td></tr>';
                 return;
             }
             loadStudents(facultyId);
@@ -187,9 +172,7 @@
             tbody.innerHTML = html;
         }
 
-        // ========================================================
-        // BƯỚC 3: TÌM KIẾM SINH VIÊN
-        // ========================================================
+        // 3. Tìm kiếm Sinh viên
         function searchStudents() {
             const facultyId = document.getElementById('facultySelect').value;
             if (!facultyId) return;
@@ -205,13 +188,11 @@
             }
         }
 
-        // ========================================================
-        // BƯỚC 3: THÊM MỚI (POST) & SỬA (PUT) SINH VIÊN
-        // ========================================================
+        // 4. Thêm mới và Sửa Sinh viên
         function saveStudent() {
             const facultyId = document.getElementById('facultySelect').value;
             if (!facultyId) {
-                alert('Vui lòng chọn Khoa ở Bước 1 trước!');
+                alert('Vui lòng chọn Khoa trước!');
                 return;
             }
 
@@ -227,7 +208,7 @@
             const studentData = { name: name, email: email };
 
             if (!id) {
-                // 1. THÊM MỚI (POST)
+                // Thêm mới
                 fetch(`${API_URL}/faculties/${facultyId}/students`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -240,7 +221,7 @@
                 })
                 .catch(err => alert('Lỗi thêm sinh viên: ' + err));
             } else {
-                // 2. SỬA / CẬP NHẬT (PUT)
+                // Cập nhật
                 fetch(`${API_URL}/faculties/${facultyId}/students/${id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
@@ -255,29 +236,25 @@
             }
         }
 
-        // Đổ dữ liệu dòng cần sửa lên Form
         function editStudent(id, name, email) {
             document.getElementById('studentId').value = id;
             document.getElementById('studentName').value = name;
             document.getElementById('studentEmail').value = email;
-            document.getElementById('formTitle').innerText = 'Bước 3: Sửa Sinh viên (ID: ' + id + ')';
+            document.getElementById('formTitle').innerText = 'Sửa Sinh viên (ID: ' + id + ')';
             document.getElementById('btnSave').innerText = 'Cập nhật';
             document.getElementById('btnCancel').style.display = 'inline-block';
         }
 
-        // Đưa form về trạng thái Thêm mới ban đầu
         function resetForm() {
             document.getElementById('studentId').value = '';
             document.getElementById('studentName').value = '';
             document.getElementById('studentEmail').value = '';
-            document.getElementById('formTitle').innerText = 'Bước 3: Thêm Sinh viên mới';
+            document.getElementById('formTitle').innerText = 'Thêm Sinh viên mới';
             document.getElementById('btnSave').innerText = 'Thêm';
             document.getElementById('btnCancel').style.display = 'none';
         }
 
-        // ========================================================
-        // BƯỚC 3: XÓA SINH VIÊN (DELETE)
-        // ========================================================
+        // 5. Xóa Sinh viên
         function deleteStudent(studentId) {
             const facultyId = document.getElementById('facultySelect').value;
             if (!confirm('Bạn có chắc chắn muốn xóa sinh viên ID ' + studentId + ' không?')) {

@@ -10,11 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * CONTROLLER REST API (WEB SERVICE)
- * 1 Controller duy nhất phục vụ ứng dụng SPA (Single Page Application).
- * Trả về dữ liệu thô dạng JSON cho Frontend gọi.
- */
 @RestController
 @RequestMapping("/api")
 @CrossOrigin(origins = "*")
@@ -26,10 +21,7 @@ public class FacultyController {
         this.facultyService = facultyService;
     }
 
-    // =========================================================
-    // BƯỚC 1: LẤY DANH SÁCH TẤT CẢ KHOA (ĐỔ VÀO COMBOBOX)
-    // GET /api/faculties
-    // =========================================================
+    // 1. Lấy danh sách tất cả khoa
     @GetMapping("/faculties")
     public List<Faculty> getAllFaculties() {
         return facultyService.getAllFaculties();
@@ -42,10 +34,7 @@ public class FacultyController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // =========================================================
-    // BƯỚC 2: LẤY DANH SÁCH SINH VIÊN THEO KHOA (ĐỔ TABLE & TÌM KIẾM)
-    // GET /api/faculties/{facultyId}/students?keyword=...
-    // =========================================================
+    // 2. Lấy danh sách sinh viên theo khoa (hỗ trợ tìm kiếm theo từ khóa)
     @GetMapping("/faculties/{facultyId}/students")
     public ResponseEntity<List<Student>> getStudents(
             @PathVariable Long facultyId,
@@ -58,10 +47,7 @@ public class FacultyController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // =========================================================
-    // BƯỚC 3: THÊM SINH VIÊN VÀO KHOA (POST)
-    // POST /api/faculties/{facultyId}/students
-    // =========================================================
+    // 3. Thêm sinh viên vào khoa
     @PostMapping("/faculties/{facultyId}/students")
     public ResponseEntity<Student> addStudent(
             @PathVariable Long facultyId,
@@ -71,10 +57,7 @@ public class FacultyController {
                       .orElse(ResponseEntity.notFound().build());
     }
 
-    // =========================================================
-    // BƯỚC 3: SỬA SINH VIÊN TRONG KHOA (PUT)
-    // PUT /api/faculties/{facultyId}/students/{studentId}
-    // =========================================================
+    // 4. Cập nhật thông tin sinh viên
     @PutMapping("/faculties/{facultyId}/students/{studentId}")
     public ResponseEntity<Student> updateStudent(
             @PathVariable Long facultyId,
@@ -85,7 +68,6 @@ public class FacultyController {
                       .orElse(ResponseEntity.notFound().build());
     }
 
-    // Hỗ trợ endpoint rút gọn: PUT /api/students/{studentId}
     @PutMapping("/students/{studentId}")
     public ResponseEntity<Student> updateStudentDirect(
             @PathVariable Long studentId,
@@ -95,10 +77,7 @@ public class FacultyController {
                       .orElse(ResponseEntity.notFound().build());
     }
 
-    // =========================================================
-    // BƯỚC 3: XÓA SINH VIÊN KHỎI KHOA (DELETE)
-    // DELETE /api/faculties/{facultyId}/students/{studentId}
-    // =========================================================
+    // 5. Xóa sinh viên
     @DeleteMapping("/faculties/{facultyId}/students/{studentId}")
     public ResponseEntity<Void> deleteStudent(
             @PathVariable Long facultyId,
@@ -110,7 +89,6 @@ public class FacultyController {
         return ResponseEntity.notFound().build();
     }
 
-    // Hỗ trợ endpoint rút gọn: DELETE /api/students/{studentId}
     @DeleteMapping("/students/{studentId}")
     public ResponseEntity<Void> deleteStudentDirect(@PathVariable Long studentId) {
         boolean deleted = facultyService.deleteStudent(studentId);
