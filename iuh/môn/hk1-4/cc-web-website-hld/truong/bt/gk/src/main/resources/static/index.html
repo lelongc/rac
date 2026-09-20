@@ -289,8 +289,10 @@
 <!-- JAVASCRIPT GỌI WEB SERVICE (ĐÚNG 3 BƯỚC THẦY DẶN) -->
 <!-- ======================================================================= -->
 <script>
-    // URL Web Service (Lúc thi thầy cung cấp URL gì thì thay ở đây)
-    const API_BASE_URL = '/api';
+    // URL Web Service (Tự động thích ứng khi chạy qua Server http://localhost:8084 hoặc chạy file độc lập file://)
+    const API_BASE_URL = (window.location.origin && window.location.origin.startsWith('http')) 
+        ? `${window.location.origin}/api` 
+        : 'http://localhost:8084/api';
 
     // Biến lưu trữ danh sách sinh viên hiện tại trong bộ nhớ
     let currentStudents = [];
