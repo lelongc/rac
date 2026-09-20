@@ -46,11 +46,17 @@ public class FacultyRestController {
     }
 
     // =========================================================================
-    // BƯỚC 2: API LẤY DANH SÁCH SINH VIÊN CỦA 1 KHOA (ĐỂ ĐỔ VÀO TABLE)
+    // BƯỚC 2 & BƯỚC 3: API LẤY DANH SÁCH & TÌM KIẾM SINH VIÊN THEO KHOA
     // =========================================================================
-    // GET /api/faculties/{facultyId}/students
+    // GET /api/faculties/{facultyId}/students?keyword=...
     @GetMapping("/faculties/{facultyId}/students")
-    public ResponseEntity<List<Student>> getStudentsByFacultyId(@PathVariable("facultyId") Long facultyId) {
+    public ResponseEntity<List<Student>> getStudentsByFacultyId(
+            @PathVariable("facultyId") Long facultyId,
+            @RequestParam(name = "keyword", required = false) String keyword) {
+        
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            return ResponseEntity.ok(facultyService.searchStudents(facultyId, keyword));
+        }
         return facultyService.getStudentsByFacultyId(facultyId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

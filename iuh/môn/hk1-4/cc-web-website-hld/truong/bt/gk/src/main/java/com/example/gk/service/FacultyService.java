@@ -86,9 +86,23 @@ public class FacultyService {
     // 2. NGHIỆP VỤ SINH VIÊN (STUDENT)
     // ==========================================
 
-    // Lấy danh sách sinh viên của 1 khoa
+    // Lấy danh sách sinh viên của 1 khoa (hoặc tìm kiếm theo từ khóa nếu có)
     public Optional<List<Student>> getStudentsByFacultyId(Long facultyId) {
         return getFacultyById(facultyId).map(Faculty::getStudents);
+    }
+
+    // [TÌM KIẾM] Tìm sinh viên theo từ khóa (tên hoặc email) trong khoa
+    public List<Student> searchStudents(Long facultyId, String keyword) {
+        Optional<List<Student>> studentsOpt = getStudentsByFacultyId(facultyId);
+        if (studentsOpt.isEmpty()) return List.of();
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return studentsOpt.get();
+        }
+        String lower = keyword.trim().toLowerCase();
+        return studentsOpt.get().stream()
+                .filter(s -> (s.getName() != null && s.getName().toLowerCase().contains(lower)) ||
+                             (s.getEmail() != null && s.getEmail().toLowerCase().contains(lower)))
+                .toList();
     }
 
     // Lấy thông tin 1 sinh viên trong khoa
