@@ -17,7 +17,7 @@
      + Xóa sinh viên: Gọi `DELETE /api/faculties/{id}/students/{studentId}`.
    - **BƯỚC 4 & 5 (Phân trang & Sắp xếp): THẦY NÓI RÕ LÀ KHÔNG THI GIỮA KỲ (Dành cho Cuối kỳ).**
 4. **Lúc thi, thầy sẽ cung cấp sẵn Web Service (Backend).** Sinh viên chủ yếu tập trung viết mã Frontend (HTML + JavaScript Fetch API).
-5. Để bạn luyện tập thực chiến ở nhà y như trong phòng thi, dự án này đã được tích hợp sẵn cả **Backend Web Service (`FacultyRestController.java`)** và **Frontend Single Page (`spa.html` / `index.html`)**!
+5. Để bạn luyện tập thực chiến ở nhà y như trong phòng thi, dự án này đã được tích hợp sẵn cả **Backend Web Service (`FacultyController.java`)** và **Frontend Single Page (`index.html`)**!
 
 ---
 

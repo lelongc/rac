@@ -222,8 +222,8 @@ async function deleteStudent(studentId) {
 # 🎯 PHẦN 4: THỰC HÀNH TEST NGAY TẠI NHÀ TRÊN MÁY TÍNH CỦA BẠN
 
 Dự án `d:\folder\rac\iuh\môn\hk1-4\cc-web-website-hld\truong\bt\gk` đã được tôi cài đặt sẵn toàn bộ:
-* **Backend Web Service:** `FacultyRestController.java` (đúng các API mà thầy sẽ cho lúc thi).
-* **Giao diện Single Page:** `src/main/resources/templates/spa.html` và `src/main/resources/static/index.html`.
+* **Backend Web Service:** `FacultyController.java` (đúng các API mà thầy sẽ cho lúc thi).
+* **Giao diện Single Page:** `src/main/resources/static/index.html`.
 
 ### Cách chạy kiểm thử:
 1. Mở terminal, chạy lệnh khởi động Spring Boot:

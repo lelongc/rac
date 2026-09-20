@@ -12,20 +12,15 @@
 	<artifactId>gk</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>gk</name>
-	<description>De Thi Giua Ky - Spring Boot MVC Thymeleaf CRUD Khoa va Sinh Vien</description>
+	<description>De Thi Giua Ky - Web Service REST API va Single Page Application (SPA)</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
-		<!-- Thư viện Spring Web (Tomcat nhúng, Spring MVC) -->
+		<!-- Thư viện Spring Web (Tomcat nhúng, REST Controller, Static HTML) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<!-- Thư viện Thymeleaf render giao diện HTML -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 	</dependencies>
 	<build>
