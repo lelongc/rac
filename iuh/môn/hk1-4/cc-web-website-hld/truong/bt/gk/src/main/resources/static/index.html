@@ -72,7 +72,7 @@
     <!-- ========================================================================= -->
     <div class="box">
         <h3>Tìm kiếm</h3>
-        <input type="text" id="keyword" placeholder="Nhập từ khóa tìm kiếm...">
+        <input type="text" id="keyword" placeholder="Nhập từ khóa tìm kiếm..." oninput="searchStudents()">
         <button onclick="searchStudents()">Tìm kiếm</button>
     </div>
 
@@ -232,17 +232,14 @@
         }
 
         // =====================================================================
-        // TÌM KIẾM DỮ LIỆU (BẤM NÚT 'TÌM KIẾM' MỚI CHẠY)
+        // TÌM KIẾM DỮ LIỆU (HỖ TRỢ CẢ VỪA GÕ VỪA TÌM VÀ BẤM NÚT)
         // =====================================================================
         function searchStudents() {
             const parentId = document.getElementById('facultySelect').value;
-            if (!parentId) {
-                alert('Vui lòng chọn mục ở Bước 1 trước khi tìm kiếm!');
-                return;
-            }
+            if (!parentId) return; // Nếu chưa chọn Khoa thì không làm gì
             const keyword = document.getElementById('keyword').value.trim();
             // Gọi hàm loadStudents truyền từ khóa.
-            // (Nếu xóa trắng ô nhập rồi bấm Tìm kiếm, hệ thống sẽ tự động hiện lại đầy đủ toàn bộ danh sách)
+            // Khi người dùng xóa trắng ô tìm kiếm (keyword rỗng), hệ thống tự động tải lại toàn bộ danh sách gốc!
             loadStudents(parentId, keyword);
         }
 
