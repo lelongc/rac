@@ -2,12 +2,12 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Quản lý Sinh viên theo Khoa</title>
+    <title>Quản lý dữ liệu Web Service (SPA)</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px auto;
-            max-width: 800px;
+            max-width: 850px;
             line-height: 1.5;
         }
         h2, h3 {
@@ -46,124 +46,185 @@
 </head>
 <body>
 
+    <!-- ========================================================================= -->
+    <!-- TIÊU ĐỀ CHÍNH CỦA TRANG WEB                                               -->
+    <!-- [THAY Ở ĐÂY NẾU ĐỀ KHÁC]:                                                -->
+    <!-- Ví dụ: QUẢN LÝ SẢN PHẨM THEO DANH MỤC / QUẢN LÝ NHÂN VIÊN THEO PHÒNG BAN  -->
+    <!-- ========================================================================= -->
     <h2>QUẢN LÝ SINH VIÊN THEO KHOA</h2>
 
-    <!-- CHỌN KHOA -->
+    <!-- ========================================================================= -->
+    <!-- PHẦN 1: COMBOBOX CHỌN ĐỐI TƯỢNG CHA (Khoa / Danh mục / Phòng ban / Lớp)   -->
+    <!-- ========================================================================= -->
     <div class="box">
         <h3>Chọn Khoa</h3>
+        <!-- [THAY Ở ĐÂY]: Đổi nhãn 'Khoa:' thành 'Danh mục:' hoặc 'Phòng ban:' -->
         <label for="facultySelect"><strong>Khoa: </strong></label>
+        
+        <!-- Sự kiện onchange: Khi người dùng click chọn 1 item khác thì tự gọi hàm onFacultyChange() -->
         <select id="facultySelect" onchange="onFacultyChange()">
             <option value="">-- Vui lòng chọn Khoa --</option>
         </select>
     </div>
 
-    <!-- TÌM KIẾM SINH VIÊN -->
+    <!-- ========================================================================= -->
+    <!-- PHẦN 2: TÌM KIẾM ĐỐI TƯỢNG CON (Sinh viên / Sản phẩm / Nhân viên)          -->
+    <!-- ========================================================================= -->
     <div class="box">
-        <h3>Tìm kiếm Sinh viên</h3>
-        <input type="text" id="keyword" placeholder="Nhập tên hoặc email..." onkeyup="searchStudents()">
+        <h3>Tìm kiếm</h3>
+        <!-- onkeyup: Vừa gõ phím là tự động lọc dữ liệu ngay lập tức -->
+        <input type="text" id="keyword" placeholder="Nhập từ khóa tìm kiếm..." onkeyup="searchStudents()">
         <button onclick="searchStudents()">Tìm kiếm</button>
         <button onclick="resetSearch()">Xóa tìm kiếm</button>
     </div>
 
-    <!-- FORM THÊM / SỬA SINH VIÊN -->
+    <!-- ========================================================================= -->
+    <!-- PHẦN 3: FORM THÊM MỚI & CHỈNH SỬA (DÙNG CHUNG FORM)                        -->
+    <!-- ========================================================================= -->
     <div class="box">
-        <h3 id="formTitle">Thêm Sinh viên mới</h3>
+        <h3 id="formTitle">Thêm mới</h3>
+        <!-- studentId: Lưu ID ẩn. Nếu rỗng => THÊM MỚI (POST). Nếu có số => CẬP NHẬT (PUT) -->
         <input type="hidden" id="studentId">
 
+        <!-- [THAY Ở ĐÂY NẾU ĐỀ KHÁC]: Đổi các ô input theo đúng thuộc tính của đề bài -->
+        <!-- Ví dụ Sản phẩm: Tên sản phẩm, Đơn giá -->
+        <!-- Ví dụ Nhân viên: Tên nhân viên, Tiền lương -->
         <label>Họ tên: </label>
-        <input type="text" id="studentName" placeholder="Nhập họ tên sinh viên">
+        <input type="text" id="studentName" placeholder="Nhập họ tên...">
 
         <label>Email: </label>
-        <input type="email" id="studentEmail" placeholder="Nhập email sinh viên">
+        <input type="email" id="studentEmail" placeholder="Nhập email...">
 
+        <!-- Nút bấm: Mặc định là 'Thêm', khi bấm Sửa ở bảng thì đổi chữ thành 'Cập nhật' -->
         <button id="btnSave" onclick="saveStudent()">Thêm</button>
         <button id="btnCancel" onclick="resetForm()" style="display: none;">Hủy</button>
     </div>
 
-    <!-- BẢNG DANH SÁCH SINH VIÊN -->
+    <!-- ========================================================================= -->
+    <!-- PHẦN 4: BẢNG (TABLE) HIỂN THỊ DANH SÁCH ĐỐI TƯỢNG CON                     -->
+    <!-- ========================================================================= -->
     <div class="box">
-        <h3>Danh sách Sinh viên</h3>
+        <h3>Danh sách hiển thị</h3>
         <table>
             <thead>
                 <tr>
+                    <!-- [THAY Ở ĐÂY]: Đổi các tiêu đề cột th tương ứng với đề bài -->
                     <th style="width: 10%;">ID</th>
                     <th style="width: 40%;">Họ tên</th>
                     <th style="width: 30%;">Email</th>
                     <th style="width: 20%;">Hành động</th>
                 </tr>
             </thead>
+            <!-- Dữ liệu từ API sẽ được Javascript vẽ vào thẻ tbody này -->
             <tbody id="studentTableBody">
                 <tr>
-                    <td colspan="4" style="text-align: center;">Vui lòng chọn Khoa</td>
+                    <td colspan="4" style="text-align: center;">Vui lòng chọn mục ở trên để xem danh sách</td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <!-- JAVASCRIPT GỌI API -->
+    <!-- ========================================================================= -->
+    <!-- PHẦN 5: JAVASCRIPT GỌI WEB SERVICE (FETCH API)                            -->
+    <!-- ========================================================================= -->
     <script>
+        // =====================================================================
+        // [CỰC KỲ QUAN TRỌNG - THAY Ở ĐÂY NẾU ĐỀ BÀI CHO LINK HOẶC PORT KHÁC]:
+        // - Nếu chạy cùng project Spring Boot: để '/api' hoặc ''
+        // - Nếu thầy cho sẵn link Web Service chạy riêng ở port khác:
+        //   Ví dụ: const API_URL = 'http://localhost:8080/api';
+        // =====================================================================
         const API_URL = '/api';
 
+        // Tự động kích hoạt khi trang web vừa tải xong
         window.onload = function() {
             loadFaculties();
         };
 
-        // 1. Tải danh sách Khoa vào Combobox
+        // =====================================================================
+        // BƯỚC 1: LẤY DANH SÁCH ĐỐI TƯỢNG CHA ĐỔ VÀO COMBOBOX (<select>)
+        // =====================================================================
         function loadFaculties() {
+            // [THAY Ở ĐÂY NẾU ĐỀ KHÁC]:
+            // Khoa:      ${API_URL}/faculties
+            // Danh mục:  ${API_URL}/categories
+            // Phòng ban: ${API_URL}/departments
             fetch(`${API_URL}/faculties`)
                 .then(response => response.json())
-                .then(faculties => {
+                .then(list => {
                     const select = document.getElementById('facultySelect');
-                    select.innerHTML = '<option value="">-- Vui lòng chọn Khoa --</option>';
-                    faculties.forEach(f => {
-                        select.innerHTML += `<option value="${f.id}">${f.name}</option>`;
+                    select.innerHTML = '<option value="">-- Vui lòng chọn --</option>';
+                    list.forEach(item => {
+                        // [THAY Ở ĐÂY]: item.id và item.name (hoặc item.categoryName tùy tên biến trong JSON thầy cho)
+                        select.innerHTML += `<option value="${item.id}">${item.name}</option>`;
                     });
                 })
-                .catch(err => console.error('Lỗi tải danh sách khoa:', err));
+                .catch(err => console.error('Lỗi tải combobox:', err));
         }
 
-        // 2. Khi chọn Khoa -> Lấy danh sách Sinh viên -> Đổ vào Table
+        // =====================================================================
+        // BƯỚC 2: KHI CHỌN 1 ITEM TRONG COMBOBOX -> GỌI API LẤY DANH SÁCH CON
+        // =====================================================================
         function onFacultyChange() {
-            const facultyId = document.getElementById('facultySelect').value;
-            if (!facultyId) {
+            const parentId = document.getElementById('facultySelect').value;
+            if (!parentId) {
                 document.getElementById('studentTableBody').innerHTML = 
-                    '<tr><td colspan="4" style="text-align: center;">Vui lòng chọn Khoa</td></tr>';
+                    '<tr><td colspan="4" style="text-align: center;">Vui lòng chọn mục ở trên</td></tr>';
                 return;
             }
-            loadStudents(facultyId);
+            // Gọi hàm lấy danh sách con
+            loadStudents(parentId);
+            // Đưa form nhập liệu về trạng thái rỗng ban đầu
             resetForm();
         }
 
-        function loadStudents(facultyId, keyword = '') {
-            let url = `${API_URL}/faculties/${facultyId}/students`;
+        function loadStudents(parentId, keyword = '') {
+            // [THAY Ở ĐÂY NẾU ĐỀ KHÁC]:
+            // Sinh viên theo Khoa:     ${API_URL}/faculties/${parentId}/students
+            // Sản phẩm theo Danh mục:  ${API_URL}/categories/${parentId}/products
+            // Nhân viên theo Phòng:    ${API_URL}/departments/${parentId}/employees
+            let url = `${API_URL}/faculties/${parentId}/students`;
+            
+            // Nếu có từ khóa tìm kiếm thì gắn thêm tham số ?keyword=...
             if (keyword) {
                 url += `?keyword=${encodeURIComponent(keyword)}`;
             }
 
             fetch(url)
                 .then(response => response.json())
-                .then(students => {
-                    renderTable(students);
+                .then(childList => {
+                    renderTable(childList);
                 })
-                .catch(err => console.error('Lỗi tải danh sách sinh viên:', err));
+                .catch(err => console.error('Lỗi tải danh sách con:', err));
         }
 
-        function renderTable(students) {
+        // =====================================================================
+        // HÀM VẼ DỮ LIỆU JSON VÀO THẺ BẢNG (TABLE)
+        // =====================================================================
+        function renderTable(childList) {
             const tbody = document.getElementById('studentTableBody');
-            if (!students || students.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Khoa này hiện chưa có sinh viên nào</td></tr>';
+            
+            // Nếu danh sách rỗng (chưa có con nào)
+            if (!childList || childList.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Chưa có dữ liệu nào</td></tr>';
                 return;
             }
 
             let html = '';
-            students.forEach(s => {
+            childList.forEach(s => {
+                // [THAY Ở ĐÂY NẾU ĐỀ KHÁC]:
+                // Hiện tại: Sinh viên có s.id, s.name, s.email
+                // Nếu là Sản phẩm: thay s.email bằng p.price (đơn giá)
+                // Nếu là Nhân viên: thay s.email bằng e.salary (tiền lương)
                 html += `
                     <tr>
                         <td>${s.id}</td>
                         <td>${s.name}</td>
                         <td>${s.email}</td>
                         <td>
+                            <!-- Nút Sửa: Truyền các giá trị của dòng này lên form để chỉnh sửa -->
                             <button onclick="editStudent(${s.id}, '${s.name}', '${s.email}')">Sửa</button>
+                            <!-- Nút Xóa: Truyền ID của dòng này để gửi lệnh DELETE -->
                             <button onclick="deleteStudent(${s.id})">Xóa</button>
                         </td>
                     </tr>
@@ -172,27 +233,31 @@
             tbody.innerHTML = html;
         }
 
-        // 3. Tìm kiếm Sinh viên
+        // =====================================================================
+        // TÌM KIẾM DỮ LIỆU THEO TỪ KHÓA
+        // =====================================================================
         function searchStudents() {
-            const facultyId = document.getElementById('facultySelect').value;
-            if (!facultyId) return;
+            const parentId = document.getElementById('facultySelect').value;
+            if (!parentId) return; // Chưa chọn Khoa thì không tìm
             const keyword = document.getElementById('keyword').value.trim();
-            loadStudents(facultyId, keyword);
+            loadStudents(parentId, keyword);
         }
 
         function resetSearch() {
             document.getElementById('keyword').value = '';
-            const facultyId = document.getElementById('facultySelect').value;
-            if (facultyId) {
-                loadStudents(facultyId);
+            const parentId = document.getElementById('facultySelect').value;
+            if (parentId) {
+                loadStudents(parentId);
             }
         }
 
-        // 4. Thêm mới và Sửa Sinh viên
+        // =====================================================================
+        // BƯỚC 3: THÊM MỚI (POST) HOẶC CẬP NHẬT (PUT) DỮ LIỆU
+        // =====================================================================
         function saveStudent() {
-            const facultyId = document.getElementById('facultySelect').value;
-            if (!facultyId) {
-                alert('Vui lòng chọn Khoa trước!');
+            const parentId = document.getElementById('facultySelect').value;
+            if (!parentId) {
+                alert('Vui lòng chọn mục ở Bước 1 trước!');
                 return;
             }
 
@@ -201,73 +266,93 @@
             const email = document.getElementById('studentEmail').value.trim();
 
             if (!name || !email) {
-                alert('Vui lòng nhập đầy đủ Họ tên và Email!');
+                alert('Vui lòng nhập đầy đủ thông tin!');
                 return;
             }
 
-            const studentData = { name: name, email: email };
+            // [THAY Ở ĐÂY NẾU ĐỀ KHÁC]:
+            // Đóng gói đối tượng JSON gửi lên Server
+            // Ví dụ Sản phẩm: const requestData = { name: name, price: parseFloat(price) };
+            // Ví dụ Nhân viên: const requestData = { name: name, salary: parseFloat(salary) };
+            const requestData = { 
+                name: name, 
+                email: email 
+            };
 
             if (!id) {
-                // Thêm mới
-                fetch(`${API_URL}/faculties/${facultyId}/students`, {
+                // -------------------------------------------------------------
+                // THÊM MỚI: Dùng phương thức POST
+                // URL: ${API_URL}/faculties/${parentId}/students
+                // -------------------------------------------------------------
+                fetch(`${API_URL}/faculties/${parentId}/students`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(studentData)
+                    body: JSON.stringify(requestData)
                 })
                 .then(response => response.json())
                 .then(() => {
-                    resetForm();
-                    loadStudents(facultyId);
+                    resetForm();               // Xóa trắng form
+                    loadStudents(parentId);    // Load lại bảng để thấy dòng vừa thêm
                 })
-                .catch(err => alert('Lỗi thêm sinh viên: ' + err));
+                .catch(err => alert('Lỗi thêm mới: ' + err));
             } else {
-                // Cập nhật
-                fetch(`${API_URL}/faculties/${facultyId}/students/${id}`, {
+                // -------------------------------------------------------------
+                // SỬA / CẬP NHẬT: Dùng phương thức PUT
+                // URL: ${API_URL}/faculties/${parentId}/students/${id}
+                // -------------------------------------------------------------
+                fetch(`${API_URL}/faculties/${parentId}/students/${id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(studentData)
+                    body: JSON.stringify(requestData)
                 })
                 .then(response => response.json())
                 .then(() => {
-                    resetForm();
-                    loadStudents(facultyId);
+                    resetForm();               // Xóa trắng form
+                    loadStudents(parentId);    // Load lại bảng để thấy dữ liệu mới
                 })
-                .catch(err => alert('Lỗi sửa sinh viên: ' + err));
+                .catch(err => alert('Lỗi cập nhật: ' + err));
             }
         }
 
+        // Đẩy dữ liệu của dòng được click lên form để Sửa
         function editStudent(id, name, email) {
             document.getElementById('studentId').value = id;
             document.getElementById('studentName').value = name;
             document.getElementById('studentEmail').value = email;
-            document.getElementById('formTitle').innerText = 'Sửa Sinh viên (ID: ' + id + ')';
+            
+            // Đổi tiêu đề form và tên nút bấm sang chế độ Cập nhật
+            document.getElementById('formTitle').innerText = 'Sửa thông tin (ID: ' + id + ')';
             document.getElementById('btnSave').innerText = 'Cập nhật';
             document.getElementById('btnCancel').style.display = 'inline-block';
         }
 
+        // Đưa form về lại trạng thái Thêm mới
         function resetForm() {
             document.getElementById('studentId').value = '';
             document.getElementById('studentName').value = '';
             document.getElementById('studentEmail').value = '';
-            document.getElementById('formTitle').innerText = 'Thêm Sinh viên mới';
+            document.getElementById('formTitle').innerText = 'Thêm mới';
             document.getElementById('btnSave').innerText = 'Thêm';
             document.getElementById('btnCancel').style.display = 'none';
         }
 
-        // 5. Xóa Sinh viên
+        // =====================================================================
+        // BƯỚC 3: XÓA DỮ LIỆU (DELETE)
+        // =====================================================================
         function deleteStudent(studentId) {
-            const facultyId = document.getElementById('facultySelect').value;
-            if (!confirm('Bạn có chắc chắn muốn xóa sinh viên ID ' + studentId + ' không?')) {
+            const parentId = document.getElementById('facultySelect').value;
+            if (!confirm('Bạn có chắc chắn muốn xóa ID ' + studentId + ' không?')) {
                 return;
             }
 
-            fetch(`${API_URL}/faculties/${facultyId}/students/${studentId}`, {
+            // Gửi request DELETE lên Server
+            fetch(`${API_URL}/faculties/${parentId}/students/${studentId}`, {
                 method: 'DELETE'
             })
             .then(() => {
-                loadStudents(facultyId);
+                loadStudents(parentId); // Load lại bảng để mất dòng vừa xóa
             })
-            .catch(err => alert('Lỗi xóa sinh viên: ' + err));
+            .catch(err => alert('Lỗi xóa: ' + err));
         }
     </script>
 </body>
