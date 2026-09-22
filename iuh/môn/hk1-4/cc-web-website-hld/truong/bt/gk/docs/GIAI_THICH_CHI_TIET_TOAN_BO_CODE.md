@@ -111,13 +111,13 @@ button { padding: 6px 12px; margin-right: 5px; cursor: pointer; }
 ```html
 <div class="box">
     <h3>Tìm kiếm</h3>
-    <input type="text" id="keyword" placeholder="Nhập từ khóa tìm kiếm..." onkeyup="searchStudents()">
+    <input type="text" id="keyword" placeholder="Nhập từ khóa tìm kiếm...">
     <button onclick="searchStudents()">Tìm kiếm</button>
-    <button onclick="resetSearch()">Xóa tìm kiếm</button>
 </div>
 ```
-- `<input type="text" id="keyword">`: Ô nhập chữ tìm kiếm.
-- `onkeyup="searchStudents()"`: **Trải nghiệm tìm kiếm tức thì (Instant Search)!** Mỗi khi người dùng gõ hoặc xóa 1 ký tự (`keyup` - nhả phím), hàm `searchStudents()` tự động chạy và lọc dữ liệu ngay mà không cần phải bấm chuột vào nút "Tìm kiếm".
+- `<input type="text" id="keyword">`: Ô nhập từ khóa tìm kiếm.
+- `<button onclick="searchStudents()">`: Nút bấm tìm kiếm. Khi click chuột vào nút này, sự kiện `onclick` sẽ gọi hàm JavaScript `searchStudents()`.
+- **Vì sao không cần nút "Xóa tìm kiếm"?** Khi muốn xem lại toàn bộ danh sách ban đầu, người dùng chỉ cần xóa sạch chữ trong ô input rồi bấm lại nút "Tìm kiếm", hệ thống sẽ tự động tải lại đầy đủ danh sách. Vừa gọn giao diện, vừa không tốn công code thêm nút thứ 2.
 
 ---
 
@@ -292,25 +292,41 @@ function renderTable(childList) {
 
 ---
 
-### Dòng 210 - 227: Chức năng Tìm kiếm
+### Dòng 235 - 248: Chức năng Tìm kiếm (Bấm nút Tìm kiếm)
 ```javascript
 function searchStudents() {
     const parentId = document.getElementById('facultySelect').value;
-    if (!parentId) return;
+    if (!parentId) {
+        alert('Vui lòng chọn mục ở Bước 1 trước khi tìm kiếm!');
+        return;
+    }
     const keyword = document.getElementById('keyword').value.trim();
+    // Gọi hàm loadStudents truyền từ khóa.
+    // (Nếu xóa trắng ô nhập rồi bấm Tìm kiếm, hệ thống sẽ tự động hiện lại đầy đủ toàn bộ danh sách)
     loadStudents(parentId, keyword);
 }
-
-function resetSearch() {
-    document.getElementById('keyword').value = '';
-    const parentId = document.getElementById('facultySelect').value;
-    if (parentId) {
-        loadStudents(parentId);
-    }
-}
 ```
-- `.trim()`: Cắt bỏ khoảng trắng vô nghĩa ở 2 đầu chuỗi (ví dụ `" an "` $\to$ `"an"`).
-- `resetSearch()`: Xóa sạch chữ trong ô tìm kiếm và gọi lại `loadStudents(parentId)` để hiện lại đầy đủ toàn bộ sinh viên.
+**Giải thích:**
+1. Lấy `parentId` (mã Khoa đang chọn). Nếu chưa chọn Khoa thì hiện hộp thoại `alert()` nhắc nhở và dừng hàm.
+2. Lấy `keyword` người dùng gõ trong ô tìm kiếm và `.trim()` (cắt bỏ khoảng trắng vô nghĩa ở 2 đầu chuỗi, ví dụ `" an "` $\to$ `"an"`).
+3. Gọi lại hàm `loadStudents(parentId, keyword)` để gửi request GET lên Web Service.
+4. **Cơ chế tự phục hồi danh sách mà không cần nút "Xóa tìm kiếm":**
+   - Khi muốn quay lại danh sách toàn bộ ban đầu, người dùng chỉ cần **xóa trắng ô tìm kiếm rồi bấm lại nút "Tìm kiếm"**.
+   - Lúc này `keyword` là rỗng `""`. Trong hàm `loadStudents()`, điều kiện `if (keyword)` không thỏa mãn, nên URL được gọi là `/api/faculties/${parentId}/students` $\to$ Web Service tự động trả về toàn bộ sinh viên gốc.
+   - Nhờ đó, ta **loại bỏ được nút "Xóa tìm kiếm"**, giúp giao diện gọn gàng, giảm bớt code phải nhớ trong phòng thi.
+
+---
+
+### 💡 SO SÁNH: Bấm nút "Tìm kiếm" (Click Button) vs Gõ là tìm ngay (`onkeyup`) - Đi thi nên chọn kiểu nào?
+
+| Tiêu chí | Kiểu 1: Bấm nút "Tìm kiếm" (Khuyên dùng đi thi ⭐) | Kiểu 2: Gõ đến đâu tìm đến đó (`onkeyup`) |
+| :--- | :--- | :--- |
+| **Độ ngắn & Dễ nhớ** | **Rất ngắn**: Chỉ cần 1 ô `<input>` + 1 nút `<button onclick="searchStudents()">`. Không cần viết thêm hàm `resetSearch`. | Dài hơn và phải xử lý sự kiện gõ phím liên tục. |
+| **Dễ giải thích cho thầy** | **Cực kỳ dễ hiểu**: Người dùng nhập xong $\to$ bấm nút $\to$ gửi duy nhất **1** request HTTP lên server $\to$ nhận kết quả vẽ lại bảng. | Phức tạp hơn khi thầy hỏi sâu về cơ chế bất đồng bộ nhiều request. |
+| **Tránh câu hỏi bẫy của thầy** | **An toàn 100%**: Chuẩn kiến trúc Web Service, kiểm soát lưu lượng mạng tối ưu. | **Rất dễ bị thầy bắt bẻ**: *"Nếu gõ từ khóa 10 ký tự thì trình duyệt bắn 10 request liên tiếp vào server. Tại sao em không dùng Debounce / Throttle để hãm lại? Làm thế server có bị nghẽn (DDoS) không?"* $\to$ Rất khó trả lời nếu không học sâu JS. |
+| **Cách reset danh sách** | Xóa trắng ô input rồi bấm Tìm kiếm là tự động load lại toàn bộ. | Phải làm thêm nút Xóa hoặc check `if (keyword === '')`. |
+
+👉 **Kết luận:** **Kiểu 1 (Click nút Tìm kiếm)** là giải pháp tối ưu nhất cho bài thi giữa kỳ: vừa dễ code, vừa dễ giải thích, vừa triệt tiêu mọi rủi ro bị thầy vặn vẹo về hiệu năng!
 
 ---
 
@@ -628,11 +644,11 @@ Dưới đây là 15 câu hỏi thầy rất hay hỏi khi đứng chấm bài t
 
 ---
 
-### ❓ Câu 10: Sự kiện `onchange` khác gì `onkeyup`?
+### ❓ Câu 10: Tại sao em chọn dùng nút bấm Tìm kiếm (`onclick`) thay vì gõ phím đến đâu tìm đến đó (`onkeyup`)?
 > **Trả lời:**  
 > "Dạ thưa thầy:
-> - `onchange`: Kích hoạt khi giá trị của thẻ bị thay đổi và người dùng đã hoàn tất việc chọn (thường dùng cho `<select>` khi chọn xong item).
-> - `onkeyup`: Kích hoạt ngay tại thời điểm người dùng vừa gõ và nhả một phím bấm trên bàn phím (dùng cho ô tìm kiếm để lọc dữ liệu tức thì sau mỗi phím gõ mà không cần bấm nút Tìm) ạ."
+> 1. **Về mặt hiệu năng mạng:** Nếu dùng `onkeyup`, mỗi khi người dùng gõ một ký tự (ví dụ gõ từ khóa 8 chữ cái), trình duyệt sẽ bắn liên tục 8 request bất đồng bộ lên server. Nếu không cài đặt kỹ thuật Debounce (chờ người dùng dừng gõ) thì server rất dễ bị quá tải (spam request) và có nguy cơ lỗi Race Condition (kết quả request trước về sau request sau).
+> 2. **Về mặt kiến trúc Web Service:** Dùng nút bấm giúp người dùng hoàn tất từ khóa rồi mới gửi **duy nhất 1 request GET**, vừa tiết kiệm băng thông mạng, vừa đúng chuẩn nghiệp vụ truy vấn dữ liệu ạ."
 
 ---
 
