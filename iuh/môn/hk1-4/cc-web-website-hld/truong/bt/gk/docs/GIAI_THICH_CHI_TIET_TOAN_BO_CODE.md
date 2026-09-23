@@ -768,59 +768,83 @@ Dưới đây là 15 câu hỏi thầy rất hay hỏi khi đứng chấm bài t
 
 ---
 
-# 5. CẨM NANG ỨNG BIẾN TRONG 2 PHÚT KHI ĐỀ THI ĐỔI DỮ LIỆU
+# 5. CẨM NANG ỨNG BIẾN THẦN TỐC KHI ĐỀ THI ĐỔI WEBSERVICE KHÁC
 
-Bất kỳ đề thi nào cũng tuân theo **mô hình duy nhất: 1 Cha - Nhiều Con (1 - N)**.
+Bất kỳ đề thi nào của môn học cũng tuân theo **mô hình duy nhất: 1 Cha - Nhiều Con (1 - N)**.
+Khi thầy phát đề khác (ví dụ Danh mục & Sản phẩm, Phòng ban & Nhân viên), bạn **KHÔNG CẦN sửa tay từng dòng**. Hãy dùng tính năng **Find & Replace (Ctrl + H)** để thay thế toàn bộ file `index.html` trong vòng **30 giây**!
 
-### Ví dụ: Đề đổi thành "Danh mục (Category) & Sản phẩm (Product)" có thuộc tính `id`, `name`, `price`:
+---
 
-Bạn mở file `index.html` lên và sửa đúng **5 vị trí** sau:
+### ⚡ BẢNG 6 BƯỚC THAY THẾ ĐỒNG LOẠT (REPLACE ALL)
 
-1. **Sửa tiêu đề & nhãn:**
+1. Mở file [index.html](file:///d:/folder/rac/iuh/m%C3%B4n/hk1-4/cc-web-website-hld/truong/bt/gk/src/main/resources/static/index.html) trong trình soạn thảo:
+   - **VS Code:** Nhấn `Ctrl + H`.
+   - **Eclipse:** Nhấn `Ctrl + F` (hoặc `Ctrl + H`).
+   - **Notepad++:** Nhấn `Ctrl + H`.
+2. Lần lượt gõ từng cặp từ dưới đây và bấm **Replace All** (theo đúng thứ tự từ 1 đến 6):
 
-   - Đổi chữ "Khoa" $\to$ "Danh mục".
-   - Đổi nhãn ô "Email" $\to$ "Đơn giá": `<input type="number" id="studentEmail" placeholder="Nhập giá...">`.
-   - Đổi cột tiêu đề bảng "Email" $\to$ "Đơn giá".
-2. **Sửa URL trong hàm `loadFaculties()`:**
+| STT | Tìm từ này (Find) | Thay bằng từ này (Replace With) | Ý nghĩa kỹ thuật |
+| :---: | :--- | :--- | :--- |
+| **1** | `faculties` | `categories` | Đổi tất cả URL gọi API đối tượng Cha |
+| **2** | `students` | `products` | Đổi tất cả URL gọi API đối tượng Con và các hàm JS |
+| **3** | `email` | `price` | Đổi tên thuộc tính thứ 2 của Con trong JSON và Form |
+| **4** | `Khoa` | `Danh mục` | Đổi nhãn tiếng Việt trên giao diện |
+| **5** | `Sinh viên` | `Sản phẩm` | Đổi nhãn tiếng Việt trên giao diện |
+| **6** | `Email` | `Đơn giá` | Đổi nhãn cột bảng và ô nhập liệu |
 
-   ```javascript
-   // Đổi /faculties thành /categories
-   fetch(`${API_URL}/categories`)
-   ```
-3. **Sửa URL trong hàm `loadStudents()`:**
+> [!TIP]
+> **Tại sao làm cách này lại không bao giờ bị lỗi?**
+> Toàn bộ biến, hàm, ID và URL trong file `index.html` đã được chuẩn hóa đồng bộ 100%. Khi bạn bấm "Replace All" theo thứ tự trên, mọi hàm JavaScript, ID thẻ HTML và đường dẫn API sẽ tự động khớp với nhau mà không bị lệch bất cứ một ký tự nào!
 
-   ```javascript
-   // Đổi /faculties/.../students thành /categories/.../products
-   let url = `${API_URL}/categories/${parentId}/products`;
-   ```
-4. **Sửa thuộc tính hiển thị trong `renderTable()`:**
+---
 
-   ```javascript
-   // Đổi s.email thành s.price
-   html += `
-       <tr>
-           <td>${s.id}</td>
-           <td>${s.name}</td>
-           <td>${s.price} VNĐ</td>
-           <td>
-               <button onclick="editStudent(${s.id}, '${s.name}', '${s.price}')">Sửa</button>
-               <button onclick="deleteStudent(${s.id})">Xóa</button>
-           </td>
-       </tr>
-   `;
-   ```
-5. **Sửa đóng gói JSON trong `saveStudent()`:**
+### 📋 BẢNG TRA CỨU CÁC ĐỀ THI HAY GẶP NHẤT TẠI IUH
 
-   ```javascript
-   // Đổi email thành price
-   const requestData = { 
-       name: name, 
-       price: parseFloat(email) // Ép kiểu số thực cho đơn giá
-   };
+#### 📦 Đề 1: Danh mục (Category) & Sản phẩm (Product)
+- **Cha:** `/api/categories` (`id`, `name`)
+- **Con:** `/api/categories/{id}/products` (`id`, `name`, `price`)
+- **Bộ từ khóa Replace All:**
+  - `faculties` $\to$ `categories`
+  - `students` $\to$ `products`
+  - `email` $\to$ `price`
+  - `Khoa` $\to$ `Danh mục` | `Sinh viên` $\to$ `Sản phẩm` | `Email` $\to$ `Đơn giá`
 
-   // URL POST và PUT: đổi sang categories/.../products
-   fetch(`${API_URL}/categories/${parentId}/products`, ...)
-   ```
+#### 🏢 Đề 2: Phòng ban (Department) & Nhân viên (Employee)
+- **Cha:** `/api/departments` (`id`, `name`)
+- **Con:** `/api/departments/{id}/employees` (`id`, `name`, `salary`)
+- **Bộ từ khóa Replace All:**
+  - `faculties` $\to$ `departments`
+  - `students` $\to$ `employees`
+  - `email` $\to$ `salary`
+  - `Khoa` $\to$ `Phòng ban` | `Sinh viên` $\to$ `Nhân viên` | `Email` $\to$ `Tiền lương`
+
+#### 🏫 Đề 3: Lớp học (Class) & Sinh viên (Student)
+- **Cha:** `/api/classes` (`id`, `name`)
+- **Con:** `/api/classes/{id}/students` (`id`, `name`, `phone`)
+- **Bộ từ khóa Replace All:**
+  - `faculties` $\to$ `classes`
+  - `email` $\to$ `phone`
+  - `Khoa` $\to$ `Lớp học` | `Email` $\to$ `Số điện thoại`
+
+#### 📚 Đề 4: Tác giả (Author) & Sách (Book)
+- **Cha:** `/api/authors` (`id`, `name`)
+- **Con:** `/api/authors/{id}/books` (`id`, `title`, `price`)
+- **Bộ từ khóa Replace All:**
+  - `faculties` $\to$ `authors`
+  - `students` $\to$ `books`
+  - `email` $\to$ `price`
+  - `Khoa` $\to$ `Tác giả` | `Sinh viên` $\to$ `Sách` | `Email` $\to$ `Giá sách`
+
+---
+
+### 🔌 Kiểm tra Cổng Port Web Service của Thầy
+Sau khi đổi tên xong, nhìn dòng đầu tiên trong thẻ `<script>`:
+```javascript
+const API_URL = '/api';
+```
+- Nếu chạy chung với file HTML: Giữ nguyên `'/api'`.
+- Nếu thầy cho Web Service chạy riêng ở cổng 8080 (hoặc cổng khác):
+  Đổi thành: `const API_URL = 'http://localhost:8080/api';`
 
 ---
 

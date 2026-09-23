@@ -1,4 +1,64 @@
 <!DOCTYPE html>
+<!-- 
+====================================================================================================
+⚡ BẢNG HƯỚNG DẪN ĐỔI TÊN ĐỒNG LOẠT (CTRL + H) KHI ĐỀ BÀI CHO WEBSERVICE KHÁC
+====================================================================================================
+Khi vào phòng thi, nếu thầy cho Web Service đề tài khác (ví dụ: Danh mục - Sản phẩm, Phòng ban - Nhân viên),
+bạn KHÔNG CẦN phải đọc từng dòng để sửa. Hãy dùng tính năng FIND & REPLACE (Thay thế đồng loạt):
+
+👉 BƯỚC 1: Mở chức năng Tìm & Thay thế trong trình soạn thảo:
+   - Trong VS Code:   Nhấn tổ hợp phím [ Ctrl + H ]
+   - Trong Eclipse:   Nhấn [ Ctrl + F ] (trong file) hoặc [ Ctrl + H ]
+   - Trong Notepad++: Nhấn tổ hợp phím [ Ctrl + H ]
+
+👉 BƯỚC 2: Thực hiện THAY THẾ ĐỒNG LOẠT (Bấm "Replace All" lần lượt từng cặp từ theo thứ tự 1 -> 6):
+   -------------------------------------------------------------------------------------------------
+   | STT | Tìm từ này (Find)   | Thay bằng từ này (Replace)   | Ý nghĩa trong Web Service          |
+   -------------------------------------------------------------------------------------------------
+   |  1  | faculties           | categories                   | Đổi URL API đối tượng Cha          |
+   |  2  | students            | products                     | Đổi URL API đối tượng Con          |
+   |  3  | email               | price                        | Đổi tên thuộc tính trong JSON      |
+   |  4  | Khoa                | Danh mục                     | Đổi chữ Tiếng Việt trên giao diện  |
+   |  5  | Sinh viên           | Sản phẩm                     | Đổi chữ Tiếng Việt trên giao diện  |
+   |  6  | Email               | Đơn giá                      | Đổi chữ Tiếng Việt trên giao diện  |
+   -------------------------------------------------------------------------------------------------
+   * LƯU Ý KHI THAY THẾ:
+     - Luôn bấm theo thứ tự từ trên xuống dưới (từ 1 đến 6).
+     - Bấm nút "Replace All" (Thay thế toàn bộ). Toàn bộ URL, biến, hàm và HTML sẽ tự đồng bộ 100%!
+
+👉 BƯỚC 3: Kiểm tra cổng Port của Web Service thầy cho
+   - Nhìn dòng khai báo trong thẻ <script>:
+     const API_URL = '/api';
+   - Nếu thầy chạy Web Service riêng ở port 8080 (hoặc port khác):
+     Đổi thành: const API_URL = 'http://localhost:8080/api';
+
+====================================================================================================
+📋 BẢNG TRA CỨU CÁC BỘ ĐỀ THI HAY GẶP NHẤT TẠI IUH:
+====================================================================================================
+1. ĐỀ BÀI: DANH MỤC & SẢN PHẨM (Category & Product)
+   - API Cha: /api/categories (id, name)
+   - API Con: /api/categories/{id}/products (id, name, price)
+   => Thay: faculties -> categories | students -> products | email -> price
+            Khoa -> Danh mục | Sinh viên -> Sản phẩm | Email -> Đơn giá
+
+2. ĐỀ BÀI: PHÒNG BAN & NHÂN VIÊN (Department & Employee)
+   - API Cha: /api/departments (id, name)
+   - API Con: /api/departments/{id}/employees (id, name, salary)
+   => Thay: faculties -> departments | students -> employees | email -> salary
+            Khoa -> Phòng ban | Sinh viên -> Nhân viên | Email -> Tiền lương
+
+3. ĐỀ BÀI: LỚP HỌC & SINH VIÊN (Class & Student)
+   - API Cha: /api/classes (id, name)
+   - API Con: /api/classes/{id}/students (id, name, phone)
+   => Thay: faculties -> classes | email -> phone
+            Khoa -> Lớp học | Email -> Số điện thoại
+
+4. ĐỀ BÀI: TÁC GIẢ & SÁCH (Author & Book)
+   - API Cha: /api/authors (id, name)
+   - API Con: /api/authors/{id}/books (id, title, price)
+   => Thay: faculties -> authors | students -> books | name -> title | email -> price
+====================================================================================================
+-->
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -54,11 +114,12 @@
     <h2>QUẢN LÝ SINH VIÊN THEO KHOA</h2>
 
     <!-- ========================================================================= -->
-    <!-- PHẦN 1: COMBOBOX CHỌN ĐỐI TƯỢNG CHA (Khoa / Danh mục / Phòng ban / Lớp)   -->
+    <!-- ========================================================================= -->
+    <!-- [VỊ TRÍ ĐỔI TÊN 1/4]: COMBOBOX CHỌN ĐỐI TƯỢNG CHA (Khoa / Danh mục / Phòng ban) -->
     <!-- ========================================================================= -->
     <div class="box">
         <h3>Chọn Khoa</h3>
-        <!-- [THAY Ở ĐÂY]: Đổi nhãn 'Khoa:' thành 'Danh mục:' hoặc 'Phòng ban:' -->
+        <!-- Thay thế đồng loạt: 'Khoa' -> 'Danh mục' hoặc 'Phòng ban' -->
         <label for="facultySelect"><strong>Khoa: </strong></label>
         
         <!-- Sự kiện onchange: Khi người dùng click chọn 1 item khác thì tự gọi hàm onFacultyChange() -->
@@ -84,14 +145,14 @@
         <!-- studentId: Lưu ID ẩn. Nếu rỗng => THÊM MỚI (POST). Nếu có số => CẬP NHẬT (PUT) -->
         <input type="hidden" id="studentId">
 
-        <!-- [THAY Ở ĐÂY NẾU ĐỀ KHÁC]: Đổi các ô input theo đúng thuộc tính của đề bài -->
-        <!-- Ví dụ Sản phẩm: Tên sản phẩm, Đơn giá -->
-        <!-- Ví dụ Nhân viên: Tên nhân viên, Tiền lương -->
+        <!-- [VỊ TRÍ ĐỔI TÊN 3/4]: Các ô nhập liệu theo đề bài -->
+        <!-- Mặc định: Họ tên (studentName) và Email (studentEmail) -->
+        <!-- Khi thay thế đồng loạt 'email' -> 'price': ô này tự động thành studentPrice -->
         <label>Họ tên: </label>
         <input type="text" id="studentName" placeholder="Nhập họ tên...">
 
         <label>Email: </label>
-        <input type="email" id="studentEmail" placeholder="Nhập email...">
+        <input type="text" id="studentEmail" placeholder="Nhập thông tin...">
 
         <!-- Nút bấm: Mặc định là 'Thêm', khi bấm Sửa ở bảng thì đổi chữ thành 'Cập nhật' -->
         <button id="btnSave" onclick="saveStudent()">Thêm</button>
@@ -99,14 +160,15 @@
     </div>
 
     <!-- ========================================================================= -->
-    <!-- PHẦN 4: BẢNG (TABLE) HIỂN THỊ DANH SÁCH ĐỐI TƯỢNG CON                     -->
+    <!-- ========================================================================= -->
+    <!-- [VỊ TRÍ ĐỔI TÊN 2/4]: BẢNG HIỂN THỊ DANH SÁCH ĐỐI TƯỢNG CON (Sinh viên / Sản phẩm) -->
     <!-- ========================================================================= -->
     <div class="box">
         <h3>Danh sách hiển thị</h3>
         <table>
             <thead>
                 <tr>
-                    <!-- [THAY Ở ĐÂY]: Đổi các tiêu đề cột th tương ứng với đề bài -->
+                    <!-- Khi thay thế đồng loạt: 'Email' -> 'Đơn giá' hoặc 'Tiền lương' -->
                     <th style="width: 10%;">ID</th>
                     <th style="width: 40%;">Họ tên</th>
                     <th style="width: 30%;">Email</th>
