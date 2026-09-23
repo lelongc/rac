@@ -1,0 +1,70 @@
+                         
+ 
+Giải 
+ Xét      δ(q1 , 0)= q1 ∉ F và  δ(q2 , 0)= q2 ∈ F vậy   q1, q2 là phân biệt được  
+               q1 ∉ F và  q2 ∈ F vậy   q1, q2 là phân biệt được              
+             δ(q1 , 1)= q2 ∈ F và  δ(q3 , 1)= q3 ∉ F vậy   q1, q3 là phân biệt được 
+              δ(q3 , 0)= q3 ∉ F và  δ(q2 , 0)= q2 ∈ F vậy   q3, q2 là phân biệt được 
+           mọi cặp trạng thái đều phân biệt được, DFA này tối thiểu trạng thái. 
+//////////////////////// 
+BÀI TẬP  
+ 
+1. Tối thiểu hóa những trạng thái của những DFA trong hình (a) và (b) sau 
+ 
+   
+ 
+ 
+2. Tìm DFA có số trạng thái tối thiểu tương đương với NFA trong hình sau 
+       
+ 
+ 
+3. Tìm DFA tối thiểu trạng thái cho ngôn ngữ 
+a)  L  = {anbm: n   2, m  1} 
+b)  L  = {anb: n  0 }    {bna : n  1} 
+1 
+0 
+0 
+0 
+0,1 
+0,1 
+0,1 
+1 
+1 
+1 
+0 
+1 
+1 
+1 
+1 
+1 
+1 
+0 
+0 
+0 
+0 
+0 
+0 
+0 
+0 
+q
+q
+q
+q
+q
+q
+q
+q
+Hình (a) 
+q
+q
+q
+q
+q
+q
+q
+Hình (b) 
+
+
+b 
+a 
+c 
