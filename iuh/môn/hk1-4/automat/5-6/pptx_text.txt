@@ -1,0 +1,238 @@
+=== Slide 1 ===
+Chương 2 
+OTOMAT HỮU HẠN VÀ NGÔN NGỮ CHÍNH QUY
+=== Slide 2 ===
+Otomat hữu hạn không đơn định (NFA) 
+Định nghĩa 2.1 Một otomat hữu hạn không đơn định (Nondeterministic Finite Automata) là một bộ năm: 
+A = <Q, Σ, δ, q0, F> 
+Trong đó Q, Σ, q0, F như trong định nghĩa 1.1 và δ: Q × Σ → 2Q, ở đây 2Q (hay P(Q), là ký hiệu tập hợp các tập con của Q) gọi là ánh xạ chuyển.   
+Rõ ràng ở đây ánh xạ δ là một hàm đa trị (hàm không đơn định), vì vậy otomat A trong định nghĩa trên đây được gọi là không đơn định. 
+Trong trường hợp δ(q, a) xác định ∀q ∈ Q, ∀a ∈ Σ, ta nói ôtômát A là đầy đủ. 
+Nếu δ(q, a) = {p1, p2, …, pk} thì ta nói rằng otomat A ở trạng thái q gặp ký hiệu a thì có thể chuyển đến một trong các trạng thái p1, p2, …, pk. 
+Nếu δ(q, a) = {p} thì ở trạng thái q gặp ký hiệu a, otomat A chỉ chuyển đến một trạng thái duy nhất p. 
+Nếu δ(q, a) không xác  định (ta thường viết δ(q, a) = ∅ ) thì ở trạng thái q gặp ký hiệu a, otomat A không thể chuyển đến trạng thái nào, cũng tương tự như với otomat hữu hạn đơn định.  
+
+=== Slide 3 ===
+Ví dụ:
+Cho otomat hữu hạn không đơn định: 
+A = <{q0, q1, q2, q3, q4}, {0, 1}, δ, q0, {q2, q4}>, 
+Với δ(q0,0) = {q0,q3}, δ(q0, 1) = {q0,q1}, δ(q1, 0) = ∅, δ(q1, 1) = {q2}, δ(q2, 0) = {q2},  δ(q2, 1) = {q2}, δ(q3, 0) = {q4}, δ(q3,1) = ∅, δ(q4, 0) = {q4}, δ(q4, 1) = {q4}. 
+Bảng chuyển trạng thái và đồ thị chuyển trạng thái của otomat A cho trong hình
+=== Slide 4 ===
+Ngôn ngữ được đoán nhận bởi otomat hữu hạn không đơn định 
+
+Định nghĩa 2.2  Cho otomat hữu hạn không đơn định A = <Q, Σ, δ, q0, F>. Mở rộng của δ là ánh xạ δ’ từ tập Q × Σ * vào 2Q được xác định như sau: 
+δ’(q, ε) = {q}, ∀q ∈ Q, 
+δ’(q, ωa) =              ∀q∈Q, ∀a∈Σ, ∀ω∈Σ* sao cho δ’(q, ω) được xác định. 
+
+Định nghĩa 2.3  Cho otomat hữu hạn không đơn định A = <Q, Σ, δ, q0, F>, ω ∈ Σ* và L là một ngôn ngữ trên Σ. Ta nói: 
+ω được đoán nhận bởi A  nếu δ(q0, ω) ∩ F ≠ ∅; 
+L được đoán nhận bởi A nếu L = {ω∈Σ* | δ(q0, ω) ∩ F ≠ ∅} và ký hiệu L là T(A). 
+
+=== Slide 5 ===
+Ví dụ:
+Cho otomat hữu hạn không đơn định: 
+A = <{q0, q1, q2}, {a, b}, δ, q0, {q2}>, trong đó δ(q0, a) = {q0}, δ(q0, b) = {q0, q1}, δ(q1, a) = {q1}, δ(q1, b) = {q1, q2},  δ(q2, a) = {q2}, δ(q2, b) = {q2}. 
+Bảng chuyển và đồ thị chuyển của otomat A được cho trong hình 
+
+
+
+
+
+
+Có thể kiểm tra được rằng từ ω = anbn ∈ T(A), tuy nhiên otomat A không đoán nhận ngôn ngữ L = { anbn | ∀ n ≥ 1}. 
+Ngôn ngữ được đoán nhận bởi otomat A là: 
+T(A) = {ω1bω2bω3 | ω1, ω2, ω3∈{a, b}*}. 
+=== Slide 6 ===
+§1.  Otomat hữu hạn đơn định (DFA) 
+Định nghĩa 1.1 Một otomat hữu hạn đơn định (Deterministic Finite Automata-DFA) là một bộ năm: 
+A = <Q, Σ, δ, q0, F>, trong đó: 
+Q là một tập hữu hạn khác rỗng, được gọi là tập các trạng thái; 
+Σ là một bảng chữ cái, được gọi là bảng chữ vào; 
+δ: D → Q, là một ánh xạ từ D vào Q, trong đó D ⊆ Q × Σ , được gọi là hàm chuyển trạng thái (hay hàm chuyển); 
+q0 ∈ Q, được gọi là trạng thái khởi đầu; 
+F ⊆ Q được gọi là tập các trạng thái kết thúc. 
+
+=== Slide 7 ===
+Chú ý:
+Trong trường hợp D = Q × Σ , ta nói A là otomat đầy đủ. Sau này ta sẽ thấy rằng mọi otomat hữu hạn đều đưa về được otomat hữu hạn đầy đủ tương đương. 
+
+=== Slide 8 ===
+Hoạt động của otomat hữu hạn đơn định A = <Q, Σ, δ, q0, F> khi cho xâu vào ω = a1a2… an có thể được mô tả như sau: 
+Khi bắt đầu làm việc, otomat ở trạng thái khởi đầu q0 và đầu đọc đang nhìn vào ô có ký hiệu a1. Tiếp theo otomat chuyển từ trạng thái q0 dưới tác động của ký hiệu vào a1 về trạng thái mới δ(q0, a1) = q1∈Q và đầu đọc chuyển sang phải một ô, tức là nhìn vào ô có ký hiệu a2.  Sau đó otomat A có thể lại tiếp tục chuyển từ trạng thái q1 nhờ hàm chuyển δ về trạng thái mới q2 = δ(q1, a2) ∈ Q. Quá trình đó sẽ tiếp tục cho tới khi gặp một trong các tình huống sau: 
+− Otomat A đọc hết xâu vào ω và δ(qn-1,an) = qn ∈ F, ta nói rằng A đoán nhận xâu ω. 
+− Hoặc otomat A đọc hết xâu vào ω và δ(qn-1,an) = qn ∉ F, ta nói A không đoán nhận xâu ω. 
+− Hoặc khi otomat A đọc đến aj , (j ≤ n) và hàm δ(qj-1, aj) không xác định, ta cũng nói A không đoán nhận xâu ω. 
+
+=== Slide 9 ===
+Mô tả quá trình đoán nhận xâu ω của otomat A 
+
+=== Slide 10 ===
+1.2 Biểu diễn otomat hữu hạn đơn định 
+Hàm chuyển trạng thái là một bộ phận quan trọng của một otomat hữu hạn đơn định.  Cho một otomat thực chất là cho hàm chuyển trạng thái của nó, có thể cho dưới dạng bảng chuyển hoặc cho dưới dạng đồ thị chuyển. 
+Cho otomat bằng bảng chuyển 
+
+=== Slide 11 ===
+Ví dụ 1.1  Cho otomat hữu hạn đơn định: 
+A1 = <{q0, q1, q2}, {a, b}, δ, q0, {q2}>, 
+Với δ(q0, a) = q0, δ(q0, b) = q1, δ(q1, a) = q0, δ(q1, b) = q2, δ(q2, a) = q2, δ(q2, b) = q2. 
+Ta có bảng chuyển trạng thái và đồ thị chuyển trạng thái của otomat A1  như sau: 
+
+=== Slide 12 ===
+Quá trình đoán nhận xâu α = ababbab của A1 
+
+=== Slide 13 ===
+Ví dụ 2:
+A2 = <{q0, q1, q2, q3}, {0, 1}, δ, q0, {q0}>,  
+trong đó δ(q0, 0) = q2, δ(q0, 1) = q1, δ(q1, 0) = q3, δ(q1, 1) = q0, δ(q2, 0) = q0, δ(q2, 1) = q3, δ(q3, 0) = q1, δ(q3, 1) = q2.  
+Ta có bảng chuyển trạng thái và đồ thị chuyển trạng thái của otomat A2
+=== Slide 14 ===
+Dãy trạng thái của otomat A2 trong quá trình đoán nhận xâu vào β = 1010100 là: 
+Như vậy, otomat A2 không chấp nhận xâu β. 
+
+=== Slide 15 ===
+Ta có thể mô tả quá trình đoán nhận xâu vào của otomat hữu hạn đơn định đầy đủ A bằng thuật toán mô phỏng sau: 
+	Input : 
+ 	− Một xâu ω, kết thúc bởi ký hiệu kết thúc file là eof. 
+ − Một otomat hữu hạn đơn định đầy đủ A với trạng thái đầu q0 và tập trạng thái kết thúc là F. 
+ 	Output:  
+Trả lời  “Đúng” nếu A đoán nhận xâu ω. 
+Trả lời “Sai” nếu A không đoán nhận xâu ω. 
+ 	Thuật toán: 
+ 	Begin 
+ 	 	S:= q0; 
+ 	 	C:= ký hiệu tiếp theo;  	 
+While C < > eof do 
+ 	 	 	begin 
+ 	 	 	 	S:= δ(S, C); 
+ 	 	 	 	C:= ký hiệu tiếp theo; 
+ 	 	 	end; 
+ 	 	if S in F return (True)  	 	else return (False); 
+ 	End. 
+
+=== Slide 16 ===
+Ngôn ngữ được đoán nhận bởi otomat đơn định
+Định nghĩa 1.2 Cho otomat hữu hạn đơn định A = <Q, Σ, δ, q0, F>. Mở rộng δ’ của δ là một ánh xạ từ D ⊆ Q × Σ * vào Q được xác định như sau: 
+1/. δ’(q, ε) = q, ∀q∈Q, 
+2/.  δ’(q, ωa) = δ(δ’(q, ω), a), ∀a∈Σ, ∀q∈Q, ∀ω ∈ Σ* sao cho δ’(q, ω) được xác định. 
+Định nghĩa 1.3 Cho otomat hữu hạn đơn định A = <Q, Σ, δ, q0, F>, và một xâu ω∈Σ*. Ta nói: 
+ω được đoán nhận bởi A  nếu δ(q0, ω) ∈ F; 
+Ngôn ngữ được đoán nhận bởi otomat A và ký hiệu là T(A), là tập từ: 
+T(A) = {ω∈Σ* | δ(q0, ω)∈F} 
+
+=== Slide 17 ===
+Định nghĩa 1.4  Hai otomat hữu hạn A = <Q, Σ, δ, q0, F> và A’= <Q’, Σ’, δ’, q’0, F’> được gọi là tương đương nếu T(A) = T(A’). 
+Ví dụ: Cho otomat hữu hạn: A3 = <{q0, q1, q2, q3, q4},{0, 1}, δ, q0, {q1, q2, q4}> với δ(q0,0) = q0, δ(q0,1) = q1, δ(q1,0) = q3, δ(q1,1) = q2, δ(q2,0) = q2, δ(q2,1) = q2, δ(q3,1) = q3, δ(q4,0) = q2, δ(q4,1) = q3. 
+ 	Đồ thị chuyển của A3 là: 
+
+
+
+A4 = <{q0, q1, q2}, {0, 1}, δ, q0, {q1, q2}>, 
+trong đó δ(q0,0) = q0, δ(q0,1) = q1, δ(q1,1) = q2, δ(q2,0) = q2, δ(q2,1) = q2. Đồ thị chuyển của A4
+
+
+T(A3) = T(A4) = {0n1, 0n11ω / n ≥ 0, ω∈{0, 1}*}. 
+Bổ đề 1.1  Cho otomat hữu hạn đơn định A = <Q, Σ, δ, q0, F>. Khi đó ∀ω1, ω2 ∈ Σ*, ∀q∈Q sao cho δ(q, ω1ω2) xác định, ta có: 
+                                       δ(q, ω1ω2) = δ(δ(q, ω1), ω2) 
+
+=== Slide 18 ===
+Đơn định hóa các otomat 
+Giả sử A = <Q, Σ, δ, q0, F> là một otomat không đơn định, khi đó ta có thể xây dựng otomat đơn định và đầy đủ M tương đương với  otomat A (theo nghĩa cùng đoán nhận một ngôn ngữ).  Việc xây dựng M được thực hiện theo thuật toán sau đây, được gọi là thuật toán đơn định hóa otomat. 
+Thuật toán đơn định hóa: 
+Input:  Otomat hữu hạn không đơn định A = <Q, Σ, δ, q0, F> 
+Output: Otomat hữu hạn đơn định M = <Q’, Σ, δ’, s0, F’> 
+
+=== Slide 19 ===
+Phương pháp: 
+Bước 1: Xây dựng hàm hai biến    T: 2Q × Σ → 2Q  thỏa mãn các điều kiện: 
+1/. ∀ q ∈ Q, ∀ a ∈ Σ thì T(q, a) = {q’ ∈ Q | q’ = δ(q, a) } 
+2/. ∀ B ⊆ Q mà δ(q, a) = B, ∀ a ∈ Σ thì T(B, a) =  UT ( p, a) 
+
+Bước 2: Xác định tập trạng thái mới Q’ = {s0, s1, …, sk | k ≤ 2| Q | -1}: 
+1/.  Đặt  s0 = {q0},  s1 = {q1}, … si = {qi} ∀ {q0}, {q1}, …, {qi} ∈ Q,
+2/.  Đặt si+1 = B1, si+2 = B2,… ∀ B1, B2 … ⊆ Q mà δ(qj, a) = Bj. 
+3/.  Nếu otomat A là không đầy đủ, đặt sk = ∅ và thêm vào hàm chuyển δ’ các giá trị δ’(sk, a) = sk ∀ a ∈ Σ để otomat M là otomat đầy đủ. 
+4/. Trạng thái khởi đầu của otomat M là s0. 
+5/. Tập trạng thái kết thúc của otomat M là F’ = {s ∈ Q’ | s ∩ F ≠ ∅ }. 
+Bước 3: Xác định hàm chuyển δ’: Q’ × Σ → Q’ của otomat M: 
+∀ s ∈ Q’, ∀ a ∈ Σ thì δ’(s, a) = T(s, a) 
+
+p ∈ B
+=== Slide 20 ===
+Ví dụ:
+Cho otomat A = <{p0, p1, p2}, {a, b, c}, δ , p0, {p1, p2}> với hàm chuyển δ cho bởi bảng sau: 
+
+
+
+
+Q’=2|Q|={p0,p1,p2,{p0,p1},{p0,p2},{p1,p2},{p0,p1,p2}, ∅}
+Hãy xây dựng otomat M = <Q’, {a, b, c}, δ’, s0, F’> đơn định và đầy đủ, tương đương với otomat A. 
+ 	1/. Xây dựng hàm T: 2Q × Σ → 2Q
++ T(p0, a) = {p1}, T(p0, b) = {p1, p2}, T(p0, c) = {p2}, 
++ T(p1, a) = {p2}, T(p1, b) = ∅ , T(p1, c) = {p0, p2}, 
++ T(p2, a) = {p1}, T(p2, b) = {p1}, T(p2, c) = {p2}, 
++ T({p1, p2}, a) =  T(p1,a) ∪ T(p2,a) =  {p2} ∪{p1} = {p1, p2}, T({p1, p2}, b) =       ∅ ∪ {p1} = {p1}, T({p1, p2}, c) = {p0, p2} ∪{p2} = {p0, p2}, 
++ T({p0, p2}, a) = {p1}, T({p0, p2}, b) = {p1, p2}, T({p0, p2}, c) = {p2} 
+T({p0, p1}, a) =  T(p0,a) ∪ T(p1,a) =  {p1} ∪{p2} = {p1, p2},
+T({p0,p1,p2}, a) = T(p0,a) ∪ T(p1,a) ∪ T(p2,a) = {p1} ∪ {p2} ∪{p1} = {p1, p2},
+…
+=== Slide 21 ===
+	2/. Đặt s0 = {p0}, s1 = {p1}, s2 = {p2}, s3 = {p1, p2}, s4 = {p0, p2}, s5 = ∅ ta có: 
+ + Tập trạng thái mới Q’ = {s0, s1, s2, s3, s4, s5}. 
++ Trạng thái khởi đầu của M là s0, 
++ Tập trạng thái kết mới: F’ = {s1, s2, s3, s4}. 
+3/. Hàm chuyển mới δ’: Q’ × Σ → Q’ được xác định như sau: 
+
+
+
+
+
+
+
+Otomat M = <{s0, s1, s2, s3, s4, s5}, {a, b, c}, δ’, s0, {s1, s2, s3, s4}> với hàm chuyển δ’ cho bởi bảng trên là otomat hữu hạn đơn định và đầy đủ.  
+Otomat M là tương đương với otomat A. 
+
+
+
+
+=== Slide 22 ===
+Ví dụ:
+Cho otomat không đơn định: A = <{q0, q1}, {a, b}, δ, q0, {q1}>, trong đó δ(q0, a) = {q0}, δ(q0, b) = {q0, q1}, δ(q1, a) = {q0, q1}, δ(q1, b) = ∅. 
+Đồ thị chuyển của A là: 
+
+
+
+
+Xây dựng otomat M = <Q’, {a, b}, δ’, t0, F’> tương đương với A theo thuật toán đơn định hóa.
+
+
+=== Slide 23 ===
+Ta xây dựng otomat M = <Q’, {a, b}, δ’, t0, F’> tương đương với A theo thuật toán đơn định hóa, ta có: 
++ Q’ = {t0, t1, t2, t3}, với t0 = {q0}, t1 = {q1},  t2 = {q0, q1}, t 3 = ∅. 
++ δ’(t0, a) = t0, δ’(t0, b) = t2, δ’(t1, a) = t2, δ’(t1, b) = t3, δ’(t2, a) = {q0}∪{q0, q1} = t2, δ’(t2, b) = {q0, q1} ∪ ∅ = t2, δ’(t3, a) = t3, δ’(t3, b) = t3.   
+Ta có bảng chuyển của M: 
+
+
+
+
++ Do t1 ∩ F = {q1} ≠ ∅ , t2 ∩ F  ={q1} ≠ ∅ nên F’ = {t1, t2}. 
+Rõ ràng otomat M  là đơn định và có đồ thị chuyển như sau: 
+
+
+=== Slide 24 ===
+Nhìn vào bảng chuyển và đồ thị chuyển của M, ta thấy ngay rằng không có đường đi nào từ t0  đến được đỉnh kết thúc t1, vì vậy otomat M sẽ tương đương với otomat M’ có đồ thị chuyển như sau: 
+
+
+
+
+
+
+
+Ta có  T(A) = T(M) = T(M’) = {anbω | n ≥ 0, ω∈{a, b}*}. 
+
+
+=== Slide 25 ===
+2.4  Sự tương đương giữa otomat đơn định và otomat không đơn định  
+Định lý 2.1  Nếu ngôn ngữ L được đoán nhận bởi một otomat hữu hạn không đơn định thì tồn tại một otomat hữu hạn đơn định đoán nhận L. 
+Định lý 2.2  Lớp ngôn ngữ được sinh bởi otomat hữu hạn đơn định là trùng với lớp ngôn ngữ được sinh bởi otomat hữu hạn không đơn định. 
+

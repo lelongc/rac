@@ -1,0 +1,900 @@
+=== Page 56 ===
+40
+Chapter 2 Finite Automata
+We say that two accepters are equivalent if they accept the same
+language. We can then also say that the class of nfa’s is equivalent to
+the class of dfa’s because for every nfa, we can find an equivalent dfa.
+Equivalence between different types of constructs is another recurring
+theme in this book.
+For any given regular language there are many equivalent dfa’s, so
+it is of practical importance to find a minimal dfa, that is, a dfa with
+the smallest number of internal states. The construction in Section 2.4
+shows how this can be done.
+O
+ur introduction in the ﬁrst chapter to the basic concepts of computa-
+tion, particularly the discussion of automata, is brief and informal.
+At this point, we have only a general understanding of what an
+automaton is and how it can be represented by a graph. To progress, we
+must be more precise, provide formal deﬁnitions, and start to develop rigor-
+ous results. We begin with ﬁnite accepters, which are a simple, special case
+of the general scheme introduced in the last chapter. This type of automa-
+ton is characterized by having no temporary storage. Since an input ﬁle
+cannot be rewritten, a ﬁnite automaton is severely limited in its capacity
+to “remember” things during the computation. A ﬁnite amount of informa-
+tion can be retained in the control unit by placing the unit into a speciﬁc
+state. But since the number of such states is ﬁnite, a ﬁnite automaton can
+only deal with situations in which the information to be stored at any time
+is strictly bounded. The automaton in Example 1.16 is an instance of a
+ﬁnite accepter.
+2.1 DETERMINISTIC FINITE ACCEPTERS
+The ﬁrst type of automaton we study in detail are ﬁnite accepters that are
+deterministic in their operation. We start with a precise formal deﬁnition
+of deterministic accepters.
+Figures 1.6 and 1.9 represent two simple automata,
+with some
+common features:
+• Both have a ﬁnite number of internal states.
+• Both process an input string, consisting of a sequence of symbols.
+• Both make transitions from one state to another, depending on the
+current state and the current input symbol.
+• Both produce some output, but in a slightly diﬀerent form. The au-
+tomaton in Figure 1.6 only accepts or rejects the input; the automaton
+in Figure 1.9 generates an output string.
+
+
+=== Page 59 ===
+2.1 Deterministic Finite Accepters
+43
+then
+δ∗(q0, ab) = q2.
+Formally, we can deﬁne δ∗recursively by
+δ∗(q, λ) = q,
+(2.1)
+δ∗(q, wa) = δ (δ∗(q, w) , a) ,
+(2.2)
+for all q ∈Q, w ∈Σ∗, a ∈Σ. To see why this is appropriate, let us apply
+these deﬁnitions to the simple case above. First, we use (2.2) to get
+δ∗(q0, ab) = δ (δ∗(q0, a) , b) .
+(2.3)
+But
+δ∗(q0, a) = δ (δ∗(q0, λ) , a)
+= δ (q0, a)
+= q1.
+Substituting this into (2.3), we get
+δ∗(q0, ab) = δ (q1, b) = q2,
+as expected.
+Languages and Dfa’s
+Having made a precise deﬁnition of an accepter, we are now ready to deﬁne
+formally what we mean by an associated language. The association is obvi-
+ous: The language is the set of all the strings accepted by the automaton.
+DEFINITION 2.2
+The language accepted by a dfa M = (Q, Σ, δ, q0, F) is the set of all strings
+on Σ accepted by M. In formal notation,
+L (M) = {w ∈Σ∗: δ∗(q0, w) ∈F} .
+Note that we require that δ, and consequently δ∗, be total functions.
+At each step, a unique move is deﬁned so that we are justiﬁed in calling
+such an automaton deterministic. A dfa will process every string in Σ∗and
+either accept it or not accept it. Nonacceptance means that the dfa stops
+in a nonﬁnal state so that
+L (M) = {w ∈Σ∗: δ∗(q0, w) /∈F} .
+
+
+=== Page 61 ===
+2.1 Deterministic Finite Accepters
+45
+of w. Assume that the claim is true for all strings v with |v| ≤n. Consider
+then any w of length n + 1 and write it as
+w = va.
+Suppose now that δ∗(qi, v) = qk. Since |v| = n, there must be a walk in
+GM labeled v from qi to qk. But if δ∗(qi, w) = qj, then M must have a
+transition δ (qk, a) = qj, so that by construction GM has an edge (qk, qj)
+with label a. Thus, there is a walk in GM labeled va = w between qi and
+qj. Since the result is obviously true for n = 1, we can claim by induction
+that, for every w ∈Σ+,
+δ∗(qi, w) = qj
+(2.4)
+implies that there is a walk in GM from qi to qj labeled w.
+The argument can be turned around in a straightforward way to
+show that the existence of such a path implies (2.4), thus completing
+the proof.
+Again, the result of the theorem is so intuitively obvious that a formal
+proof seems unnecessary. We went through the details for two reasons. The
+ﬁrst is that it is a simple, yet typical example of an inductive proof in con-
+nection with automata. The second is that the result will be used over and
+over, so stating and proving it as a theorem lets us argue quite conﬁdently
+using graphs. This makes our examples and proofs more transparent than
+they would be if we used the properties of δ∗.
+While graphs are convenient for visualizing automata, other represen-
+tations are also useful. For example, we can represent the function δ as a
+table. The table in Figure 2.3 is equivalent to Figure 2.2. Here the row
+label is the current state, while the column label represents the current
+input symbol. The entry in the table deﬁnes the next state.
+a
+b
+q0
+q1
+q2
+q2
+q0
+q1
+q2
+q2
+q2
+FIGURE 2.3
+
+
+=== Page 62 ===
+46
+Chapter 2 Finite Automata
+It is apparent from this example that a dfa can easily be implemented as
+a computer program, for example, as a simple table-lookup or as a sequence
+of if statements. The best implementation or representation depends on the
+speciﬁc application. Transition graphs are very convenient for the kinds of
+arguments we want to make here, so we use them in most of our discussions.
+In constructing automata for languages deﬁned informally, we employ
+reasoning similar to that for programming in higher-level languages. But the
+programming of a dfa is tedious and sometimes conceptually complicated
+by the fact that such an automaton has few powerful features.
+EXAMPLE 2.3
+Find a deterministic ﬁnite accepter that recognizes the set of all
+strings on Σ = {a, b} starting with the preﬁx ab.
+The only issue here is the ﬁrst two symbols in the string; after they
+have been read, no further decisions are needed. Still, the automaton
+has to process the whole string before its decision is made. We can
+therefore solve the problem with an automaton that has four states:
+an initial state, two states for recognizing ab ending in a ﬁnal trap
+state, and one nonﬁnal trap state. If the ﬁrst symbol is an a and the
+second is a b, the automaton goes to the ﬁnal trap state, where it will
+stay since the rest of the input does not matter. On the other hand, if
+the ﬁrst symbol is not an a or the second one is not a b, the automa-
+ton enters the nonﬁnal trap state. The simple solution is shown in
+Figure 2.4.
+q1
+q2
+q0
+a, b
+a, b
+a
+q3
+b
+b
+a
+FIGURE 2.4
+
+
+=== Page 63 ===
+2.1 Deterministic Finite Accepters
+47
+EXAMPLE 2.4
+Find a dfa that accepts all the strings on {0, 1}, except those
+containing the substring 001.
+In deciding whether the substring 001 has occurred, we need to
+know not only the current input symbol, but we also need to remember
+whether or not it has been preceded by one or two 0’s. We can keep
+track of this by putting the automaton into speciﬁc states and labeling
+them accordingly. Like variable names in a programming language,
+state names are arbitrary and can be chosen for mnemonic reasons.
+For example, the state in which two 0’s were the immediately preceding
+symbols can be labeled simply 00.
+If the string starts with 001, then it must be rejected. This implies
+that there must be a path labeled 001 from the initial state to a nonﬁnal
+state. For convenience, this nonﬁnal state is labeled 001. This state
+must be a trap state because later symbols do not matter. All other
+states are accepting states.
+This gives us the basic structure of the solution, but we still must
+add provisions for the substring 001 occurring in the middle of the
+input. We must deﬁne Q and δ so that whatever we need to make the
+correct decision is remembered by the automaton. In this case, when
+a symbol is read, we need to know some part of the string to the left,
+for example, whether or not the two previous symbols were 00. If we
+label the states with the relevant symbols, it is very easy to see what
+the transitions must be. For example,
+δ (00, 0) = 00
+because this situation arises only if there are three consecutive 0’s. We
+are only interested in the last two, a fact we remember by keeping the
+dfa in the state 00. A complete solution is shown in Figure 2.5. We
+see from this example how useful mnemonic labels on the states are
+for keeping track of things. Trace a few strings, such as 100100 and
+1010100, to see that the solution is indeed correct.
+0
+00
+0
+1
+0
+1
+0
+001
+0, 1
+1
+λ
+FIGURE 2.5
+
+
+=== Page 64 ===
+48
+Chapter 2 Finite Automata
+Regular Languages
+Every ﬁnite automaton accepts some language. If we consider all possible
+ﬁnite automata, we get a set of languages associated with them. We will call
+such a set of languages a family. The family of languages that is accepted by
+deterministic ﬁnite accepters is quite limited. The structure and properties
+of the languages in this family will become clearer as our study proceeds;
+for the moment we will simply attach a name to this family.
+DEFINITION 2.3
+A language L is called regular if and only if there exists some deterministic
+ﬁnite accepter M such that
+L = L (M) .
+EXAMPLE 2.5
+Show that the language
+L =
+
+awa : w ∈{a, b}∗
+is regular.
+To show that this or any other language is regular, all we have to
+do is ﬁnd a dfa for it. The construction of a dfa for this language is
+similar to Example 2.3, but a little more complicated. What this dfa
+must do is check whether a string begins and ends with an a; what is
+between is immaterial. The solution is complicated by the fact that
+there is no explicit way of testing the end of the string. This diﬃculty
+is overcome by simply putting the dfa into a ﬁnal state whenever the
+second a is encountered. If this is not the end of the string, and another
+b is found, it will take the dfa out of the ﬁnal state. Scanning continues
+in this way, each a taking the automaton back to its ﬁnal state. The
+complete solution is shown in Figure 2.6. Again, trace a few examples
+to see why this works. After one or two tests, it will be obvious that
+the dfa accepts a string if and only if it begins and ends with an a.
+Since we have constructed a dfa for the language, we can claim that,
+by deﬁnition, the language is regular.
+
+
+=== Page 66 ===
+50
+Chapter 2 Finite Automata
+Therefore, we need a dfa that recognizes two consecutive strings of
+essentially the same form (but not necessarily identical in value). The
+diagram in Figure 2.6 can be used as a starting point, but the vertex
+q3 has to be modiﬁed. This state can no longer be ﬁnal since, at this
+point, we must start to look for a second substring of the form awa. To
+recognize the second substring, we replicate the states of the ﬁrst part
+(with new names), with q3 as the beginning of the second part. Since
+the complete string can be broken into its constituent parts wherever
+aa occurs, we let the ﬁrst occurrence of two consecutive a’s be the
+trigger that gets the automaton into its second part. We can do this
+by making δ (q3, a) = q4. The complete solution is in Figure 2.7. This
+dfa accepts L2, which is therefore regular.
+The last example suggests the conjecture that if a language L is regular,
+so are L2, L3, .... We will see later that this is indeed correct.
+INTRODUCTORY EXERCISES
+1. Find a dfa for the language L = {a, b}+.
+2. In Example 2.3, what language is accepted if q3 replaces q2 as ﬁnal state?
+3. Modify the dfa in Figure 2.6 so that it accepts L = {awb}.
+4. Modify the dfa in Figure 2.6 so that it accepts L = {bwa}.
+5. Take the dfa M = ({q0, q1, q2}, {a}, δ, q0, {q2}), with δ deﬁned by
+δ(q0, a) = q1,
+δ(q1, a) = q2,
+δ(q2, a) = q2.
+(a) Draw the transition graph for M.
+(b) Is the language accepted by this dfa L = {an} with (i) n ≥
+1, (ii)n ≥2, (iii)n > 2?
+6. Draw the transition graph of the dfa in Exercise 5, using Σ = {a, b}, then
+compute δ∗(aaba).
+7. Suppose in Exercise 5, with Σ = {a, b}, δ(q2, a) = q2 is replaced by
+δ(q2, b) = q0.
+(a) Give an intuitive description of the language accepted by this new
+dfa.
+(b) Describe this language using set notation.
+8. Show that the language L = {aba2nba : n ≥1} is regular.
+
+
+=== Page 69 ===
+2.2 Nondeterministic Finite Accepters
+53
+20. Show that if L is regular, so is L ∪{aa}, for all a ∈Σ.
+21. Use (2.1) and (2.2) to show that
+δ∗(q, wv) = δ∗(δ∗(q, w) , v)
+for all w, v ∈Σ∗.
+22. Let L be the language accepted by the automaton in Figure 2.2. Find a dfa
+that accepts L3.
+23. Let L be the language accepted by the automaton in Figure 2.2. Find a dfa
+for the language L2 −L.
+24. Let L be the language in Example 2.5. Show that L∗is regular.
+25. Let GM be the transition graph for some dfa M. Prove the following:
+(a) If L (M) is inﬁnite, then GM must have at least one cycle for
+which there is a path from the initial vertex to some vertex in
+the cycle and a path from some vertex in the cycle to some ﬁnal
+vertex.
+(b) If L (M) is ﬁnite, then no such cycle exists.
+26. Let us deﬁne an operation truncate, which removes the rightmost symbol
+from any string. For example, truncate (aaaba) is aaab. The operation can
+be extended to languages by
+truncate (L) = {truncate (w) : w ∈L} .
+Show how, given a dfa for any regular language L, one can construct a dfa for
+truncate (L). From this, prove that if L is a regular language not containing
+λ, then truncate (L) is also regular.
+27. While the language accepted by a given dfa is unique, there are normally
+many dfa’s that accept a language. Find a dfa with exactly six states that
+accepts the same language as the dfa in Figure 2.4.
+28. Can you ﬁnd a dfa with three states that accepts the language of the dfa
+in Figure 2.4? If not, can you give convincing arguments that no such dfa
+can exist?
+2.2 NONDETERMINISTIC FINITE ACCEPTERS
+If you examine the automata we have seen so far, you will notice a common
+feature: a unique transition is deﬁned for each state and each input symbol.
+In the formal deﬁnition, this is expressed by saying that δ is a total function.
+This is the reason we call these automata deterministic. We now complicate
+matters by giving some automata choices in some situations where more
+than one transition is possible. We will call such automata nondeterministic.
+Nondeterminism is, at ﬁrst sight, an unusual idea. Computers are
+deterministic machines, and the element of choice seems out of place. Never-
+theless, nondeterminism is a useful concept, as we will see.
+
+
+=== Page 70 ===
+54
+Chapter 2 Finite Automata
+Definition of a Nondeterministic Accepter
+Nondeterminism means a choice of moves for an automaton. Rather than
+prescribing a unique move in each situation, we allow a set of possible moves.
+Formally, we achieve this by deﬁning the transition function so that its range
+is a set of possible states.
+DEFINITION 2.4
+A nondeterministic ﬁnite accepter or nfa is deﬁned by the quintuple
+M = (Q, Σ, δ, q0, F) ,
+where Q, Σ, q0, F are deﬁned as for deterministic ﬁnite accepters, but
+δ : Q × (Σ ∪{λ}) →2Q.
+Note that there are three major diﬀerences between this deﬁnition and
+the deﬁnition of a dfa. In a nondeterministic accepter, the range of δ is in
+the powerset 2Q, so that its value is not a single element of Q, but a subset
+of it. This subset deﬁnes the set of all possible states that can be reached
+by the transition. If, for instance, the current state is q1, the symbol a is
+read, and
+δ (q1, a) = {q0, q2} ,
+then either q0 or q2 could be the next state of the nfa. Also, we allow λ
+as the second argument of δ. This means that the nfa can make a transi-
+tion without consuming an input symbol. Although we still assume that
+the input mechanism can only travel to the right, it is possible that it is
+stationary on some moves. Finally, in an nfa, the set δ (qi, a) may be empty,
+meaning that there is no transition deﬁned for this speciﬁc situation.
+Like dfa’s, nondeterministic accepters can be represented by transition
+graphs. The vertices are determined by Q, while an edge (qi, qj) with label
+a is in the graph if and only if δ (qi, a) contains qj. Note that since a may
+be the empty string, there can be some edges labeled λ.
+A string is accepted by an nfa if there is some sequence of possible moves
+that will put the machine in a ﬁnal state at the end of the string. A string
+is rejected (that is, not accepted) only if there is no possible sequence of
+moves by which a ﬁnal state can be reached. Nondeterminism can therefore
+be viewed as involving “intuitive” insight by which the best move can be
+chosen at every state (assuming that the nfa wants to accept every string).
+EXAMPLE 2.7
+Consider the transition graph in Figure 2.8. It describes a nondeter-
+ministic accepter since there are two transitions labeled a out of q0.
+
+
+=== Page 77 ===
+2.3 Deterministic and Nondeterministic Finite Accepters
+61
+19. Consider the following modiﬁcation of Deﬁnition 2.6. An nfa with multiple
+initial states is deﬁned by the quintuple
+M = (Q, Σ, δ, Q0, F) ,
+where Q0 ⊆Q is a set of possible initial states. The language accepted by
+such an automaton is deﬁned as
+L (M) = {w : δ∗(q0, w) contains qf, for any q0 ∈Q0, qf ∈F} .
+Show that for every nfa with multiple initial states there exists an nfa with a
+single initial state that accepts the same language.
+20. Suppose that in Exercise 19 we made the restriction Q0 ∩F = ⊘. Would this
+aﬀect the conclusion?
+21. Use Deﬁnition 2.5 to show that for any nfa
+δ∗(q, wv) =
+
+p∈δ∗(q,w)
+δ∗(p, v) ,
+for all q ∈Q and all w, v ∈Σ∗.
+22. An nfa in which (a) there are no λ-transitions, and (b) for all q ∈Q and all a ∈
+Σ, δ (q, a) contains at most one element, is sometimes called an incomplete
+dfa.
+This is reasonable because the conditions make it such that there is
+never any choice of moves.
+For Σ = {a, b}, convert the incomplete dfa below into a standard dfa.
+a
+a
+b
+23. Let L be a regular language on some alphabet Σ, and let Σ1 ⊂Σ be a smaller
+alphabet. Consider L1, the subset of L whose elements are made up only of
+symbols from Σ1, that is,
+L1 = L ∩Σ∗
+1.
+Show that L1 is also regular.
+2.3 EQUIVALENCE OF DETERMINISTIC AND
+NONDETERMINISTIC FINITE ACCEPTERS
+We now come to a fundamental question. In what sense are dfa’s and nfa’s
+diﬀerent? Obviously, there is a diﬀerence in their deﬁnition, but this does
+not imply that there is any essential distinction between them. To explore
+this question, we introduce the concept of equivalence between automata.
+
+
+=== Page 79 ===
+2.3 Deterministic and Nondeterministic Finite Accepters
+63
+one state of a set of possible states, say {qi, qj, ..., qk}. An equivalent dfa
+after reading the same string must be in some deﬁnite state. How can we
+make these two situations correspond? The answer is a nice trick: Label
+the states of the dfa with a set of states in such a way that, after reading
+w, the equivalent dfa will be in a single state labeled {qi, qj, ..., qk}. Since
+for a set of |Q| states there are exactly 2|Q| subsets, the corresponding dfa
+will have a ﬁnite number of states.
+Most of the work in this suggested construction lies in the analysis
+of the nfa to get the correspondence between possible states and inputs.
+Before getting to the formal description of this, let us illustrate it with a
+simple example.
+EXAMPLE 2.12
+Convert the nfa in Figure 2.12 to an equivalent dfa. The nfa starts
+in state q0, so the initial state of the dfa will be labeled {q0}. After
+reading an a, the nfa can be in state q1 or, by making a λ-transition,
+in state q2. Therefore, the corresponding dfa must have a state labeled
+{q1, q2} and a transition
+δ ({q0} , a) = {q1, q2} .
+In state q0, the nfa has no speciﬁed transition when the input is b;
+therefore,
+δ ({q0} , b) = ∅.
+A state labeled ∅represents an impossible move for the nfa and, there-
+fore, means nonacceptance of the string. Consequently, this state in
+the dfa must be a nonﬁnal trap state.
+q0
+q1
+q2
+a
+a
+b
+λ
+FIGURE 2.12
+We have now introduced into the dfa the state {q1, q2}, so we need
+to ﬁnd the transitions out of this state. Remember that this state of
+the dfa corresponds to two possible states of the nfa, so we must refer
+back to the nfa. If the nfa is in state q1 and reads an a, it can go to q1.
+Furthermore, from q1 the nfa can make a λ-transition to q2. If, for the
+same input, the nfa is in state q2, then there is no speciﬁed transition.
+
+
+=== Page 81 ===
+2.3 Deterministic and Nondeterministic Finite Accepters
+65
+2. Repeat the following steps until no more edges are missing.
+Take any vertex {qi, qj, ..., qk} of GD that has no outgoing edge for some
+a ∈Σ. Compute δ∗
+N (qi, a) , δ∗
+N (qj, a) , ..., δ∗
+N (qk, a). If
+δ∗
+N (qi, a) ∪δ∗
+N (qj, a) ∪... ∪δ∗
+N (qk, a) = {ql, qm, ..., qn},
+create a vertex for GD labeled {ql, qm, ..., qn} if it does not already exist.
+Add to GD an edge from {qi, qj, ..., qk} to {ql, qm, ..., qn} and label it
+with a.
+3. Every state of GD whose label contains any qf ∈FN is identiﬁed as a
+ﬁnal vertex.
+4. If MN accepts λ, the vertex {q0} in GD is also made a ﬁnal vertex.
+It is clear that this procedure always terminates. Each pass through the
+loop in Step 2 adds an edge to GD. But GD has at most 2|QN | |Σ| edges,
+so that the loop eventually stops. To show that the construction also gives
+the correct answer, we argue by induction on the length of the input string.
+Assume that for every v of length less than or equal to n, the presence
+in GN of a walk labeled v from q0 to qi implies that in GD there is a walk
+labeled v from {q0} to a state Qi = {..., qi, ...}. Consider now any w = va
+and look at a walk in GN labeled w from q0 to ql. There must then be a walk
+labeled v from q0 to qi and an edge (or a sequence of edges) labeled a from
+qi to ql. By the inductive assumption, in GD there will be a walk labeled v
+from {q0} to Qi. But by construction, there will be an edge from Qi to some
+state whose label contains ql. Thus, the inductive assumption holds for all
+strings of length n + 1. As it is obviously true for n = 1, it is true for all n.
+The result then is that whenever δ∗
+N (q0, w) contains a ﬁnal state qf, so does
+the label of δ∗
+D (q0, w). To complete the proof, we reverse the argument to
+show that if the label of δ∗
+D (q0, w) contains qf, so must δ∗
+N (q0, w).
+The arguments in this proof, although correct, are admittedly somewhat
+terse, showing only the major steps. We will follow this practice in the rest
+of the book, emphasizing the basic ideas in a proof and omitting minor
+details, which you may want to ﬁll in yourself.
+The construction in the previous proof is tedious but important. Let
+us do another example to make sure we understand all the steps.
+EXAMPLE 2.13
+Convert the nfa in Figure 2.14 into an equivalent deterministic machine.
+Since δN (q0, 0) = {q0, q1}, we introduce the state {q0, q1} in GD
+and add an edge labeled 0 between {q0} and {q0, q1}. In the same way,
+considering δN (q0, 1) = {q1} gives us the new state {q1} and an edge
+labeled 1 between it and {q0}.
+
+
+=== Page 83 ===
+2.3 Deterministic and Nondeterministic Finite Accepters
+67
+This gives us the new state {q0, q1, q2} and the transition
+δD ({q0, q1} , 0) = {q0, q1, q2} .
+Then, using a = 1, i = 0, j = 1, k = 2,
+δ∗
+N (q0, 1) ∪δ∗
+N (q1, 1) ∪δ∗
+N (q2, 1) = {q1, q2}
+makes it necessary to introduce yet another state {q1, q2}.
+At this
+point, we have the partially constructed automaton shown in Fig-
+ure 2.15. Since there are still some missing edges, we continue until we
+obtain the complete solution in Figure 2.16.
+One important conclusion we can draw from Theorem 2.2 is that every
+language accepted by an nfa is regular.
+INTRODUCTORY EXERCISES
+a
+q0
+q1
+b
+b
+a
+λ
+a, b
+q2
+q4
+q5
+q3
+1. Convert the nfa above to an equivalent dfa.
+2. Convert the nfa with initial state q0, ﬁnal state q3, and
+δ(q0, a) = {q1, q2},
+δ(q1, a) = {q3},
+δ(q2, b) = {q1, q3}
+to an equivalent dfa.
+3. Convert the nfa in Example 2.7 into an equivalent dfa.
+4. Change the nfa in Example 2.13 by changing the given transition δ(q1, 1) =
+{q2} to δ(q1, 1) = {q1}, then convert the new nfa into an equivalent dfa.
+5. Does a dfa equivalent to an nfa always have at least as many states as the nfa?
+
+
+=== Page 85 ===
+2.4 Reduction of the Number of States in Finite Automata*
+69
+12. Deﬁne a dfa with multiple initial states in an analogous way to the corre-
+sponding nfa in Exercise 18, Section 2.2. Does an equivalent dfa with a single
+initial state always exist?
+13. Prove that all ﬁnite languages are regular.
+14. Show that if L is regular, so is LR.
+15. Give a simple verbal description of the language accepted by the dfa in Figure
+2.16.
+Use this to ﬁnd another dfa, equivalent to the given one, but with
+fewer states.
+16. Let L be any language. Deﬁne even (w) as the string obtained by extracting
+from w the letters in even-numbered positions; that is, if
+w = a1a2a3a4...,
+then
+even (w) = a2a4....
+Corresponding to this, we can deﬁne a language
+even (L) = {even (w) : w ∈L} .
+Prove that if L is regular, so is even (L) .
+17. From a language L, we create a new language, chopleft (L), by removing the
+leftmost symbol of every string in L. Speciﬁcally,
+chopleft (L) = {w : vw ∈L, with |v| = 1} .
+Show that if L is regular, then chopleft (L) is also regular.
+18. From a language L, we create a new language chopright (L), by removing the
+rightmost symbol of every string in L. Speciﬁcally,
+chopright (L) = {w : wv ∈L, with |v| = 1} .
+Show that if L is regular, then chopright (L) is also regular.
+2.4 REDUCTION OF THE NUMBER OF STATES IN FINITE
+AUTOMATA*
+Any dfa deﬁnes a unique language, but the converse is not true. For a given
+language, there are many dfa’s that accept it. There may be a considerable
+diﬀerence in the number of states of such equivalent automata. In terms of
+the questions we have considered so far, all solutions are equally satisfactory,
+but if the results are to be applied in a practical setting, there may be
+reasons for preferring one over another.
+
+
+=== Page 86 ===
+70
+Chapter 2 Finite Automata
+EXAMPLE 2.14
+The two dfa’s depicted in Figure 2.17(a) and 2.17(b) are equivalent,
+as a few test strings will quickly reveal.
+We notice some obviously
+unnecessary features of Figure 2.17(a). The state q5 plays absolutely
+no role in the automaton since it can never be reached from the initial
+state q0. Such a state is inaccessible, and it can be removed (along
+with all transitions relating to it) without aﬀecting the language
+accepted by the automaton.
+But even after the removal of q5, the
+ﬁrst automaton has some redundant parts.
+The states reachable
+subsequent to the ﬁrst move δ (q0, 0) mirror those reachable from a
+ﬁrst move δ (q0, 1). The second automaton combines these two options.
+q1
+q0
+q0
+q2
+1
+0, 1
+0, 1
+q4
+1
+1
+1
+1
+0, 1
+q3
+0, 1
+q5
+0
+0
+q2
+q1
+0
+0
+0
+(b)
+(a)
+FIGURE 2.17
+From a strictly theoretical point of view, there is little reason for prefer-
+ring the automaton in Figure 2.17(b) over that in Figure 2.17(a). However,
+in terms of simplicity, the second alternative is clearly preferable. Repre-
+sentation of an automaton for the purpose of computation requires space
+proportional to the number of states. For storage eﬃciency, it is desirable
+to reduce the number of states as far as possible.
+We now describe an
+algorithm that accomplishes this.
+DEFINITION 2.8
+Two states p and q of a dfa are called indistinguishable if
+δ∗(p, w) ∈F implies δ∗(q, w) ∈F,
+
+
+=== Page 87 ===
+2.4 Reduction of the Number of States in Finite Automata*
+71
+and
+δ∗(p, w) /∈F implies δ∗(q, w) /∈F,
+for all w ∈Σ∗. If, on the other hand, there exists some string w ∈Σ∗
+such that
+δ∗(p, w) ∈F and δ∗(q, w) /∈F,
+or vice versa, then the states p and q are said to be distinguishable by a
+string w.
+Clearly, two states are either indistinguishable or distinguishable. In-
+distinguishability has the properties of an equivalence relation: If p and q
+are indistinguishable and if q and r are also indistinguishable, then so are p
+and r, and all three states are indistinguishable.
+One method for reducing the states of a dfa is based on ﬁnding and
+combining indistinguishable states. We ﬁrst describe a method for ﬁnding
+pairs of distinguishable states.
+procedure: mark
+1. Remove all inaccessible states. This can be done by enumerating all
+simple paths of the graph of the dfa starting at the initial state. Any
+state not part of some path is inaccessible.
+2. Consider all pairs of states (p, q). If p ∈F and q /∈F or vice versa, mark
+the pair (p, q) as distinguishable.
+3. Repeat the following step until no previously unmarked pairs are marked.
+For all pairs (p, q) and all a ∈Σ, compute δ (p, a) = pa and δ (q, a) = qa.
+If
+the
+pair
+(pa, qa)
+is
+marked
+as
+distinguishable,
+mark
+(p, q)
+as distinguishable.
+We claim that this procedure constitutes an algorithm for marking all dis-
+tinguishable pairs.
+THEOREM 2.3
+The procedure mark, applied to any dfa M = (Q, Σ, δ, q0, F), terminates
+and determines all pairs of distinguishable states.
+Proof: Obviously, the procedure terminates, since there are only a ﬁnite
+number of pairs that can be marked. It is also easy to see that the states
+of any pair so marked are distinguishable. The only claim that requires
+elaboration is that the procedure ﬁnds all distinguishable pairs.
+
+
+=== Page 88 ===
+72
+Chapter 2 Finite Automata
+Note ﬁrst that states qi and qj are distinguishable with a string of length
+n if and only if there are transitions
+δ (qi, a) = qk
+(2.5)
+and
+δ (qj, a) = q l,
+(2.6)
+for some a ∈Σ, with qk and ql distinguishable by a string of length n −1.
+We use this ﬁrst to show that at the completion of the nth pass through the
+loop in step 3, all states distinguishable by strings of length n or less have
+been marked. In step 2, we mark all pairs indistinguishable by λ, so we have
+a basis with n = 0 for an induction. We now assume that the claim is true
+for all i = 0, 1, ..., n −1. By this inductive assumption, at the beginning of
+the nth pass through the loop, all states distinguishable by strings of length
+up to n −1 have been marked. Because of (2.5) and (2.6) above, at the end
+of this pass, all states distinguishable by strings of length up to n will be
+marked. By induction then, we can claim that, for any n, at the completion
+of the nth pass, all pairs distinguishable by strings of length n or less have
+been marked.
+To show that this procedure marks all distinguishable states, assume
+that the loop terminates after n passes. This means that during the nth
+pass no new states were marked. From (2.5) and (2.6), it then follows that
+there cannot be any states distinguishable by a string of length n, but not
+distinguishable by any shorter string. But if there are no states distinguish-
+able only by strings of length n, there cannot be any states distinguishable
+only by strings of length n+1, and so on. As a consequence, when the loop
+terminates, all distinguishable pairs have been marked.
+The procedure mark can be implemented by partitioning the states into
+equivalence classes. Whenever two states are found to be distinguishable,
+they are immediately put into separate equivalence classes.
+EXAMPLE 2.15
+Consider the automaton in Figure 2.18.
+In the second step of procedure mark we partition the state set
+into ﬁnal and nonﬁnal states to get two equivalence classes {q0, q1, q3}
+and {q2, q4}. In the next step, when we compute
+δ(q0, 0) = q1
+and
+δ(q1, 0) = q2,
+
+
+=== Page 89 ===
+2.4 Reduction of the Number of States in Finite Automata*
+73
+we recognize that q0 and q1 are distinguishable, so we put them into
+diﬀerent sets. So {q0, q1, q3} is split into {q0} and {q1, q3}. Also, since
+δ(q2, 0) = q1 and δ(q4, 0) = q4, the class {q2, q4} is split into {q2}
+and {q4}. The rest of the computations show that no further splitting
+is needed.
+q1
+1
+1
+1
+1
+0
+0
+0
+0
+0, 1
+q4
+q2
+q0
+q3
+FIGURE 2.18
+Once the indistinguishability classes are found, the construction of the
+minimal dfa is straightforward.
+procedure: reduce
+Given a dfa M = (Q, Σ, δ, q0, F) , we construct a reduced dfa M =
+
+Q, Σ,δ,
+q0, F
+
+as follows.
+1. Use procedure mark to generate the equivalence classes, say {qi, qj, ..., qk},
+as described.
+2. For each set {qi, qj, ..., qk} of such indistinguishable states, create a state
+labeled ij · · · k for M.
+3. For each transition rule of M of the form
+δ (qr, a) = qp,
+ﬁnd the sets to which qr and qp belong.
+If qr ∈{qi, qj, ..., qk} and
+qp ∈{ql, qm, ..., qn}, add to δ a rule
+δ (ij · · · k, a) = lm · · · n.
+4. The initial state q0 is that state of M whose label includes the 0.
+5. F is the set of all the states whose label contains i such that qi ∈F.
+
+
+=== Page 90 ===
+74
+Chapter 2 Finite Automata
+EXAMPLE 2.16
+Continuing with Example 2.15, we create the states in Figure 2.19.
+Since, for example,
+δ(q1, 0) = q2,
+there is an edge labeled 0 from state 13 to state 2. The rest of the
+transitions are easily found, giving the minimal dfa in Figure 2.19.
+0
+1
+1
+0
+0
+0, 1
+0, 1
+4
+2
+13
+FIGURE 2.19
+THEOREM 2.4
+Given any dfa M, application of the procedure reduce yields another dfa M
+such that
+L (M) = L
+
+M
+
+.
+Furthermore, M is minimal in the sense that there is no other dfa with a
+smaller number of states that also accepts L (M).
+Proof: There are two parts. The ﬁrst is to show that the dfa created by
+reduce is equivalent to the original dfa. This is relatively easy, and we can
+use inductive arguments similar to those used in establishing the equivalence
+of dfa’s and nfa’s. All we have to do is to show that δ∗(qi, w) = qj if and
+only if the label of δ∗(qi, w) is of the form ...j....
+We will leave this as
+an exercise.
+The second part, to show that M is minimal, is harder. Suppose M has
+states {p0, p1, p2, ..., pm}, with p0 the initial state. Assume that there is an
+equivalent dfa M1, with transition function δ1 and initial state q0, equivalent
+
+
+=== Page 91 ===
+2.4 Reduction of the Number of States in Finite Automata*
+75
+to M, but with fewer states. Since there are no inaccessible states in M,
+there must be distinct strings w1, w2, ..., wm such that
+δ∗(p0, wi) = pi, i = 1, 2, ..., m.
+But since M1 has fewer states than M, there must be at least two of these
+strings, say wk and wl, such that
+δ∗
+1 (q0, wk) = δ∗
+1 (q0, wl) .
+Since pk and pl are distinguishable, there must be some string x such that
+δ∗(p0, wkx) = δ∗(pk, x) is a ﬁnal state, and δ∗(q0, wlx) = δ∗(pl, x) is a
+nonﬁnal state (or vice versa). In other words, wkx is accepted by M and
+wlx is not. But note that
+δ∗
+1 (q0, wkx) = δ∗
+1 (δ∗
+1 (q0, wk) , x)
+= δ∗
+1 (δ∗
+1 (q0, wl) , x)
+= δ∗
+1 (q0, wlx) .
+Thus, M1 either accepts both wkx and wlx or rejects both, contradicting
+the assumption that M and M1 are equivalent. This contradiction proves
+that M1 cannot exist.
+INTRODUCTORY EXERCISES
+1. Show that indistinguishability, as given in Deﬁnition 2.8, is an equivalence
+relation by showing that is symmetric, reﬂexive, and transitive.
+2. Complete the argument in Example 2.15 by showing that q1 and q3 are equiv-
+alent so that no further splitting is possible.
+3. Try to convince yourself that the dfa in Example 2.15 and the dfa in Example
+2.16 are equivalent by testing them with diﬀerent strings.
+4. Show that the dfa constructed in Example 2.13 is not minimal because the
+state labeled {q2} and the state labeled ∅are equivalent.
+EXERCISES
+1. Consider the dfa with initial state q0, ﬁnal state q2, and
+δ(q0, a) = q2
+δ(q0, b) = q2
+δ(q1, a) = q2
+δ(q1, b) = q2
+δ(q2, a) = q3
+δ(q2, b) = q3
+δ(q3, a) = q3
+δ(q3, b) = q1
+Find a minimal equivalent dfa.
+
+
+=== Page 92 ===
+76
+Chapter 2 Finite Automata
+2. Minimize the number of states in the dfa in Figure 2.16.
+3. Find minimal dfa’s for the following languages. In each case, prove that the
+result is minimal.
+(a) L = {anbm : n ≥2, m ≥1}.
+(b) L = {anb : n ≥1} ∪{bna : n ≥1}.
+(c) L = {an : n ≥0, n ̸= 2}.
+(d) L = {an : n ̸= 3 and n ̸= 4}.
+(e) L = {an : n mod 3 = 1} ∪{an : n mod 5 = 1}.
+4. Show that the automaton generated by procedure reduce is deterministic.
+5. Show that if L is a nonempty language such that any w in L has length at
+least n, then any dfa accepting L must have at least n + 1 states.
+6. Prove or disprove the following conjecture. If M = (Q, Σ, δ, q0, F) is a minimal
+dfa for a regular language L, then 
+M = (Q, Σ, δ, q0, Q −F) is a minimal dfa
+for L.
+7. Show that indistinguishability is an equivalence relation but that distinguisha-
+bility is not.
+8. Show the explicit steps of the suggested proof of the ﬁrst part of Theorem
+2.4, namely, that 
+M is equivalent to the original dfa.
+9. Prove the following: If the states qa and qb are indistinguishable, and if qa
+and qc are distinguishable, then qb and qc must be distinguishable.
+
+

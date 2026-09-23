@@ -1,0 +1,331 @@
+Total pages: 7
+=== PAGE 1 ===
+TỐI THIỂU CÁC TRẠNG THÁI CỦA DFA 
+ 
+Câu 1- cho DFA tìm DFA tối thiểu trạng thái 
+Câu 2- cho DFA hỏi nó tối thiểu chưa? Tại sao 
+ 
+2.1 GIẢM SỐ LƯỢNG CÁC TRẠNG THÁI TRONG DFA  
+           (Optimization of DFA) 
+Với một ngôn ngữ được cho, có nhiều DFA chấp nhận nó, nhưng số trạng thái của chúng có thể khác nhau. Do 
+vậy, một DFA cho trước, có thể làm giảm bớt đi một số trạng thái như có thể, mà không ảnh hưởng gì đến ngôn 
+ngữ được nó chấp nhận.  
+ Một DFA chỉ còn tối thiểu các trạng thái, nhận dạng cùng một ngôn ngữ với DFA ban đầu (chưa giảm trạng thái) 
+cho: 
+ Tính đơn giản − Dễ hiểu về chuyển dịch của máy tự động. 
+ Hiệu quả         − Cần ít bộ nhớ và sức mạnh xử lý hơn để triển khai DFA. 
+ Tối ưu hóa      − Cải thiện hiệu suất trong các ứng dụng bằng cách sử dụng DFA được giảm trạng thái. 
+Ví dụ 2.2 
+    Hai DFA trong hình (a) và (b) của hình 2.2 là tương đương, kiểm chứng bằng cách kiểm tra một vài chuỗi nhập 
+trên chúng. Chúng ta xem lại một số đặc tính không cần thiết trong hình (a).  
+ 
+                  
+                                 Hình 2.2: Hai DFA hình (a) và hình (b) tương đương với nhau 
+ 
+Trạng thái q5 không đóng một vai trò nào trong DFA, bởi vì nó không bao giờ đến được từ trạng thái ban đầu q0. 
+Như vậy có thể xóa đi, cùng với tất cả các hàm chuyển dịch liên quan đến nó, mà không làm ảnh hưởng đến ngôn 
+ngữ được nó chấp nhận. Nhưng ngay cả sau khi loại bỏ trạng thái q5, DFA trong hình (a) vẫn còn trạng thái dư 
+thừa. Trạng thái q1, q2,trong hình (a) được kết nối thành một trạng thái q1 trong hình (b), kéo theo q3 và q4 trong 
+hình (a) thành q2 trong hình (b). Kết quả ta được hình (b)  là DFA tương đương với hình (a) mà không còn trạng 
+thái dư thừa.   
+Trong hình 2.2, từ hình (a) ta có thể biến đổi thành hình (b) 
+         ● Bỏ q5 vì nó không bao giờ đến được từ trạng thái ban đầu q0, nó là trạng thái thừa 
+                 
+          ● q1, q2 được kết nối thành một trạng thái q1  
+
+
+=== PAGE 2 ===
+                   
+         ● q3, q4 được kết nối thành một trạng thái q2 
+              
+      Hình (a) có 6 trạng thái được giảm còn 3 trạng thái như hình(b) 
+ 
+Định nghĩa 2.2 ------------------------------------------------------------------------------- 
+1- Hai trạng thái p và q của một DFA được gọi là không thể phân biệt được nếu: 
+Với mọi chuỗi w *, ta có:    
+   * (q, w)  F suy ra  * (p, w)  F, và  
+   *(p, w)  F  suy ra  * (q, w)  F,              
+2- Hai trạng thái p và q của một DFA được gọi là phân biệt được nếu: 
+Tồn tại một chuỗi w sao cho: 
+   * (q, w) F và * (p, w) F hay ngược lại * (p, w) F và * (q, w) F 
+           -------------------------------------------------------------------------------------------------- 
+Làm rõ thêm định nghĩa 2.2 
+ 
+1. Trạng thái không thể phân biệt (Indistinguishable), "như nhau"   
+Hai trạng thái p và q được coi là "như nhau" về mặt hành vi. Dù bắt đầu từ p hay q, rồi để máy đọc hết chuỗi w 
+bất kỳ nào, kết quả cuối cùng đều dẫn đến cùng một loại trạng thái (cùng là trạng thái kết thúc hoặc cùng không 
+kết thúc). 
++ Điều kiện:     Với mọi chuỗi w  *, từ một cặp trạng thái khi máy đọc hết w thì cả 2 trạng thái đều dẫn 
+đến cùng một trạng thái là kết thúc hay không kết thúc: 
+                                 *(p, w)  F  và *(q, w)  F 
++ Ứng dụng:    Chúng ta không thể gộp hai trạng thái này lại thành một để giảm trạng thái của máy tự động. 
+2. Trạng thái phân biệt được (Distinguishable), “khác nhau” 
+Đây là trường hợp tìm được bằng chứng để chứng minh p và q là phân biệt được “khác nhau”. 
++  Điều kiện: Tồn tại ít nhất một chuỗi w sao cho khi máy đọc hết chuỗi w này thì: 
+                              Một trạng thái dẫn đến kết thúc (F), còn trạng thái kia thì không. 
++ Ví dụ điển hình: 
+Khi có một trạng thái là trạng thái kết thúc (p  F), còn trạng thái kia không phải là trạng thái kết thúc 
+(q F ). Thì kết luận ngay: p và q là phân biệt được. 
+ 
+Giải thuật Optimize states   
+
+
+=== PAGE 3 ===
+Với hai trạng thái trong DFA thì chúng có t hể phân biệt được hoặc là không phân biệt được. Sự không thể 
+phân biệt được có những tính chất của quan hệ tương đương. Nếu p và q không phân biệt được và nếu q và r cũng 
+không phân biệt được, thì p, q, r cũng không thể phân biệt được. 
+Một phương pháp giảm số trạng thái của một DFA là thực hiện việc tìm kiếm và kết hợp lại những trạng thái 
+không phân biệt được. Giải thuật Optimize states được sử dụng để rút gọn các trạng thái của DFA có số trạng 
+thái tối thiểu.   
+Giải thuật Optimize states 
+// Giải thuật này là để đánh dấu những cặp trạng thái là phân biệt được và tối thiểu trạng thái của DFA 
+//Đầu vào  DFA 
+//Đầu ra  DFA tối thiểu trạng thái 
+Bước 0 − Loại bỏ các trạng thái mà từ trạng thái khởi đầu không thể đi đến chúng được 
+Bước 1 − Vẽ một bảng cho tất cả các cặp trạng thái (qi , qj ) kể cả các cặp không kết nối trực tiếp  
+         //Ban đầu tất cả đều không được đánh dấu, và bảng này để đánh dấu các cặp là phân biệt được 
+Bước 2 − Xét mọi cặp trạng thái (qi , qj) trong DFA trong đó qi ∈ F và qj ∉ F hoặc ngược lại và đánh dấu chúng 
+vào bảng là phân biệt được. //F là tập hợp các trạng thái kết thúc của DFA 
+Bước 3 − Lặp lại bước này cho đến khi không thể đánh dấu thêm cặp trạng thái phân biệt được nào nữa  
+   Đối với mọi cặp trạng thái (p, q) chưa được đánh dấu và với mọi ký tự a ∈ Σ: 
+1. Tính các trạng thái kế tiếp: δ(p, a) = pa và δ(q, a) = qa. 
+2. Nếu cặp trạng thái (pa, qa) đã được đánh dấu là phân biệt được, thì hãy đánh dấu cặp (p, q) là phân biệt 
+được. 
+Bước 4 − Kết hợp tất cả các cặp không được đánh dấu (qi , qj ) và biến chúng thành một trạng thái duy nhất 
+trong DFA rút gọn trạng thái. 
+Ví dụ 2.3a  
+                Lần vết giải thuật Optimize states để Tìm DFA tối thiểu trạng thái cho DFA sau 
+ 
+    Giải 
+Bước 1- lập bảng để đánh dấu những cặp trạng thái phân biệt được vào những ô chưa tô màu 
+                                       
+                                                           q0 q1 q2 q3 q4 
+q0      
+q1      
+q2      
+q3      
+q4      
+ 
+Bước 2- Xét mọi cặp trạng thái (qi , qj) trong DFA trong đó qi ∈ F và qj ∉ F hoặc ngược lại  
+(qj ∈ F và qi ∉ F) thì đánh dấu  chúng vào bảng vì chúng phân biệt được. 
+               
+                                                           q0 q1 q2 q3 q4 
+q0      
+q1      
+q2      
+q3      
+q4 x x x x  
+ 
+
+
+=== PAGE 4 ===
+  
+Bước 3- Đánh dấu những cặp phân biệt được khác, dựa trên những cặp đã được đánh dấu phân biệt được 
+ Xét những cặp trạng thái chưa được đánh dấu trong bước 2: 
+  ■ (q1, q0) chưa xác nhận là phân biệt được vì 
+            δ(q1 , a) = q1, δ(q0 , a) = q1 (q1 và q0 khi đọc a thì dẫn đến cùng 1 trạng thái là q1) 
+            δ(q1 , b) = q3 ∉ F, δ(q0 , b) = q2 ∉ F      
+■ (q2, q0) chưa xác nhận là phân biệt được vì 
+    δ(q2 , a) = q1, δ(q0 , a) = q1; δ(q2 , b) = q2, δ(q0 , b) = q2  
+■ (q2, q1) chưa xác nhận là phân biệt được vì 
+    δ(q2 , a) = q1, δ(q1 , a) = q1; δ(q2 , b) = q2 ∉ F, δ(q1 , b) = q3 ∉ F 
+■ (q3, q0) phân biệt được vì 
+    δ(q3 , a) = q1, δ(q0 , a) = q1; δ(q3 , b) = q4 ∈ F, δ(q0 , b) = q2 ∉ F 
+■ (q3, q1) phân biệt được vì 
+    δ(q3 , a) = q1, δ(q1 , a) = q1; δ(q3 , b) = q4 ∈ F, δ(q1 , b) = q3 ∉ F 
+■ (q3, q2) phân biệt được vì 
+    δ(q3 , a) = q1, δ(q2 , a) = q1; δ(q3 , b) = q4 ∈ F, δ(q2 , b) = q2 ∉ F 
+             đánh dấu (q3 , q0), (q3 , q1), (q3 , q2) vào bảng (màu đỏ). 
+ 
+                                                           q0 q1 q2 q3 q4 
+q0      
+q1      
+q2      
+q3 x x x   
+q4 x x x x  
+                                                                    
+                         Lặp lại các cặp chưa được đánh dấu là  các cặp  (q1 , q0), (q2 , q0), (q2 , q1)     
+         ■ (q1, q0) phân biệt được vì 
+                   δ(q1 , a) = q1, δ(q0 , a) = q1; δ(q1 , b) = q3, δ(q0 , b) = q2 mà (q3 , q2) đã đánh dấu 
+         ■ (q2, q0) chưa xác nhận là phân biệt được vì 
+                   δ(q2 , a) = q1, δ(q0 , a) = q1; δ(q2 , b) = q2, δ(q0 , b) = q2  
+         ■ (q2, q1) phân biệt được vì 
+                   δ(q2 , a) = q1, δ(q1 , a) = q1; δ(q2 , b) = q2, δ(q1 , b) = q3 mà (q3 , q2) đã đánh dấu 
+               đánh dấu (q1 , q0), (q3 , q1) vào bảng (màu xanh). 
+ 
+ 
+ 
+ 
+ 
+                                                           q0 q1 q2 q3 q4 
+
+
+=== PAGE 5 ===
+q0      
+q1 x     
+q2  x    
+q3 x x x   
+q4 x x x x  
+                                                                   
+                Lặp lại cặp (q2, q0) vẫn không đánh dấu vào bảng được nên dừng bước 3 
+Sau bước 3, chỉ có tổ hợp trạng thái {q2, q0} không được đánh dấu, nên q2 và q0 được gộp thành 1 
+trạng thái . 
+                 Ta có thể tổ hợp lại: {q2, q0}, {q1}, {q3} và {q4,} và có DFA tối thiểu trạng thái sau 
+                                             
+           
+      Ví dụ 2.3b 
+               Tìm DFAr tối thiểu trạng thái cho DFA sau bằng lần vết giải thuật Optimize states. 
+                                              
+Bước 1 – Lập bảng cho tất cả các cặp trạng thái của DFA đầu vào 
+ 
+ 
+ 
+ 
+ 
+ q1 q2 q3 q4 q5 q6 
+q1       
+q2       
+q3       
+q4       
+q5       
+q6       
+ 
+Bước 2- Xét mọi cặp trạng thái (qi , qj) trong DFA trong đó qi ∈ F và qj ∉ F hoặc ngược lại và đánh dấu  
+chúng vào bảng, // chú ý chỉ đánh dấu vào nửa dưới của bảng để tránh đánh dấu một cặp 2 lần. 
+                        Trong bảng này, những ô được đánh dấu là những cặp phân biệt được. 
+
+
+=== PAGE 6 ===
+ 
+ 
+ 
+ q1 q2 q3 q4 q5 q6 
+q1       
+q2       
+q3 x x     
+q4 x x     
+q5 x x     
+q6   x x x  
+ 
+Bước 3- Đánh dấu những cặp khác dựa trên những cặp đã được đánh dấu 
+Xét những cặp trạng thái chưa được đánh dấu: 
+Ta có:  δ(q6 , 1) = q6, δ(q1 , 1) = q3 mà (q1 , q3) đã được đánh dấu,  
+            nên (q6 , q1) cũng được đánh dấu (màu đỏ). 
+            δ(q6 , 0) = q6, δ(q2 , 0) = q1 mà (q6 , q1) đã được đánh dấu,  
+            nên (q6 , q2) cũng được đánh dấu (màu đỏ). 
+            Xét những cặp chưa đánh dấu còn lại thì đều không đánh dấu được.  
+         Ta có kết quả ở bảng sau 
+ 
+ q1 q2 q3 q4 q5 q6 
+q1       
+q2       
+q3 x x     
+q4 x x     
+q5 x x     
+ q6 x x x x x  
+   
+Sau bước 3, ta được các tổ hợp trạng thái {q1, q2},{q3, q4}, {q3, q5} và {q4, q5} không được đánh dấu. 
+Ta có thể tổ hợp lại: {q3, q4} {q3, q5} {q4, q5} thành {q3, q4, q5} 
+Do đó, ta có hai trạng thái kết hợp một số trạng thái trong DFA là các tổ hợp: {q1, q2} và {q3, q4, q5} 
+Vì vậy, DFAr tối thiểu trạng thái chỉ có ba trạng thái: {q6}, {q1, q2} và {q3, q4, q5} như hình sau:                                                     
+                                             
+                                           
+                Nhận xét:  
+- Cả 2 DFA đều chấp nhận chấp nhận các chuỗi: 1;  0*1;  0*100*  
+- DFA tối thiểu trạng thái thì tất cả các trạng thái của nó đều phân biệt được 
+ 
+                                   
+Mệnh đề ------------------------------------------------------------------------------------------------ 
+        Một DFA là tối thiểu trạng thái khi và chỉ khi tất cả các trạng thái của nó có thể phân biệt được.  
+        ----------------------------------------------------------------------------------------------------------- 
+Mệnh đề này có nghĩa là không có hai trạng thái nào có thể được gộp lại, bởi vì luôn tồn tại ít nhất một chuỗi đầu 
+vào s sao cho một trạng thái sẽ chấp nhận s và trạng thái còn lại sẽ không chấp nhận s, do đó hai trạng thái đó là 
+phân biệt được. Nói cách khác mọi cặp trạng thái của DFA đều phân biệt được.  
+Ví dụ 2.4 
+             Kiểm tra DFA sau có tối thiểu trạng thái không ? 
+
+
+=== PAGE 7 ===
+                          
+Giải 
+ Xét      δ(q1 , 0)= q1 ∉ F và  δ(q2 , 0)= q2 ∈ F vậy   q1, q2 là phân biệt được  
+               q1 ∉ F và  q2 ∈ F vậy   q1, q2 là phân biệt được              
+             δ(q1 , 1)= q2 ∈ F và  δ(q3 , 1)= q3 ∉ F vậy   q1, q3 là phân biệt được 
+              δ(q3 , 0)= q3 ∉ F và  δ(q2 , 0)= q2 ∈ F vậy   q3, q2 là phân biệt được 
+           mọi cặp trạng thái đều phân biệt được, DFA này tối thiểu trạng thái. 
+//////////////////////// 
+BÀI TẬP  
+ 
+1. Tối thiểu hóa những trạng thái của những DFA trong hình (a) và (b) sau 
+ 
+    
+ 
+2. Tìm DFA có số trạng thái tối thiểu tương đương với NFA trong hình sau 
+        
+ 
+3. Tìm DFA tối thiểu trạng thái cho ngôn ngữ 
+a)  L  = {anbm: n   2, m  1} 
+b)  L  = {anb: n  0 }    {bna : n  1} 
+1 
+0 
+0 
+0 
+0,1 
+0,1 
+0,1 
+1 
+1 
+1 
+0 
+1 
+1 
+1 
+1 
+1 
+1 
+ 0 
+0 
+ 0 
+0 
+0 
+0 
+0 
+0 
+q
+ 
+q
+ 
+q
+ 
+q
+ 
+q
+ 
+q
+ 
+q
+ 
+q
+ 
+Hình (a) 
+q
+ 
+q
+ 
+q
+ 
+q
+ 
+q
+ 
+q
+ 
+q
+ 
+Hình (b) 
+ 
+ 
+b 
+a 
+ c 
+

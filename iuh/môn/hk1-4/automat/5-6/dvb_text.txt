@@ -1,0 +1,1618 @@
+=== Page 171 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 171 - 
+e) q   
+  
+Dùng các qui tắc (1.a-c), ta có dãy dẫn xuất: 
+ 
+ 
+S1  G
+*  #q0 [a1, a1][a2, a2] … [an, an]# 
+Dãy dẫn xuất này thể hiện hình trạng bắt đầu của MT là: #q0a1a2 … an#. Bắt đầu từ 
+bước này các quy tắc (2.a-c) được áp dụng. Lưu ý rằng các qui tắc này trong G phản 
+ánh các quy tắc chuyển trạng thái đã được thiết kế cho MT. Cho nên quá trình dẫn 
+xuất lại trong G sẽ mô phỏng lại các bước chuyển hình thái trong quá trình làm việc 
+của MT. Nếu quá trình đó chuyển đến một trong những trạng thái kết thúc q  F, 
+tương ứng với trường hợp MT đoán nhận chuỗi a1a2 … an, thì trong văn phạm G các 
+quy tắc (3.a-e) sẽ được áp dụng tiếp theo và cho phép G dẫn xuất ra chính chuỗi 
+nhập a1a2 … an. Hay ta có: S G
+*   a1a2 … an 
+ 
+Phần chứng minh L(MT)  L(G) và L(G)  L(MT) xem như bài tập. 
+■ 
+8.8 Ôtômát tuyến tính giới nội và văn phạm cảm ngữ cảnh 
+8.8.1 Ôtômát tuyến tính giới nội 
+Định nghĩa 8.4: Ta gọi ôtômát tuyến tính giới nội là một máy Turing không đơn 
+định và không có khả năng nới rộng vùng làm việc ra khỏi mút trái và mút phải 
+của chuỗi vào. Ký hiệu một ôtômát tuyến tính giới nội là LBA. 
+Nó phải thỏa hai điều kiện sau: 
+1) Bộ chữ cái vào của nó có chứa thêm hai ký hiệu đặc biệt  và $ dùng làm 
+ký hiệu đánh dấu mút trái và mút phải. 
+2) LBA không thực hiện phép chuyển sang trái (L) từ  và không thực hiện phép 
+chuyển sang phải (R) từ $, và cũng không viết các ký hiệu khác lên  và $. 
+ LBA đơn giản là một máy Turing, nhưng thay vì sử dụng một băng không giới hạn 
+cho việc tính toán, nó bị hạn chế chỉ trong phạm vi băng chứa chuỗi vào x với hai 
+ô chứa các ký hiệu đánh dấu cận đầu mút. Sự giới hạn này làm cho việc tính toán 
+phải thông qua một số các hàm tuyến tính trên độ dài chuỗi, do đó ta gọi mô hình 
+này là ôtômát tuyến tính giới nội. LBA không dùng các ô trống ở trên băng về phía 
+trái và phía phải của chuỗi vào, vì vậy ký hiệu khoảng trắng B như đã dùng ở máy 
+Turing là không cần dùng ở đây. Trái lại, để LBA nhận biết được giới hạn bên trái 
+và giới hạn bên phải của chuỗi vào, ta phải đưa thêm vào bộ chữ cái vào S hai ký 
+hiệu đặc biệt như , $ để đánh dấu mút trái và mút phải của chuỗi. Vậy, tại thời điểm 
+bắt đầu, chuỗi vào ở trên băng sẽ có dạng  w $,  trong đó w  (- {, $})* là chuỗi 
+cần đoán nhận. Trong quá trình làm việc, khi đầu đọc duyệt tới ô có chứa  hay $, 
+thì phép chuyển tiếp theo sau đó chỉ có thể là đổi trạng thái, chuyển đầu đọc trở lại 
+phía trong phạm vi băng (tức chuyển sang phải khi gặp  và chuyển sang trái khi 
+gặp $), và không được phép viết ký hiệu gì khác trên băng tại ô đang đọc khi gặp  
+và $. Vậy, LBA có thể định nghĩa một cách hình thức hơn như sau. 
+
+=== Page 172 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 172 - 
+ Định nghĩa 8.5: LBA là một hệ thống MT = (Q, , ,,qo,, $, F), trong đó các 
+thành phần Q, , , qo, F vẫn như đã định nghĩa ở máy Turing, còn , $   và 
+hàm chuyển: 
+ 
+: Q    (Q    { L, R}) 
+phải thỏa mãn điều kiện: 
+-         Nếu (p, Y, E)  (q, ) thì Y =  và E = R 
+-         Nếu (p, Y, E)  (q, $) thì Y = $ và E = L 
+Ngôn ngữ đƣợc đoán nhận bởi LBA  
+Ta định nghĩa ngôn ngữ L(MT) được đoán nhận bởi LBA MT là tập hợp: 
+L(MT) = { w  w  ( - {, $})* và qow$ ⊢MT
+* q với q  F và   * } 
+Chú ý rằng các ký hiệu đánh dấu hai đầu mút ngay từ hình trạng bắt đầu, chúng đã 
+có mặt trên băng nhập, nhưng chúng không được xem như thuộc một phần của 
+chuỗi được đoán nhận hay không được đoán nhận bởi LBA. Vì đầu đọc của LBA 
+không thể dịch chuyển ra ngoài phần chuỗi nhập nên chúng ta không cần định 
+nghĩa các khoảng trống (ký hiệu B) phía bên phải của $. 
+8.8.2 Văn phạm cảm ngữ cảnh (CSG) 
+Văn phạm cảm ngữ cảnh, như đã trình bày ở các chương trước, là một văn phạm   
+G = (VN, , P, S), trong đó: 
+1)     VN là một tập hữu hạn các biến hay ký hiệu không kết thúc. 
+2)       là một tập hữu hạn các ký hiệu cuối, VN   =  
+3)      P là tập hữu hạn các qui tắc dạng    trong đó ,   (VN  )*, 
+chuỗi  phải có chứa biến và ràng buộc ||  || 
+4)      S  VN là ký hiệu bắt đầu. 
+ Ngôn ngữ do văn phạm cảm ngữ cảnh G sinh ra là 
+L(G) = {w  w  * và S 
+*
+ w} 
+ L(G) được gọi là ngôn ngữ cảm ngữ cảnh. Thuật ngữ “cảm ngữ cảnh” có xuất xứ 
+từ một dạng chuẩn của văn phạm dạng này, trong đó mỗi qui tắc có dạng        
+1A2  12 với   , cho thấy một biến A chỉ có thể được thay thế bởi một 
+chuỗi  (khác rỗng) trong “ngữ cảnh” 1 - 2. Điều đó không giống như trong văn 
+phạm phi ngữ cảnh, với các qui tắc có dạng A   (||  0), sự thay thế này không đòi 
+hỏi ngữ cảnh. 
+Ví dụ 8.11 Xét văn phạm G = (VN, , P, S) với VN ={ S, B, C},  ={a, b, c} và P 
+gồm các qui tắc như sau: 
+ 
+ 
+ 
+ 
+1. S  aSBC 
+ 
+ 
+ 
+ 
+ 
+2. S  aBC 
+ 
+ 
+ 
+ 
+ 
+
+=== Page 173 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 173 - 
+ 
+ 
+ 
+ 
+3. CB  BC 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+4. aB  ab 
+5. bB  bb 
+6. bC  bc 
+7. cC  cc 
+Một cách phi hình thức, áp dụng một số qui tắc cho các chuỗi dẫn xuất sinh ra 
+ngôn ngữ, ta dễ thấy rằng văn phạm G sinh ra ngôn ngữ có dạng: 
+L = {anbncn n  1} 
+Thật vậy, với qui tắc (1) và (2) ta có chuỗi dẫn xuất S 
+*
+ an(BC)n. Sau đó, bằng 
+cách áp dụng qui tắc (3), mọi biến B sẽ được thay thế lên trước các biến C trong 
+chuỗi dẫn xuất: an(BC) * anBnCn. Bởi qui tắc (4) và (5), mọi biến B sẽ được thay 
+thế thành các ký hiệu kết thúc b, và cuối cùng với (6) và (7), mọi biến C cũng sẽ 
+được thay thế thành c. Tóm lại, ta có chuỗi dẫn xuất như sau: 
+S
+*
+ an(BC)n 
+*
+ anBnCn 
+*
+ anbncn. 
+Bài toán thành viên với văn phạm cảm ngữ cảnh 
+Định lý 8.4  Với mọi văn phạm cảm ngữ cảnh G = (VN, , P, S), tồn tại một thuật 
+toán để xác định xem một chuỗi vào w  * có thuộc ngôn ngữ L(G) hay không. 
+Chứng minh: 
+Giả sử |w| = n. Ta lập đồ thị mà mỗi đỉnh là một chuỗi thuộc (VN  )* có độ dài 
+nhỏ hơn hoặc bằng n, có một cung từ đỉnh  đến đỉnh  nếu   . Như vậy, một 
+đường đi trong đồ thị đó tương ứng với một suy dẫn trong G. Vậy w  L(G) khi và 
+chỉ khi có một đường đi từ đỉnh bắt đầu S tới đỉnh w trong đồ thị. Dùng bất cứ 
+thuật toán thuật nào cho phép tìm đường nối hai đỉnh trong đồ thị (đã có nhiều 
+thuật toán như thế ([2], [6])), ta sẽ xác định được phải chăng đã có đường đi từ đỉnh 
+S tới đỉnh w.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+■ 
+Ví dụ 8.12: Xét văn phạm cảm ngữ cảnh G = (VN, , P, S) với các qui tắc được 
+cho như trong thí dụ 8.11 trên và xét chuỗi vào w = abbc. Ta cần xác định xem liệu 
+chuỗi w  L(G)? 
+ 
+Để tìm đường đi từ đỉnh S tới đỉnh abbc trong đồ thị nói trên ta có thể dùng phương 
+pháp “vết dầu loang” như sau: 
+Lập các  R(i), i = 0, 1, 2, … theo quy tắc sau: 
+ 
+ 
+R(0) = { S } 
+ 
+ 
+R(i)  =  R(i -1)  {     với   R(i -1)  và  ||  |w|} 
+Do  R(0)  R(1)  …  R(i)  R(i +1)   …   tập các đỉnh, vậy tồn tại số k nào 
+đó sao cho: 
+ 
+ 
+R(k) = R(k +1) = R(k +2) = …   
+
+=== Page 174 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 174 - 
+Do đó, quá trình thành lập các R(i) sẽ có thể ngừng sau k bước. 
+Và w  L(G) khi và chỉ khi có i  k để cho w  R(i). 
+Trong ví dụ trên, giả sử khi ta xét |w| = 4, ta có: 
+ 
+ 
+R(0) = {S} 
+ 
+ 
+R(1) = {S, aSBC, aBC} 
+ 
+ 
+R(2) = {S, aSBC, aBC, abC} 
+ 
+ 
+R(3) = {S, aSBC, aBC, abC, abc} 
+ 
+ 
+R(4) = R(3) 
+Vậy chuỗi abbc không thuộc L(G). 
+8.8.3 Sự tƣơng đƣơng giữa LBA và CSG 
+Chúng ta chú ý rằng, LBA có thể đoán nhận các xâu rỗng , còn CSG không thể 
+sinh ra xâu rỗng. Ngoài trường hợp đó ra thì LBA sẽ đoán nhận chính xác tất cả 
+các xâu được sinh ra từ CSG. 
+Định lý 8.5  Nếu L là  một ngôn ngữ cảm ngữ cảnh thì L sẽ được đoán nhận bởi một LBA 
+nào đó. 
+Chứng minh: 
+Cách chứng minh định lý này cũng tương tự như cách chứng minh của định lý ở 
+chương trước về sự tương đương giữa lớp ngôn ngữ sinh từ văn phạm loại 0 với 
+lớp ngôn ngữ mà máy Turing chấp nhận, chỉ khác là ở đây không cần dùng một 
+băng nhập thứ hai để phát sinh các dạng câu theo xâu dẫn xuất lần lượt theo các 
+suy dẫn của văn phạm, mà chỉ cần dùng băng thứ hai trên băng nhập của LBA vào 
+việc đó. 
+Cho G = (VN, , P, S) là một văn phạm cảm ngữ cảnh, ta xây dựng ôtômát LBA 
+MT như sau: Băng nhập của LBA gồm hai băng: băng 1 chứa xâu nhập vào w với 
+các ký hiệu đánh dấu , $ ở hai đầu, băng 2 dùng để phát sinh các dạng câu . Trạng 
+thái bắt đầu, nếu w =  thì MT ngừng và không đoán nhận dãy vào, nếu không thì đầu 
+đọc viết ký hiệu S ở băng 2, ngay dưới ký hiệu bên trái nhất của xâu w, tiếp đó MT thực 
+hiện quá trình sau: 
+1) 
+Chọn trong số không đơn định một xâu con  của xâu  trên băng 2 sao cho  
+   là một qui tắc trong P.  
+2) 
+Thay  bởi , nếu cần thiết ta phải dịch chuyển phần cuối xâu sang phải cho 
+đủ chỗ, tuy nhiên nếu dịch chuyển ra ngoài $ thì LBA ngừng và không chấp 
+nhận. 
+3) 
+(Hình thái hiện tại ở băng 1 là w$, còn ở băng 2 là xâu , mà S G  và    
+  w). So sánh băng 1 và băng 2, nếu  = w thì LBA ngừng và đoán nhận 
+w. Nếu không thì trở về bước (1). 
+
+=== Page 175 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 175 - 
+Như vậy khi MT đoán nhận xâu w, thì S 
+*
+ w. Ngược lại nếu S 
+*
+ w thì mọi dạng 
+câu  xuất hiện trong dãy dẫn xuất đó đều thoả mãn   w, bởi vì mọi qui tắc     
+   trong văn phạm G đều thỏa   . Như vậy MT có thể thực hiện dãy dẫn 
+xuất đó trên băng 2, giữa hai ký hiệu đánh dấu đầu mút  và $. Vậy MT đoán nhận 
+xâu nhập w.  
+Tóm lại MT sẽ đoán nhận mọi xâu sinh ra bởi văn phạm G.  
+          ■ 
+  
+Định lý 8.6  Nếu L = L(MT) với một LBA MT = (Q, , ,,qo,, $, F)  thì L – {} 
+là một ngôn ngữ cảm ngữ cảnh. 
+ 
+Chứng minh: 
+Ta xây dựng G theo 3 giai đoạn: 
+(i)  Giai đoạn 1: Văn phạm cho phép sinh ra một xâu w (xâu nhập của MT), cũng 
+được chứa trong , $ và q0. 
+(ii) Giai đoạn 2: Văn phạm lặp lại công việc của MT. 
+(iii) Giai đoạn 3: Khi xuất hiện trạng thái q  F, ta thu về xâu w với lưu ý rằng các 
+qui tắc    đều có  = .  
+Quá trình mô phỏng lại các qui tắc đó bởi các qui tắc của G sẽ không có gì vướng 
+mắc. Chỉ ở giai đoạn 3, việc xoá đi các ký hiệu đánh dấu hai đầu mút  và $, q 
+không được phép làm rút ngắn xâu nhập lại. Để giải quyết vướng mắc này, ta gắn 
+các ký hiệu , $, q kề bên với các ký hiệu của xâu nhập mà không để đứng rời ra 
+như trước. 
+ 
+Cụ thể, giai đoạn 1 thực hiện bởi các qui tắc trong G sau: 
+ 
+ 
+S1  [a, q0  a]S2 
+S1  [a, q0a$] 
+ 
+ 
+S2  [a, a]S2, 
+ 
+S2  [a,a$] 
+ 
+ 
+a   - {, $} 
+Các qui tắc trong G cho phép thực hiện giai đoạn 2, giống như LBA MT thực hiện 
+(sinh viên tự xây dựng xem như bài tập). 
+Cuối cùng, ở giai đoạn 3, các qui tắc sau đây sẽ được sử dụng, với q  F: 
+ 
+ 
+[a, q]  a 
+ 
+ 
+a   - {, $} và ,  có thể có.  
+Chú ý rằng số qui tắc là hữu hạn, vì  và / hoặc  chỉ gồm , $ và một ký hiệu 
+nhập vào. Chúng ta cũng có thể xoá thành phần thứ hai của một biến nếu nó liền kề 
+với ký hiệu kết thúc bằng cách dùng các qui tắc dạng: 
+ 
+ 
+[a, ]b  ab 
+ 
+ 
+b[a, ]  ba 
+
+=== Page 176 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 176 - 
+ 
+a, b   - {, $} và  có thể có.  
+ Như vậy các qui tắc vừa được xây dựng mô tả văn phạm là G và có thể chứng 
+minh L(MT) - {} = L(G).  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+■ 
+8.9 Bài toán dừng của máy Turing 
+8.9.1 Những bài toán không quyết định đƣợc  
+Trong khoa học tính toán, chúng ta thường gặp những bài toán mà câu trả lời là 
+“có” (yes) hoặc “không” (no), “đúng” (true) hoặc “sai” (false), được gọi là loại bài 
+toán quyết định. Đối với một bài toán quyết định, có những bộ dữ liệu vào có câu 
+trả lời (đầu ra) là “có” và cũng có những bộ dữ liệu vào có câu trả lời “không”.  
+Sau đây là một số bài toán quyết định liên quan đến các ngôn ngữ (hình thức, ngôn 
+ngữ lập trình): 
+1. Có thể viết được chương trình tìm tất cả các sô nguyên dương x, y, z  và số 
+nguyên n > 2 để xn + yn = zn. Bài toán đặt ra là chương trình này có dừng 
+hay không nếu và khi nào tìm thấy lời giải? (Định lý cuối cùng của Fermat). 
+2. Bài toán SAT (Formula SATisfiability). Cho trước công thức Boole, hỏi có 
+một bộ giá trị của các biến để công thức đó luôn nhận giá trị đúng hay 
+không? 
+3. Đối với một ngôn ngữ lập trình bất kỳ, có xác định được hay không: 
+(a) Một chương trình cho trước có thể lặp vô hạn với dữ liệu vào bất kỳ? 
+(b) Một chương trình cho trước có thể cho ra kết quả? 
+(c) Một chương trình cho trước có thể dừng với dữ liệu vào cho trước? 
+4. Đối với các ngôn ngữ hình thức, có xác định hay không: 
+(a) Bài toán tương đương của các văn phạm phi ngữ cảnh? 
+(b) Bài toán rỗng của ngôn ngữ cảm ngữ cảnh? 
+(c) Bài toán thành viên của văn phạm loại 0, một xâu cho trước có thuộc 
+một ngôn ngữ loại 0? 
+5. Bài toán dừng của máy Turing? 
+6. Bài toán P = NP? (được đề cập chi tiết ở phần sau). 
+… 
+Định nghĩa 8.6: Lớp các bài toán với hai kết quả (có hoặc không) được gọi là 
+quyết định được (giải được) nếu tồn tại một thuật toán xác định và luôn dừng với 
+kết luận (có hoặc không) đối với mọi bộ dữ liệu vào. Ngược lại là lớp các bài toán 
+không quyết định được (không giải được). 
+Tất cả các bài toán nêu trên là không quyết định được. Sau đây chúng ta chứng 
+minh rằng bài toán dừng của máy Turing là không giải được. 
+
+=== Page 177 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 177 - 
+Theo giả thuyết của Church, máy Turing được xem như một hệ thống tính toán 
+tổng quát nhất. Từ đó suy ra, việc tìm ra một thuật toán để giải bài toán quyết định 
+tương đương với việc xây dựng máy Turing để thực hiện thuật toán đó. 
+Trước khi chứng minh định lý về tính dừng của máy Turing, chúng ta cần lưu ý 
+thêm một số biểu diễn của máy Turing. Hàm chuyển  () có thể biểu diễn thành bộ 
+5, ví dụ: (q, a) = (, , ) được biểu diễn thành (q, a, , , ). Tất cả các trạng thái 
+và các bộ 5-phần tử như trên có thể mã hoá thành các xâu (dãy ký tự) trên bảng chữ 
+ (thường  = {0, 1}, vậy MT có thể biểu diễn bằng các dãy nhị phân). Một tập 
+các dãy mã hoá MT như thế, sẽ được ký hiệu là d(MT). Cặp (MT, x), trong đó MT 
+là máy Turing và x là dãy vào, được mã hoá thành d(MT) * x.    
+Định lý 8.7 (Định lý Turing) Bài toán dừng của máy Turing trên bảng chữ           
+ = {0, 1} là không quyết định được, nghĩa là một máy Turing bất kỳ có dừng hay 
+không đối với dãy vào x bất kỳ trong  là không quyết định được.  
+Chứng minh: 
+Chúng ta chứng minh định lý bằng phương pháp phản chứng. Giả sử MT là một 
+máy Turing bất kỳ và d(MT) là dãy mã hoá nhị phân biểu diễn cho MT. Khi đó, 
+cặp (MT, x), x là bất kỳ, sẽ được mã hoá thành d(MT)*x. Giả sử bài toán dừng của 
+MT đối với x là quyết định được, thì sẽ tồn tại thuật toán P để trả lời xem MT có 
+dừng hay không. Nghĩa là, 
+(a) Nếu MT dừng đối với dãy vào x thì P đạt tới hiện trạng được chấp nhận, 
+(b) Nếu MT không dừng đối với dãy vào x thì P đạt tới hiện trạng không 
+được chấp nhận. 
+Chúng ta hãy xây dựng thuật toán Q mới dựa vào P như sau: 
+(c) Xem d(MT) là dãy vào và sao đúp thành d(MT) *d(MT), sau đó áp dụng 
+thuật toán P đối với dãy vào  d(MT) *d(MT), 
+(d) Q lặp lại vô hạn nếu P đạt đến hiện trạng được đoán nhận và Q dừng nếu 
+P đạt đến hiện trạng không được chấp nhận. 
+Theo giả thuyết Church, tồn tại một máy Turing MT’để thực hiện Q. Bởi vì thuật 
+toán P, cũng như Q thực hiện được trên mọi máy, vậy Q thực hiện được trên máy 
+MT và P thực hiện được trên MT’. Ta có thể chọn MT’= MT.  
+ 
++ Từ (d) và (a) suy ra MT’ lặp vô hạn nếu nó dừng. 
+ 
++ Từ (d) và (b) suy ra  MT’ dừng nếu nó lặp vô hạn. 
+Nghĩa là, MT’ dừng khi và chỉ khi MT’ lặp vô hạn. Đây rõ ràng là mâu thuẫn, vậy 
+tính dừng của máy Turing là không quyết định được. 
+ 
+ 
+ 
+ 
+■ 
+Hệ quả 8.1: Bài toán tồn tại một máy Turing để quyết định xem có dừng hay 
+không khi thao tác trên một dãy vào bất kỳ là không giải được. 
+Hệ quả 8.2: Tồn tại máy Turing MT trên {0, 1} và một trạng thái qm sao cho 
+không tồn tại thuật toán  để quyết định xem MT có đạt đến qm từ một hiện trạng 
+nào đó hay không.  
+
+=== Page 178 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 178 - 
+8.9.2 Bài toán về sự tƣơng ứng của Post 
+Bài toán về sự tương ứng Post  PCP (Post Correspondence Problem) được Emil 
+Post giới thiệu vào năm 1946. Bài toán được phát biểu như sau:  
+Xét hai danh sách x = (x1, x2, …, xn) và y = (y1, y2, …, yn) của các xâu khác rỗng 
+trên bảng chữ  = {0, 1}. Có tồn tại hay không một dãy  i1, i2, …, im, 1  ij  n, sao 
+cho 
+ 
+ 
+x
+1i … x m
+i  =  y
+1i … y m
+i  
+Lưu ý: Các chỉ số ij không nhất thiết phải khác nhau và m có thể lớn hơn n.  
+Ví dụ 8.12. Với hai danh sách x = (b, bab3, ba) và y = (b3, ba, a) bài toán PCP có 
+lời giải hay không? 
+Giải: 
+Chúng ta cần xác định xem, có tồn tại hay không một dãy con của x và y tương ứng bằng 
+nhau không. Ta có thể chọn i1 = 2, i2 = i3 = 1, i4 = 3, nghĩa là tồn tại dãy (2, 1, 1, 3), m = 4 để 
+ 
+ 
+ 
+ 
+ 
+ 
+      =  
+ 
+Do đó, PCP có lời giải. 
+ 
+ 
+Ví dụ 8.13. Chứng minh rằng với hai danh sách x =(01, 1, 1) và y = (012, 10, 12) 
+thì PCP không có lời giải. 
+Trước tiên chúng ta thấy, với mọi xi  x và yi  y, ta có |xi| < |yi|, với mọi i. Do 
+vậy, xâu được tạo ra bằng dãy các xâu con của x sẽ luôn ngắn hơn xâu được tạo ra 
+bằng các xâu con tương ứng của y. Vì vậy, PCP không có lời giải.  
+Post đã phát biểu định lý sau: 
+Định lý 8.8  PCP trên bảng chữ   với  || ≥ 2 sẽ không quyết định được. 
+Sử dụng kỹ thuật rút gọn để chuyển bài toán PCP về nhiều lớp các bài toán quyết 
+định trong ngôn ngữ hình thức. Những kết luận sau đây có thể suy ra được từ bài 
+toán PCP [4]. 
+(i) 
+Nếu L1 và L2 hai ngôn ngữ phi ngữ cảnh trên bảng chữ  , || ≥ 2,  thì 
+không tồn tại thuật toán để quyết định được những kết quả sau đúng hay 
+sai: 
+a. L1  L2 = , 
+b. L1  L2 là ngôn ngữ phi ngữ cảnh, 
+c. L1  L2, 
+d. L1  = L2. 
+(ii) Nếu G là văn phạm cảm ngữ cảnh (loại 1), thì không tồn tại thuật toán để 
+quyết định được những kết quả sau đúng hay sai: 
+bab3 
+b 
+b 
+ba 
+ba 
+b3 
+b3 
+a 
+
+=== Page 179 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 179 - 
+a. L(G) = , 
+b. L(G) là vô hạn, 
+c. x0  L(G) với x0 nào đó. 
+(iii) Nếu G là văn phạm ngữ cấu (loại 0), thì không tồn tại thuật toán để quyết 
+định xem x  * có thuộc L(G) hay không.  
+8.10 Lớp các bài toán NP đầy đủ 
+Vào đầu những năm 60 của thế kỷ 20, các máy tính đã được sử dụng rộng rãi để 
+giải các bài toán khoa học - kỹ thuật  và các bài toán kinh tế. Các nhà tin học đứng 
+trước một vấn đề thách thức rất lớn trước những câu hỏi: thế nào là một thuật toán 
+“tốt”, hiệu quả, hay ngược lại, một thuật toán “không tốt”?, thế nào là một bài toán 
+“dễ”, một bài toán “khó”? Lúc đầu, phần lớn nhận xét theo trực quan, nhanh hay 
+không là dựa vào kết quả thực nghiệm. Mãi cho đến 1965 Edmond lần đầu tiên đưa 
+ý tưởng mới: một thuật toán được gọi là hiệu quả (tốt), nếu thời gian thực hiện trên 
+máy bị chặn lại bởi một đa thức của mọi dữ liệu vào (kể cả trường hợp xấu nhất). 
+Các nhà khoa học (trong đó có Steve Cook và Dick Karp) đã khẳng định rằng yêu 
+cầu tối thiểu đối với một thuật toán hiệu quả là thời gian tính của nó phải là đa thức 
+(nc), với c là hằng số. Người ta cũng nhận thấy rằng đối với nhiều lớp bài toán, 
+việc tìm ra những thuật toán như vậy là rất khó khăn, hơn nữa chúng ta còn không 
+biết là một thuật toán như thế có tồn tại hay không. Chính vì thế, Cook và Karp 
+cùng một số người khác đã đưa ra định nghĩa lớp các bài toán NP-đầy đủ, mà cho 
+đến nay nhiều người tin rằng (nhưng chưa chứng minh được) không thể có thuật 
+toán hiệu quả để giải chúng. 
+8.10.1 Các lớp bài toán P và NP 
+Đánh giá độ phức tạp tính toán của bài toán là xác định thời gian tính toán (số các 
+phép toán cơ sở cần thực hiện) của thuật toán tốt nhất trong tất cả các thuật toán 
+giải bài toán đó, cả những thuật toán đã biết lẫn các thuật toán còn chưa biết. Việc 
+đánh giá độ phức tạp tính toán của bài toán giữ vai trò định hướng trong việc thiết 
+kế các thuật toán để giải những bài toán đặt ra trong thực tế. 
+Để định nghĩa được lớp các bài toán P và NP chúng ta cần định nghĩa độ phức tạp 
+thời gian của máy Turing. 
+Định nghĩa 8.7 Độ phức tạp thời gian T(n) của máy Turing (đơn định) là số phép 
+chuyển cực đại của MT để xử lý một dãy vào bất kỳ có độ dài n. 
+Định nghĩa 8.8  Ngôn ngữ L được gọi là thuộc lớp P nếu tồn tại một máy Turing (đơn 
+định) MT sao cho MT có độ phức tạp thời gian là đa thức p(n) và nó đoán nhận được L. 
+Mục 8.5 chúng ta đã định nghĩa máy Turing không đơn định. Đặc điểm của máy 
+Turing không đơn định là tại mỗi hiện trạng bất kỳ, máy được phép có nhiều khả 
+năng dịch chuyển (hàm chuyển không đơn trị). Để định nghĩa được lớp NP chúng 
+ta cần định nghĩa độ phức tạp thời gian của máy Turing không đơn định. 
+
+=== Page 180 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 180 - 
+Định nghĩa 8.9  Máy Turing không đơn định MT có độ phức tạp thời gian T(n) 
+nếu với mọi dãy vào được đoán nhận có độ dài n, tồn tại một dãy nhiều nhất T(n) 
+phép chuyển để MT đạt đến hiện trạng chấp nhận.  
+Định nghĩa 8.10  Ngôn ngữ L được gọi là thuộc lớp NP nếu tồn tại một máy 
+Turing không đơn định MT sao cho MT có độ phức tạp thời gian là đa thức p(n) và 
+nó đoán nhận L. 
+ Mặc dù định nghĩa của lớp P và NP là tương tự, song chúng có sự khác biệt rất 
+lớn.  
+ Khi L thuộc P, số các bước chuyển của MT để xử lý dãy đầu vào bất kỳ có 
+độ dài n là nhỏ hơn hoặc bằng p(n). 
+  Khi L thuộc NP, số các bước chuyển của MT để xử lý là nhỏ hơn hoặc 
+bằng p(n) chỉ đối với những dãy vào được chấp nhận. Như vậy, trong lớp 
+NP, giới hạn p(n) các phép chuyển chỉ có tác dụng khi chúng ta có thể tìm 
+được dãy đầu vào w  L. 
+Một cách hoàn toàn tương đương, ta có thể hiểu P là lớp các bài toán có thể giải 
+được trong thời gian đa thức, còn NP là lớp các bài toán, mà mọi nghiệm giả định 
+đều có thể kiểm định được trong thời gian đa thức. Thường thì việc tìm nghiệm 
+khó hơn nhiều so với việc kiểm chứng nghiệm. 
+Sau đây là một số tính chất đóng của lớp P  và NP [1]. 
+Định lý 8.9  Nếu A, B  P  thì A  B, A  B, AB, A*  P 
+Định lý 8.10  Nếu A, B  NP  thì A  B, A  B, AB, A*  NP. 
+Một trong những bài toán “mở” quan trọng nhất hiện nay của khoa học máy tính lý 
+thuyết là P = NP? Nói cách khác, có phải mọi ngôn ngữ được đoán nhận bởi một 
+thuật toán không đơn định với thời gian đa thức thì cũng được chấp chận bởi thuật 
+toán đơn định nào đó với thời gian đa thức hay không? Đây là một trong những bài 
+toán khó nhất đặt ra trong thế kỷ 21 này cho các nhà toán học và khoa học tính 
+toán. 
+8.10.2 NP-đầy đủ 
+Hiển nhiên là P  NP, nên việc xét mối quan hệ giữa P và NP nói chung là phải 
+duyệt lại toàn bộ lớp NP. Thay vì phải duyệt toàn bộ lớp NP, ta muốn chỉ duyệt 
+một bộ phận nhỏ, thậm chí chỉ một vài bài toán trong NP mà thôi. Muốn thế ta hãy 
+chọn ra một bài toán “khó giải nhất” C theo một nghĩa nào đó bất kỳ trong NP rồi 
+kiểm tra xem nó có thuộc P hay không. Nếu C không thuộc P thì đó đã là bằng 
+chứng P  NP. Như vậy, mỗi bài toán “khó nhất” trong NP là chìa khoá để giải bài 
+toán P = NP?. S. Cook gọi những bài toán khó nhất trong NP là các bài toán NP-
+đầy đủ (NP-completeness). Vấn đề đặt ra là định nghĩa như thế nào bài toán A là 
+khó hơn bài toán B.  
+Để giải quyết vấn đề trên, ta có thể vận dụng khái niệm dẫn được trong lý thuyết 
+thuật toán. 
+
+=== Page 181 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 181 - 
+Định nghĩa 8.11 Giả sử L1, L2 là hai ngôn ngữ trên 1 và 2 tương ứng. Ta nói L1 
+dẫn đa thức được về L2, ký hiệu L1 ⋞p  L2 nếu 
+(i) 
+Tồn tại một hàm f: 1
+*  2
+* sao cho w  L1 khi và chỉ khi f(w)  L2. 
+(ii) 
+f() có thể tính được bởi một máy Turing có độ phức tạp thời gian là đa 
+thức. 
+Định nghĩa 8.12  Ngôn ngữ L  * là NP-đầy đủ nếu 
+(i) 
+L là NP, 
+(ii) 
+Với mọi ngôn ngữ L’ thuộc NP, L dẫn đa thức được về L’. 
+Định nghĩa của lớp các ngôn ngữ P và NP như trên có thể mở rộng cho lớp các bài 
+toán. Bài toán C thuộc NP-đầy đủ, nếu nó thuộc NP và mọi bài toán B thuộc NP 
+đều dẫn đa thức được về C theo nghĩa ngôn ngữ đoán nhận bởi máy Turing giải B 
+dẫn đa thức được về ngôn ngữ đoán nhận bởi máy Turing giải C.  Hiện nay có 
+hàng trăm bài toán NP-đầy đủ thuộc đủ mọi lĩnh vực: tính toán mệnh đề, lý thuyết 
+đồ thị, lý thuyết tối ưu, qui hoạch, lý thuyết tổ hợp, lập lịch, ... 
+Ta có các mệnh đề sau: 
+Mệnh đề 8.1  Nếu L1⋞p L2 và L2  P, thì L1  P. 
+Chứng minh: dùng định nghĩa của quan hệ ⋞p. 
+Mệnh đề 8.2  Nếu L1 là NP-đầy đủ, L2  NP và L1 ⋞p L2, thì L2  NP-đầy đủ. 
+Chứng minh: dùng tính bắc cầu của quan hệ ⋞p. 
+Về ý nghĩa, mệnh đề 8.2 cho một phương pháp cơ bản để chứng minh một bài toán 
+mới là NP-đầy đủ trên cơ sở dẫn được đa thức về từ những bài toán NP-đầy đủ cho 
+trước. 
+Định lý 8.11  Giả sử L là NP-đầy đủ, P = NP khi và chỉ khi L thuộc P. 
+Chứng minh dùng mệnh đề 8.1. 
+Định lý 8.9 chỉ ra con đường nhằm tới đích P = NP. 
+Tuy nhiên để áp dụng được mệnh đề 8.2, ta còn cần có một ngôn ngữ đầu tiên là 
+NP-đầy đủ. Mặt khác, những bài toán NP-đầy đủ còn có những tính chất sau [4]: 
+Tính chất 8.1  Không tìm được thuật toán thời gian đa thức cho bất kỳ một bài 
+toán NP-đầy đủ nào. 
+Tính chất 8.2  Không thể khẳng định được là không tồn tại thuật toán thời gian đa 
+thức đối với những bài toán NP-đầy đủ. 
+Tính chất 8.3  Nếu tìm được một thuật toán thời gian đa thức để giải một bài toán 
+NP-đầy đủ thì sẽ tồn tại thuật toán thời gian đa thức cho tất cả các bài toán NP-đầy 
+đủ. 
+
+=== Page 182 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 182 - 
+Tính chất 8.4   Nếu chứng minh được rằng có một thuật toán thời gian đa thức cho 
+một bài toán NP-đầy đủ thì sẽ tồn tại thuật toán thời gian đa thức cho mọi bài toán 
+NP-đầy đủ. 
+Do vậy, để trả lời cho câu hỏi P = NP?, chúng ta cần biết đầy đủ thông tin về 
+những bài toán NP-đầy đủ. Cook đã chứng minh SAT là NP-đầy đủ. 
+Định lý 8.12 (Cook Theorem) SAT là NP-đầy đủ. 
+Cook là người đầu tiên chứng minh được bài toán SAT là NP-đầy đủ vào năm 
+1971. Một năm sau đó, dựa vào phương pháp của Cook, M. Karp đã chỉ ra một loạt 
+khoảng 20 bài toán tối ưu tổ hợp cổ điển là NP-đầy đủ. Đến năm 1979, hai tác giả 
+M. Garey và D. Johnson đã tổng kết được khoảng 300 bài toán là NP-đầy đủ. Từ 
+đó đến nay, con số các bài toán là NP-đầy đủ vẫn tăng liên tục hàng năm. 
+Ngoài những bài toán đã nêu ở trên, ta có thể nêu thêm một số bài toán trong các 
+lĩnh vực sau đây là NP-đầy đủ [1]: 
+1. Bài toán hành trình của người bán hàng (Travelling Salesman Problem). 
+Cho trước n thành phố, biết khoảng cách giữa chúng và một số D, có tồn tại 
+một hành trình để người bán hàng đi qua tất cả các thành phố đó với quãng 
+đường đi nhiều nhất là D?. 
+2. Bài toán qui hoạch 0-1 (Zero-one Programming Problem). Cho trước m 
+phương trình 
+j
+m
+j
+ijx
+a
+
+1
+ = bj, i = 1, 2, …, n 
+ 
+ Có tồn tại các giá trị 0, 1 để thoả mãn hệ phương trình trên hay không? 
+3. Bài toán qui hoạch nguyên tuyến tính dạng quyết định. Cho trước ma trận 
+nguyên A = (aij) kích thước m  n, b = (b1, …, bm) là vector nguyên. Hỏi hệ 
+bất phương trình Ax ≥ b có nghiệm nguyên hay không? 
+4. Bài toán tìm chu trình Hamilton của một đồ thị cho trước. Chu trình 
+Hamilton của đồ thị G là chu trình đi qua tất cả các đỉnh đúng một lần, trừ 
+đỉnh đầu và đỉnh cuối. 
+5. Bài toán tìm tập phủ các đỉnh của đồ thị. Cho trước đồ thị G = (V, E) và số 
+nguyên K   0, liệu V có một tập con V’có cỡ  K (có K đỉnh) sao cho mỗi 
+cung e  E có ít nhất một đỉnh cuối thuộc V’. 
+6. Bài toán tìm tập độc lập trong đồ thị. Cho trước đồ thị G = (V, E) và số 
+nguyên K   0, xác định xem G có tập độc lập cỡ K hay không?., nghĩa là 
+liệu  có một tập con V’ V, |V’| = K, sao cho u, v  V’,{u, v}  E.  
+7. Bài toán tìm tổng con. Cho trước một dãy các số nguyên (a1, a2, ..., an) và số 
+nguyên S, xác định xem có tồn tại một tập I  {1, 2, ..., n} sao cho iI ai = S. 
+…  
+
+=== Page 183 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 183 - 
+Sự phong phú và đa dạng của các bài toán NP-đầy đủ là một thuận lợi trong việc 
+chọn “chìa khoá” để mở cánh cửa P = NP? 
+Trong khi chờ đợi câu trả lời bài toán quan trọng nêu trên, ta hãy thử hỏi điều gì sẽ 
+xảy ra nếu P = NP, và nếu như P ≠ NP? 
+Nếu như P ≠ NP, các điều sau sẽ xảy ra: 
+ Độ mật của các mã khoá công khai sẽ được khẳng định. Do vậy, mã khoá 
+công khai sẽ được triển khai diện rộng rãi hơn, phù hợp với xu thế phát triển 
+các hệ thống mở, nhất là thương mại điện tử của xã hội trong tương lai. 
+ Những bài toán NP-đầy đủ trở thành các bài toán bất trị, cho đến khi có một 
+cuộc cách mạng mới trong công nghệ thông tin cùng với một thế hệ máy 
+tính hoàn toàn mới về nguyên lý hoạt động, có khả năng “siêu” tăng tốc tính 
+toán. Chúng ta đã nghe nói đến những ý tưởng táo bạo của các nhà khoa học 
+về một thế hệ máy tính mới có tên là máy tính lượng tử. Máy tính lượng tử 
+sẽ hoạt động theo nguyên lý chung của cơ học lượng tử. Hy vọng máy tính 
+lượng tử sẽ giúp chúng ta giải được những bài toán NP-đầy đủ. 
+Ngược lại, nếu P = NP, ta sẽ có những hệ quả trực tiếp sau đây: 
+ Mọi bài toán hễ kiểm chứng dễ thì giải cũng dễ. 
+ Tất cả các bài toán tối ưu, tổ hợp thông thường đều giải được trong thời gian 
+đa thức. 
+ Mối lo “Bùng nổ tổ hợp” bấy lâu nay sẽ được giải quyết. 
+ Một loạt các hệ mã khoá công khai dựa trên giả thiết P ≠ NP bị đổ vỡ, ... 
+Nói chung người ta tin là P ≠ NP. 
+Bài tập về các bài toán quyết định đƣợc và lớp bài toán P, NP-đầy đủ 
+8.1   Xây dựng máy Turing để đoán nhận {0n1n | n ≥ 1} 
+8.2   Xác định dãy tính toán đối với các dãy 1213, 2133, 312 của máy Turing cho 
+trước ở ví dụ 8.7. 
+8.3   Thiết kế máy Turing để đoán nhận tất cả các xâu trên {0, 1} có chứa chẵn số 1. 
+8.4   Xây dựng máy Turing để đoán nhận ngôn ngữ {anbncn | n, m ≥ 1} 
+8.5   Xây dựng máy Turing để đoán nhận tất cả các Palindrrome chẵn trên tập {0, 1} 
+8.6  Chứng minh rằng vấn đề đệ qui của văn phạm loại 0 là không giải được.  
+8.7   Chứng minh rằng bài toán quyết định xem một ngôn ngữ cảm ngữ cảnh cho 
+trước có phải là phi ngữ cảnh hay không là không giải được. 
+8.8  Chứng minh rằng {x | x là tập hợp và x  x} không phải là tập hợp (Đây là 
+nghịch lý Russell). 
+8.9  Chứng minh rằng PCP là giải được nếu || = 1. 
+
+=== Page 184 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 184 - 
+8.10  Giả sử x = (x1x2, … xn) và y = (y1y2 … yn) là hai xâu khác rỗng trên  với    
+|| ≥ 2. 
+(i) 
+PCP là giải được với n = 1? 
+(ii) 
+PCP là giải được với n = 2? 
+8.11  Chứng minh rằng PCP với {(01, 011), (1, 10), (1, 11)} không có lời giải. 
+8.12  Chỉ ra rằng PCP với S = {(0, 10), (110, 03), (021, 10)} không có lời giải. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+=== Page 185 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 185 - 
+Phụ lục: Hƣớng dẫn và lời giải các bài tập 
+ 
+Chƣơng 1 
+1.6   Ta có thể chứng minh qui nạp theo |w|. Nếu w = , hiển nhiên ab = ab. Rõ 
+ràng |w| = 0 là số chẵn, bước cơ sở qui nạp được khẳng định. Giả sử điều cần 
+chứng minh đúng với |w| < n. Ta xét những dãy w có độ dài n và abw = wab. Bởi 
+vì abw = wab nên w = abw1 với w  {a, b}*. Khi đó, ababw1 = abw1ab suy ra 
+abw1 = w1ab. Theo giả thiết qui nạp |w1| là số chẵn. Từ đó suy ra |w| = |w1| + 2 
+cũng là số chẵn. 
+1.9  2.  
+    x ( P(x, y)  y Q(y, x)) =  (x (P(x, y)  y Q(y, x))  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+   = x y  (P(x, y)  Q(y, x)) 
+1.10  1.  A  (x P(x)  x Q(x))   (x R(x)  x F(x)) 
+Thực hiện các phép biến đổi tương đương  đối với A: 
+a/ Khử phép kéo theo : A = (x P(x)  x Q(x))   (x R(x)  x F(x)) 
+ 
+ 
+ 
+ 
+        =  (x P(x)  x Q(x))    (x R(x)  x F(x)) 
+b/   
+ 
+ 
+      = (x  P(x)  x  Q(x))  (x  R(x)  x  F(x)) 
+ 
+c/  
+ 
+ 
+ 
+      = x ( P(x)   Q(x))  x ( R(x)   F(x)) 
+ 
+ 
+ 
+ 
+       = x y (( P(x)   Q(x))  ( R(y)   F(y))) 
+d/ Dạng chuẩn hội: x y (( P(x)   Q(x)   R(y))  ( P(x)   Q(x)   F(y)))  
+    Dạng chuẩn tuyển: x y ( P(x)   Q(x)  ( R(y)   F(y)) 
+2. a/ Công thức (x!) (x3 = 1) là hằng đúng còn (x!) (x2 – 3x + 2 = 0) là sai 
+vì x2 – 3x + 2 = 0 có hai nghiệm: x1 = 1, x2 = 2. 
+b/ (x!) P(x)  x P(x)  x y ((P(x)  P(y))  x = y). 
+1.11 1. P(x, y) = “y = 2x” trên trường số Z  Z, Z là trường số nguyên.  
+(x)(y!) (P(x, y)  ((y!)(x) P(x, y)) là sai vì (x)(y!)(y = 2x) = T nhưng  
+(y!)(x)(y = 2x) = F. 
+ 
+(y!)(x) (P(x, y)  ((x)(y!) P(x, y)) là đúng vì (y!)(x)(y = 2x) = F. 
+2. Trường để (x!)(x > 2) đúng, ví dụ D = {y | y  2}  {3}.  
+    Trường để (x!)(x > 2) sai, ví dụ D = Z  tất cả các số nguyên. 
+3. (x  P(x)  (x  Q(x))  (X  (x P(x)  x Q(x))) 
+    (x  P(x)  (x Q(x))  ( X  (x P(x)  x Q(x))) 
+    (x  P(x)  x Q(x)   X)  (x P(x)  x Q(x))) 
+
+=== Page 186 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 186 - 
+    (x  P(x)  x Q(x)   X  x P(x))  (x  P(x)  x Q(x)   X  x Q(x)) 
+    (x  P(x)  x Q(x)   X  x P(x))  (x  P(x)  x Q(x)   X ) 
+    (x  P(x)  x Q(x)   X ), vì  x  P(x)  x P(x) =  (x P(x))  x P(x) = T 
+    (x)(y) ((P(x)  Q(y))    X). 
+1.12  1. Công thức (x)(x) P(x, y) trên trường M  M với M = {1, 2, 3} ở dạng 
+không còn các lượng tử ,  mà chỉ còn các phép hội, tuyển và các vị từ trên 
+trường đã cho:  
+(P(1, 1)  P(1, 2)  P(1, 3))   (P(2, 1)  P(2, 2)  P(2, 3))  (P(3, 1)  P(3, 2)  P(3, 3)). 
+2.  A   (x P(x)  x Q(x))   x  P(x)   x  Q(x)  (((X   Y)   Y)   X). 
+ 
+a/ A  ( (x P(x))  x Q(x))   x  P(x)   x  Q(x)  ( (( X   Y)   Y)   X)  
+ 
+b/ A  (x P(x)  x Q(x))   x  P(x)   x  Q(x)  (((X    Y)  Y)   X) 
+ 
+c/ A  x (P(x)   ( X   Y))  
+d/ Dạng chuẩn hội: x ((P(x)    X)   (P(x)   Y))  
+    Dạng chuẩn tuyển: x (P(x)   ( X   Y)). 
+1.13  3. Suy luận dưới đây là đúng.  
+ 
+ 
+ 
+ X1  X2 
+X3   X2 
+X4   X3 
+(  X4  X5)   X5 
+ 
+ 
+ 
+ 
+ 
+  X1 
+Áp dụng tính chất của qui tắc suy diễn ta có:  X1  X2 = X1  X2  và X3 
+  X2  = X2  X3. Sử dụng qui tắc suy diễn bắc cầu suy ra X1  X3. Tương tự X4 
+  X3  = X3  X4,  X4  X5  = X4  X5,  suy ra X1X4 và cuối cùng X1X5.  
+Sau đó sử dụng qui tắc Modus tollens:  
+ 
+ 
+ 
+ X5 
+ 
+ 
+ 
+X1  X5  
+ 
+ 
+ 
+  X1  
+1.15  1.  a/  Công thức tương đương 
+     
+F = ((x)( P(x)  Q(x))  (x)  P(x)  (x)(Q(x)  R(x))  (x)(S(x)   R(x)))  (x)  S(x) 
+Trước khi tìm dạng chuẩn tuyển, ta thực hiện một số phép biến đổi và rút gọn công 
+thức. Ta đặt A =  (x)( P(x)  Q(x))   (x)(Q(x)  R(x))  (x)(S(x)   R(x)) 
+ 
+ 
+ 
+    =  (x)(( P(x)  Q(x))   (Q(x)  R(x))   (S(x)   R(x))). 
+
+=== Page 187 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 187 - 
+Dễ nhận thấy: S(x)   R(x)  =   R(x)   S(x) . Sử dụng qui tắc suy diễn bắc cầu 
+hai lần suy ra A = (x)(( P(x)   S(x). Do vậy,  
+F =  ((x)(( P(x)   S(x)  (x)  P(x))  (x)  S(x)  
+   =  ( ((x)((P(x)   S(x))   (x)  P(x))  (x)  S(x) 
+   =  ((x)(( P(x)   S(x))   ((x)  P(x))  (x)  S(x) 
+   =  ((x)(( P(x)   S(x))  (x)  S(x)   ((x)  P(x))  
+   
+ 
+   =  ((x)(( P(x)   S(x)    S(x))   ((x)  P(x))  
+      =  (x)  P(x)  (x)  S(x))   ((x)  P(x)) = T 
+b/   Mô hình suy diễn trên có đúng trên trường M. Tương tự như trên, sử dụng quy tắc 
+bắc cầu và qui tắc Modus Ponens để khẳng định điều đó. 
+2.  Hãy diễn đạt định nghĩa giới hạn 
+0
+)
+(
+x
+x x
+Limf
+=  L dưới dạng một công thức vị từ: 
+   x (0 < |x – x0| <   |f(x) – f(x0)| < ) 
+1.16  1. Đặt P(x) = “X có bằng cử nhân” và Q(x) = “X đã tốt nghiệp đại học”. Đặt 
+tiếp R = “Lan”. Từ phát biểu của bài toán ta có: 
+(X (P(X)  Q(X))   P(R))   Q(R) là hằng đúng.. Nghĩa là những phát biểu trên là đúng. 
+ 
+Chƣơng 2 
+2.2  Bởi vì (q1,a) = (q1,a), nên R là phản xạ. Tính đối xứng là hiển nhiên. Nếu 
+q1Rq2 thì (q1,a) = (q2,a)  với a  , còn nếu q2Rq3 thì (q1,a) = (q2,a). Từ 
+đó suy ra (q1,a) = (q3,a), nghĩa là q1Rq3. Vậy R là quan hệ tương đương. 
+2.3  Bảng chuyển trạng thái của ÔTKĐĐ để đoán nhận {ab, ba} 
+Bảng A.1 
+ 
+ 
+  
+ 
+Trạng thái/ 
+ 
+a 
+ 
+b 
+ 
+ 
+ 
+               q0 
+ 
+ 
+q1 
+ 
+q2 
+ 
+ 
+ 
+     
+      q1 
+ 
+ 
+ 
+ 
+q3 
+ 
+ 
+ 
+ 
+      q2 
+ 
+ 
+q1 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+      q3 
+ 
+ 
+ 
+ 
+ 
+ 
+Bảng chuyển trạng thái của ÔTĐĐ tương đương với bảng A.2 là 
+ 
+ 
+
+=== Page 188 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 188 - 
+Bảng A.2 
+ 
+ 
+  
+ 
+Trạng thái/ 
+ 
+a 
+ 
+b 
+ 
+ 
+ 
+               [q0] 
+ 
+ 
+[q1]  
+[q2] 
+ 
+ 
+ 
+     
+      [q1] 
+ 
+ 
+ 
+ 
+[q3] 
+ 
+ 
+ 
+ 
+      [q2] 
+ 
+ 
+[q1]  
+  
+ 
+ 
+ 
+ 
+ 
+      [q3] 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+       
+ 
+ 
+ 
+ 
+ 
+2.5  Ôtômát không đơn định đoán nhận được tập tất cả các xâu từ tập {a,b} kết thúc 
+bằng xâu con aba được xây dựng như sau 
+ 
+ 
+ 
+2.6  Bảng chuyển trạng thái của ôtômát đơn định tương đương là 
+Bảng A.3 
+ 
+ 
+  
+ 
+Trạng thái/ 
+ 
+0 
+ 
+1 
+ 
+2 
+ 
+ 
+ 
+               [q0] 
+ 
+ 
+[q1, q4] 
+[q4]   
+[q2, q3] 
+ 
+ 
+ 
+     
+      [q4] 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+      [q1, q4]  
+ 
+  
+ 
+[q4]  
+  
+ 
+ 
+ 
+ 
+ 
+      [q2, q3]  
+ 
+ 
+ 
+[q4]    
+[q2, q3] 
+ 
+ 
+ 
+ 
+ 
+       
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2.9 Cho trước  = {a1, a2, …, an}, tìm ôtômát hữu hạn để đoán nhận ngôn ngữ  
+a) L1 = {x  * | x có độ dài lẻ} được đoán nhận bởi ôtômát có hàm chuyển trạng thái như sau 
+ Q\  
+       a1             a2         a3          . . .        an-1            an 
+q0 
+q1 
+       q1             q1         q1          . . .        q1            q1   
+       q0             q0         q0          . . .        q0            q0   
+c) L1 = {x  * | x có độ dài chẵn và lớn hơn 1} được đoán nhận bởi ôtômát có 
+hàm chuyển trạng thái như sau 
+ Q\  
+       a1             a2         a3          . . .        an-1            an 
+q0 
+q1 
+       q2 
+       q1             q1         q1          . . .        q1            q1   
+       q2             q2         q2          . . .        q2            q2   
+       q1             q1         q1          . . .        q1            q1   
+q0 
+q1 
+q2 
+q3 
+a 
+b 
+a 
+a, b 
+
+=== Page 189 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 189 - 
+2.10* Cho hai ôtômát sau đây: 
+ 
+ 
+M1:   
+ 
+ 
+ 
+ 
+ 
+M2:  
+ 
+  
+ 
+a/ Ngôn ngữ đoán nhận được bởi M1: T(M1) = {0(14)n0 | n ≥ 0}  {1} 
+   Ngôn ngữ đoán nhận được bởi M2: T(M2) = {a(cb)nbm | n ≥ 0, m ≥ 1}  {cm | m ≥ 1 } 
+b/ Ôtômát M được ghép từ M1 và M2 sao cho T(M) = T(M1)T(M2), có thể xây 
+dựng như sau: 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+  
+ 
+ 
+c/ M là hợp của M1 và M2 sao cho T(M) = T(M1)  T(M2) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Chƣơng 3 
+3.1    (a)    S  
+*
+G 0nS1n  
+*
+G0nA1m1n, n  0, m  1. A  
+*
+G 1kA  1k+1, k  0. 
+ 
+0m1n  L(G) với n > m  1. Vậy L(G) = {0m1n | n > m  1} 
+ 
+(d)   L(G) = {x  {0, 1}+ | x không chứa hai số 0 liên tiếp}. 
+3.2   (a) 
+G =({S, A, B}, {0, 1}, P, S), trong đó P có các qui tắc S  0B | 1A,    A  0 | 0S 
+|1AA, B  1 | 1S | 0BB.  Chứng minh các tính chất sau qui nạp theo |w|.  
+(i)  S  
+*
+w khi và chỉ khi w chứa số các số 0 bằng số các số 1.  
+q4 
+q0 
+q1 
+q2 
+q3 
+q5 
+0 
+1 
+1 
+1 
+1 
+0 
+1 
+b 
+s0 
+s1 
+s2 
+s4 
+a 
+s3 
+c 
+b 
+c 
+b 
+c 
+b 
+q4 
+q0 
+q1 
+q2 
+q3 
+0 
+1 
+1 
+1 
+1 
+0 
+1 
+s0 
+s1 
+s2 
+s4 
+a 
+s3 
+c 
+b 
+c 
+b 
+c 
+b 
+q0 
+0 
+0 
+1 
+a 
+c 
+s1 
+s2 
+s4 
+s3 
+c 
+b 
+b 
+c 
+q1 
+q2 
+q3 
+q5 
+1 
+1 
+1 
+1 
+q4 
+
+=== Page 190 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 190 - 
+(ii)  A  
+*
+w khi và chỉ khi w chứa số các số 0 lớn hơn số các số 1 là 1. 
+(iii)  B  
+*
+w khi và chỉ khi w chứa số các số 1 lớn hơn số các số 0 là 1. 
+ 
+(b)   G ó các qui tắc suy dẫn S  0S1 | 0A1, A  1A0 | 10. Hiển nhiên 
+L(G)  {0n1m0m1n  | m, n  1}. Ngược lại áp dụng qui tắc S  0S1 (n-1) 
+lần,      S  0A1 một lần và A  1A0 (m-1) lần rồi A  10 là chúng ta 
+thu được  {0n1m0m1n  }. Nghĩa là {0n1m0m1n  | m, n  1}  L(G). 
+ 
+(c)   G có các dẫn xuất S  0S11 | 011. 
+3.6    (a)  Văn phạm cảm ngữ cảnh nhưng không phải là phi ngữ cảnh, ví dụ văn 
+phạm có có các dẫn xuất: S  aS | b, aS  aa, B  a. 
+ 
+(b)  Văn phạm phi ngữ cảnh nhưng không phải là chính qui, ví dụ văn phạm 
+có có các dẫn xuất: S  AS | a, A  a. 
+3.7   (a)   G = ({S, A, B}, {0, 1}, P, S), trong đó P có các dẫn xuất S  0S1 | 0A, 
+S  1B | 0 | 1, A  0A | 0, B  1B | 1. Sử dụng S  0S1, S  0, hoặc 
+S  1thì nhận được 0m1n, trong đó m và n khác nhau là 1. Để nhận 
+được số các chữ số 0 nhiều hơn số các chư số 1 ta áp dụng A  0A | 0, 
+S  0A lặp lại nhiều lần, ngược lại để nhận được số các số 1 nhiều hơn 
+thì áp dụng S  1B, B  1B | 1 lặp lại nhiều lần. 
+ 
+(c)    G có các dẫn xuất S  aSc | ac | bc | bS1c, S1  bS1c | bc. Một xâu 
+của L dạng albmcn,  l + m = n, có thể viết thành albmcmcl với l, m ≥ 0. Áp 
+dụng l-lần qui tắc S  aSc, thu được alScl. Nếu m = thì áp dụng tiếp S  
+ac, ngược lại áp dụng S  bS1c rồi sử dụng (m-1) lần qui tắc S1  
+bS1c, cuối cùng là      S1  bc.  
+3.8    (a)   G có các dẫn xuất S  aS1 | aS2, S1  aS, S2  a 
+ 
+(b)   G có các dẫn xuất S  aS | bS | a 
+ 
+(c)   G có các dẫn xuất S  aS1, S1  aS1 | bS1 | a | b 
+3.9   Chỉ ra rằng L(G1) = {anbn | n  1} = L(G2). 
+3.11  Giả sử G1 là văn phạm gồm các qui tắc A  xB | y, trong đó x, y * và A, 
+B. Thay A  xB, trong đó x = a1a2…an bằng A  a1A1, A1  a2A2, …, An-1  
+anB. Những dẫn xuất A  y, y = b1b2…bn  được thay bằng A  b1B1, B1  
+b2B2, …, bn-1  bn. Dễ dàng chứng minh rằng văn phạm mới G2 gồm những 
+dẫn xuất mới là chính qui và tương đương với G1. 
+3.12  (i) Văn phạm phi ngữ cảnh sinh ra L = {anbn0, cm1kdm | n > 0, m > 0, k 0} gồm 
+những qui tắc: S  S10 | cSd | cS2d | cd, S1  aS1b | ab, S2  1S2 | 1. 
+
+=== Page 191 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 191 - 
+3.13  (i) Văn phạm phi ngữ cảnh sinh ra L = {an0kbncmdm | n > 0, m > 0, k  0} gồm 
+những qui tắc: S  S1S2, S1  aS1b | ab | aS3b, S3  0S3 | 0, S2  cS2d | cd. 
+3.16  G có các qui tắc S  0AB, A0  S0B, A1  SB1, B  SA | 01. Dễ nhận ra 
+rằng  S  0AB 0ASA  0A0ABA hoặc S  0AB 0A01  0S0B1. Khi 
+áp dụng  S  0AB thì nhận được A trong các dẫn xuất. Nếu muốn loại bỏ A thì 
+phải áp dụng A0  S0B, A1  SB1, khi đó S lại xuất hiện ở vế phải. Do vậy 
+một trong hai biến S, A không thể loại bỏ được ở vế phải, nghĩa là L(G) = . 
+3.17  (a)  Sai. Nếu G1 gồm các dẫn xuất S  SS | aS | bS | a | b là phi ngữ cảnh, 
+và G2 có các qui tắc S  aS | bS | a | b là chính qui. Hai văn phạm này tương 
+đương với nhau vì L(G1) = L(G2) = {a, b}+. 
+ 
+(b) Đúng. L = {w1, w2, …, wn} thì văn phạm có những qui tắc sau: S  w1 | 
+w2 | …| wn  là ngôn ngữ phi ngữ cảnh. 
+ 
+(c) Đúng. Chỉ cần chỉ ra rằng w  * tồn tại văn phạm chính qui để sinh ra w. 
+3.18  G = ({S, S1, A, B}, {0, 1, …, 9}, P, S). P gồm có S  0 | 2 | 4 | 6 | 8 | AS1,   
+S1  0 | 2 | 4 | 6 | 8, S  ABS1, B  1 | 2 | … | 9, A  1 | 2 | … | 9 . 
+3.20 Tính đối xứng của cụm từ trong L thể hiện ở chỗ: trong mỗi xâu thì số vị trí 
+ký hiệu a luôn luôn nhiều hơn số vị trí của b. Do đó khi sinh ra một vị trí của b thì 
+cũng phải sinh ra một ví trí a và phải sinh thêm ít nhất một vị của a nữa. Từ đó văn 
+phạm sinh ra L có các qui tắc sau: 
+ 
+S  aSb | bSa | aAb | bAa, A  aA | a 
+3.24 Vì m  n  1 nên có thể viết  m = n + k, k  0. Khi đó  
+    a/  L = {an+kbn | 0  k, 1  n} = {anakbn | 0  k, 1  n} 
+Văn phạm G sinh ra L do vậy có các qui tắc 
+S  aSb | aAb | ab, A  aA | a 
+Đây là văn phạm phi ngữ cảnh. 
+   b/ Dạng chuẩn Chomsky của G:  
+S  DB | DC | DM, D  a, B  SM, M  b, C   AM, A  DA | a 
+Chƣơng 4 
+4.1   (i)   0 + 1 + 2 
+(ii)  b*ab* 
+(iii) aa(aaa)* 
+(iv) (aa)*+ (aaa)* + aaaaa 
+4.2   (i)  Đó là các xâu:   
++ Được ghép từ hai xâu: xâu có độ dài nhiều nhất là 3 của (ab+a)* và aa 
++ Được ghép từ hai xâu: xâu có độ dài nhiều nhất là 4 của (ab+a)* và b. 
+
+=== Page 192 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 192 - 
+Đó là các xâu: aa, aaa, abaa, aaaa, aabaa, abaaa, a5, ababb, aaabbb, và a4b. 
+(ii)  Tương tự như trên, những xâu có độ dài nhỏ hơn hoặc 5 của a*  + (ab + a)* 
+là: , a, ab, aa, abab, aab, aba, a3, abaa, aaab, ababa, a4, abaaa, và a5. 
+4.5  Hệ chuyển đổi (hoặc ôtômát hữu hạn) tương đương với các biểu thức            
+(ab + a)*(aa + b) được cho bởi hình sau. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Sau đó tiếp tục loại bỏ các cung  sẽ thu được ôtômát hữu hạn yêu cầu. 
+4.6 (a) (1 + 01)* biểu diễn cho tập những xâu không chứa cặp 00. Biểu thức            
+(1 + 01)*00(1 + 01)* biểu diễn cho tập những xâu chứa đúng một cặp 00. 
+Tương tự đối với cặp 11. Vậy biểu thức chính qui biểu diễn tập tất cả các xâu 
+trên {0, 1} có nhiều nhất một cặp số 0 hoặc nhiều nhất một cặp số 1 là: 
+ 
+ 
+(1 + 01)* + (1 + 01)*00(1 + 01)* + (0 + 10)* (0 + 10)*11(0 + 10)* 
+(c)   b* + (b + abb)* ab*   
+(d)   1(0 + 1)*00. 
+4.7  Giả sử L là tập tất cả các xâu Palindrome trên {a, b} được đoán nhận bởi ôtômát 
+hữu hạn M = (Q, , , q0, F). Bởi vì Q là hữu hạn nên {(q0, an) | n ≥ 1} là tập con 
+của Q, nghĩa là (q0, an) = (q0, am), với m < n. Mặt khác,         anb2nan  L (là 
+Palindrome) nên (q0, anb2nan) = q  F.  Vì (q0, an) = (q0, am) nên từ tính chất 
+của hàm chuyển ta có (q0, amb2nan) = (q0, anb2nan), m < n. Từ đó suy ra amb2nan  
+ L. Điều này mâu thuẫn vì m < n nên amb2nan không phải là Palindrome.  
+4.10  Giả sử L = {ww | w  {a, b}*} là tập chính qui, được đoán nhận bởi ôtômát 
+M có n trạng thái. Dễ nhận thấy số ký hiệu a, b trong các xâu của L luôn là số 
+chẵn. Xét w = anb, hiển nhiên anbanb  L. |ww| = 2(n + 1) > n. Áp dụng bổ đề 
+Bơm để viết ww = xyz với |y|  0, |xy |  n. Hãy tìm i sao cho     xyiz  L thì sẽ 
+dẫn đến mâu thuẫn. 
+ 
+Thật vậy, ta có thể chọn xâu y chỉ có một trong các dạng sau: 
+ 
+(i)  y không chứa b, y = ak, k ≥ 1. 
+ 
+(ii)  y chỉ có một ký hiệu b. 
+ 
+Biết rằng |y|  |xy|  n. Trường hợp (i), ta chọn i = 0. Khi đó xy0z = an-kbanb 
+không thuộc L vì không thể viết xz thành dạng uu với u  {a, b}*. Tương tự 
+trường hợp (ii) cũng chọn i = 0. Dĩ nhiên xy0z = xz  L vì số ký hiệu b trong xz 
+là lẻ, mâu thuẫn.  
+q4 
+q0 
+q1 
+q2 
+q3 
+q5 
+
+
+a 
+a 
+b 
+a 
+b 
+a 
+
+=== Page 193 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 193 - 
+4.11  (i)  Áp dụng bổ đề Bơm để chỉ ra L = {anb2n | n > 0} không phải là chính qui. 
+Giả sử nó là chính qui, được đoán nhận bởi ôtômát M có n trạng thái. Xét       
+w = anb2n. Theo bổ đề Bơm, w = xyz  với |y| > 0, |xy |  n và xz  L. Vì         
+|xy | = m  n nên xy = am và y = ak với 0 < k  n. Vậy xz = an-kb2n  L là mâu 
+thuẫn vì n – k  n. Vậy, L không phải là chính qui. 
+(iii) Áp dụng bổ đề Bơm để chỉ ra L = {anbn | n > 0} không phải là chính qui.  
+Giả sử nó là chính qui, được đoán nhận bởi ôtômát M = (Q, , , q0, F) có n 
+trạng thái. Bởi vì Q là hữu hạn nên {(q0, an) | n ≥ 0} là tập con của Q, nghĩa là 
+(q0, an) = (q0, am), với m  n. Do đó  
+(q0, ambn) = ((q0, am),  bn) = ((q0, an),  bn)  = q  F 
+Suy ra ambn  L với m  n là mâu thuẫn. 
+4.19 (i) Văn phạm chính qui G sinh ra L = {xn(10)myk | n, k  1, m  0} có các qui 
+tắc sau: S  xS | xA | xB, A  1C, C  0A | 0B, B  yB | y.  
+(ii) Ôtômát hữu hạn trạng thái (không đơn định) M  sao cho T(M) = L(G) 
+được biểu diễn như sau: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+(iii) Dãy các qui tắc S  xS  xxA  xx1C  xx10B  xx10y, vì vậy 
+xx10y  L(G). Xâu  x101 không được sinh ra bởi văn phạm G vì không có 
+cách nào để dẫn ra được x101 ở trạng thái kết thúc. 
+4.20   (i)  Ngôn ngữ L = {a(xyz)nb | n  0}  {bab}. Sau đó chứng minh L = L(G). 
+ 
+(ii) Ôtômát hữu hạn trạng thái (không đơn định) M  sao cho T(M) = L(G) là 
+ 
+ 
+ 
+ 
+ 
+ 
+(iii) Dễ dàng chỉ ra được dãy các dẫn xuất để xâu w = axyzb  L(G) và chỉ ra 
+cây dẫn xuất trên đồ thị biểu diễn ôtômát ở hình trên đến trạng thái kết thúc q6 
+và dãy nhãn trên nó là w.  
+x 
+q3 
+q0 
+q1 
+q2 
+q4 
+x 
+1 
+ 1 
+y 
+ 0 
+x 
+y 
+a 
+q3 
+q0 
+q1 
+q2 
+q6 
+a 
+x 
+ b 
+  b 
+q5 
+q4 
+b 
+y 
+z 
+
+=== Page 194 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 194 - 
+4.21 (i) Văn phạm chính qui G để L(G) = L(M) có các qui tắc sau: 
+ 
+ 
+S  1A | 0A, A  xB | yC, B  yA, C  x. 
+(ii) G sinh ra w1 = 1xyyx, w2 = 0yx bằng cách chỉ ra hai dãy dẫn xuất tương 
+ứng và M cũng đoán nhận được w1, w2 bằng cách chỉ ra hai cây dẫn xuất 
+tương ứng. 
+4.22 (i) Văn phạm chính qui G để sinh ra L = {ancbmc, ancbma | n, m ≥ 0} có các qui 
+tắc sau: S  aS | cA, A   bA | a | c. 
+ 
+(ii), (iii) tương tự như 4.22 (ii) và (iii). 
+4.23 (i)  Ôtômát hữu hạn trạng thái M trên {a, b} để đoán nhận tất cả các xâu có 
+các chữ a là số chẵn và lớn hơn 0 được biểu diễn như sau: 
+ 
+ 
+ 
+(ii) Văn phạm chính qui tương đương với M có các qui tắc: 
+S  bS | aA, A  bA | aC, C  aA | b 
+ 
+(iii) Biểu thức chính qui tương đương với ngôn ngữ sinh bởi G là 
+b*ab*(aa)(aa)*b*. 
+ 
+Chƣơng V 
+5.2   Áp dụng các qui tắc S  0S0 | 1S1 | A sẽ được S 
+*
+wAw, với w  {0, 1}*. Sử dụng 
+hai qui tắc A  2B3, B2B3 sẽ dẫn tiếp ra A 
+*
+2mB3m, sau đó áp dụng  B 3 ta 
+nhận được S 
+*
+w2m3m+1w. Từ đó suy ra L(G)  {w2m3m+1w | w  {0, 1}*, m ≥ 1}. 
+Chiều ngược lại chứng minh tương tự. 
+5.4  Xét w = abababa chỉ ra rằng nó có hai cây dẫn xuất khác nhau. 
+5.5 Xâu abab có hai dẫn xuất khác nhau: S  abSb  abab và S  aAb  
+ abSb  abab. 
+5.6   (i)   S  aB  aaBB  aaaBBB  aaabBB  aaabbB  aaabbaBB  
+aaabbabB  aaabbabbS  aaabbabbbA  aaabbabbba. 
+ 
+(ii)  S  aB  aaBB  aaBbS  aaBbbA  aaBbba  aaaBbba  
+aaabBbba  aaabbSbba  aaabbaBbba  aaabbabbba. 
+5.7  (ii)  Thực hiện theo hai bước 
+Bước 1. Áp dụng định lý 5.3, ta có W1 = {B}, W2 = {B}  {C, A},               
+W3 = {A, B, C}  {S} = VN. Vậy G1 = G. 
+a 
+q0 
+q1 
+a 
+ a 
+b 
+q4 
+b 
+b 
+
+=== Page 195 ===
+ 
+     
+Ôtômát và ngôn ngữ hình thức  
+ 
+- 195 - 
+Bước 2. Áp dụng định lý 5.4, sẽ nhận được W1 = {S}, W2 = {S}  {A, a},               
+W3 = {S, A, a}  {B, b}, W4 = {S, A, B, a, b}  . Vậy, văn phạm tối giản 
+tương đương sẽ là G2 = ({S, A, B}, {a, b}, P, S), trong đó P gồm có S  aAa,           
+A  bBB, B  ab.  
+(iii)  Văn phạm tối giản tương đương sẽ là G = ({S, A, B}, {a, b}, P, S), trong 
+đó P gồm có S  AB, A  a, B  a | b. 
+5.8  (ii)  Thực hiện theo hai bước 
+Bước 1. W1 = {C} bởi vì C  abb, W2 = {C}  {E, A} vì E  aC, A  bCC               
+W3 = {A, E, C}  {S}  vì S  aAa. W4  = W3. Vậy G1 = ({S, A, C, E}, P1, S), 
+trong đó P1 = {S  aAa, A  Sb |bCC,  C  abb,  E  aC}. 
+Bước 2. Áp dụng định lý 5.4 đối với G1, sẽ nhận được W1 = {S}, W2 = {S}  
+{A, a},  W3 = {S, A, a}  {S, C, b} = {S, A, C, a, b}, W4 = W3. Văn phạm tối 
+giản tương đương sẽ là G2 = ({S, A, C}, {a, b}, P2, S), trong đó P2 gồm có     
+S  aAa, A  Sb | bCC, c  abb.  
+5.9  (ii)  Văn phạm CNF G = ({S, A, B, C0, C1, D1, D2), P, S) tương đương với văn 
+phạm cho trước, trong đó P gồm có S  C1A | C0B, A  0 | C0S | C1D1,        
+B  1 | C1S | C0D2, C1  1, C0  0, D1  AA, D2  BB. 
+5.10 Văn phạm không có qui tắc rỗng và qui tắc đơn vị, do đó ta có thể thực hiện từ 
+bước 2.  
++ Thay S  aAD bằng S  CaAD và Ca  a 
++ Thay A  aB bằng A  CaB 
++ Thay A  bAB bằng A  CbAB và Cb  b. 
+Bước 3 giới hạn số các biến bên phải bằng cách 
++ Thay S  CaAD bằng S  CaC1 và C1  AD 
++ Thay A  CbAB bằng A  CbC2 và C2  AB.  
+Văn phạm dạng chuẩn Chomsky tương đương sẽ là:  
+G = ({S, A, B, D, Ca, Cb, C1, C2}, {a, b, d}, P, S), trong đó P  có các qui tắc 
+sau: S  CaC1,  C1  AD, Ca  a, Cb  b, C2  AB, A  CaB | CbC2,       
+B  b, D  d. 
+5.12  (i) Bước 1: Đặt lại tên các biến S bằng A1, xây dựng văn phạm tương đương 
+G1 = ({A1, A2, A3}, {0, 1}, P1, A1), trong đó  
+P1 = {A1  A1A1 | A2A1A2 | A2A3, A2  0, A3  1.  
+Bước 2:  Áp dụng bổ đề 5.2 đối với A1  A1A1, ta nhận được biến mới Z1 và 
+các qui tắc mới sẽ là: A1  A2A3Z1 | A2A1A2Z1, Z1  A1 | A1Z1.  
+Bước 3: Áp dụng bổ đề 5.1 đối với các A1-dẫn xuất, ta thu được: 
+   
+A1  0A3Z1 | 02A1A2Z1 | 0A1A3 | 0A3 
+

@@ -1,0 +1,98 @@
+BÀI TẬP: THIẾT KẾ OTOMAT CHO HỆ THỐNG THANG MÁY 3 TẦNG (DFA & NFA)
+I. ĐẶT BÀI TOÁN & PHÂN TÍCH HỆ THỐNG
+1. Mô tả bài toán
+Thiết kế hệ thống điều khiển thang máy phục vụ cho tòa nhà 3 tầng (Tầng 1, Tầng 2, Tầng 3) sử dụng mô hình lý thuyết Otomat:
+Một Otomat Hữu hạn Đơn định (DFA - Deterministic Finite Automaton).
+Một Otomat Hữu hạn Không đơn định (NFA - Non-deterministic Finite Automaton).
+2. Tập ký hiệu đầu vào / Bảng chữ cái ()
+Các sự kiện điều khiển và cảm biến của thang máy được mô hình hóa thành tập ký hiệu vào :
+Trong đó:
+đóng ( hoặc ): Sự kiện nhấn nút đóng cửa / cảm biến xác nhận cửa đóng hoàn toàn.
+mở ( hoặc ): Sự kiện nhấn nút mở cửa / cảm biến xác nhận cửa mở hoàn toàn.
+ (tầng 1): Sự kiện bấm nút chọn hoặc gọi Tầng 1.
+ (tầng 2): Sự kiện bấm nút chọn hoặc gọi Tầng 2.
+ (tầng 3): Sự kiện bấm nút chọn hoặc gọi Tầng 3.
+ (cảnh báo / ): Tín hiệu cảnh báo khẩn cấp, quá tải hoặc sự cố an toàn.
+ (reset / ): Tín hiệu bảo trì / hoàn tất xử lý sự cố để đưa hệ thống về trạng thái bình thường.
+II. THIẾT KẾ 1: OTOMAT HỮU HẠN ĐƠN ĐỊNH (DFA)
+1. Định nghĩa hình thức 5-thành phần
+Otomat đơn định  được xác định bởi bộ 5:
+a) Tập các trạng thái ()
+Gồm 7 trạng thái biểu diễn vị trí tầng, trạng thái cửa và trạng thái sự cố:
+: Thang máy ở Tầng 1, Cửa đang Mở (Floor 1 - Open).
+: Thang máy ở Tầng 1, Cửa đang Đóng (Floor 1 - Closed).
+: Thang máy ở Tầng 2, Cửa đang Mở (Floor 2 - Open).
+: Thang máy ở Tầng 2, Cửa đang Đóng (Floor 2 - Closed).
+: Thang máy ở Tầng 3, Cửa đang Mở (Floor 3 - Open).
+: Thang máy ở Tầng 3, Cửa đang Đóng (Floor 3 - Closed).
+: Trạng thái Cảnh báo sự cố / Dừng khẩn cấp (Alarm/Emergency State).
+b) Trạng thái bắt đầu ()
+ (Thang máy khởi tạo mặc định tại Tầng 1, cửa đóng sẵn sàng nhận lệnh).
+c) Tập trạng thái kết thúc / chấp nhận ()
+ (Các trạng thái thang máy đã đưa hành khách đến tầng mong muốn an toàn và mở cửa thành công).
+2. Bảng chuyển trạng thái của DFA ()
+Nguyên lý vận hành an toàn trong DFA:
+Khi cửa đang mở (): Thang máy không được phép di chuyển giữa các tầng dù có bấm . Thang máy chỉ chuyển sang cửa đóng khi nhận tín hiệu đóng.
+Khi cửa đã đóng (): Nhận lệnh  (), thang máy di chuyển đến tầng  (). Nếu bấm đúng tầng hiện tại (), thang máy mở cửa ().
+Khi xảy ra sự cố (): Từ bất kỳ trạng thái nào, hệ thống chuyển ngay lập tức sang  (khóa hành trình).
+Khôi phục (): Chỉ khi kỹ thuật viên phát tín hiệu rs, hệ thống mới thoát khỏi  và quay về trạng thái an toàn .
+3. Đồ thị chuyển trạng thái của DFA
+4. Ví dụ kiểm thử chuỗi nhập trên DFA
+Chuỗi 1: Đi từ Tầng 1 lên Tầng 3 và mở cửa
+Chuỗi 2: Đang ở Tầng 2 thì gặp sự cố cảnh báo
+III. THIẾT KẾ 2: OTOMAT HỮU HẠN KHÔNG ĐƠN ĐỊNH (NFA)
+1. Tại sao dùng NFA cho Thang máy?
+Trong thực tế, mô hình NFA cho phép:
+Lập lịch song song & Tiên đoán (Concurrency / Speculative Scheduling): Khi ở Tầng 1 nhận lệnh , thang máy có thể vừa duy trì trạng thái chờ khách ở Tầng 1, vừa kích hoạt tiến trình chuẩn bị động cơ chuyển động lên Tầng 2.
+Cảm biến cảnh báo đa luồng (): Khi có cảnh báo cb, hệ thống không đơn định chuyển đồng thời sang: 
+Dừng khẩn cấp ().
+Kích hoạt chuông còi báo động / gửi tín hiệu về trung tâm cứu hộ ().
+Chuyển dịch tự phát (-transition): Thang máy tự động đóng cửa sau thời gian chờ (timeout)  mà không cần người dùng bấm đóng.
+2. Định nghĩa hình thức 5-thành phần của NFA
+a) Tập trạng thái ()
+: Thang máy tại Tầng 1.
+: Thang máy tại Tầng 2.
+: Thang máy tại Tầng 3.
+: Trạng thái điều khiển Cửa mở (phục vụ khách ra vào).
+: Trạng thái Đang di chuyển (động cơ hoạt động kéo cáp).
+: Trạng thái Cảnh báo / Dừng khẩn cấp.
+: Trạng thái Kích hoạt cứu hộ / Phát còi hú.
+b) Trạng thái bắt đầu ()
+ (Thang máy bắt đầu tại Tầng 1).
+c) Tập trạng thái kết thúc ()
+ (Thang máy hoàn thành chu trình di chuyển và mở cửa an toàn cho khách).
+3. Bảng chuyển trạng thái của NFA ()
+4. Đồ thị chuyển trạng thái của NFA
+5. Cây phân nhánh xử lý chuỗi nhập trên NFA
+Kiểm tra chuỗi tiếp nhận: (Từ Tầng 1 gọi Tầng 2, di chuyển và mở cửa)
+(q1, T2 T2 mở) ├── (q1, T2 mở) ── (qDOOR, mở) ── (qDOOR, λ)  [CHẤP NHẬN] └── (qMOVE, T2 mở)       └── (q2, mở)             └── (qDOOR, λ)  [CHẤP NHẬN] 
+Nhờ tính chất không đơn định, hệ thống tìm được ít nhất 1 nhánh dẫn đến trạng thái chấp nhận , do đó chuỗi  được chấp nhận.
+Kiểm tra sự cố cảnh báo:
+(q1, cb) ├── (qCB, λ)      [Trạng thái phanh dừng khẩn cấp] └── (qALARM, λ)   [Trạng thái kích hoạt còi báo động] 
+Hệ thống xử lý song song 2 nhiệm vụ bảo vệ an toàn cùng lúc.
+IV. BẢNG SO SÁNH TỔNG HỢP DFA VÀ NFA THANG MÁY
+V. KẾT LUẬN & ĐÁNH GIÁ
+Cả hai mô hình DFA và NFA đều mô tả chính xác hoạt động logic của hệ thống thang máy 3 tầng đáp ứng trọn vẹn tập ký hiệu .
+Bản thiết kế đảm bảo đầy đủ bộ 5 thành phần hình thức , bảng chuyển trạng thái, đồ thị chuyển trạng thái và các kịch bản vận hành thực tế.
+['Trạng thái hiện tại', 'đóng', 'mở', '', '', '', '(Cảnh báo)', '(Reset)']
+['', '', '', '', '', '', '', '']
+['', '', '', '', '', '', '', '']
+['', '', '', '', '', '', '', '']
+['', '', '', '', '', '', '', '']
+['', '', '', '', '', '', '', '']
+['', '', '', '', '', '', '', '']
+['', '', '', '', '', '', '', '']
+['Trạng thái', 'đóng', 'mở', '', '', '', '', '', '(Tự động)']
+['', '', '', '', '', '', '', '', '']
+['', '', '', '', '', '', '', '', '']
+['', '', '', '', '', '', '', '', '']
+['', '', '', '', '', '', '', '', '']
+['', '', '', '', '', '', '', '', '(Tự đóng)']
+['', '', '', '', '', '', '', '', '']
+['', '', '', '', '', '', '', '', '']
+['Tiêu chí', 'Mô hình DFA (Đơn định)', 'Mô hình NFA (Không đơn định)']
+['Số lượng trạng thái', '7 trạng thái (\n\n)', '7 trạng thái (\n\n)']
+['Tính xác định', 'Duy nhất 1 trạng thái tiếp theo cho mỗi đầu vào.', 'Trả về một \ntập hợp\n trạng thái (có thể rỗng hoặc nhiều trạng thái).']
+['Chuyển dịch  (Tự phát)', 'Không cho phép\n. Cửa chỉ đóng khi có sự kiện \nđóng\n.', 'Cho phép\n. Mô tả được cảm biến tự động đóng cửa sau timeout.']
+['Xử lý sự cố', 'Chuyển tuần tự vào 1 trạng thái khóa \n\n.', 'Phân nhánh song song vừa dừng thang (\n\n), vừa báo động (\n\n).']
+['Ứng dụng thực tế', 'Dễ dàng nạp trực tiếp vào lập trình vi điều khiển, PLC, mạch số cứng.', 'Dùng để thiết kế đặc tả yêu cầu mức cao, kiểm thử luồng đồng thời (Concurrency).']
