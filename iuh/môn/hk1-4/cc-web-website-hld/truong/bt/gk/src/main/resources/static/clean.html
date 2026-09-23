@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý dữ liệu Web Service (SPA)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px auto;
+            max-width: 850px;
+            line-height: 1.5;
+        }
+        h2, h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .box {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        input, select {
+            padding: 6px;
+            margin: 4px 6px 4px 0;
+        }
+        button {
+            padding: 6px 12px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>QUẢN LÝ SINH VIÊN THEO KHOA</h2>
+
+    <div class="box">
+        <h3>Chọn Khoa</h3>
+        <label for="facultySelect"><strong>Khoa: </strong></label>
+        <select id="facultySelect" onchange="onFacultyChange()">
+            <option value="">-- Vui lòng chọn Khoa --</option>
+        </select>
+    </div>
+
+    <div class="box">
+        <h3>Tìm kiếm</h3>
+        <input type="text" id="keyword" placeholder="Nhập từ khóa tìm kiếm..." oninput="searchStudents()">
+        <button onclick="searchStudents()">Tìm kiếm</button>
+    </div>
+
+    <div class="box">
+        <h3 id="formTitle">Thêm mới</h3>
+        <input type="hidden" id="studentId">
+
+        <label>Họ tên: </label>
+        <input type="text" id="studentName" placeholder="Nhập họ tên...">
+
+        <label>Email: </label>
+        <input type="text" id="studentEmail" placeholder="Nhập thông tin...">
+
+        <button id="btnSave" onclick="saveStudent()">Thêm</button>
+        <button id="btnCancel" onclick="resetForm()" style="display: none;">Hủy</button>
+    </div>
+
+    <div class="box">
+        <h3>Danh sách hiển thị</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 10%;">ID</th>
+                    <th style="width: 40%;">Họ tên</th>
+                    <th style="width: 30%;">Email</th>
+                    <th style="width: 20%;">Hành động</th>
+                </tr>
+            </thead>
+            <tbody id="studentTableBody">
+                <tr>
+                    <td colspan="4" style="text-align: center;">Vui lòng chọn mục ở trên để xem danh sách</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const API_URL = '/api';
+
+        window.onload = function() {
+            loadFaculties();
+        };
+
+        function loadFaculties() {
+            fetch(`${API_URL}/faculties`)
+                .then(response => response.json())
+                .then(list => {
+                    const select = document.getElementById('facultySelect');
+                    select.innerHTML = '<option value="">-- Vui lòng chọn --</option>';
+                    list.forEach(item => {
+                        select.innerHTML += `<option value="${item.id}">${item.name}</option>`;
+                    });
+                })
+                .catch(err => console.error('Lỗi tải combobox:', err));
+        }
+
+        function onFacultyChange() {
+            const parentId = document.getElementById('facultySelect').value;
+            if (!parentId) {
+                document.getElementById('studentTableBody').innerHTML = 
+                    '<tr><td colspan="4" style="text-align: center;">Vui lòng chọn mục ở trên</td></tr>';
+                return;
+            }
+            loadStudents(parentId);
+            resetForm();
+        }
+
+        function loadStudents(parentId, keyword = '') {
+            let url = `${API_URL}/faculties/${parentId}/students`;
+            
+            if (keyword) {
+                url += `?keyword=${encodeURIComponent(keyword)}`;
+            }
+
+            fetch(url)
+                .then(response => response.json())
+                .then(childList => {
+                    renderTable(childList);
+                })
+                .catch(err => console.error('Lỗi tải danh sách con:', err));
+        }
+
+        function renderTable(childList) {
+            const tbody = document.getElementById('studentTableBody');
+            
+            if (!childList || childList.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">Chưa có dữ liệu nào</td></tr>';
+                return;
+            }
+
+            let html = '';
+            childList.forEach(s => {
+                html += `
+                    <tr>
+                        <td>${s.id}</td>
+                        <td>${s.name}</td>
+                        <td>${s.email}</td>
+                        <td>
+                            <button onclick="editStudent(${s.id}, '${s.name}', '${s.email}')">Sửa</button>
+                            <button onclick="deleteStudent(${s.id})">Xóa</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function searchStudents() {
+            const parentId = document.getElementById('facultySelect').value;
+            if (!parentId) return;
+            const keyword = document.getElementById('keyword').value.trim();
+            loadStudents(parentId, keyword);
+        }
+
+        function saveStudent() {
+            const parentId = document.getElementById('facultySelect').value;
+            if (!parentId) {
+                alert('Vui lòng chọn mục ở Bước 1 trước!');
+                return;
+            }
+
+            const id = document.getElementById('studentId').value;
+            const name = document.getElementById('studentName').value.trim();
+            const email = document.getElementById('studentEmail').value.trim();
+
+            if (!name || !email) {
+                alert('Vui lòng nhập đầy đủ thông tin!');
+                return;
+            }
+
+            const requestData = { 
+                name: name, 
+                email: email 
+            };
+
+            if (!id) {
+                fetch(`${API_URL}/faculties/${parentId}/students`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(requestData)
+                })
+                .then(response => response.json())
+                .then(() => {
+                    resetForm();
+                    loadStudents(parentId);
+                })
+                .catch(err => alert('Lỗi thêm mới: ' + err));
+            } else {
+                fetch(`${API_URL}/faculties/${parentId}/students/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(requestData)
+                })
+                .then(response => response.json())
+                .then(() => {
+                    resetForm();
+                    loadStudents(parentId);
+                })
+                .catch(err => alert('Lỗi cập nhật: ' + err));
+            }
+        }
+
+        function editStudent(id, name, email) {
+            document.getElementById('studentId').value = id;
+            document.getElementById('studentName').value = name;
+            document.getElementById('studentEmail').value = email;
+            
+            document.getElementById('formTitle').innerText = 'Sửa thông tin (ID: ' + id + ')';
+            document.getElementById('btnSave').innerText = 'Cập nhật';
+            document.getElementById('btnCancel').style.display = 'inline-block';
+        }
+
+        function resetForm() {
+            document.getElementById('studentId').value = '';
+            document.getElementById('studentName').value = '';
+            document.getElementById('studentEmail').value = '';
+            document.getElementById('formTitle').innerText = 'Thêm mới';
+            document.getElementById('btnSave').innerText = 'Thêm';
+            document.getElementById('btnCancel').style.display = 'none';
+        }
+
+        function deleteStudent(studentId) {
+            const parentId = document.getElementById('facultySelect').value;
+            if (!confirm('Bạn có chắc chắn muốn xóa ID ' + studentId + ' không?')) {
+                return;
+            }
+
+            fetch(`${API_URL}/faculties/${parentId}/students/${studentId}`, {
+                method: 'DELETE'
+            })
+            .then(() => {
+                loadStudents(parentId);
+            })
+            .catch(err => alert('Lỗi xóa: ' + err));
+        }
+    </script>
+</body>
+</html>
