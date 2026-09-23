@@ -1,62 +1,100 @@
 <!DOCTYPE html>
 <!-- 
 ====================================================================================================
-⚡ BẢNG HƯỚNG DẪN ĐỔI TÊN ĐỒNG LOẠT (CTRL + H) KHI ĐỀ BÀI CHO WEBSERVICE KHÁC
+⚡ CẨM NANG "THẦN CHÚ" ĐỔI TÊN TOÀN BỘ 100% (ĐỔI CẢ TÊN HÀM, ID, BIẾN, URL & GIAO DIỆN)
+⚡ DÀNH CHO CẢ 2 TRƯỜNG HỢP: (1) CÓ SẴN WEBSERVICE  và  (2) THẦY KHÔNG CHO WEBSERVICE
 ====================================================================================================
-Khi vào phòng thi, nếu thầy cho Web Service đề tài khác (ví dụ: Danh mục - Sản phẩm, Phòng ban - Nhân viên),
-bạn KHÔNG CẦN phải đọc từng dòng để sửa. Hãy dùng tính năng FIND & REPLACE (Thay thế đồng loạt):
 
-👉 BƯỚC 1: Mở chức năng Tìm & Thay thế trong trình soạn thảo:
-   - Trong VS Code:   Nhấn tổ hợp phím [ Ctrl + H ]
-   - Trong Eclipse:   Nhấn [ Ctrl + F ] (trong file) hoặc [ Ctrl + H ]
-   - Trong Notepad++: Nhấn tổ hợp phím [ Ctrl + H ]
+Khi vào phòng thi, nếu đề bài là Danh mục & Sản phẩm, Phòng ban & Nhân viên... bạn cần đổi
+TOÀN BỘ tên hàm (saveProduct, editProduct, loadProducts...) để khi thầy chấm bài, thầy thấy tên hàm chuẩn
+theo đúng đề bài, không thể bắt bẻ hay nghi ngờ copy bài.
 
-👉 BƯỚC 2: Thực hiện THAY THẾ ĐỒNG LOẠT (Bấm "Replace All" lần lượt từng cặp từ theo thứ tự 1 -> 6):
-   -------------------------------------------------------------------------------------------------
-   | STT | Tìm từ này (Find)   | Thay bằng từ này (Replace)   | Ý nghĩa trong Web Service          |
-   -------------------------------------------------------------------------------------------------
-   |  1  | faculties           | categories                   | Đổi URL API đối tượng Cha          |
-   |  2  | students            | products                     | Đổi URL API đối tượng Con          |
-   |  3  | email               | price                        | Đổi tên thuộc tính trong JSON      |
-   |  4  | Khoa                | Danh mục                     | Đổi chữ Tiếng Việt trên giao diện  |
-   |  5  | Sinh viên           | Sản phẩm                     | Đổi chữ Tiếng Việt trên giao diện  |
-   |  6  | Email               | Đơn giá                      | Đổi chữ Tiếng Việt trên giao diện  |
-   -------------------------------------------------------------------------------------------------
-   * LƯU Ý KHI THAY THẾ:
-     - Luôn bấm theo thứ tự từ trên xuống dưới (từ 1 đến 6).
-     - Bấm nút "Replace All" (Thay thế toàn bộ). Toàn bộ URL, biến, hàm và HTML sẽ tự đồng bộ 100%!
+----------------------------------------------------------------------------------------------------
+🎯 HƯỚNG DẪN DÙNG TÍNH NĂNG "MATCH CASE" (PHÂN BIỆT HOA/THƯỜNG) ĐỂ THAY THẾ TOÀN BỘ:
+----------------------------------------------------------------------------------------------------
+BẮT BUỘC BẬT TÍNH NĂNG PHÂN BIỆT CHỮ HOA / CHỮ THƯỜNG TRƯỚC KHI TÌM KIẾM:
+- Trong Eclipse:   Bấm [ Ctrl + F ] -> Đánh dấu tick vào ô [x] Case sensitive
+- Trong VS Code:   Bấm [ Ctrl + H ] -> Bấm vào biểu tượng chữ [ Aa ] (hoặc nhấn Alt + C)
+- Trong Notepad++: Bấm [ Ctrl + H ] -> Đánh dấu tick vào ô [x] Match case
 
-👉 BƯỚC 3: Kiểm tra cổng Port của Web Service thầy cho
-   - Nhìn dòng khai báo trong thẻ <script>:
-     const API_URL = '/api';
-   - Nếu thầy chạy Web Service riêng ở port 8080 (hoặc port khác):
-     Đổi thành: const API_URL = 'http://localhost:8080/api';
+Sau đó, lần lượt gõ từng cặp từ dưới đây và bấm nút "REPLACE ALL" (Thay thế toàn bộ):
 
 ====================================================================================================
-📋 BẢNG TRA CỨU CÁC BỘ ĐỀ THI HAY GẶP NHẤT TẠI IUH:
+🔥 BẢNG 12 BƯỚC ĐỔI TÊN ĐỒNG LOẠT (VÍ DỤ ĐỀ: DANH MỤC & SẢN PHẨM)
+====================================================================================================
+| BƯỚC | TÌM TỪ NÀY (Find) | THAY BẰNG TỪ NÀY (Replace) | PHẠM VI ẢNH HƯỞNG TRONG CODE             |
+| :---:| :---------------- | :------------------------- | :--------------------------------------- |
+|  1   | Faculties         | Categories                 | Tên hàm: loadFaculties -> loadCategories |
+|  2   | faculties         | categories                 | Đường dẫn URL API Cha: /api/categories   |
+|  3   | Faculty           | Category                   | Tên hàm: onFacultyChange -> onCategoryChange |
+|  4   | faculty           | category                   | ID thẻ HTML: categorySelect, parentId    |
+|  5   | Students          | Products                   | Tên hàm: loadProducts, searchProducts    |
+|  6   | students          | products                   | Đường dẫn URL API Con: /products         |
+|  7   | Student           | Product                    | Tên hàm: saveProduct, editProduct, deleteProduct |
+|  8   | student           | product                    | ID thẻ HTML: productId, productName, productTableBody |
+|  9   | email             | price                      | Thuộc tính JSON: s.price, price: price   |
+|  10  | Email             | Đơn giá                    | Tiêu đề cột Bảng & nhãn ô nhập form      |
+|  11  | Khoa              | Danh mục                   | Tiêu đề & nhãn Combobox tiếng Việt       |
+|  12  | Sinh viên         | Sản phẩm                   | Tiêu đề trang & form tiếng Việt          |
+----------------------------------------------------------------------------------------------------
+👉 KẾT QUẢ SAU 12 LẦN BẤM REPLACE ALL:
+- 100% tên hàm trở thành: loadCategories(), onCategoryChange(), loadProducts(), searchProducts(),
+                          saveProduct(), editProduct(), deleteProduct().
+- 100% ID thẻ HTML trở thành: categorySelect, productId, productName, productPrice, productTableBody.
+- 100% URL API trở thành: /api/categories, /api/categories/${parentId}/products.
+- Thầy xem code thấy chuẩn chỉ 100%, không còn vương lại bất kỳ một chữ "Student" hay "Faculty" nào!
+
+====================================================================================================
+⚡ TRƯỜNG HỢP 2: NẾU THẦY "KHÔNG CHO WEBSERVICE" (BẮT TỰ VIẾT HOẶC TỰ CHẠY BACKEND)
+====================================================================================================
+Nếu thầy không cho sẵn Web Service chạy riêng mà bắt nộp cả project Spring Boot:
+Bạn dùng ngay project Spring Boot này, mở Eclipse lên và dùng chức năng REFACTOR RENAME (Alt + Shift + R):
+
+1. ĐỔI MODEL CHA:
+   - Mở file `Faculty.java` -> Bôi đen chữ `Faculty` ở dòng `public class Faculty`
+   - Bấm phím [ Alt + Shift + R ] (hoặc chuột phải -> Refactor -> Rename) -> Gõ `Category` -> Enter.
+   - Eclipse sẽ TỰ ĐỘNG đổi tên file thành `Category.java` và đổi toàn bộ nơi gọi trong cả project!
+
+2. ĐỔI MODEL CON:
+   - Mở file `Student.java` -> Bấm [ Alt + Shift + R ] -> Đổi thành `Product`.
+   - Trong `Product.java`: Đổi `private String email;` thành `private Double price;` (hoặc String price).
+
+3. ĐỔI SERVICE:
+   - Mở file `FacultyService.java` -> Bấm [ Alt + Shift + R ] -> Đổi thành `CategoryService`.
+
+4. ĐỔI CONTROLLER:
+   - Mở file `FacultyController.java` -> Bấm [ Alt + Shift + R ] -> Đổi thành `CategoryController`.
+   - Trong file này, sửa các URL `@GetMapping`:
+     + `/api/faculties` -> `/api/categories`
+     + `/api/faculties/{facultyId}/students` -> `/api/categories/{categoryId}/products`
+
+5. CHẠY BACKEND:
+   - Bấm chuột phải vào `GkApplication.java` -> Run As -> Spring Boot App.
+   - Backend sẽ chạy tại cổng `8084` (hoặc cổng trong `application.properties`).
+   - File `index.html` của bạn chỉ việc gọi tới cổng đó là xong trọn vẹn cả bài thi 10 điểm!
+
+====================================================================================================
+📋 BẢNG TRA TỪ KHÓA CHO CÁC BỘ ĐỀ THI HAY GẶP NHẤT TẠI IUH:
 ====================================================================================================
 1. ĐỀ BÀI: DANH MỤC & SẢN PHẨM (Category & Product)
-   - API Cha: /api/categories (id, name)
-   - API Con: /api/categories/{id}/products (id, name, price)
-   => Thay: faculties -> categories | students -> products | email -> price
-            Khoa -> Danh mục | Sinh viên -> Sản phẩm | Email -> Đơn giá
+   - Cha:  Faculties -> Categories  | faculties -> categories | Faculty -> Category | faculty -> category | Khoa -> Danh mục
+   - Con:  Students -> Products    | students -> products   | Student -> Product  | student -> product  | Sinh viên -> Sản phẩm
+   - Cột:  email -> price          | Email -> Đơn giá
 
 2. ĐỀ BÀI: PHÒNG BAN & NHÂN VIÊN (Department & Employee)
-   - API Cha: /api/departments (id, name)
-   - API Con: /api/departments/{id}/employees (id, name, salary)
-   => Thay: faculties -> departments | students -> employees | email -> salary
-            Khoa -> Phòng ban | Sinh viên -> Nhân viên | Email -> Tiền lương
+   - Cha:  Faculties -> Departments | faculties -> departments | Faculty -> Department | faculty -> department | Khoa -> Phòng ban
+   - Con:  Students -> Employees   | students -> employees   | Student -> Employee  | student -> employee  | Sinh viên -> Nhân viên
+   - Cột:  email -> salary         | Email -> Tiền lương
 
-3. ĐỀ BÀI: LỚP HỌC & SINH VIÊN (Class & Student)
-   - API Cha: /api/classes (id, name)
-   - API Con: /api/classes/{id}/students (id, name, phone)
-   => Thay: faculties -> classes | email -> phone
-            Khoa -> Lớp học | Email -> Số điện thoại
+3. ĐỀ BÀI: LỚP HỌC & SINH VIÊN (Classroom & Student)
+   - Cha:  Faculties -> Classrooms | faculties -> classrooms | Faculty -> Classroom | faculty -> classroom | Khoa -> Lớp học
+   - Con:  Students giữ nguyên     | students giữ nguyên     | Student giữ nguyên   | student giữ nguyên   | Sinh viên giữ nguyên
+   - Cột:  email -> phone          | Email -> Số điện thoại
 
 4. ĐỀ BÀI: TÁC GIẢ & SÁCH (Author & Book)
-   - API Cha: /api/authors (id, name)
-   - API Con: /api/authors/{id}/books (id, title, price)
-   => Thay: faculties -> authors | students -> books | name -> title | email -> price
+   - Cha:  Faculties -> Authors    | faculties -> authors    | Faculty -> Author    | faculty -> author    | Khoa -> Tác giả
+   - Con:  Students -> Books       | students -> books       | Student -> Book      | student -> book      | Sinh viên -> Sách
+   - Cột:  email -> price          | Email -> Giá bán
 ====================================================================================================
 -->
 <html lang="vi">
@@ -203,19 +241,17 @@ bạn KHÔNG CẦN phải đọc từng dòng để sửa. Hãy dùng tính năn
 
         // =====================================================================
         // BƯỚC 1: LẤY DANH SÁCH ĐỐI TƯỢNG CHA ĐỔ VÀO COMBOBOX (<select>)
+        // [ĐỔI TÊN HÀM BƯỚC 1]: loadFaculties() -> loadCategories() (Thay: Faculties -> Categories)
+        // [ĐỔI URL BƯỚC 2]:     ${API_URL}/faculties -> ${API_URL}/categories
         // =====================================================================
         function loadFaculties() {
-            // [THAY Ở ĐÂY NẾU ĐỀ KHÁC]:
-            // Khoa:      ${API_URL}/faculties
-            // Danh mục:  ${API_URL}/categories
-            // Phòng ban: ${API_URL}/departments
             fetch(`${API_URL}/faculties`)
                 .then(response => response.json())
                 .then(list => {
                     const select = document.getElementById('facultySelect');
                     select.innerHTML = '<option value="">-- Vui lòng chọn --</option>';
                     list.forEach(item => {
-                        // [THAY Ở ĐÂY]: item.id và item.name (hoặc item.categoryName tùy tên biến trong JSON thầy cho)
+                        // [LƯU Ý]: item.id và item.name (hoặc item.categoryName nếu JSON backend đặt khác)
                         select.innerHTML += `<option value="${item.id}">${item.name}</option>`;
                     });
                 })
@@ -224,6 +260,7 @@ bạn KHÔNG CẦN phải đọc từng dòng để sửa. Hãy dùng tính năn
 
         // =====================================================================
         // BƯỚC 2: KHI CHỌN 1 ITEM TRONG COMBOBOX -> GỌI API LẤY DANH SÁCH CON
+        // [ĐỔI TÊN HÀM BƯỚC 3]: onFacultyChange() -> onCategoryChange() (Thay: Faculty -> Category)
         // =====================================================================
         function onFacultyChange() {
             const parentId = document.getElementById('facultySelect').value;
@@ -238,11 +275,11 @@ bạn KHÔNG CẦN phải đọc từng dòng để sửa. Hãy dùng tính năn
             resetForm();
         }
 
+        // =====================================================================
+        // [ĐỔI TÊN HÀM BƯỚC 5]: loadStudents() -> loadProducts() (Thay: Students -> Products)
+        // [ĐỔI URL BƯỚC 6]:     .../faculties/.../students -> .../categories/.../products
+        // =====================================================================
         function loadStudents(parentId, keyword = '') {
-            // [THAY Ở ĐÂY NẾU ĐỀ KHÁC]:
-            // Sinh viên theo Khoa:     ${API_URL}/faculties/${parentId}/students
-            // Sản phẩm theo Danh mục:  ${API_URL}/categories/${parentId}/products
-            // Nhân viên theo Phòng:    ${API_URL}/departments/${parentId}/employees
             let url = `${API_URL}/faculties/${parentId}/students`;
             
             // Nếu có từ khóa tìm kiếm thì gắn thêm tham số ?keyword=...
@@ -260,6 +297,7 @@ bạn KHÔNG CẦN phải đọc từng dòng để sửa. Hãy dùng tính năn
 
         // =====================================================================
         // HÀM VẼ DỮ LIỆU JSON VÀO THẺ BẢNG (TABLE)
+        // [ĐỔI THUỘC TÍNH BƯỚC 9]: s.email -> s.price (Thay: email -> price)
         // =====================================================================
         function renderTable(childList) {
             const tbody = document.getElementById('studentTableBody');
@@ -272,10 +310,6 @@ bạn KHÔNG CẦN phải đọc từng dòng để sửa. Hãy dùng tính năn
 
             let html = '';
             childList.forEach(s => {
-                // [THAY Ở ĐÂY NẾU ĐỀ KHÁC]:
-                // Hiện tại: Sinh viên có s.id, s.name, s.email
-                // Nếu là Sản phẩm: thay s.email bằng p.price (đơn giá)
-                // Nếu là Nhân viên: thay s.email bằng e.salary (tiền lương)
                 html += `
                     <tr>
                         <td>${s.id}</td>
@@ -295,18 +329,18 @@ bạn KHÔNG CẦN phải đọc từng dòng để sửa. Hãy dùng tính năn
 
         // =====================================================================
         // TÌM KIẾM DỮ LIỆU (HỖ TRỢ CẢ VỪA GÕ VỪA TÌM VÀ BẤM NÚT)
+        // [ĐỔI TÊN HÀM BƯỚC 5]: searchStudents() -> searchProducts() (Thay: Students -> Products)
         // =====================================================================
         function searchStudents() {
             const parentId = document.getElementById('facultySelect').value;
             if (!parentId) return; // Nếu chưa chọn Khoa thì không làm gì
             const keyword = document.getElementById('keyword').value.trim();
-            // Gọi hàm loadStudents truyền từ khóa.
-            // Khi người dùng xóa trắng ô tìm kiếm (keyword rỗng), hệ thống tự động tải lại toàn bộ danh sách gốc!
             loadStudents(parentId, keyword);
         }
 
         // =====================================================================
         // BƯỚC 3: THÊM MỚI (POST) HOẶC CẬP NHẬT (PUT) DỮ LIỆU
+        // [ĐỔI TÊN HÀM BƯỚC 7]: saveStudent() -> saveProduct() (Thay: Student -> Product)
         // =====================================================================
         function saveStudent() {
             const parentId = document.getElementById('facultySelect').value;
@@ -324,10 +358,6 @@ bạn KHÔNG CẦN phải đọc từng dòng để sửa. Hãy dùng tính năn
                 return;
             }
 
-            // [THAY Ở ĐÂY NẾU ĐỀ KHÁC]:
-            // Đóng gói đối tượng JSON gửi lên Server
-            // Ví dụ Sản phẩm: const requestData = { name: name, price: parseFloat(price) };
-            // Ví dụ Nhân viên: const requestData = { name: name, salary: parseFloat(salary) };
             const requestData = { 
                 name: name, 
                 email: email 
@@ -368,7 +398,7 @@ bạn KHÔNG CẦN phải đọc từng dòng để sửa. Hãy dùng tính năn
             }
         }
 
-        // Đẩy dữ liệu của dòng được click lên form để Sửa
+        // [ĐỔI TÊN HÀM BƯỚC 7]: editStudent() -> editProduct() (Thay: Student -> Product)
         function editStudent(id, name, email) {
             document.getElementById('studentId').value = id;
             document.getElementById('studentName').value = name;
@@ -392,6 +422,7 @@ bạn KHÔNG CẦN phải đọc từng dòng để sửa. Hãy dùng tính năn
 
         // =====================================================================
         // BƯỚC 3: XÓA DỮ LIỆU (DELETE)
+        // [ĐỔI TÊN HÀM BƯỚC 7]: deleteStudent() -> deleteProduct() (Thay: Student -> Product)
         // =====================================================================
         function deleteStudent(studentId) {
             const parentId = document.getElementById('facultySelect').value;
