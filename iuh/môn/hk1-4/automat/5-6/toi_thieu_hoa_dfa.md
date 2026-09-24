@@ -1,11 +1,10 @@
 # CẨM NANG TOÀN DIỆN & MẪU TRÌNH BÀY THI CHUẨN 10/10
-## CHƯƠNG 5-6: CHUYỂN ĐỔI NFA SANG DFA & TỐI THIỂU HÓA TRẠNG THÁI DFA
+## CHUYÊN ĐỀ: TỐI THIỂU HÓA TRẠNG THÁI DFA (OPTIMIZE STATES)
 
-> **Tài liệu học tập & Ôn thi chuẩn theo 2 giáo trình và bộ bài làm mẫu bài thi:**
-> 1. Giáo trình 1: `chuyển đổi NFA _DFA_SV.pdf`
-> 2. Giáo trình 2: `TỐI THIỂU CÁC TRẠNG THÁI CỦA DFA SV.pdf`
-> 3. Mẫu bài làm trên giấy thi thực tế: `kk_1.jpg` đến `kk_9.jpg`  
-> **Môn học:** Lý thuyết Otomat và Ngôn ngữ hình thức (IUH)
+> **Tài liệu học tập & Ôn thi chuẩn theo giáo trình và bộ bài làm mẫu bài thi:**
+> - Giáo trình chính: `TỐI THIỂU CÁC TRẠNG THÁI CỦA DFA SV.pdf`
+> - Mẫu bài làm trên giấy thi thực tế: `kk_6.jpg` đến `kk_9.jpg`  
+> - Môn học: Lý thuyết Otomat và Ngôn ngữ hình thức (IUH)
 
 ---
 
@@ -13,15 +12,18 @@
 - [0. HƯỚNG DẪN QUY ƯỚC & CÁCH VẼ TRẠNG THÁI KẾT THÚC (FINAL STATE - F)](#0-hướng-dẫn-quy-ước--cách-vẽ-trạng-thái-kết-thúc-final-state---f)
 - [1. QUY TẮC SỐNG CÒN KHI LÀM BÀI THI (XỬ LÝ ĐỀ MẤT CHỈ SỐ q)](#1-quy-tắc-sống-còn-khi-làm-bài-thi-xử-lý-đề-mất-chỉ-số-q)
 - [2. PHẦN A: BẢN CHẤT BẢNG TAM GIÁC & CÁC Ô (qi, qj) Ở ĐÂU RA?](#2-phần-a-bản-chất-bảng-tam-giác--các-ô-qi-qj-ở-đâu-ra)
-- [3. PHẦN B: CHUYÊN ĐỀ 1 - CHUYỂN ĐỔI NFA SANG DFA (THỦ TỤC NFA-TO-DFA)](#3-phần-b-chuyên-đề-1---chuyển-đổi-nfa-sang-dfa-thủ-tục-nfa-to-dfa)
-  - [3.1 Mẫu trình bày bài làm đi thi chuẩn cho dạng NFA → DFA](#31-mẫu-trình-bày-bài-làm-đi-thi-chuẩn-cho-dạng-nfa-→-dfa)
-  - [3.2 Chi tiết 3 Ví dụ Slide (Ví dụ 1, Ví dụ 2, Ví dụ 3)](#32-chi-tiết-3-ví-dụ-slide-ví-dụ-1-ví-dụ-2-ví-dụ-3)
-  - [3.3 Lời giải chi tiết 5 Bài tập NFA → DFA (Trang 5 Slide - Chuẩn bài thi kk_1 đến kk_5)](#33-lời-giải-chi-tiết-5-bài-tập-nfa-→-dfa-trang-5-slide---chuẩn-bài-thi-kk_1-đến-kk_5)
-- [4. PHẦN C: CHUYÊN ĐỀ 2 - TỐI THIỂU HÓA TRẠNG THÁI DFA (OPTIMIZE STATES)](#4-phần-c-chuyên-đề-2---tối-thiểu-hóa-trạng-thái-dfa-optimize-states)
-  - [4.1 Mẫu trình bày bài làm đi thi chuẩn cho dạng DFA Minimization](#41-mẫu-trình-bày-bài-làm-đi-thi-chuẩn-cho-dạng-dfa-minimization)
-  - [4.2 Chi tiết 4 Ví dụ Slide (Ví dụ 2.2, 2.3a, 2.3b, 2.4)](#42-chi-tiết-4-ví-dụ-slide-ví-dụ-22-23a-23b-24)
-  - [4.3 Lời giải chi tiết 3 Bài tập lớn (Trang 7 Slide - Chuẩn bài thi kk_6 đến kk_9)](#43-lời-giải-chi-tiết-3-bài-tập-lớn-trang-7-slide---chuẩn-bài-thi-kk_6-đến-kk_9)
-- [5. PHẦN D: CHECKLIST & BÍ QUYẾT ĐẠT ĐIỂM 10 KHI ĐI THI](#5-phần-d-checklist--bí-quyết-đạt-điểm-10-khi-đi-thi)
+- [3. PHẦN B: MẪU TRÌNH BÀY BÀI LÀM ĐI THI CHUẨN DẠNG DFA MINIMIZATION](#3-phần-b-mẫu-trình-bày-bài-làm-đi-thi-chuẩn-dạng-dfa-minimization)
+- [4. PHẦN C: CHI TIẾT 4 VÍ DỤ SLIDE GIÁO TRÌNH](#4-phần-c-chi-tiết-4-ví-dụ-slide-giáo-trình)
+  - [Ví dụ 2.2: Loại bỏ trạng thái cô lập q5 & gộp nhánh đối xứng](#ví-dụ-22-loại-bỏ-trạng-thái-cô-lập-q5--gộp-nhánh-đối-xứng)
+  - [Ví dụ 2.3a: Lần vết giải thuật Optimize states trên DFA 5 trạng thái](#ví-dụ-23a-lần-vết-giải-thuật-optimize-states-trên-dfa-5-trạng-thái)
+  - [Ví dụ 2.3b: Rút gọn DFA 6 trạng thái về 3 trạng thái](#ví-dụ-23b-rút-gọn-dfa-6-trạng-thái-về-3-trạng-thái)
+  - [Ví dụ 2.4: Mẫu trả lời câu hỏi "DFA đã tối thiểu chưa? Tại sao?"](#ví-dụ-24-mẫu-trả-lời-câu-hỏi-dfa-đã-tối-thiểu-chưa-tại-sao)
+- [5. PHẦN D: LỜI GIẢI CHI TIẾT 3 BÀI TẬP LỚN (TRANG 7 SLIDE - CHUẨN BÀI THI `kk_6` ĐẾN `kk_9`)](#5-phần-d-lời-giải-chi-tiết-3-bài-tập-lớn-trang-7-slide---chuẩn-bài-thi-kk_6-đến-kk_9)
+  - [Bài tập 1 - Hình a: Tối thiểu hóa DFA 8 trạng thái (Đối chiếu `kk_6.jpg`)](#bài-tập-1---hình-a-tối-thiểu-hóa-dfa-8-trạng-thái-đối-chiếu-kk_6jpg)
+  - [Bài tập 1 - Hình b: Tối thiểu hóa DFA 7 trạng thái (Đối chiếu `kk_6.jpg`)](#bài-tập-1---hình-b-tối-thiểu-hóa-dfa-7-trạng-thái-đối-chiếu-kk_6jpg)
+  - [Bài tập 2: NFA → DFA → Tối thiểu hóa (Ngôn ngữ L = a* b* c* - Đối chiếu `kk_9.jpg`)](#bài-tập-2-nfa-→-dfa-→-tối-thiểu-hóa-ngôn-ngữ-l--a-b-c---đối-chiếu-kk_9jpg)
+  - [Bài tập 3: Thiết kế DFA tối thiểu cho các ngôn ngữ hình thức](#bài-tập-3-thiết-kế-dfa-tối-thiểu-cho-các-ngôn-ngữ-hình-thức)
+- [6. PHẦN E: CHECKLIST ĐIỂM 10 CHO DẠNG BÀI DFA MINIMIZATION](#6-phần-e-checklist-điểm-10-cho-dạng-bài-dfa-minimization)
 
 ---
 
@@ -35,8 +37,8 @@
 
 | Phương tiện thể hiện | Trạng thái thường (Non-final) | Trạng thái khởi đầu | **Trạng thái kết thúc (Final State - F)** |
 | :--- | :--- | :--- | :--- |
-| **Giấy thi / Viết tay (`kk_1` đến `kk_9`)** | 1 vòng tròn đơn (qi) | Mũi tên → trỏ vào nút | **2 VÒNG TRÒN ĐỒNG TÂM (VÒNG TRÒN ĐÔI)** |
-| **Văn bản / Công thức** | q0, q1, {q1, q2} | q0 hoặc S0 | **★ qf ∈ F hoặc ★ {q1, q2} ∈ FD (luôn có dấu ★)** |
+| **Giấy thi / Viết tay (`kk_6` đến `kk_9`)** | 1 vòng tròn đơn (qi) | Mũi tên → trỏ vào nút | **2 VÒNG TRÒN ĐỒNG TÂM (VÒNG TRÒN ĐÔI)** |
+| **Văn bản / Công thức** | q0, q1, {q1, q2} | q0 hoặc S0 | **★ qf ∈ F hoặc ★ [q3, q4] ∈ F (luôn có dấu ★)** |
 | **Bảng hàm chuyển dịch (δ)** | Ghi tên tập bình thường | Thêm mũi tên → | **In đậm, thêm dấu ★, cột "Thuộc F?" ghi "CÓ (TRẠNG THÁI KẾT THÚC - F)"** |
 | **Sơ đồ Mermaid (Trong file này)** | Khung chữ nhật bo góc đơn | Có `[*] --> q0` | **Tô nền XANH LÁ TƯƠI NHẠT, VIỀN XANH ĐẬM DÀY 3PX, nhãn chứa `★ ... (KẾT THÚC - F)`** |
 
@@ -105,528 +107,10 @@ q4  │(q4,q0)│(q4,q1)│(q4,q2)│(q4,q3)│  <-- Hàng q4: 4 ô
 
 ---
 
-# 3. PHẦN B: CHUYÊN ĐỀ 1 - CHUYỂN ĐỔI NFA SANG DFA (THỦ TỤC NFA-TO-DFA)
+# 3. PHẦN B: MẪU TRÌNH BÀY BÀI LÀM ĐI THI CHUẨN DẠNG DFA MINIMIZATION
+*(Trích chuẩn theo bài thi thực tế `kk_6.jpg` đến `kk_9.jpg`)*
 
----
-
-## 3.1 Mẫu trình bày bài làm đi thi chuẩn cho dạng NFA → DFA
-*(Trích chuẩn theo các bài thi thực tế `kk_1.jpg` đến `kk_5.jpg`)*
-
-Khi làm bài thi dạng chuyển đổi NFA sang DFA, bạn trình bày đúng 3 bước theo cấu trúc sau:
-
-```text
-BÀI LÀM:
-
-Bước 1: Đỉnh khởi đầu của DFA là {q0}  
-(Nếu NFA có bước nhảy λ: S0 = λ-closure(q0) = {q0, ...})
-
-Bước 2: Xây dựng các hàm chuyển dịch δ*:
-  δ*({q0}, a) = {...};    δ*({q0}, b) = {...}
-  δ*({q1, q2}, a) = {...}; δ*({q1, q2}, b) = {...}
-  ...
-  δ*(∅, a) = ∅;          δ*(∅, b) = ∅  (Nếu có trạng thái bẫy)
-
-Bước 3: Những trạng thái nào có chứa <trạng thái kết thúc FN của NFA> 
-đều là trạng thái kết thúc của DFA (Ký hiệu ★ (F)).
-Ta có đồ thị chuyển trạng thái của DFA như hình sau:
-
-  [Vẽ hình đồ thị DFA hoàn chỉnh với nhãn tập con trên các nút, các nút thuộc FD đánh dấu rõ ★ (F)]
-```
-
----
-
-## 3.2 Chi tiết 3 Ví dụ Slide (Ví dụ 1, Ví dụ 2, Ví dụ 3)
-
-### VÍ DỤ 1: NFA có λ-transition → DFA có trạng thái bẫy ∅
-*(Slide trang 1 - 2)*
-
-#### 1. Khai báo Otomat ban đầu:
-- Tập trạng thái NFA: `Q = {q0, q1, q2}`, `Σ = {a, b}`.
-- Trạng thái khởi đầu: `q0`.
-- **Tập trạng thái kết thúc NFA: FN = {★ q1}.**
-- Các bước chuyển của NFA:
-  - `q0 ─(a)→ q1`
-  - `q1 ─(λ)→ q2`, `q1 ─(a)→ q1`, `q1 ─(b)→ q0`
-  - `q2 ─(b)→ q0`
-
-#### 2. Bài làm mẫu chuẩn đi thi:
-
-```text
-Bước 1: Đỉnh khởi đầu của DFA là {q0}.
-
-Bước 2: Các bước chuyển dịch δ*:
-  δ*({q0}, a) = {q1, q2}   (vì q0 đọc a ra q1, q1 đi λ sang q2)
-  δ*({q0}, b) = ∅          (không có chuyển dịch b từ q0)
-
-  δ*({q1, q2}, a) = δ*(q1, a) ∪ δ*(q2, a) = {q1, q2} ∪ ∅ = {q1, q2}
-  δ*({q1, q2}, b) = δ*(q1, b) ∪ δ*(q2, b) = {q0} ∪ {q0} = {q0}
-
-  δ*(∅, a) = ∅; δ*(∅, b) = ∅  (trạng thái bẫy)
-
-Bước 3: Vì q1 ∈ FN nên những đỉnh có chứa q1 là trạng thái kết thúc của DFA. 
-Do vậy đỉnh ★ {q1, q2} là trạng thái kết thúc duy nhất của DFA (FD = {{q1, q2}}).
-```
-
-#### 3. Bảng hàm chuyển dịch của DFA:
-
-| Trạng thái DFA | Ký hiệu tập con | Đọc a | Đọc b | Thuộc FD? (Trạng thái kết thúc) |
-| :---: | :---: | :---: | :---: | :---: |
-| → {q0} | {q0} | {q1, q2} | ∅ | Không |
-| **★ {q1, q2}** | {q1, q2} | {q1, q2} | {q0} | **CÓ (TRẠNG THÁI KẾT THÚC DUY NHẤT - F)** |
-| ∅ | Trap | ∅ | ∅ | Không |
-
-#### 4. Đồ thị DFA tương đương:
-*(Nút màu xanh lá viền đậm có dấu `★ (KẾT THÚC - F)` là trạng thái kết thúc vòng tròn đôi)*
-
-```mermaid
-stateDiagram-v2
-    classDef finalState fill:#d4edda,stroke:#28a745,stroke-width:3px,font-weight:bold;
-    [*] --> q0
-    state "★ {q1, q2} (KẾT THÚC - F)" as q1_q2
-    state "q0 (Khởi đầu)" as q0
-    state "Trap: ∅ (Bẫy)" as Trap
-
-    q0 --> q1_q2: a
-    q0 --> Trap: b
-    q1_q2 --> q1_q2: a
-    q1_q2 --> q0: b
-    Trap --> Trap: a, b
-
-    class q1_q2 finalState;
-```
-
----
-
-### VÍ DỤ 2: NFA sang DFA đầy đủ trên Σ = {0, 1}
-*(Slide trang 2 - 4)*
-
-#### 1. Khai báo Otomat ban đầu:
-- NFA có `Q = {q0, q1, q2}`, `Σ = {0, 1}`.
-- Trạng thái khởi đầu: `q0`.
-- **Tập trạng thái kết thúc NFA: FN = {★ q1}.**
-- Các bước chuyển của NFA:
-  - `q0 ─(0)→ q0, q1`; `q0 ─(1)→ q1`
-  - `q1 ─(0)→ q2`; `q1 ─(1)→ q2`
-  - `q2 ─(0)→ ∅`; `q2 ─(1)→ q2`
-
-#### 2. Bài làm mẫu chuẩn đi thi:
-
-```text
-Bước 1: Đỉnh khởi đầu của DFA là {q0}.
-
-Bước 2: Tính các bước chuyển dịch δ*:
-  δ*({q0}, 0) = {q0, q1};  δ*({q0}, 1) = {q1}
-
-  δ*({q0, q1}, 0) = δ*(q0, 0) ∪ δ*(q1, 0) = {q0, q1} ∪ {q2} = {q0, q1, q2}
-  δ*({q0, q1}, 1) = δ*(q0, 1) ∪ δ*(q1, 1) = {q1} ∪ {q2} = {q1, q2}
-
-  δ*({q1}, 0) = {q2};      δ*({q1}, 1) = {q2}
-
-  δ*({q0, q1, q2}, 0) = {q0, q1, q2}; δ*({q0, q1, q2}, 1) = {q1, q2}
-  δ*({q1, q2}, 0) = {q2};           δ*({q1, q2}, 1) = {q2}
-  δ*({q2}, 0) = ∅;                  δ*({q2}, 1) = {q2}
-
-  δ*(∅, 0) = ∅; δ*(∅, 1) = ∅  (trạng thái bẫy)
-
-Bước 3: Những trạng thái nào chứa q1 ∈ FN đều là trạng thái kết thúc của DFA.
-Tập trạng thái kết thúc FD gồm 4 trạng thái:
-  FD = { ★ {q1}, ★ {q0, q1}, ★ {q1, q2}, ★ {q0, q1, q2} }
-```
-
-#### 3. Bảng hàm chuyển của DFA:
-
-| Trạng thái DFA | Ký hiệu tập con | Đọc 0 | Đọc 1 | Thuộc FD? (Trạng thái kết thúc) |
-| :---: | :---: | :---: | :---: | :---: |
-| → {q0} | {q0} | {q0, q1} | {q1} | Không |
-| **★ {q0, q1}** | {q0, q1} | {q0, q1, q2} | {q1, q2} | **CÓ (TRẠNG THÁI KẾT THÚC - F)** |
-| **★ {q1}** | {q1} | {q2} | {q2} | **CÓ (TRẠNG THÁI KẾT THÚC - F)** |
-| **★ {q0, q1, q2}** | {q0, q1, q2} | {q0, q1, q2} | {q1, q2} | **CÓ (TRẠNG THÁI KẾT THÚC - F)** |
-| **★ {q1, q2}** | {q1, q2} | {q2} | {q2} | **CÓ (TRẠNG THÁI KẾT THÚC - F)** |
-| {q2} | {q2} | ∅ | {q2} | Không |
-| ∅ | Trap | ∅ | ∅ | Không |
-
-#### 4. Đồ thị DFA tương đương:
-
-```mermaid
-stateDiagram-v2
-    classDef finalState fill:#d4edda,stroke:#28a745,stroke-width:3px,font-weight:bold;
-    [*] --> q0
-    state "★ {q0, q1} (F)" as q0_q1
-    state "★ {q1} (F)" as q1
-    state "★ {q0, q1, q2} (F)" as q0_q1_q2
-    state "★ {q1, q2} (F)" as q1_q2
-
-    q0 --> q0_q1: 0
-    q0 --> q1: 1
-    q0_q1 --> q0_q1_q2: 0
-    q0_q1 --> q1_q2: 1
-    q1 --> q2: 0, 1
-    q0_q1_q2 --> q0_q1_q2: 0
-    q0_q1_q2 --> q1_q2: 1
-    q1_q2 --> q2: 0, 1
-    q2 --> Trap: 0
-    q2 --> q2: 1
-    Trap --> Trap: 0, 1
-
-    class q0_q1,q1,q0_q1_q2,q1_q2 finalState;
-```
-
----
-
-### VÍ DỤ 3: NFA có λ-closure bắt đầu phức tạp {q0, q3, q4}
-*(Slide trang 4 - 5)*
-
-#### 1. Khai báo Otomat ban đầu:
-- NFA có `Q = {q0, q1, q2, q3, q4}`, `Σ = {a, b}`.
-- Trạng thái khởi đầu: `q0`.
-- **Tập trạng thái kết thúc NFA: FN = {★ q1, ★ q2}.**
-
-#### 2. Bài làm mẫu chuẩn đi thi:
-
-```text
-Bước 1: Đỉnh khởi đầu của DFA là {q0, q3, q4} (vì δ*(q0, λ) = {q0, q3, q4}).
-
-Bước 2: Tính các chuyển dịch δ*:
-  δ*({q0, q3, q4}, a) = {q1, q2, q4}
-  δ*({q0, q3, q4}, b) = {q1, q2, q3, q4}
-
-  δ*({q1, q2, q4}, a) = {q0, q1, q2, q3, q4}
-  δ*({q1, q2, q4}, b) = {q3, q4}
-
-  δ*({q1, q2, q3, q4}, a) = {q0, q1, q2, q3, q4}
-  δ*({q1, q2, q3, q4}, b) = {q3, q4}
-
-  δ*({q0, q1, q2, q3, q4}, a) = {q0, q1, q2, q3, q4}
-  δ*({q0, q1, q2, q3, q4}, b) = {q1, q2, q3, q4}
-
-  δ*({q3, q4}, a) = {q4};    δ*({q3, q4}, b) = {q3, q4}
-  δ*({q4}, a) = ∅;          δ*({q4}, b) = {q3, q4}
-  δ*(∅, a) = ∅;             δ*(∅, b) = ∅
-
-Bước 3: Chọn những đỉnh có chứa q1 hoặc q2 ∈ FN làm trạng thái kết thúc.
-Tập trạng thái kết thúc FD = { ★ {q1, q2, q4}, ★ {q1, q2, q3, q4}, ★ {q0, q1, q2, q3, q4} }.
-```
-
-#### 3. Bảng hàm chuyển của DFA:
-
-| Trạng thái DFA | Ký hiệu nút | Đọc a | Đọc b | Thuộc FD? (Trạng thái kết thúc) |
-| :---: | :---: | :---: | :---: | :---: |
-| → {q0, q3, q4} | A | B | C | Không |
-| **★ {q1, q2, q4}** | B | D | E | **CÓ (TRẠNG THÁI KẾT THÚC - F)** |
-| **★ {q1, q2, q3, q4}** | C | D | E | **CÓ (TRẠNG THÁI KẾT THÚC - F)** |
-| **★ {q0, q1, q2, q3, q4}** | D | D | C | **CÓ (TRẠNG THÁI KẾT THÚC - F)** |
-| {q3, q4} | E | G | E | Không |
-| {q4} | G | Trap | E | Không |
-| ∅ | Trap | Trap | Trap | Không |
-
-#### 4. Đồ thị DFA tương đương:
-
-```mermaid
-stateDiagram-v2
-    classDef finalState fill:#d4edda,stroke:#28a745,stroke-width:3px,font-weight:bold;
-    [*] --> A
-    state "A: {q0, q3, q4} (Bắt đầu)" as A
-    state "★ B: {q1, q2, q4} (F)" as B
-    state "★ C: {q1, q2, q3, q4} (F)" as C
-    state "★ D: {q0, q1, q2, q3, q4} (F)" as D
-    state "E: {q3, q4}" as E
-    state "G: {q4}" as G
-    state "Trap: ∅" as Trap
-
-    A --> B: a
-    A --> C: b
-    B --> D: a
-    B --> E: b
-    C --> D: a
-    C --> E: b
-    D --> D: a
-    D --> C: b
-    E --> G: a
-    E --> E: b
-    G --> Trap: a
-    G --> E: b
-    Trap --> Trap: a, b
-
-    class B,C,D finalState;
-```
-
----
-
-## 3.3 Lời giải chi tiết 5 Bài tập NFA → DFA (Trang 5 Slide - Chuẩn bài thi kk_1 đến kk_5)
-
----
-
-### BÀI TẬP 1 (Trang 5 - Đối chiếu bài làm `kk_5.jpg`)
-
-#### 1. Đề bài:
-NFA có `Q = {q0, q1, q2}`, `Σ = {0, 1}`, trạng thái đầu `q0`, kết thúc **FN = {★ q1, ★ q2}**.
-- `q0 ─(0)→ q0`; `q0 ─(1)→ q1`
-- `q1 ─(0)→ q1, q2`; `q1 ─(1)→ q1`
-- `q2 ─(0)→ q2`; `q2 ─(1)→ q2`
-
-#### 2. Bài làm chuẩn đi thi:
-
-```text
-Bước 1: Đỉnh khởi đầu là {q0}
-
-Bước 2:
-  δ*({q0}, 0) = {q0};           δ*({q0}, 1) = {q1}
-  δ*({q1}, 0) = {q1, q2};       δ*({q1}, 1) = {q1}
-  δ*({q1, q2}, 0) = {q1, q2};   δ*({q1, q2}, 1) = {q1, q2}
-  δ*(∅, 0) = ∅;                 δ*(∅, 1) = ∅
-
-Bước 3: Những trạng thái nào chứa q1 hoặc q2 ∈ FN đều là trạng thái kết thúc của DFA.
-Tập trạng thái kết thúc FD = { ★ {q1}, ★ {q1, q2} }.
-Ta được hình sau:
-```
-
-#### 3. Bảng chuyển dịch DFA:
-
-| Trạng thái DFA | Đọc 0 | Đọc 1 | Thuộc FD? (Trạng thái kết thúc) |
-| :---: | :---: | :---: | :---: |
-| → {q0} | {q0} | {q1} | Không |
-| **★ {q1}** | {q1, q2} | {q1} | **CÓ (TRẠNG THÁI KẾT THÚC - F)** |
-| **★ {q1, q2}** | {q1, q2} | {q1, q2} | **CÓ (TRẠNG THÁI KẾT THÚC - F)** |
-
-#### 4. Đồ thị DFA tương đương:
-
-```mermaid
-stateDiagram-v2
-    classDef finalState fill:#d4edda,stroke:#28a745,stroke-width:3px,font-weight:bold;
-    [*] --> q0
-    state "★ {q1} (F)" as q1
-    state "★ {q1, q2} (F)" as q1_q2
-
-    q0 --> q0: 0
-    q0 --> q1: 1
-    q1 --> q1: 1
-    q1 --> q1_q2: 0
-    q1_q2 --> q1_q2: 0, 1
-
-    class q1,q1_q2 finalState;
-```
-
----
-
-### BÀI TẬP 2 (Trang 5 - Đối chiếu bài làm `kk_4.jpg`)
-
-#### 1. Đề bài:
-NFA 2 trạng thái `Q = {q0, q1}`, `Σ = {0, 1}`, trạng thái đầu `q0`, kết thúc **FN = {★ q1}**.
-- `q0 ─(0)→ q0, q1`; `q0 ─(1)→ q1`
-- `q1 ─(0)→ ∅`; `q1 ─(1)→ q0, q1`
-
-#### 2. Bài làm chuẩn đi thi:
-
-```text
-Bước 1: Đỉnh khởi đầu là {q0}
-
-Bước 2:
-  δ*({q0}, 0) = {q0, q1};       δ*({q0}, 1) = {q1}
-  δ*({q1}, 0) = ∅;             δ*({q1}, 1) = {q0, q1}
-  δ*({q0, q1}, 0) = {q0, q1};   δ*({q0, q1}, 1) = {q0, q1}
-  δ*(∅, 0) = ∅;                 δ*(∅, 1) = ∅
-
-Bước 3: Những trạng thái nào chứa q1 ∈ FN là trạng thái kết thúc.
-Tập trạng thái kết thúc FD = { ★ {q1}, ★ {q0, q1} }.
-Ta có hình sau:
-```
-
-#### 3. Bảng chuyển dịch DFA:
-
-| Trạng thái DFA | Đọc 0 | Đọc 1 | Thuộc FD? (Trạng thái kết thúc) |
-| :---: | :---: | :---: | :---: |
-| → {q0} | {q0, q1} | {q1} | Không |
-| **★ {q1}** | ∅ | {q0, q1} | **CÓ (TRẠNG THÁI KẾT THÚC - F)** |
-| **★ {q0, q1}** | {q0, q1} | {q0, q1} | **CÓ (TRẠNG THÁI KẾT THÚC - F)** |
-| ∅ | ∅ | ∅ | Không |
-
-#### 4. Đồ thị DFA tương đương:
-
-```mermaid
-stateDiagram-v2
-    classDef finalState fill:#d4edda,stroke:#28a745,stroke-width:3px,font-weight:bold;
-    [*] --> q0
-    state "★ {q1} (F)" as q1
-    state "★ {q0, q1} (F)" as q0_q1
-    state "Trap: ∅" as Trap
-
-    q0 --> q0_q1: 0
-    q0 --> q1: 1
-    q1 --> Trap: 0
-    q1 --> q0_q1: 1
-    q0_q1 --> q0_q1: 0, 1
-    Trap --> Trap: 0, 1
-
-    class q1,q0_q1 finalState;
-```
-
----
-
-### BÀI TẬP 3 (Trang 5 - Đối chiếu bài làm `kk_3.jpg`)
-
-#### 1. Đề bài:
-NFA đoán nhận các chuỗi kết thúc bởi `bb` trên `Σ = {a, b}`, kết thúc **FN = {★ q2}**.
-- `q0 ─(a, b)→ q0`; `q0 ─(b)→ q1`
-- `q1 ─(b)→ q2 ∈ FN`
-
-#### 2. Bài làm chuẩn đi thi:
-
-```text
-Bước 1: Đỉnh khởi đầu của DFA là {q0}
-
-Bước 2:
-  δ*({q0}, a) = {q0};           δ*({q0}, b) = {q0, q1}
-  δ*({q0, q1}, a) = {q0};       δ*({q0, q1}, b) = {q0, q1, q2}
-  δ*({q0, q1, q2}, a) = {q0};   δ*({q0, q1, q2}, b) = {q0, q1, q2}
-
-Bước 3: Ta chọn đỉnh có chứa q2 ∈ FN làm trạng thái kết thúc.
-Tập trạng thái kết thúc duy nhất: FD = { ★ {q0, q1, q2} }.
-```
-
-#### 3. Bảng chuyển dịch DFA:
-
-| Trạng thái DFA | Đọc a | Đọc b | Thuộc FD? (Trạng thái kết thúc) |
-| :---: | :---: | :---: | :---: |
-| → {q0} | {q0} | {q0, q1} | Không |
-| {q0, q1} | {q0} | {q0, q1, q2} | Không |
-| **★ {q0, q1, q2}** | {q0} | {q0, q1, q2} | **CÓ (TRẠNG THÁI KẾT THÚC DUY NHẤT - F)** |
-
-#### 4. Đồ thị DFA tương đương:
-
-```mermaid
-stateDiagram-v2
-    classDef finalState fill:#d4edda,stroke:#28a745,stroke-width:3px,font-weight:bold;
-    [*] --> q0
-    state "★ {q0, q1, q2} (F)" as q0_q1_q2
-
-    q0 --> q0: a
-    q0 --> q0_q1: b
-    q0_q1 --> q0: a
-    q0_q1 --> q0_q1_q2: b
-    q0_q1_q2 --> q0: a
-    q0_q1_q2 --> q0_q1_q2: b
-
-    class q0_q1_q2 finalState;
-```
-
----
-
-### BÀI TẬP 4 (Trang 5 - Đối chiếu bài làm `kk_2.jpg`)
-
-#### 1. Đề bài:
-NFA 3 trạng thái `Q = {q0, q1, q2}`, `Σ = {0, 1}`, trạng thái đầu `q0`, kết thúc **FN = {★ q2}**.
-- `q0 ─(0)→ q0`; `q0 ─(1)→ q1, q2`
-- `q1 ─(0)→ q0, q1`; `q1 ─(1)→ q1`
-- `q2 ─(0)→ q2`; `q2 ─(1)→ q2`
-
-#### 2. Bài làm chuẩn đi thi:
-
-```text
-Bước 1: Đỉnh khởi đầu của DFA là {q0}
-
-Bước 2:
-  δ*({q0}, 0) = {q0};           δ*({q0}, 1) = {q1, q2}
-  δ*({q1, q2}, 0) = {q0, q1, q2}; δ*({q1, q2}, 1) = {q1, q2}
-  δ*({q0, q1, q2}, 0) = {q0, q1, q2}; δ*({q0, q1, q2}, 1) = {q1, q2}
-  δ*(∅, 0) = ∅;                 δ*(∅, 1) = ∅
-
-Bước 3: Ta chọn đỉnh có chứa q2 ∈ FN làm trạng thái kết thúc.
-Tập trạng thái kết thúc FD = { ★ {q1, q2}, ★ {q0, q1, q2} }.
-Ta được đồ thị DFA tương đương:
-```
-
-#### 3. Bảng chuyển dịch DFA:
-
-| Trạng thái DFA | Đọc 0 | Đọc 1 | Thuộc FD? (Trạng thái kết thúc) |
-| :---: | :---: | :---: | :---: |
-| → {q0} | {q0} | {q1, q2} | Không |
-| **★ {q1, q2}** | {q0, q1, q2} | {q1, q2} | **CÓ (TRẠNG THÁI KẾT THÚC - F)** |
-| **★ {q0, q1, q2}** | {q0, q1, q2} | {q1, q2} | **CÓ (TRẠNG THÁI KẾT THÚC - F)** |
-
-#### 4. Đồ thị DFA tương đương:
-
-```mermaid
-stateDiagram-v2
-    classDef finalState fill:#d4edda,stroke:#28a745,stroke-width:3px,font-weight:bold;
-    [*] --> q0
-    state "★ {q1, q2} (F)" as q1_q2
-    state "★ {q0, q1, q2} (F)" as q0_q1_q2
-
-    q0 --> q0: 0
-    q0 --> q1_q2: 1
-    q1_q2 --> q0_q1_q2: 0
-    q1_q2 --> q1_q2: 1
-    q0_q1_q2 --> q0_q1_q2: 0
-    q0_q1_q2 --> q1_q2: 1
-
-    class q1_q2,q0_q1_q2 finalState;
-```
-
----
-
-### BÀI TẬP 5 (Trang 5 - Đối chiếu bài làm `kk_1.jpg`)
-
-#### 1. Đề bài:
-NFA 3 trạng thái `Q = {q0, q1, q2}`, `Σ = {a, b}`, đầu `q0`, kết thúc **FN = {★ q2}**.
-- `q0 ─(a)→ q1, q2`; `q0 ─(b)→ ∅`
-- `q1 ─(a)→ q1, q2`; `q1 ─(b)→ q2`
-- `q2 ─(a)→ q2`; `q2 ─(b)→ q2`
-
-#### 2. Bài làm chuẩn đi thi:
-
-```text
-Bước 1: Đỉnh khởi đầu là {q0}
-
-Bước 2:
-  δ*({q0}, a) = {q1, q2};       δ*({q0}, b) = ∅
-  δ*({q1, q2}, a) = {q1, q2};   δ*({q1, q2}, b) = {q2}
-  δ*({q2}, a) = {q2};           δ*({q2}, b) = {q2}
-  δ*(∅, a) = ∅;                 δ*(∅, b) = ∅
-
-Bước 3: Ta chọn đỉnh chứa q2 ∈ FN làm trạng thái kết thúc.
-Tập trạng thái kết thúc FD = { ★ {q1, q2}, ★ {q2} }.
-Ta được đồ thị DFA tương đương:
-```
-
-#### 3. Bảng chuyển dịch DFA:
-
-| Trạng thái DFA | Đọc a | Đọc b | Thuộc FD? (Trạng thái kết thúc) |
-| :---: | :---: | :---: | :---: |
-| → {q0} | {q1, q2} | ∅ | Không |
-| **★ {q1, q2}** | {q1, q2} | {q2} | **CÓ (TRẠNG THÁI KẾT THÚC - F)** |
-| **★ {q2}** | {q2} | {q2} | **CÓ (TRẠNG THÁI KẾT THÚC - F)** |
-| ∅ | ∅ | ∅ | Không |
-
-#### 4. Đồ thị DFA tương đương:
-
-```mermaid
-stateDiagram-v2
-    classDef finalState fill:#d4edda,stroke:#28a745,stroke-width:3px,font-weight:bold;
-    [*] --> q0
-    state "★ {q1, q2} (F)" as q1_q2
-    state "★ {q2} (F)" as q2
-    state "Trap: ∅" as Trap
-
-    q0 --> Trap: b
-    q0 --> q1_q2: a
-    q1_q2 --> q1_q2: a
-    q1_q2 --> q2: b
-    q2 --> q2: a, b
-    Trap --> Trap: a, b
-
-    class q1_q2,q2 finalState;
-```
-
----
-
-# 4. PHẦN C: CHUYÊN ĐỀ 2 - TỐI THIỂU HÓA TRẠNG THÁI DFA (OPTIMIZE STATES)
-
----
-
-## 4.1 Mẫu trình bày bài làm đi thi chuẩn cho dạng DFA Minimization
-*(Trích chuẩn theo các bài thi thực tế `kk_6.jpg` đến `kk_9.jpg`)*
-
-Khi làm bài thi tối thiểu hóa DFA, bạn trình bày đầy đủ 4 bước theo cấu trúc sau:
+Khi làm bài thi tối thiểu hóa DFA, bạn trình bày đầy đủ 4 bước:
 
 ```text
 BÀI LÀM:
@@ -655,15 +139,15 @@ Vẽ đồ thị DFA tối thiểu mới (đánh dấu rõ ★ (F) cho các tr�
 
 ---
 
-## 4.2 Chi tiết 4 Ví dụ Slide (Ví dụ 2.2, 2.3a, 2.3b, 2.4)
+# 4. PHẦN C: CHI TIẾT 4 VÍ DỤ SLIDE GIÁO TRÌNH
 
-### VÍ DỤ 2.2: Loại bỏ trạng thái cô lập q5 & gộp nhánh đối xứng
+### Ví dụ 2.2: Loại bỏ trạng thái cô lập q5 & gộp nhánh đối xứng
 *(Slide trang 1 - 2)*
 
 #### 1. Khai báo Otomat ban đầu:
 - DFA ban đầu có 6 trạng thái `Q = {q0, q1, q2, q3, q4, q5}`, `Σ = {0, 1}`.
 - Trạng thái khởi đầu: `q0`.
-- **Tập trạng thái kết thúc: F = {★ q3, ★ q4}.**
+- **Tập trạng thái kết thúc: F = {★ q3, ★ q4}**.
 
 #### 2. Bài làm mẫu chuẩn:
 - **Bước 0:** Loại bỏ trạng thái `q5` vì `q5` không thể đến được từ `q0` (trạng thái cô lập / thừa).
@@ -702,12 +186,12 @@ stateDiagram-v2
 
 ---
 
-### VÍ DỤ 2.3a: Lần vết giải thuật Optimize states trên DFA 5 trạng thái
+### Ví dụ 2.3a: Lần vết giải thuật Optimize states trên DFA 5 trạng thái
 *(Slide trang 3 - 5, đối chiếu `kk_8.jpg`)*
 
 #### 1. Khai báo Otomat ban đầu:
 - DFA có `Q = {q0, q1, q2, q3, q4}`, `Σ = {a, b}`, khởi đầu `q0`.
-- **Tập trạng thái kết thúc: F = {★ q4}.**
+- **Tập trạng thái kết thúc: F = {★ q4}**.
 
 #### 2. Bài làm mẫu chuẩn:
 
@@ -767,12 +251,12 @@ stateDiagram-v2
 
 ---
 
-### VÍ DỤ 2.3b: Rút gọn DFA 6 trạng thái về 3 trạng thái
+### Ví dụ 2.3b: Rút gọn DFA 6 trạng thái về 3 trạng thái
 *(Slide trang 5 - 6, đối chiếu `kk_7.jpg`)*
 
 #### 1. Khai báo Otomat ban đầu:
 - DFA có 6 trạng thái `Q = {q1, q2, q3, q4, q5, q6}`, khởi đầu `q6`.
-- **Tập trạng thái kết thúc: F = {★ q3, ★ q4, ★ q5}.**
+- **Tập trạng thái kết thúc: F = {★ q3, ★ q4, ★ q5}**.
 
 #### 2. Bài làm mẫu chuẩn:
 
@@ -818,12 +302,12 @@ stateDiagram-v2
 
 ---
 
-### VÍ DỤ 2.4: Mẫu trả lời câu hỏi "DFA đã tối thiểu chưa? Tại sao?"
+### Ví dụ 2.4: Mẫu trả lời câu hỏi "DFA đã tối thiểu chưa? Tại sao?"
 *(Slide trang 6 - 7)*
 
 #### 1. Khai báo Otomat ban đầu:
 - DFA có 3 trạng thái `Q = {q1, q2, q3}`, khởi đầu `q1`.
-- **Tập trạng thái kết thúc: F = {★ q2}.**
+- **Tập trạng thái kết thúc: F = {★ q2}**.
 
 #### 2. Bài làm mẫu chuẩn đi thi:
 
@@ -868,14 +352,14 @@ stateDiagram-v2
 
 ---
 
-## 4.3 Lời giải chi tiết 3 Bài tập lớn (Trang 7 Slide - Chuẩn bài thi kk_6 đến kk_9)
+# 5. PHẦN D: LỜI GIẢI CHI TIẾT 3 BÀI TẬP LỚN (TRANG 7 SLIDE - CHUẨN BÀI THI `kk_6` ĐẾN `kk_9`)
 
 ---
 
-### BÀI TẬP 1 - HÌNH (a): TỐI THIỂU HÓA DFA 8 TRẠNG THÁI
+### Bài tập 1 - Hình a: Tối thiểu hóa DFA 8 trạng thái (Đối chiếu `kk_6.jpg`)
 
 #### A. Ảnh đề bài đã gán nhãn q0 → q7:
-![Hình a đã gán nhãn](file:///d:/folder/rac/iuh/môn/hk1-4/automat/5-6/bai1a_danhan.png)
+![Hình a đã gán nhãn](./bai1a_danhan.png)
 
 #### B. Bài làm chuẩn đi thi:
 
@@ -953,10 +437,10 @@ stateDiagram-v2
 
 ---
 
-### BÀI TẬP 1 - HÌNH (b): TỐI THIỂU HÓA DFA 7 TRẠNG THÁI
+### Bài tập 1 - Hình b: Tối thiểu hóa DFA 7 trạng thái (Đối chiếu `kk_6.jpg`)
 
 #### A. Ảnh đề bài đã gán nhãn q0 → q6:
-![Hình b đã gán nhãn](file:///d:/folder/rac/iuh/môn/hk1-4/automat/5-6/bai1b_danhan.png)
+![Hình b đã gán nhãn](./bai1b_danhan.png)
 
 #### B. Bài làm chuẩn đi thi:
 
@@ -1017,10 +501,10 @@ stateDiagram-v2
 
 ---
 
-### BÀI TẬP 2: NFA → DFA → TỐI THIỂU HÓA (L = a* b* c*)
+### Bài tập 2: NFA → DFA → Tối thiểu hóa (Ngôn ngữ L = a* b* c* - Đối chiếu `kk_9.jpg`)
 
 #### A. Ảnh đề bài đã gán nhãn q0, q1, q2:
-![Bài 2 đã gán nhãn](file:///d:/folder/rac/iuh/môn/hk1-4/automat/5-6/bai2_danhan.png)
+![Bài 2 đã gán nhãn](./bai2_danhan.png)
 
 #### B. Bài làm chuẩn đi thi:
 
@@ -1096,7 +580,7 @@ stateDiagram-v2
 
 ---
 
-### BÀI TẬP 3: THIẾT KẾ DFA TỐI THIỂU CHO CÁC NGÔN NGỮ HÌNH THỨC
+### Bài tập 3: Thiết kế DFA tối thiểu cho các ngôn ngữ hình thức
 
 #### 1. Câu a: L = { a^n b^m | n ≥ 2, m ≥ 1 } trên Σ = {a, b}
 
@@ -1231,21 +715,17 @@ stateDiagram-v2
 
 ---
 
-# 5. PHẦN D: CHECKLIST & BÍ QUYẾT ĐẠT ĐIỂM 10 KHI ĐI THI
+# 6. PHẦN E: CHECKLIST ĐIỂM 10 CHO DẠNG BÀI DFA MINIMIZATION
 
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
-│ BẢNG CHECKLIST BÀI THI MÔN OTOMAT - ĐẠT ĐIỂM 10 TUYỆT ĐỐI             │
+│ BẢNG CHECKLIST BÀI THI TỐI THIỂU HÓA DFA                               │
 ├────────────────────────────────────────────────────────────────────────┤
-│ [ ] 1. Vẽ lại hình đồ thị và gán nhãn q0, q1, q2... rõ ràng.           │
-│ [ ] 2. Ghi rõ bộ 5 thành phần M = (Q, Σ, δ, q0, F).                    │
-│ [ ] 3. Đánh dấu rõ ràng tất cả các trạng thái kết thúc F bằng ★ / (F).  │
-│ [ ] 4. Với NFA -> DFA: Viết rõ từng dòng tính toán δ* cho từng tập con. │
-│ [ ] 5. Với NFA -> DFA: Nhớ thêm trạng thái bẫy ∅ nếu máy không đầy đủ. │
-│ [ ] 6. Với Optimize States: Ghi Bước 0 loại bỏ trạng thái cô lập.     │
-│ [ ] 7. Với Optimize States: Đánh dấu X bảng tam giác và giải thích     │
-│        lý do phân biệt được của từng cặp.                              │
-│ [ ] 8. Vẽ hình đồ thị DFA tối thiểu mới với các trạng thái kết thúc F  │
-│        (Vẽ 2 vòng tròn đồng tâm cho các nút thuộc F).                   │
+│ [ ] 1. Bước 0: Kiểm tra và loại bỏ ngay các trạng thái không đến được. │
+│ [ ] 2. Bước 1: Tính số ô bảng tam giác C(n, 2) = n(n-1)/2.             │
+│ [ ] 3. Bước 2: Đánh dấu X vào tất cả cặp phân biệt rõ rệt (qi∈F, qj∉F).│
+│ [ ] 4. Bước 3: Lần vết chuyển dịch δ(qi, a) và δ(qj, a) cho ô trống.   │
+│ [ ] 5. Bước 4: Gộp các cặp ô trống thành 1 trạng thái mới tương đương. │
+│ [ ] 6. Vẽ lại đồ thị DFA tối thiểu: Trạng thái kết thúc vẽ 2 VÒNG TRÒN.│
 └────────────────────────────────────────────────────────────────────────┘
 ```
