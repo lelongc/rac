@@ -1,0 +1,180 @@
+=== PDF 1: d:\folder\rac\iuh\môn\hk1-4\automat\5-6\chuyển đổi NFA _DFA_SV.pdf (5 pages) ===
+--- Page 1 ---
+CHUYỂN ĐỔI NFA  SANG DFA 
+ 
+       DFA là một NFA có thêm một số giới hạn, như vậy NFA mạnh hơn DFA. Tuy nhiên, bất cứ ngôn ngữ nào được 
+chấp nhận bởi một DFA thì cũng được chấp nhận bởi NFA. Điều ngược lại thì cũng đúng. Do vậy thiết kế một máy 
+tự động chấp nhận họ ngôn ngữ mà cả NFA và DFA chấp nhận, thì chọn NFA để thiết kế thì dễ dàng hơn.  
+ 
+1- Chuyển NFA thành DFA tương đương 
+          Thủ tục NFA-to-DFA  
+(GD là đồ thị của DFA, GN là đồ thị của NFA, m là số trạng thái của NFA, FN là tập các trạng thái kết thúc của 
+NFA)  
+1. Tạo một đồ thị GD với đỉnh khởi đầu là một tập {q0, … , qn}, tập này có ít nhất là một phần tử, NFA khi ở tại 
+các đỉnh này thì nó chưa đọc kí hiệu nào hay chỉ đọc ký hiệu .   
+2. Lập lại các bước sau cho đến khi GD không còn cạnh nào thiếu tại mỗi đỉnh 
+(nên nhớ : mỗi đỉnh của đang thành lập phải có số cạnh đi ra bằng với số phần tử trong   do vậy phải lặp 
+cho đến khi đủ các cạnh tại mỗi đỉnh)  
++ Lấy một đỉnh bất kỳ {qi, qj,…,qk} của GD mà có một cạnh đi ra mà chưa được định nghĩa (chưa vẽ trên đồ 
+thị) đối với một a nào đó. 
++ Tính trên GN: *(qi, a)  *( qj, a)  ...  *(qk, a) =  { ql, qm,…, qn}. 
++ Tạo một đỉnh cho GD có nhãn {q1, qm,…,qn}  nếu nó chưa tồn tại. 
++ Thêm vào GD một cạnh từ {qi, qj,…, qk} đến {ql, qm,…, qn} và gán nhãn  cho nó là a.  
+3. Mỗi trạng thái của GD mà nhãn của nó chứa bất kỳ  qf FN thì được coi  là một đỉnh kết thúc. 
+4. Nếu GN  chấp nhận   thì đỉnh khởi đầu trong GD cũng được coi là đỉnh kết thúc. 
+Rõ ràng là thủ tục này luôn kết thúc. Mỗi lần qua vòng lặp ở bước 2 đều thêm một cạnh vào GD. Nhưng  GD 
+có  2m ||  cạnh, m và || hữu hạn, vì thế vòng lặp phải dừng. 
+ 
+Ví dụ 1 
+      Chuyển đổi NFA có đồ thị GN như hình sau sang DFA có đồ thị GD tương đương  
+                     
+                          
+ 
+Chúng ta chuyển đổi theo  bốn bước của thủ tục NFA-to-DFA ở trên. 
+Bước 1 
+       Ta chọn đỉnh khởi đầu của DFA sẽ được đánh nhãn là {q0}.  
+        /trong NFA này chỉ có q0 là nó chưa đọc ký tự nào/ 
+                       
+ 
+Bước 2 
+                  
+ 
+Trong NFA này, ta có: 
+*( q0, a) = { q1, q2}  / q0 đọc a → q1 hoặc nó đọc  thì → q2 / 
+*( q0, b) =             / q0 đọc b thì không có chuyển dịch / 
+*(, a)  =  ,  *(, b)  =     / mặc dù trong đồ thị không thể hiện/ 
+Trong NFA,  biểu thị cho máy không có chuyển dịch. Nhưng trong DFA trạng thái có    
+là một trạng thái không kết thúc và gọi là trạng thái bẫy (Trap).  
+Đưa thêm trạng thái { q1, q2} và  vào DFA  
+
+--- Page 2 ---
+        
+ 
+Lặp bước 2 này để vẽ đủ các cạnh đi ra tại mỗi đỉnh của DFA này 
+Như trên ta đã có :  
+(q0, a) = {q1, q2}; *( q0, b) =  ;  *(, a) =  ,  *(, b) =             
+Vẽ những chuyển dịch này vào DFA thành những cạnh 
+         
+ 
+Trong DFA { q1, q2} chưa có cạnh đi ra, ta trở lại NFA tìm các cạnh đi ra cho nó 
+          
+     
+Ta lại có: 
+*( {q1, q2}, a) = *(q1, a)  *(q2, a) = {q1, q2}  = {q1, q2} 
+/tại q1, đọc a nó đứng yên tại q1, hay từ q1 nó có thể đọc  để đến q2/ 
+*( {q1, q2}, b) = *(q1, b)  *(q2, b) = {q0}{q0} = {q0} 
+/ tại q1, đọc b nó đến q0, q2 nó đọc b cũng đến q0/ 
+Đưa những dịch chuyển này vào DFA ta được  
+ 
+Bước 3 
+          Trong NFA q1 là trạng thái kết thúc nên trong DFA chọn đỉnh có chứa nhãn q1 là đỉnh kết thúc. Do vậy, 
+chọn đỉnh {q1, q2} là đỉnh kết thúc.           
+Kết quả ta được DFA tương đương có đồ thị GD như hình sau 
+          
+  
+Bước 4 
+          Vì NFA không chấp nhận chuỗi rỗng, nên không thực hiện bước này 
+ 
+ Ví dụ 2 
+    Chuyển đổi NFA có đồ thị như hình sau sang DFA tương đương. 
+                        
+ 
+
+--- Page 3 ---
+    Giải 
+Bước 1 
+       Ta chọn đỉnh khởi đầu của DFA sẽ được đánh nhãn là {q0}.  
+        /trong NFA chỉ có q0 là nó chưa đọc ký tự nào/ 
+                                           
+                          
+ 
+           Bước 2 
+                  *( q0, 0) = {q0, q1} ; *( q0, 1) = {q1} 
+                                               
+ 
+                  Trở lại NFA 
+                                            
+ 
+                  *( {q0, q1}, 0) =  *(q0, 0)  *(q1, 0) = {q0, q1}{q2}= {q0, q1, q2} 
+                  *( {q0, q1}, 1) =  *(q0, 1)  *(q1, 1) = {q1}{q2}= {q1, q2} 
+                  (q1, 0) = {q2}; (q1, 1) = {q2} 
+                                   
+ 
+                  Trở lại NFA lần nữa 
+                                
+ 
+                  *( {q0, q1, q2}, 0) =  *(q0, 0)  *(q1, 0)  *(q2, 0)  = {q0, q1}{q2} = {q0, q1, q2} 
+                  *( {q0, q1, q2}, 1) =  *(q0, 1)  *(q1, 1)  *(q2, 1)   = {q1}{q2}{q2}= {q1, q2} 
+                  *( {q1, q2}, 0) =  *(q1, 0)  *(q2, 0) = {q2}  = {q2} 
+                  *( {q1, q2}, 1) =  *(q1, 1)  *(q2, 1) = {q2}{q2}= {q2} 
+                  *(q2, 0) = ; *(q2, 1) ={q2} 
+                   Cuối cùng trạng thái  là bẫy nên (, 0) = ; (, 1) = ; 
+                                                
+ 
+                   Bước 3 
+                       Những trạng thái nào có chứa q1 đều là trạng thái kết thúc ta được kết quả như hình sau: 
+ 
+
+--- Page 4 ---
+                                       
+ 
+                   Bước 4 không có, vì NFA không chấp nhận chuỗi rỗng 
+/////////////////////////////////////////////////// 
+ 
+Ví dụ 3 
+Chuyển đổi NFA có đồ thị như hình sau sang DFA tương đương. 
+                               
+ 
+ 
+Bước 1 
+    Những trạng thái mà NFA chưa đọc ký hiệu nào trong chuỗi nhập mà có thể là trạng thái hiện hành của 
+NFA khi bắt đầu là tập trạng thái {q0, q3, q4},  
+vì ta có:  
+                         *(q0, ) = {q0, q3, q4}. 
+            Nên chọn đỉnh khởi đầu của DFA có nhãn là {q0, q3, q4}. 
+Bước 2 
+*({q0, q3, q4}, a)  = {q1, q2, q4} 
+*({q0, q3, q4}, b) = {q1, q2, q3, q4} 
+*({q1, q2, q4}, a) = {q0, q1, q2, q3, q4} 
+*({q1, q2, q4}, b) = {q3, q4} 
+*({q1, q2, q3, q4}, a) = {q0, q1, q2, q3, q4} 
+*({q1, q2, q3, q4}, b) = {q3, q4} 
+*({q0, q1, q2, q3, q4}, a) = {q0, q1, q2, q3, q4} 
+*({q0, q1, q2, q3, q4}, b) = {q1, q2, q3, q4} 
+*({q3, q4}, a) = {q4} 
+*({q3, q4}, b) = {q3, q4} 
+*({q4}, a) =  
+*({q4}, b) = {q3, q4} 
+*(, a) = ; *(, b) = ;  (trạng thái bẫy) 
+      Các bước còn lại tương tự như những ví dụ trên. Cuối cùng ta có đồ thị của DFA tương đương với NFA như hình 
+sau. 
+                     
+ 
+
+--- Page 5 ---
+              
+ 
+      Ta có thể đặt lại nhãn hình trên cho các đỉnh là một ký hiệu đơn như q0, q1, q2, q3, q4, q5 và  để dễ đọc hơn, như 
+hình sau. 
+                          
+                      
+ 
+Bài tập 
+          Chuyển đổi NFA trong hình sau thành DFA 
+          1)                   
+                 
+ 
+2)  
+                
+ 
+3) 
+               
+       
+4) 
+             
+ 
+5) 
+             
+  
+ 
+
