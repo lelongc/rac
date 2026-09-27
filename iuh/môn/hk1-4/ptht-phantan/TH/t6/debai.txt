@@ -1,0 +1,36 @@
+HƯỚNG DẪN THỰC HÀNH RMI (BÀI MẪU)
+
+Phần 1: Chuẩn bị (Coding + Compile)
+BƯỚC 1: Tham khảo bài giảng chapter 5 RMI.ppt (từ slide 25 đến slide 36), soạn thảo 4 class gồm:
+- Adder.java
+- AdderImpl.java
+- RMIServer.java
+- RMIClient.java
+
+BƯỚC 2: Biên dịch
+D:\Java\RMI> set path="c:\Program Files (x86)\Java\jdk1.6.0\bin"
+D:\Java\RMI> javac *.java
+
+BƯỚC 3: Tạo Stub và Skeleton
+D:\Java\RMI> rmic -v1.1 AdderImpl
+Kiểm tra kết quả: sinh ra các file AdderImpl_Stub.class và AdderImpl_Skel.class.
+
+Phần 2: Thực thi ứng dụng (demo trên localhost)
+BƯỚC 1: Chạy chương trình Registry
+D:\Java\RMI> start rmiregistry 1099
+
+BƯỚC 2: Chạy chương trình RMIServer
+D:\Java\RMI> java RMIServer
+Output:
+Server has started
+Adder bound
+
+BƯỚC 3: Chạy chương trình RMIClient
+D:\Java\RMI> java RMIClient
+Output:
+2+2=4
+
+Bài tập
+1. Cải tiến RMIServer theo yêu cầu sau: Phía RMIServer sử dụng câu lệnh LocateRegistry.createRegistry(PORT), biên dịch lại RMIServer và thực thi lại ứng dụng.
+2. Cải tiến bài ví dụ mẫu trên theo yêu cầu: RMIServer và RMIClient được cài đặt trên hai máy khác nhau, RMIClient sẽ xác định địa chỉ IP và Port của RMIServer dựa theo tham số truyền vào (args).
+3. Cải tiến bài ví dụ mẫu trên bằng cách xây dựng thêm các dịch vụ trừ, nhân, chia hai số nguyên. Viết chương trình RMIClient để minh họa sử dụng các dịch vụ đó.
