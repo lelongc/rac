@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  auction-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    image: auction-server:latest
+    container_name: auction-server
+    environment:
+      - RMI_PORT=1099
+      - SOCKET_PORT=5000
+      - RMI_HOST=auction-server
+    ports:
+      - "1099:1099"
+      - "5000:5000"
+    networks:
+      - auction-net
+
+  client-1:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    image: auction-client:latest
+    container_name: auction-client-1
+    environment:
+      - SERVER_HOST=auction-server
+      - RMI_HOST=auction-server
+      - RMI_PORT=1099
+      - AUCTION_USER=SinhVien_A
+    depends_on:
+      - auction-server
+    stdin_open: true
+    tty: true
+    networks:
+      - auction-net
+
+  client-2:
+    image: auction-client:latest
+    container_name: auction-client-2
+    environment:
+      - SERVER_HOST=auction-server
+      - RMI_HOST=auction-server
+      - RMI_PORT=1099
+      - AUCTION_USER=SinhVien_B
+    depends_on:
+      - auction-server
+    stdin_open: true
+    tty: true
+    networks:
+      - auction-net
+
+networks:
+  auction-net:
+    driver: bridge
