@@ -5,6 +5,7 @@
 ## 🌟 PHƯƠNG ÁN 1: DÙNG 2 IMAGE TÁCH BIỆT (AUCTION-SERVER & AUCTION-CLIENT) [CHUẨN NHẤT]
 
 ### 1. Build 2 Image riêng biệt:
+
 ```bash
 # 1. Build Server từ Dockerfile.server:
 docker build -f Dockerfile.server -t auction-server:latest .
@@ -14,6 +15,7 @@ docker build -f Dockerfile.client -t auction-client:latest .
 ```
 
 ### 2. Khởi chạy hệ thống:
+
 ```bash
 # Bước 1: Tạo mạng nội bộ (chỉ chạy 1 lần):
 docker network create auction-net
@@ -82,6 +84,7 @@ java AuctionClient localhost 1099 SinhVien_B
 ---
 
 ## 🛠️ LỆNH DỌN DẸP / RESET:
+
 ```bash
 docker rm -f auction-server
 ```
