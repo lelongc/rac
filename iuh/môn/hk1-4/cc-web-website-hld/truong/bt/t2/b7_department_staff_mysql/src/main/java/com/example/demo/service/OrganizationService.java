@@ -21,9 +21,6 @@ public class OrganizationService {
         this.staffRepository = staffRepository;
     }
 
-    // ==========================================
-    // CÁC THAO TÁC PHÒNG BAN (DEPARTMENT)
-    // ==========================================
 
     public List<Department> getAllDepartments() {
         return departmentRepository.findAll();
@@ -38,26 +35,17 @@ public class OrganizationService {
         return departmentRepository.findById(departmentId);
     }
 
-    // ==========================================
-    // CÁC THAO TÁC NHÂN VIÊN (STAFF CRUD)
-    // ==========================================
-
-    // Lấy tất cả nhân viên trong CSDL
     public List<Staff> getAllStaff() {
         return staffRepository.findAll();
     }
 
-    // Lấy 1 nhân viên theo ID
     public Optional<Staff> getStaffById(Long staffId) {
         return staffRepository.findById(staffId);
     }
 
-    // Lấy danh sách nhân viên theo phòng ban
     public List<Staff> getStaffByDepartment(Long departmentId) {
         return staffRepository.findByDepartmentId(departmentId);
     }
-
-    // Tìm kiếm nhân viên linh hoạt (theo tên hoặc phòng ban)
     public List<Staff> searchStaff(String keyword, Long departmentId) {
         boolean hasKeyword = keyword != null && !keyword.trim().isEmpty();
         boolean hasDept = departmentId != null && departmentId > 0;
@@ -73,7 +61,6 @@ public class OrganizationService {
         }
     }
 
-    // THÊM MỚI NHÂN VIÊN (CREATE)
     @Transactional
     public Optional<Staff> createStaff(Staff staff) {
         Long deptId = staff.getDepartmentId();

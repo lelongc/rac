@@ -3,62 +3,57 @@
 > **Mã bài tập**: Bài 7 - Quản lý Phòng Ban & Nhân Viên (`Department` - `Staff`)  
 > **Thư mục dự án**: `d:\folder\rac\iuh\môn\hk1-4\cc-web-website-hld\truong\bt\t2\b7_department_staff_mysql`  
 > **Trạng thái Database**: ✅ **ĐÃ KẾT NỐI VÀ TEST THÀNH CÔNG VỚI CLEVER CLOUD MYSQL CỦA BẠN!**  
-> **Bảng CSDL đã tạo**: `departments` và `staffs` (kèm khóa ngoại `department_id`)  
-> **Dữ liệu mẫu đã có sẵn**: 4 phòng ban và 5 nhân viên mẫu trong MySQL.
+> **Bảng CSDL đã tạo**: `departments` (4 dòng) và `staffs` (5 dòng) kèm khóa ngoại `department_id`.
 
 ---
 
 ## MỤC LỤC
-1. [Thông tin Clever Cloud MySQL đã cấu hình](#1-thông-tin-clever-cloud-mysql-đã-cấu-hình)
-2. [Cách xem Sơ đồ quan hệ RDB trực quan (ERD) ngay bây giờ trên phpMyAdmin](#2-cách-xem-sơ-đồ-quan-hệ-rdb-trực-quan-erd-ngay-bây-giờ-trên-phpmyadmin)
-3. [Cách mở và chạy dự án trong Eclipse IDE](#3-cách-mở-và-chạy-dự-án-trong-eclipse-ide)
-4. [Trải nghiệm các chức năng Full CRUD trên Web](#4-trải-nghiệm-các-chức-năng-full-crud-trên-web)
-5. [Kiến trúc chuẩn của Bài 7 theo yêu cầu Thầy Trương Bá Phúc](#5-kiến-trúc-chuẩn-của-bài-7-theo-yêu-cầu-thầy-trương-bá-phúc)
-6. [Danh sách các REST API Endpoint](#6-danh-sách-các-rest-api-endpoint)
+1. [HƯỚNG DẪN THAO TÁC TRÊN PHPMYADMIN (TỪ MÀN HÌNH BẠN ĐANG THẤY)](#1-hướng-dẫn-thao-tác-trên-phpmyadmin-từ-màn-hình-bạn-đang-thấy)
+   - [Cách 1: Mở Sơ đồ quan hệ RDB (Designer) để chụp hình](#cách-1-mở-sơ-đồ-quan-hệ-rdb-designer-để-chụp-hình)
+   - [Cách 2: Xem dữ liệu các dòng trong bảng (Browse)](#cách-2-xem-dữ-liệu-các-dòng-trong-bảng-browse)
+   - [Cách 3: Xem chi tiết Khóa Ngoại (Relation view)](#cách-3-xem-chi-tiết-khóa-ngoại-relation-view)
+2. [Cách mở và chạy dự án trong Eclipse IDE](#2-cách-mở-và-chạy-dự-án-trong-eclipse-ide)
+3. [Trải nghiệm các chức năng Full CRUD trên Web](#3-trải-nghiệm-các-chức-năng-full-crud-trên-web)
+4. [Kiến trúc chuẩn của Bài 7 theo yêu cầu Thầy Trương Bá Phúc](#4-kiến-trúc-chuẩn-của-bài-7-theo-yêu-cầu-thầy-trương-bá-phúc)
+5. [Danh sách các REST API Endpoint](#5-danh-sách-các-rest-api-endpoint)
 
 ---
 
-## 1. THÔNG TIN CLEVER CLOUD MYSQL ĐÃ CẤU HÌNH
+## 1. HƯỚNG DẪN THAO TÁC TRÊN PHPMYADMIN (TỪ MÀN HÌNH BẠN ĐANG THẤY)
 
-File `src/main/resources/application.properties` đã được điền chính xác thông số của bạn:
+Nhìn vào màn hình phpMyAdmin bạn vừa chụp được, 2 bảng `departments` (4 dòng) và `staffs` (5 dòng) đã nằm sẵn trong MySQL của bạn. Bây giờ bạn làm tiếp các bước sau:
 
-```properties
-server.port=8080
-
-# Kết nối Clever Cloud MySQL
-spring.datasource.url=jdbc:mysql://bqil983hlw33dnafyqvs-mysql.services.clever-cloud.com:3306/bqil983hlw33dnafyqvs?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-spring.datasource.username=un0ambnc8wmldqfb
-spring.datasource.password=4YnHLJB7lYnNHrxUO26z
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-
-# Tự động đồng bộ bảng & khóa ngoại trong MySQL
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.format_sql=true
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
-```
+### Cách 1: Mở Sơ đồ quan hệ RDB (Designer) để chụp hình
+1. Nhìn lên thanh menu ngang phía trên cùng (dòng có chữ `Structure`, `SQL`, `Search`, `Query`, `Export`, `Import`, `Operations`, `Routines`...).
+2. Ở góc bên phải của thanh menu đó, bấm vào chữ:  
+   👉 **`More ▼`** (hoặc dấu mũi tên trỏ xuống bên cạnh chữ `Routines`).
+3. Trong menu thả xuống, bấm chọn dòng:  
+   👉 **`Designer`** *(hoặc tiếng Việt là **Bộ thiết kế**)*.
+4. **KẾT QUẢ**:
+   * Toàn bộ màn hình sẽ chuyển sang trang vẽ sơ đồ quan hệ RDB (ERD).
+   * Bạn sẽ thấy 2 khối hộp hình chữ nhật: **`departments`** và **`staffs`**.
+   * Có một **sợi dây liên kết màu xanh** nối từ `departments.id` sang `staffs.department_id`.
+   * Bạn dùng chuột bấm vào tiêu đề các bảng để kéo thả sắp xếp vị trí cho ngay ngắn, sau đó chụp màn hình lại để nộp cho thầy!
 
 ---
 
-## 2. CÁCH XEM SƠ ĐỒ QUAN HỆ RDB TRỰC QUAN (ERD) NGAY BÂY GIỜ TRÊN PHPMYADMIN
-
-Do hệ thống đã kết nối và tự động sinh bảng thành công vào Clever Cloud của bạn, bạn có thể xem ngay sơ đồ RDB trực quan:
-
-1. Đăng nhập vào trang quản trị [Clever Cloud Console](https://console.clever-cloud.com).
-2. Nhấp chọn Add-on MySQL của bạn (`bqil983hlw33dnafyqvs`).
-3. Bấm vào nút **"phpMyAdmin"** ở đầu trang $\rightarrow$ Trình duyệt tự mở giao diện phpMyAdmin.
-4. Ở cột bên trái, bấm chọn database: **`bqil983hlw33dnafyqvs`**.
-5. Nhìn lên thanh menu ngang phía trên cùng, bấm vào tab **"Designer"** (Bộ thiết kế):
-   * *(Nếu màn hình nhỏ chưa thấy, bấm nút **More (Xem thêm)** $\rightarrow$ chọn **Designer**)*.
-6. 👉 **Bạn sẽ thấy ngay SƠ ĐỒ RDB TUYỆT ĐẸP**:
-   * Bảng **`departments`** (id, name).
-   * Bảng **`staffs`** (id, name, email, department_id).
-   * Đường kẻ màu xanh nối trực quan từ `departments.id` sang `staffs.department_id` biểu thị quan hệ $1 - N$ chuẩn chỉ.
-   * Bạn có thể dùng chuột kéo thả các bảng để sắp xếp vị trí và chụp ảnh đưa vào báo cáo!
+### Cách 2: Xem dữ liệu các dòng trong bảng (Browse)
+1. Trên màn hình danh sách bảng (như trong ảnh của bạn):
+   * Nhìn vào dòng `departments`, bấm vào chữ **`Browse`** có icon kính lúp $\rightarrow$ Bạn sẽ thấy 4 phòng ban: *Engineering, Human Resources, Marketing, Finance*.
+   * Nhìn vào dòng `staffs`, bấm vào chữ **`Browse`** $\rightarrow$ Bạn sẽ thấy 5 nhân viên: *Nguyen Van An, Tran Thi Binh, Le Hoang Cuong, Pham Thi Dung, Doan Minh Em*.
 
 ---
 
-## 3. CÁCH MỞ VÀ CHẠY DỰ ÁN TRONG ECLIPSE IDE
+### Cách 3: Xem chi tiết Khóa Ngoại (Relation view)
+1. Ở cột danh sách bảng bên trái, bấm vào bảng **`staffs`**.
+2. Nhìn lên thanh menu trên cùng, bấm tab **`Structure`** (Cấu trúc).
+3. Bấm vào nút **`Relation view`** (Chế độ xem quan hệ):
+   * Bạn sẽ thấy dòng khai báo ràng buộc khóa ngoại:  
+     `department_id` trỏ tới bảng `departments(id)` với chế độ `ON DELETE CASCADE`.
+
+---
+
+## 2. CÁCH MỞ VÀ CHẠY DỰ ÁN TRONG ECLIPSE IDE
 
 Dự án đã có sẵn các file cấu hình `.project`, `.classpath`, `pom.xml`:
 
@@ -79,28 +74,28 @@ Dự án đã có sẵn các file cấu hình `.project`, `.classpath`, `pom.xml
 
 ---
 
-## 4. TRẢI NGHIỆM CÁC CHỨC NĂNG FULL CRUD TRÊN WEB
+## 3. TRẢI NGHIỆM CÁC CHỨC NĂNG FULL CRUD TRÊN WEB
 
 Sau khi chạy ứng dụng trong Eclipse, mở trình duyệt vào địa chỉ:  
 👉 **`http://localhost:8080/index.html`** *(hoặc `http://localhost:8080`)*
 
 ### Các tính năng đã hoạt động 100%:
 1. **Lọc theo Phòng ban (Combobox)**: Chọn phòng ban bất kỳ $\rightarrow$ Bảng tự động tải danh sách nhân viên của phòng ban đó. Bấm nút "Tất cả" để xem lại toàn bộ.
-2. **Tìm kiếm theo tên**: Nhập tên nhân viên vào ô tìm kiếm và bấm **🔍 Tìm kiếm** (hoặc nhấn phím `Enter`).
+2. **Tìm kiếm theo tên**: Nhập tên nhân viên vào ô tìm kiếm và bấm **Tìm kiếm** (hoặc nhấn phím `Enter`).
 3. **Thêm mới nhân viên (Create)**:
-   - Bấm nút **➕ Thêm mới nhân viên** màu xanh lá.
+   - Bấm nút **Thêm nhân viên** màu xanh lá.
    - Nhập Họ tên, Email, chọn Phòng ban $\rightarrow$ bấm **Lưu nhân viên**.
    - Dữ liệu lập tức được ghi trực tiếp vào Clever Cloud MySQL và hiển thị lên bảng.
 4. **Sửa thông tin nhân viên (Update)**:
-   - Bấm nút **✏️ Sửa** ở hàng nhân viên tương ứng.
-   - Hộp thoại popup hiện thông tin hiện tại, cho phép bạn đổi tên, email, hoặc chuyển nhân viên sang phòng ban khác $\rightarrow$ bấm **Cập nhật thay đổi**.
+   - Bấm nút **Sửa** ở hàng nhân viên tương ứng.
+   - Hộp thoại popup hiện thông tin hiện tại, cho phép bạn đổi tên, email, hoặc chuyển nhân viên sang phòng ban khác $\rightarrow$ bấm **Lưu thay đổi**.
 5. **Xóa nhân viên (Delete)**:
-   - Bấm nút **🗑️ Xóa** màu đỏ.
+   - Bấm nút **Xóa** màu đỏ.
    - Trình duyệt sẽ bật thông báo xác nhận: *"Bạn có chắc chắn muốn xóa nhân viên [Tên] không?"* $\rightarrow$ Chọn OK để xóa vĩnh viễn khỏi MySQL.
 
 ---
 
-## 5. KIẾN TRÚC CHUẨN CỦA BÀI 7 THEO YÊU CẦU THẦY TRƯƠNG BÁ PHÚC
+## 4. KIẾN TRÚC CHUẨN CỦA BÀI 7 THEO YÊU CẦU THẦY TRƯƠNG BÁ PHÚC
 
 Dự án được xây dựng theo đúng chuẩn thiết kế MVC + REST Service 3 tầng:
 
@@ -124,7 +119,7 @@ b7_department_staff_mysql/
 └── src/main/resources/
     ├── application.properties            # Cấu hình Clever Cloud MySQL
     └── static/
-        └── index.html                    # Giao diện SPA hiện đại (Full Thêm/Sửa/Xóa/Tìm)
+        └── index.html                    # Giao diện SPA gọn gàng (Full Thêm/Sửa/Xóa/Tìm)
 ```
 
 ### Sơ đồ luồng dữ liệu (Data Flow):
@@ -132,7 +127,7 @@ $$\text{Giao diện (index.html)} \underset{\text{Fetch API}}{\overset{\text{JSO
 
 ---
 
-## 6. DANH SÁCH CÁC REST API ENDPOINT
+## 5. DANH SÁCH CÁC REST API ENDPOINT
 
 | Phương thức | Đường dẫn API | Chức năng | Dữ liệu gửi lên (Body) | Mã phản hồi |
 | :---: | :--- | :--- | :---: | :---: |
