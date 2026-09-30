@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý nhân viên</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1d3557;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .filter-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        select,
+        input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+        select {
+            min-width: 250px;
+        }
+
+        button {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #1d3557;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+        }
+
+        .status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .status.success {
+            display: block;
+            color: #155724;
+            background: #d4edda;
+        }
+
+        .status.error {
+            display: block;
+            color: #721c24;
+            background: #f8d7da;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            margin: 8% auto;
+            padding: 25px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .modal-content h2 {
+            margin-top: 0;
+            color: #1d3557;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .close {
+            position: absolute;
+            right: 18px;
+            top: 10px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #777;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .loading {
+            text-align: center;
+            color: #777;
+            padding: 15px;
+        }
+
+        @media (max-width: 700px) {
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .filter-row {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            select {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Quản lý nhân viên</h1>
+
+    <!-- Khu vực chọn phòng ban -->
+    <div class="card">
+        <div class="filter-row">
+            <label for="departmentSelect">Chọn phòng ban:</label>
+
+            <select id="departmentSelect">
+                <option value="">-- Tất cả phòng ban --</option>
+            </select>
+
+            <button class="btn-primary" onclick="loadAllStaff()">
+                Tải tất cả nhân viên
+            </button>
+        </div>
+
+        <div id="statusMessage" class="status"></div>
+    </div>
+
+    <!-- Danh sách nhân viên -->
+    <div class="card">
+        <h2>Danh sách nhân viên</h2>
+
+        <div id="loadingMessage" class="loading" style="display: none;">
+            Đang tải dữ liệu...
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Họ tên</th>
+                    <th>Email</th>
+                    <th>ID phòng ban</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+
+            <tbody id="staffTableBody">
+                <tr>
+                    <td colspan="5" class="empty-message">
+                        Chưa có dữ liệu nhân viên
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal sửa nhân viên -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeEditModal()">&times;</span>
+
+        <h2>Sửa thông tin nhân viên</h2>
+
+        <form id="editStaffForm">
+            <input type="hidden" id="editStaffId">
+
+            <div class="form-group">
+                <label for="editStaffName">Họ tên:</label>
+                <input type="text" id="editStaffName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="editStaffEmail">Email:</label>
+                <input type="email" id="editStaffEmail" required>
+            </div>
+
+            <div class="form-group">
+                <label for="editDepartmentId">Phòng ban:</label>
+                <select id="editDepartmentId" required></select>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button"
+                        class="btn-secondary"
+                        onclick="closeEditModal()">
+                    Hủy
+                </button>
+
+                <button type="submit" class="btn-success">
+                    Lưu thay đổi
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Nếu chạy HTML cùng domain với Spring Boot thì có thể dùng:
+    // const API_BASE_URL = "";
+    const API_BASE_URL = "http://localhost:8080";
+
+    let departments = [];
+    let staffs = [];
+
+    const departmentSelect = document.getElementById("departmentSelect");
+    const editDepartmentId = document.getElementById("editDepartmentId");
+    const staffTableBody = document.getElementById("staffTableBody");
+    const loadingMessage = document.getElementById("loadingMessage");
+    const statusMessage = document.getElementById("statusMessage");
+    const editModal = document.getElementById("editModal");
+
+    // Khi trang được tải
+    document.addEventListener("DOMContentLoaded", async function () {
+        await loadDepartments();
+        await loadAllStaff();
+    });
+
+    // Tải danh sách phòng ban
+    async function loadDepartments() {
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/departments`);
+
+            if (!response.ok) {
+                throw new Error("Không thể tải danh sách phòng ban");
+            }
+
+            departments = await response.json();
+
+            departmentSelect.innerHTML =
+                '<option value="">-- Tất cả phòng ban --</option>';
+
+            editDepartmentId.innerHTML = "";
+
+            departments.forEach(department => {
+                const option = document.createElement("option");
+
+                option.value = department.id;
+                option.textContent = `${department.id} - ${department.name}`;
+
+                departmentSelect.appendChild(option);
+
+                const editOption = document.createElement("option");
+
+                editOption.value = department.id;
+                editOption.textContent =
+                    `${department.id} - ${department.name}`;
+
+                editDepartmentId.appendChild(editOption);
+            });
+
+        } catch (error) {
+            showStatus(error.message, "error");
+        }
+    }
+
+    // Xử lý khi người dùng chọn phòng ban
+    departmentSelect.addEventListener("change", async function () {
+        const departmentId = this.value;
+
+        if (!departmentId) {
+            await loadAllStaff();
+            return;
+        }
+
+        await loadStaffByDepartment(departmentId);
+    });
+
+    // Tải tất cả nhân viên
+    async function loadAllStaff() {
+        showLoading(true);
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/staffs`);
+
+            if (!response.ok) {
+                throw new Error("Không thể tải danh sách nhân viên");
+            }
+
+            staffs = await response.json();
+
+            renderStaffTable(staffs);
+            showStatus("Đã tải danh sách tất cả nhân viên", "success");
+
+        } catch (error) {
+            showStatus(error.message, "error");
+            renderStaffTable([]);
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    // Tải nhân viên theo phòng ban
+    async function loadStaffByDepartment(departmentId) {
+        showLoading(true);
+
+        try {
+            const response = await fetch(
+                `${API_BASE_URL}/api/departments/${departmentId}/staffs`
+            );
+
+            if (!response.ok) {
+                throw new Error("Không thể tải nhân viên của phòng ban");
+            }
+
+            const department = await response.json();
+
+            staffs = department.staffs || [];
+
+            renderStaffTable(staffs);
+            showStatus(
+                `Đã tải nhân viên thuộc phòng ban: ${department.name}`,
+                "success"
+            );
+
+        } catch (error) {
+            showStatus(error.message, "error");
+            renderStaffTable([]);
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    // Hiển thị danh sách nhân viên lên bảng
+    function renderStaffTable(staffList) {
+        staffTableBody.innerHTML = "";
+
+        if (!staffList || staffList.length === 0) {
+            staffTableBody.innerHTML = `
+                <tr>
+                    <td colspan="5" class="empty-message">
+                        Không có nhân viên
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        staffList.forEach(staff => {
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${staff.id ?? ""}</td>
+                <td>${escapeHtml(staff.name ?? "")}</td>
+                <td>${escapeHtml(staff.email ?? "")}</td>
+                <td>${staff.departmentId ?? ""}</td>
+                <td>
+                    <button class="btn-primary"
+                            onclick='openEditModal(${JSON.stringify(staff)})'>
+                        Sửa
+                    </button>
+                </td>
+            `;
+
+            staffTableBody.appendChild(row);
+        });
+    }
+
+    // Mở form sửa thông tin nhân viên
+    function openEditModal(staff) {
+        document.getElementById("editStaffId").value = staff.id;
+        document.getElementById("editStaffName").value = staff.name || "";
+        document.getElementById("editStaffEmail").value = staff.email || "";
+        document.getElementById("editDepartmentId").value =
+            staff.departmentId || "";
+
+        editModal.style.display = "block";
+    }
+
+    // Đóng form sửa
+    function closeEditModal() {
+        editModal.style.display = "none";
+    }
+
+    // Đóng modal khi click ra bên ngoài
+    window.addEventListener("click", function (event) {
+        if (event.target === editModal) {
+            closeEditModal();
+        }
+    });
+
+    // Xử lý submit form sửa nhân viên
+    document.getElementById("editStaffForm")
+        .addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const staffId =
+                document.getElementById("editStaffId").value;
+
+            const updatedStaff = {
+                name: document.getElementById("editStaffName").value.trim(),
+                email: document.getElementById("editStaffEmail").value.trim(),
+                departmentId: Number(
+                    document.getElementById("editDepartmentId").value
+                )
+            };
+
+            try {
+                const response = await fetch(
+                    `${API_BASE_URL}/api/staffs/${staffId}`,
+                    {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(updatedStaff)
+                    }
+                );
+
+                if (!response.ok) {
+                    throw new Error(
+                        "Cập nhật nhân viên thất bại"
+                    );
+                }
+
+                closeEditModal();
+
+                showStatus(
+                    "Cập nhật thông tin nhân viên thành công",
+                    "success"
+                );
+
+                const selectedDepartment = departmentSelect.value;
+
+                if (selectedDepartment) {
+                    await loadStaffByDepartment(selectedDepartment);
+                } else {
+                    await loadAllStaff();
+                }
+
+            } catch (error) {
+                showStatus(error.message, "error");
+            }
+        });
+
+    // Hiển thị trạng thái
+    function showStatus(message, type) {
+        statusMessage.textContent = message;
+        statusMessage.className = `status ${type}`;
+
+        setTimeout(() => {
+            statusMessage.className = "status";
+            statusMessage.textContent = "";
+        }, 4000);
+    }
+
+    function showLoading(isLoading) {
+        loadingMessage.style.display = isLoading ? "block" : "none";
+    }
+
+    function escapeHtml(value) {
+        return String(value)
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+    }
+</script>
+
+</body>
+</html>
