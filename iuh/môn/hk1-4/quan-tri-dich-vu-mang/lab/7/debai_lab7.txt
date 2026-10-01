@@ -1,0 +1,152 @@
+--- PAGE 1 ---
+1
+Xinetd
+ &  Remote Access
+--- PAGE 2 ---
+Xinetd (inetd) – supper server
+• Là một supper daemon, quản lý một số dịch vụ mạng bằng cách lắng 
+nghe tại các port tương ứng. Khi có yêu cầu, xinetd gọi dịch vụ và 
+unload khi kết thúc
+2
+
+--- PAGE 3 ---
+Xinetd – supper server
+• Phần lớn các distro (bản server) đã cài đặt và 
+thiết lập tự động boot.
+• Quản lý dịch vụ :
+/etc/init.d/xinetd   status|start|restart|…
+3
+--- PAGE 4 ---
+Xinetd – supper server
+• File cấu hình :
+• /etc/xinetd.conf : file cấu hình dịch vụ xinetd
+• Thư mục  /etc/xinetd.d :  chứa các file cấu hình của các dịch vụ mà xinetd 
+quản lý.  Cung cấp thông tin của dịch vụ cho xinetd :
+Giao thức, port, loại socket, user/ file binary gọi chạy dịch vụ ,…
+Ví dụ : file  /etc/xinetd.d/telnet
+4
+--- PAGE 5 ---
+5
+/etc/xinetd.conf  file 
+--- PAGE 6 ---
+6
+The /etc/xinetd.d  directory 
+--- PAGE 7 ---
+7
+xinetd sẽ
+khởi động
+telnet khi
+có
+request 
+--- PAGE 8 ---
+Remote access
+telnet
+• Dịch vụ cho phép thực hiện truy suất từ xa , bằng dòng
+lệnh, sử dụng network virtual terminal
+• mô hình client-server
+• kết nối tcp
+• port 23
+• Dịch vụ không mã hóa dữ liệu
+• Sử dụng ssh thay thế
+• Trên server, dịch vụ telnet được quản lý bởi xinetd
+• Với file cấu hình /etc/xinetd.d/telnet
+• Trên client thực hiện remote access bằng
+telnet   ip_server
+• Các gói cài đặt
+• Trên server : telnetd
+• Trên client : telnet
+8
+--- PAGE 9 ---
+9
+192.168.1.101/24 192.168.1.100/24
+telnet ServerClient
+1.Cài  xinetd / qly dich vu
+2. Cài telnet  server
+3. Tao file (nếu chưa có ) 
+/etc/xinetd.d/telnet => kđ
+lại xinetd
+4.Cài telnet  client
+5. test
+--- PAGE 10 ---
+Remote access
+telnet
+• Demo 1 : thiết lập remote access bằng telnet
+• Cài đặt xinetd và telnetd trên server
+• Tạo file cấu hình quản lý telnet trong /etc/xinetd.d
+• Start hoặc reload dịch vụ xinetd
+• Tại client, cài đặt telnet
+• Tại client, thực hiện remote access tới server bằng 
+lệnh telnet
+10
+--- PAGE 11 ---
+Remote access
+OpenSSH
+• Secure Shell (ssh) service
+• client-server protocol, port 22
+• Chức năng tương tự Telnet
+• Mã hóa data 
+• Cài đặt và cấu hình OpenSSH server application :
+– Gói cài đặt :   openssh-server
+=>cung cấp daemon  :  sshd
+• File cấu hình :  /etc/ssh/sshd_config
+– Quản lý dich vụ :
+• Tự động khởi động khi boot ( bằng upstart script)
+• Hoặc 
+sudo    /etc/init.d/ssh   start | stop|reload|restart
+11
+--- PAGE 12 ---
+Remote access
+OpenSSH
+• Cài đặt và cấu hình OpenSSH client 
+application :
+• Gói cài đặt :  openssh-client
+=>cung cấp : ssh, ssh-keygen, ssh-copy-id, …, 
+scp, slogin, sftp
+• File cấu hình  :
+/etc/ssh/ssh_config   và  $HOME/.ssh/config
+• Truy suất server
+ssh  [ -l  username ]  IP_address
+12
+--- PAGE 13 ---
+Remote access
+OpenSSH
+• Demo 1 : thiết lập remote access tới server bằng 
+ssh . 
+• Demo 2 : thiết lập cấu hình cho phép / không 
+cho phép user x thực hiện remote access
+• Demo 3 : Sử dụng các tool : scp, slogin
+13
+--- PAGE 14 ---
+ftp server 
+vsftpd
+• Cài đặt và cấu hình phía server
+• Gói cài đặt :  vsftpd
+=>cung cấp daemon:  vsftpd
+• File cấu hình :    /etc/vsftpd.conf
+(xem man  vsftpd.conf)
+• Quản lý dich vụ : 2 cách
+• standalone  : quản lý bằng upstart script hoặc init script
+• Dùng xinetd
+14
+--- PAGE 15 ---
+ftp server 
+vsftpd
+• Cài đặt và cấu hình phía client
+• Trình phía client đã cài đặt : ftp
+(xem man ftp )
+• kết nối với server
+ftp  [options]   [host  [port]]
+Dùng 2 tài khoản ftp,  anonymous  ( pass ko có)
+15
+--- PAGE 16 ---
+ftp server 
+vsftpd
+• Demo 1 : cài đặt và cấu hình ftp server theo yêu 
+cầu :
+• Quản lý dịch vụ bằng init script
+• Không cho phép dùng anonymous
+• Demo 2 : cài đặt và cấu hình ftp server theo yêu 
+cầu :
+• Dùng xinetd 
+• Không cho phép dùng anonymous
+16
