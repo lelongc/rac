@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Sinh Viên - Spring Data JPA (DemoJPA)</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Tahoma, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f8;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 24px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2196F3;
+            color: #1976D2;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 8px;
+            flex: 1;
+            max-width: 450px;
+        }
+
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus {
+            border-color: #2196F3;
+        }
+
+        .btn {
+            padding: 8px 14px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid transparent;
+            border-radius: 3px;
+            cursor: pointer;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background-color: #1976D2;
+            color: #fff;
+            border-color: #1565C0;
+        }
+
+        .btn-primary:hover {
+            background-color: #1565C0;
+        }
+
+        .btn-success {
+            background-color: #2e7d32;
+            color: #fff;
+            border-color: #1b5e20;
+        }
+
+        .btn-success:hover {
+            background-color: #1b5e20;
+        }
+
+        .btn-secondary {
+            background-color: #757575;
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background-color: #616161;
+        }
+
+        .btn-edit {
+            background-color: #0288d1;
+            color: #fff;
+            padding: 4px 8px;
+            font-size: 12px;
+            margin-right: 4px;
+        }
+
+        .btn-delete {
+            background-color: #d32f2f;
+            color: #fff;
+            padding: 4px 8px;
+            font-size: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        th, td {
+            border: 1px solid #e0e0e0;
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f5f5f5;
+            color: #424242;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        tr:hover {
+            background-color: #f1f5f9;
+        }
+
+        .empty-row {
+            text-align: center;
+            color: #777;
+            padding: 20px;
+        }
+
+        /* Modal Popup */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-box {
+            background: #fff;
+            width: 420px;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            color: #1976D2;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Hệ Thống Quản Lý Sinh Viên (Spring Data JPA + MySQL)</h1>
+
+    <div class="toolbar">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Tìm kiếm theo họ tên..." onkeyup="handleSearchKey(event)">
+            <button class="btn btn-primary" onclick="searchStudents()">Tìm kiếm</button>
+            <button class="btn btn-secondary" onclick="resetSearch()">Tất cả</button>
+        </div>
+        <button class="btn btn-success" onclick="openAddModal()">+ Thêm sinh viên mới</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 60px; text-align: center;">ID</th>
+                <th>Họ và Tên</th>
+                <th>Email</th>
+                <th>Số Điện Thoại</th>
+                <th style="width: 130px; text-align: center;">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody id="studentTableBody">
+            <tr>
+                <td colspan="5" class="empty-row">Đang tải dữ liệu từ CSDL...</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal Thêm / Sửa Sinh Viên -->
+<div class="modal-overlay" id="studentModal">
+    <div class="modal-box">
+        <div class="modal-header" id="modalTitle">Thêm sinh viên mới</div>
+        <form id="studentForm" onsubmit="saveStudent(event)">
+            <input type="hidden" id="studentId">
+            <div class="form-group">
+                <label for="studentName">Họ và tên (*):</label>
+                <input type="text" id="studentName" required placeholder="Ví dụ: Nguyen Van An">
+            </div>
+            <div class="form-group">
+                <label for="studentEmail">Email (*):</label>
+                <input type="email" id="studentEmail" required placeholder="Ví dụ: an.nguyen@iuh.edu.vn">
+            </div>
+            <div class="form-group">
+                <label for="studentPhone">Số điện thoại:</label>
+                <input type="text" id="studentPhone" placeholder="Ví dụ: 0901234567">
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Hủy</button>
+                <button type="submit" class="btn btn-primary">Lưu lại</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    const API_BASE = '/api/students';
+
+    // Tải dữ liệu khi mở trang web
+    document.addEventListener('DOMContentLoaded', () => {
+        loadStudents();
+    });
+
+    // Lấy danh sách sinh viên từ REST API
+    async function loadStudents(keyword = '') {
+        const tbody = document.getElementById('studentTableBody');
+        try {
+            let url = API_BASE;
+            if (keyword && keyword.trim() !== '') {
+                url += `?keyword=${encodeURIComponent(keyword.trim())}`;
+            }
+
+            const res = await fetch(url);
+            if (!res.ok) throw new Error('Không thể kết nối đến máy chủ');
+            const data = await res.json();
+
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="empty-row">Không tìm thấy sinh viên nào trong CSDL.</td></tr>';
+                return;
+            }
+
+            let html = '';
+            data.forEach(s => {
+                html += `
+                    <tr>
+                        <td style="text-align: center;">${s.id}</td>
+                        <td><strong>${escapeHtml(s.name)}</strong></td>
+                        <td>${escapeHtml(s.email || '-')}</td>
+                        <td>${escapeHtml(s.phone || '-')}</td>
+                        <td style="text-align: center;">
+                            <button class="btn btn-edit" onclick="openEditModal(${s.id}, '${escapeJs(s.name)}', '${escapeJs(s.email)}', '${escapeJs(s.phone)}')">Sửa</button>
+                            <button class="btn btn-delete" onclick="deleteStudent(${s.id}, '${escapeJs(s.name)}')">Xóa</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        } catch (err) {
+            tbody.innerHTML = `<tr><td colspan="5" class="empty-row" style="color: red;">Lỗi tải dữ liệu: ${err.message}</td></tr>`;
+        }
+    }
+
+    function searchStudents() {
+        const kw = document.getElementById('searchInput').value;
+        loadStudents(kw);
+    }
+
+    function handleSearchKey(event) {
+        if (event.key === 'Enter') {
+            searchStudents();
+        }
+    }
+
+    function resetSearch() {
+        document.getElementById('searchInput').value = '';
+        loadStudents();
+    }
+
+    function openAddModal() {
+        document.getElementById('modalTitle').innerText = 'Thêm sinh viên mới';
+        document.getElementById('studentId').value = '';
+        document.getElementById('studentName').value = '';
+        document.getElementById('studentEmail').value = '';
+        document.getElementById('studentPhone').value = '';
+        document.getElementById('studentModal').style.display = 'flex';
+        document.getElementById('studentName').focus();
+    }
+
+    function openEditModal(id, name, email, phone) {
+        document.getElementById('modalTitle').innerText = 'Cập nhật thông tin sinh viên';
+        document.getElementById('studentId').value = id;
+        document.getElementById('studentName').value = name;
+        document.getElementById('studentEmail').value = email;
+        document.getElementById('studentPhone').value = phone;
+        document.getElementById('studentModal').style.display = 'flex';
+        document.getElementById('studentName').focus();
+    }
+
+    function closeModal() {
+        document.getElementById('studentModal').style.display = 'none';
+    }
+
+    async function saveStudent(event) {
+        event.preventDefault();
+        const id = document.getElementById('studentId').value;
+        const name = document.getElementById('studentName').value.trim();
+        const email = document.getElementById('studentEmail').value.trim();
+        const phone = document.getElementById('studentPhone').value.trim();
+
+        const payload = { name, email, phone };
+
+        try {
+            let res;
+            if (id) {
+                // Cập nhật (PUT)
+                res = await fetch(`${API_BASE}/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            } else {
+                // Thêm mới (POST)
+                res = await fetch(API_BASE, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            }
+
+            if (!res.ok) {
+                const text = await res.text();
+                throw new Error(text || 'Thao tác không thành công');
+            }
+
+            closeModal();
+            loadStudents(document.getElementById('searchInput').value);
+        } catch (err) {
+            alert('Lỗi: ' + err.message);
+        }
+    }
+
+    async function deleteStudent(id, name) {
+        if (!confirm(`Bạn có chắc chắn muốn xóa sinh viên "${name}" (ID: ${id}) khỏi CSDL?`)) {
+            return;
+        }
+
+        try {
+            const res = await fetch(`${API_BASE}/${id}`, {
+                method: 'DELETE'
+            });
+
+            if (!res.ok) throw new Error('Không thể xóa sinh viên');
+
+            loadStudents(document.getElementById('searchInput').value);
+        } catch (err) {
+            alert('Lỗi khi xóa: ' + err.message);
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>"']/g, m => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        })[m]);
+    }
+
+    function escapeJs(str) {
+        if (!str) return '';
+        return str.replace(/'/g, "\\'").replace(/"/g, '\\"');
+    }
+</script>
+
+</body>
+</html>
