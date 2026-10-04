@@ -17,8 +17,8 @@ stateDiagram-v2
     direction LR
     [*] --> q0
     q0 --> q1: a
-    q1 --> q2: λ
-    q2 --> q0: λ
+    q1 --> q2: ε
+    q2 --> q0: ε
     q1 --> [*]
 ```
 
@@ -75,7 +75,7 @@ stateDiagram-v2
     q0 --> q1: 0, 1
     q1 --> q0: 0
     q1 --> q1: 1
-    q1 --> q2: 0, λ
+    q1 --> q2: 0, ε
     q2 --> q1: 1
     q1 --> [*]
 ```
@@ -152,9 +152,9 @@ b) Chuỗi nào trong các chuỗi sau được chấp nhận: $00, \ 01001, \ 1
 ##### 1. Với chuỗi $w = 00$:
 
 ```
-                         ┌── (q0, λ) ──→ q0
+                         ┌── (q0, ε) ──→ q0
 (q0, 00) ──→ (q1, 0) ────┤
-                         └── (q2, λ) ──→ q2
+                         └── (q2, ε) ──→ q2
 ```
 
 * **Tập trạng thái cuối cùng:** $\{q_0, q_2\}$.
@@ -261,12 +261,12 @@ stateDiagram-v2
     direction LR
     [*] --> q0
     q0 --> q0: 1
-    q0 --> q1: 1, λ
+    q0 --> q1: 1, ε
     q1 --> q0: 1
     q1 --> q1: 1
     q1 --> q2: 0
     q2 --> q2: 0
-    q2 --> q1: λ
+    q2 --> q1: ε
 ```
 
 ---
@@ -420,7 +420,7 @@ stateDiagram-v2
     [*] --> q0
     q0 --> q1: a
     q1 --> q2: b
-    q2 --> q0: c, λ
+    q2 --> q0: c, ε
     q0 --> [*]
 ```
 
@@ -505,8 +505,8 @@ stateDiagram-v2
 stateDiagram-v2
     direction LR
     [*] --> q0
-    q0 --> q1: λ
-    q0 --> q8: λ
+    q0 --> q1: ε
+    q0 --> q8: ε
   
     q1 --> q1: 0, 1
     q1 --> q2: 0
@@ -677,8 +677,8 @@ Tạo trạng thái bắt đầu $q_0$, nối $\lambda$ sang $q_1$ (Máy A) và 
 stateDiagram-v2
     direction LR
     [*] --> q0
-    q0 --> q1: λ
-    q0 --> q2: λ
+    q0 --> q1: ε
+    q0 --> q2: ε
   
     q1 --> q1: 0
     q1 --> q3: 1

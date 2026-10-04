@@ -13,9 +13,9 @@
 - [1. QUY TẮC SỐNG CÒN KHI LÀM BÀI THI (XỬ LÝ ĐỀ MẤT CHỈ SỐ q)](#1-quy-tắc-sống-còn-khi-làm-bài-thi-xử-lý-đề-mất-chỉ-số-q)
 - [2. MẪU TRÌNH BÀY BÀI LÀM ĐI THI CHUẨN (THỦ TỤC NFA-TO-DFA)](#2-mẫu-trình-bày-bài-làm-đi-thi-chuẩn-thủ-tục-nfa-to-dfa)
 - [3. CHI TIẾT 3 VÍ DỤ SLIDE GIÁO TRÌNH](#3-chi-tiết-3-ví-dụ-slide-giáo-trình)
-  - [Ví dụ 1: NFA có λ-transition → DFA có trạng thái bẫy ∅](#ví-dụ-1-nfa-có-λ-transition-→-dfa-có-trạng-thái-bẫy-∅)
+  - [Ví dụ 1: NFA có ε-transition → DFA có trạng thái bẫy ∅](#ví-dụ-1-nfa-có-ε-transition-→-dfa-có-trạng-thái-bẫy-∅)
   - [Ví dụ 2: NFA sang DFA đầy đủ trên Σ = {0, 1}](#ví-dụ-2-nfa-sang-dfa-đầy-đủ-trên-Σ--0-1)
-  - [Ví dụ 3: NFA có λ-closure bắt đầu phức tạp {q0, q3, q4}](#ví-dụ-3-nfa-có-λ-closure-bắt-đầu-phức-tạp-q0-q3-q4)
+  - [Ví dụ 3: NFA có ε-closure bắt đầu phức tạp {q0, q3, q4}](#ví-dụ-3-nfa-có-ε-closure-bắt-đầu-phức-tạp-q0-q3-q4)
 - [4. LỜI GIẢI CHI TIẾT 5 BÀI TẬP SLIDE (TRANG 5 - ĐỐI CHIẾU BÀI THI `kk_1` ĐẾN `kk_5`)](#4-lời-giải-chi-tiết-5-bài-tập-slide-trang-5---đối-chiếu-bài-thi-kk_1-đến-kk_5)
   - [Bài tập 1: NFA 3 trạng thái có vòng lặp ngược (Đối chiếu `kk_5.jpg`)](#bài-tập-1-nfa-3-trạng-thái-có-vòng-lặp-ngược-đối-chiếu-kk_5jpg)
   - [Bài tập 2: NFA 2 trạng thái có chuyển dịch 0, 1 (Đối chiếu `kk_4.jpg`)](#bài-tập-2-nfa-2-trạng-thái-có-chuyển-dịch-0-1-đối-chiếu-kk_4jpg)
@@ -70,7 +70,7 @@ Khi làm bài thi chuyển đổi NFA sang DFA, bạn trình bày đúng 3 bư�
 BÀI LÀM:
 
 Bước 1: Đỉnh khởi đầu của DFA là {q0}  
-(Nếu NFA có bước nhảy λ: S0 = λ-closure(q0) = {q0, ...})
+(Nếu NFA có bước nhảy ε: S0 = ε-closure(q0) = {q0, ...})
 
 Bước 2: Xây dựng các hàm chuyển dịch δ*:
   δ*({q0}, a) = {...};    δ*({q0}, b) = {...}
@@ -89,7 +89,7 @@ Ta có đồ thị chuyển trạng thái của DFA như hình sau:
 
 # 3. CHI TIẾT 3 VÍ DỤ SLIDE GIÁO TRÌNH
 
-### Ví dụ 1: NFA có λ-transition → DFA có trạng thái bẫy ∅
+### Ví dụ 1: NFA có ε-transition → DFA có trạng thái bẫy ∅
 *(Slide trang 1 - 2)*
 
 #### 1. Khai báo Otomat ban đầu:
@@ -98,7 +98,7 @@ Ta có đồ thị chuyển trạng thái của DFA như hình sau:
 - **Tập trạng thái kết thúc NFA: FN = {★ q1}** (chỉ có q1 có vòng tròn đôi).
 - Các bước chuyển dịch của NFA:
   - `q0 ─(a)→ q1`
-  - `q1 ─(λ)→ q2`; `q1 ─(a)→ q1`; `q1 ─(b)→ q0`
+  - `q1 ─(ε)→ q2`; `q1 ─(a)→ q1`; `q1 ─(b)→ q0`
   - `q2 ─(b)→ q0`
 
 #### 2. Bài làm chuẩn đi thi:
@@ -107,7 +107,7 @@ Ta có đồ thị chuyển trạng thái của DFA như hình sau:
 Bước 1: Đỉnh khởi đầu của DFA là {q0}.
 
 Bước 2: Các bước chuyển dịch δ*:
-  δ*({q0}, a) = {q1, q2}   (vì q0 đọc a ra q1, q1 đi λ sang q2)
+  δ*({q0}, a) = {q1, q2}   (vì q0 đọc a ra q1, q1 đi ε sang q2)
   δ*({q0}, b) = ∅          (không có chuyển dịch b từ q0)
 
   δ*({q1, q2}, a) = δ*(q1, a) ∪ δ*(q2, a) = {q1, q2} ∪ ∅ = {q1, q2}
@@ -224,7 +224,7 @@ stateDiagram-v2
 
 ---
 
-### Ví dụ 3: NFA có λ-closure bắt đầu phức tạp {q0, q3, q4}
+### Ví dụ 3: NFA có ε-closure bắt đầu phức tạp {q0, q3, q4}
 *(Slide trang 4 - 5)*
 
 #### 1. Khai báo Otomat ban đầu:
@@ -235,7 +235,7 @@ stateDiagram-v2
 #### 2. Bài làm chuẩn đi thi:
 
 ```text
-Bước 1: Đỉnh khởi đầu của DFA là {q0, q3, q4} (vì δ*(q0, λ) = {q0, q3, q4}).
+Bước 1: Đỉnh khởi đầu của DFA là {q0, q3, q4} (vì δ*(q0, ε) = {q0, q3, q4}).
 
 Bước 2: Tính các chuyển dịch δ*:
   δ*({q0, q3, q4}, a) = {q1, q2, q4}
@@ -628,7 +628,7 @@ stateDiagram-v2
 ├────────────────────────────────────────────────────────────────────────┤
 │ [ ] 1. Quan sát kĩ hình đề bài: Nút nào có 2 vòng tròn mới là FN.     │
 │ [ ] 2. Khai báo rõ ràng bộ 5 thành phần ban đầu M = (Q, Σ, δ, q0, FN). │
-│ [ ] 3. Xác định đỉnh khởi đầu DFA: S0 = {q0} (hoặc λ-closure(q0)).     │
+│ [ ] 3. Xác định đỉnh khởi đầu DFA: S0 = {q0} (hoặc ε-closure(q0)).     │
 │ [ ] 4. Tính toán δ* từng bước cẩn thận bằng phép hợp (∪).              │
 │ [ ] 5. Đưa trạng thái bẫy ∅ vào DFA nếu NFA có đường chuyển rỗng.      │
 │ [ ] 6. Kết luận bước 3: Đỉnh nào của DFA CHỨA PHẦN TỬ THUỘC FN mới là  │

@@ -342,7 +342,7 @@ Biểu diễn trực quan quá trình sinh chuỗi từ nút gốc $S$ đến c�
       / | \
      a  S  b
         |
-    (λ / rỗng)
+    (ε / rỗng)
 ```
 
 *(Đọc các nút lá từ trái sang phải: $a \cdot a \cdot \lambda \cdot b \cdot b = aabb$)*

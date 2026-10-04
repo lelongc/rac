@@ -82,7 +82,7 @@ stateDiagram-v2
     [*] --> q0
     q0 --> q0: 0, 1
     q0 --> q1: 1
-    q1 --> q2: 0, λ
+    q1 --> q2: 0, ε
     q2 --> q3: 1
     q3 --> q3: 0, 1
     q3 --> [*]
@@ -127,7 +127,7 @@ Giả sử đưa chuỗi $w = 010110$ vào máy $N_1$. Quá trình đọc từng
        (q0, 0)    Rỗng ∅               (q3, 0)
           |                                |  đọc ký tự '0' thứ sáu (tại q3 đọc 0 loop q3)
           v                                v
-       (q0, λ)                         (q3, λ) -> ĐÃ ĐẾN q3 ∈ F!
+       (q0, ε)                         (q3, ε) -> ĐÃ ĐẾN q3 ∈ F!
      (Dừng ở q0 ∉ F)               [CHẤP NHẬN CHUỖI 010110]
 ```
 
@@ -191,8 +191,8 @@ stateDiagram-v2
     direction LR
     [*] --> q0
     q0 --> q1: a
-    q1 --> q2: λ
-    q2 --> q0: λ
+    q1 --> q2: ε
+    q2 --> q0: ε
     q2 --> [*]
 ```
 
@@ -234,7 +234,7 @@ stateDiagram-v2
     [*] --> q0
     q0 --> q1: 1
     q1 --> q0: 0
-    q0 --> q2: λ
+    q0 --> q2: ε
     q1 --> q2: 0, 1
     q0 --> [*]
 ```
@@ -478,8 +478,8 @@ stateDiagram-v2
 stateDiagram-v2
     direction LR
     [*] --> q0
-    q0 --> q1: λ
-    q0 --> q4: λ
+    q0 --> q1: ε
+    q0 --> q4: ε
     
     q1 --> q2: 0
     q2 --> q3: 0
@@ -534,8 +534,8 @@ stateDiagram-v2
 stateDiagram-v2
     direction LR
     [*] --> q0
-    q0 --> q1: λ
-    q0 --> q3: λ
+    q0 --> q1: ε
+    q0 --> q3: ε
     
     q1 --> q1: 1
     q1 --> q2: 0

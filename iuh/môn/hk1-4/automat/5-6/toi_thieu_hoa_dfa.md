@@ -515,14 +515,14 @@ GIAI ĐOẠN 1: CHUYỂN NFA SANG DFA
 
 NFA ban đầu có trạng thái kết thúc duy nhất FN = {★ q2}.
 
-Bước 1: Đỉnh khởi đầu của DFA là S0 = λ-closure(q0) = {q0, q1, q2}.
+Bước 1: Đỉnh khởi đầu của DFA là S0 = ε-closure(q0) = {q0, q1, q2}.
 Vì S0 chứa q2 ∈ FN nên S0 là trạng thái kết thúc (★ S0 ∈ FD).
 
 Bước 2: Các bước chuyển dịch δ*:
   Từ S0 = {q0, q1, q2}:
-    δ*(S0, a) = λ-closure({q0}) = {q0, q1, q2} = S0
-    δ*(S0, b) = λ-closure({q1}) = {q1, q2} = S1 (chứa q2 => ★ S1 ∈ FD)
-    δ*(S0, c) = λ-closure({q2}) = {q2} = S2 (chứa q2 => ★ S2 ∈ FD)
+    δ*(S0, a) = ε-closure({q0}) = {q0, q1, q2} = S0
+    δ*(S0, b) = ε-closure({q1}) = {q1, q2} = S1 (chứa q2 => ★ S1 ∈ FD)
+    δ*(S0, c) = ε-closure({q2}) = {q2} = S2 (chứa q2 => ★ S2 ∈ FD)
 
   Từ S1 = {q1, q2}:
     δ*(S1, a) = ∅ = Strap
@@ -537,7 +537,7 @@ Bước 2: Các bước chuyển dịch δ*:
 
 GIAI ĐOẠN 2: TỐI THIỂU HÓA DFA VỪA TÌM ĐƯỢC
 
-- Strap ∉ FD phân biệt với S0, S1, S2 ∈ FD bởi chuỗi λ.
+- Strap ∉ FD phân biệt với S0, S1, S2 ∈ FD bởi chuỗi ε.
 - Cặp (S0, S1): δ*(S0, a) = S0 ∈ FD, δ*(S1, a) = Strap ∉ FD => S0, S1 phân biệt bởi chuỗi a.
 - Cặp (S1, S2): δ*(S1, b) = S1 ∈ FD, δ*(S2, b) = Strap ∉ FD => S1, S2 phân biệt bởi chuỗi b.
 - Cặp (S0, S2): δ*(S0, a) = S0 ∈ FD, δ*(S2, a) = Strap ∉ FD => S0, S2 phân biệt bởi chuỗi a.
@@ -604,7 +604,7 @@ Bảng chuyển trạng thái:
   δ(qtrap, a) = qtrap; δ(qtrap, b) = qtrap
 
 Chứng minh DFA này tối thiểu:
-- q3 ∈ F phân biệt với {q0, q1, q2, qtrap} ∉ F bởi chuỗi λ.
+- q3 ∈ F phân biệt với {q0, q1, q2, qtrap} ∉ F bởi chuỗi ε.
 - (q0, qtrap) phân biệt bởi chuỗi aab.
 - (q1, qtrap) phân biệt bởi chuỗi ab.
 - (q2, qtrap) phân biệt bởi chuỗi b.
@@ -656,7 +656,7 @@ stateDiagram-v2
 BÀI LÀM:
 
 Xây dựng DFA M = (Q, Σ, δ, q0, F) gồm 6 trạng thái:
-- q0: Bắt đầu (chuỗi rỗng λ).
+- q0: Bắt đầu (chuỗi rỗng ε).
 - q1: Nhánh a+ (đã đọc ≥ 1 chữ a).
 - ★ q2 ∈ F: Đã đọc đúng 1 chữ b từ đầu (chấp nhận chuỗi "b").
 - ★ q3 ∈ F: Đã hoàn tất chuỗi hợp lệ (kết thúc bởi b ở nhánh a+ hoặc kết thúc bởi a ở nhánh b+).

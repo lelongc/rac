@@ -206,9 +206,9 @@ stateDiagram-v2
     qMOVE --> q3: T3
 
     %% Cửa và chuyển dịch tự phát lambda
-    qDOOR --> q1: đóng / λ
-    qDOOR --> q2: đóng / λ
-    qDOOR --> q3: đóng / λ
+    qDOOR --> q1: đóng / ε
+    qDOOR --> q2: đóng / ε
+    qDOOR --> q3: đóng / ε
     qDOOR --> qDOOR: mở
 
     %% Không đơn định khi gặp sự cố Cảnh báo
@@ -236,10 +236,10 @@ stateDiagram-v2
 
 ```text
 (q1, T2 T2 mở)
-├── (q1, T2 mở) ── (qDOOR, mở) ── (qDOOR, λ)  [CHẤP NHẬN]
+├── (q1, T2 mở) ── (qDOOR, mở) ── (qDOOR, ε)  [CHẤP NHẬN]
 └── (qMOVE, T2 mở)
       └── (q2, mở)
-            └── (qDOOR, λ)  [CHẤP NHẬN]
+            └── (qDOOR, ε)  [CHẤP NHẬN]
 ```
 > Nhờ tính chất không đơn định, hệ thống tìm được ít nhất 1 nhánh dẫn đến trạng thái chấp nhận $q_{DOOR} \in F$, do đó chuỗi $w$ được **chấp nhận**.
 
@@ -247,8 +247,8 @@ stateDiagram-v2
 
 ```text
 (q1, cb)
-├── (qCB, λ)      [Trạng thái phanh dừng khẩn cấp]
-└── (qALARM, λ)   [Trạng thái kích hoạt còi báo động]
+├── (qCB, ε)      [Trạng thái phanh dừng khẩn cấp]
+└── (qALARM, ε)   [Trạng thái kích hoạt còi báo động]
 ```
 > Hệ thống xử lý song song 2 nhiệm vụ bảo vệ an toàn cùng lúc.
 

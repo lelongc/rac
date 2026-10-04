@@ -5,7 +5,7 @@
 > **Tài liệu đối chiếu gốc:**
 > - Đề thi chính thức: `Automata - Đề ôn tập GK 1.pdf` (Hình ảnh đính kèm: `./de_gk_img_1.jpeg`)
 > - Hình thức thi: Tự luận 60 phút, được đem 1 tờ A4 tài liệu.
-> - Ký hiệu chuẩn: 100% Unicode tiếng Việt (`→`, `∅`, `★`, `Σ`, `δ`, `λ`, `∈`, `∉`, `∪`, `∩`, `^*`, `^+`, `⇒`, `〈`, `〉`). Không lỗi font hiển thị.
+> - Ký hiệu chuẩn: 100% Unicode tiếng Việt (`→`, `∅`, `★`, `Σ`, `δ`, `ε`, `∈`, `∉`, `∪`, `∩`, `^*`, `^+`, `⇒`, `<`, `>`). Không lỗi font hiển thị.
 
 ---
 
@@ -114,14 +114,14 @@ Ta xét theo các khía cạnh sau:
 3. MỞ RỘNG (VĂN PHẠM PHI NGỮ CẢNH - CFG SINH RA NGÔN NGỮ NÀY):
    Nếu bài toán yêu cầu xây dựng công cụ sinh hình thức cho L, ta sử dụng Văn phạm 
    phi ngữ cảnh (CFG) với tập luật sinh sau:
-               S → cS | Sc | aSaSbS | aSbSaS | bSaSaS | λ
+               S → cS | Sc | aSaSbS | aSbSaS | bSaSaS | ε
 ```
 
 ---
 
 ## CÂU 2 (3.0 điểm): Văn phạm G, Phân cấp Chomsky, Cây phân tích & L(G)
 
-**ĐỀ BÀI:** Cho văn phạm `G = 〈{a, b}, {S, A}, S, {S → Sb | aA, A → aA | a}〉`. Hãy thực hiện các ý sau:  
+**ĐỀ BÀI:** Cho văn phạm `G = <{a, b}, {S, A}, S, {S → Sb | aA, A → aA | a}>`. Hãy thực hiện các ý sau:  
 a) Tìm phân lớp thấp nhất của văn phạm đã cho theo hệ thống phân cấp Chomsky.  
 b) Vẽ cây phân tích cho các chuỗi: `"aaaaaa"`, `"aaaabb"`, `"aaaabbbba"`, nếu chúng thuộc văn phạm G.  
 c) Nêu 5 ví dụ về chuỗi không được chấp nhận bởi văn phạm G.  
@@ -253,7 +253,7 @@ graph TD
   + Từ biến `A`, các luật sinh chỉ là `A → aA | a`, chỉ có thể sinh ra thêm các ký tự `a` đứng trước các ký tự `b` đã sinh ra trước đó. Không có bất kỳ luật sinh nào cho phép biến đổi từ `A` trở lại `S` hoặc sinh thêm ký tự `a` vào sau ký tự `b`.
   + Do đó, mọi chuỗi sinh bởi `G` đều phải có dạng tất cả các chữ `a` đứng trước, tất cả các chữ `b` đứng sau (`a^m b^n`).
   + Chuỗi `"aaaabbbba"` có ký tự `a` ở cuối (sau các chữ `b`), do đó chuỗi này **KHÔNG THUỘC VĂN PHẠM G**.
-  + 👉 **Kết luận: Không tồn tại cây phân tích cho chuỗi `"aaaabbbba"`.**
+  + => **Kết luận: Không tồn tại cây phân tích cho chuỗi `"aaaabbbba"`.**
 
 ---
 
@@ -264,8 +264,8 @@ BÀI LÀM CÂU 2c:
 
 Năm ví dụ về các chuỗi KHÔNG ĐƯỢC CHẤP NHẬN bởi văn phạm G:
 
-1. Chuỗi rỗng λ (hoặc ε): 
-   - Giải thích: Văn phạm G không có luật rỗng (S → λ). Chuỗi ngắn nhất sinh ra 
+1. Chuỗi rỗng ε (hoặc ε): 
+   - Giải thích: Văn phạm G không có luật rỗng (S → ε). Chuỗi ngắn nhất sinh ra 
      bởi G là S ⇒ aA ⇒ aa (độ dài bằng 2). Do đó chuỗi rỗng không được chấp nhận.
 
 2. Chuỗi "a" (chỉ gồm 1 ký tự a):
@@ -330,10 +330,10 @@ c) Nêu 5 ví dụ về chuỗi không được chấp nhận bởi ô-tô-mát 
 BÀI LÀM CÂU 3a:
 
 Quan sát hình vẽ, tại mỗi trạng thái khi đọc mỗi ký hiệu 0 hoặc 1 đều có duy nhất 
-một bước chuyển trạng thái xác định, không có bước chuyển rỗng λ.
+một bước chuyển trạng thái xác định, không có bước chuyển rỗng ε.
 Do đó, ô-tô-mát đã cho là một Ôtômát hữu hạn đơn định (DFA), được mô tả bởi bộ 5 thành phần:
 
-                          M = 〈Q, Σ, δ, q0, F〉
+                          M = <Q, Σ, δ, q0, F>
 
 Trong đó:
 1. Q = {A, B, C} : Tập hợp gồm 3 trạng thái.
@@ -392,7 +392,7 @@ BÀI LÀM CÂU 3c:
 
 Năm ví dụ về chuỗi KHÔNG ĐƯỢC CHẤP NHẬN (BỊ TỪ CHỐI) bởi ô-tô-mát:
 
-1. Chuỗi w1 = λ (chuỗi rỗng):
+1. Chuỗi w1 = ε (chuỗi rỗng):
    Vết chuyển dịch: Không đọc ký hiệu nào, dừng lại tại trạng thái bắt đầu A ∉ F ==> Bị từ chối.
 
 2. Chuỗi w2 = "0":
@@ -438,14 +438,14 @@ Cho ngôn ngữ L trên bảng chữ cái Σ. Phép lặp của ngôn ngữ L, k
          L* = ∪ (k = 0 đến ∞) L^k = L^0 ∪ L^1 ∪ L^2 ∪ L^3 ∪ ...
 
 Trong đó:
-1. L^0 = {λ} : Tập hợp chỉ chứa duy nhất một phần tử là chuỗi rỗng λ.
+1. L^0 = {ε} : Tập hợp chỉ chứa duy nhất một phần tử là chuỗi rỗng ε.
                Nó đại diện cho việc kết nối 0 lần các chuỗi từ ngôn ngữ L.
 2. L^1 = L   : Bản thân ngôn ngữ L ban đầu.
 3. L^2 = L . L = { xy | x ∈ L, y ∈ L } : Tập hợp tất cả các chuỗi được tạo thành 
                bằng cách ghép nối hai chuỗi bất kỳ thuộc L lại với nhau.
 4. L^k = L^(k-1) . L  (với k ≥ 1) : Tích ghép k lần các chuỗi thuộc ngôn ngữ L.
 
-Ý nghĩa: Một chuỗi w bất kỳ thuộc về L* khi và chỉ khi w = λ, hoặc w có thể phân 
+Ý nghĩa: Một chuỗi w bất kỳ thuộc về L* khi và chỉ khi w = ε, hoặc w có thể phân 
 tích thành tích ghép của một số hữu hạn các từ thuộc L:
          w = w1 . w2 ... wk   (với k ≥ 1 và mọi wi ∈ L).
 ```
@@ -460,7 +460,7 @@ Ngôn ngữ cho trước: `L = {ab, bb, cc, ba, ca}` trên bảng chữ cái `{a
    Mọi từ trong tập `L` đều có đúng 2 ký tự:  
    `|ab| = |bb| = |cc| = |ba| = |ca| = 2`.  
    Do đó, bất kỳ chuỗi `w` nào thuộc `L^*` đều được ghép từ các khối 2 ký tự, nên **độ dài của chuỗi `|w|` bắt buộc phải là một SỐ CHẴN!**  
-   👉 **Nếu chuỗi có độ dài là SỐ LẺ ⇒ Chắc chắn KHÔNG THUỘC `L^*`!**
+   => **Nếu chuỗi có độ dài là SỐ LẺ ⇒ Chắc chắn KHÔNG THUỘC `L^*`!**
 2. **Quy tắc phân rã khối 2 ký tự (Tiêu chuẩn số 2):**  
    - Các cặp 2 ký tự HỢP LỆ (có trong L): `ab`, `bb`, `cc`, `ba`, `ca`.
    - Các cặp 2 ký tự BẤT HỢP LỆ (KHÔNG có trong L): `aa`, `bc`, `cb`, `ac`.
@@ -484,10 +484,10 @@ Ngôn ngữ cho trước: `L = {ab, bb, cc, ba, ca}` trên bảng chữ cái `{a
 - Tính độ dài:  
   `|w2| = (2 × 3) + 8 + 1 + 1 + 2 + 1 + 3 = 6 + 8 + 1 + 1 + 2 + 1 + 3 = 22` (Số chẵn).
 - Phân tích ghép khối từ trái qua phải:
-  + `(ab)^3` = `ab . ab . ab` \in L^* (3 khối `ab ∈ L`).
-  + `c^8` = `cc . cc . cc . cc` \in L^* (4 khối `cc ∈ L`).
-  + `ba` \in L (1 khối `ba ∈ L`).
-  + `b^2` = `bb` \in L (1 khối `bb ∈ L`).
+  + `(ab)^3` = `ab . ab . ab` ∈ L^* (3 khối `ab ∈ L`).
+  + `c^8` = `cc . cc . cc . cc` ∈ L^* (4 khối `cc ∈ L`).
+  + `ba` ∈ L (1 khối `ba ∈ L`).
+  + `b^2` = `bb` ∈ L (1 khối `bb ∈ L`).
   + Đoạn còn lại ở cuối: `ac^3 = accc`. Cặp 2 ký tự đầu tiên là `ac`.
   + Nhưng `ac ∉ L` (trong L chỉ có `ca`, không có `ac`). Không thể phân rã đoạn `accc` thành các khối thuộc L.
 - **Kết luận:** Chuỗi **KHÔNG THUỘC `L^*`**.
@@ -509,7 +509,7 @@ Ngôn ngữ cho trước: `L = {ab, bb, cc, ba, ca}` trên bảng chữ cái `{a
 - Tính độ dài:  
   `|w4| = 3 + 2 + 3 + 4 + 2 = 14` (Số chẵn).
 - Phân tích ghép khối từ trái qua phải:
-  + Lần lượt tách: `bb` (\in L), `ba` (\in L), `ab` (\in L), `bb` (\in L).
+  + Lần lượt tách: `bb` (∈ L), `ba` (∈ L), `ab` (∈ L), `bb` (∈ L).
   + Đoạn tiếp theo là `(ac)^2 = acac`. Cặp ký tự là `ac`.
   + Do `ac ∉ L` (tập L chỉ có `ca`, không có `ac`), nên không thể phân rã thành các từ thuộc L.
 - **Kết luận:** Theo đúng đề bài in, chuỗi **KHÔNG THUỘC `L^*`**.
@@ -558,7 +558,7 @@ Ngôn ngữ cho trước: `L = {ab, bb, cc, ba, ca}` trên bảng chữ cái `{a
   + Phần đầu: `ab`.
   + Phần cuối: `ba`.
   + Phần ở giữa: là một chuỗi tùy ý trên `{a, b}`, biểu diễn bởi `(a + b)^*`.
-  + Trường hợp đặc biệt: Chuỗi `abba` (vừa bắt đầu bằng `ab` vừa kết thúc bằng `ba`, độ dài 4, ứng với phần giữa là `λ`).
+  + Trường hợp đặc biệt: Chuỗi `abba` (vừa bắt đầu bằng `ab` vừa kết thúc bằng `ba`, độ dài 4, ứng với phần giữa là `ε`).
   + **Đáp án:** `r = ab (a + b)^* ba`.
 
 ---
@@ -581,8 +581,8 @@ Ngôn ngữ cho trước: `L = {ab, bb, cc, ba, ca}` trên bảng chữ cái `{a
   + Vì không được có `00`, mỗi chữ số `0` bắt buộc phải có chữ số `1` đi liền sau nó, tạo thành cụm `01`.
   + Các chữ số `1` có thể đứng riêng lẻ tự do: `1`.
   + Do đó các khối lặp là `(1 + 01)^*`.
-  + Chuỗi có thể kết thúc bằng một chữ số `0` đơn lẻ hoặc chuỗi rỗng: `(λ + 0)`.
-  + **Đáp án:** `r = (1 + 01)^* (λ + 0)`.
+  + Chuỗi có thể kết thúc bằng một chữ số `0` đơn lẻ hoặc chuỗi rỗng: `(ε + 0)`.
+  + **Đáp án:** `r = (1 + 01)^* (ε + 0)`.
 
 ---
 
@@ -597,8 +597,8 @@ Ngôn ngữ cho trước: `L = {ab, bb, cc, ba, ca}` trên bảng chữ cái `{a
 
 ## Dạng tương đương Câu 2: Văn phạm & Cây phân tích (3 bài tập mẫu)
 
-### Bài tập 2.1: Văn phạm đối xứng `S → aSb | λ`
-- **Đề bài:** Cho văn phạm `G1 = 〈{a, b}, {S}, S, {S → aSb | λ}〉`.
+### Bài tập 2.1: Văn phạm đối xứng `S → aSb | ε`
+- **Đề bài:** Cho văn phạm `G1 = <{a, b}, {S}, S, {S → aSb | ε}>`.
   a) Phân loại Chomsky.  
   b) Vẽ cây phân tích cho chuỗi `aabb`.  
   c) Tìm ngôn ngữ `L(G1)`.
@@ -606,17 +606,17 @@ Ngôn ngữ cho trước: `L = {ab, bb, cc, ba, ca}` trên bảng chữ cái `{a
   + **a) Phân loại:**
     * Vế trái chỉ gồm 1 biến `S` ⇒ Tối thiểu là Loại 2 (Phi ngữ cảnh).
     * Vế phải có `aSb` (biến `S` bị kẹp giữa `a` và `b`), không phải tuyến tính trái và cũng không phải tuyến tính phải ⇒ Không thể là Loại 3.
-    * 👉 **Phân lớp thấp nhất:** Loại 2 (Văn phạm phi ngữ cảnh - CFG).
+    * => **Phân lớp thấp nhất:** Loại 2 (Văn phạm phi ngữ cảnh - CFG).
   + **b) Dẫn xuất & Cây phân tích cho `"aabb"`:**
-    * Dãy dẫn xuất: `S ⇒ aSb ⇒ aaSbb ⇒ aaλbb = aabb`.
+    * Dãy dẫn xuất: `S ⇒ aSb ⇒ aaSbb ⇒ aaεbb = aabb`.
     * Cây phân tích:
 ```text
            S
         /  |         a   S   b
          / |         a  S  b
            |
-           λ
-Lá đọc từ trái sang phải: a - a - λ - b - b ==> "aabb".
+           ε
+Lá đọc từ trái sang phải: a - a - ε - b - b ==> "aabb".
 ```
   + **c) Ngôn ngữ sinh ra:**
     `L(G1) = { a^n b^n | n ≥ 0 }`.
@@ -624,7 +624,7 @@ Lá đọc từ trái sang phải: a - a - λ - b - b ==> "aabb".
 ---
 
 ### Bài tập 2.2: Văn phạm xen kẽ `S → 0B, B → 1S | 0`
-- **Đề bài:** Cho văn phạm `G2 = 〈{0, 1}, {S, B}, S, {S → 0B, B → 1S | 0}〉`.
+- **Đề bài:** Cho văn phạm `G2 = <{0, 1}, {S, B}, S, {S → 0B, B → 1S | 0}>`.
   a) Phân loại Chomsky.  
   b) Vẽ cây phân tích cho chuỗi `"01010"`.  
   c) Tìm ngôn ngữ `L(G2)`.
@@ -633,7 +633,7 @@ Lá đọc từ trái sang phải: a - a - λ - b - b ==> "aabb".
     * Vế trái đều là 1 biến (`S`, `B`).
     * Tất cả các vế phải đều có dạng `Ký hiệu . Biến` (`0B`, `1S`) hoặc `Ký hiệu kết thúc` (`0`).
     * Đây là các luật thuần túy **TUYẾN TÍNH PHẢI**.
-    * 👉 **Phân lớp thấp nhất:** **LOẠI 3 (VĂN PHẠM CHÍNH QUY - Regular Grammar)**.
+    * => **Phân lớp thấp nhất:** **LOẠI 3 (VĂN PHẠM CHÍNH QUY - Regular Grammar)**.
   + **b) Dãy dẫn xuất & Cây phân tích cho `"01010"`:**
     * Dẫn xuất: `S ⇒ 0B ⇒ 01S ⇒ 010B ⇒ 0101S ⇒ 01010B ⇒ 01010`.
     * Cây phân tích:
@@ -665,7 +665,7 @@ Lá: 0 - 1 - 0 - 1 - 0 ==> "01010".
   + Hàm chuyển `δ`:
     - `δ(q_chẵn, 0) = q_lẻ`, `δ(q_chẵn, 1) = q_chẵn`
     - `δ(q_lẻ, 0) = q_chẵn`, `δ(q_lẻ, 1) = q_lẻ`
-  + 5 chuỗi được chấp nhận: `λ`, `"1"`, `"00"`, `"100"`, `"010"`.
+  + 5 chuỗi được chấp nhận: `ε`, `"1"`, `"00"`, `"100"`, `"010"`.
   + 5 chuỗi bị từ chối: `"0"`, `"01"`, `"10"`, `"000"`, `"1011"`.
 
 ---
@@ -681,13 +681,13 @@ Lá: 0 - 1 - 0 - 1 - 0 ==> "01010".
 - **Lời giải:**
   + Nhận xét: Mọi từ trong `L` đều có độ dài bằng 2. Do đó mọi chuỗi thuộc `L^*` phải có độ dài CHẴN.
   + **1. Xét `w1 = "011011"`:**  
-    `|w1| = 6` (chẵn). Tách: `01` (\in L), `10` (\in L), `11` (\in L) ⇒ **`w1 ∈ L^*`**.
+    `|w1| = 6` (chẵn). Tách: `01` (∈ L), `10` (∈ L), `11` (∈ L) ⇒ **`w1 ∈ L^*`**.
   + **2. Xét `w2 = "10011"`:**  
     `|w2| = 5` (lẻ) ⇒ Kết luận ngay: **`w2 ∉ L^*`**.
   + **3. Xét `w3 = "111001"`:**  
-    `|w3| = 6` (chẵn). Tách: `11` (\in L), `10` (\in L), `01` (\in L) ⇒ **`w3 ∈ L^*`**.
+    `|w3| = 6` (chẵn). Tách: `11` (∈ L), `10` (∈ L), `01` (∈ L) ⇒ **`w3 ∈ L^*`**.
   + **4. Xét `w4 = (01)^3 (11)^2 = "0101011111"`:**  
-    Gồm 3 khối `01` (\in L) và 2 khối `11` (\in L) ⇒ **`w4 ∈ L^*`**.
+    Gồm 3 khối `01` (∈ L) và 2 khối `11` (∈ L) ⇒ **`w4 ∈ L^*`**.
 
 ---
 
@@ -697,14 +697,14 @@ Lá: 0 - 1 - 0 - 1 - 0 ==> "01010".
   b) Kiểm tra xem chuỗi `"aabaab"` và `"bba"` có thuộc `L^*` không.
 - **Lời giải:**
   + **a) Tính các lũy thừa:**
-    * `L^0 = {λ}` (theo định nghĩa, lũy thừa 0 chỉ chứa chuỗi rỗng).
+    * `L^0 = {ε}` (theo định nghĩa, lũy thừa 0 chỉ chứa chuỗi rỗng).
     * `L^1 = L = {a, ab}`.
     * `L^2 = L . L`: Ghép từng phần tử của `L` với `L`:
       - `a . a = aa`
       - `a . ab = aab`
       - `ab . a = aba`
       - `ab . ab = abab`
-      - 👉 `L^2 = {aa, aab, aba, abab}`.
+      - => `L^2 = {aa, aab, aba, abab}`.
   + **b) Kiểm tra chuỗi:**
     * Xét chuỗi `"aabaab"`: Phân rã thành `a . ab . a . ab` (gồm các phần tử `a ∈ L`, `ab ∈ L`) ⇒ **Thuộc `L^*`**.
     * Xét chuỗi `"bba"`: Ký tự đầu tiên là `b`. Nhưng trong `L = {a, ab}`, mọi từ đều bắt đầu bằng chữ `a`, không có từ nào bắt đầu bằng `b`. Do đó không thể phân rã ⇒ **Không thuộc `L^*`**.
