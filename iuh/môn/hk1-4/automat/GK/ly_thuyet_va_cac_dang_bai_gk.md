@@ -443,9 +443,9 @@ Loại 0 (Rộng nhất) ⊃ Loại 1 (Cảm ngữ cảnh) ⊃ Loại 2 (Phi ng�
 
 | Cấp Chomsky | Tên gọi | Quy tắc nhận diện siêu nhanh | Ví dụ luật sinh |
 | :---: | :--- | :--- | :--- |
-| **Loại 0** | **Không hạn chế** *(Unrestricted)* | Vế trái chứa ít nhất 1 biến, vế phải tùy ý. Có luật mà vế trái dài hơn vế phải (`|α| > |β|`). | `aAb → ba` |
-| **Loại 1** | **Cảm ngữ cảnh** *(CSL)* | Vế phải luôn dài hơn hoặc bằng vế trái (`|α| ≤ |β|`). Biến bị kẹp trong ngữ cảnh. | `aAb → acb` / `AB → BA` |
-| **Loại 2** | **Phi ngữ cảnh** *(CFG)* | **VẾ TRÁI PHẢI LÀ ĐÚNG 1 BIẾN DUY NHẤT (`S → ...`, `A → ...`).** / Vế phải tự do tùy ý! | `S → aSb | ε` / `A → aAb | c` |
+| **Loại 0** | **Không hạn chế** *(Unrestricted)* | Vế trái chứa ít nhất 1 biến, vế phải tùy ý. Có luật mà vế trái dài hơn vế phải (`độ dài vế trái > vế phải`). | `aAb → ba` |
+| **Loại 1** | **Cảm ngữ cảnh** *(CSL)* | Vế phải luôn dài hơn hoặc bằng vế trái (`độ dài vế trái ≤ vế phải`). Biến bị kẹp trong ngữ cảnh. | `aAb → acb` / `AB → BA` |
+| **Loại 2** | **Phi ngữ cảnh** *(CFG)* | **VẾ TRÁI PHẢI LÀ ĐÚNG 1 BIẾN DUY NHẤT (`S → ...`, `A → ...`).** / Vế phải tự do tùy ý! | `S → aSb hoặc ε` / `A → aAb hoặc c` |
 | **Loại 3** | **Chính quy** *(Regular)* | Vế trái là đúng 1 biến. Vế phải chỉ được phép có 1 trong 2 dạng: / 1. **Thuần tuyến tính phải:** `A → wB` hoặc `A → w` / 2. **Thuần tuyến tính trái:** `A → Bw` hoặc `A → w` | `S → 0A, A → 1` / *(Tất cả biến đứng sau cùng)* |
 
 ---
@@ -457,7 +457,7 @@ Loại 0 (Rộng nhất) ⊃ Loại 1 (Cảm ngữ cảnh) ⊃ Loại 2 (Phi ng�
    - Xét luật `aAb → ba`: Vế trái có độ dài 3, vế phải có độ dài 2 (`|vế trái| > |vế phải|`).  
    - => **Phân lớp:** **Loại 0 (Văn phạm không hạn chế)**.
 2. **Văn phạm 2:** `P = { S → aSBC, CB → BC, bB → bb, C → c }`.  
-   - Xét tất cả các luật: Vế phải luôn dài hơn hoặc bằng vế trái (`|α| ≤ |β|`). Vế trái có nhiều hơn 1 ký hiệu (`CB → BC`).  
+   - Xét tất cả các luật: Vế phải luôn dài hơn hoặc bằng vế trái (`độ dài vế trái ≤ vế phải`). Vế trái có nhiều hơn 1 ký hiệu (`CB → BC`).  
    - => **Phân lớp:** **Loại 1 (Văn phạm cảm ngữ cảnh - CSL)**.
 3. **Văn phạm 3:** `P = { S → aSb, S → ε }`.  
    - Vế trái chỉ gồm đúng 1 biến `S`. Vế phải `aSb` có biến `S` bị kẹp giữa `a` và `b` (không phải tuyến tính trái hay phải).  

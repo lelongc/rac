@@ -533,7 +533,7 @@ Ngôn ngữ cho trước: `L = {ab, bb, cc, ba, ca}` trên bảng chữ cái `{a
 
 #### BẢNG TỔNG KẾT ĐÁP ÁN CÂU 4b:
 
-| STT | Chuỗi đề bài cho | Tổng độ dài `|w|` | Tính chẵn / lẻ | Khả năng phân rã thành các khối thuộc `L` | Kết luận |
+| STT | Chuỗi đề bài cho | Tổng độ dài `w` | Tính chẵn / lẻ | Khả năng phân rã thành các khối thuộc `L` | Kết luận |
 | :---: | :--- | :---: | :---: | :--- | :---: |
 | 1 | `(ab)^2 c^8 bab^3 ac^3` | 21 | **LẺ** | Không thể (độ dài lẻ) | **KHÔNG THUỘC `L^*`** |
 | 2 | `(ab)^3 c^8 bab^2 ac^3` | 22 | **CHẴN** | Bị kẹt ở đoạn cuối `accc` (chứa `ac ∉ L`) | **KHÔNG THUỘC `L^*`** |
