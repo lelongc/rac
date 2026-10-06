@@ -26,6 +26,7 @@
   - [1.5. BÀI THI THỰC TẾ 1: Câu 4 Đề ôn tập GK 1 (Đề chính thức 3.0 điểm)](#15-bài-thi-thực-tế-1-câu-4-đề-ôn-tập-gk-1-đề-chính-thức-30-điểm)
   - [1.6. BÀI THI THỰC TẾ 2: Bài 8 Phiếu ôn tập của thầy (L = {ab, bb, cc, ba, ca})](#16-bài-thi-thực-tế-2-bài-8-phiếu-ôn-tập-của-thầy-l--ab-bb-cc-ba-ca)
   - [1.7. Các bài tập tương đương tự luyện có đáp án](#17-các-bài-tập-tương-đương-tự-luyện-có-đáp-án)
+  - [1.8. Bổ sung: Các phép toán trên từ (Tiền tố, Hậu tố, Chuỗi con) & Tập ngôn ngữ (Hợp, Giao, Hiệu, Bù)](#18-bổ-sung-các-phép-toán-trên-từ-tiền-tố-hậu-tố-chuỗi-con--tập-ngôn-ngữ-hợp-giao-hiệu-bù)
 - [CHUYÊN ĐỀ 2: BIỂU THỨC CHÍNH QUY (REGULAR EXPRESSION - RE)](#chuyên-đề-2-biểu-thức-chính-quy-regular-expression---re)
 
   - [2.1. Bản chất của Biểu thức chính quy qua các khối hình học](#21-bản-chất-của-biểu-thức-chính-quy-qua-các-khối-hình-học)
@@ -44,6 +45,7 @@
   - [3.5. BÀI THI THỰC TẾ 2: Bài 3 Phiếu ôn tập của thầy (CFG sinh Non-regular)](#35-bài-thi-thực-tế-2-bài-3-phiếu-ôn-tập-của-thầy-cfg-sinh-non-regular)
   - [3.6. BÀI THI THỰC TẾ 3: Bài 4 Phiếu ôn tập của thầy (CFG sinh Regular - Điểm nhấn cốt lõi)](#36-bài-thi-thực-tế-3-bài-4-phiếu-ôn-tập-của-thầy-cfg-sinh-regular---điểm-nhấn-cốt-lõi)
   - [3.7. Các bài tập tương đương tự luyện có đáp án](#37-các-bài-tập-tương-đương-tự-luyện-có-đáp-án)
+  - [3.8. Dạng bài toán ngược: Xây dựng Văn phạm sinh ra Ngôn ngữ cho trước (L → G)](#38-dạng-bài-toán-ngược-xây-dựng-văn-phạm-sinh-ra-ngôn-ngữ-cho-trước-l--g)
 - [CHUYÊN ĐỀ 4: ÔTÔMÁT HỮU HẠN (DFA, NFA, BẢNG CHUYỂN, RE ↔ AUTOMATA ↔ VĂN PHẠM)](#chuyên-đề-4-ôtômát-hữu-hạn-dfa-nfa-bảng-chuyển-re--automata--văn-phạm)
 
   - [4.1. Bản chất Otomat: Cỗ máy nhận dạng chuỗi qua trò chơi nhảy ô](#41-bản-chất-otomat-cỗ-máy-nhận-dạng-chuỗi-qua-trò-chơi-nhảy-ô)
@@ -378,6 +380,54 @@ Nhận xét: Mọi từ trong `L` đều có độ dài bằng 2. Do đó chuỗ
   + a) `L^0 = {ε}`; `L^1 = {a, ab}`; `L^2 = {aa, aab, aba, abab}` (có 4 chuỗi).
   + b) `aabaab = a . ab . a . ab` ⇒ **THUỘC `L^*`**.
     `bba`: Từ đầu tiên là `b`, nhưng mọi từ trong `L` đều bắt đầu bằng chữ `a` ⇒ **KHÔNG THUỘC `L^*`**.
+
+---
+
+## 1.8. Bổ sung: Các phép toán trên từ (Tiền tố, Hậu tố, Chuỗi con) & Tập ngôn ngữ (Hợp, Giao, Hiệu, Bù)
+
+### 1. Các phép toán trên từ (Operations on Strings):
+Cho chuỗi `w` trên bảng chữ cái `Σ`.
+- **Tiền tố (Prefix):** Chuỗi `u` được gọi là tiền tố của `w` nếu tồn tại chuỗi `v` sao cho `w = u . v`.
+  + *Ví dụ:* Với `w = "abc"`, các tiền tố của `w` là: `ε, a, ab, abc`.
+  + **Tiền tố thực sự (Proper Prefix):** Là tiền tố khác chính chuỗi đó (`u ≠ w`), gồm: `ε, a, ab`.
+- **Hậu tố (Suffix):** Chuỗi `v` được gọi là hậu tố của `w` nếu tồn tại chuỗi `u` sao cho `w = u . v`.
+  + *Ví dụ:* Với `w = "abc"`, các hậu tố của `w` là: `ε, c, bc, abc`.
+  + **Hậu tố thực sự (Proper Suffix):** Là hậu tố khác chính nó (`v ≠ w`), gồm: `ε, c, bc`.
+- **Chuỗi con (Substring):** Chuỗi `y` được gọi là chuỗi con của `w` nếu tồn tại hai chuỗi `x` và `z` sao cho `w = x . y . z`.
+  + *Ví dụ:* Với `w = "abc"`, các chuỗi con là: `ε, a, b, c, ab, bc, abc`.
+- **Lũy thừa của một từ (`w^k`):**
+  + `w^0 = ε`
+  + `w^1 = w`
+  + `w^k = w . w^(k-1)` (ghép `k` lần từ `w`). Ví dụ: `(ab)^3 = ababab`.
+
+---
+
+### 2. Các phép toán trên tập ngôn ngữ (Operations on Languages):
+Cho hai ngôn ngữ `L1` và `L2` xác định trên cùng bảng chữ cái `Σ`.
+- **Phép hợp (Union):** Tập các chuỗi thuộc ít nhất một trong hai ngôn ngữ:
+  ```text
+  L1 ∪ L2 = { w | w ∈ L1  hoặc  w ∈ L2 }
+  ```
+- **Phép giao (Intersection):** Tập các chuỗi đồng thời thuộc cả hai ngôn ngữ:
+  ```text
+  L1 ∩ L2 = { w | w ∈ L1  và  w ∈ L2 }
+  ```
+- **Phép hiệu (Difference):** Tập các chuỗi thuộc `L1` nhưng không thuộc `L2`:
+  ```text
+  L1 - L2 = { w | w ∈ L1  và  w ∉ L2 }
+  ```
+- **Phép bù (Complement):** Tập tất cả các chuỗi trên `Σ^*` không thuộc ngôn ngữ `L`:
+  ```text
+  L_bù = Σ* - L = { w ∈ Σ* | w ∉ L }
+  ```
+- **Phép nhân ghép (Concatenation):**
+  ```text
+  L1 . L2 = { u . v | u ∈ L1, v ∈ L2 }
+  ```
+- **Phép lũy thừa:** `L^0 = { ε }`, `L^1 = L`, `L^(k+1) = L^k . L`.
+- **Bao đóng Kleene (Kleene Star):** `L^* = ⋃ (k = 0 đến ∞) L^k`.
+- **Bao đóng dương (Positive Closure):** `L^+ = ⋃ (k = 1 đến ∞) L^k = L^* loại bỏ phần tử chuỗi rỗng ε` (khi `ε ∉ L`).
+
 
 ---
 
@@ -1059,6 +1109,77 @@ R = aa a* b*   (hoặc viết: a a a* b*)
 
 ---
 
+## 3.8. Dạng bài toán ngược: Xây dựng Văn phạm sinh ra Ngôn ngữ cho trước (L → G)
+
+Đây là dạng bài tập trọng tâm trong đề cương của giảng viên: *"Cho trước một ngôn ngữ mô tả bằng công thức toán học hoặc bằng lời, hãy viết một văn phạm G sinh ra đúng ngôn ngữ đó"*.
+
+### 1. Phương pháp tư duy 3 bước để viết văn phạm:
+- **Bước 1: Phân tích cấu trúc phụ thuộc của chuỗi:**
+  + Nếu số lượng các ký tự độc lập nhau (ví dụ: `a^n b^m` với `n, m` tùy ý) ⇒ Dùng văn phạm tuyến tính (Chính quy - Loại 3) tách thành các biến riêng biệt.
+  + Nếu có sự cân bằng số lượng giữa các ký tự (ví dụ: `a^n b^n`, `a^n b^(2n)`) hoặc chuỗi đối xứng (Palindrome) ⇒ Bắt buộc dùng biến đệ quy kẹp giữa (Phi ngữ cảnh - Loại 2 / CFG).
+- **Bước 2: Thiết lập luật đệ quy từng chu kỳ:**
+  + Mỗi lần sinh 1 ký tự `a` bên trái và 1 ký tự `b` bên phải: viết `S → aSb`.
+  + Mỗi lần sinh 1 ký tự `a` bên trái và 2 ký tự `b` bên phải: viết `S → aSbb`.
+  + Chuỗi đối xứng: mỗi lần bọc `a...a` hoặc `b...b`: viết `S → aSa | bSb`.
+- **Bước 3: Thiết lập luật dừng (điều kiện cơ sở):**
+  + Nếu ngôn ngữ cho phép chuỗi rỗng (`n ≥ 0`): cho luật dừng `S → ε`.
+  + Nếu ngôn ngữ bắt buộc không rỗng (`n ≥ 1`): cho luật dừng là chuỗi ngắn nhất không rỗng (ví dụ `S → ab`).
+
+---
+
+### 2. Bốn bài tập kinh điển hay ra thi:
+
+#### Bài tập 1: Xây dựng văn phạm sinh ngôn ngữ `L1 = { a^n b^n | n ≥ 1 }`
+- **Phân tích:** Số chữ `a` bằng số chữ `b`, tất cả `a` đứng trước `b`, chuỗi ngắn nhất là `ab` (`n = 1`).
+- **Lời giải:**
+  Văn phạm `G1 = < {a, b}, {S}, S, P1 >` với tập luật sinh `P1`:
+  ```text
+  S → aSb | ab
+  ```
+  *(Giải thích: Áp dụng `S → aSb` n-1 lần ta được `a^(n-1) S b^(n-1)`. Bước cuối thay `S → ab` ta được `a^n b^n`).*
+  *(Ghi chú: Nếu đề bài cho n ≥ 0 thì tập luật sinh là `S → aSb | ε`).*
+
+---
+
+#### Bài tập 2: Xây dựng văn phạm sinh ngôn ngữ `L2 = { a^n b^(2n) | n ≥ 0 }`
+- **Phân tích:** Số chữ `b` luôn gấp đôi số chữ `a`. Mỗi khi thêm 1 chữ `a` ở đầu thì phải thêm đúng 2 chữ `b` ở cuối. Chuỗi ngắn nhất là `ε` (`n = 0`).
+- **Lời giải:**
+  Văn phạm `G2 = < {a, b}, {S}, S, P2 >` với tập luật sinh `P2`:
+  ```text
+  S → aSbb | ε
+  ```
+  *(Ví dụ dẫn xuất cho aabbbb với n=2: `S ⇒ aSbb ⇒ aaSbbbb ⇒ aa(ε)bbbb = aabbbb`).*
+
+---
+
+#### Bài tập 3: Xây dựng văn phạm sinh ngôn ngữ `L3 = { a^n b^m | n ≥ m ≥ 0 }`
+- **Phân tích:** Số chữ `a` luôn nhiều hơn hoặc bằng số chữ `b` (`n - m ≥ 0`). Ta phân tách chuỗi thành 2 phần: phần các chữ `a` dư ra ở đầu, và phần cân bằng `a^m b^m` ở sau.
+- **Lời giải:**
+  Văn phạm `G3 = < {a, b}, {S, A}, S, P3 >` với tập luật sinh `P3`:
+  ```text
+  S → aS | A
+  A → aAb | ε
+  ```
+  - `S → aS`: sinh số lượng tùy ý các chữ `a` dư ở phía trước.
+  - `S → A`: chuyển sang sinh phần cân bằng.
+  - `A → aAb | ε`: sinh đúng số lượng chữ `a` và chữ `b` bằng nhau.
+
+---
+
+#### Bài tập 4: Xây dựng văn phạm sinh ngôn ngữ Palindrome (chuỗi đối xứng) trên `{a, b}`
+- **Đề bài:** Viết văn phạm sinh `L4 = { w ∈ {a, b}* | w = w^R }`.
+- **Phân tích:** Chuỗi đối xứng có cấu trúc: nếu bắt đầu bằng `a` thì kết thúc bằng `a` (`a...a`); nếu bắt đầu bằng `b` thì kết thúc bằng `b` (`b...b`). Tâm của chuỗi đối xứng có thể là chuỗi rỗng `ε` (đối xứng độ dài chẵn), hoặc ký tự đơn `a`, hoặc ký tự đơn `b` (đối xứng độ dài lẻ).
+- **Lời giải:**
+  Văn phạm `G4 = < {a, b}, {S}, S, P4 >` với tập luật sinh `P4`:
+  ```text
+  S → aSa | bSb | a | b | ε
+  ```
+  *(Ví dụ dẫn xuất cho "abba": `S ⇒ aSa ⇒ abSba ⇒ ab(ε)ba = abba`).*
+  *(Ví dụ dẫn xuất cho "ababa": `S ⇒ aSa ⇒ abSba ⇒ aba(a)ba = ababa` - tâm là a).*
+
+
+---
+
 # CHUYÊN ĐỀ 4: ÔTÔMÁT HỮU HẠN (DFA, NFA, BẢNG CHUYỂN, RE ↔ AUTOMATA ↔ VĂN PHẠM)
 
 ---
@@ -1545,21 +1666,226 @@ Cho `R = (a + b)* ab`.
 
 ---
 
-## 4.8. Bổ trợ nâng cao: Thuật toán chuyển NFA sang DFA & Tối thiểu hóa DFA
+## 4.8. Chuyên đề giải mẫu: Thuật toán chuyển NFA sang DFA (Phương pháp tập con)
 
-### 1. Thuật toán chuyển NFA sang DFA (Phương pháp tập con - Subset Construction):
+Đây là dạng bài tập tự luận kinh điển trong đề thi giữa kỳ của trường IUH: *"Cho một NFA (có hoặc không có bước nhảy ε), hãy chuyển đổi thành DFA tương đương"*.
 
-- Mỗi trạng thái của DFA tương ứng với một **tập con các trạng thái của NFA**.
-- Trạng thái bắt đầu của DFA là `ε-closure(q0)` (tập các trạng thái đến được từ `q0` chỉ bằng các bước nhảy rỗng `ε`).
-- Tại mỗi tập trạng thái `U`, với mỗi ký hiệu `x ∈ Σ`, trạng thái tiếp theo là `ε-closure(⋃ δ_NFA(q, x))` với mọi `q ∈ U`.
-- Trạng thái nào của DFA chứa ít nhất một trạng thái kết thúc của NFA thì trạng thái đó là **trạng thái chấp nhận của DFA**.
+### 1. Quy trình chuẩn 3 bước làm bài thi (Subset Construction):
+- **Bước 1: Xác định trạng thái bắt đầu của DFA:**
+  + Nếu NFA không có bước nhảy `ε`: Đỉnh khởi đầu của DFA là `S0 = {q0}`.
+  + Nếu NFA có bước nhảy `ε`: Đỉnh khởi đầu là `S0 = ε-closure(q0)` (tập gồm `q0` và tất cả các trạng thái đến được từ `q0` chỉ bằng các bước chuyển rỗng `ε`).
+- **Bước 2: Xây dựng hàm chuyển trạng thái δ* cho các tập con:**
+  + Với mỗi tập trạng thái mới `U` và mỗi ký hiệu `x ∈ Σ`, tính tập trạng thái kế tiếp:
+    ```text
+    δ*(U, x) = ε-closure( ⋃ (q ∈ U) δ_NFA(q, x) )
+    ```
+  + Đặt tên chữ cái in hoa cho các tập trạng thái mới (`A, B, C, D...`) để vẽ hình gọn gàng.
+  + Nếu kết quả trả về tập rỗng `∅`, ta ghi nhận trạng thái bẫy `∅` với tính chất: `δ*(∅, x) = ∅` với mọi `x`.
+  + Lặp lại quá trình cho đến khi **không còn tập trạng thái mới nào xuất hiện**.
+- **Bước 3: Xác định trạng thái kết thúc và Vẽ đồ thị DFA kết quả:**
+  + Bất kỳ tập trạng thái nào của DFA có chứa ít nhất một phần tử thuộc `F_NFA` (trạng thái kết thúc của NFA ban đầu) thì tập đó trở thành **trạng thái kết thúc của DFA** (ký hiệu dấu sao `★` hoặc vẽ vòng tròn đôi).
+  + Vẽ lại đồ thị DFA hoàn chỉnh với các đỉnh là các tập con.
 
-### 2. Thuật toán tối thiểu hóa DFA (Minimization - Bảng đánh dấu Myhill-Nerode):
+---
 
-- **Bước 1 (Loại bỏ):** Xóa tất cả các trạng thái không thể chạm tới (Unreachable states) từ `q0`.
-- **Bước 2 (Khởi tạo bảng):** Lập bảng tam giác dưới cho mọi cặp trạng thái `(p, q)`. Đánh dấu `X` vào các ô có một trạng thái thuộc `F` và một trạng thái không thuộc `F`.
-- **Bước 3 (Lan truyền đánh dấu):** Duyệt các ô chưa đánh dấu `(p, q)`. Nếu tồn tại ký hiệu `x` sao cho cặp `(δ(p, x), δ(q, x))` đã bị đánh dấu `X`, thì đánh dấu `X` vào ô `(p, q)`. Lặp lại cho đến khi không còn ô nào bị đánh dấu thêm.
-- **Bước 4 (Gộp trạng thái):** Các ô không bị đánh dấu là các **trạng thái tương đương**, ta gộp chúng thành một trạng thái duy nhất trong DFA tối giản.
+### 2. Bài tập giải mẫu chi tiết chuẩn 10/10 đi thi:
+
+**ĐỀ BÀI:** Cho NFA `M = (Q, Σ, δ, q0, F)` trên bảng chữ cái `Σ = {0, 1}` có:
+- `Q = {q0, q1, q2}`, `q0` là trạng thái khởi đầu, `F = {q2}`.
+- Hàm chuyển `δ` được cho bởi:
+  + `δ(q0, 0) = {q0, q1}`, `δ(q0, 1) = {q0}`
+  + `δ(q1, 0) = ∅`, `δ(q1, 1) = {q2}`
+  + `δ(q2, 0) = ∅`, `δ(q2, 1) = ∅`
+*(Đây là NFA nhận dạng các chuỗi kết thúc bằng chuỗi con 01).*
+**Yêu cầu:** Chuyển đổi NFA trên sang DFA tương đương.
+
+---
+
+#### BÀI LÀM MẪU CHUẨN ĐI THI:
+
+```text
+BÀI LÀM:
+
+Bước 1: Xác định trạng thái khởi đầu của DFA:
+Vì NFA không có bước nhảy ε, trạng thái khởi đầu của DFA là:
+          A = {q0}
+
+Bước 2: Xây dựng các hàm chuyển dịch δ* bằng phương pháp tập con:
+
+- Xét trạng thái A = {q0}:
+  + δ*(A, 0) = δ(q0, 0) = {q0, q1}  ==> Đặt là trạng thái mới B = {q0, q1}
+  + δ*(A, 1) = δ(q0, 1) = {q0} = A
+
+- Xét trạng thái B = {q0, q1}:
+  + δ*(B, 0) = δ(q0, 0) ∪ δ(q1, 0) = {q0, q1} ∪ ∅ = {q0, q1} = B
+  + δ*(B, 1) = δ(q0, 1) ∪ δ(q1, 1) = {q0} ∪ {q2} = {q0, q2}  ==> Đặt là trạng thái mới C = {q0, q2}
+
+- Xét trạng thái C = {q0, q2}:
+  + δ*(C, 0) = δ(q0, 0) ∪ δ(q2, 0) = {q0, q1} ∪ ∅ = {q0, q1} = B
+  + δ*(C, 1) = δ(q0, 1) ∪ δ(q2, 1) = {q0} ∪ ∅ = {q0} = A
+
+Không còn trạng thái mới nào xuất hiện. Quá trình dừng lại.
+
+Bước 3: Xác định trạng thái kết thúc của DFA:
+Trạng thái kết thúc của NFA ban đầu là F_NFA = {q2}.
+Trong các tập trạng thái của DFA {A, B, C}, chỉ có tập C = {q0, q2} chứa phần tử q2 ∈ F_NFA.
+Do đó, tập trạng thái kết thúc của DFA là:
+          F_DFA = { C } (tức tập {q0, q2}).
+
+BẢNG CHUYỂN TRẠNG THÁI CỦA DFA:
++---------------+-------------------+---------------+---------------+---------------+
+| Tên đỉnh DFA  | Tập trạng thái    |    Đọc '0'    |    Đọc '1'    |  Thuộc F_DFA? |
++---------------+-------------------+---------------+---------------+---------------+
+|     → A       | {q0}              |       B       |       A       | Không         |
+|       B       | {q0, q1}          |       B       |       C       | Không         |
+|     ★ C       | {q0, q2}          |       B       |       A       | CÓ (KẾT THÚC) |
++---------------+-------------------+---------------+---------------+---------------+
+
+SƠ ĐỒ ĐỒ THỊ CHUYỂN TRẠNG THÁI CỦA DFA:
+         1                               0
+       ┌───┐                           ┌───┐
+       v   │                           v   │
+-----> (A) ------------ 0 -----------> (B) ------------ 1 -----------> ((C))
+        ^                               ^                               │
+        │                               │                               │
+        │                               └────────────── 0 ──────────────┘
+        └────────────────────────────── 1 ──────────────────────────────┘
+```
+
+---
+
+## 4.9. Chuyên đề giải mẫu: Tối thiểu hóa DFA (Phương pháp Bảng tam giác đánh dấu)
+
+Tối thiểu hóa DFA (Minimization / State Optimization) là bài toán rút gọn một DFA thành DFA tương đương có **số lượng trạng thái ít nhất có thể**.
+
+### 1. Bản chất Bảng tam giác đánh dấu (Table-Filling Algorithm / Myhill-Nerode):
+- Để biết hai trạng thái `p` và `q` có thể gộp lại được hay không, ta phải kiểm tra xem chúng có **hành vi giống hệt nhau** (tương đương) hay không.
+- Với DFA có `n` trạng thái, số cặp cần so sánh là `C(n, 2) = n(n - 1) / 2`.
+  Ta lập một **bảng tam giác dưới** gồm các ô `(qi, qj)` với `i > j`.
+
+### 2. Quy trình 4 bước chuẩn giải bài thi:
+- **Bước 1 (Loại bỏ đỉnh cô lập):** Xóa tất cả các trạng thái không thể chạm tới được (Unreachable states) xuất phát từ `q0`.
+- **Bước 2 (Khởi tạo đánh dấu bước 0):**
+  + Duyệt tất cả các ô trong bảng tam giác.
+  + Đánh dấu `X` (hoặc `X0`) vào ô `(p, q)` nếu một trạng thái thuộc `F` và trạng thái kia không thuộc `F` (`p ∈ F, q ∉ F` hoặc ngược lại). Vì một trạng thái chấp nhận và một trạng thái không chấp nhận thì chắc chắn không thể tương đương nhau!
+- **Bước 3 (Lan truyền đánh dấu bước k):**
+  + Duyệt các ô còn trống `(p, q)`.
+  + Với mỗi ký hiệu đầu vào `x ∈ Σ`, xét cặp trạng thái tiếp theo `(δ(p, x), δ(q, x))`.
+  + Nếu cặp tiếp theo này **đã bị đánh dấu X ở các bước trước**, thì ta đánh dấu `X` vào ô `(p, q)`.
+  + Lặp lại cho đến khi qua một lượt duyệt mà **không có thêm ô nào bị đánh dấu X**.
+- **Bước 4 (Gộp trạng thái & Vẽ DFA tối giản):**
+  + Các ô **vẫn còn trống** sau khi thuật toán kết thúc chính là các cặp **trạng thái tương đương nhau**.
+  + Ta gộp các trạng thái tương đương này thành một trạng thái duy nhất.
+  + Vẽ lại đồ thị DFA tối thiểu.
+
+---
+
+### 3. Bài tập giải mẫu chi tiết chuẩn 10/10 đi thi:
+
+**ĐỀ BÀI:** Cho DFA `M = (Q, Σ, δ, q0, F)` trên `Σ = {0, 1}` có bảng chuyển trạng thái:
+
+| Trạng thái | Đọc 0 | Đọc 1 | Thuộc F? |
+| :---: | :---: | :---: | :---: |
+| `→ q0` | `q1` | `q2` | Không |
+| `q1` | `q1` | `q3` | Không |
+| `q2` | `q1` | `q2` | Không |
+| `q3` | `q1` | `q4` | Không |
+| `★ q4` | `q1` | `q2` | **CÓ (F)** |
+
+**Yêu cầu:** Tối thiểu hóa DFA trên bằng phương pháp bảng đánh dấu.
+
+---
+
+#### BÀI LÀM MẪU CHUẨN ĐI THI:
+
+```text
+BÀI LÀM:
+
+Bước 1: Kiểm tra tính liên thông:
+Xuất phát từ q0:
+  - Đọc 0 đến q1
+  - Đọc 1 đến q2
+  - Từ q1 đọc 1 đến q3
+  - Từ q3 đọc 1 đến q4
+Tất cả 5 trạng thái đều đến được từ q0. Không có trạng thái cô lập.
+
+Bước 2: Lập bảng tam giác và đánh dấu bước 0:
+Số trạng thái n = 5 ==> Bảng tam giác gồm C(5, 2) = 10 ô.
+Tập trạng thái kết thúc F = {q4}, tập không kết thúc {q0, q1, q2, q3}.
+Đánh dấu X vào tất cả các ô chứa q4 kết hợp với một trạng thái ∉ F:
+  - (q4, q0): đánh dấu X
+  - (q4, q1): đánh dấu X
+  - (q4, q2): đánh dấu X
+  - (q4, q3): đánh dấu X
+
+Bảng tam giác sau Bước 2:
+      q0     q1     q2     q3
+q1  [   ]
+q2  [   ]  [   ]
+q3  [   ]  [   ]  [   ]
+q4  [ X ]  [ X ]  [ X ]  [ X ]
+
+Bước 3: Lần vết lan truyền đánh dấu các ô còn lại:
+Xét các ô chưa đánh dấu: (q1, q0), (q2, q0), (q2, q1), (q3, q0), (q3, q1), (q3, q2).
+
+1. Xét ô (q2, q0):
+   - Đọc 0: (δ(q2, 0), δ(q0, 0)) = (q1, q1) (cùng 1 đỉnh, không phân biệt)
+   - Đọc 1: (δ(q2, 1), δ(q0, 1)) = (q2, q2) (cùng 1 đỉnh, không phân biệt)
+   ==> Ô (q2, q0) CHƯA BỊ ĐÁNH DẤU (nghi ngờ q0 và q2 tương đương).
+
+2. Xét ô (q3, q1):
+   - Đọc 0: (δ(q3, 0), δ(q1, 0)) = (q1, q1) (không phân biệt)
+   - Đọc 1: (δ(q3, 1), δ(q1, 1)) = (q4, q3).
+     Nhìn vào bảng, ô (q4, q3) ĐÃ BỊ ĐÁNH DẤU X!
+   ==> ĐÁNH DẤU X VÀO Ô (q3, q1).
+
+3. Xét ô (q3, q0):
+   - Đọc 1: (δ(q3, 1), δ(q0, 1)) = (q4, q2) ==> Đã bị đánh dấu X!
+   ==> ĐÁNH DẤU X VÀO Ô (q3, q0).
+
+4. Xét ô (q3, q2):
+   - Đọc 1: (δ(q3, 1), δ(q2, 1)) = (q4, q2) ==> Đã bị đánh dấu X!
+   ==> ĐÁNH DẤU X VÀO Ô (q3, q2).
+
+5. Xét ô (q1, q0):
+   - Đọc 1: (δ(q1, 1), δ(q0, 1)) = (q3, q2) ==> Vừa bị đánh dấu X ở trên!
+   ==> ĐÁNH DẤU X VÀO Ô (q1, q0).
+
+6. Xét ô (q2, q1):
+   - Đọc 1: (δ(q2, 1), δ(q1, 1)) = (q2, q3) = (q3, q2) ==> Đã bị đánh dấu X!
+   ==> ĐÁNH DẤU X VÀO Ô (q2, q1).
+
+Kiểm tra lại ô duy nhất còn trống: ô (q2, q0):
+   - Đọc 0 ra (q1, q1), đọc 1 ra (q2, q2). Với mọi đầu vào đều dẫn về cùng trạng thái!
+   ==> Ô (q2, q0) MÃI MÃI KHÔNG THỂ BỊ ĐÁNH DẤU.
+
+BẢNG TAM GIÁC HOÀN CHỈNH:
+      q0     q1     q2     q3
+q1  [ X ]
+q2  [   ]  [ X ]
+q3  [ X ]  [ X ]  [ X ]
+q4  [ X ]  [ X ]  [ X ]  [ X ]
+
+Bước 4: Kết luận các trạng thái tương đương & Gộp trạng thái:
+Từ bảng trên, chỉ có duy nhất ô (q2, q0) không bị đánh dấu.
+Do đó: Trạng thái q0 tương đương với trạng thái q2 (q0 ≡ q2).
+Ta gộp hai trạng thái này thành một trạng thái mới: [q0, q2].
+
+BẢNG CHUYỂN TRẠNG THÁI CỦA DFA TỐI TIỂU:
++---------------+-------------------+---------------+---------------+---------------+
+| Tên đỉnh mới  | Các đỉnh gộp      |    Đọc '0'    |    Đọc '1'    |  Thuộc F?     |
++---------------+-------------------+---------------+---------------+---------------+
+|    → A        | [q0, q2]          |       B       |       A       | Không         |
+|      B        | [q1]              |       B       |       C       | Không         |
+|      C        | [q3]              |       B       |       D       | Không         |
+|    ★ D        | [q4]              |       B       |       A       | CÓ (KẾT THÚC) |
++---------------+-------------------+---------------+---------------+---------------+
+
+KẾT LUẬN:
+DFA ban đầu gồm 5 trạng thái đã được tối thiểu hóa thành công về DFA tương đương 
+chỉ gồm 4 trạng thái {A, B, C, D}.
+```
+
 
 ---
 
