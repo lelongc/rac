@@ -1138,6 +1138,7 @@ R = aa a* b*   (hoặc viết: a a a* b*)
 - **Phân tích:** Số chữ `a` bằng số chữ `b`, tất cả `a` đứng trước `b`, chuỗi ngắn nhất là `ab` (`n = 1`).
 - **Lời giải:**
   Văn phạm `G1 = < {a, b}, {S}, S, P1 >` với tập luật sinh `P1`:
+
   ```text
   S → aSb | ab
   ```
@@ -1152,6 +1153,7 @@ R = aa a* b*   (hoặc viết: a a a* b*)
 - **Phân tích:** Số chữ `b` luôn gấp đôi số chữ `a`. Mỗi khi thêm 1 chữ `a` ở đầu thì phải thêm đúng 2 chữ `b` ở cuối. Chuỗi ngắn nhất là `ε` (`n = 0`).
 - **Lời giải:**
   Văn phạm `G2 = < {a, b}, {S}, S, P2 >` với tập luật sinh `P2`:
+
   ```text
   S → aSbb | ε
   ```
@@ -1165,6 +1167,7 @@ R = aa a* b*   (hoặc viết: a a a* b*)
 - **Phân tích:** Số chữ `a` luôn nhiều hơn hoặc bằng số chữ `b` (`n - m ≥ 0`). Ta phân tách chuỗi thành 2 phần: phần các chữ `a` dư ra ở đầu, và phần cân bằng `a^m b^m` ở sau.
 - **Lời giải:**
   Văn phạm `G3 = < {a, b}, {S, A}, S, P3 >` với tập luật sinh `P3`:
+
   ```text
   S → aS | A
   A → aAb | ε
@@ -1182,6 +1185,7 @@ R = aa a* b*   (hoặc viết: a a a* b*)
 - **Phân tích:** Chuỗi đối xứng có cấu trúc: nếu bắt đầu bằng `a` thì kết thúc bằng `a` (`a...a`); nếu bắt đầu bằng `b` thì kết thúc bằng `b` (`b...b`). Tâm của chuỗi đối xứng có thể là chuỗi rỗng `ε` (đối xứng độ dài chẵn), hoặc ký tự đơn `a`, hoặc ký tự đơn `b` (đối xứng độ dài lẻ).
 - **Lời giải:**
   Văn phạm `G4 = < {a, b}, {S}, S, P4 >` với tập luật sinh `P4`:
+
   ```text
   S → aSa | bSb | a | b | ε
   ```
@@ -1234,121 +1238,128 @@ M = (Q, Σ, δ, q0, F)
 ## 4.3. BÀI THI THỰC TẾ 1: Câu 3 Đề ôn tập GK 1 (Đọc DFA từ hình ảnh đề thi)
 
 **ĐỀ BÀI CHÍNH THỨC (Trích Đề GK 1 - 2.0 điểm):**
-Cho ô-tô-mát hữu hạn nhận diện ngôn ngữ như hình dưới đây (Xem hình ảnh `./de_gk_img_1.jpeg`):
+Cho ô-tô-mát nhận diện một ngôn ngữ `L` gồm các chuỗi được xây dựng dựa trên bảng chữ cái `Σ = {0, 1}` như trong hình vẽ (Xem hình ảnh `./de_gk_img_1.jpeg`):
 
-- Trạng thái bắt đầu là `A`.
-- Từ `A`: đọc `a` sang `B`, đọc `b` quay về `A`.
-- Từ `B`: đọc `a` sang `C` (vòng đôi), đọc `b` quay về `A`.
-- Từ `C` (vòng đôi): đọc `a` ở lại `C`, đọc `b` ở lại `C`.
+- Trạng thái bắt đầu là `A` (mũi tên từ ngoài trỏ vào).
+- Trạng thái kết thúc là `C` (vòng tròn đôi).
+- Các cung chuyển:
+  + Từ `A`: đọc `0` sang `B`, đọc `1` quay lại `A` (vòng lặp).
+  + Từ `B`: đọc `0` quay lại `B` (vòng lặp), đọc `1` sang `C`.
+  + Từ `C`: đọc `0` sang `B`, đọc `1` quay lại `A`.
 
-a) (0.5 điểm) Hãy mô tả ô-tô-mát này bằng định nghĩa hình thức (bộ 5 thành phần và bảng chuyển).
-b) (0.5 điểm) Cho 5 ví dụ chuỗi được chấp nhận bởi ô-tô-mát.
-c) (1.0 điểm) Cho 5 ví dụ chuỗi bị từ chối bởi ô-tô-mát.
+a) (0.5 điểm) Mô tả ô-tô-mát đã cho bằng định nghĩa.
+b) (0.5 điểm) Nêu 5 ví dụ về chuỗi được chấp nhận bởi ô-tô-mát đã cho.
+c) (1.0 điểm) Nêu 5 ví dụ về chuỗi không được chấp nhận bởi ô-tô-mát đã cho.
 
 ---
 
 ### LỜI GIẢI MẪU CHUẨN 10/10 ĐI THI:
 
-#### Lời giải Câu 3a: Định nghĩa hình thức và Bảng chuyển trạng thái
+#### Lời giải Câu 3a: Mô tả ô-tô-mát bằng định nghĩa hình thức & Bảng chuyển trạng thái
 
 ```text
 BÀI LÀM CÂU 3a:
 
-Căn cứ vào sơ đồ chuyển trạng thái trong đề thi, ô-tô-mát là một DFA đơn định 
-được xác định bởi bộ 5 thành phần:
-               M = (Q, Σ, δ, q0, F)
+Quan sát hình vẽ, tại mỗi trạng thái khi đọc mỗi ký hiệu 0 hoặc 1 đều có duy nhất 
+một bước chuyển trạng thái xác định, không có bước chuyển rỗng ε.
+Do đó, ô-tô-mát đã cho là một Ôtômát hữu hạn đơn định (DFA), được mô tả bởi bộ 5 thành phần:
+
+                          M = <Q, Σ, δ, q0, F>
 
 Trong đó:
-1. Tập hợp các trạng thái:
-               Q = {A, B, C}
-2. Bảng chữ cái đầu vào:
-               Σ = {a, b}
-3. Trạng thái khởi đầu:
-               q0 = A
-4. Tập hợp các trạng thái kết thúc (chấp nhận):
-               F = {C}
-5. Hàm chuyển trạng thái δ được biểu diễn qua Bảng chuyển trạng thái:
+1. Q = {A, B, C} : Tập hợp gồm 3 trạng thái.
+2. Σ = {0, 1}    : Bảng chữ cái đầu vào.
+3. q0 = A        : Trạng thái khởi đầu (mũi tên trỏ vào nút A).
+4. F = {C}       : Tập hợp trạng thái kết thúc (nút C có 2 vòng tròn).
+5. δ : Q × Σ → Q : Hàm chuyển trạng thái được xác định như sau:
+     δ(A, 0) = B ;   δ(A, 1) = A
+     δ(B, 0) = B ;   δ(B, 1) = C
+     δ(C, 0) = B ;   δ(C, 1) = A
 
-               +---------------+---------------+---------------+
-               |  Trạng thái   |  Đầu vào 'a'  |  Đầu vào 'b'  |
-               +---------------+---------------+---------------+
-               |    → A        |       B       |       A       |
-               |      B        |       C       |       A       |
-               |    * C        |       C       |       C       |
-               +---------------+---------------+---------------+
-(Quy ước: Dấu mũi tên "→" chỉ trạng thái bắt đầu, dấu sao "*" chỉ trạng thái chấp nhận).
+BẢNG CHUYỂN TRẠNG THÁI (δ):
++---------------+---------------+---------------+--------------------------+
+|  Trạng thái   |   Đọc số 0    |   Đọc số 1    |   Thuộc F (Kết thúc)?    |
++---------------+---------------+---------------+--------------------------+
+|   → A (Start) |       B       |       A       |   Không                  |
+|     B         |       B       |       C       |   Không                  |
+|   ★ C (Final) |       B       |       A       |   CÓ (Trạng thái kết thúc)|
++---------------+---------------+---------------+--------------------------+
 
-Sơ đồ đồ thị trạng thái:
-        b                             a, b
-      ┌───┐                         ┌──────┐
-      v   │                         v      │
-----> (A) ---------- a ----------> (B) ---------- a ----------> ((C))
-       ^                            │
-       │                            │
-       └───────────── b ────────────┘
+Sơ đồ trạng thái trực quan:
+        1                             0
+      ┌───┐                         ┌───┐
+      v   │                         v   │
+----> (A) ---------- 0 -----------> (B) ---------- 1 -----------> ((C))
+       ^                             ^                             │
+       │                             └──────────── 0 ──────────────┤
+       └──────────────────────────── 1 ────────────────────────────┘
 ```
 
 ---
 
 #### Lời giải Câu 3b: 5 chuỗi được chấp nhận kèm vết chuyển dịch
 
-- **Quy luật nhận diện:** Để chuyển từ trạng thái bắt đầu `A` đến trạng thái chấp nhận `C`, máy bắt buộc phải đi qua đường `A --a-> B --a-> C`. Do đó, ngôn ngữ mà máy chấp nhận là **tất cả các chuỗi có chứa chuỗi con `aa`** (`R = (a + b)^* aa (a + b)^*`).
+- **Quy luật nhận diện:**
+  + Từ `A`, đọc chuỗi số `1` thì lặp tại `A`. Gặp số `0` đầu tiên thì chuyển sang `B`.
+  + Tại `B`, đọc thêm các số `0` vẫn lặp tại `B`. Gặp số `1` thì chuyển sang trạng thái chấp nhận `C`.
+  + Tại `C`, nếu đọc tiếp `0` thì về `B` (từ `B` gặp `1` lại lên `C`), nếu đọc tiếp `1` thì về `A` (từ `A` gặp `01` lại lên `C`).
+  + Do đó, ô-tô-mát chấp nhận **tất cả các chuỗi kết thúc bằng cụm `01`** (tương ứng RE: `(0 + 1)* 01`).
 
 ```text
 BÀI LÀM CÂU 3b:
 
-Năm ví dụ chuỗi được chấp nhận bởi ô-tô-mát kèm vết chuyển dịch trạng thái:
+Năm ví dụ về chuỗi ĐƯỢC CHẤP NHẬN bởi ô-tô-mát kèm vết chuyển dịch trạng thái:
 
-1. Chuỗi w1 = "aa":
-   Vết chuyển: A ─(a)→ B ─(a)→ C
+1. Chuỗi w1 = "01":
+   Vết chuyển: A ─(0)→ B ─(1)→ C
    Trạng thái kết thúc: C ∈ F  ==> ĐƯỢC CHẤP NHẬN.
 
-2. Chuỗi w2 = "baa":
-   Vết chuyển: A ─(b)→ A ─(a)→ B ─(a)→ C
+2. Chuỗi w2 = "101":
+   Vết chuyển: A ─(1)→ A ─(0)→ B ─(1)→ C
    Trạng thái kết thúc: C ∈ F  ==> ĐƯỢC CHẤP NHẬN.
 
-3. Chuỗi w3 = "aab":
-   Vết chuyển: A ─(a)→ B ─(a)→ C ─(b)→ C
+3. Chuỗi w3 = "001":
+   Vết chuyển: A ─(0)→ B ─(0)→ B ─(1)→ C
    Trạng thái kết thúc: C ∈ F  ==> ĐƯỢC CHẤP NHẬN.
 
-4. Chuỗi w4 = "baab":
-   Vết chuyển: A ─(b)→ A ─(a)→ B ─(a)→ C ─(b)→ C
+4. Chuỗi w4 = "1101":
+   Vết chuyển: A ─(1)→ A ─(1)→ A ─(0)→ B ─(1)→ C
    Trạng thái kết thúc: C ∈ F  ==> ĐƯỢC CHẤP NHẬN.
 
-5. Chuỗi w5 = "babaa":
-   Vết chuyển: A ─(b)→ A ─(a)→ B ─(b)→ A ─(a)→ B ─(a)→ C
+5. Chuỗi w5 = "0101":
+   Vết chuyển: A ─(0)→ B ─(1)→ C ─(0)→ B ─(1)→ C
    Trạng thái kết thúc: C ∈ F  ==> ĐƯỢC CHẤP NHẬN.
 ```
 
 ---
 
-#### Lời giải Câu 3c: 5 chuỗi bị từ chối kèm vết chuyển dịch
+#### Lời giải Câu 3c: 5 chuỗi không được chấp nhận kèm vết chuyển dịch
 
-- **Quy luật:** Tất cả các chuỗi **không chứa chuỗi con `aa`** đều bị từ chối.
+- **Quy luật:** Tất cả các chuỗi **không kết thúc bằng `01`** (kết thúc bằng `0`, kết thúc bằng chuỗi các số `1` không đi liền sau `0`, hoặc chuỗi rỗng `ε`) đều bị từ chối vì dừng tại `A` hoặc `B` (`∉ F`).
 
 ```text
 BÀI LÀM CÂU 3c:
 
-Năm ví dụ chuỗi bị từ chối bởi ô-tô-mát kèm vết chuyển dịch trạng thái:
+Năm ví dụ về chuỗi KHÔNG ĐƯỢC CHẤP NHẬN bởi ô-tô-mát kèm vết chuyển dịch:
 
 1. Chuỗi w1 = ε (chuỗi rỗng):
    Vết chuyển: Dừng ngay tại trạng thái khởi đầu A.
    Trạng thái kết thúc: A ∉ F  ==> BỊ TỪ CHỐI.
 
-2. Chuỗi w2 = "a":
-   Vết chuyển: A ─(a)→ B
+2. Chuỗi w2 = "0":
+   Vết chuyển: A ─(0)→ B
    Trạng thái kết thúc: B ∉ F  ==> BỊ TỪ CHỐI.
 
-3. Chuỗi w3 = "b":
-   Vết chuyển: A ─(b)→ A
+3. Chuỗi w3 = "1":
+   Vết chuyển: A ─(1)→ A
    Trạng thái kết thúc: A ∉ F  ==> BỊ TỪ CHỐI.
 
-4. Chuỗi w4 = "ab":
-   Vết chuyển: A ─(a)→ B ─(b)→ A
-   Trạng thái kết thúc: A ∉ F  ==> BỊ TỪ CHỐI.
+4. Chuỗi w4 = "00":
+   Vết chuyển: A ─(0)→ B ─(0)→ B
+   Trạng thái kết thúc: B ∉ F  ==> BỊ TỪ CHỐI.
 
-5. Chuỗi w5 = "abab":
-   Vết chuyển: A ─(a)→ B ─(b)→ A ─(a)→ B ─(b)→ A
+5. Chuỗi w5 = "011":
+   Vết chuyển: A ─(0)→ B ─(1)→ C ─(1)→ A
    Trạng thái kết thúc: A ∉ F  ==> BỊ TỪ CHỐI.
 ```
 

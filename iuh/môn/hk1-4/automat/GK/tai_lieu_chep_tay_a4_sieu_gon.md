@@ -58,9 +58,9 @@
 
 ## 5. AUTOMATA HỮU HẠN & VẾT CHẠY (CHƯƠNG 2)
 - **Bộ 5:** `M = (Q, Σ, δ, q0, F)`. `q0`: đỉnh vào (mũi tên trỏ vào); `F`: đỉnh kết thúc (vòng tròn đôi / ★).
-- **Trình bày vết chạy:**
-  + Chấp nhận: `w = 110: q0 ─(1)→ q1 ─(1)→ q1 ─(0)→ q2 ∈ F ⇒ CHẤP NHẬN.`
-  + Từ chối: `w = 101: q0 ─(1)→ q1 ─(0)→ q2 ─(1)→ q1 ∉ F ⇒ TỪ CHỐI.`
+- **Trình bày vết chạy (Ví dụ Câu 3 Đề 1):**
+  + Chấp nhận: `w = "01": A ─(0)→ B ─(1)→ C ∈ F ⇒ CHẤP NHẬN.`
+  + Từ chối: `w = "00": A ─(0)→ B ─(0)→ B ∉ F ⇒ TỪ CHỐI.`
 - **DFA → Văn phạm tuyến tính phải:**
   + `δ(qi, x) = qj` ⇒ Viết luật: `Qi → x Qj`.
   + Nếu `qj ∈ F` (đích là kết thúc) ⇒ Bổ sung thêm luật dừng: `Qi → x`.
