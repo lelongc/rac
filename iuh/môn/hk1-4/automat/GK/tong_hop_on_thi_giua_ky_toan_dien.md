@@ -26,7 +26,7 @@
   - [1.5. BÀI THI THỰC TẾ 1: Câu 4 Đề ôn tập GK 1 (Đề chính thức 3.0 điểm)](#15-bài-thi-thực-tế-1-câu-4-đề-ôn-tập-gk-1-đề-chính-thức-30-điểm)
   - [1.6. BÀI THI THỰC TẾ 2: Bài 8 Phiếu ôn tập của thầy (L = {ab, bb, cc, ba, ca})](#16-bài-thi-thực-tế-2-bài-8-phiếu-ôn-tập-của-thầy-l--ab-bb-cc-ba-ca)
   - [1.7. Các bài tập tương đương tự luyện có đáp án](#17-các-bài-tập-tương-đương-tự-luyện-có-đáp-án)
-  - [1.8. Bổ sung: Các phép toán trên từ (Tiền tố, Hậu tố, Chuỗi con) & Tập ngôn ngữ (Hợp, Giao, Hiệu, Bù)](#18-bổ-sung-các-phép-toán-trên-từ-tiền-tố-hậu-tố-chuỗi-con--tập-ngôn-ngữ-hợp-giao-hiệu-bù)
+  - [1.8. Bổ sung: Các phép toán trên từ (Tiền tố, Hậu tố, Chuỗi con) &amp; Tập ngôn ngữ (Hợp, Giao, Hiệu, Bù)](#18-bổ-sung-các-phép-toán-trên-từ-tiền-tố-hậu-tố-chuỗi-con--tập-ngôn-ngữ-hợp-giao-hiệu-bù)
 - [CHUYÊN ĐỀ 2: BIỂU THỨC CHÍNH QUY (REGULAR EXPRESSION - RE)](#chuyên-đề-2-biểu-thức-chính-quy-regular-expression---re)
 
   - [2.1. Bản chất của Biểu thức chính quy qua các khối hình học](#21-bản-chất-của-biểu-thức-chính-quy-qua-các-khối-hình-học)
@@ -322,18 +322,18 @@ Cho `L = {ab, bb, cc, ba, ca}` trên `Σ = {a, b, c}`.
 
 Nhận xét: Mọi từ trong `L` đều có độ dài bằng 2. Do đó chuỗi thuộc `L^*` bắt buộc phải có độ dài chẵn và phân tách được thành các từ của `L`.
 
-| Chuỗi `w` | Độ dài `w` | Tính chẵn lẻ | Phân hoạch thành các từ của `L` | KẾT LUẬN |
-| :--- | :---: | :---: | :--- | :---: |
-| `ab` | 2 | Chẵn | `ab` (∈ L) | **THUỘC `L^*`** |
-| `abba` | 4 | Chẵn | `ab . ba` (cả 2 từ đều ∈ L) | **THUỘC `L^*`** |
-| `abbaca` | 6 | Chẵn | `ab . ba . ca` (cả 3 từ đều ∈ L) | **THUỘC `L^*`** |
-| `bbccab` | 6 | Chẵn | `bb . cc . ab` (cả 3 từ đều ∈ L) | **THUỘC `L^*`** |
-| `cabaab` | 6 | Chẵn | `ca . ba . ab` (cả 3 từ đều ∈ L) | **THUỘC `L^*`** |
-| `abcabb` | 6 | Chẵn | `ab . ca . bb` (cả 3 từ đều ∈ L) | **THUỘC `L^*`** |
-| `babbca` | 6 | Chẵn | `ba . bb . ca` (cả 3 từ đều ∈ L) | **THUỘC `L^*`** |
-| `ababbbcc` | 8 | Chẵn | `ab . ab . bb . cc` (cả 4 từ đều ∈ L) | **THUỘC `L^*`** |
-| `cacaab` | 6 | Chẵn | `ca . ca . ab` (cả 3 từ đều ∈ L) | **THUỘC `L^*`** |
-| `abbcc` | 5 | **LẺ** | Tách theo cặp: `ab` - `bc` - `c` (bị lẻ chữ c cuối và `bc ∉ L`) | **KHÔNG THUỘC** |
+| Chuỗi`w`  | Độ dài`w` | Tính chẵn lẻ | Phân hoạch thành các từ của`L`                                         |        KẾT LUẬN        |
+| :----------- | :------------: | :-------------: | :----------------------------------------------------------------------------- | :----------------------: |
+| `ab`       |       2       |      Chẵn      | `ab` (∈ L)                                                                  | **THUỘC `L^*`** |
+| `abba`     |       4       |      Chẵn      | `ab . ba` (cả 2 từ đều ∈ L)                                             | **THUỘC `L^*`** |
+| `abbaca`   |       6       |      Chẵn      | `ab . ba . ca` (cả 3 từ đều ∈ L)                                        | **THUỘC `L^*`** |
+| `bbccab`   |       6       |      Chẵn      | `bb . cc . ab` (cả 3 từ đều ∈ L)                                        | **THUỘC `L^*`** |
+| `cabaab`   |       6       |      Chẵn      | `ca . ba . ab` (cả 3 từ đều ∈ L)                                        | **THUỘC `L^*`** |
+| `abcabb`   |       6       |      Chẵn      | `ab . ca . bb` (cả 3 từ đều ∈ L)                                        | **THUỘC `L^*`** |
+| `babbca`   |       6       |      Chẵn      | `ba . bb . ca` (cả 3 từ đều ∈ L)                                        | **THUỘC `L^*`** |
+| `ababbbcc` |       8       |      Chẵn      | `ab . ab . bb . cc` (cả 4 từ đều ∈ L)                                   | **THUỘC `L^*`** |
+| `cacaab`   |       6       |      Chẵn      | `ca . ca . ab` (cả 3 từ đều ∈ L)                                        | **THUỘC `L^*`** |
+| `abbcc`    |       5       |  **LẺ**  | Tách theo cặp:`ab` - `bc` - `c` (bị lẻ chữ c cuối và `bc ∉ L`) | **KHÔNG THUỘC** |
 
 #### 2. Xác định các lũy thừa L^0, L^1, L^2:
 
@@ -386,7 +386,9 @@ Nhận xét: Mọi từ trong `L` đều có độ dài bằng 2. Do đó chuỗ
 ## 1.8. Bổ sung: Các phép toán trên từ (Tiền tố, Hậu tố, Chuỗi con) & Tập ngôn ngữ (Hợp, Giao, Hiệu, Bù)
 
 ### 1. Các phép toán trên từ (Operations on Strings):
+
 Cho chuỗi `w` trên bảng chữ cái `Σ`.
+
 - **Tiền tố (Prefix):** Chuỗi `u` được gọi là tiền tố của `w` nếu tồn tại chuỗi `v` sao cho `w = u . v`.
   + *Ví dụ:* Với `w = "abc"`, các tiền tố của `w` là: `ε, a, ab, abc`.
   + **Tiền tố thực sự (Proper Prefix):** Là tiền tố khác chính chuỗi đó (`u ≠ w`), gồm: `ε, a, ab`.
@@ -403,7 +405,9 @@ Cho chuỗi `w` trên bảng chữ cái `Σ`.
 ---
 
 ### 2. Các phép toán trên tập ngôn ngữ (Operations on Languages):
+
 Cho hai ngôn ngữ `L1` và `L2` xác định trên cùng bảng chữ cái `Σ`.
+
 - **Phép hợp (Union):** Tập các chuỗi thuộc ít nhất một trong hai ngôn ngữ:
   ```text
   L1 ∪ L2 = { w | w ∈ L1  hoặc  w ∈ L2 }
@@ -427,7 +431,6 @@ Cho hai ngôn ngữ `L1` và `L2` xác định trên cùng bảng chữ cái `Σ
 - **Phép lũy thừa:** `L^0 = { ε }`, `L^1 = L`, `L^(k+1) = L^k . L`.
 - **Bao đóng Kleene (Kleene Star):** `L^* = ⋃ (k = 0 đến ∞) L^k`.
 - **Bao đóng dương (Positive Closure):** `L^+ = ⋃ (k = 1 đến ∞) L^k = L^* loại bỏ phần tử chuỗi rỗng ε` (khi `ε ∉ L`).
-
 
 ---
 
@@ -651,11 +654,11 @@ e) `(ab + cb) (ac)* aab + c`
 
 |     STT     | Biểu thức RE              | Mô tả ngôn ngữ bằng lời tự nhiên                                                                                                                                                                    | 3 Chuỗi CHẤP NHẬN                                  | 3 Chuỗi TỪ CHỐI                                                                                             |
 | :---------: | :-------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------- | :------------------------------------------------------------------------------------------------------------- |
-| **a** | `(a + b)* abb`            | Tập hợp tất cả các chuỗi trên`{a, b}` có **hậu tố kết thúc bằng chuỗi con `abb`**.                                                                                                  | `abbaabb``babb`                                   | `ε` (quá ngắn)`ab` (thiếu chữ b cuối)`abba` (kết thúc bằng a)                                   |
+| **a** | `(a + b)* abb`            | Tập hợp tất cả các chuỗi trên`{a, b}` có **hậu tố kết thúc bằng chuỗi con `abb`**.                                                                                                  | `abbaabb``babb`                                     | `ε` (quá ngắn)`ab` (thiếu chữ b cuối)`abba` (kết thúc bằng a)                                   |
 | **b** | `a* (b a* b a*)*`         | Tập hợp tất cả các chuỗi trên`{a, b}` có **số lượng ký tự `b` là một số chẵn** (0, 2, 4,...).                                                                                    | `ε` (0 chữ b)`aa` (0 chữ b)`abba` (2 chữ b) | `b` (1 chữ b - lẻ)`ab` (1 chữ b - lẻ)`abbb` (3 chữ b - lẻ)                                         |
-| **c** | `(ab + bc) (a + c)*`      | Tập hợp các chuỗi trên`{a, b, c}` **bắt đầu bằng tiền tố `ab` hoặc `bc`**, sau đó chỉ gồm các ký tự `a` hoặc `c` (không chứa thêm bất kỳ chữ `b` nào).         | `abbca``abac`                                     | `a` (sai tiền tố)`abc` (chứa chữ b ở sau)`bcb` (chứa chữ b ở sau)                                |
-| **d** | `(a + b) (ac)* abc`       | Các chuỗi trên`{a, b, c}` **bắt đầu bằng một ký tự `a` hoặc `b`**, tiếp theo là **0 hoặc nhiều khối `ac`**, và **kết thúc bằng chuỗi con `abc`**.          | `aabcbabc``aacabc`                                | `abc` (thiếu ký tự đầu trước khối abc)`bac` (không kết thúc bằng abc)`aacbc` (sai khối ac)  |
-| **e** | `(ab + cb) (ac)* aab + c` | Ngôn ngữ gồm**đúng chuỗi đơn lẻ `c`**, HOẶC các chuỗi **bắt đầu bằng `ab` hoặc `cb`**, ở giữa là 0 hoặc nhiều khối `ac`, và **kết thúc bằng `aab`**. | `cabaab``cbaab`                                   | `ab` (thiếu hậu tố aab)`caab` (tiền tố là c thay vì cb)`abaabc` (kết thúc bằng c thay vì aab) |
+| **c** | `(ab + bc) (a + c)*`      | Tập hợp các chuỗi trên`{a, b, c}` **bắt đầu bằng tiền tố `ab` hoặc `bc`**, sau đó chỉ gồm các ký tự `a` hoặc `c` (không chứa thêm bất kỳ chữ `b` nào).         | `abbca``abac`                                       | `a` (sai tiền tố)`abc` (chứa chữ b ở sau)`bcb` (chứa chữ b ở sau)                                |
+| **d** | `(a + b) (ac)* abc`       | Các chuỗi trên`{a, b, c}` **bắt đầu bằng một ký tự `a` hoặc `b`**, tiếp theo là **0 hoặc nhiều khối `ac`**, và **kết thúc bằng chuỗi con `abc`**.          | `aabcbabc``aacabc`                                  | `abc` (thiếu ký tự đầu trước khối abc)`bac` (không kết thúc bằng abc)`aacbc` (sai khối ac)  |
+| **e** | `(ab + cb) (ac)* aab + c` | Ngôn ngữ gồm**đúng chuỗi đơn lẻ `c`**, HOẶC các chuỗi **bắt đầu bằng `ab` hoặc `cb`**, ở giữa là 0 hoặc nhiều khối `ac`, và **kết thúc bằng `aab`**. | `cabaab``cbaab`                                     | `ab` (thiếu hậu tố aab)`caab` (tiền tố là c thay vì cb)`abaabc` (kết thúc bằng c thay vì aab) |
 
 ---
 
@@ -1114,6 +1117,7 @@ R = aa a* b*   (hoặc viết: a a a* b*)
 Đây là dạng bài tập trọng tâm trong đề cương của giảng viên: *"Cho trước một ngôn ngữ mô tả bằng công thức toán học hoặc bằng lời, hãy viết một văn phạm G sinh ra đúng ngôn ngữ đó"*.
 
 ### 1. Phương pháp tư duy 3 bước để viết văn phạm:
+
 - **Bước 1: Phân tích cấu trúc phụ thuộc của chuỗi:**
   + Nếu số lượng các ký tự độc lập nhau (ví dụ: `a^n b^m` với `n, m` tùy ý) ⇒ Dùng văn phạm tuyến tính (Chính quy - Loại 3) tách thành các biến riêng biệt.
   + Nếu có sự cân bằng số lượng giữa các ký tự (ví dụ: `a^n b^n`, `a^n b^(2n)`) hoặc chuỗi đối xứng (Palindrome) ⇒ Bắt buộc dùng biến đệ quy kẹp giữa (Phi ngữ cảnh - Loại 2 / CFG).
@@ -1130,29 +1134,34 @@ R = aa a* b*   (hoặc viết: a a a* b*)
 ### 2. Bốn bài tập kinh điển hay ra thi:
 
 #### Bài tập 1: Xây dựng văn phạm sinh ngôn ngữ `L1 = { a^n b^n | n ≥ 1 }`
+
 - **Phân tích:** Số chữ `a` bằng số chữ `b`, tất cả `a` đứng trước `b`, chuỗi ngắn nhất là `ab` (`n = 1`).
 - **Lời giải:**
   Văn phạm `G1 = < {a, b}, {S}, S, P1 >` với tập luật sinh `P1`:
   ```text
   S → aSb | ab
   ```
+
   *(Giải thích: Áp dụng `S → aSb` n-1 lần ta được `a^(n-1) S b^(n-1)`. Bước cuối thay `S → ab` ta được `a^n b^n`).*
   *(Ghi chú: Nếu đề bài cho n ≥ 0 thì tập luật sinh là `S → aSb | ε`).*
 
 ---
 
 #### Bài tập 2: Xây dựng văn phạm sinh ngôn ngữ `L2 = { a^n b^(2n) | n ≥ 0 }`
+
 - **Phân tích:** Số chữ `b` luôn gấp đôi số chữ `a`. Mỗi khi thêm 1 chữ `a` ở đầu thì phải thêm đúng 2 chữ `b` ở cuối. Chuỗi ngắn nhất là `ε` (`n = 0`).
 - **Lời giải:**
   Văn phạm `G2 = < {a, b}, {S}, S, P2 >` với tập luật sinh `P2`:
   ```text
   S → aSbb | ε
   ```
+
   *(Ví dụ dẫn xuất cho aabbbb với n=2: `S ⇒ aSbb ⇒ aaSbbbb ⇒ aa(ε)bbbb = aabbbb`).*
 
 ---
 
 #### Bài tập 3: Xây dựng văn phạm sinh ngôn ngữ `L3 = { a^n b^m | n ≥ m ≥ 0 }`
+
 - **Phân tích:** Số chữ `a` luôn nhiều hơn hoặc bằng số chữ `b` (`n - m ≥ 0`). Ta phân tách chuỗi thành 2 phần: phần các chữ `a` dư ra ở đầu, và phần cân bằng `a^m b^m` ở sau.
 - **Lời giải:**
   Văn phạm `G3 = < {a, b}, {S, A}, S, P3 >` với tập luật sinh `P3`:
@@ -1160,6 +1169,7 @@ R = aa a* b*   (hoặc viết: a a a* b*)
   S → aS | A
   A → aAb | ε
   ```
+
   - `S → aS`: sinh số lượng tùy ý các chữ `a` dư ở phía trước.
   - `S → A`: chuyển sang sinh phần cân bằng.
   - `A → aAb | ε`: sinh đúng số lượng chữ `a` và chữ `b` bằng nhau.
@@ -1167,6 +1177,7 @@ R = aa a* b*   (hoặc viết: a a a* b*)
 ---
 
 #### Bài tập 4: Xây dựng văn phạm sinh ngôn ngữ Palindrome (chuỗi đối xứng) trên `{a, b}`
+
 - **Đề bài:** Viết văn phạm sinh `L4 = { w ∈ {a, b}* | w = w^R }`.
 - **Phân tích:** Chuỗi đối xứng có cấu trúc: nếu bắt đầu bằng `a` thì kết thúc bằng `a` (`a...a`); nếu bắt đầu bằng `b` thì kết thúc bằng `b` (`b...b`). Tâm của chuỗi đối xứng có thể là chuỗi rỗng `ε` (đối xứng độ dài chẵn), hoặc ký tự đơn `a`, hoặc ký tự đơn `b` (đối xứng độ dài lẻ).
 - **Lời giải:**
@@ -1174,9 +1185,9 @@ R = aa a* b*   (hoặc viết: a a a* b*)
   ```text
   S → aSa | bSb | a | b | ε
   ```
+
   *(Ví dụ dẫn xuất cho "abba": `S ⇒ aSa ⇒ abSba ⇒ ab(ε)ba = abba`).*
   *(Ví dụ dẫn xuất cho "ababa": `S ⇒ aSa ⇒ abSba ⇒ aba(a)ba = ababa` - tâm là a).*
-
 
 ---
 
@@ -1671,6 +1682,7 @@ Cho `R = (a + b)* ab`.
 Đây là dạng bài tập tự luận kinh điển trong đề thi giữa kỳ của trường IUH: *"Cho một NFA (có hoặc không có bước nhảy ε), hãy chuyển đổi thành DFA tương đương"*.
 
 ### 1. Quy trình chuẩn 3 bước làm bài thi (Subset Construction):
+
 - **Bước 1: Xác định trạng thái bắt đầu của DFA:**
   + Nếu NFA không có bước nhảy `ε`: Đỉnh khởi đầu của DFA là `S0 = {q0}`.
   + Nếu NFA có bước nhảy `ε`: Đỉnh khởi đầu là `S0 = ε-closure(q0)` (tập gồm `q0` và tất cả các trạng thái đến được từ `q0` chỉ bằng các bước chuyển rỗng `ε`).
@@ -1691,13 +1703,14 @@ Cho `R = (a + b)* ab`.
 ### 2. Bài tập giải mẫu chi tiết chuẩn 10/10 đi thi:
 
 **ĐỀ BÀI:** Cho NFA `M = (Q, Σ, δ, q0, F)` trên bảng chữ cái `Σ = {0, 1}` có:
+
 - `Q = {q0, q1, q2}`, `q0` là trạng thái khởi đầu, `F = {q2}`.
 - Hàm chuyển `δ` được cho bởi:
   + `δ(q0, 0) = {q0, q1}`, `δ(q0, 1) = {q0}`
   + `δ(q1, 0) = ∅`, `δ(q1, 1) = {q2}`
   + `δ(q2, 0) = ∅`, `δ(q2, 1) = ∅`
-*(Đây là NFA nhận dạng các chuỗi kết thúc bằng chuỗi con 01).*
-**Yêu cầu:** Chuyển đổi NFA trên sang DFA tương đương.
+    *(Đây là NFA nhận dạng các chuỗi kết thúc bằng chuỗi con 01).*
+    **Yêu cầu:** Chuyển đổi NFA trên sang DFA tương đương.
 
 ---
 
@@ -1759,11 +1772,13 @@ SƠ ĐỒ ĐỒ THỊ CHUYỂN TRẠNG THÁI CỦA DFA:
 Tối thiểu hóa DFA (Minimization / State Optimization) là bài toán rút gọn một DFA thành DFA tương đương có **số lượng trạng thái ít nhất có thể**.
 
 ### 1. Bản chất Bảng tam giác đánh dấu (Table-Filling Algorithm / Myhill-Nerode):
+
 - Để biết hai trạng thái `p` và `q` có thể gộp lại được hay không, ta phải kiểm tra xem chúng có **hành vi giống hệt nhau** (tương đương) hay không.
 - Với DFA có `n` trạng thái, số cặp cần so sánh là `C(n, 2) = n(n - 1) / 2`.
   Ta lập một **bảng tam giác dưới** gồm các ô `(qi, qj)` với `i > j`.
 
 ### 2. Quy trình 4 bước chuẩn giải bài thi:
+
 - **Bước 1 (Loại bỏ đỉnh cô lập):** Xóa tất cả các trạng thái không thể chạm tới được (Unreachable states) xuất phát từ `q0`.
 - **Bước 2 (Khởi tạo đánh dấu bước 0):**
   + Duyệt tất cả các ô trong bảng tam giác.
@@ -1784,13 +1799,13 @@ Tối thiểu hóa DFA (Minimization / State Optimization) là bài toán rút g
 
 **ĐỀ BÀI:** Cho DFA `M = (Q, Σ, δ, q0, F)` trên `Σ = {0, 1}` có bảng chuyển trạng thái:
 
-| Trạng thái | Đọc 0 | Đọc 1 | Thuộc F? |
-| :---: | :---: | :---: | :---: |
-| `→ q0` | `q1` | `q2` | Không |
-| `q1` | `q1` | `q3` | Không |
-| `q2` | `q1` | `q2` | Không |
-| `q3` | `q1` | `q4` | Không |
-| `★ q4` | `q1` | `q2` | **CÓ (F)** |
+| Trạng thái | Đọc 0 | Đọc 1 |     Thuộc F?     |
+| :----------: | :-----: | :-----: | :---------------: |
+|  `→ q0`  | `q1` | `q2` |      Không      |
+|    `q1`    | `q1` | `q3` |      Không      |
+|    `q2`    | `q1` | `q2` |      Không      |
+|    `q3`    | `q1` | `q4` |      Không      |
+|  `★ q4`  | `q1` | `q2` | **CÓ (F)** |
 
 **Yêu cầu:** Tối thiểu hóa DFA trên bằng phương pháp bảng đánh dấu.
 
@@ -1885,7 +1900,6 @@ KẾT LUẬN:
 DFA ban đầu gồm 5 trạng thái đã được tối thiểu hóa thành công về DFA tương đương 
 chỉ gồm 4 trạng thái {A, B, C, D}.
 ```
-
 
 ---
 
