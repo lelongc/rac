@@ -344,67 +344,105 @@ w4 = bb ba ab bb ac ac ab
 
 ### BẢNG TRA NHANH 6 MẪU VĂN PHẠM KINH ĐIỂN ĐI THI:
 
-| Ngôn ngữ L                       | Tập luật sinh P của G  | Phân lớp Chomsky | Cơ chế hoạt động |
-| :--------------------------------- | :------------------------ | :----------------: | :-------------------- |
-| L = { a^n b^n                      | n ≥ 1 } (không rỗng)   |      S → aSb      | ab                    |
-| L = { a^n b^n                      | n ≥ 0 } (có rỗng)      |      S → aSb      | ε                    |
-| L = { a^n b^(2n)                   | n ≥ 0 } (b gấp đôi a) |     S → aSbb     | ε                    |
-| L = { a^(2n) b^n                   | n ≥ 0 } (a gấp đôi b) |     S → aaSb     | ε                    |
-| L = { a^n b^m                      | n ≥ m ≥ 0 } (a ≥ b)    |      S → aS      | A; A → aAb           |
-| L = { w ∈ {a,b}*                  | w = w^R } (Đối xứng)   |      S → aSa      | bSb                   |
-| L = a* b* (số a và b độc lập) | S → aS                   |     B; B → bB     | ε                    |
+| Ngôn ngữ L | Tập luật sinh P của G | Phân lớp Chomsky | Cơ chế hoạt động |
+| :--- | :--- | :---: | :--- |
+| `L = { a^n b^n ; n ≥ 1 }` (không rỗng) | `S → aSb | ab` | Loại 2 (CFG) | Đệ quy kẹp giữa, dừng bằng ab |
+| `L = { a^n b^n ; n ≥ 0 }` (có rỗng) | `S → aSb | ε` | Loại 2 (CFG) | Đệ quy kẹp giữa, dừng bằng chuỗi rỗng ε |
+| `L = { a^n b^(2n) ; n ≥ 0 }` (b gấp đôi a) | `S → aSbb | ε` | Loại 2 (CFG) | Thêm 1 a bên trái, 2 b bên phải |
+| `L = { a^(2n) b^n ; n ≥ 0 }` (a gấp đôi b) | `S → aaSb | ε` | Loại 2 (CFG) | Thêm 2 a bên trái, 1 b bên phải |
+| `L = { a^n b^m ; n ≥ m ≥ 0 }` (a ≥ b) | `S → aS | A; A → aAb | ε` | Loại 2 (CFG) | A sinh a^m b^m, S đệm thêm a thừa |
+| `L = { w ∈ {a,b}* ; w = w^R }` (Đối xứng) | `S → aSa | bSb | a | b | ε` | Loại 2 (CFG) | Mở rộng đối xứng 2 đầu, tâm a, b, ε |
+| `L = a* b*` (số a và b độc lập) | `S → aS | B; B → bB | ε` | Loại 3 (Regular) | Hết a thì chuyển sang sinh b |
 
-### VÍ DỤ MẪU 1.1: Xây dựng văn phạm cho L =
-
-- **Đề bài:** Cho L = { a^n b^(2n) | n ≥ 1 }. Hãy xây dựng văn phạm phi ngữ cảnh G sinh ngôn ngữ L.
+### VÍ DỤ MẪU 1.1: Xây dựng văn phạm cho L = { a^n b^(2n) ; n ≥ 1 }
+- **Đề bài:** Cho `L = { a^n b^(2n) ; n ≥ 1 }`. Hãy xây dựng văn phạm phi ngữ cảnh G sinh ngôn ngữ L.
 - **Cách làm ngắn gọn:**
-  + Chuỗi ngắn nhất (khi n = 1) là: bb.
-  + Vòng lặp đệ quy: Mỗi lần thêm 1 chữ  ở đầu thì thêm 2 chữ  ở đuôi: S → aSbb.
-  + Bước dừng: Dừng ở chuỗi ngắn nhất bb: S → abb.
+  + Chuỗi ngắn nhất (khi n = 1) là: `abb`.
+  + Vòng lặp đệ quy: Mỗi lần thêm 1 chữ `a` ở đầu thì thêm 2 chữ `b` ở đuôi: `S → aSbb`.
+  + Bước dừng: Dừng ở chuỗi ngắn nhất `abb`: `S → abb`.
 - **BÀI LÀM CHUẨN THI:**
-  Văn phạm cần tìm là G = < {a, b}, {S}, S, P > với tập luật sinh P:
-  S → aSbb | abb
-  *(Nếu đề cho n ≥ 0 thì thay bước dừng bằng: S → aSbb | ε).*
+  Văn phạm cần tìm là `G = < {a, b}, {S}, S, P >` với tập luật sinh P:
+  `S → aSbb | abb`
+  *(Nếu đề cho n ≥ 0 thì thay bước dừng bằng: `S → aSbb | ε`).*
 
-### VÍ DỤ MẪU 1.2: Xây dựng văn phạm cho L =
-
-- **Đề bài:** Xây dựng văn phạm G sinh ngôn ngữ L = { a^n b^m | n ≥ m ≥ 0 } (số a nhiều hơn hoặc bằng số b).
+### VÍ DỤ MẪU 1.2: Xây dựng văn phạm cho L = { a^n b^m ; n ≥ m ≥ 0 }
+- **Đề bài:** Xây dựng văn phạm G sinh ngôn ngữ `L = { a^n b^m ; n ≥ m ≥ 0 }` (số chữ a nhiều hơn hoặc bằng số chữ b).
 - **Cách làm ngắn gọn:**
-  + Tách chuỗi thành: ^(n-m) đứng trước và ^m b^m đứng sau.
-  + Dùng biến phụ A sinh phần cân bằng ^m b^m: A → aAb | ε.
-  + Dùng biến gốc S sinh các chữ  dư thừa ở đầu rồi chuyển sang A: S → aS | A.
+  + Tách chuỗi thành: `a^(n-m)` đứng trước và `a^m b^m` đứng sau.
+  + Dùng biến phụ A sinh phần cân bằng `a^m b^m`: `A → aAb | ε`.
+  + Dùng biến gốc S sinh các chữ a dư thừa ở đầu rồi chuyển sang A: `S → aS | A`.
 - **BÀI LÀM CHUẨN THI:**
-  Văn phạm cần tìm là G = < {a, b}, {S, A}, S, P > với tập luật sinh P:
-  S → aS | A
-  A → aAb | ε
+  Văn phạm cần tìm là `G = < {a, b}, {S, A}, S, P >` với tập luật sinh P:
+  `S → aS | A`
+  `A → aAb | ε`
 
 ---
 
 ## DẠNG 2: CHUYỂN NFA SANG DFA (SUBSET CONSTRUCTION)
 
 ### 3 BƯỚC THUẬT TOÁN ĂN TRỌN ĐIỂM:
+- **Bước 1:** Trạng thái khởi đầu của DFA là: `A = ε-closure(q0)` (nếu không có bước chuyển ε thì `A = {q0}`).
+- **Bước 2:** Với mỗi tập trạng thái mới `U` và ký hiệu đầu vào `x`, tính:
+  `δ*(U, x) = ε-closure( ⋃ (q ∈ U) δ_NFA(q, x) )`. Đặt tên tập mới là `B, C, D...` Lặp lại đến khi không còn tập mới. (Nếu tập rỗng thì ghi `∅`).
+- **Bước 3:** Bất kỳ tập trạng thái nào của DFA chứa ít nhất một trạng thái kết thúc của NFA (`∩ F_NFA ≠ ∅`) thì tập đó là trạng thái kết thúc của DFA (đánh dấu `★`).
 
-- **Bước 1:** Trạng thái khởi đầu của DFA là: A = ε-closure(q0) (nếu không có bước chuyển ε thì A = {q0}).
-- **Bước 2:** Với mỗi tập trạng thái mới U và ký hiệu đầu vào x, tính:
-  δ*(U, x) = ε-closure( ⋃ (q ∈ U) δ_NFA(q, x) ). Đặt tên tập mới là B, C, D... Lặp lại đến khi không còn tập mới. (Nếu tập rỗng thì ghi ∅).
-- **Bước 3:** Bất kỳ tập trạng thái nào của DFA chứa ít nhất một trạng thái kết thúc của NFA (∩ F_NFA ≠ ∅) thì tập đó là trạng thái kết thúc của DFA (đánh dấu ★).
+### VÍ DỤ MẪU 2: Chuyển NFA nhận chuỗi kết thúc bằng 01 sang DFA (TRÌNH BÀY ĐẦY ĐỦ 2 BẢNG)
 
-### VÍ DỤ MẪU 2: Chuyển NFA nhận chuỗi kết thúc bằng 01 sang DFA
+**ĐỀ BÀI:** Cho NFA `M = < {q0, q1, q2}, {0, 1}, δ, q0, {q2} >` nhận diện chuỗi kết thúc bằng `01` có sơ đồ trạng thái như sau:
+```text
+         0, 1
+        ┌───┐
+        v   │
+-----> (q0) ────── 0 ──────> (q1) ────── 1 ──────> ((q2))
+```
 
-- **Đề bài:** Cho NFA M = < {q0, q1, q2}, {0, 1}, δ, q0, {q2} > có:
-  δ(q0, 0) = {q0, q1}, δ(q0, 1) = {q0}, δ(q1, 1) = {q2}. Hãy chuyển sang DFA tương đương.
-- **BÀI LÀM CHUẨN THI:**
-  1. Trạng thái khởi đầu của DFA: A = {q0}.
-  2. Bảng chuyển trạng thái tập con:
+#### BẢNG 1: BẢNG CHUYỂN TRẠNG THÁI CỦA NFA BAN ĐẦU (δ_NFA)
++---------------+---------------+---------------+--------------------------+
+|  Trạng thái   |   Đọc số 0    |   Đọc số 1    |   Thuộc F (Kết thúc)?    |
++---------------+---------------+---------------+--------------------------+
+|   → q0        |   {q0, q1}    |     {q0}      |   Không                  |
+|     q1        |       ∅       |     {q2}      |   Không                  |
+|   ★ q2        |       ∅       |       ∅       |   CÓ (Trạng thái kết thúc)|
++---------------+---------------+---------------+--------------------------+
 
-| Đỉnh DFA | Tập con NFA                 |   Đọc ký hiệu 0   |   Đọc ký hiệu 1   |   Thuộc F_DFA?   |
-| :--------: | :--------------------------- | :-------------------: | :-------------------: | :---------------: |
-|    → A    | {q0}                         | {q0, q1} =**B** |   {q0} =**A**   |      Không      |
-|     B     | {q0, q1}                     | {q0, q1} =**B** | {q0, q2} =**C** |      Không      |
-|    ★ C    | {q0, q2} (chứa q2 ∈ F_NFA) | {q0, q1} =**B** |   {q0} =**A**   | **CÓ (F)** |
+#### QUÁ TRÌNH TÍNH TOÁN XÂY DỰNG TẬP CON CHI TIẾT (TỪNG BƯỚC):
+- **Bước 1: Khởi tạo trạng thái đầu của DFA:**
+  + Vì NFA không có bước chuyển rỗng ε, nên:
+    `A = ε-closure(q0) = {q0}`.
+- **Bước 2: Lần lượt tính bước chuyển cho từng tập trạng thái mới:**
+  + **Xét tập A = {q0}:**
+    * Đọc 0: `δ*(A, 0) = δ_NFA(q0, 0) = {q0, q1}` ==> Xuất hiện tập mới, đặt tên là **`B`**.
+    * Đọc 1: `δ*(A, 1) = δ_NFA(q0, 1) = {q0} = A`.
+  + **Xét tập B = {q0, q1}:**
+    * Đọc 0: `δ*(B, 0) = δ_NFA(q0, 0) ∪ δ_NFA(q1, 0) = {q0, q1} ∪ ∅ = {q0, q1} = B`.
+    * Đọc 1: `δ*(B, 1) = δ_NFA(q0, 1) ∪ δ_NFA(q1, 1) = {q0} ∪ {q2} = {q0, q2}` ==> Xuất hiện tập mới, đặt tên là **`C`**.
+  + **Xét tập C = {q0, q2}:**
+    * Đọc 0: `δ*(C, 0) = δ_NFA(q0, 0) ∪ δ_NFA(q2, 0) = {q0, q1} ∪ ∅ = {q0, q1} = B`.
+    * Đọc 1: `δ*(C, 1) = δ_NFA(q0, 1) ∪ δ_NFA(q2, 1) = {q0} ∪ ∅ = {q0} = A`.
+  + Hết tập mới ==> Dừng thuật toán!
+- **Bước 3: Xác định trạng thái kết thúc F_DFA:**
+  + NFA có `F_NFA = {q2}`.
+  + Trong các tập DFA: chỉ có tập `C = {q0, q2}` chứa `q2`, do đó `F_DFA = {C}` (đánh dấu `★ C`).
 
-3. Kết luận: DFA gồm 3 trạng thái {A, B, C}, trạng thái khởi đầu là A, trạng thái kết thúc là F_DFA = {C}.
-   *(Sơ đồ DFA kết quả chính là sơ đồ Câu 3 Đề GK 1).*
+#### BẢNG 2: BẢNG CHUYỂN TRẠNG THÁI TẬP CON CỦA DFA TƯƠNG ĐƯƠNG (δ_DFA)
+| Trạng thái DFA | Tập hợp trạng thái NFA | Khi đọc số 0 | Khi đọc số 1 | Thuộc F_DFA? |
+| :---: | :--- | :--- | :--- | :---: |
+| `→ A` | `{q0}` | `{q0, q1}` = **B** | `{q0}` = **A** | Không |
+| `B` | `{q0, q1}` | `{q0, q1}` = **B** | `{q0, q2}` = **C** | Không |
+| `★ C` | `{q0, q2}` (chứa q2 ∈ F_NFA) | `{q0, q1}` = **B** | `{q0}` = **A** | **CÓ (F)** |
+
+#### KẾT LUẬN & SƠ ĐỒ DFA TƯƠNG ĐƯƠNG:
+DFA tương đương gồm 3 trạng thái `{A, B, C}`, trạng thái khởi đầu là `A`, trạng thái kết thúc là `F_DFA = {C}`.
+Sơ đồ chuyển trạng thái DFA:
+```text
+        1                             0
+      ┌───┐                         ┌───┐
+      v   │                         v   │
+----> (A) ---------- 0 -----------> (B) ---------- 1 -----------> ((C))
+       ^                             ^                             │
+       │                             └──────────── 0 ──────────────┤
+       └──────────────────────────── 1 ────────────────────────────┘
+```
 
 ---
 
