@@ -329,80 +329,170 @@ w4 = bb ba ab bb ac ac ab
 
 ### BẢNG TRA NHANH 6 MẪU VĂN PHẠM KINH ĐIỂN ĐI THI:
 
-| Ngôn ngữ `L` | Tập luật sinh `P` của `G` | Phân lớp Chomsky | Cơ chế hoạt động |
+| Ngôn ngữ L | Tập luật sinh P của G | Phân lớp Chomsky | Cơ chế hoạt động |
 | :--- | :--- | :---: | :--- |
-| `L = { a^n b^n | n ≥ 1 }` (không rỗng) | `S → aSb | ab` | Loại 2 (CFG) | Đệ quy kẹp giữa, dừng bằng `ab` |
-| `L = { a^n b^n | n ≥ 0 }` (có rỗng) | `S → aSb | ε` | Loại 2 (CFG) | Đệ quy kẹp giữa, dừng bằng chuỗi rỗng `ε` |
-| `L = { a^n b^(2n) | n ≥ 0 }` (b gấp đôi a) | `S → aSbb | ε` | Loại 2 (CFG) | Mỗi lần thêm 1 `a` thì thêm 2 `b` bên phải |
-| `L = { a^(2n) b^n | n ≥ 0 }` (a gấp đôi b) | `S → aaSb | ε` | Loại 2 (CFG) | Mỗi lần thêm 2 `a` bên trái thì thêm 1 `b` bên phải |
-| `L = { a^n b^m | n ≥ m ≥ 0 }` (a ≥ b) | `S → aS | A; A → aAb | ε` | Loại 2 (CFG) | Biến `A` sinh `a^m b^m`, biến `S` đệm thêm các chữ `a` thừa |
-| `L = { w ∈ {a,b}* | w = w^R }` (Đối xứng) | `S → aSa | bSb | a | b | ε` | Loại 2 (CFG) | Mở rộng 2 đầu đối xứng, tâm là `a, b` hoặc `ε` |
-| `L = a* b*` (số a và b độc lập) | `S → aS | B; B → bB | ε` | Loại 3 (Regular) | Tuyến tính phải: hết `a` thì chuyển sang sinh `b` |
+| L = { a^n b^n | n ≥ 1 } (không rỗng) | S → aSb | ab | Loại 2 (CFG) | Đệ quy kẹp giữa, dừng bằng ab |
+| L = { a^n b^n | n ≥ 0 } (có rỗng) | S → aSb | ε | Loại 2 (CFG) | Đệ quy kẹp giữa, dừng bằng ε |
+| L = { a^n b^(2n) | n ≥ 0 } (b gấp đôi a) | S → aSbb | ε | Loại 2 (CFG) | Thêm 1 a bên trái, 2 b bên phải |
+| L = { a^(2n) b^n | n ≥ 0 } (a gấp đôi b) | S → aaSb | ε | Loại 2 (CFG) | Thêm 2 a bên trái, 1 b bên phải |
+| L = { a^n b^m | n ≥ m ≥ 0 } (a ≥ b) | S → aS | A; A → aAb | ε | Loại 2 (CFG) | A sinh a^m b^m, S đệm thêm a thừa |
+| L = { w ∈ {a,b}* | w = w^R } (Đối xứng) | S → aSa | bSb | a | b | ε | Loại 2 (CFG) | Mở rộng đối xứng 2 đầu, tâm a, b, ε |
+| L = a* b* (số a và b độc lập) | S → aS | B; B → bB | ε | Loại 3 (Regular) | Hết a thì chuyển sang sinh b |
+
+### VÍ DỤ MẪU 1.1: Xây dựng văn phạm cho L = { a^n b^(2n) | n ≥ 1 }
+- **Đề bài:** Cho L = { a^n b^(2n) | n ≥ 1 }. Hãy xây dựng văn phạm phi ngữ cảnh G sinh ngôn ngữ L.
+- **Cách làm ngắn gọn:**
+  + Chuỗi ngắn nhất (khi n = 1) là: bb.
+  + Vòng lặp đệ quy: Mỗi lần thêm 1 chữ  ở đầu thì thêm 2 chữ  ở đuôi: S → aSbb.
+  + Bước dừng: Dừng ở chuỗi ngắn nhất bb: S → abb.
+- **BÀI LÀM CHUẨN THI:**
+  Văn phạm cần tìm là G = < {a, b}, {S}, S, P > với tập luật sinh P:
+  S → aSbb | abb
+  *(Nếu đề cho n ≥ 0 thì thay bước dừng bằng: S → aSbb | ε).*
+
+### VÍ DỤ MẪU 1.2: Xây dựng văn phạm cho L = { a^n b^m | n ≥ m ≥ 0 }
+- **Đề bài:** Xây dựng văn phạm G sinh ngôn ngữ L = { a^n b^m | n ≥ m ≥ 0 } (số a nhiều hơn hoặc bằng số b).
+- **Cách làm ngắn gọn:**
+  + Tách chuỗi thành: ^(n-m) đứng trước và ^m b^m đứng sau.
+  + Dùng biến phụ A sinh phần cân bằng ^m b^m: A → aAb | ε.
+  + Dùng biến gốc S sinh các chữ  dư thừa ở đầu rồi chuyển sang A: S → aS | A.
+- **BÀI LÀM CHUẨN THI:**
+  Văn phạm cần tìm là G = < {a, b}, {S, A}, S, P > với tập luật sinh P:
+  S → aS | A
+  A → aAb | ε
 
 ---
 
 ## DẠNG 2: CHUYỂN NFA SANG DFA (SUBSET CONSTRUCTION)
 
 ### 3 BƯỚC THUẬT TOÁN ĂN TRỌN ĐIỂM:
-- **Bước 1:** Trạng thái khởi đầu của DFA là: `A = ε-closure(q0)` (nếu không có bước chuyển rỗng `ε` thì `A = {q0}`).
-- **Bước 2:** Với mỗi tập trạng thái mới `U` và ký hiệu đầu vào `x`, tính:
-  `δ*(U, x) = ε-closure( ⋃ (q ∈ U) δ_NFA(q, x) )`. Đặt tên tập mới là `B, C, D...` Lặp lại đến khi không còn tập mới. (Nếu tập rỗng thì ghi `∅`).
-- **Bước 3:** Bất kỳ tập trạng thái nào của DFA chứa **ít nhất một trạng thái kết thúc** của NFA (`∩ F_NFA ≠ ∅`) thì tập đó là **trạng thái kết thúc của DFA** (đánh dấu `★`).
+- **Bước 1:** Trạng thái khởi đầu của DFA là: A = ε-closure(q0) (nếu không có bước chuyển ε thì A = {q0}).
+- **Bước 2:** Với mỗi tập trạng thái mới U và ký hiệu đầu vào x, tính:
+  δ*(U, x) = ε-closure( ⋃ (q ∈ U) δ_NFA(q, x) ). Đặt tên tập mới là B, C, D... Lặp lại đến khi không còn tập mới. (Nếu tập rỗng thì ghi ∅).
+- **Bước 3:** Bất kỳ tập trạng thái nào của DFA chứa ít nhất một trạng thái kết thúc của NFA (∩ F_NFA ≠ ∅) thì tập đó là trạng thái kết thúc của DFA (đánh dấu ★).
 
-### BÀI TẬP MẪU: Chuyển NFA nhận chuỗi kết thúc bằng `01` sang DFA
-- NFA có `Q = {q0, q1, q2}`, `q0` bắt đầu, `F = {q2}`.
-- Cung chuyển: `δ(q0, 0) = {q0, q1}`, `δ(q0, 1) = {q0}`, `δ(q1, 1) = {q2}`.
-
-#### BẢNG CHUYỂN TẬP CON:
+### VÍ DỤ MẪU 2: Chuyển NFA nhận chuỗi kết thúc bằng 01 sang DFA
+- **Đề bài:** Cho NFA M = < {q0, q1, q2}, {0, 1}, δ, q0, {q2} > có:
+  δ(q0, 0) = {q0, q1}, δ(q0, 1) = {q0}, δ(q1, 1) = {q2}. Hãy chuyển sang DFA tương đương.
+- **BÀI LÀM CHUẨN THI:**
+  1. Trạng thái khởi đầu của DFA: A = {q0}.
+  2. Bảng chuyển trạng thái tập con:
 
 | Đỉnh DFA | Tập con NFA | Đọc ký hiệu 0 | Đọc ký hiệu 1 | Thuộc F_DFA? |
 | :---: | :--- | :---: | :---: | :---: |
-| `→ A` | `{q0}` | `{q0, q1}` = **B** | `{q0}` = **A** | Không |
-| `B` | `{q0, q1}` | `{q0, q1}` = **B** | `{q0, q2}` = **C** | Không |
-| `★ C` | `{q0, q2}` (chứa q2 ∈ F) | `{q0, q1}` = **B** | `{q0}` = **A** | **CÓ (F)** |
+| → A | {q0} | {q0, q1} = **B** | {q0} = **A** | Không |
+| B | {q0, q1} | {q0, q1} = **B** | {q0, q2} = **C** | Không |
+| ★ C | {q0, q2} (chứa q2 ∈ F_NFA) | {q0, q1} = **B** | {q0} = **A** | **CÓ (F)** |
 
-⇒ Kết quả ra đúng DFA 3 trạng thái của Câu 3 Đề GK 1!
+  3. Kết luận: DFA gồm 3 trạng thái {A, B, C}, trạng thái khởi đầu là A, trạng thái kết thúc là F_DFA = {C}.
+  *(Sơ đồ DFA kết quả chính là sơ đồ Câu 3 Đề GK 1).*
 
 ---
 
 ## DẠNG 3: TỐI THIỂU HÓA DFA (TABLE-FILLING ALGORITHM)
 
 ### 4 BƯỚC THUẬT TOÁN BẢNG TAM GIÁC:
-- **Bước 1:** Loại bỏ các trạng thái không chạm tới được (unreachable) từ trạng thái khởi đầu `q0`.
-- **Bước 2 (Khởi tạo):** Lập bảng tam giác dưới gồm các ô `(qi, qj)` với `i > j`. Đánh dấu `X` vào ô nếu một trạng thái thuộc `F` và trạng thái kia không thuộc `F`.
-- **Bước 3 (Lan truyền):** Với mỗi ô trống `(p, q)`, kiểm tra từng ký hiệu `x ∈ Σ`:  
-  Nếu cặp `(δ(p, x), δ(q, x))` đã bị đánh dấu `X` ⇒ **Đánh dấu `X` vào ô `(p, q)`**.  
+- **Bước 1:** Loại bỏ các trạng thái không chạm tới được (unreachable) từ trạng thái khởi đầu q0.
+- **Bước 2 (Khởi tạo):** Lập bảng tam giác dưới gồm các ô (qi, qj) với i > j. Đánh dấu X vào ô nếu một trạng thái thuộc F và trạng thái kia không thuộc F.
+- **Bước 3 (Lan truyền):** Với mỗi ô trống (p, q), kiểm tra từng ký hiệu x ∈ Σ:  
+  Nếu cặp (δ(p, x), δ(q, x)) đã bị đánh dấu X ⇒ **Đánh dấu X vào ô (p, q)**.  
   Lặp lại quá trình quét này cho đến khi không còn ô nào bị đánh dấu thêm.
-- **Bước 4 (Gộp trạng thái):** Các ô **VẪN CÒN TRỐNG** chính là các cặp trạng thái **tương đương nhau** (`p ≡ q`). Gộp chúng lại thành 1 trạng thái mới và vẽ lại DFA tối tiểu.
+- **Bước 4 (Gộp trạng thái):** Các ô **VẪN CÒN TRỐNG** chính là các cặp trạng thái **tương đương nhau** (p ≡ q). Gộp chúng lại thành 1 trạng thái mới và vẽ lại DFA tối tiểu.
+
+### VÍ DỤ MẪU 3: Tối thiểu hóa DFA 4 trạng thái
+- **Đề bài:** Cho DFA M có Q = {A, B, C, D}, Σ = {0, 1}, q0 = A, F = {D}.
+  Bảng chuyển trạng thái δ:
+  + Từ A: đọc 0 sang B, đọc 1 sang C
+  + Từ B: đọc 0 sang B, đọc 1 sang D
+  + Từ C: đọc 0 sang B, đọc 1 sang D
+  + Từ D: đọc 0 sang B, đọc 1 sang C
+- **BÀI LÀM CHUẨN THI:**
+  1. Loại bỏ đỉnh cô lập: Mọi đỉnh đều chạm tới được từ A.
+  2. Lập bảng tam giác dưới và đánh dấu ban đầu:
+     - Vì D ∈ F còn A, B, C ∉ F, nên đánh dấu X vào các ô chứa D: (D, A), (D, B), (D, C).
+  3. Lan truyền dấu X cho các ô còn trống:
+     - Xét cặp (B, C):
+       + Đọc 0: δ(B, 0) = B, δ(C, 0) = B ==> Cặp (B, B) trùng nhau.
+       + Đọc 1: δ(B, 1) = D, δ(C, 1) = D ==> Cặp (D, D) trùng nhau.
+       ==> Cặp (B, C) KHÔNG BỊ ĐÁNH DẤU X.
+     - Xét cặp (B, A): Đọc 1: δ(B, 1) = D, δ(A, 1) = C ==> Cặp (D, C) đã có dấu X ==> Đánh dấu X vào ô (B, A).
+     - Xét cặp (C, A): Đọc 1: δ(C, 1) = D, δ(A, 1) = C ==> Cặp (D, C) đã có dấu X ==> Đánh dấu X vào ô (C, A).
+
+BẢNG TAM GIÁC DƯỚI KẾT QUẢ:
+```text
+      A      B      C
+B   [ X ]
+C   [ X ]  [   ]               <-- Ô (C, B) DUY NHẤT CÒN TRỐNG ==> B ≡ C!
+D   [ X ]  [ X ]  [ X ]
+```
+  4. Kết luận: Cặp tương đương duy nhất là B ≡ C. Gộp B và C thành 1 trạng thái [B, C].
+  DFA tối giản rút từ 4 trạng thái xuống còn 3 trạng thái: {A, [B, C], D} với:
+  - Từ A: đọc 0 sang [B, C], đọc 1 sang [B, C]
+  - Từ [B, C]: đọc 0 sang [B, C], đọc 1 sang D
+  - Từ D: đọc 0 sang [B, C], đọc 1 sang [B, C]
 
 ---
 
 ## DẠNG 4: CHUYỂN DFA SANG VĂN PHẠM CHÍNH QUY (RIGHT-LINEAR GRAMMAR)
 
 ### QUY TẮC SINH LUẬT 1 ĐỔI 1:
-1. Mỗi trạng thái `qi` trong DFA tương ứng với 1 biến không kết thúc `Qi`. Trạng thái khởi đầu `q0` tương ứng biến bắt đầu `S`.
-2. Với mỗi cung chuyển `δ(qi, x) = qj`:
-   - Sinh luật: `Qi → x Qj`
-3. Nếu trạng thái đích `qj ∈ F` (là trạng thái kết thúc):
-   - Sinh thêm luật dừng: `Qi → x`
-4. Nếu trạng thái bắt đầu `q0 ∈ F` (DFA chấp nhận chuỗi rỗng `ε`):
-   - Sinh thêm luật: `S → ε`
+1. Mỗi trạng thái qi trong DFA tương ứng với 1 biến không kết thúc Qi. Trạng thái khởi đầu q0 tương ứng biến bắt đầu S.
+2. Với mỗi cung chuyển δ(qi, x) = qj:
+   - Sinh luật: Qi → x Qj
+3. Nếu trạng thái đích qj ∈ F (là trạng thái kết thúc):
+   - Sinh thêm luật dừng: Qi → x
+4. Nếu trạng thái bắt đầu q0 ∈ F (DFA chấp nhận chuỗi rỗng ε):
+   - Sinh thêm luật: S → ε
 
-**Ví dụ chuyển Câu 3 Đề GK 1 sang Văn phạm:**
-- Đặt `A ↔ S`, `B ↔ B`, `C ↔ C` (với `C ∈ F`).
-- Từ `A`: đọc 0 sang B, đọc 1 sang A ⇒ `S → 0B | 1S`
-- Từ `B`: đọc 0 sang B, đọc 1 sang C ⇒ `B → 0B | 1C | 1` (luật `1` vì `C ∈ F`)
-- Từ `C`: đọc 0 sang B, đọc 1 sang A ⇒ `C → 0B | 1S`
+### VÍ DỤ MẪU 4: Chuyển DFA Câu 3 Đề GK 1 sang Văn phạm chính quy
+- **Đề bài:** Chuyển DFA có 3 trạng thái {A, B, C}, q0 = A, F = {C} sau đây sang Văn phạm:
+  δ(A, 0) = B, δ(A, 1) = A; δ(B, 0) = B, δ(B, 1) = C; δ(C, 0) = B, δ(C, 1) = A.
+- **BÀI LÀM CHUẨN THI:**
+  Đặt biến: A ↔ S, B ↔ B, C ↔ C (với C ∈ F).
+  Tập luật sinh P:
+  - Từ trạng thái A: S → 0B | 1S
+  - Từ trạng thái B: B → 0B | 1C | 1 *(bổ sung thêm luật dừng '1' vì C là trạng thái kết thúc!)*
+  - Từ trạng thái C: C → 0B | 1S
+  Kết luận: Văn phạm tuyến tính phải tương đương là G = < {0, 1}, {S, B, C}, S, P >.
 
 ---
 
 ## DẠNG 5: VẼ NFA TỪ BIỂU THỨC CHÍNH QUY (RE)
 
 ### QUY TẮC THOMPSON CƠ BẢN:
-1. **Ký hiệu đơn lẻ `a`:** `(1) ──a──> ((2))`
-2. **Nối tiếp `R1 . R2`:** Nối trạng thái kết thúc của `R1` sang trạng thái bắt đầu của `R2` bằng bước chuyển `ε`.
-3. **Rẽ nhánh cộng `R1 + R2`:** Tạo đỉnh mới rẽ nhánh bằng `ε` vào `R1` và `R2`, rồi chụm lại vào đỉnh kết thúc bằng `ε`.
-4. **Bao đóng lặp `R*`:** Vòng lặp `ε` quay ngược từ kết thúc về bắt đầu, kèm 1 nhánh `ε` đi tắt từ đầu đến kết thúc (cho chuỗi rỗng).
+1. Ký hiệu đơn lẻ : (1) ──a──> ((2))
+2. Nối tiếp R1 . R2: Nối kết thúc của R1 sang bắt đầu của R2 bằng bước chuyển ε.
+3. Rẽ nhánh R1 + R2: Tạo đỉnh mới rẽ nhánh bằng ε vào R1 và R2, rồi chụm lại vào kết thúc bằng ε.
+4. Bao đóng R*: Vòng lặp ε quay ngược từ kết thúc về bắt đầu, kèm nhánh ε đi tắt từ đầu đến kết thúc.
+
+### VÍ DỤ MẪU 5: Vẽ NFA cho biểu thức RE R = (a + b)* abb
+- **Đề bài:** Cho biểu thức chính quy R = (a + b)* abb trên Σ = {a, b}. Hãy vẽ sơ đồ NFA nhận diện R.
+- **BÀI LÀM CHUẨN THI:**
+  - Nhận diện: Chuỗi có tiền tố tự do (a + b)* và hậu tố cố định bb.
+  - Thiết kế trạng thái:
+    + Trạng thái q0: Tự lặp đọc , b (biểu diễn (a + b)*).
+    + Đoạn nhận diện bb: q0 ─(a)→ q1 ─(b)→ q2 ─(b)→ ((q3)) (với q3 ∈ F).
+  - Sơ đồ NFA:
+`	ext
+         a, b
+        ┌───┐
+        v   │
+-----> (q0) ────── a ──────> (q1) ────── b ──────> (q2) ────── b ──────> ((q3))
+`
+  - Bộ 5 thành phần: M = < {q0, q1, q2, q3}, {a, b}, δ, q0, {q3} >.
+
+---
+
+## DẠNG 6: ĐỌC VÀ MÔ TẢ NGÔN NGỮ TỪ BIỂU THỨC CHÍNH QUY (RE → L)
+
+### BẢNG TRA NHANH 4 MẪU ĐỌC RE KINH ĐIỂN:
+
+| Biểu thức RE | Ý nghĩa ngôn ngữ mô tả bằng lời | Dạng tập hợp có tham số |
+| :--- | :--- | :--- |
+| R = a* (b a* b a*)* | Tất cả các chuỗi có số lượng chữ  là **số chẵn** | L = { w ∈ {a, b}* | Nb(w) mod 2 = 0 } |
+| R = a* b a* (b a* b a*)* | Tất cả các chuỗi có số lượng chữ  là **số lẻ** | L = { w ∈ {a, b}* | Nb(w) mod 2 = 1 } |
+| R = (a + ba)* (ε + b) | Tất cả các chuỗi **không chứa chuỗi con 'bb'** | L = { w ∈ {a, b}* | w không chứa bb } |
+| R = 0 (0 + 1)* 1 | Tất cả các chuỗi **bắt đầu bằng 0 và kết thúc bằng 1** | L = { 0 w 1 | w ∈ {0, 1}* } |
 
 ---
 
