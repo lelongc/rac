@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Quản Lý Sinh Viên - Bài 8 JPA (Thymeleaf)</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-hover: #172554;
+            --secondary: #475569;
+            --danger: #b91c1c;
+            --danger-hover: #991b1b;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --border: #cbd5e1;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 8px;
+            flex: 1;
+            max-width: 420px;
+        }
+
+        input[type="text"], input[type="email"], input[type="tel"] {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.15);
+        }
+
+        button, .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1px solid transparent;
+            text-decoration: none;
+            transition: background-color 0.15s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: #ffffff;
+        }
+
+        .btn-danger {
+            background-color: #fee2e2;
+            color: var(--danger);
+            border-color: #fecaca;
+        }
+
+        .btn-danger:hover {
+            background-color: #fca5a5;
+            color: #7f1d1d;
+        }
+
+        .btn-sm {
+            padding: 4px 10px;
+            font-size: 13px;
+        }
+
+        .panel {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .panel-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) 120px;
+            gap: 12px;
+            align-items: end;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 4px;
+            color: var(--text-main);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: var(--secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.05em;
+        }
+
+        tbody tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 32px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .nav-links {
+            margin-top: 16px;
+            display: flex;
+            gap: 16px;
+            font-size: 13px;
+        }
+
+        .nav-links a {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Quản Lý Sinh Viên (Spring Data JPA - Thymeleaf SSR)</h1>
+        <div class="subtitle">Môn học: Kiến trúc & Thiết kế Phần mềm / Công nghệ Web - IUH (GV: Trương Bá Phúc)</div>
+        <div class="nav-links">
+            <span>Chế độ: <strong>Thymeleaf Server-Side Rendering</strong></span>
+            <a href="/index.html">Chuyển sang giao diện Web REST API (SPA)</a>
+            <a href="/api/students" target="_blank">Xem dữ liệu JSON thô (/api/students)</a>
+        </div>
+    </header>
+
+    <!-- FORM THÊM SINH VIÊN -->
+    <div class="panel">
+        <div class="panel-title">Thêm Sinh Viên Mới Vào CSDL (MySQL)</div>
+        <form th:action="@{/students/add}" method="post" class="form-grid">
+            <div class="form-group">
+                <label for="name">Họ và tên *</label>
+                <input type="text" id="name" name="name" required placeholder="Nhập tên sinh viên">
+            </div>
+            <div class="form-group">
+                <label for="email">Email sinh viên *</label>
+                <input type="email" id="email" name="email" required placeholder="email@iuh.edu.vn">
+            </div>
+            <div class="form-group">
+                <label for="phone">Số điện thoại</label>
+                <input type="tel" id="phone" name="phone" placeholder="0901234567">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Lưu Vào CSDL</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- TÌM KIẾM -->
+    <div class="toolbar">
+        <form th:action="@{/students}" method="get" class="search-box">
+            <input type="text" name="keyword" th:value="${keyword}" placeholder="Tìm kiếm theo tên sinh viên...">
+            <button type="submit" class="btn btn-secondary">Tìm</button>
+            <a th:if="${keyword != null and keyword != ''}" th:href="@{/students}" class="btn btn-secondary">Bỏ lọc</a>
+        </form>
+        <div style="font-size: 13px; color: var(--text-muted);">
+            Tổng số: <strong th:text="${students != null ? students.size() : 0}">0</strong> sinh viên
+        </div>
+    </div>
+
+    <!-- BẢNG DỮ LIỆU -->
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 70px;">ID</th>
+                <th>Họ và tên</th>
+                <th>Email</th>
+                <th>Số điện thoại</th>
+                <th style="width: 100px; text-align: center;">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="s : ${students}">
+                <td th:text="${s.id}">1</td>
+                <td th:text="${s.name}" style="font-weight: 500;">Nguyen Van A</td>
+                <td th:text="${s.email}">a@iuh.edu.vn</td>
+                <td th:text="${s.phone != null ? s.phone : '-'}">0901234567</td>
+                <td style="text-align: center;">
+                    <a th:href="@{'/students/delete/' + ${s.id}}" 
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('Bạn có chắc chắn muốn xóa sinh viên này khỏi CSDL?');">
+                        Xóa
+                    </a>
+                </td>
+            </tr>
+            <tr th:if="${students == null or students.isEmpty()}">
+                <td colspan="5" class="empty-state">
+                    Không tìm thấy sinh viên nào trong CSDL.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

@@ -185,4 +185,55 @@ Mở file **`Bật - Tắt MySQL.bat`** trên Desktop $\rightarrow$ Bấm phím 
    - Thử bấm nút **"+ Thêm sinh viên mới"** $\rightarrow$ Nhập tên, email, SĐT $\rightarrow$ Bấm Lưu.
    - Thử bấm nút **"Sửa"** $\rightarrow$ Cập nhật thông tin sinh viên $\rightarrow$ Bấm Lưu.
    - Thử gõ vào ô **Tìm kiếm** tên sinh viên để lọc trực tiếp.
-   - Thử mở **MySQL Workbench** $\rightarrow$ chạy lệnh: `SELECT * FROM b7_db.students;` để chỉ cho thầy thấy dữ liệu đã được lưu bền vững vào CSDL vật lý!
+   - Thử mở **MySQL Workbench** $\rightarrow$ chạy lệnh: `SELECT * FROM b8_db.students;` để chỉ cho thầy thấy dữ liệu đã được lưu bền vững vào CSDL vật lý!
+
+---
+
+## 6. ĐỐI CHIẾU & GIẢI MÃ 11 BƯỚC GHI CHÚ CỦA BẠN HỌC (ẢNH CHỤP MÀN HÌNH)
+
+### 6.1. Bảng "Dịch thuật" & Giải mã 11 bước trong ảnh chụp
+Dưới đây là phần phân tích giải mã các thuật ngữ viết sai chính tả / phiên âm ngô nghê trong ảnh của bạn cùng lớp sang thuật ngữ chuyên môn IT chuẩn xác:
+
+| STT trong ảnh | Ghi chú gốc của bạn trong ảnh | Thuật ngữ IT chuẩn xác | Ý nghĩa & Bản chất kỹ thuật |
+| :---: | :--- | :--- | :--- |
+| **1** | `tao skinmo: student delievy` | **Tạo Schema CSDL** (ví dụ `b8_db` hoặc `student_delivery`) | Bạn viết "skinmo" do nghe phiên âm /ˈskiːmə/ (schema) của thầy. Tạo database trong MySQL trước. |
+| **2** | `vào MySQL workbench phải u ser delivery lấy u ser root hoặc reset password` | **Kiểm tra tài khoản root & mật khẩu MySQL** | Đảm bảo biết chính xác Username (`root`) và Password (`root`) để điền vào file cấu hình Spring Boot. |
+| **3** | `khởi động MySQL server nếu chưa khởi động` | **Bật service MySQL Server (Port 3306)** | Đảm bảo service `mysqld` đang chạy cổng 3306 để Spring Boot có thể kết nối. |
+| **4** | `tạo spring boot với các depend theafyleaf ti` | **Tạo dự án Spring Boot với dependency:** `Spring Web`, `Spring Data JPA`, `MySQL Driver`, `Thymeleaf`, `DevTools` | Bạn viết "theafyleaf ti" là biến âm của **Thymeleaf** và **DevTools/Lombok**. Đây là các thư viện thầy đã add sẵn trong file `pom.xml`. |
+| **5** | `import spring boot với mavel` | **Import dự án Maven vào Eclipse** | Bạn viết "mavel" là **Maven**. Thao tác: `File` $\rightarrow$ `Import...` $\rightarrow$ `Existing Maven Projects`. |
+| **6** | `import code ( e say code )` | **Import mã nguồn có sẵn (Existing Code)** | "e say code" chính là nghe từ "Existing code" (hoặc "Thầy share code"). Tức là dùng bộ khung code `demojpa` thầy gửi. |
+| **7** | `cập nhật lại thông tin cấu hình trong file tài sản - cập nhật u ser name password` | **Cấu hình file `application.properties`** | "file tài sản" là bạn dịch chữ *properties* sang tiếng Việt! Cần điền URL JDBC, User `root`, Pass `root`. |
+| **8** | `khởi động server` | **Run Spring Boot App** | Chạy file `DemojpaApplication.java`. |
+| **9** | `my serticy workbench refesh` | **MySQL Workbench Refresh (🔄)** | Bạn viết "my serticy" là **MySQL**. Bấm nút xoay tròn để cập nhật cây Schema. |
+| **10** | `kiểm tra student table đc tạo chưa` | **Kiểm tra bảng `students` sinh tự động** | Do có `@Entity` và `spring.jpa.hibernate.ddl-auto=update`, Hibernate tự tạo bảng không cần gõ SQL. |
+| **11** | `dung post man test hết các chức năng` | **Dùng Postman kiểm thử REST API** | Gửi các request GET, POST, PUT, DELETE vào `/api/students`. |
+
+---
+
+### 6.2. Tại sao mỗi bạn trong lớp lại ghi chép một kiểu?
+1. **Góc nhìn mức cơ bản (như bạn trong ảnh - Dừng ở bước 11 Postman):**
+   - Thầy live-code demo trên lớp đến phút 11 thì dùng Postman để bắn API test dữ liệu. Bạn này chỉ ghi chép theo tiến độ demo cơ bản của thầy để "chạy được code".
+2. **Góc nhìn ăn điểm thực hành (Yêu cầu cốt tử phút 11:20 của thầy):**
+   - Ở phút 11:20 cuối video, thầy đã nói rõ: *"Bây giờ các bạn viết giao diện cho nó, để nó load mấy cái này lên... Thầy tính điểm mấy cái phần này nhé các bạn nhé!"*.
+   - Do đó, nếu chỉ dừng ở bước 11 (Postman) thì chưa trọn vẹn yêu cầu tính điểm của thầy! Phải có **Giao diện Web** để người dùng thao tác trực quan.
+
+---
+
+### 6.3. Dự án Bài 8 (`b8_demojpa_student`) hiện tại đã "Chuẩn & Đủ" chưa?
+
+👉 **DỰ ÁN ĐÃ ĐẠT CHUẨN 100% VÀ VƯỢT TRỘI MỌI YÊU CẦU:**
+
+1. **CSDL & Schema**: Đã tạo riêng `b8_db` độc lập, cổng 3306, user `root`, pass `root`. Bảng `students` đã có dữ liệu mẫu.
+2. **Entity & Repository**: 
+   - `Student.java` có đủ `@Entity`, `@Id`, `@GeneratedValue`, `@Column(length=100, nullable=false)`, `@Column(unique=true)`.
+   - `StudentRepository.java` kế thừa `JpaRepository<Student, Long>` ("Cái kho" theo lời thầy).
+3. **Service & REST Controller (Phục vụ Bước 11 Postman)**:
+   - `StudentController.java` (`/api/students`) hỗ trợ trọn bộ CRUD: GET all/search, GET id, POST create, PUT update, DELETE. Thầy dùng Postman test bất kỳ chức năng nào cũng chạy mượt 100%.
+4. **Giao diện Web SPA Hiện Đại (Phục vụ yêu cầu tính điểm cuối video)**:
+   - Truy cập: `http://localhost:8080/index.html` hoặc `http://localhost:8080/`.
+   - Giao diện sạch sẽ, chuẩn học thuật, tải danh sách từ CSDL, tìm kiếm tức thì, modal thêm/sửa, dialog xóa không cần reload trang.
+5. **Giao diện Web Thymeleaf SSR (Phục vụ dependency `theafyleaf` trong ảnh & `pom.xml`)**:
+   - Truy cập: `http://localhost:8080/students`.
+   - Được render trực tiếp từ server bằng `templates/students.html` qua `StudentViewController.java`.
+   - Dù thầy muốn chấm theo trường phái **REST API + Postman**, **Web SPA (Fetch API)** hay **Thymeleaf SSR**, bài của bạn đều có sẵn và hoàn hảo 10/10!
+

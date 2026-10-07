@@ -1,8 +1,11 @@
 # TÀI LIỆU CHUẨN ĐI THI GIỮA KỲ AUTOMATA (IUH)
+
 ## TRỌN BỘ CÁC DẠNG BÀI 3 CHƯƠNG & BÀI GIẢI MẪU 10/10 ĐỀ ÔN TẬP GK 1
+
 *(Biên soạn tinh gọn: Đủ dạng bài - Đúng barem điểm - Không lý thuyết thừa - Dễ hiểu để chép vào bài thi)*
 
 > **LƯU Ý QUAN TRỌNG KHI ĐI THI:**
+>
 > - Được mang **1 tờ A4 chép tay (2 mặt)** vào phòng thi.
 > - Ký hiệu chuẩn: Chuỗi rỗng là `ε`, bước chuyển trạng thái là `→`, dẫn xuất là `⇒`.
 > - Không dùng ký hiệu `lambda` để tránh bị trừ điểm.
@@ -10,14 +13,15 @@
 ---
 
 # PHẦN 1: BÀI GIẢI MẪU CHUẨN 10/10 ĐỀ THI GIỮA KỲ 1
+
 *(Trích Đề thi chính thức: `Automata - Đề ôn tập GK 1.pdf`)*
 
 ---
 
 ## CÂU 1 (2.0 điểm): BIỂU THỨC CHÍNH QUY (RE)
 
-**ĐỀ BÀI:** Xét bảng chữ cái `Σ = {a, b, c}`. Hãy tìm biểu thức chính quy đại diện cho các ngôn ngữ sau đây:  
-a) (1.0 điểm) Tất cả các chuỗi có chứa chuỗi con `acab` hoặc `bbac`.  
+**ĐỀ BÀI:** Xét bảng chữ cái `Σ = {a, b, c}`. Hãy tìm biểu thức chính quy đại diện cho các ngôn ngữ sau đây:
+a) (1.0 điểm) Tất cả các chuỗi có chứa chuỗi con `acab` hoặc `bbac`.
 b) (1.0 điểm) Tất cả các chuỗi sao cho số lượng ký tự `a` nhiều gấp 2 lần số lượng ký tự `b` có trong chuỗi.
 
 ---
@@ -29,9 +33,11 @@ b) (1.0 điểm) Tất cả các chuỗi sao cho số lượng ký tự `a` nhi�
 - Chuỗi con cần chứa là `acab` HOẶC `bbac`, biểu diễn bằng phép cộng `(acab + bbac)`.
 
 **BIỂU THỨC CHÍNH QUY KẾT QUẢ:**
+
 ```text
 R = (a + b + c)* (acab + bbac) (a + b + c)*
 ```
+
 *(Hoặc viết dạng khai triển: `(a + b + c)* acab (a + b + c)* + (a + b + c)* bbac (a + b + c)*`).*
 
 ---
@@ -42,6 +48,7 @@ R = (a + b + c)* (acab + bbac) (a + b + c)*
 - Theo **Bổ đề Bơm (Pumping Lemma)**, ngôn ngữ này là **Ngôn ngữ phi chính quy (Non-regular)**, do đó **không thể biểu diễn chính xác tuyệt đối bằng một Biểu thức chính quy (RE) thuần túy**.
 
 **CÁCH TRÌNH BÀY CHUẨN ĐI THI ĐẠT ĐIỂM TỐI ĐA:**
+
 ```text
 BÀI LÀM CÂU 1b:
 
@@ -63,14 +70,16 @@ BÀI LÀM CÂU 1b:
 ## CÂU 2 (3.0 điểm): VĂN PHẠM HÌNH THỨC & CÂY PHÂN TÍCH
 
 **ĐỀ BÀI:** Cho văn phạm `G = < {a, b}, {S, A}, S, P >` với tập luật sinh `P`:
+
 ```text
 S → Sb | aA
 A → aA | a
 ```
-Hãy thực hiện các ý sau:  
-a) Tìm phân lớp thấp nhất của văn phạm đã cho theo hệ thống phân cấp Chomsky.  
-b) Vẽ cây phân tích cho các chuỗi: `"aaaaaa"`, `"aaaabb"`, `"aaaabbbba"`, nếu chúng thuộc văn phạm G.  
-c) Nêu 5 ví dụ về chuỗi không được chấp nhận bởi văn phạm G.  
+
+Hãy thực hiện các ý sau:
+a) Tìm phân lớp thấp nhất của văn phạm đã cho theo hệ thống phân cấp Chomsky.
+b) Vẽ cây phân tích cho các chuỗi: `"aaaaaa"`, `"aaaabb"`, `"aaaabbbba"`, nếu chúng thuộc văn phạm G.
+c) Nêu 5 ví dụ về chuỗi không được chấp nhận bởi văn phạm G.
 d) Tìm ngôn ngữ `L` sinh bởi văn phạm G. Giải thích ngắn gọn.
 
 ---
@@ -109,6 +118,7 @@ KẾT LUẬN: Phân lớp thấp nhất của G theo hệ thống Chomsky là LO
   + Đặt `i = k + 2`. Vì `k ≥ 0` nên `i ≥ 2`. Số chữ `b` là `j ≥ 0`.
 
 **KẾT LUẬN NGÔN NGỮ L(G):**
+
 ```text
 L(G) = { a^i b^j | i ≥ 2, j ≥ 0 }
 (Mô tả: Chuỗi gồm ít nhất 2 chữ 'a', theo sau là 0 hoặc nhiều chữ 'b'. 
@@ -120,11 +130,13 @@ L(G) = { a^i b^j | i ≥ 2, j ≥ 0 }
 ### BÀI LÀM CÂU 2b (Vẽ cây phân tích cú pháp):
 
 Kiểm tra 3 chuỗi đề bài yêu cầu:
+
 - Chuỗi `"aaaaaa"`: có 6 chữ `a`, 0 chữ `b` (`i=6 ≥ 2, j=0`) ⇒ **THUỘC L(G)** ⇒ Vẽ cây.
 - Chuỗi `"aaaabb"`: có 4 chữ `a`, 2 chữ `b` (`i=4 ≥ 2, j=2`) ⇒ **THUỘC L(G)** ⇒ Vẽ cây.
 - Chuỗi `"aaaabbbba"`: kết thúc bằng ký tự `a` sau các chữ `b` (vi phạm cấu trúc `a^i b^j`) ⇒ **KHÔNG THUỘC L(G)** ⇒ Không vẽ cây.
 
 #### 1. Cây phân tích cho chuỗi `"aaaaaa"` (Dẫn xuất: `S ⇒ aA ⇒ aaA ⇒ aaaA ⇒ aaaaA ⇒ aaaaaA ⇒ aaaaaa`):
+
 ```text
          S
        ┌─┴─┐
@@ -143,6 +155,7 @@ Kiểm tra 3 chuỗi đề bài yêu cầu:
 ```
 
 #### 2. Cây phân tích cho chuỗi `"aaaabb"` (Dẫn xuất: `S ⇒ Sb ⇒ Sbb ⇒ aAbb ⇒ aaAbb ⇒ aaaAbb ⇒ aaaabb`):
+
 ```text
              S
            ┌─┴─┐
@@ -186,8 +199,8 @@ Kiểm tra 3 chuỗi đề bài yêu cầu:
        └──────────────────────────── 1 ────────────────────────────┘
 ```
 
-a) Mô tả ô-tô-mát đã cho bằng định nghĩa hình thức.  
-b) Nêu 5 ví dụ về chuỗi được chấp nhận bởi ô-tô-mát đã cho.  
+a) Mô tả ô-tô-mát đã cho bằng định nghĩa hình thức.
+b) Nêu 5 ví dụ về chuỗi được chấp nhận bởi ô-tô-mát đã cho.
 c) Nêu 5 ví dụ về chuỗi không được chấp nhận bởi ô-tô-mát đã cho.
 
 ---
@@ -254,9 +267,8 @@ Năm chuỗi KHÔNG ĐƯỢC CHẤP NHẬN (dừng ngoài F):
 
 ## CÂU 4 (3.0 điểm): PHÉP LẶP KLEENE STAR L*
 
-**ĐỀ BÀI:**  
-a) Hãy trình bày định nghĩa của phép lặp ngôn ngữ `L*`.  
-b) Cho ngôn ngữ `L = {ab, bb, cc, ba, ca}`. Hãy xác định các chuỗi nào sau đây thuộc về `L*`:  
+**ĐỀ BÀI:**a) Hãy trình bày định nghĩa của phép lặp ngôn ngữ `L*`.b) Cho ngôn ngữ `L = {ab, bb, cc, ba, ca}`. Hãy xác định các chuỗi nào sau đây thuộc về `L*`:
+
 - `w1 = (ab)^2 c^8 b a b^3 a c^3`
 - `w2 = (ab)^3 c^8 b a b^2 a c^3`
 - `w3 = (ab)^3 c^8 b a c b^3 a c^2`
@@ -289,6 +301,7 @@ Trong đó:
 ### BÀI LÀM CÂU 4b (Kiểm tra 6 chuỗi đề thi):
 
 > **MẸO 3 GIÂY ĂN TRỌN ĐIỂM:**
+>
 > - Mọi từ trong `L = {ab, bb, cc, ba, ca}` đều có **độ dài đúng bằng 2**.
 > - Do đó, mọi chuỗi thuộc `L*` **BẮT BUỘC PHẢI CÓ TỔNG ĐỘ DÀI LÀ SỐ CHẴN**.
 > - Nếu chuỗi có độ dài LẺ ⇒ **KẾT LUẬN NGAY LÀ KHÔNG THUỘC L*** mà không cần phân tích!
@@ -296,16 +309,17 @@ Trong đó:
 
 #### BẢNG TỔNG HỢP KIỂM TRA 6 CHUỖI ĐI THI:
 
-| Chuỗi | Khai triển số mũ | Tổng độ dài | Tính chẵn/lẻ | KẾT LUẬN | Lý do / Phân hoạch cặp 2 ký tự |
-| :--- | :--- | :---: | :---: | :---: | :--- |
-| `w1` | `(ab)^2 c^8 b a b^3 a c^3` | `4 + 8 + 1 + 1 + 3 + 1 + 3 = 21` | **LẺ** | **KHÔNG THUỘC** | Độ dài lẻ (21), không thể ghép từ các từ dài 2 của L |
-| `w2` | `(ab)^3 c^8 b a b^2 a c^3` | `6 + 8 + 1 + 1 + 2 + 1 + 3 = 22` | **CHẴN** | **KHÔNG THUỘC** | Tách cặp gặp đuôi `... c c c`: cặp cuối `c` lẻ đơn độc |
-| `w3` | `(ab)^3 c^8 b a c b^3 a c^2` | `6 + 8 + 1 + 1 + 1 + 3 + 1 + 2 = 23` | **LẺ** | **KHÔNG THUỘC** | Độ dài lẻ (23), không thể ghép từ các từ dài 2 của L |
-| `w4` | `b^3 a^2 b^3 (ac)^2 ab` | `3 + 2 + 3 + 4 + 2 = 14` | **CHẴN** | **THUỘC L*** | Phân hoạch thành 7 cặp: `(bb)(ba)(ab)(bb)(ac)(ac)(ab)` đều ∈ L |
-| `w5` | `b^5 a^3 b^3 (abc)^2 ab` | `5 + 3 + 3 + 6 + 2 = 19` | **LẺ** | **KHÔNG THUỘC** | Độ dài lẻ (19), không thể ghép từ các từ dài 2 của L |
-| `w6` | `b^7 a^2 b^3 (ac)^2 aab` | `7 + 2 + 3 + 4 + 3 = 19` | **LẺ** | **KHÔNG THUỘC** | Độ dài lẻ (19), không thể ghép từ các từ dài 2 của L |
+| Chuỗi | Khai triển số mũ            |            Tổng độ dài            | Tính chẵn/lẻ |       KẾT LUẬN       | Lý do / Phân hoạch cặp 2 ký tự                                   |
+| :----- | :----------------------------- | :------------------------------------: | :-------------: | :---------------------: | :--------------------------------------------------------------------- |
+| `w1` | `(ab)^2 c^8 b a b^3 a c^3`   |   `4 + 8 + 1 + 1 + 3 + 1 + 3 = 21`   |  **LẺ**  | **KHÔNG THUỘC** | Độ dài lẻ (21), không thể ghép từ các từ dài 2 của L       |
+| `w2` | `(ab)^3 c^8 b a b^2 a c^3`   |   `6 + 8 + 1 + 1 + 2 + 1 + 3 = 22`   | **CHẴN** | **KHÔNG THUỘC** | Tách cặp gặp đuôi`... c c c`: cặp cuối `c` lẻ đơn độc  |
+| `w3` | `(ab)^3 c^8 b a c b^3 a c^2` | `6 + 8 + 1 + 1 + 1 + 3 + 1 + 2 = 23` |  **LẺ**  | **KHÔNG THUỘC** | Độ dài lẻ (23), không thể ghép từ các từ dài 2 của L       |
+| `w4` | `b^3 a^2 b^3 (ac)^2 ab`      |       `3 + 2 + 3 + 4 + 2 = 14`       | **CHẴN** |   **THUỘC L***   | Phân hoạch thành 7 cặp:`(bb)(ba)(ab)(bb)(ac)(ac)(ab)` đều ∈ L |
+| `w5` | `b^5 a^3 b^3 (abc)^2 ab`     |       `5 + 3 + 3 + 6 + 2 = 19`       |  **LẺ**  | **KHÔNG THUỘC** | Độ dài lẻ (19), không thể ghép từ các từ dài 2 của L       |
+| `w6` | `b^7 a^2 b^3 (ac)^2 aab`     |       `7 + 2 + 3 + 4 + 3 = 19`       |  **LẺ**  | **KHÔNG THUỘC** | Độ dài lẻ (19), không thể ghép từ các từ dài 2 của L       |
 
 **Chi tiết chuỗi duy nhất thuộc L* (`w4`):**
+
 ```text
 w4 = bb ba ab bb ac ac ab
    - bb ∈ L
@@ -317,6 +331,7 @@ w4 = bb ba ab bb ac ac ab
    Cặp "ac" có thuộc L không? Không! L chỉ có "ca", KHÔNG có "ac"!
    ==> Do đó cặp "ac" ∉ L ==> CẢ 6 CHUỖI ĐỀ THI ĐỀU KHÔNG THUỘC L*!
 ```
+
 *(Lưu ý đi thi: Nếu đề bài in `ac ∈ L` thì `w4` thuộc, còn nếu đề in đúng `ca ∈ L` thì `w4` có cặp `ac` nên không thuộc).*
 
 ---
@@ -329,17 +344,18 @@ w4 = bb ba ab bb ac ac ab
 
 ### BẢNG TRA NHANH 6 MẪU VĂN PHẠM KINH ĐIỂN ĐI THI:
 
-| Ngôn ngữ L | Tập luật sinh P của G | Phân lớp Chomsky | Cơ chế hoạt động |
-| :--- | :--- | :---: | :--- |
-| L = { a^n b^n | n ≥ 1 } (không rỗng) | S → aSb | ab | Loại 2 (CFG) | Đệ quy kẹp giữa, dừng bằng ab |
-| L = { a^n b^n | n ≥ 0 } (có rỗng) | S → aSb | ε | Loại 2 (CFG) | Đệ quy kẹp giữa, dừng bằng ε |
-| L = { a^n b^(2n) | n ≥ 0 } (b gấp đôi a) | S → aSbb | ε | Loại 2 (CFG) | Thêm 1 a bên trái, 2 b bên phải |
-| L = { a^(2n) b^n | n ≥ 0 } (a gấp đôi b) | S → aaSb | ε | Loại 2 (CFG) | Thêm 2 a bên trái, 1 b bên phải |
-| L = { a^n b^m | n ≥ m ≥ 0 } (a ≥ b) | S → aS | A; A → aAb | ε | Loại 2 (CFG) | A sinh a^m b^m, S đệm thêm a thừa |
-| L = { w ∈ {a,b}* | w = w^R } (Đối xứng) | S → aSa | bSb | a | b | ε | Loại 2 (CFG) | Mở rộng đối xứng 2 đầu, tâm a, b, ε |
-| L = a* b* (số a và b độc lập) | S → aS | B; B → bB | ε | Loại 3 (Regular) | Hết a thì chuyển sang sinh b |
+| Ngôn ngữ L                       | Tập luật sinh P của G  | Phân lớp Chomsky | Cơ chế hoạt động |
+| :--------------------------------- | :------------------------ | :----------------: | :-------------------- |
+| L = { a^n b^n                      | n ≥ 1 } (không rỗng)   |      S → aSb      | ab                    |
+| L = { a^n b^n                      | n ≥ 0 } (có rỗng)      |      S → aSb      | ε                    |
+| L = { a^n b^(2n)                   | n ≥ 0 } (b gấp đôi a) |     S → aSbb     | ε                    |
+| L = { a^(2n) b^n                   | n ≥ 0 } (a gấp đôi b) |     S → aaSb     | ε                    |
+| L = { a^n b^m                      | n ≥ m ≥ 0 } (a ≥ b)    |      S → aS      | A; A → aAb           |
+| L = { w ∈ {a,b}*                  | w = w^R } (Đối xứng)   |      S → aSa      | bSb                   |
+| L = a* b* (số a và b độc lập) | S → aS                   |     B; B → bB     | ε                    |
 
-### VÍ DỤ MẪU 1.1: Xây dựng văn phạm cho L = { a^n b^(2n) | n ≥ 1 }
+### VÍ DỤ MẪU 1.1: Xây dựng văn phạm cho L =
+
 - **Đề bài:** Cho L = { a^n b^(2n) | n ≥ 1 }. Hãy xây dựng văn phạm phi ngữ cảnh G sinh ngôn ngữ L.
 - **Cách làm ngắn gọn:**
   + Chuỗi ngắn nhất (khi n = 1) là: bb.
@@ -350,7 +366,8 @@ w4 = bb ba ab bb ac ac ab
   S → aSbb | abb
   *(Nếu đề cho n ≥ 0 thì thay bước dừng bằng: S → aSbb | ε).*
 
-### VÍ DỤ MẪU 1.2: Xây dựng văn phạm cho L = { a^n b^m | n ≥ m ≥ 0 }
+### VÍ DỤ MẪU 1.2: Xây dựng văn phạm cho L =
+
 - **Đề bài:** Xây dựng văn phạm G sinh ngôn ngữ L = { a^n b^m | n ≥ m ≥ 0 } (số a nhiều hơn hoặc bằng số b).
 - **Cách làm ngắn gọn:**
   + Tách chuỗi thành: ^(n-m) đứng trước và ^m b^m đứng sau.
@@ -366,40 +383,42 @@ w4 = bb ba ab bb ac ac ab
 ## DẠNG 2: CHUYỂN NFA SANG DFA (SUBSET CONSTRUCTION)
 
 ### 3 BƯỚC THUẬT TOÁN ĂN TRỌN ĐIỂM:
+
 - **Bước 1:** Trạng thái khởi đầu của DFA là: A = ε-closure(q0) (nếu không có bước chuyển ε thì A = {q0}).
 - **Bước 2:** Với mỗi tập trạng thái mới U và ký hiệu đầu vào x, tính:
   δ*(U, x) = ε-closure( ⋃ (q ∈ U) δ_NFA(q, x) ). Đặt tên tập mới là B, C, D... Lặp lại đến khi không còn tập mới. (Nếu tập rỗng thì ghi ∅).
 - **Bước 3:** Bất kỳ tập trạng thái nào của DFA chứa ít nhất một trạng thái kết thúc của NFA (∩ F_NFA ≠ ∅) thì tập đó là trạng thái kết thúc của DFA (đánh dấu ★).
 
 ### VÍ DỤ MẪU 2: Chuyển NFA nhận chuỗi kết thúc bằng 01 sang DFA
+
 - **Đề bài:** Cho NFA M = < {q0, q1, q2}, {0, 1}, δ, q0, {q2} > có:
   δ(q0, 0) = {q0, q1}, δ(q0, 1) = {q0}, δ(q1, 1) = {q2}. Hãy chuyển sang DFA tương đương.
 - **BÀI LÀM CHUẨN THI:**
   1. Trạng thái khởi đầu của DFA: A = {q0}.
   2. Bảng chuyển trạng thái tập con:
 
-| Đỉnh DFA | Tập con NFA | Đọc ký hiệu 0 | Đọc ký hiệu 1 | Thuộc F_DFA? |
-| :---: | :--- | :---: | :---: | :---: |
-| → A | {q0} | {q0, q1} = **B** | {q0} = **A** | Không |
-| B | {q0, q1} | {q0, q1} = **B** | {q0, q2} = **C** | Không |
-| ★ C | {q0, q2} (chứa q2 ∈ F_NFA) | {q0, q1} = **B** | {q0} = **A** | **CÓ (F)** |
+| Đỉnh DFA | Tập con NFA                 |   Đọc ký hiệu 0   |   Đọc ký hiệu 1   |   Thuộc F_DFA?   |
+| :--------: | :--------------------------- | :-------------------: | :-------------------: | :---------------: |
+|    → A    | {q0}                         | {q0, q1} =**B** |   {q0} =**A**   |      Không      |
+|     B     | {q0, q1}                     | {q0, q1} =**B** | {q0, q2} =**C** |      Không      |
+|    ★ C    | {q0, q2} (chứa q2 ∈ F_NFA) | {q0, q1} =**B** |   {q0} =**A**   | **CÓ (F)** |
 
-  3. Kết luận: DFA gồm 3 trạng thái {A, B, C}, trạng thái khởi đầu là A, trạng thái kết thúc là F_DFA = {C}.
-  *(Sơ đồ DFA kết quả chính là sơ đồ Câu 3 Đề GK 1).*
+3. Kết luận: DFA gồm 3 trạng thái {A, B, C}, trạng thái khởi đầu là A, trạng thái kết thúc là F_DFA = {C}.
+   *(Sơ đồ DFA kết quả chính là sơ đồ Câu 3 Đề GK 1).*
 
 ---
 
 ## DẠNG 3: TỐI THIỂU HÓA DFA (TABLE-FILLING ALGORITHM)
 
 ### 4 BƯỚC THUẬT TOÁN BẢNG TAM GIÁC:
+
 - **Bước 1:** Loại bỏ các trạng thái không chạm tới được (unreachable) từ trạng thái khởi đầu q0.
 - **Bước 2 (Khởi tạo):** Lập bảng tam giác dưới gồm các ô (qi, qj) với i > j. Đánh dấu X vào ô nếu một trạng thái thuộc F và trạng thái kia không thuộc F.
-- **Bước 3 (Lan truyền):** Với mỗi ô trống (p, q), kiểm tra từng ký hiệu x ∈ Σ:  
-  Nếu cặp (δ(p, x), δ(q, x)) đã bị đánh dấu X ⇒ **Đánh dấu X vào ô (p, q)**.  
-  Lặp lại quá trình quét này cho đến khi không còn ô nào bị đánh dấu thêm.
+- **Bước 3 (Lan truyền):** Với mỗi ô trống (p, q), kiểm tra từng ký hiệu x ∈ Σ:Nếu cặp (δ(p, x), δ(q, x)) đã bị đánh dấu X ⇒ **Đánh dấu X vào ô (p, q)**.Lặp lại quá trình quét này cho đến khi không còn ô nào bị đánh dấu thêm.
 - **Bước 4 (Gộp trạng thái):** Các ô **VẪN CÒN TRỐNG** chính là các cặp trạng thái **tương đương nhau** (p ≡ q). Gộp chúng lại thành 1 trạng thái mới và vẽ lại DFA tối tiểu.
 
 ### VÍ DỤ MẪU 3: Tối thiểu hóa DFA 4 trạng thái
+
 - **Đề bài:** Cho DFA M có Q = {A, B, C, D}, Σ = {0, 1}, q0 = A, F = {D}.
   Bảng chuyển trạng thái δ:
   + Từ A: đọc 0 sang B, đọc 1 sang C
@@ -414,28 +433,32 @@ w4 = bb ba ab bb ac ac ab
      - Xét cặp (B, C):
        + Đọc 0: δ(B, 0) = B, δ(C, 0) = B ==> Cặp (B, B) trùng nhau.
        + Đọc 1: δ(B, 1) = D, δ(C, 1) = D ==> Cặp (D, D) trùng nhau.
-       ==> Cặp (B, C) KHÔNG BỊ ĐÁNH DẤU X.
+         ==> Cặp (B, C) KHÔNG BỊ ĐÁNH DẤU X.
      - Xét cặp (B, A): Đọc 1: δ(B, 1) = D, δ(A, 1) = C ==> Cặp (D, C) đã có dấu X ==> Đánh dấu X vào ô (B, A).
      - Xét cặp (C, A): Đọc 1: δ(C, 1) = D, δ(A, 1) = C ==> Cặp (D, C) đã có dấu X ==> Đánh dấu X vào ô (C, A).
 
 BẢNG TAM GIÁC DƯỚI KẾT QUẢ:
+
 ```text
       A      B      C
 B   [ X ]
 C   [ X ]  [   ]               <-- Ô (C, B) DUY NHẤT CÒN TRỐNG ==> B ≡ C!
 D   [ X ]  [ X ]  [ X ]
 ```
-  4. Kết luận: Cặp tương đương duy nhất là B ≡ C. Gộp B và C thành 1 trạng thái [B, C].
-  DFA tối giản rút từ 4 trạng thái xuống còn 3 trạng thái: {A, [B, C], D} với:
-  - Từ A: đọc 0 sang [B, C], đọc 1 sang [B, C]
-  - Từ [B, C]: đọc 0 sang [B, C], đọc 1 sang D
-  - Từ D: đọc 0 sang [B, C], đọc 1 sang [B, C]
+
+4. Kết luận: Cặp tương đương duy nhất là B ≡ C. Gộp B và C thành 1 trạng thái [B, C].
+   DFA tối giản rút từ 4 trạng thái xuống còn 3 trạng thái: {A, [B, C], D} với:
+
+- Từ A: đọc 0 sang [B, C], đọc 1 sang [B, C]
+- Từ [B, C]: đọc 0 sang [B, C], đọc 1 sang D
+- Từ D: đọc 0 sang [B, C], đọc 1 sang [B, C]
 
 ---
 
 ## DẠNG 4: CHUYỂN DFA SANG VĂN PHẠM CHÍNH QUY (RIGHT-LINEAR GRAMMAR)
 
 ### QUY TẮC SINH LUẬT 1 ĐỔI 1:
+
 1. Mỗi trạng thái qi trong DFA tương ứng với 1 biến không kết thúc Qi. Trạng thái khởi đầu q0 tương ứng biến bắt đầu S.
 2. Với mỗi cung chuyển δ(qi, x) = qj:
    - Sinh luật: Qi → x Qj
@@ -445,6 +468,7 @@ D   [ X ]  [ X ]  [ X ]
    - Sinh thêm luật: S → ε
 
 ### VÍ DỤ MẪU 4: Chuyển DFA Câu 3 Đề GK 1 sang Văn phạm chính quy
+
 - **Đề bài:** Chuyển DFA có 3 trạng thái {A, B, C}, q0 = A, F = {C} sau đây sang Văn phạm:
   δ(A, 0) = B, δ(A, 1) = A; δ(B, 0) = B, δ(B, 1) = C; δ(C, 0) = B, δ(C, 1) = A.
 - **BÀI LÀM CHUẨN THI:**
@@ -453,19 +477,21 @@ D   [ X ]  [ X ]  [ X ]
   - Từ trạng thái A: S → 0B | 1S
   - Từ trạng thái B: B → 0B | 1C | 1 *(bổ sung thêm luật dừng '1' vì C là trạng thái kết thúc!)*
   - Từ trạng thái C: C → 0B | 1S
-  Kết luận: Văn phạm tuyến tính phải tương đương là G = < {0, 1}, {S, B, C}, S, P >.
+    Kết luận: Văn phạm tuyến tính phải tương đương là G = < {0, 1}, {S, B, C}, S, P >.
 
 ---
 
 ## DẠNG 5: VẼ NFA TỪ BIỂU THỨC CHÍNH QUY (RE)
 
 ### QUY TẮC THOMPSON CƠ BẢN:
+
 1. Ký hiệu đơn lẻ : (1) ──a──> ((2))
 2. Nối tiếp R1 . R2: Nối kết thúc của R1 sang bắt đầu của R2 bằng bước chuyển ε.
 3. Rẽ nhánh R1 + R2: Tạo đỉnh mới rẽ nhánh bằng ε vào R1 và R2, rồi chụm lại vào kết thúc bằng ε.
 4. Bao đóng R*: Vòng lặp ε quay ngược từ kết thúc về bắt đầu, kèm nhánh ε đi tắt từ đầu đến kết thúc.
 
 ### VÍ DỤ MẪU 5: Vẽ NFA cho biểu thức RE R = (a + b)* abb
+
 - **Đề bài:** Cho biểu thức chính quy R = (a + b)* abb trên Σ = {a, b}. Hãy vẽ sơ đồ NFA nhận diện R.
 - **BÀI LÀM CHUẨN THI:**
   - Nhận diện: Chuỗi có tiền tố tự do (a + b)* và hậu tố cố định bb.
@@ -473,12 +499,7 @@ D   [ X ]  [ X ]  [ X ]
     + Trạng thái q0: Tự lặp đọc , b (biểu diễn (a + b)*).
     + Đoạn nhận diện bb: q0 ─(a)→ q1 ─(b)→ q2 ─(b)→ ((q3)) (với q3 ∈ F).
   - Sơ đồ NFA:
-`	ext
-         a, b
-        ┌───┐
-        v   │
------> (q0) ────── a ──────> (q1) ────── b ──────> (q2) ────── b ──────> ((q3))
-`
+    `	ext a, b ┌───┐ v   │ -----> (q0) ────── a ──────> (q1) ────── b ──────> (q2) ────── b ──────> ((q3)) `
   - Bộ 5 thành phần: M = < {q0, q1, q2, q3}, {a, b}, δ, q0, {q3} >.
 
 ---
@@ -487,12 +508,12 @@ D   [ X ]  [ X ]  [ X ]
 
 ### BẢNG TRA NHANH 4 MẪU ĐỌC RE KINH ĐIỂN:
 
-| Biểu thức RE | Ý nghĩa ngôn ngữ mô tả bằng lời | Dạng tập hợp có tham số |
-| :--- | :--- | :--- |
-| R = a* (b a* b a*)* | Tất cả các chuỗi có số lượng chữ  là **số chẵn** | L = { w ∈ {a, b}* | Nb(w) mod 2 = 0 } |
-| R = a* b a* (b a* b a*)* | Tất cả các chuỗi có số lượng chữ  là **số lẻ** | L = { w ∈ {a, b}* | Nb(w) mod 2 = 1 } |
-| R = (a + ba)* (ε + b) | Tất cả các chuỗi **không chứa chuỗi con 'bb'** | L = { w ∈ {a, b}* | w không chứa bb } |
-| R = 0 (0 + 1)* 1 | Tất cả các chuỗi **bắt đầu bằng 0 và kết thúc bằng 1** | L = { 0 w 1 | w ∈ {0, 1}* } |
+| Biểu thức RE           | Ý nghĩa ngôn ngữ mô tả bằng lời                                 | Dạng tập hợp có tham số |
+| :----------------------- | :---------------------------------------------------------------------- | :--------------------------- |
+| R = a* (b a* b a*)*      | Tất cả các chuỗi có số lượng chữ  là**số chẵn**      | L = { w ∈ {a, b}*           |
+| R = a* b a* (b a* b a*)* | Tất cả các chuỗi có số lượng chữ  là**số lẻ**        | L = { w ∈ {a, b}*           |
+| R = (a + ba)* (ε + b)   | Tất cả các chuỗi**không chứa chuỗi con 'bb'**              | L = { w ∈ {a, b}*           |
+| R = 0 (0 + 1)* 1         | Tất cả các chuỗi**bắt đầu bằng 0 và kết thúc bằng 1** | L = { 0 w 1                  |
 
 ---
 

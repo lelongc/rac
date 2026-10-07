@@ -1,0 +1,99 @@
+================================================================================
+                    ĐỀ BÀI & YÊU CẦU THỰC HÀNH BÀI 8 (DEMOJPA)
+                     MÔN: CÔNG NGHỆ WEB / KIẾN TRÚC PHẦN MỀM - IUH
+                              GIẢNG VIÊN: TRƯƠNG BÁ PHÚC
+================================================================================
+
+I. BẢN CHẤT & Ý TƯỞNG CỐT LÕI CỦA THẦY:
+--------------------------------------------------------------------------------
+1. Chuyển từ "Lưu tạm trên RAM" sang "Lưu bền vững vào CSDL MySQL":
+   - Các bài trước (B1 - B6) lưu danh sách trong bộ nhớ RAM (List<Student>), 
+     khi tắt server hoặc khởi động lại là mất sạch dữ liệu.
+   - Từ Bài 8 này, bắt đầu dùng Spring Data JPA và Hibernate để lưu trực tiếp
+     vào CSDL MySQL vật lý (cổng 3306).
+
+2. Khái niệm "ORM" (Object-Relational Mapping):
+   - Đánh dấu @Entity lên Class Java -> Hibernate tự động tạo bảng CSDL tương 
+     ứng trong MySQL. Sinh viên không cần phải gõ câu lệnh CREATE TABLE bằng tay.
+   - Tự động ràng buộc CSDL bằng Java Annotation:
+     + @Id và @GeneratedValue: Khóa chính tự tăng 1, 2, 3...
+     + @Column(length = 100, nullable = false): Chiều dài tối đa 100, cấm để trống.
+     + @Column(unique = true): Giá trị duy nhất, không cho phép trùng lặp (ví dụ email).
+
+3. Khái niệm "CÁI KHO" (Repository):
+   - Thầy ví Interface `StudentRepository extends JpaRepository<Student, Long>` 
+     chính là một "Cái kho" chứa dữ liệu.
+   - Cần lấy dữ liệu hay cất dữ liệu chỉ cần gọi hàm có sẵn của kho:
+     findAll(), findById(), save(), deleteById().
+
+4. Kiến trúc 4 tầng chuẩn mực:
+   - Entity     : Đại diện cho bảng CSDL (Student.java).
+   - Repository : "Cái kho" thao tác dữ liệu với MySQL (StudentRepository.java).
+   - Service    : Tầng xử lý nghiệp vụ trung gian, inject cái kho vào dùng (StudentService.java).
+   - Controller : Nhận yêu cầu từ người dùng, gọi Service và trả kết quả (StudentController.java).
+
+5. YÊU CẦU CHẤM ĐIỂM CỐT TỬ CỦA THẦY (Phút 11:20 trong video):
+   - Thầy dặn rõ ở cuối buổi:
+     "Bây giờ các bạn viết giao diện cho nó, để nó load mấy cái này lên... 
+      Thầy tính điểm mấy cái phần này nhé các bạn nhé!"
+   - Do đó, bài làm PHẢI CÓ GIAO DIỆN WEB hiển thị danh sách sinh viên từ CSDL,
+     có chức năng thêm, sửa, xóa, tìm kiếm trực quan.
+
+
+II. CÁC BƯỚC THỰC HIỆN CHUẨN XÁC TỪNG BƯỚC (QUY TRÌNH 11 BƯỚC):
+--------------------------------------------------------------------------------
+Bước 1: Khởi động MySQL Server (nếu chưa chạy) và mở MySQL Workbench.
+Bước 2: Tạo Schema CSDL mới trong MySQL:
+        Lệnh SQL: CREATE DATABASE b8_db CHARACTER SET utf8mb4;
+Bước 3: Xác định tài khoản kết nối:
+        - Host: localhost (127.0.0.1)
+        - Port: 3306
+        - Username: root
+        - Password: root
+Bước 4: Tạo/Sử dụng project Spring Boot với các dependencies:
+        - Spring Data JPA
+        - Spring Web
+        - MySQL Driver
+        - Thymeleaf
+Bước 5: Import dự án Maven vào Eclipse:
+        File -> Import... -> Maven -> Existing Maven Projects -> Chọn thư mục code.
+Bước 6: Import cấu trúc code chuẩn:
+        - com.example.demojpa.entity
+        - com.example.demojpa.repository
+        - com.example.demojpa.service
+        - com.example.demojpa.controller
+Bước 7: Cập nhật thông tin cấu hình trong file `application.properties`:
+        - spring.datasource.url=jdbc:mysql://localhost:3306/b8_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+        - spring.datasource.username=root
+        - spring.datasource.password=root
+        - spring.jpa.hibernate.ddl-auto=update (để tự động sinh bảng)
+Bước 8: Khởi động server Spring Boot:
+        Run As -> Spring Boot App (chạy file DemojpaApplication.java).
+Bước 9: Vào MySQL Workbench bấm nút Refresh (icon xoay tròn 🔄) ở cột Schemas.
+Bước 10: Kiểm tra bảng `students` đã được Hibernate tự động tạo trong CSDL `b8_db` chưa.
+Bước 11: Kiểm thử (Test) ứng dụng theo 3 cách:
+         Cách 1 - Dùng Postman: Test các REST API tại `/api/students` (GET, POST, PUT, DELETE).
+         Cách 2 - Dùng Trình duyệt Web (SPA): Mở `http://localhost:8080/index.html` để thao tác trực quan.
+         Cách 3 - Dùng Giao diện Thymeleaf SSR: Mở `http://localhost:8080/students`.
+
+
+III. DANH SÁCH CHỨC NĂNG CẦN ĐẠT ĐỂ LẤY ĐIỂM TỐI ĐA:
+--------------------------------------------------------------------------------
+1. Quản lý Sinh viên (CRUD):
+   [x] Xem danh sách tất cả sinh viên lưu trong CSDL.
+   [x] Thêm mới sinh viên (Họ tên, Email, Số điện thoại) vào MySQL.
+   [x] Cập nhật thông tin sinh viên theo ID.
+   [x] Xóa sinh viên khỏi CSDL theo ID.
+   [x] Tìm kiếm sinh viên theo tên (không phân biệt hoa thường).
+
+2. Ràng buộc toàn vẹn dữ liệu (JPA Validation):
+   [x] ID tự tăng tự động (IDENTITY).
+   [x] Tên sinh viên bắt buộc nhập (nullable = false), tối đa 100 ký tự.
+   [x] Email không được phép trùng lặp (unique = true).
+
+3. Khả năng trình chiếu khi thầy gọi lên chấm:
+   [x] Trình chiếu trên Postman: Bắn request nhận JSON ngay lập tức.
+   [x] Trình chiếu trên Web: Thao tác thêm/sửa/xóa trực quan bằng chuột.
+   [x] Trình chiếu trên MySQL Workbench: Chạy lệnh `SELECT * FROM b8_db.students;`
+       để chứng minh dữ liệu đã vào tận ổ cứng trong MySQL Server!
+================================================================================
