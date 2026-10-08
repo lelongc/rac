@@ -263,6 +263,43 @@ public class ThreadProcess extends Thread {
 //             double w = Double.parseDouble(a[0]), h = Double.parseDouble(a[1]);
 //             return String.format("Chu vi HCN=%.4f", 2 * (w + h));
 
+            // ========== BAI 32: ĐỀ THI GIỮA KỲ CÂU 1 - Chuyển số thành chữ - Input: "3432" ==========
+//             String numStr = data.trim();
+//             String[] numWords = {"không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"};
+//             StringBuilder sbNum = new StringBuilder();
+//             boolean valid = true;
+//             for (char ch : numStr.toCharArray()) {
+//                 if (ch >= '0' && ch <= '9') sbNum.append(numWords[ch - '0']).append(" ");
+//                 else { valid = false; break; }
+//             }
+//             if (!valid) return "Chuỗi chứa ký tự không phải số!";
+//             return numStr + ": " + sbNum.toString().trim();
+
+            // ========== BAI 33: ĐỀ THI GIỮA KỲ CÂU 2 - Tìm thông tin theo Email - Input: "abcd1234@gmail.com" ==========
+//             Map<String, String> userDb = new HashMap<>();
+//             userDb.put("abcd1234@gmail.com", "HenryFord 825 893 5382");
+//             userDb.put("nguyenvana@gmail.com", "Nguyen Van A 0912345678");
+//             userDb.put("tranthib@gmail.com", "Tran Thi B 0987654321");
+//             String queryEmail = data.trim().toLowerCase();
+//             if (userDb.containsKey(queryEmail)) return data.trim() + " và " + userDb.get(queryEmail);
+//             return data.trim() + " -> Không tìm thấy người dùng";
+
+            // ========== BAI 34: THỰC HÀNH LAB 5 - Sắp xếp dãy số - Input: "11 22 4 25 28 3" ==========
+//             List<Double> numList = new ArrayList<>();
+//             for (String s : a) if (!s.isBlank()) numList.add(Double.parseDouble(s.trim()));
+//             if (numList.isEmpty()) return "Dãy số rỗng";
+//             List<Double> ascL = new ArrayList<>(numList);
+//             Collections.sort(ascL);
+//             List<Double> descL = new ArrayList<>(numList);
+//             descL.sort(Collections.reverseOrder());
+//             return "Chuỗi nhận được: " + data.trim() + " | Sắp giảm dần: " + descL + " | Sắp tăng dần: " + ascL;
+
+            // ========== BAI 35: THỰC HÀNH LAB 1 - Xếp loại sinh viên - Input: "SV01 Nguyen Van An 8.5" ==========
+//             if (a.length < 3) return "Nhap: MaSV HoTen DiemTB";
+//             double score = Double.parseDouble(a[a.length - 1]);
+//             String rank = (score >= 8.5) ? "Xuat sac" : (score >= 7.0) ? "Kha/Gioi" : (score >= 5.0) ? "Trung binh" : "Yeu";
+//             return "Thong tin: " + data.trim() + " | Xep loai: " + rank;
+
         } catch (Exception e) {
             return "Loi: " + e.getMessage();
         }
