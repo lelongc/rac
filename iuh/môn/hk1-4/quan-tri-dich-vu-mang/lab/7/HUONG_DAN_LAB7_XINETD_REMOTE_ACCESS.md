@@ -385,17 +385,20 @@ Các lệnh thông dụng trong giao diện tương tác SFTP:
 Thay vì dùng mật khẩu dễ bị lộ, quản trị viên sử dụng cặp khóa công khai / riêng tư (Public/Private Key):
 
 1. **Trên Client (Ubuntu_2):** Tạo cặp khóa RSA 2048-bit:
+
    ```bash
    ssh-keygen -t rsa -b 2048
    # Bấm Enter liên tục 3 lần để chấp nhận đường dẫn mặc định ~/.ssh/id_rsa và không đặt passphrase
    ```
 2. **Đẩy khóa công khai (Public Key) lên Server (Ubuntu_1):**
+
    ```bash
    ssh-copy-id neko@192.168.6.3
    ```
 
    *(Nhập mật khẩu `conmeo` của neko một lần duy nhất).*
 3. **Kiểm tra đăng nhập lại:**
+
    ```bash
    ssh neko@192.168.6.3
    ```
@@ -632,7 +635,7 @@ Trong thư mục `d:\folder\rac\iuh\môn\hk1-4\quan-tri-dich-vu-mang\lab\7\`, c�
 
 | Lỗi gặp phải                                                                    | Nguyên nhân                                                                                                                    | Cách khắc phục triệt để                                                                                                                                                                                                       |
 | :--------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **`telnet: Unable to connect: Connection refused`**                        | 1. Dịch vụ Xinetd chưa chạy.2. Cờ `disable = yes` trong `/etc/xinetd.d/telnet`.                                         | 1. Chạy`sudo systemctl restart xinetd`.2. Sửa thành `disable = no` rồi restart lại xinetd.3. Kiểm tra bằng `sudo ss -tlnp \| grep :23`.                                                                                 |
+| **`telnet: Unable to connect: Connection refused`**                        | 1. Dịch vụ Xinetd chưa chạy.2. Cờ`disable = yes` trong `/etc/xinetd.d/telnet`.                                          | 1. Chạy`sudo systemctl restart xinetd`.2. Sửa thành `disable = no` rồi restart lại xinetd.3. Kiểm tra bằng `sudo ss -tlnp \| grep :23`.                                                                                 |
 | **`500 OOPS: vsftpd: refusing to run with writable root inside chroot()`** | Tính năng`chroot_local_user=YES` khóa user vào thư mục home nhưng thư mục home lại có quyền ghi.                   | Thêm dòng cấu hình sau vào`/etc/vsftpd.conf`:`allow_writeable_chroot=YES`Sau đó khởi động lại dịch vụ.                                                                                                             |
 | **Lỗi cổng 21 bị xung đột: `Address already in use`**                 | Khi cấu hình vsftpd qua Xinetd nhưng quên chưa dừng dịch vụ`vsftpd` standalone, cả 2 cùng đòi lắng nghe cổng 21. | 1. Mở`/etc/vsftpd.conf`, đổi `listen=NO`.2. Chạy: `sudo systemctl stop vsftpd && sudo systemctl disable vsftpd`.3. Khởi động lại: `sudo systemctl restart xinetd`.                                                  |
 | **SSH báo `Permission denied, please try again.` dù gõ đúng pass**    | User đăng nhập không nằm trong danh sách chỉ thị`AllowUsers` trong `/etc/ssh/sshd_config`.                           | Mở file`/etc/ssh/sshd_config`, thêm tên user đó vào sau chỉ thị `AllowUsers` (ví dụ: `AllowUsers neko testuser1 username_moi`) rồi chạy `sudo systemctl restart ssh`.                                           |
