@@ -522,23 +522,43 @@ D   [ X ]  [ X ]  [ X ]
 ## DẠNG 5: VẼ NFA TỪ BIỂU THỨC CHÍNH QUY (RE)
 
 ### QUY TẮC THOMPSON CƠ BẢN:
-
-1. Ký hiệu đơn lẻ : (1) ──a──> ((2))
-2. Nối tiếp R1 . R2: Nối kết thúc của R1 sang bắt đầu của R2 bằng bước chuyển ε.
-3. Rẽ nhánh R1 + R2: Tạo đỉnh mới rẽ nhánh bằng ε vào R1 và R2, rồi chụm lại vào kết thúc bằng ε.
-4. Bao đóng R*: Vòng lặp ε quay ngược từ kết thúc về bắt đầu, kèm nhánh ε đi tắt từ đầu đến kết thúc.
+1. Ký hiệu đơn lẻ `a`: `(1) ──a──> ((2))`
+2. Nối tiếp `R1 . R2`: Nối kết thúc của `R1` sang bắt đầu của `R2` bằng bước chuyển `ε`.
+3. Rẽ nhánh `R1 + R2`: Tạo đỉnh mới rẽ nhánh bằng `ε` vào `R1` và `R2`, rồi chụm lại vào kết thúc bằng `ε`.
+4. Bao đóng `R*`: Vòng lặp `ε` quay ngược từ kết thúc về bắt đầu, kèm nhánh `ε` đi tắt từ đầu đến kết thúc.
 
 ### VÍ DỤ MẪU 5: Vẽ NFA cho biểu thức RE R = (a + b)* abb
 
-- **Đề bài:** Cho biểu thức chính quy R = (a + b)* abb trên Σ = {a, b}. Hãy vẽ sơ đồ NFA nhận diện R.
+- **Đề bài:** Cho biểu thức chính quy `R = (a + b)* abb` trên `Σ = {a, b}`. Hãy vẽ sơ đồ NFA nhận diện `R` và lập bảng chuyển trạng thái.
 - **BÀI LÀM CHUẨN THI:**
-  - Nhận diện: Chuỗi có tiền tố tự do (a + b)* và hậu tố cố định bb.
-  - Thiết kế trạng thái:
-    + Trạng thái q0: Tự lặp đọc , b (biểu diễn (a + b)*).
-    + Đoạn nhận diện bb: q0 ─(a)→ q1 ─(b)→ q2 ─(b)→ ((q3)) (với q3 ∈ F).
-  - Sơ đồ NFA:
-    `	ext a, b ┌───┐ v   │ -----> (q0) ────── a ──────> (q1) ────── b ──────> (q2) ────── b ──────> ((q3)) `
-  - Bộ 5 thành phần: M = < {q0, q1, q2, q3}, {a, b}, δ, q0, {q3} >.
+  1. Phân tích cấu trúc RE:
+     + Tiền tố tự do `(a + b)*`: lặp lại các ký tự `a, b` tùy ý tại trạng thái khởi đầu `q0`.
+     + Hậu tố cố định `abb`: dẫn từ `q0` qua chuỗi ký tự `a`, rồi `b`, rồi `b` đến trạng thái kết thúc `q3`.
+  
+  2. Sơ đồ chuyển trạng thái NFA:
+```text
+         a, b
+        ┌───┐
+        v   │
+-----> (q0) ────── a ──────> (q1) ────── b ──────> (q2) ────── b ──────> ((q3))
+```
+
+  3. Khai báo bộ 5 thành phần hình thức:
+     `M = < Q, Σ, δ, q0, F >`
+     - `Q = {q0, q1, q2, q3}`
+     - `Σ = {a, b}`
+     - Trạng thái khởi đầu: `q0`
+     - Tập trạng thái kết thúc: `F = {q3}` (vòng đôi)
+
+  4. Bảng chuyển trạng thái (δ_NFA):
++---------------+---------------+---------------+--------------------------+
+|  Trạng thái   |  Đọc chữ 'a'  |  Đọc chữ 'b'  |   Thuộc F (Kết thúc)?    |
++---------------+---------------+---------------+--------------------------+
+|   → q0        |   {q0, q1}    |     {q0}      |   Không                  |
+|     q1        |       ∅       |     {q2}      |   Không                  |
+|     q2        |       ∅       |     {q3}      |   Không                  |
+|   ★ q3        |       ∅       |       ∅       |   CÓ (Trạng thái kết thúc)|
++---------------+---------------+---------------+--------------------------+
 
 ---
 
@@ -546,12 +566,12 @@ D   [ X ]  [ X ]  [ X ]
 
 ### BẢNG TRA NHANH 4 MẪU ĐỌC RE KINH ĐIỂN:
 
-| Biểu thức RE           | Ý nghĩa ngôn ngữ mô tả bằng lời                                 | Dạng tập hợp có tham số |
-| :----------------------- | :---------------------------------------------------------------------- | :--------------------------- |
-| R = a* (b a* b a*)*      | Tất cả các chuỗi có số lượng chữ  là**số chẵn**      | L = { w ∈ {a, b}*           |
-| R = a* b a* (b a* b a*)* | Tất cả các chuỗi có số lượng chữ  là**số lẻ**        | L = { w ∈ {a, b}*           |
-| R = (a + ba)* (ε + b)   | Tất cả các chuỗi**không chứa chuỗi con 'bb'**              | L = { w ∈ {a, b}*           |
-| R = 0 (0 + 1)* 1         | Tất cả các chuỗi**bắt đầu bằng 0 và kết thúc bằng 1** | L = { 0 w 1                  |
+| Biểu thức RE | Ý nghĩa ngôn ngữ mô tả bằng lời | Dạng tập hợp có điều kiện |
+| :--- | :--- | :--- |
+| `R = a* (b a* b a*)*` | Tất cả các chuỗi có số lượng chữ `b` là **số chẵn** | `L = { w ∈ {a, b}* ; Nb(w) mod 2 = 0 }` |
+| `R = a* b a* (b a* b a*)*` | Tất cả các chuỗi có số lượng chữ `b` là **số lẻ** | `L = { w ∈ {a, b}* ; Nb(w) mod 2 = 1 }` |
+| `R = (a + ba)* (ε + b)` | Tất cả các chuỗi **không chứa chuỗi con 'bb'** | `L = { w ∈ {a, b}* ; w không chứa bb }` |
+| `R = 0 (0 + 1)* 1` | Tất cả các chuỗi **bắt đầu bằng 0 và kết thúc bằng 1** | `L = { 0w1 ; w ∈ {0, 1}* }` |
 
 ---
 
