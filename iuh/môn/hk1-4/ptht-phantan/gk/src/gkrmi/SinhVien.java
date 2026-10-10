@@ -2,6 +2,13 @@ package gkrmi;
 
 import java.io.Serializable;
 
+// =========================================================================
+// ⚠️ LƯU Ý KHI ĐI THI ĐỂ KHÔNG BỊ THỪA FILE NÀY:
+// - File này CHỈ DÙNG DUY NHẤT KHI ĐỀ RA [BÀI 37: ĐỐI TƯỢNG SINH VIÊN].
+// - NẾU ĐỀ RA BẤT KỲ BÀI NÀO KHÁC (BÀI 1 ĐẾN BÀI 36):
+//   -> HÃY XÓA THẲNG TAY FILE NÀY ĐI (DELETE SinhVien.java)!
+//   -> Dự án vẫn biên dịch và chạy 100% bình thường, không bị thừa file khi nộp!
+// =========================================================================
 public class SinhVien implements Serializable {
     private static final long serialVersionUID = 1L;
 

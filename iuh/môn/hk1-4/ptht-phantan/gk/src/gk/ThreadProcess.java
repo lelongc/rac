@@ -44,29 +44,29 @@ public class ThreadProcess extends Thread {
         try {
             String[] a = data.trim().split("[ ,\\s]+");
             
-            // ========== BAI 1: Tam giac - Input: "a b c" (vd: 3 4 5) ==========
-             if (a.length != 3) return "Nhap: a b c";
-             double x = Double.parseDouble(a[0]), y = Double.parseDouble(a[1]), z = Double.parseDouble(a[2]);
-             if (!(x > 0 && y > 0 && z > 0 && x + y > z && x + z > y && y + z > x)) return "Khong phai tam giac";
-             double p = x + y + z;
-             double s = Math.sqrt((p / 2) * (p / 2 - x) * (p / 2 - y) * (p / 2 - z));
-             return String.format("Tam giac hop le | Chu vi=%.2f | Dien tich=%.2f", p, s);
+            // ========== BAI 1: Tam giac - Input: "a b c" (vd: 3 4 5) [MAC DINH BAT] ==========
+            if (a.length != 3) return "Nhap: a b c";
+            double x = Double.parseDouble(a[0]), y = Double.parseDouble(a[1]), z = Double.parseDouble(a[2]);
+            if (!(x > 0 && y > 0 && z > 0 && x + y > z && x + z > y && y + z > x)) return "Khong phai tam giac";
+            double p = x + y + z;
+            double s = Math.sqrt((p / 2) * (p / 2 - x) * (p / 2 - y) * (p / 2 - z));
+            return String.format("Tam giac hop le | Chu vi=%.2f | Dien tich=%.2f", p, s);
 
             // ========== BAI 2: So phuc - Input: "op a b c d" (ADD/SUB/MUL/DIV a+bi c+di) ==========
-            // if (a.length != 5) return "Nhap: op a b c d";
-            // String op = a[0].toUpperCase();
-            // double ar = Double.parseDouble(a[1]), ai = Double.parseDouble(a[2]);
-            // double br = Double.parseDouble(a[3]), bi = Double.parseDouble(a[4]);
-            // double rr = 0, ri = 0;
-            // if (op.equals("ADD")) { rr = ar + br; ri = ai + bi; }
-            // else if (op.equals("SUB")) { rr = ar - br; ri = ai - bi; }
-            // else if (op.equals("MUL")) { rr = ar * br - ai * bi; ri = ar * bi + ai * br; }
-            // else if (op.equals("DIV")) {
-            //     double den = br * br + bi * bi;
-            //     if (den == 0) return "Loi chia 0";
-            //     rr = (ar * br + ai * bi) / den; ri = (ai * br - ar * bi) / den;
-            // } else return "op chi ADD|SUB|MUL|DIV";
-            // return String.format("%.4f%+.4fi", rr, ri);
+//             if (a.length != 5) return "Nhap: op a b c d";
+//             String op = a[0].toUpperCase();
+//             double ar = Double.parseDouble(a[1]), ai = Double.parseDouble(a[2]);
+//             double br = Double.parseDouble(a[3]), bi = Double.parseDouble(a[4]);
+//             double rr = 0, ri = 0;
+//             if (op.equals("ADD")) { rr = ar + br; ri = ai + bi; }
+//             else if (op.equals("SUB")) { rr = ar - br; ri = ai - bi; }
+//             else if (op.equals("MUL")) { rr = ar * br - ai * bi; ri = ar * bi + ai * br; }
+//             else if (op.equals("DIV")) {
+//                 double den = br * br + bi * bi;
+//                 if (den == 0) return "Loi chia 0";
+//                 rr = (ar * br + ai * bi) / den; ri = (ai * br - ar * bi) / den;
+//             } else return "op chi ADD|SUB|MUL|DIV";
+//             return String.format("%.4f%+.4fi", rr, ri);
 
             // ========== BAI 3: Fibonacci - Input: "n" (vd: 10) ==========
 //             int n = Integer.parseInt(data.trim());
@@ -76,14 +76,14 @@ public class ThreadProcess extends Thread {
 //             long fib_a = 0, fib_b = 1;
 
             // 1 số 
-            // for (int i = 2; i <= n; i++) { long c = fib_a + fib_b; fib_a = fib_b; fib_b = c; }
-            // return String.valueOf(fib_b);
+//             for (int i = 2; i <= n; i++) { long c = fib_a + fib_b; fib_a = fib_b; fib_b = c; }
+//             return String.valueOf(fib_b);
 
             // Muon in day:
-            // StringBuilder seq = new StringBuilder(); seq.append(fib_a);
-            // if (n >= 1) seq.append(", ").append(fib_b);
-            // for (int i = 2; i <= n; i++) { long c = fib_a + fib_b; seq.append(", ").append(c); fib_a = fib_b; fib_b = c; }
-            // return "Day Fibonacci: " + seq.toString();
+//             StringBuilder seq = new StringBuilder(); seq.append(fib_a);
+//             if (n >= 1) seq.append(", ").append(fib_b);
+//             for (int i = 2; i <= n; i++) { long c = fib_a + fib_b; seq.append(", ").append(c); fib_a = fib_b; fib_b = c; }
+//             return "Day Fibonacci: " + seq.toString();
 
             // ========== BAI 4: Quy doi tien te - Input: "amount from to" (100 USD VND) ==========
 //             if (a.length != 3) return "Nhap: amount from to";
@@ -96,10 +96,10 @@ public class ThreadProcess extends Thread {
 //             return String.format("%.4f %s", vnd / rate.get(to), to);
 
             // ========== BAI 5: Nguyen to - Input: "n" ==========
-            // long n = Long.parseLong(data.trim());
-            // if (n < 2) return "Khong phai so nguyen to";
-            // for (long i = 2; i * i <= n; i++) if (n % i == 0) return "Khong phai so nguyen to";
-            // return "La so nguyen to";
+//             long n = Long.parseLong(data.trim());
+//             if (n < 2) return "Khong phai so nguyen to";
+//             for (long i = 2; i * i <= n; i++) if (n % i == 0) return "Khong phai so nguyen to";
+//             return "La so nguyen to";
 
             // ========== BAI 6: Sap xep tang dan - Input: "5,2,9,1" or "5 2 9 1" ==========
 //             List<Double> list = new ArrayList<>();
@@ -120,11 +120,11 @@ public class ThreadProcess extends Thread {
 //             return map.toString();
 
             // ========== BAI 9: Sap xep chuoi theo chu cai - Input: "zebra,apple,cat" ==========
-            // String[] arr = data.split(",");
-            // List<String> list = new ArrayList<>();
-            // for (String s : arr) list.add(s.trim());
-            // Collections.sort(list);
-            // return list.toString();
+//             String[] arr = data.split(",");
+//             List<String> list = new ArrayList<>();
+//             for (String s : arr) list.add(s.trim());
+//             Collections.sort(list);
+//             return list.toString();
 
             // ========== BAI 10: Dao chuoi ==========
 //            return new StringBuilder(data).reverse().toString();
