@@ -152,7 +152,7 @@ public class RemoteServiceImpl extends UnicastRemoteObject implements IRemoteSer
     // ĐỀ THI GIỮA KỲ: "3432" -> "3432: ba bốn ba hai"
     @Override
     public String doiSoThanhChu(String numberStr) throws RemoteException {
-        if (numberStr == null || numberStr.isBlank()) return "Chuoi rong";
+        if (numberStr == null || numberStr.trim().isEmpty()) return "Chuoi rong";
         String[] words = {"không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"};
         StringBuilder sb = new StringBuilder();
         for (char ch : numberStr.trim().toCharArray()) {
@@ -185,7 +185,7 @@ public class RemoteServiceImpl extends UnicastRemoteObject implements IRemoteSer
         String[] words = str.trim().toLowerCase().split("\\s+");
         StringBuilder sb = new StringBuilder();
         for (String w : words) {
-            if (!w.isBlank()) {
+            if (!w.trim().isEmpty()) {
                 sb.append(Character.toUpperCase(w.charAt(0))).append(w.substring(1)).append(" ");
             }
         }
@@ -214,7 +214,7 @@ public class RemoteServiceImpl extends UnicastRemoteObject implements IRemoteSer
         String[] words = str.trim().toLowerCase().split("\\s+");
         Map<String, Integer> freq = new LinkedHashMap<>();
         for (String w : words) {
-            if (!w.isBlank()) freq.put(w, freq.getOrDefault(w, 0) + 1);
+            if (!w.trim().isEmpty()) freq.put(w, freq.getOrDefault(w, 0) + 1);
         }
         return freq.toString();
     }
@@ -234,7 +234,7 @@ public class RemoteServiceImpl extends UnicastRemoteObject implements IRemoteSer
             String[] tokens = inputNumbers.trim().split("[ ,\\s]+");
             List<Double> list = new ArrayList<>();
             for (String t : tokens) {
-                if (!t.isBlank()) list.add(Double.parseDouble(t));
+                if (!t.trim().isEmpty()) list.add(Double.parseDouble(t));
             }
             if (list.isEmpty()) return "Loi: Danh sach so rong";
 
@@ -264,7 +264,7 @@ public class RemoteServiceImpl extends UnicastRemoteObject implements IRemoteSer
             List<Double> list = new ArrayList<>();
             double sum = 0;
             for (String t : tokens) {
-                if (!t.isBlank()) {
+                if (!t.trim().isEmpty()) {
                     double val = Double.parseDouble(t);
                     list.add(val);
                     sum += val;

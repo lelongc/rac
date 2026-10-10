@@ -2,139 +2,106 @@
 
 ---
 
-## I. MA TRẬN PHÂN TÍCH ĐỀ THI GIỮA KỲ & THỰC HÀNH (TH TUẦN 1 - 6)
+## I. HƯỚNG DẪN IMPORT VÀO ECLIPSE (TỰ ĐỘNG MAP CODE, KHÔNG BỊ COPY)
 
-| Tuần / Đề bài | Trọng tâm kiến thức | Khả năng ra thi GK | Dạng câu hỏi thường gặp khi thi |
-| :--- | :--- | :---: | :--- |
-| **Đề thi mẫu GK (Câu 1)** | UDP Socket xử lý chuỗi | **RẤT CAO** | Chuyển số thành chữ (VD: `"3432"` -> `"3432: ba bốn ba hai"`), đảo chuỗi, đếm nguyên âm/phụ âm. |
-| **Đề thi mẫu GK (Câu 2)** | TCP Socket tìm kiếm đối tượng | **RẤT CAO** | Nhận email/mã số, tìm kiếm trong mảng/Map/file rồi trả về thông tin (Tên, SĐT, Địa chỉ). |
-| **TH Tuần 5 (Lab 5)** | TCP Socket dãy số | **RẤT CAO** | Nhập dãy số (`"11 22 4 25 28 3"`), trả về chuỗi gốc + chuỗi sắp giảm dần + chuỗi sắp tăng dần. |
-| **TH Tuần 6 (RMI)** | Java RMI (Registry + Remote) | **RẤT CAO** | - Bài 1: Tự tạo Registry bằng `LocateRegistry.createRegistry(1099)`<br>- Bài 2: RMI truyền IP/Port động qua args<br>- Bài 3: Dịch vụ tính toán (+ - * /), giải PT, UCLN, kiểm tra số nguyên tố, đối tượng SinhVien. |
-| **TH Tuần 4** | Multi-client Chat Socket | **TRUNG BÌNH** | Server đa luồng trung gian broadcast tin nhắn cho các client khác. |
-| **TH Tuần 3** | Object Streams & Serialization | **LỒNG GHÉP** | Đối tượng `SinhVien implements Serializable` truyền qua Stream hoặc qua RMI. |
-| **TH Tuần 1** | OOP cơ bản | **LỒNG GHÉP** | Xây dựng lớp Sinh viên: mã, họ tên, điểm TB, hàm `rank()` xếp loại. |
+Thư mục `gk` đã được cấu hình sẵn 2 file chuẩn của Eclipse là `.project` và `.classpath` với cấu trúc `src/` và `bin/`. Do đó, mọi phiên bản Eclipse (từ Eclipse cũ ở phòng máy trường đến Eclipse 2025 ở máy bạn) đều nhận diện ngay lập tức là Java Project chuẩn.
 
----
-
-## II. BỘ 3 TEMPLATE SẴN CÓ TRONG THƯ MỤC `gk`
-
-Trong thư mục `d:\folder\rac\iuh\môn\hk1-4\ptht-phantan\gk\`:
-
-1. **Thư mục `gk/`**: Template **TCP Socket** (Đa luồng `ThreadProcess`, chứa sẵn 35 bài toán nghiệp vụ).
-2. **Thư mục `gkudp/`**: Template **UDP Socket** (Client gửi DatagramPacket, Server xử lý 35 bài toán nghiệp vụ).
-3. **Thư mục `gkrmi/`**: Template **Java RMI** (Gồm `IRemoteService`, `RemoteServiceImpl`, `RMIServer`, `RMIClient`, `SinhVien` Serializable).
+### 📌 Các bước Import trực tiếp (In-place Mapping):
+1. **Mở Eclipse** (Eclipse 2025 hoặc Eclipse trên phòng máy trường).
+2. Chọn menu: **File -> Open Projects from File System...** 
+   *(Hoặc: **File -> Import... -> General -> Existing Projects into Workspace** -> Next)*.
+3. Tại ô **Import source** (hoặc **Select root directory**), bấm nút **Directory...** (hoặc **Browse...**):
+   - Trỏ tới đúng thư mục: `d:\folder\rac\iuh\môn\hk1-4\ptht-phantan\gk`
+4. **⚠️ LƯU Ý SỐNG CÒN (ĐỂ TỰ MAP CODE):**
+   - **TUYỆT ĐỐI KHÔNG TÍCH** vào ô checkbox: `[ ] Copy projects into workspace`.
+   - Nếu bạn tích vào ô này, Eclipse sẽ copy một bản sao khác vào thư mục workspace, lúc đó sửa code ở ngoài sẽ KHÔNG map vào Eclipse!
+   - Bỏ tích ô đó -> Bấm **Finish**.
+5. **Kích hoạt tự động làm mới (Auto Refresh):**
+   - Vào menu: **Window -> Preferences -> General -> Workspace**.
+   - Tích chọn ô: **`[x] Refresh using native hooks or polling`** -> Bấm **Apply and Close**.
+   - *Mẹo:* Khi bạn sửa file ở ngoài (bằng VS Code / Notepad / Antigravity), khi quay lại Eclipse, nếu chưa thấy cập nhật thì chỉ cần bấm chuột vào Project `gk` trong tab *Package Explorer* và nhấn phím **F5** (Refresh).
 
 ---
 
-## III. HƯỚNG DẪN "ĐI THI MANG VÔ BIẾT XÓA CÁI GÌ, CHỪA LẠI CÁI GÌ"
+## II. MA TRẬN ĐỐI CHIẾU 100% CÁC BÀI THỰC HÀNH (TH TUẦN 1 - 6) VÀ ĐỀ THI
+
+| Tuần / Nội dung TH | Yêu cầu bài toán | Tương ứng trong bộ template `gk` | Khả năng ra thi |
+| :--- | :--- | :--- | :---: |
+| **Đề thi mẫu GK (Câu 1)** | UDP Socket: Chuyển số thành chữ (VD: `"3432"` -> `"3432: ba bốn ba hai"`). | `src/gkudp/ThreadProcess.java` (Bài 32) & `src/gkrmi/` (`doiSoThanhChu`) | **95%** |
+| **Đề thi mẫu GK (Câu 2)** | TCP Socket: Tìm thông tin người dùng theo Email (lưu bằng Mảng hoặc File văn bản). | `src/gk/ThreadProcess.java` (Bài 33) & `users.txt` & `src/gkrmi/` (`timNguoiDungTheoEmail`) | **95%** |
+| **TH Tuần 6 (RMI)** | RMI: Registry 1099, args IP/Port, 4 phép tính (+ - * /), giải PT, Chuỗi, Dãy số, Đối tượng. | Toàn bộ package `src/gkrmi/` (`IRemoteService`, `RemoteServiceImpl`, `RMIServer`, `RMIClient`) | **90%** |
+| **TH Tuần 5 (Lab 5)** | TCP Socket: Sắp xếp dãy số (In chuỗi gốc, sắp giảm dần, sắp tăng dần). | `src/gk/ThreadProcess.java` (Bài 34) & `src/gkrmi/` (`sapXepDaySo`) | **85%** |
+| **TH Tuần 4** | TCP Socket Multi-client: Chat Group, Server làm trung gian broadcast cho các client. | Package `src/gkchat/` (`ChatServer.java` & `ChatClient.java`) | **50%** |
+| **TH Tuần 3 (Streams)** | Đọc ghi file văn bản, Serializable Object (`Student`), Data streams. | File `users.txt`, `SinhVien.java`, Bài 36 (Đọc file từ xa qua Socket). | **Lồng ghép** |
+| **TH Tuần 1 (OOP)** | Class Học sinh/Sinh viên: Mã, Tên, Điểm TB, hàm `rank()` xếp loại. | `src/gkrmi/SinhVien.java` & Bài 35 (Xếp loại sinh viên). | **Lồng ghép** |
 
 ---
 
-### TRƯỜNG HỢP 1: ĐỀ THI YÊU CẦU **TCP SOCKET**
-*Dùng thư mục `gk/`*
+## III. CẤU TRÚC GÓI MÃ NGUỒN TRONG ECLIPSE
 
-1. **File `Server.java`**:
-   - **Giữ nguyên 100%**: Đã có sẵn lắng nghe cổng `5000` và đa luồng `new ThreadProcess(s, clientId).start()`.
-   - Nếu đề bài yêu cầu đổi cổng (ví dụ: `8888`, `6789`), chỉ cần sửa dòng:
-     ```java
-     static final int PORT = 5000; // Đổi số port theo đề
-     ```
-
-2. **File `Client.java`**:
-   - **Giữ nguyên 100%**: Đã có sẵn vòng lặp đọc từ bàn phím `Scanner`, gửi `out.println()`, nhận và in kết quả `in.readLine()`.
-
-3. **File `ThreadProcess.java` (QUAN TRỌNG NHẤT)**:
-   - Mở hàm `public static String processData(String data)`:
-   - **Cách làm**:
-     - Xem đề yêu cầu bài nào (xem danh sách 35 bài đã đánh số rõ ràng).
-     - **Uncomment bài đó** (bỏ 2 dấu `//`).
-     - **Xóa tất cả các bài còn lại** (hoặc comment lại).
-   - **Ví dụ các bài phổ biến nhất**:
-     + **Câu 2 Đề thi (Tìm email)**: Tìm đến `BAI 33: ĐỀ THI GIỮA KỲ CÂU 2`, uncomment.
-     + **Lab 5 (Sắp xếp dãy số)**: Tìm đến `BAI 34: THỰC HÀNH LAB 5`, uncomment.
-     + **Câu 1 Đề thi (Chuyển số thành chữ)**: Tìm đến `BAI 32: ĐỀ THI GIỮA KỲ CÂU 1`, uncomment.
-     + **Xếp loại sinh viên**: Tìm đến `BAI 35: THỰC HÀNH LAB 1`, uncomment.
-
----
-
-### TRƯỜNG HỢP 2: ĐỀ THI YÊU CẦU **UDP SOCKET**
-*Dùng thư mục `gkudp/`*
-
-1. **File `Server.java`**:
-   - **Giữ nguyên 100%**: Đã có sẵn `DatagramSocket(PORT)`, nhận `DatagramPacket`, gọi `ThreadProcess.processData(msg)` và gửi gói tin phản hồi lại cho Client.
-
-2. **File `Client.java`**:
-   - **Giữ nguyên 100%**: Đã có sẵn `DatagramSocket`, nhập dữ liệu từ bàn phím, đóng gói `DatagramPacket` gửi lên Server và nhận kết quả in ra màn hình.
-
-3. **File `ThreadProcess.java`**:
-   - Thao tác hoàn toàn giống hệt trường hợp TCP ở trên: Chỉ cần tìm bài tương ứng trong 35 bài có sẵn, uncomment bài cần làm và xóa các bài khác.
+```text
+gk/ (Java Project)
+├── .project                   <- File cấu hình Project Eclipse
+├── .classpath                 <- File cấu hình Build Path tự nhận JRE máy trường & máy nhà
+├── users.txt                  <- File văn bản dữ liệu người dùng mẫu (Câu 2 đề thi)
+├── bin/                       <- Thư mục chứa file biên dịch .class
+└── src/
+    ├── gk/                    <- [BỘ 1: TCP SOCKET REQUEST-RESPONSE]
+    │   ├── Server.java        <- TCP Server đa luồng (Port 5000)
+    │   ├── Client.java        <- TCP Client Console
+    │   └── ThreadProcess.java <- Thư viện 36 BÀI TOÁN XỬ LÝ (Có đủ đề thi & bài TH)
+    │
+    ├── gkudp/                 <- [BỘ 2: UDP SOCKET]
+    │   ├── Server.java        <- UDP Server (Port 5000)
+    │   ├── Client.java        <- UDP Client
+    │   └── ThreadProcess.java <- Thư viện 36 BÀI TOÁN XỬ LÝ
+    │
+    ├── gkrmi/                 <- [BỘ 3: JAVA RMI HOÀN CHỈNH]
+    │   ├── IRemoteService.java    <- Interface Remote (Toán, Chuỗi, Mảng số, Đối tượng)
+    │   ├── RemoteServiceImpl.java <- Cài đặt chi tiết tất cả các hàm
+    │   ├── RMIServer.java         <- Tự động tạo Registry 1099 & Naming.rebind
+    │   ├── RMIClient.java         <- Client gọi hàm từ xa (Có sẵn 5 mẫu chạy thử)
+    │   └── SinhVien.java          <- Model Serializable chuẩn OOP Tuần 1 & Tuần 3
+    │
+    └── gkchat/                <- [BỘ 4: TCP CHAT GROUP MULTI-CLIENT TUẦN 4]
+        ├── ChatServer.java    <- Server trung gian Broadcast Vector<ClientHandler>
+        └── ChatClient.java    <- Client 2 luồng (vừa nghe tin nhắn, vừa gõ phím)
+```
 
 ---
 
-### TRƯỜNG HỢP 3: ĐỀ THI YÊU CẦU **JAVA RMI**
-*Dùng thư mục `gkrmi/`*
+## IV. HƯỚNG DẪN "ĐI THI BIẾT XÓA CÁI GÌ, CHỪA LẠI CÁI GÌ"
 
-1. **File `RMIServer.java`**:
-   - **Giữ nguyên 100%**: Đã tự động tạo Registry tại cổng 1099 (`LocateRegistry.createRegistry(PORT)`), đăng ký dịch vụ `Naming.rebind(...)`.
+### 1. Đề thi ra TCP SOCKET (dùng package `gk`):
+- **Server.java** & **Client.java**: Giữ nguyên 100%. (Đổi biến `PORT` nếu đề chỉ định cổng).
+- **ThreadProcess.java**: 
+  - Mở hàm `processData(String data)`.
+  - Tìm bài tương ứng theo comment:
+    + Câu 1 GK (Đổi số thành chữ): Tìm `BAI 32`, bỏ dấu `//`.
+    + Câu 2 GK (Tìm Email): Tìm `BAI 33`, bỏ dấu `//`.
+    + Lab 5 (Sắp xếp dãy số): Tìm `BAI 34`, bỏ dấu `//`.
+    + Lab 1 (Xếp loại SV): Tìm `BAI 35`, bỏ dấu `//`.
+    + Đọc file Server: Tìm `BAI 36`, bỏ dấu `//`.
+    + Toán / Chuỗi khác: Chọn từ Bài 1 đến Bài 31.
+  - Xóa hoặc để comment các bài còn lại.
 
-2. **File `IRemoteService.java`**:
-   - Nếu đề bài yêu cầu chỉ làm 1 hoặc 2 chức năng cụ thể:
-     + **Chừa lại**: Các khai báo phương thức mà đề yêu cầu (ví dụ: `int add(int a, int b)`, `String doiSoThanhChu(String s)`...).
-     + **Xóa**: Những hàm không liên quan (để code gọn gàng, giáo viên nhìn vào thấy đúng trọng tâm đề).
+### 2. Đề thi ra UDP SOCKET (dùng package `gkudp`):
+- **Server.java** & **Client.java**: Giữ nguyên 100%.
+- **ThreadProcess.java**: Thao tác uncomment đúng bài cần làm như TCP.
 
-3. **File `RemoteServiceImpl.java`**:
-   - Giữ lại các hàm đã chừa trong `IRemoteService.java`.
-   - Xóa các hàm không dùng tới.
-   - Nếu đề bài yêu cầu tìm kiếm người dùng / sinh viên: Chỉ cần sửa lại dữ liệu mẫu trong `userDatabase` hoặc `sinhVienList` theo đúng ví dụ của đề bài.
+### 3. Đề thi ra JAVA RMI (dùng package `gkrmi`):
+- **RMIServer.java**: Giữ nguyên 100%.
+- **IRemoteService.java**: Chừa lại đúng hàm đề yêu cầu, xóa các hàm thừa.
+- **RemoteServiceImpl.java**: Giữ lại các hàm tương ứng, xóa các hàm thừa. Cập nhật dữ liệu trong `userDatabase` hoặc `users.txt` nếu có.
+- **RMIClient.java**: Uncomment 1 trong 5 khối Demo có sẵn tương ứng với bài, xóa các khối còn lại.
+- **SinhVien.java**: Giữ lại nếu đề có xử lý đối tượng.
 
-4. **File `RMIClient.java`**:
-   - Đã chuẩn bị sẵn 5 mẫu demo tương ứng:
-     + Mẫu 1: Đổi số thành chữ (Câu 1 GK)
-     + Mẫu 2: Tìm kiếm theo Email (Câu 2 GK)
-     + Mẫu 3: Sắp xếp dãy số (Lab 5)
-     + Mẫu 4: Máy tính 4 phép tính (Tuần 6 Bài 3)
-     + Mẫu 5: Đối tượng SinhVien (Tuần 1, 3)
-   - Đi thi ra dạng nào thì **giữ lại mẫu đó**, xóa 4 mẫu còn lại đi.
-
-5. **File `SinhVien.java`**:
-   - Dùng khi đề bài liên quan đến truyền nhận đối tượng (bắt buộc phải có `implements Serializable`).
+### 4. Đề thi ra TCP CHAT GROUP / BROADCAST (dùng package `gkchat`):
+- Chạy `ChatServer.java` trên 1 tab Console.
+- Chạy 2 hoặc nhiều lần `ChatClient.java` trên các tab Console khác nhau để chat qua lại.
 
 ---
 
-## IV. BẢNG TRA CỨU NHANH 35 BÀI TOÁN SẴN CÓ TRONG `ThreadProcess.java`
-
-- **Bài 1**: Tam giác (Chu vi, diện tích Heron).
-- **Bài 2**: Số phức (Cộng, trừ, nhân, chia $a+bi$ và $c+di$).
-- **Bài 3**: Fibonacci (Tính số thứ $n$, in dãy).
-- **Bài 4**: Quy đổi tiền tệ (USD, EUR, JPY, VND).
-- **Bài 5**: Kiểm tra số nguyên tố.
-- **Bài 6**: Sắp xếp tăng dần.
-- **Bài 7**: Sắp xếp giảm dần.
-- **Bài 8**: Thống kê số lần xuất hiện của từ.
-- **Bài 9**: Sắp xếp mảng chuỗi theo chữ cái.
-- **Bài 10**: Đảo ngược chuỗi.
-- **Bài 11**: Tách chuỗi theo ký tự phân cách (`text|delimiter`).
-- **Bài 12**: UCLN và BCNN.
-- **Bài 13**: Giải phương trình bậc 1 ($ax + b = 0$).
-- **Bài 14**: Giải phương trình bậc 2 ($ax^2 + bx + c = 0$).
-- **Bài 15**: Tính tổng $1 + 2 + \dots + n$.
-- **Bài 16**: Đếm nguyên âm, phụ âm.
-- **Bài 17**: Chuẩn hóa chuỗi (Viết hoa chữ cái đầu).
-- **Bài 18**: Kiểm tra chuỗi Palindrome (chuỗi đối xứng).
-- **Bài 19**: Tính giai thừa ($n!$).
-- **Bài 20**: Tính tổng các chữ số của một số nguyên.
-- **Bài 21**: Tính tổng danh sách các số.
-- **Bài 22**: Tìm Min, Max trong danh sách số.
-- **Bài 23**: Kiểm tra chẵn, lẻ.
-- **Bài 24**: Chuyển chuỗi sang IN HOA.
-- **Bài 25**: Chuyển chuỗi sang in thường.
-- **Bài 26**: Đếm tổng số ký tự (có tính và không tính khoảng trắng).
-- **Bài 27**: Tính diện tích hình chữ nhật.
-- **Bài 28**: Tính diện tích hình tròn.
-- **Bài 29**: Tính diện tích hình thang.
-- **Bài 30**: Tính chu vi hình vuông.
-- **Bài 31**: Tính chu vi hình chữ nhật.
-- **Bài 32**: **[ĐỀ THI GK CÂU 1]** Chuyển số thành chữ (VD: `"3432"` -> `"3432: ba bốn ba hai"`).
-- **Bài 33**: **[ĐỀ THI GK CÂU 2]** Tìm thông tin người dùng theo Email (VD: `"abcd1234@gmail.com"` -> Tên + SĐT).
-- **Bài 34**: **[THỰC HÀNH LAB 5]** Sắp xếp dãy số (In chuỗi gốc, giảm dần, tăng dần).
-- **Bài 35**: **[THỰC HÀNH LAB 1]** Xếp loại học sinh/sinh viên theo điểm TB.
+## V. ĐẢM BẢO TƯƠNG THÍCH MỌI PHIÊN BẢN ECLIPSE & JAVA
+- Toàn bộ mã nguồn đã được chuẩn hóa để tuân thủ **Java 8+**, hoàn toàn loại bỏ các hàm chỉ có ở Java 11+ (như `isBlank()`) và Java 16+ (như `.toList()`).
+- File `.classpath` sử dụng biến generic `JRE_CONTAINER`, tự động thích ứng với bất kỳ phiên bản JDK/JRE nào có sẵn trên máy của trường và Eclipse 2025.

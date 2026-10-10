@@ -103,20 +103,20 @@ public class ThreadProcess extends Thread {
 
             // ========== BAI 6: Sap xep tang dan - Input: "5,2,9,1" or "5 2 9 1" ==========
 //             List<Double> list = new ArrayList<>();
-//             for (String s : a) if (!s.isBlank()) list.add(Double.parseDouble(s.trim()));
+//             for (String s : a) if (!s.trim().isEmpty()) list.add(Double.parseDouble(s.trim()));
 //             Collections.sort(list);
 //             return list.toString();
 
             // ========== BAI 7: Sap xep giam dan - Input: "5,2,9,1" ==========
 //             List<Double> list = new ArrayList<>();
-//             for (String s : a) if (!s.isBlank()) list.add(Double.parseDouble(s.trim()));
+//             for (String s : a) if (!s.trim().isEmpty()) list.add(Double.parseDouble(s.trim()));
 //             list.sort((x, y) -> Double.compare(y, x));
 //             return list.toString();
 
             // ========== BAI 8: Thong ke tu - Input: "phat trien he thong phat trien" ==========
 //             String[] w = data.toLowerCase().trim().split("\\s+");
 //             Map<String, Integer> map = new LinkedHashMap<>();
-//             for (String x : w) if (!x.isBlank()) map.put(x, map.getOrDefault(x, 0) + 1);
+//             for (String x : w) if (!x.trim().isEmpty()) map.put(x, map.getOrDefault(x, 0) + 1);
 //             return map.toString();
 
             // ========== BAI 9: Sap xep chuoi theo chu cai - Input: "zebra,apple,cat" ==========
@@ -182,7 +182,7 @@ public class ThreadProcess extends Thread {
             // ========== BAI 17: Chuan hoa chuoi - Input: "  phat  trien HE thong  " ==========
 //             String[] w = data.trim().toLowerCase().split("\\s+");
 //             StringBuilder sb = new StringBuilder();
-//             for (String word : w) if (!word.isBlank()) {
+//             for (String word : w) if (!word.trim().isEmpty()) {
 //                 sb.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(' ');
 //             }
 //             return sb.toString().trim();
@@ -210,14 +210,14 @@ public class ThreadProcess extends Thread {
 
             // ========== BAI 21: Tong danh sach so - Input: "1,2,3,4,5" ==========
 //             List<Double> list = new ArrayList<>();
-//             for (String s : a) if (!s.isBlank()) list.add(Double.parseDouble(s.trim()));
+//             for (String s : a) if (!s.trim().isEmpty()) list.add(Double.parseDouble(s.trim()));
 //             double sum = 0;
 //             for (double num : list) sum += num;
 //             return String.format("Tong=%.4f", sum);
 
             // ========== BAI 22: Min Max - Input: "5,2,9,1" ==========
 //             List<Double> list = new ArrayList<>();
-//             for (String s : a) if (!s.isBlank()) list.add(Double.parseDouble(s.trim()));
+//             for (String s : a) if (!s.trim().isEmpty()) list.add(Double.parseDouble(s.trim()));
 //             if (list.isEmpty()) return "Danh sach rong";
 //             double min = list.get(0), max = list.get(0);
 //             for (double num : list) { if (num < min) min = num; if (num > max) max = num; }
@@ -286,7 +286,7 @@ public class ThreadProcess extends Thread {
 
             // ========== BAI 34: THỰC HÀNH LAB 5 - Sắp xếp dãy số - Input: "11 22 4 25 28 3" ==========
 //             List<Double> numList = new ArrayList<>();
-//             for (String s : a) if (!s.isBlank()) numList.add(Double.parseDouble(s.trim()));
+//             for (String s : a) if (!s.trim().isEmpty()) numList.add(Double.parseDouble(s.trim()));
 //             if (numList.isEmpty()) return "Dãy số rỗng";
 //             List<Double> ascL = new ArrayList<>(numList);
 //             Collections.sort(ascL);
