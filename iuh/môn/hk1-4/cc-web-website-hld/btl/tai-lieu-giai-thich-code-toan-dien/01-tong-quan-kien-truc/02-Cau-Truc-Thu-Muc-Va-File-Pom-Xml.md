@@ -76,7 +76,7 @@ blog-website-main/
 │   │   │       └── SlugUtils.java             # Tạo đường dẫn thân thiện URL từ tiếng Việt có dấu
 │   │   │
 │   │   └── resources/                      # Tài nguyên cấu hình và giao diện
-│   │       ├── application.yaml            # Cấu hình chính (Port, H2 Database, JPA, JWT Key)
+│   │       ├── application.yaml            # Cấu hình chính (Port, MySQL Database Local, JPA, JWT Key)
 │   │       ├── application-secret.yml       # Cấu hình bảo mật Cloudinary (Cloud Name, API Key, Secret)
 │   │       ├── static/                     # Tài nguyên tĩnh phía Client
 │   │       │   ├── assets/css/main.css        # File định dạng giao diện tổng thể
@@ -96,7 +96,7 @@ blog-website-main/
 │   │
 │   └── test/                               # Chứa các bài kiểm thử tự động (Unit Test / Integration Test)
 │
-└── data/                                   # Thư mục lưu trữ file Cơ sở dữ liệu vật lý H2 (blogdb.mv.db)
+└── pom.xml                                 # File cấu hình phụ thuộc Maven và build dự án
 ```
 
 ---
@@ -244,15 +244,9 @@ File `pom.xml` (Project Object Model) là trái tim quản lý các thư viện 
 91: 			<artifactId>mysql-connector-j</artifactId>
 92: 			<scope>runtime</scope>
 93: 		</dependency>
-94: 		<dependency>
-95: 			<groupId>com.h2database</groupId>
-96: 			<artifactId>h2</artifactId>
-97: 			<scope>runtime</scope>
-98: 		</dependency>
 ```
-- **MySQL Connector/J & H2 Database**: 
-  - `mysql-connector-j`: Driver kết nối MySQL khi triển khai hệ thống lớn thực tế.
-  - `h2`: Hệ quản trị cơ sở dữ liệu nhúng (Embedded In-memory / File Database). H2 giúp ứng dụng chạy được ngay lập tức trên máy của giảng viên hoặc bất kỳ thành viên nào mà không cần cài MySQL Server hay cấu hình mật khẩu DB phức tạp.
+- **MySQL Connector/J (`mysql-connector-j`)**: 
+  - Driver JDBC chính thức của MySQL Connector. Đóng vai trò cầu nối cho phép Spring Data JPA / Hibernate kết nối và thực thi các câu lệnh truy vấn tới **MySQL Server Local** (cổng `3306`, database `blog_website_db`).
 
 ```xml
 100: 		<dependency>
@@ -351,7 +345,7 @@ File `pom.xml` (Project Object Model) là trái tim quản lý các thư viện 
 ### Câu 1: Em hãy giải thích `<scope>runtime</scope>` và `<scope>test</scope>` trong file pom.xml có ý nghĩa gì?
 - **Trả lời**:
   > "Thưa thầy/cô:
-  > - `<scope>runtime</scope>` (như thư viện H2, MySQL Connector): Nghĩa là thư viện này không cần thiết trong quá trình biên dịch mã nguồn Java (compile-time) vì code của chúng em chỉ gọi các interface chuẩn của JDBC/JPA, nhưng bắt buộc phải có khi ứng dụng bắt đầu chạy thực tế (runtime) để nạp driver kết nối database.
+  > - `<scope>runtime</scope>` (như thư viện MySQL Connector `mysql-connector-j`): Nghĩa là thư viện này không cần thiết trong quá trình biên dịch mã nguồn Java (compile-time) vì code của chúng em chỉ gọi các interface chuẩn của JDBC/JPA, nhưng bắt buộc phải có khi ứng dụng bắt đầu chạy thực tế (runtime) để nạp driver kết nối database.
   > - `<scope>test</scope>`: Nghĩa là thư viện đó (như JUnit, Mockito) chỉ phục vụ cho việc biên dịch và chạy các file kiểm thử trong thư mục `src/test/`. Khi chúng em build ứng dụng ra file jar chính thức để deploy lên production thì Maven sẽ loại bỏ các thư viện test này để giảm dung lượng file."
 
 ### Câu 2: Tại sao trong pom.xml nhóm em phải cấu hình cả Lombok lẫn MapStruct trong thẻ `<annotationProcessorPaths>`?

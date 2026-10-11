@@ -28,7 +28,7 @@ Dự án áp dụng mô hình kiến trúc **Phân tầng chuẩn doanh nghiệp
 [Repository Layer: Spring Data JPA Repositories (Giao tiếp tầng CSDL bằng ORM)]
        │
        ▼
-[Database: H2 Persistent File Database (Lưu trữ vĩnh viễn ./data/blogdb.mv.db)]
+[Database: MySQL Server Local cổng 3306 (Database: blog_website_db, quản lý qua MySQL Workbench)]
 ```
 
 ---
@@ -53,8 +53,7 @@ public class SecurityConfig {
 private final String[] PUBLIC_POST_ENDPOINTS = {
         "/users",           // API Đăng ký tài khoản mới (POST)
         "/auth/login",      // API Đăng nhập lấy Token (POST)
-        "/auth/introspect", // API Kiểm tra Token còn hạn hay không (POST)
-        "/h2-console/**"    // CSDL H2 Web Console (POST)
+        "/auth/introspect"  // API Kiểm tra Token còn hạn hay không (POST)
 };
 ```
 * **Mục đích**: Đây là các API cho phép bất kỳ ai (kể cả chưa đăng nhập) đều được gửi dữ liệu lên máy chủ.
@@ -63,7 +62,6 @@ private final String[] PUBLIC_POST_ENDPOINTS = {
 private final String[] PUBLIC_GET_ENDPOINTS = {
         "/assets/**", "/css/**", "/js/**",         // Cho phép tải file CSS/JS giao diện
         "/fragments/**",                           // Cho phép tải thanh navbar, sidebar, footer
-        "/h2-console/**",                          // Cho phép mở giao diện CSDL H2
         "/", "/home", "/home-page.html",           // Trang chủ
         "/login", "/register",                     // Trang Đăng nhập & Đăng ký
         "/post", "/blog-editor",                   // Trang đọc bài & viết bài
@@ -93,14 +91,13 @@ public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Excepti
             // 1. Cấu hình CORS cho phép các request từ trình duyệt
             .cors(org.springframework.security.config.Customizer.withDefaults())
             
-            // 2. Cho phép hiển thị giao diện H2-Console trong thẻ <iframe>
+            // 2. Tắt frameOptions để giao diện linh hoạt
             .headers(headers -> headers.frameOptions(frame -> frame.disable()))
             
             // 3. Thiết lập quyền truy cập cho từng đường dẫn
             .authorizeHttpRequests(request -> request
                     .requestMatchers(HttpMethod.POST, PUBLIC_POST_ENDPOINTS).permitAll()
                     .requestMatchers(HttpMethod.GET, PUBLIC_GET_ENDPOINTS).permitAll()
-                    .requestMatchers("/h2-console/**").permitAll()
 
                     // Chặn quyền Admin: Chỉ tài khoản có ROLE_ADMIN mới gọi được API này
                     .requestMatchers(ADMIN_ENDPOINTS).hasRole(Role.ADMIN.name())
@@ -259,7 +256,7 @@ public UserResponse createUser(UserCreatetionRequest request){
     // 5. Gán vai trò mặc định khi đăng ký là ROLE_USER
     u.getRoles().add(Role.USER.name());
     
-    // 6. Lưu xuống CSDL H2
+    // 6. Lưu xuống CSDL MySQL
     User savedUser = userRepository.save(u);
     return userMapper.toUserResponse(savedUser);
 }
@@ -631,9 +628,9 @@ cloudinary:
 
 ### ❓ Câu 3: "Dữ liệu được lưu trữ ở đâu? Tại sao khi tắt server khởi động lại thì dữ liệu không bị mất?"
 * **Trả lời**:  
-  *"Dạ, nhóm cấu hình CSDL **H2 Database dạng File** với chuỗi kết nối:  
-  `jdbc:h2:file:./data/blogdb;AUTO_SERVER=TRUE;MODE=MySQL;...`  
-  Mọi thao tác thêm/sửa/xóa đều được Hibernate ghi vĩnh viễn vào file nhị phân `data/blogdb.mv.db` trên ổ cứng. Do đó khi tắt ứng dụng hoặc khởi động lại máy, dữ liệu vẫn được bảo toàn nguyên vẹn 100%."*
+  *"Dạ, nhóm cấu hình CSDL **MySQL Server Local** (cổng `3306`, database `blog_website_db`) với chuỗi kết nối:  
+  `jdbc:mysql://localhost:3306/blog_website_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8`  
+  Mọi thao tác thêm/sửa/xóa đều được Hibernate thực thi và lưu trữ bền vững trong hệ quản trị CSDL quan hệ MySQL. Do đó khi tắt ứng dụng hoặc khởi động lại máy, dữ liệu vẫn được bảo toàn nguyên vẹn 100% và nhóm có thể mở MySQL Workbench để kiểm tra trực tiếp cấu trúc 12 bảng và dữ liệu bất cứ lúc nào."*
 
 ---
 
@@ -658,7 +655,7 @@ cloudinary:
   *"Dạ thưa Thầy/Cô:
   1. **Không lưu trên ổ cứng máy chủ cục bộ (Local Disk)**: Vì khi deploy ứng dụng lên Cloud (AWS, Render, Heroku) hoặc đóng gói Docker, các container có tính chất Stateless (mỗi lần restart hoặc scale container mới thì file lưu cục bộ sẽ bị mất). Ngoài ra, server ứng dụng sẽ bị nghẽn mạng do phải vừa xử lý logic vừa gánh tải truyền file ảnh tĩnh.
   2. **Không lưu dạng BLOB trong CSDL**: Vì file ảnh rất nặng, nếu lưu trực tiếp vào CSDL sẽ làm phình to dung lượng database và làm chậm đáng kể các câu truy vấn SQL tìm kiếm.
-  3. **Lựa chọn Cloudinary**: Là giải pháp chuẩn doanh nghiệp hiện nay. File ảnh thật được đưa lên lưu tại Cloudinary và phân phối qua mạng lưới CDN tốc độ cao. CSDL H2 của nhóm chỉ cần lưu một chuỗi đường link URL ngắn khoảng 100 ký tự (tại cột `avatar_url` bảng `users` hoặc `banner` bảng `blogs`), vừa nhẹ vừa tối ưu hiệu năng."*
+  3. **Lựa chọn Cloudinary**: Là giải pháp chuẩn doanh nghiệp hiện nay. File ảnh thật được đưa lên lưu tại Cloudinary và phân phối qua mạng lưới CDN tốc độ cao. CSDL MySQL của nhóm chỉ cần lưu một chuỗi đường link URL ngắn khoảng 100 ký tự (tại cột `avatar_url` bảng `users` hoặc `banner` bảng `blogs`), vừa nhẹ vừa tối ưu hiệu năng."*
 
 ---
 

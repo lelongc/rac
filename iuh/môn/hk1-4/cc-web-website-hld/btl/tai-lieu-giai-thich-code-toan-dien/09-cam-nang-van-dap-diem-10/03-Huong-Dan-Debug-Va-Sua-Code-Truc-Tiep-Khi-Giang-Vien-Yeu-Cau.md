@@ -131,18 +131,14 @@ Nếu thầy/cô yêu cầu: *"Giờ em thêm một tài khoản giáo viên `te
 
 Nếu thầy/cô yêu cầu: *"Dữ liệu nãy giờ em nhập lưu ở đâu? Mở trực tiếp CSDL lên cho thầy xem các bảng USERS và BLOGS!"*
 
-### Các thao tác chỉ tay mượt mà:
-1. Mở trình duyệt, truy cập địa chỉ: `http://localhost:8080/h2-console`.
-2. Tại màn hình đăng nhập của H2 Console, kiểm tra chính xác các thông số:
-   - **JDBC URL**: Điền đúng chuỗi kết nối trong `application.yaml`:
-     ```
-     jdbc:h2:file:./data/blogdb;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1;MODE=MySQL;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE
-     ```
-   - **User Name**: `sa`
-   - **Password**: Để trống hoàn toàn.
-3. Bấm nút **"Connect"**.
-4. Màn hình quản trị mở ra:
-   - Ở cột bên trái, chỉ vào các bảng: `USERS`, `BLOGS`, `COMMENTS`, `BLOG_LIKES`, `BOOKMARKS`.
-   - Gõ câu lệnh SQL: `SELECT * FROM USERS;` -> Bấm **Run** -> Thấy rõ danh sách các tài khoản với mật khẩu đã được mã hóa chuỗi `$2a$10$...`.
-   - Gõ câu lệnh SQL: `SELECT * FROM BLOGS;` -> Bấm **Run** -> Thấy rõ các bài viết vừa tạo.
-   - Thầy cô sẽ cực kỳ ấn tượng vì nhóm hiểu tường tận từ mã nguồn đến tận đáy cơ sở dữ liệu!
+### Các thao tác chỉ tay mượt mà trên MySQL Workbench:
+1. Mở phần mềm đồ họa **MySQL Workbench** trên máy tính.
+2. Click vào kết nối **Local instance MySQL** (hoặc tạo kết nối tới Hostname: `127.0.0.1` / `localhost`, Port: `3306`, Username: `root`, Password: `root`).
+3. Trong bảng điều khiển bên trái tại mục **Schemas**, click chọn database `blog_website_db`.
+4. Mở rộng mục **Tables** để thấy đầy đủ 12 bảng do Hibernate tự động tạo:
+   - `users`, `user_roles`, `blogs`, `categories`, `tags`, `comments`, `blog_likes`, `blog_views`, `bookmarks`, `notifications`, `user_follows`, `blog_tags`.
+5. Chuột phải vào bảng `users` -> chọn **Select Rows - Limit 1000** (hoặc gõ lệnh `SELECT * FROM blog_website_db.users;` và bấm icon tia sét):
+   - Thấy rõ danh sách các tài khoản (`admin`, `duonghd`, `dungnt`, `longlt`) với mật khẩu đã được mã hóa an toàn bằng chuỗi hash BCrypt `$2a$10$...`.
+6. Chuột phải vào bảng `blogs` -> chọn **Select Rows**:
+   - Thấy rõ các bài viết vừa đăng kèm tiêu đề, đường link ảnh Cloudinary, slug SEO và ID tác giả.
+7. Thầy cô sẽ cực kỳ ấn tượng vì nhóm hiểu tường tận từ mã nguồn đến tận đáy cơ sở dữ liệu MySQL chuẩn công nghiệp!

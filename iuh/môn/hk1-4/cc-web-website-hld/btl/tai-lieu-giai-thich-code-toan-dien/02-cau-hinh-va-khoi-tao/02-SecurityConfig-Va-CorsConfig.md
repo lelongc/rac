@@ -38,14 +38,12 @@ public class SecurityConfig {
     private final String[] PUBLIC_POST_ENDPOINTS = {
             "/users",
             "/auth/login",
-            "/auth/introspect",
-            "/h2-console/**"
+            "/auth/introspect"
     };
 
     private final String[] PUBLIC_GET_ENDPOINTS = {
             "/assets/**", "/css/**", "/js/**",
             "/fragments/**",
-            "/h2-console/**",
             "/", "/home", "/home-page.html",
             "/login", "/login.html",
             "/register", "/register.html",
@@ -89,7 +87,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(HttpMethod.POST, PUBLIC_POST_ENDPOINTS).permitAll()
                         .requestMatchers(HttpMethod.GET, PUBLIC_GET_ENDPOINTS).permitAll()
-                        .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(ADMIN_ENDPOINTS).hasRole(Role.ADMIN.name())
                         .requestMatchers(HttpMethod.GET, "/users").hasRole(Role.ADMIN.name())
                         .requestMatchers(HttpMethod.POST, "/categories", "/tags").hasRole(Role.ADMIN.name())
@@ -169,11 +166,10 @@ public class SecurityConfig {
     private final String[] PUBLIC_POST_ENDPOINTS = {
             "/users",              // Cho phép khách vãng lai đăng ký tài khoản mới
             "/auth/login",          // Cho phép đăng nhập lấy token
-            "/auth/introspect",     // Cho phép kiểm tra token có còn hạn hay không
-            "/h2-console/**"       // Cho phép gửi form đăng nhập vào H2 console
+            "/auth/introspect"     // Cho phép kiểm tra token có còn hạn hay không
     };
 ```
-- Mọi request POST gửi đến 4 đường dẫn này đều được phép đi qua mà không cần có Token trước.
+- Mọi request POST gửi đến 3 đường dẫn này đều được phép đi qua mà không cần có Token trước.
 
 ```java
     private final String[] PUBLIC_GET_ENDPOINTS = { ... }
@@ -206,13 +202,12 @@ public class SecurityConfig {
 ```java
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()))
 ```
-- **Tại sao phải có dòng này?**: Mặc định Spring Security bật chế độ `X-Frame-Options: DENY` để chống tấn công Clickjacking (ngăn trang web bị nhúng vào thẻ `<iframe>`). Tuy nhiên, giao diện web H2 Console (`/h2-console`) sử dụng thẻ `<iframe>` để chia giao diện thành 3 khung (cây danh mục bên trái, màn hình nhập SQL bên phải). Nếu không tắt `frameOptions`, H2 Console sẽ bị chặn và hiện màn hình trắng xóa!
+- **Tác dụng của dòng này**: Cho phép nhúng thẻ `<iframe>` trong các khung hiển thị nội bộ của ứng dụng khi cần thiết, đồng thời cấu hình linh hoạt cho các thành phần UI mở rộng.
 
 ```java
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(HttpMethod.POST, PUBLIC_POST_ENDPOINTS).permitAll()
                         .requestMatchers(HttpMethod.GET, PUBLIC_GET_ENDPOINTS).permitAll()
-                        .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(ADMIN_ENDPOINTS).hasRole(Role.ADMIN.name())
                         .requestMatchers(HttpMethod.GET, "/users").hasRole(Role.ADMIN.name())
                         .requestMatchers(HttpMethod.POST, "/categories", "/tags").hasRole(Role.ADMIN.name())

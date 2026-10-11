@@ -57,7 +57,7 @@ nohup java -jar target/blog-website-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
 Để không phải sửa code thủ công khi chuyển từ máy cá nhân lên máy chủ thực tế, dự án hỗ trợ tách cấu hình:
 
 ### 4.1. Cấu hình Development (`application-dev.yaml`)
-Dùng H2 Database trong bộ nhớ, tự động seed tài khoản mẫu, bật H2 Web Console để sinh viên dễ dàng demo và làm bài tập lớn.
+Dùng MySQL Server Local cổng 3306, tự động seed tài khoản và bài viết mẫu, quản lý trực quan qua MySQL Workbench để sinh viên dễ dàng demo và làm bài tập lớn.
 
 ### 4.2. Cấu hình Production (`application-prod.yaml`)
 Kết nối CSDL MySQL / PostgreSQL thật trên Cloud:

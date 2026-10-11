@@ -202,4 +202,4 @@ File nằm tại: `src/main/java/com/group/blog/service/BlogService.java`
   > "Thưa thầy/cô, hoàn toàn không bị lỗi!
   > Vì trong các Entity `Comment`, `BlogLike`, `Bookmark`, `BlogView`, nhóm em đều đã cấu hình chú thích:
   > `@org.hibernate.annotations.OnDelete(action = OnDeleteAction.CASCADE)`.
-  > Chú thích này sinh trực tiếp ràng buộc `ON DELETE CASCADE` ở tầng CSDL. Khi lệnh `blogRepository.deleteById(id)` được thực thi, CSDL H2/MySQL sẽ tự động xóa sạch tất cả Comment, Like, Bookmark và View của bài viết đó chỉ trong một giao dịch duy nhất, đảm bảo tính toàn vẹn dữ liệu hoàn hảo."
+  > Chú thích này sinh trực tiếp ràng buộc `ON DELETE CASCADE` ở tầng CSDL. Khi lệnh `blogRepository.deleteById(id)` được thực thi, CSDL MySQL sẽ tự động xóa sạch tất cả Comment, Like, Bookmark và View của bài viết đó chỉ trong một giao dịch duy nhất, đảm bảo tính toàn vẹn dữ liệu hoàn hảo."

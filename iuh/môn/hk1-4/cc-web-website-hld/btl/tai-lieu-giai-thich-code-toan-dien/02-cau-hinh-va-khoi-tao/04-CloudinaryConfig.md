@@ -102,4 +102,4 @@ public class CloudinaryConfig {
 ### Câu 2: Nếu mất mạng Internet thì tính năng upload ảnh có hoạt động được không?
 - **Trả lời**:
   > "Thưa thầy/cô, vì Cloudinary là dịch vụ đám mây (Cloud Service), nên quá trình upload ảnh bắt buộc máy chủ phải có kết nối Internet để gửi file qua giao thức HTTP API. 
-  > Nếu máy tính mất mạng hoàn toàn, hệ thống sẽ bắt lỗi và thông báo cho người dùng biết việc upload ảnh tạm thời gián đoạn. Tuy nhiên các tính năng viết bài và đọc bài viết đã lưu sẵn trong cơ sở dữ liệu H2 cục bộ vẫn hoạt động hoàn toàn bình thường."
+  > Nếu máy tính mất mạng hoàn toàn, hệ thống sẽ bắt lỗi và thông báo cho người dùng biết việc upload ảnh tạm thời gián đoạn. Tuy nhiên các tính năng viết bài và đọc bài viết đã lưu sẵn trong cơ sở dữ liệu MySQL cục bộ vẫn hoạt động hoàn toàn bình thường."

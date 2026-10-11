@@ -18,7 +18,7 @@
 
 ### 3. Database (Cơ sở dữ liệu)
 - **Hình ảnh đời thường:** Là **Kho chứa nguyên liệu** và **Sổ kế toán** của nhà hàng (chứa gạo, thịt, danh sách công nợ).
-- **Trong dự án:** Là CSDL **H2 Database** (lưu trong file `data/blogdb.mv.db`), nơi cất giữ bảng `users`, `blogs`, `comments`, `likes`.
+- **Trong dự án:** Là CSDL **MySQL Server Local** (cổng `3306`, database `blog_website_db`), nơi cất giữ an toàn và bền vững 12 bảng `users`, `blogs`, `comments`, `likes`, `categories`... và có thể quản lý trực quan qua **MySQL Workbench**.
 
 ### 4. HTTP Request (Yêu cầu gửi đi)
 - **Hình ảnh đời thường:** Là **Tờ phiếu gọi món** mà khách hàng ghi ra rồi đưa cho bồi bàn mang vào bếp.

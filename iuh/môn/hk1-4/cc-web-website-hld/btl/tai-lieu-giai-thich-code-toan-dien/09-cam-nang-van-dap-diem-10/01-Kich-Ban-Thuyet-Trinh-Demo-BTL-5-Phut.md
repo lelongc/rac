@@ -22,7 +22,7 @@
 
 ### BƯỚC 1: GIỚI THIỆU TỔNG QUAN VÀ TRANG CHỦ (0:00 - 1:00)
 - **Lời thoại của sinh viên**:
-  > *"Kính thưa quý Thầy/Cô trong hội đồng, hôm nay nhóm chúng em xin phép báo cáo Bài tập lớn môn Công nghệ Web: Hệ thống Blog mạng xã hội đa người dùng Bleb Blog. Dự án được chúng em xây dựng trên nền tảng Spring Boot 3.5 và Java 21, sử dụng cơ sở dữ liệu H2 cấu hình bền vững dạng File theo chuẩn tương thích MySQL, và lưu trữ hình ảnh đám mây trên Cloudinary.*
+  > *"Kính thưa quý Thầy/Cô trong hội đồng, hôm nay nhóm chúng em xin phép báo cáo Bài tập lớn môn Công nghệ Web: Hệ thống Blog mạng xã hội đa người dùng Bleb Blog. Dự án được chúng em xây dựng trên nền tảng Spring Boot 3.5 và Java 21, sử dụng cơ sở dữ liệu MySQL Server Local (cổng 3306), kết nối qua Spring Data JPA và quản lý trực quan trên MySQL Workbench, cùng dịch vụ lưu trữ hình ảnh đám mây trên Cloudinary.*
   > *Đây là Trang chủ của hệ thống. Khách vãng lai chưa cần đăng nhập vẫn có thể duyệt các bài viết mới nhất, lọc theo danh mục (Technology, Programming, Web Design) và thẻ tag, hoặc xem bảng xếp hạng các bài viết xu hướng (Trending Now) dựa trên lượt đọc thực tế."*
 - **Thao tác trên màn hình**:
   - Click vào tab danh mục `Programming` -> Thấy URL đổi thành `/?cat=...` và danh sách bài viết lọc ngay lập tức mà không bị chớp giật trang.
@@ -80,6 +80,6 @@
   - Click vào Dashboard:
     - Xem thống kê tổng số thành viên, tổng số bài viết, danh sách 5 bài viết gần nhất.
     - Vào mục "Categories & Tags": Thêm một danh mục mới `"Trí tuệ nhân tạo (AI)"`, cập nhật và xóa danh mục.
-    - Vào mục "Users": Xem danh sách người dùng trong CSDL H2.
+    - Vào mục "Users": Xem danh sách người dùng trong CSDL MySQL.
 - **Kết thúc thuyết trình**:
   > *"Dạ trên đây là toàn bộ các chức năng chính của Bài tập lớn. Nhóm chúng em đã kiểm thử tự động toàn diện vượt qua 48/48 ca kiểm thử. Chúng em xin chân thành cảm ơn quý Thầy/Cô và rất mong nhận được câu hỏi vấn đáp ạ!"*

@@ -93,5 +93,5 @@ Nếu giảng viên hỏi vào một ngóc ngách code quá sâu mà bạn lỡ 
 2. **Khởi động sẵn máy tính trước 15 phút:**
    - Bật sẵn IntelliJ IDEA, project `blog-website-main` đã bấm Run màu xanh.
    - Mở sẵn 2 tab trình duyệt Chrome: 1 tab trang chủ `http://localhost:8080/`, 1 tab ẩn danh để sẵn sàng demo 2 tài khoản tương tác cùng lúc.
-   - Mở sẵn cửa sổ H2 Console `http://localhost:8080/h2-console` để khi thầy cô bảo xem DB là bấm Connect được ngay.
+   - Mở sẵn phần mềm MySQL Workbench kết nối tới `localhost:3306` (database `blog_website_db`) để khi thầy cô bảo xem DB là bấm truy vấn xem bảng được ngay.
 3. **Tin tưởng vào bản thân:** Bạn đã có trong tay bộ tài liệu giải thích chi tiết từng dòng code toàn diện nhất. Hãy tự tin bước vào phòng thi và mang điểm 10 về! 🎓🌟

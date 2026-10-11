@@ -1,12 +1,12 @@
 # GIẢI THÍCH CHI TIẾT TỪNG DÒNG FILE APPLICATION.YAML VÀ APPLICATION-SECRET.YML
 
-> **Mục tiêu**: Hiểu cặn kẽ mọi thông số cấu hình của ứng dụng: từ cổng kết nối, chuỗi kết nối cơ sở dữ liệu H2 Database (tại sao dùng các cờ đặc biệt), cấu hình Hibernate, bảo mật JWT, dung lượng upload ảnh và tích hợp Cloudinary API.
+> **Mục tiêu**: Hiểu cặn kẽ mọi thông số cấu hình của ứng dụng: từ cổng kết nối, chuỗi kết nối cơ sở dữ liệu MySQL Server Local (tại sao dùng các tham số JDBC đặc thù), cấu hình Hibernate MySQLDialect, bảo mật JWT, dung lượng upload ảnh và tích hợp Cloudinary API.
 
 ---
 
 ## 1. FILE `src/main/resources/application.yaml`
 
-Toàn bộ nội dung file gốc trong dự án:
+Toàn bộ nội dung file trong dự án:
 
 ```yaml
 server:
@@ -16,16 +16,12 @@ server:
 
 spring:
   datasource:
-    url: jdbc:h2:file:./data/blogdb;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1;MODE=MySQL;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE
-    driverClassName: org.h2.Driver
-    username: sa
-    password: ""
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+    url: jdbc:mysql://localhost:3306/blog_website_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: update
     show-sql: true
@@ -66,42 +62,41 @@ server:
 
 ---
 
-### Nhóm 2: Cấu hình Kết nối Cơ sở dữ liệu H2 Database
+### Nhóm 2: Cấu hình Kết nối Cơ sở dữ liệu MySQL Server Local
 ```yaml
 spring:
   datasource:
-    url: jdbc:h2:file:./data/blogdb;AUTO_SERVER=TRUE;DB_CLOSE_DELAY=-1;MODE=MySQL;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE
-    driverClassName: org.h2.Driver
-    username: sa
-    password: ""
+    url: jdbc:mysql://localhost:3306/blog_website_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
 ```
-- **`driverClassName: org.h2.Driver`**: Lớp Java chịu trách nhiệm làm cầu nối điều khiển cơ sở dữ liệu H2.
-- **`username: sa`** và **`password: ""`**: Tài khoản quản trị mặc định của H2 là `sa` (System Administrator), mật khẩu để trống.
-- **Chuỗi kết nối `url: jdbc:h2:file:./data/blogdb;...`** là phần tinh hoa nhất, giải thích từng cờ (flags):
-  1. **`file:./data/blogdb`**: Cấu hình lưu trữ dữ liệu bền vững thành file vật lý tại thư mục `./data/blogdb.mv.db`. Khác hoàn toàn với chế độ in-memory thuần túy (`mem:testdb` sẽ bị mất sạch dữ liệu khi tắt server), chế độ file này đảm bảo khi tắt máy tính hoặc khởi động lại ứng dụng thì toàn bộ tài khoản, bài viết, comment vẫn được bảo toàn nguyên vẹn 100%!
-  2. **`AUTO_SERVER=TRUE`**: Cho phép chế độ đa tiến trình (Multi-process). Nhờ cờ này, cả ứng dụng Spring Boot và giao diện web H2 Console (hoặc một tool bên ngoài như DBeaver) có thể cùng lúc truy cập vào file database mà không bị lỗi tranh chấp khóa file (`Database already open`).
-  3. **`DB_CLOSE_DELAY=-1`**: Giữ cho cơ sở dữ liệu luôn duy trì trạng thái hoạt động chừng nào máy ảo JVM còn chạy, không bị tự động ngắt kết nối khi hết phiên.
-  4. **`MODE=MySQL`**: Ép H2 hoạt động ở chế độ tương thích hoàn toàn với hệ quản trị CSDL MySQL (từ cú pháp SQL, hàm ngày giờ, kiểu dữ liệu chuỗi). Nhờ đó, nếu sau này muốn chuyển sang MySQL Server thật, code không cần sửa một dòng nào!
-  5. **`DATABASE_TO_LOWER=TRUE`** & **`CASE_INSENSITIVE_IDENTIFIERS=TRUE`**: Không phân biệt chữ hoa, chữ thường cho tên bảng và tên cột, loại bỏ hoàn toàn các lỗi xung đột tên bảng giữa môi trường Windows và Linux.
+- **`driverClassName: com.mysql.cj.jdbc.Driver`**: Lớp Java Driver chính thức của MySQL Connector/J chịu trách nhiệm làm cầu nối điều khiển cơ sở dữ liệu MySQL.
+- **`username: root`** và **`password: root`**: Tài khoản và mật khẩu quản trị của MySQL Server cục bộ.
+- **Chuỗi kết nối `url: jdbc:mysql://localhost:3306/blog_website_db?...`** được tối ưu hóa chuẩn mực cho môi trường phát triển cục bộ:
+  1. **`localhost:3306/blog_website_db`**: Chỉ định dịch vụ MySQL đang chạy ở cổng mặc định `3306` trên máy tính (`localhost`), trỏ vào cơ sở dữ liệu `blog_website_db`.
+  2. **`createDatabaseIfNotExist=true`**: Rất thông minh! Khi ứng dụng khởi động, nếu trong MySQL Server chưa có database `blog_website_db`, driver sẽ tự động tạo mới database mà không cần người dùng phải gõ lệnh SQL tạo database trước bằng tay.
+  3. **`useSSL=false`**: Tắt cơ chế mã hóa kết nối SSL. Vì ứng dụng và MySQL chạy trên cùng một máy local, việc tắt SSL giúp tăng tốc độ thiết lập kết nối và tránh lỗi từ chối chứng chỉ số tự ký (self-signed certificate).
+  4. **`serverTimezone=UTC`**: Đồng bộ múi giờ quốc tế chuẩn UTC, giúp các trường thời gian như `publishedAt`, `createdAt`, `updatedAt` lưu trữ nhất quán, không bị lỗi lệch múi giờ giữa máy ảo JVM và máy chủ MySQL.
+  5. **`allowPublicKeyRetrieval=true`**: Tham số bắt buộc đối với MySQL 8+ sử dụng plugin xác thực `caching_sha2_password`. Nó cho phép JDBC driver lấy khóa công khai từ máy chủ MySQL để mã hóa mật khẩu truyền qua kết nối không có SSL.
+  6. **`characterEncoding=UTF-8`**: Đảm bảo toàn bộ chuỗi ký tự gửi và nhận (tiêu đề bài viết, nội dung tiếng Việt có dấu, bình luận) đều được mã hóa chuẩn UTF-8, không bị lỗi font hay dấu hỏi chấm (`???`).
 
 ---
 
-### Nhóm 3: Cấu hình Giao diện Quản trị CSDL (H2 Web Console)
-```yaml
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-```
-- **`enabled: true`**: Kích hoạt giao diện đồ họa quản trị CSDL tích hợp sẵn của H2.
-- **`path: /h2-console`**: Đường dẫn URL để truy cập vào trang quản trị cơ sở dữ liệu ngay trên trình duyệt: `http://localhost:8080/h2-console`. Giảng viên có thể vào đây để kiểm tra trực tiếp các bảng `USERS`, `BLOGS`, `COMMENTS` xem dữ liệu được lưu như thế nào.
+### Nhóm 3: Công Cụ Quản Trị Trực Quan (MySQL Workbench)
+- Để xem và thao tác trực tiếp với dữ liệu trong `blog_website_db`, nhóm sử dụng phần mềm đồ họa chuyên nghiệp **MySQL Workbench**:
+  - **Hostname**: `127.0.0.1` / `localhost`
+  - **Port**: `3306`
+  - **Username**: `root`
+  - **Password**: `root`
+- Tại đây, giảng viên có thể xem trực quan 12 bảng đã được Hibernate tự động sinh (`users`, `user_roles`, `blogs`, `categories`, `tags`, `comments`, `blog_likes`, `blog_views`, `bookmarks`, `notifications`, `user_follows`, `blog_tags`) cùng dữ liệu seed ban đầu.
 
 ---
 
 ### Nhóm 4: Cấu hình Hibernate & JPA (Java Persistence API)
 ```yaml
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: update
     show-sql: true
@@ -109,7 +104,7 @@ spring:
       hibernate:
         format_sql: true
 ```
-- **`database-platform: org.hibernate.dialect.H2Dialect`**: Khai báo ngôn ngữ thổ ngữ (Dialect) của Hibernate là H2. Hibernate sẽ tự động dịch các phương thức Java thành các câu lệnh SQL tối ưu riêng cho H2 Database.
+- **`database-platform: org.hibernate.dialect.MySQLDialect`**: Khai báo ngôn ngữ thổ ngữ (Dialect) của Hibernate là MySQL. Hibernate sẽ tự động biên dịch các câu lệnh HQL/JPQL và thao tác thực thể thành các câu lệnh SQL tối ưu theo chuẩn cú pháp MySQL 8.
 - **`hibernate.ddl-auto: update`**: Cực kỳ thông minh. Mỗi lần khởi động, Hibernate sẽ tự động quét các class Entity (`User.java`, `Blog.java`...) và tự động tạo mới các bảng nếu chưa có, hoặc cập nhật thêm các cột mới mà KHÔNG làm mất dữ liệu cũ đang có trong bảng.
 - **`show-sql: true`**: In các câu lệnh SQL mà Spring Data JPA thực thi ngầm ra màn hình Console/Terminal.
 - **`properties.hibernate.format_sql: true`**: Định dạng câu lệnh SQL in ra cho đẹp mắt, xuống dòng rõ ràng (indent), giúp nhóm dễ dàng gỡ lỗi (debug) và giải thích luồng truy vấn cho giảng viên xem trực tiếp.
@@ -172,15 +167,16 @@ cloudinary:
 
 ## 4. CÂU HỎI VẤN ĐÁP CỦA GIẢNG VIÊN VỀ CẤU HÌNH & CÂU TRẢ LỜI ĐIỂM 10
 
-### Câu 1: Tại sao nhóm lại sử dụng H2 Database ở chế độ File (`file:./data/blogdb`) thay vì In-Memory (`mem:`) hay cài đặt MySQL trực tiếp?
+### Câu 1: Tại sao nhóm lại sử dụng MySQL Server Local thay vì cơ sở dữ liệu nhúng (In-Memory / SQLite)?
 - **Trả lời**:
   > "Thưa thầy/cô:
-  > - Nếu dùng chế độ in-memory thuần túy (`mem:`), mỗi lần dừng ứng dụng thì toàn bộ tài khoản do người dùng đăng ký và các bài viết mới tạo sẽ biến mất hoàn toàn.
-  > - Do đó, nhóm em cấu hình chế độ File (`file:./data/blogdb`). H2 sẽ lưu toàn bộ dữ liệu vào file vật lý `blogdb.mv.db`. Dữ liệu sẽ tồn tại vĩnh viễn qua các lần chạy.
-  > - Đồng thời, việc dùng H2 kèm cờ `MODE=MySQL` mang lại 2 ưu điểm vượt trội: Thứ nhất, thầy cô và các bạn sinh viên khác khi tải code về máy chỉ cần bấm Run là chạy ngay mà không cần tốn thời gian cài MySQL Server, tạo Database hay sợ sai lệch mật khẩu `root`. Thứ hai, cú pháp và kiểu dữ liệu hoàn toàn tương thích với MySQL nên hệ thống có thể chuyển đổi sang MySQL thật chỉ bằng việc đổi chuỗi kết nối trong 1 nốt nhạc."
+  > - Các hệ quản trị cơ sở dữ liệu in-memory thuần túy sẽ mất sạch dữ liệu khi tắt máy chủ hoặc gặp sự cố.
+  > - MySQL Server là một hệ quản trị cơ sở dữ liệu quan hệ (RDBMS) chuẩn công nghiệp thực tế. Nó đảm bảo tính toàn vẹn dữ liệu nghiêm ngặt theo chuẩn ACID, hỗ trợ cơ chế khóa ngoại và giao dịch đa luồng mạnh mẽ.
+  > - Việc kết nối với MySQL Server cục bộ (cổng 3306) kết hợp với công cụ trực quan hóa MySQL Workbench giúp nhóm dễ dàng kiểm tra, phân tích câu lệnh truy vấn SQL thực tế và chuẩn bị sẵn sàng cho môi trường Production của doanh nghiệp."
 
-### Câu 2: Em hãy giải thích cờ `AUTO_SERVER=TRUE` trong chuỗi JDBC URL của H2 có tác dụng gì? Nếu bỏ cờ này thì chuyện gì xảy ra?
+### Câu 2: Em hãy giải thích cờ `createDatabaseIfNotExist=true` và `allowPublicKeyRetrieval=true` trong chuỗi JDBC URL của MySQL có tác dụng gì?
 - **Trả lời**:
-  > "Thưa thầy/cô, mặc định một file cơ sở dữ liệu H2 chỉ cho phép duy nhất MỘT tiến trình được mở tại một thời điểm (Exclusive Lock). 
-  > Nếu không có cờ `AUTO_SERVER=TRUE`, khi ứng dụng Spring Boot đang chạy và chiếm giữ file `blogdb.mv.db`, nếu chúng em mở thêm trình duyệt vào `http://localhost:8080/h2-console` để xem bảng thì H2 sẽ báo lỗi nghiêm trọng: `Database may be already in use: Locked by another process`.
-  > Nhờ có cờ `AUTO_SERVER=TRUE`, H2 sẽ tự động khởi động một máy chủ ngầm nội bộ, cho phép cả Spring Boot và H2 Web Console cùng chia sẻ quyền đọc ghi đồng thời một cách an toàn."
+  > "Thưa thầy/cô:
+  > - Cờ `createDatabaseIfNotExist=true` giúp Spring Boot tự động phát hiện và khởi tạo cơ sở dữ liệu `blog_website_db` trên MySQL Server nếu trên máy chưa tồn tại database này, giúp quá trình triển khai mã nguồn diễn ra hoàn toàn tự động mà không cần chạy file script SQL bằng tay trước.
+  > - Cờ `allowPublicKeyRetrieval=true` là cấu hình cần thiết cho chuẩn bảo mật của MySQL 8+. Do MySQL 8 sử dụng thuật toán mã hóa mật khẩu `caching_sha2_password`, khi ứng dụng kết nối ở chế độ không dùng SSL (`useSSL=false`), driver JDBC cần được phép truy xuất khóa công khai của server để mã hóa mật khẩu an toàn trước khi gửi đi."
+

@@ -25,7 +25,7 @@ Mọi hành động trên website Bleb Blog đều tuân thủ chặt chẽ theo
 [Repository Layer (JPA)]      ──> Sinh câu lệnh SQL tương tác với CSDL
          │  5. Đọc/Ghi dữ liệu
          ▼
-[Database (H2 / MySQL)]
+[Database (MySQL Local)]
 ```
 
 ---

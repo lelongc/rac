@@ -214,7 +214,7 @@ public class Bookmark {
 ```
 - **Sự khác biệt cực kỳ quan trọng**:
   - `cascade = CascadeType.REMOVE` (của JPA): Hibernate phải tự chạy câu lệnh `SELECT` để lôi hết các comment/like lên bộ nhớ JVM rồi mới phát lệnh `DELETE` từng cái một. Cách này rất chậm khi dữ liệu lớn.
-  - `@OnDelete(action = OnDeleteAction.CASCADE)` (của Hibernate): Sinh trực tiếp câu lệnh `ON DELETE CASCADE` ở mức định nghĩa bảng trong Database (Foreign Key Constraint). Khi một bài Blog bị xóa, Database Engine (H2 / MySQL) sẽ tự động dọn sạch tất cả Comment, Like, Bookmark liên quan chỉ bằng một nhát búa ở mức phần cứng, tốc độ nhanh gấp hàng chục lần!
+  - `@OnDelete(action = OnDeleteAction.CASCADE)` (của Hibernate): Sinh trực tiếp câu lệnh `ON DELETE CASCADE` ở mức định nghĩa bảng trong Database (Foreign Key Constraint). Khi một bài Blog bị xóa, Database Engine (MySQL) sẽ tự động dọn sạch tất cả Comment, Like, Bookmark liên quan chỉ bằng một nhát búa ở mức phần cứng, tốc độ nhanh gấp hàng chục lần!
 
 ---
 

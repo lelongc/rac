@@ -5,23 +5,28 @@
 > 1. **24743991** — Hoàng Đại Dương
 > 2. **24000905** — Nguyễn Trung Dũng
 > 3. **23630851** — Lê Thành Long
->    **Công nghệ**: Spring Boot 3.5, Java 21, Spring Security (JWT), Spring Data JPA, **H2 File-based Persistent Database (Lưu trữ vĩnh viễn trên ổ cứng)**, MapStruct, Lombok, Thymeleaf/HTML5, CSS3, JavaScript (Bootstrap 5, Tailwind CSS, jQuery).
+>    **Công nghệ**: Spring Boot 3.5, Java 21, Spring Security (JWT), Spring Data JPA, **MySQL Server Local (Cổng 3306, Database: blog_website_db)**, MapStruct, Lombok, Thymeleaf/HTML5, CSS3, JavaScript (Bootstrap 5, Tailwind CSS, jQuery).
 
 ---
 
-## 🗄️ 1. CƠ SỞ DỮ LIỆU LƯU TRỮ VĨNH VIỄN (PERSISTENT STORAGE)
+## 🗄️ 1. CƠ SỞ DỮ LIỆU MYSQL LOCAL (PERSISTENT INDUSTRIAL STORAGE)
 
-* **Cơ chế lưu trữ**: Sử dụng **H2 Database dạng File** lưu trực tiếp tại thư mục dự án `data/blogdb.mv.db`.
+* **Cơ chế lưu trữ**: Sử dụng **MySQL Server Local** (Cổng `3306`, Database: `blog_website_db`).
 * **Ưu điểm**:
-  - Không cần cài đặt MySQL Server, XAMPP hay Docker.
-  - **Dữ liệu được lưu vĩnh viễn 100%** vào file vật lý trên ổ cứng.
-  - Khởi động lại ứng dụng, tắt máy tính hoặc reset IDE thì toàn bộ tài khoản, bài viết, like, bình luận **vẫn còn nguyên vẹn**.
-* **Truy cập H2 Web Console**:
-  - Đường dẫn: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
-  - **Driver Class**: `org.h2.Driver`
-  - **JDBC URL**: `jdbc:h2:file:./data/blogdb`
-  - **User Name**: `sa`
-  - **Password**: *(Để trống)*
+  - Hệ quản trị CSDL quan hệ chuẩn công nghiệp thực tế theo định hướng của Giảng viên.
+  - **Dữ liệu được lưu trữ vật lý vĩnh viễn 100%** trong MySQL Server.
+  - Tự động sinh cấu trúc 12 bảng và quan hệ khóa ngoại (Hibernate ORM: `ddl-auto: update`).
+  - Khởi động lại ứng dụng, tắt máy tính hoặc reset IDE thì toàn bộ tài khoản, bài viết, like, bình luận **vẫn còn nguyên vẹn trong MySQL**.
+* **Thông số kết nối CSDL**:
+  - **Host / Port**: `localhost:3306`
+  - **Database Name**: `blog_website_db`
+  - **Username**: `root`
+  - **Password**: `root`
+  - **JDBC URL**: `jdbc:mysql://localhost:3306/blog_website_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8`
+* **Xem và thao tác trực quan bằng MySQL Workbench**:
+  - Mở icon **MySQL Workbench** ngoài Desktop.
+  - Kết nối vào `localhost:3306` (Username: `root`, Password: `root`).
+  - Ở cột bên trái (Schemas), bấm Refresh (🔄) để thấy CSDL `blog_website_db` cùng đầy đủ 12 bảng dữ liệu (`users`, `blogs`, `categories`, `tags`, `comments`, `blog_likes`, ...).
 
 ---
 
@@ -136,10 +141,10 @@
 
 | Testcase ID         | Tên ca kiểm thử        | Các bước thực hiện                                                                                                                                                        | Kết quả kỳ vọng (Expected Result)                                                                                  |
 | :------------------ | :------------------------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------- |
-| **TC-ADM-01** | Xem Dashboard thống kê  | Đăng nhập tài khoản`admin` $\rightarrow$ Truy cập [http://localhost:8080/admin/dashboard](http://localhost:8080/admin/dashboard)                                      | Thống kê chính xác:**Total Users**, **Total Posts**, bảng danh sách bài viết gần đây.           |
-| **TC-ADM-02** | Quản lý thành viên    | Vào trang[http://localhost:8080/admin/users](http://localhost:8080/admin/users)                                                                                                | Hiển thị bảng danh sách toàn bộ người dùng trong hệ thống kèm thông tin vai trò (ROLE_ADMIN, ROLE_USER). |
-| **TC-ADM-03** | Quản lý bài viết      | Vào trang[http://localhost:8080/admin/posts](http://localhost:8080/admin/posts)                                                                                                | Cho phép Admin xem tất cả bài của mọi tác giả, tìm kiếm và kiểm duyệt/xóa bài viết.                    |
-| **TC-ADM-04** | Quản lý Danh mục & Tag | Vào trang[http://localhost:8080/admin/categories-tags](http://localhost:8080/admin/categories-tags) $\rightarrow$ Thêm 1 danh mục mới (ví dụ: `Trí tuệ nhân tạo`) | Danh mục mới xuất hiện ngay trên bảng và xuất hiện ở Sidebar lọc bài viết ngoài trang chủ.              |
+| **TC-ADM-01** | Xem Dashboard thống kê  | Đăng nhập tài khoản `admin` $\rightarrow$ Truy cập [http://localhost:8080/admin/dashboard](http://localhost:8080/admin/dashboard)                                      | Thống kê chính xác: **Total Users**, **Total Posts**, bảng danh sách bài viết gần đây.           |
+| **TC-ADM-02** | Quản lý thành viên    | Vào trang [http://localhost:8080/admin/users](http://localhost:8080/admin/users)                                                                                                | Hiển thị bảng danh sách toàn bộ người dùng trong hệ thống kèm thông tin vai trò (ROLE_ADMIN, ROLE_USER). |
+| **TC-ADM-03** | Quản lý bài viết      | Vào trang [http://localhost:8080/admin/posts](http://localhost:8080/admin/posts)                                                                                                | Cho phép Admin xem tất cả bài của mọi tác giả, tìm kiếm và kiểm duyệt/xóa bài viết.                    |
+| **TC-ADM-04** | Quản lý Danh mục & Tag | Vào trang [http://localhost:8080/admin/categories-tags](http://localhost:8080/admin/categories-tags) $\rightarrow$ Thêm 1 danh mục mới (ví dụ: `Trí tuệ nhân tạo`) | Danh mục mới xuất hiện ngay trên bảng và xuất hiện ở Sidebar lọc bài viết ngoài trang chủ.              |
 
 ---
 
@@ -147,9 +152,9 @@
 
 | Testcase ID         | Tên ca kiểm thử                           | Các bước thực hiện                                                                                                                                         | Kết quả kỳ vọng (Expected Result)                                                                                                                     |
 | :------------------ | :------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **TC-SEC-01** | Chặn User thường vào API Admin           | Đăng nhập tài khoản`duonghd` (không có quyền ADMIN) $\rightarrow$ Gọi `GET /api/admin/stats`                                                     | Spring Security chặn lại và trả về mã lỗi**`403 Forbidden`**.                                                                              |
-| **TC-DB-01**  | Kiểm tra CSDL qua H2 Console                | 1. Truy cập[http://localhost:8080/h2-console](http://localhost:8080/h2-console)2. Nhập JDBC URL: `jdbc:h2:file:./data/blogdb`3. Bấm **Connect**       | Đăng nhập thành công$\rightarrow$ Thấy đầy đủ cây bảng: `USERS`, `BLOGS`, `COMMENTS`, `CATEGORIES`, `TAGS`, `NOTIFICATIONS`,... |
-| **TC-DB-02**  | Kiểm tra Lưu trữ Vĩnh viễn (Persistent) | 1. Đăng ký một user mới hoặc viết 1 bài mới.2. Tắt hẳn ứng dụng Spring Boot.3. Khởi động lại ứng dụng Spring Boot.4. Mở lại trình duyệt. | **Dữ liệu bài viết/tài khoản vừa tạo vẫn còn nguyên 100%**, không hề bị mất (nhờ cơ chế file `data/blogdb.mv.db`).              |
+| **TC-SEC-01** | Chặn User thường vào API Admin           | Đăng nhập tài khoản `duonghd` (không có quyền ADMIN) $\rightarrow$ Gọi `GET /api/admin/stats`                                                     | Spring Security chặn lại và trả về mã lỗi **`403 Forbidden`**.                                                                              |
+| **TC-DB-01**  | Kiểm tra CSDL qua MySQL Workbench           | 1. Mở MySQL Workbench<br>2. Kết nối tới `localhost:3306` (User: `root`, Pass: `root`)<br>3. Mở schema `blog_website_db` | Kết nối thành công $\rightarrow$ Thấy đầy đủ 12 bảng: `users`, `blogs`, `comments`, `categories`, `tags`, `notifications`,... |
+| **TC-DB-02**  | Kiểm tra Lưu trữ Bền vững trên MySQL Server | 1. Đăng ký một user mới hoặc viết 1 bài mới.<br>2. Tắt hẳn ứng dụng Spring Boot.<br>3. Khởi động lại ứng dụng Spring Boot.<br>4. Mở lại trình duyệt. | **Dữ liệu bài viết/tài khoản vừa tạo vẫn còn nguyên 100%**, được lưu trữ bền vững trong CSDL MySQL Server (`blog_website_db`). |
 
 ---
 

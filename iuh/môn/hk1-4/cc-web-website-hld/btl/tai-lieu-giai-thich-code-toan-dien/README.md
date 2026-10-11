@@ -10,7 +10,7 @@
 3. **Lê Thành Long** - MSSV: **23630851**
 
 - **Đề tài**: Xây dựng Website Blog Mạng Xã Hội Đa Người Dùng (Bleb Blog)
-- **Công nghệ nền tảng**: Java 21, Spring Boot 3.5.11, Spring Security (JWT HS512), Spring Data JPA (Hibernate), H2 Database (File Mode tương thích MySQL), Cloudinary Media API, Thymeleaf, Vanilla JavaScript (ES6) & Bootstrap 5.3.
+- **Công nghệ nền tảng**: Java 21, Spring Boot 3.5.11, Spring Security (JWT HS512), Spring Data JPA (Hibernate), MySQL Server Local (cổng 3306, `blog_website_db`), Cloudinary Media API, Thymeleaf, Vanilla JavaScript (ES6) & Bootstrap 5.3.
 
 ---
 
@@ -22,7 +22,7 @@ Bộ tài liệu này được biên soạn độc quyền và chi tiết từ d
 ---
 
 ### 📂 [THƯ MỤC 00: NHẬP MÔN CHO NGƯỜI CHƯA BIẾT GÌ VỀ WEB](./00-nhap-mon-cho-nguoi-chua-biet-gi/)
-- [01-Tu-Dien-Thuat-Ngu-Web-Va-Spring-Boot-Binh-Dan-Hoc-Vu.md](./00-nhap-mon-cho-nguoi-chua-biet-gi/01-Tu-Dien-Thuat-Ngu-Web-Va-Spring-Boot-Binh-Dan-Hoc-Vu.md): **Bắt buộc đọc đầu tiên:** Giải thích hơn 40 thuật ngữ kỹ thuật hóc búa (API, JSON, JWT, Stateless, Bean, DI, DTO, BCrypt, H2, ORM) bằng các hình ảnh đời thường bình dân học vụ cực kỳ dễ hiểu.
+- [01-Tu-Dien-Thuat-Ngu-Web-Va-Spring-Boot-Binh-Dan-Hoc-Vu.md](./00-nhap-mon-cho-nguoi-chua-biet-gi/01-Tu-Dien-Thuat-Ngu-Web-Va-Spring-Boot-Binh-Dan-Hoc-Vu.md): **Bắt buộc đọc đầu tiên:** Giải thích hơn 40 thuật ngữ kỹ thuật hóc búa (API, JSON, JWT, Stateless, Bean, DI, DTO, BCrypt, MySQL, ORM) bằng các hình ảnh đời thường bình dân học vụ cực kỳ dễ hiểu.
 - [02-Ban-Do-Vong-Doi-Va-Tat-Ca-Cac-Luong-Du-Lieu-He-Thong.md](./00-nhap-mon-cho-nguoi-chua-biet-gi/02-Ban-Do-Vong-Doi-Va-Tat-Ca-Cac-Luong-Du-Lieu-He-Thong.md): **Trọng tâm luồng chạy:** 7 Sơ đồ tuần tự trực quan (Mermaid Sequence Diagrams) mô tả từng bước đi của dữ liệu từ nút bấm Client ➔ Bảo mật ➔ Controller ➔ Service ➔ Repository ➔ CSDL.
 - [03-Bang-Tra-Cuu-Giang-Vien-Hoi-Gi-Mo-Dung-File-Nay.md](./00-nhap-mon-cho-nguoi-chua-biet-gi/03-Bang-Tra-Cuu-Giang-Vien-Hoi-Gi-Mo-Dung-File-Nay.md): **Phao cứu sinh phòng thi:** Bảng tra cứu 25+ câu hỏi giảng viên hay hỏi ➔ Mở chính xác file nào, dòng bao nhiêu trong 1 giây ➔ Đọc câu thoại mẫu điểm 10.
 
@@ -32,7 +32,7 @@ Bộ tài liệu này được biên soạn độc quyền và chi tiết từ d
 - [03-Kien-Truc-Thymeleaf-Va-Hybrid-SPA-Vs-SSR.md](./01-tong-quan-kien-truc/03-Kien-Truc-Thymeleaf-Va-Hybrid-SPA-Vs-SSR.md): **Câu hỏi điểm 10:** Bản chất Thymeleaf trong dự án (Template View Resolver), tại sao không dùng `th:each`/`th:text` cổ điển mà dùng kiến trúc Hybrid CSR + RESTful API kết hợp JWT Token?
 
 ### 📂 [THƯ MỤC 02: CẤU HÌNH VÀ KHỞI TẠO](./02-cau-hinh-va-khoi-tao/)
-- [01-Application-Yaml-Va-Secret.md](./02-cau-hinh-va-khoi-tao/01-Application-Yaml-Va-Secret.md): Giải thích từng thông số trong `application.yaml` và `application-secret.yml` (Cổng 8080, CSDL H2 bền vững `file:./data/blogdb`, cờ `AUTO_SERVER=TRUE`, khóa ký JWT, tài khoản Cloudinary).
+- [01-Application-Yaml-Va-Secret.md](./02-cau-hinh-va-khoi-tao/01-Application-Yaml-Va-Secret.md): Giải thích từng thông số trong `application.yaml` và `application-secret.yml` (Cổng 8080, CSDL MySQL Server Local cổng 3306 `blog_website_db`, cơ chế tự động tạo schema, khóa ký JWT, tài khoản Cloudinary).
 - [02-SecurityConfig-Va-CorsConfig.md](./02-cau-hinh-va-khoi-tao/02-SecurityConfig-Va-CorsConfig.md): **File quan trọng nhất khi thi vấn đáp!** Giải thích từng dòng trong chuỗi lọc `SecurityFilterChain`, bộ giải mã Nimbus JWT Decoder, tắt CSRF, phân quyền Role ADMIN vs USER, và cấu hình CORS.
 - [03-ApplicationInitConfig.md](./02-cau-hinh-va-khoi-tao/03-ApplicationInitConfig.md): Cơ chế nạp dữ liệu mồi (`ApplicationRunner`), tạo tài khoản mặc định cho 3 thành viên và admin, băm mật khẩu BCrypt, tạo sẵn Categories, Tags và Blogs mẫu.
 - [04-CloudinaryConfig.md](./02-cau-hinh-va-khoi-tao/04-CloudinaryConfig.md): Khởi tạo Bean kết nối dịch vụ lưu trữ hình ảnh đám mây Cloudinary.
@@ -80,7 +80,7 @@ Bộ tài liệu này được biên soạn độc quyền và chi tiết từ d
 ### 📂 [THƯ MỤC 09: CẨM NANG VẤN ĐÁP ĐIỂM 10](./09-cam-nang-van-dap-diem-10/)
 - [01-Kich-Ban-Thuyet-Trinh-Demo-BTL-5-Phut.md](./09-cam-nang-van-dap-diem-10/01-Kich-Ban-Thuyet-Trinh-Demo-BTL-5-Phut.md): Kịch bản phân vai và từng câu thoại chuẩn mực khi demo trực tiếp 5 phút trước hội đồng.
 - [02-Top-50-Cau-Hoi-Van-Dap-Giang-Vien-Hay-Hoi-Nhat.md](./09-cam-nang-van-dap-diem-10/02-Top-50-Cau-Hoi-Van-Dap-Giang-Vien-Hay-Hoi-Nhat.md): **Bộ 50 câu hỏi trắc nghiệm miệng & câu hỏi chuyên sâu** bao quát 100% mọi tình huống giảng viên hay hỏi kèm câu trả lời chuẩn xác nhất.
-- [03-Huong-Dan-Debug-Va-Sua-Code-Truc-Tiep-Khi-Giang-Vien-Yeu-Cau.md](./09-cam-nang-van-dap-diem-10/03-Huong-Dan-Debug-Va-Sua-Code-Truc-Tiep-Khi-Giang-Vien-Yeu-Cau.md): Hướng dẫn Live Coding trong 2 phút: Thêm trường mới, đổi luật validate, phân quyền API, đổi cổng server và cách mở trực tiếp CSDL H2 Console để giải thích dữ liệu.
+- [03-Huong-Dan-Debug-Va-Sua-Code-Truc-Tiep-Khi-Giang-Vien-Yeu-Cau.md](./09-cam-nang-van-dap-diem-10/03-Huong-Dan-Debug-Va-Sua-Code-Truc-Tiep-Khi-Giang-Vien-Yeu-Cau.md): Hướng dẫn Live Coding trong 2 phút: Thêm trường mới, đổi luật validate, phân quyền API, đổi cổng server và cách mở trực tiếp CSDL qua MySQL Workbench để giải thích dữ liệu.
 - [04-Bi-Kip-Tam-Ly-Va-Ky-Nang-Ung-Bien-Khi-Bi-Hoi-Cau-Kho.md](./09-cam-nang-van-dap-diem-10/04-Bi-Kip-Tam-Ly-Va-Ky-Nang-Ung-Bien-Khi-Bi-Hoi-Cau-Kho.md): **Chiến thuật phòng thi:** Nghệ thuật câu giờ thông minh 10-15s khi gặp câu hỏi khó, xử lý "hiệu ứng demo" khi web bị lỗi, và kỹ thuật chuyển hướng về vùng tự tin.
 
 ### 📂 [THƯ MỤC 10: KIỂM THỬ VÀ TRIỂN KHAI](./10-kiem-thu-va-trien-khai/)
@@ -91,7 +91,7 @@ Bộ tài liệu này được biên soạn độc quyền và chi tiết từ d
 
 ## ⚡ LỘ TRÌNH ÔN THI CẤP TỐC DÀNH CHO THÀNH VIÊN NHÓM
 - **Ngày 1 (Nhập môn & Nắm luồng dữ liệu)**: Đọc toàn bộ **Thư mục 00** (Từ điển thuật ngữ bình dân + Bản đồ 7 luồng dữ liệu + Bảng tra cứu) + **Thư mục 01** (Kiến trúc 3 lớp & Thymeleaf). Sau ngày này, bạn sẽ hiểu 80% cách website vận hành!
-- **Ngày 2 (Bảo mật & CSDL)**: Đọc **Thư mục 02** (Bảo mật SecurityConfig & Token JWT) + **Thư mục 03** (Entities) + **Thư mục 04** (Repositories). Mở H2 Console để xem các bảng dữ liệu thực tế.
+- **Ngày 2 (Bảo mật & CSDL)**: Đọc **Thư mục 02** (Bảo mật SecurityConfig & Token JWT) + **Thư mục 03** (Entities) + **Thư mục 04** (Repositories). Mở MySQL Workbench để xem các bảng dữ liệu thực tế.
 - **Ngày 3 (Nghiệp vụ Backend)**: Đọc **Thư mục 05** (Services) + **Thư mục 06** (Controllers) + **Thư mục 07** (Exceptions, DTO, Mappers). Nắm chắc luồng tạo bài viết, like, comment, và đổi mật khẩu.
 - **Ngày 4 (Giao diện & Kiểm thử)**: Đọc **Thư mục 08** (Frontend JS, HTML, CSS) + **Thư mục 10** (Kiểm thử & Triển khai). Tập dượt kịch bản demo 5 phút trên 2 trình duyệt.
 - **Ngày 5 (Tổng diễn tập điểm 10)**: Học thuộc lòng file `09.02-Top-50-Cau-Hoi-Van-Dap-Giang-Vien-Hay-Hoi-Nhat.md`, thực hành 6 tình huống Live Coding trong file `09.03` và ghi nhớ các mẹo ứng biến trong file `09.04`.

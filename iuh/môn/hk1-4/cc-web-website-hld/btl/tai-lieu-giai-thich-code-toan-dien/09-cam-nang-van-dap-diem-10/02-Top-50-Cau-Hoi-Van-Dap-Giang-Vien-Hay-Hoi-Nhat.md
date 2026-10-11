@@ -29,11 +29,11 @@
 ### Câu 5: File `pom.xml` có vai trò gì? Thẻ `<parent>` có tác dụng gì?
 - **Trả lời**: `pom.xml` chứa thông tin cấu hình dự án, quản lý thư viện và plugin. Thẻ `<parent>` kế thừa `spring-boot-starter-parent` giúp quản lý sẵn phiên bản của hàng trăm thư viện tương thích mà lập trình viên không cần tự khai báo thẻ `<version>` ở từng dependency con.
 
-### Câu 6: Trong dự án này, cơ sở dữ liệu H2 được cấu hình như thế nào?
-- **Trả lời**: H2 được cấu hình lưu trữ bền vững thành file vật lý tại `./data/blogdb.mv.db` với chế độ tương thích `MODE=MySQL` và cờ `AUTO_SERVER=TRUE` cho phép cả ứng dụng web và H2 Console cùng truy cập đồng thời mà không bị khóa file.
+### Câu 6: Trong dự án này, cơ sở dữ liệu được cấu hình như thế nào?
+- **Trả lời**: Hệ thống kết nối tới cơ sở dữ liệu **MySQL Server Local** (cổng `3306`), database `blog_website_db`. Spring Boot sử dụng JDBC Driver `com.mysql.cj.jdbc.Driver` với các cờ `createDatabaseIfNotExist=true` (tự động tạo database nếu chưa có), `useSSL=false`, `serverTimezone=UTC` và `allowPublicKeyRetrieval=true` (tương thích cơ chế băm `caching_sha2_password` của MySQL 8). Hibernate tự động quản lý và cập nhật 12 bảng thông qua `ddl-auto: update` và `database-platform: org.hibernate.dialect.MySQLDialect`.
 
-### Câu 7: Nếu muốn chuyển dự án này sang sử dụng hệ quản trị CSDL MySQL Server thật thì cần làm gì?
-- **Trả lời**: Chỉ cần mở file `application.yaml`, sửa chuỗi `spring.datasource.url` trỏ về `jdbc:mysql://localhost:3306/blogdb`, điền `username`, `password` của MySQL và đổi `database-platform` sang MySQL Dialect. Toàn bộ mã nguồn Java và Entity không cần sửa bất kỳ dòng nào vì cú pháp JPA là độc lập với hệ quản trị CSDL!
+### Câu 7: Tại sao nhóm chọn dùng MySQL Server Local thay vì cơ sở dữ liệu nhúng (In-Memory / SQLite)?
+- **Trả lời**: MySQL Server là hệ quản trị cơ sở dữ liệu quan hệ chuẩn công nghiệp thực tế. Nó đảm bảo tính toàn vẹn dữ liệu nghiêm ngặt theo chuẩn ACID, hỗ trợ cơ chế khóa ngoại phần cứng, giao dịch đa luồng mạnh mẽ và cho phép quản trị trực quan chuyên nghiệp thông qua **MySQL Workbench**. Việc dùng MySQL giúp dự án phản ánh sát với môi trường Production của doanh nghiệp.
 
 ### Câu 8: Mục đích của thư viện Lombok trong dự án là gì?
 - **Trả lời**: Lombok giúp loại bỏ các dòng code thừa (boilerplate code) bằng cách tự động sinh các hàm Getter, Setter, Constructors, `equals`, `hashCode` và Builder Pattern tại thời điểm biên dịch (Compile-time) thông qua các annotation như `@Getter`, `@Setter`, `@Builder`, `@Data`.
@@ -63,7 +63,7 @@
 - **Trả lời**: Khi tạo Token, các quyền được đóng gói vào trường `scope` trong Payload của JWT. Khi giải mã token, Bean `JwtAuthenticationConverter` sẽ gắn thêm tiền tố `ROLE_` (thành `ROLE_ADMIN`, `ROLE_USER`). Trong `SecurityConfig`, các API được chặn bằng `.hasRole("ADMIN")` sẽ đối chiếu với các quyền này trong `SecurityContextHolder`.
 
 ### Câu 14: Đoạn code `.headers(headers -> headers.frameOptions(frame -> frame.disable()))` trong `SecurityConfig` giải quyết vấn đề gì?
-- **Trả lời**: Mặc định Spring Security bật cờ `X-Frame-Options: DENY` để chống tấn công Clickjacking. Tuy nhiên giao diện web H2 Console (`/h2-console`) sử dụng thẻ `<iframe>` để chia khung màn hình. Dòng code trên tắt `frameOptions` để trình duyệt cho phép hiển thị H2 Console bình thường.
+- **Trả lời**: Mặc định Spring Security bật cờ `X-Frame-Options: DENY` để chống tấn công Clickjacking. Cấu hình trên vô hiệu hóa hạn chế này nhằm giúp ứng dụng linh hoạt khi cần nhúng các khung nhìn hoặc iframe nội bộ trên giao diện.
 
 ### Câu 15: Token hết hạn (Expired) thì hệ thống xử lý như thế nào?
 - **Trả lời**: Khi token hết hạn (quá 1 giờ), bộ giải mã `jwtDecoder()` sẽ phát hiện trường `expirationTime` nhỏ hơn thời điểm hiện tại và ném lỗi xác thực. Phía Frontend, hàm `callApi()` bắt mã lỗi `401/403` và hiển thị Toast: `"Phiên đăng nhập hết hạn hoặc không có quyền!"`, đồng thời người dùng sẽ được yêu cầu đăng nhập lại.
@@ -81,7 +81,7 @@
 
 ---
 
-## PHẦN 3: HIBERNATE, JPA & CƠ SỞ DỮ LIỆU H2 (CÂU 19 - 28)
+## PHẦN 3: HIBERNATE, JPA & CƠ SỞ DỮ LIỆU MYSQL (CÂU 19 - 28)
 
 ### Câu 19: JPA và Hibernate có mối quan hệ gì với nhau?
 - **Trả lời**: JPA (Java Persistence API) chỉ là một tập hợp các **giao diện và đặc tả tiêu chuẩn (Specification / Interface)** của Java. Còn **Hibernate là lớp triển khai thực tế (Implementation)** cụ thể của chuẩn JPA đó, chịu trách nhiệm trực tiếp sinh câu lệnh SQL và quản lý kết nối CSDL.

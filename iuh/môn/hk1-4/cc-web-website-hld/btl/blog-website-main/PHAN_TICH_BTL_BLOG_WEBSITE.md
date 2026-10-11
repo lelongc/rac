@@ -25,9 +25,8 @@ Dự án được xây dựng theo mô hình **Kiến trúc phân tầng chuẩn
 
 * **Ngôn ngữ & Nền tảng**: **Java 21**, **Spring Boot 3.5.11**.
 * **Cơ sở dữ liệu (Database)**: 
-  - **H2 Persistent File Database** (`jdbc:h2:file:./data/blogdb;AUTO_SERVER=TRUE;MODE=MySQL;...`): Dữ liệu được lưu vĩnh viễn vào file nhị phân `data/blogdb.mv.db` trên ổ cứng, **không bị mất khi tắt/khởi động lại server**, chạy độc lập không cần cài đặt thêm phần mềm.
-  - **Hỗ trợ chuyển đổi linh hoạt sang MySQL 8.0** chỉ bằng 1 dòng cấu hình trong `application.yaml`.
-  - Quản lý CSDL qua **H2 Web Console** tại đường dẫn `/h2-console`.
+  - **MySQL Server Local** (cổng `3306`, database `blog_website_db`): Dữ liệu được lưu trữ an toàn, bền vững theo chuẩn công nghiệp thực tế trong hệ quản trị CSDL quan hệ MySQL.
+  - Quản lý và trực quan hóa CSDL chuyên nghiệp qua **MySQL Workbench** tại `localhost:3306` (User: `root`, Password: `root`).
 * **ORM & Data Access**: **Spring Data JPA (Hibernate ORM 6.6)** quản lý thực thể, quan hệ bảng và tự động sinh câu lệnh SQL tối ưu.
 * **Bảo mật & Phân quyền**: 
   - **Spring Security 6**, kiến trúc Stateless không lưu session RAM.
@@ -244,7 +243,7 @@ Hệ thống được thiết lập sẵn bộ dữ liệu mẫu khởi chạy t
 * **Trạng thái kiểm thử tự động**: **Đạt 48/48 Testcase (100% PASS)** thông qua kịch bản kiểm thử toàn diện `test_suite.ps1`.
 * **16/16 Trang Giao diện người dùng & Quản trị**: Hoạt động ổn định, trả về mã **`200 OK`**.
 * **Bảo mật & Phân quyền**: Ngăn chặn chính xác các truy cập trái phép bằng mã **`403 Forbidden`**.
-* **Độ bền dữ liệu**: Cơ chế **H2 Persistent File Database** bảo toàn 100% dữ liệu tài khoản, bài viết, lượt tương tác qua mọi lần tắt và khởi động lại ứng dụng.
+* **Độ bền dữ liệu**: Cơ sở dữ liệu **MySQL Server Local** bảo toàn 100% dữ liệu tài khoản, bài viết, lượt tương tác qua mọi lần tắt và khởi động lại ứng dụng.
 
 ---
 

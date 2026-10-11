@@ -28,15 +28,13 @@ public class SecurityConfig {
     private final String[] PUBLIC_POST_ENDPOINTS = {
             "/users",
             "/auth/login",
-            "/auth/introspect",
-            "/h2-console/**"
+            "/auth/introspect"
     };
 
     // Các API và View dùng phương thức GET được phép truy cập tự do
     private final String[] PUBLIC_GET_ENDPOINTS = {
             "/assets/**", "/css/**", "/js/**",         // Tài nguyên tĩnh (frontend)
             "/fragments/**",                           // Các file html tĩnh (sidebar, navbar...)
-            "/h2-console/**",                          // H2 Database Web Console
 
             // --- CÁC ROUTE GIAO DIỆN (VIEW) CÔNG KHAI ---
             "/", "/home", "/home-page.html",
@@ -86,7 +84,6 @@ public class SecurityConfig {
                         // 1. CÁC API VÀ VIEW PUBLIC (AI CŨNG VÀO ĐƯỢC)
                         .requestMatchers(HttpMethod.POST, PUBLIC_POST_ENDPOINTS).permitAll()
                         .requestMatchers(HttpMethod.GET, PUBLIC_GET_ENDPOINTS).permitAll()
-                        .requestMatchers("/h2-console/**").permitAll()
 
                         // 2. CÁC API ĐẶC THÙ YÊU CẦU QUYỀN ADMIN
                         .requestMatchers(ADMIN_ENDPOINTS).hasRole(Role.ADMIN.name())

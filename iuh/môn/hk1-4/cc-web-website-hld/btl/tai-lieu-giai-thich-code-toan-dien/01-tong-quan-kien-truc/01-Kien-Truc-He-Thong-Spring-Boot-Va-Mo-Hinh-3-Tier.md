@@ -8,7 +8,7 @@
 
 Dự án **Blog Website (Bleb Blog)** là một ứng dụng Web hiện đại kết hợp giữa:
 - **Backend**: Xây dựng trên nền tảng **Java 21** và framework **Spring Boot 3.5.11**. Cung cấp hệ thống RESTful API chuẩn mực, xử lý logic nghiệp vụ, xác thực phân quyền bằng JWT (JSON Web Token), và giao tiếp cơ sở dữ liệu qua Spring Data JPA (Hibernate).
-- **Database**: Sử dụng **H2 Database** lưu trữ file (`./data/blogdb.mv.db`), tự động tạo bảng (DDL auto-update), cấu hình chuẩn tương thích MySQL (`MODE=MySQL`), cho phép chạy độc lập ngay lập tức mà không phụ thuộc vào việc cài đặt MySQL Server bên ngoài.
+- **Database**: Sử dụng **MySQL Server Local** (cổng `3306`, database `blog_website_db`), tự động tạo bảng (Hibernate DDL auto-update), chuẩn quản trị quan hệ công nghiệp, quản lý trực quan qua **MySQL Workbench**.
 - **Lưu trữ hình ảnh đám mây**: Tích hợp **Cloudinary API** để tải lên và lưu trữ ảnh đại diện (avatar), ảnh bài viết (banner) với URL HTTPS vĩnh viễn.
 - **Frontend**: Kết hợp giữa **Thymeleaf Template Engine** (render giao diện phía server) và **JavaScript thuần (Vanilla JS / ES6)** phía client, gọi các REST API bất đồng bộ (AJAX/Fetch API), lưu trữ token JWT trong `localStorage`.
 
@@ -57,10 +57,10 @@ Trong kỹ nghệ phần mềm và các đồ án môn học tại IUH, mô hìn
 +───────────────────────────────────────────────────────────────────────────────+
                                       │  ▲
                         SQL Statement │  │ Result Set
-                         (H2 / MySQL) ▼  │
+                        (MySQL Local) ▼  │
 +───────────────────────────────────────────────────────────────────────────────+
 |                             DATABASE ENGINE                                   |
-|                H2 Database Engine (Lưu trữ file ./data/blogdb)                |
+|       MySQL Server Local (Cổng 3306, Database: blog_website_db)               |
 +───────────────────────────────────────────────────────────────────────────────+
 ```
 

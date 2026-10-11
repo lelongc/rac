@@ -301,8 +301,13 @@ b3 thêm nút xóa ,sửa ,thêm, tìm kiếm
 
 spa
 
-biết cách gọi rest api , lấy json đưa lên table , thêm xóa sửa tìm kiếm 
+biết cách gọi rest api , lấy json đưa lên table , thêm xóa sửa tìm kiếm
 
 b4 phân trang
 
 b5 sorting
+
+
+https://dev.mysql.com/doc/workbench/en/wb-eer-color-key.html
+
+https://medium.com/@ashleylynnrapone/database-design-from-entity-relationship-diagrams-to-physical-diagrams-16da210d01e9

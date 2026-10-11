@@ -105,9 +105,9 @@ public class ApplicationInitConfig {
                 tags1.add(tagJava);
 
                 Blog blog1 = Blog.builder()
-                        .title("Khám phá kiến trúc Spring Boot 3 và cơ chế In-Memory H2 Database")
-                        .description("Tìm hiểu cách xây dựng ứng dụng Web hoàn chỉnh với Spring Boot 3, Hibernate JPA và giải pháp H2 Database nhúng không cần cài đặt MySQL.")
-                        .content("Spring Boot là một trong những framework phổ biến nhất trong hệ sinh thái Java. Kết hợp với H2 In-memory Database giúp việc kiểm thử và triển khai diễn ra cực kỳ nhanh chóng và tiện lợi.")
+                        .title("Khám phá kiến trúc Spring Boot 3 và Cơ sở Dữ liệu MySQL Local")
+                        .description("Tìm hiểu cách xây dựng ứng dụng Web hoàn chỉnh với Spring Boot 3, Hibernate JPA và hệ quản trị cơ sở dữ liệu MySQL Server trên máy cục bộ.")
+                        .content("Spring Boot là một trong những framework phổ biến nhất trong hệ sinh thái Java. Kết hợp với MySQL Server giúp việc quản lý dữ liệu bền vững, bảo mật và chuẩn hóa theo môi trường thực tế.")
                         .banner("https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800")
                         .draft(false)
                         .author(duong)
