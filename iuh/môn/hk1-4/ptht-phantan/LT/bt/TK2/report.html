@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Báo cáo Thường kỳ 2 - Lê Thành Long - 23630851</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 12mm 15mm 12mm 15mm;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #1e293b;
+            line-height: 1.45;
+            background: #ffffff;
+            margin: 0;
+            padding: 0;
+            font-size: 13px;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #0284c7;
+            padding-bottom: 10px;
+            margin-bottom: 16px;
+        }
+        .header h3 {
+            margin: 0 0 4px 0;
+            font-size: 13px;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .header h1 {
+            margin: 6px 0 4px 0;
+            font-size: 19px;
+            color: #0369a1;
+            text-transform: uppercase;
+        }
+        .header h2 {
+            margin: 0;
+            font-size: 14px;
+            color: #0f172a;
+            font-weight: 600;
+        }
+        .student-card {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-left: 5px solid #0284c7;
+            border-radius: 6px;
+            padding: 10px 16px;
+            margin-bottom: 16px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 16px;
+        }
+        .student-card .info-item {
+            font-size: 12.5px;
+        }
+        .student-card .info-item strong {
+            color: #0369a1;
+        }
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
+            border-bottom: 1.5px solid #e2e8f0;
+            padding-bottom: 4px;
+            margin-top: 14px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .section-title span {
+            background: #0284c7;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11.5px;
+            margin-right: 8px;
+        }
+        .terminal-box {
+            background: #0f172a;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.12);
+            margin-bottom: 14px;
+            border: 1px solid #334155;
+        }
+        .terminal-bar {
+            background: #1e293b;
+            padding: 6px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #334155;
+        }
+        .terminal-dots {
+            display: flex;
+            gap: 6px;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        .dot-red { background: #ef4444; }
+        .dot-yellow { background: #f59e0b; }
+        .dot-green { background: #10b981; }
+        .terminal-badge {
+            color: #38bdf8;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            background: rgba(56, 189, 248, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+        }
+        .terminal-body {
+            padding: 10px 14px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 11.5px;
+            color: #f1f5f9;
+            white-space: pre-wrap;
+            word-break: break-all;
+            line-height: 1.4;
+        }
+        .prompt {
+            color: #38bdf8;
+            font-weight: bold;
+        }
+        .cmd {
+            color: #facc15;
+            font-weight: bold;
+        }
+        .json-key {
+            color: #93c5fd;
+        }
+        .json-str {
+            color: #86efac;
+        }
+        .json-num {
+            color: #fca5a5;
+        }
+        .page-break {
+            page-break-before: always;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TRANG 1 -->
+    <div class="header">
+        <h3>BỘ CÔNG THƯƠNG - TRƯỜNG ĐẠI HỌC CÔNG NGHIỆP TP. HỒ CHÍ MINH</h3>
+        <h1>BÁO CÁO KẾT QUẢ KIỂM TRA THƯỜNG KỲ 2 - ĐỀ 2</h1>
+        <h2>HỌC PHẦN: PHÁT TRIỂN HỆ THỐNG PHÂN TÁN</h2>
+    </div>
+
+    <div class="student-card">
+        <div class="info-item"><strong>Họ và tên:</strong> Lê Thành Long</div>
+        <div class="info-item"><strong>Mã số sinh viên (MSSV):</strong> 23630851</div>
+        <div class="info-item"><strong>Docker Hub Repository:</strong> shima594/c2:23630851</div>
+        <div class="info-item"><strong>Port dịch vụ:</strong> 8080 (REST API /api/products)</div>
+        <div class="info-item" style="grid-column: span 2;">
+            <strong>Lệnh Docker Run:</strong> 
+            <code>docker run -d -p 8080:8080 --name product-service shima594/c2:23630851</code>
+        </div>
+    </div>
+
+    <div class="section-title">
+        <span>BƯỚC 1</span> KHỞI CHẠY SERVICE VỚI DOCKER CONTAINER
+    </div>
+    <div class="terminal-box">
+        <div class="terminal-bar">
+            <div class="terminal-dots">
+                <div class="dot dot-red"></div>
+                <div class="dot dot-yellow"></div>
+                <div class="dot dot-green"></div>
+            </div>
+            <div class="terminal-badge">[SV: Lê Thành Long | MSSV: 23630851]</div>
+        </div>
+        <div class="terminal-body"><span class="prompt">PS D:\23630851_LeThanhLong&gt;</span> <span class="cmd">docker run -d -p 8080:8080 --name product-service shima594/c2:23630851</span>
+c47dbaa036d38cb115d8b158794f88fec0c81aef032b4657de4fd65eecd5faff
+
+<span class="prompt">PS D:\23630851_LeThanhLong&gt;</span> <span class="cmd">docker ps</span>
+CONTAINER ID   IMAGE                   COMMAND                  STATUS         PORTS                    NAMES
+c47dbaa036d3   shima594/c2:23630851    "java -jar app.jar"      Up 2 minutes   0.0.0.0:8080->8080/tcp   product-service</div>
+    </div>
+
+    <div class="section-title">
+        <span>BƯỚC 2</span> KIỂM THỬ API GET /api/products (LẤY DANH SÁCH SẢN PHẨM BAN ĐẦU)
+    </div>
+    <div class="terminal-box">
+        <div class="terminal-bar">
+            <div class="terminal-dots">
+                <div class="dot dot-red"></div>
+                <div class="dot dot-yellow"></div>
+                <div class="dot dot-green"></div>
+            </div>
+            <div class="terminal-badge">[SV: Lê Thành Long | MSSV: 23630851]</div>
+        </div>
+        <div class="terminal-body"><span class="prompt">PS D:\23630851_LeThanhLong&gt;</span> <span class="cmd">curl -s http://localhost:8080/api/products</span>
+[
+  {
+    <span class="json-key">"id"</span>: <span class="json-num">1</span>,
+    <span class="json-key">"name"</span>: <span class="json-str">"Laptop Dell XPS 15"</span>,
+    <span class="json-key">"price"</span>: <span class="json-num">25000000.0</span>
+  },
+  {
+    <span class="json-key">"id"</span>: <span class="json-num">2</span>,
+    <span class="json-key">"name"</span>: <span class="json-str">"Mouse Logitech MX Master"</span>,
+    <span class="json-key">"price"</span>: <span class="json-num">1850000.0</span>
+  },
+  {
+    <span class="json-key">"id"</span>: <span class="json-num">3</span>,
+    <span class="json-key">"name"</span>: <span class="json-str">"Keyboard Keychron K2"</span>,
+    <span class="json-key">"price"</span>: <span class="json-num">2100000.0</span>
+  }
+]</div>
+    </div>
+
+    <!-- TRANG 2 -->
+    <div class="page-break"></div>
+
+    <div class="section-title">
+        <span>BƯỚC 3</span> KIỂM THỬ API POST /api/products (THÊM SẢN PHẨM MỚI)
+    </div>
+    <div class="terminal-box">
+        <div class="terminal-bar">
+            <div class="terminal-dots">
+                <div class="dot dot-red"></div>
+                <div class="dot dot-yellow"></div>
+                <div class="dot dot-green"></div>
+            </div>
+            <div class="terminal-badge">[SV: Lê Thành Long | MSSV: 23630851]</div>
+        </div>
+        <div class="terminal-body"><span class="prompt">PS D:\23630851_LeThanhLong&gt;</span> <span class="cmd">curl -s -X POST http://localhost:8080/api/products -H "Content-Type: application/json" -d '{"name": "Tai nghe Sony WH-1000XM5", "price": 8490000.0}'</span>
+{
+  <span class="json-key">"id"</span>: <span class="json-num">4</span>,
+  <span class="json-key">"name"</span>: <span class="json-str">"Tai nghe Sony WH-1000XM5"</span>,
+  <span class="json-key">"price"</span>: <span class="json-num">8490000.0</span>
+}</div>
+    </div>
+
+    <div class="section-title">
+        <span>BƯỚC 4</span> KIỂM THỬ API GET /api/products (XÁC NHẬN SẢN PHẨM MỚI ĐÃ ĐƯỢC THÊM)
+    </div>
+    <div class="terminal-box">
+        <div class="terminal-bar">
+            <div class="terminal-dots">
+                <div class="dot dot-red"></div>
+                <div class="dot dot-yellow"></div>
+                <div class="dot dot-green"></div>
+            </div>
+            <div class="terminal-badge">[SV: Lê Thành Long | MSSV: 23630851]</div>
+        </div>
+        <div class="terminal-body"><span class="prompt">PS D:\23630851_LeThanhLong&gt;</span> <span class="cmd">curl -s http://localhost:8080/api/products</span>
+[
+  {
+    <span class="json-key">"id"</span>: <span class="json-num">1</span>,
+    <span class="json-key">"name"</span>: <span class="json-str">"Laptop Dell XPS 15"</span>,
+    <span class="json-key">"price"</span>: <span class="json-num">25000000.0</span>
+  },
+  {
+    <span class="json-key">"id"</span>: <span class="json-num">2</span>,
+    <span class="json-key">"name"</span>: <span class="json-str">"Mouse Logitech MX Master"</span>,
+    <span class="json-key">"price"</span>: <span class="json-num">1850000.0</span>
+  },
+  {
+    <span class="json-key">"id"</span>: <span class="json-num">3</span>,
+    <span class="json-key">"name"</span>: <span class="json-str">"Keyboard Keychron K2"</span>,
+    <span class="json-key">"price"</span>: <span class="json-num">2100000.0</span>
+  },
+  {
+    <span class="json-key">"id"</span>: <span class="json-num">4</span>,
+    <span class="json-key">"name"</span>: <span class="json-str">"Tai nghe Sony WH-1000XM5"</span>,
+    <span class="json-key">"price"</span>: <span class="json-num">8490000.0</span>
+  }
+]</div>
+    </div>
+
+    <!-- TRANG 3 -->
+    <div class="page-break"></div>
+
+    <div class="section-title">
+        <span>BƯỚC 5</span> KIỂM THỬ API DELETE /api/products/{id} (XÓA SẢN PHẨM THEO ID = 1)
+    </div>
+    <div class="terminal-box">
+        <div class="terminal-bar">
+            <div class="terminal-dots">
+                <div class="dot dot-red"></div>
+                <div class="dot dot-yellow"></div>
+                <div class="dot dot-green"></div>
+            </div>
+            <div class="terminal-badge">[SV: Lê Thành Long | MSSV: 23630851]</div>
+        </div>
+        <div class="terminal-body"><span class="prompt">PS D:\23630851_LeThanhLong&gt;</span> <span class="cmd">curl -s -X DELETE http://localhost:8080/api/products/1</span>
+Deleted product with ID: 1</div>
+    </div>
+
+    <div class="section-title">
+        <span>BƯỚC 6</span> KIỂM TRA LẠI GET /api/products (XÁC NHẬN ID = 1 ĐÃ BỊ XÓA KHỎI DANH SÁCH)
+    </div>
+    <div class="terminal-box">
+        <div class="terminal-bar">
+            <div class="terminal-dots">
+                <div class="dot dot-red"></div>
+                <div class="dot dot-yellow"></div>
+                <div class="dot dot-green"></div>
+            </div>
+            <div class="terminal-badge">[SV: Lê Thành Long | MSSV: 23630851]</div>
+        </div>
+        <div class="terminal-body"><span class="prompt">PS D:\23630851_LeThanhLong&gt;</span> <span class="cmd">curl -s http://localhost:8080/api/products</span>
+[
+  {
+    <span class="json-key">"id"</span>: <span class="json-num">2</span>,
+    <span class="json-key">"name"</span>: <span class="json-str">"Mouse Logitech MX Master"</span>,
+    <span class="json-key">"price"</span>: <span class="json-num">1850000.0</span>
+  },
+  {
+    <span class="json-key">"id"</span>: <span class="json-num">3</span>,
+    <span class="json-key">"name"</span>: <span class="json-str">"Keyboard Keychron K2"</span>,
+    <span class="json-key">"price"</span>: <span class="json-num">2100000.0</span>
+  },
+  {
+    <span class="json-key">"id"</span>: <span class="json-num">4</span>,
+    <span class="json-key">"name"</span>: <span class="json-str">"Tai nghe Sony WH-1000XM5"</span>,
+    <span class="json-key">"price"</span>: <span class="json-num">8490000.0</span>
+  }
+]</div>
+    </div>
+
+</body>
+</html>

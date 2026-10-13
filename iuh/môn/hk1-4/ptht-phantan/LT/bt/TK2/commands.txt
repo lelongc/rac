@@ -1,0 +1,24 @@
+# Chay service Product REST API bang Docker container o port 8080
+docker run -d -p 8080:8080 --name product-service shima594/c2:23630851
+
+# Kiem tra container dang chay
+docker ps
+
+# Kiem thu 1: Lay danh sach san pham ban dau (GET)
+curl.exe -s http://localhost:8080/api/products
+
+# Kiem thu 2: Them san pham moi (POST)
+'{"name": "Tai nghe Sony WH-1000XM5", "price": 8490000.0}' | curl.exe -s -X POST http://localhost:8080/api/products -H "Content-Type: application/json" -d '@-'
+
+# Kiem thu 3: Lay lai danh sach de kiem tra san pham moi da vao (GET)
+curl.exe -s http://localhost:8080/api/products
+
+# Kiem thu 4: Xoa san pham co ID = 1 (DELETE)
+curl.exe -s -X DELETE http://localhost:8080/api/products/1
+
+# Kiem thu 5: Lay lai danh sach de kiem tra ID = 1 da bi xoa (GET)
+curl.exe -s http://localhost:8080/api/products
+
+# Dung va xoa container sau khi demo xong
+docker stop product-service
+docker rm product-service
