@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sơ Đồ ERD Cơ Sở Dữ Liệu - blog_website_db (IUH BTL)</title>
+    <!-- Mermaid.js for Professional ERD Diagram rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            padding: 24px;
+        }
+        .header {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .header h1 {
+            font-size: 24px;
+            color: #38bdf8;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header p {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+        .badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .badge {
+            background: #1e293b;
+            border: 1px solid #475569;
+            padding: 6px 12px;
+            border-radius: 9999px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .badge.primary {
+            background: #0284c7;
+            border-color: #38bdf8;
+            color: #fff;
+        }
+        .btn-group {
+            display: flex;
+            gap: 12px;
+        }
+        button {
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        button:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+        button.secondary {
+            background: #334155;
+        }
+        button.secondary:hover {
+            background: #475569;
+        }
+        .card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 24px;
+            overflow-x: auto;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+        }
+        #erd-container {
+            display: flex;
+            justify-content: center;
+            min-width: 1000px;
+            background: #0b1120;
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px dashed #334155;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+        .stat-box {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 16px;
+        }
+        .stat-box .title {
+            color: #94a3b8;
+            font-size: 13px;
+        }
+        .stat-box .number {
+            color: #38bdf8;
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div>
+            <h1>📊 LƯỢC ĐỒ THỰC THỂ LIÊN KẾT (EER / ERD DIAGRAM)</h1>
+            <p>Dự án Bài Tập Lớn: <strong>Blog Website Hướng Dữ Liệu</strong> — Cơ sở dữ liệu: <strong>blog_website_db</strong> (MySQL Local)</p>
+        </div>
+        <div class="btn-group">
+            <button onclick="window.print()">🖨️ In / Lưu PDF</button>
+            <button class="secondary" onclick="exportSvgToPng()">💾 Tải ảnh PNG chất lượng cao</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <div id="erd-container">
+            <pre class="mermaid" id="mermaid-code">
+erDiagram
+    %% ==========================================
+    %% SƠ ĐỒ ERD CHUẨN CƠ SỞ DỮ LIỆU blog_website_db
+    %% ==========================================
+
+    users ||--o{ user_roles : "has"
+    users ||--o{ blogs : "writes (author_id)"
+    users ||--o{ comments : "posts"
+    users ||--o{ blog_likes : "likes"
+    users ||--o{ bookmarks : "saves"
+    users ||--o{ notifications : "receives"
+    users ||--o{ user_follows : "follows (follower_id)"
+    users ||--o{ user_follows : "is followed (following_id)"
+    users ||--o{ blog_views : "views"
+
+    categories ||--o{ blogs : "contains (category_id)"
+
+    blogs ||--o{ comments : "has"
+    blogs ||--o{ blog_likes : "receives"
+    blogs ||--o{ bookmarks : "is bookmarked"
+    blogs ||--o{ blog_tags : "tagged with"
+    blogs ||--o{ blog_views : "viewed in"
+
+    tags ||--o{ blog_tags : "assigned to"
+
+    comments ||--o{ comments : "replies to (parent_id)"
+
+    %% ==========================================
+    %% ĐỊNH NGHĨA CẤU TRÚC CHI TIẾT CÁC BẢNG
+    %% ==========================================
+
+    users {
+        binary(16) id PK "Mã định danh User (UUID)"
+        varchar(50) username UK "Tên đăng nhập duy nhất"
+        varchar(255) email UK "Địa chỉ email"
+        varchar(255) password "Mật khẩu mã hóa BCrypt"
+        varchar(500) avatar_url "Đường dẫn ảnh đại diện"
+        varchar(255) bio "Tiểu sử giới thiệu"
+        datetime created_at "Ngày tạo tài khoản"
+    }
+
+    user_roles {
+        binary(16) user_id PK,FK "Tham chiếu users(id)"
+        varchar(50) role PK "Tên quyền: ROLE_ADMIN, ROLE_USER"
+    }
+
+    categories {
+        binary(16) id PK "Mã danh mục (UUID)"
+        varchar(100) name UK "Tên chủ đề bài viết"
+        varchar(255) description "Mô tả chuyên mục"
+    }
+
+    tags {
+        binary(16) id PK "Mã thẻ (UUID)"
+        varchar(50) name UK "Tên thẻ tag: Java, SpringBoot..."
+    }
+
+    blogs {
+        binary(16) id PK "Mã bài viết (UUID)"
+        varchar(255) title "Tiêu đề bài viết"
+        longtext content "Nội dung bài viết đầy đủ"
+        varchar(500) description "Tóm tắt ngắn bài viết"
+        varchar(500) banner "URL ảnh bìa Cloudinary"
+        int total_reads "Số lượt xem (Views)"
+        datetime created_at "Thời điểm đăng bài"
+        datetime updated_at "Thời điểm cập nhật"
+        binary(16) author_id FK "Tác giả -> users(id)"
+        binary(16) category_id FK "Danh mục -> categories(id)"
+    }
+
+    blog_tags {
+        binary(16) blog_id PK,FK "Tham chiếu blogs(id)"
+        binary(16) tag_id PK,FK "Tham chiếu tags(id)"
+    }
+
+    comments {
+        binary(16) id PK "Mã bình luận (UUID)"
+        text content "Nội dung comment"
+        datetime created_at "Thời gian bình luận"
+        binary(16) user_id FK "Người bình luận -> users(id)"
+        binary(16) blog_id FK "Bài viết -> blogs(id)"
+        binary(16) parent_id FK "Bình luận cha (Reply) -> comments(id)"
+    }
+
+    blog_likes {
+        binary(16) id PK "Mã lượt thích (UUID)"
+        datetime created_at "Thời gian bấm tim"
+        binary(16) user_id FK "Người thích -> users(id)"
+        binary(16) blog_id FK "Bài được thích -> blogs(id)"
+    }
+
+    bookmarks {
+        binary(16) id PK "Mã lưu trữ (UUID)"
+        datetime created_at "Thời điểm lưu bài"
+        binary(16) user_id FK "Người lưu -> users(id)"
+        binary(16) blog_id FK "Bài được lưu -> blogs(id)"
+    }
+
+    user_follows {
+        binary(16) id PK "Mã theo dõi (UUID)"
+        datetime created_at "Thời điểm theo dõi"
+        binary(16) follower_id FK "Người theo dõi -> users(id)"
+        binary(16) following_id FK "Người được theo dõi -> users(id)"
+    }
+
+    notifications {
+        binary(16) id PK "Mã thông báo (UUID)"
+        varchar(500) content "Nội dung thông báo tương tác"
+        boolean is_read "Trạng thái đã đọc (true/false)"
+        datetime created_at "Thời điểm phát thông báo"
+        binary(16) user_id FK "Người nhận thông báo -> users(id)"
+    }
+
+    blog_views {
+        binary(16) id PK "Mã lượt đọc (UUID)"
+        datetime viewed_at "Thời điểm đọc bài"
+        binary(16) blog_id FK "Bài viết -> blogs(id)"
+        binary(16) user_id FK "Người xem -> users(id)"
+    }
+            </pre>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-box">
+            <div class="title">Tổng số Bảng (Tables)</div>
+            <div class="number">12 Bảng</div>
+        </div>
+        <div class="stat-box">
+            <div class="title">Khóa ngoại (Foreign Keys)</div>
+            <div class="number">17 Liên kết</div>
+        </div>
+        <div class="stat-box">
+            <div class="title">Quan hệ thực thể</div>
+            <div class="number">1-N & N-N</div>
+        </div>
+        <div class="stat-box">
+            <div class="title">Cơ chế Khóa chính</div>
+            <div class="number">UUID (128-bit)</div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            er: {
+                useMaxWidth: true,
+                diagramPadding: 20,
+                layoutDirection: 'TB',
+                minEntityWidth: 140,
+                minEntityHeight: 90,
+                entityPadding: 15
+            }
+        });
+
+        function exportSvgToPng() {
+            const svgElement = document.querySelector("#erd-container svg");
+            if (!svgElement) {
+                alert("Đang tải sơ đồ, vui lòng thử lại sau giây lát!");
+                return;
+            }
+            const svgData = new XMLSerializer().serializeToString(svgElement);
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            const img = new Image();
+            img.onload = function() {
+                canvas.width = img.width * 2;
+                canvas.height = img.height * 2;
+                ctx.scale(2, 2);
+                ctx.fillStyle = "#0f172a";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0);
+                const a = document.createElement("a");
+                a.download = "SO_DO_ERD_BLOG_WEBSITE_IUH.png";
+                a.href = canvas.toDataURL("image/png");
+                a.click();
+            };
+            img.src = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgData)));
+        }
+    </script>
+</body>
+</html>

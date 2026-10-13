@@ -1,0 +1,19 @@
+docker compose up -d chat-server
+
+docker compose run --rm client-1
+23630851_1
+general
+Xin chao phong general
+/join room_cntt
+Toi da qua phong room_cntt roi
+exit
+
+docker compose run --rm client-2
+23630851_2
+general
+Xin chao ca phong general
+exit
+
+type chatroom.log
+
+docker compose down

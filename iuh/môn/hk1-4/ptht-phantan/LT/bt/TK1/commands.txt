@@ -1,0 +1,50 @@
+# Bat server
+docker compose up -d chat-server
+
+
+
+
+# Bat client 1
+docker compose run --rm client-1
+
+# Nhap nickname client 1
+23630851_1
+
+# Nhap phong chat
+general
+
+# Gui tin nhan
+Xin chao phong general
+
+# Chuyen phong chat
+/join room_cntt
+
+# Chat phong moi
+Toi da qua phong room_cntt roi
+
+# Thoat client 1
+exit
+
+
+
+
+# Bat client 2 ở terminal khac
+docker compose run --rm client-2
+
+# Nhap nickname client 2
+23630851_2
+
+# Nhap phong chat
+general
+
+# Gui tin nhan
+Xin chao ca phong general
+
+# Thoat client 2
+exit
+
+# Xem file log
+type chatroom.log
+
+# Tat server
+docker compose down

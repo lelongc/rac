@@ -1,0 +1,55 @@
+services:
+  chat-server:
+    image: shima594/de2:23630851
+    build: .
+    container_name: chat-server-de2
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./chatroom.log:/app/chatroom.log
+    networks:
+      - chat-net
+    restart: unless-stopped
+
+  client:
+    image: shima594/de2:23630851
+    command: ["client"]
+    environment:
+      - SERVER_HOST=chat-server
+      - SERVER_PORT=5000
+    depends_on:
+      - chat-server
+    stdin_open: true
+    tty: true
+    networks:
+      - chat-net
+
+  client-1:
+    image: shima594/de2:23630851
+    command: ["client"]
+    environment:
+      - SERVER_HOST=chat-server
+      - SERVER_PORT=5000
+    depends_on:
+      - chat-server
+    stdin_open: true
+    tty: true
+    networks:
+      - chat-net
+
+  client-2:
+    image: shima594/de2:23630851
+    command: ["client"]
+    environment:
+      - SERVER_HOST=chat-server
+      - SERVER_PORT=5000
+    depends_on:
+      - chat-server
+    stdin_open: true
+    tty: true
+    networks:
+      - chat-net
+
+networks:
+  chat-net:
+    driver: bridge
