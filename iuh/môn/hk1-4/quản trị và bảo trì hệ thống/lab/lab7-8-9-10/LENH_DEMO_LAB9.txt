@@ -1,0 +1,70 @@
+﻿================================================================================
+          TONG HOP TOAN BO CAU LENH DEMO LAB 9 - DOMAIN DONG CAP & 5 FSMO ROLES
+================================================================================
+
+[MUC 1] LENH CHINH TRUNG THAY XEM (BAT BUOC - 1 GIAY LA XONG LAB 9):
+--------------------------------------------------------------------------------
+Mo CMD (Command Prompt), copy dong nay dan vao roi go Enter:
+
+netdom query fsmo
+
+-> Ket qua se hien ra day du 5 vai tro:
+   1. Schema master
+   2. Domain naming master
+   3. PDC
+   4. RID pool manager
+   5. Infrastructure master
+-> Thong bao: "The command completed successfully." la dat diem toi da!
+
+
+================================================================================
+[MUC 2] LENH MO NHANH CAC GIAO DIEN GUI QUAN TRI ROLE (NEU THAY YEU CAU MO GIAO DIEN):
+--------------------------------------------------------------------------------
+
+1. Mo giao dien quan tri 3 Role Domain (RID, PDC, Infrastructure):
+   Copy lenh nay dan vao cua so Run (Windows + R) hoac CMD:
+   dsa.msc
+   -> Nhap chuot phai vao ten Domain (newstar.vn) -> Chon "Operations Masters...".
+
+2. Mo giao dien quan tri Role Domain Naming Master (Forest):
+   Copy lenh nay dan vao cua so Run (Windows + R) hoac CMD:
+   domain.msc
+   -> Nhap chuot phai vao dong dau tien "Active Directory Domains and Trusts" -> Chon "Operations Master...".
+
+3. Kich hoat va mo giao dien quan tri Role Schema Master (Forest):
+   Copy lan luot 2 lenh nay vao CMD:
+   regsvr32 schmmgmt.dll
+   mmc
+   -> Trong cua so MMC: Menu File -> Add/Remove Snap-in -> Chon "Active Directory Schema" -> Add -> OK.
+
+
+================================================================================
+[MUC 3] LENH KIEM TRA 2 USER DONG BO PHUC VU DOMAIN DONG CAP (U11, U12):
+--------------------------------------------------------------------------------
+Mo CMD copy dan dong nay vao:
+
+powershell -Command "Get-ADUser -Filter 'SamAccountName -eq \"U11\" -or SamAccountName -eq \"U12\"' | Format-Table Name, SamAccountName, Enabled"
+
+
+================================================================================
+[MUC 4] LENH CHUYEN GIAO (TRANSFER) ROLE KHI CO SERVER THU 2 (VAN DAP):
+--------------------------------------------------------------------------------
+
+Cach 1: Dung PowerShell chuyen toan bo 5 Role trong 1 giay (Ngoi tai Server muon nhan role):
+Move-ADDirectoryServerOperationMasterRole -Identity "WIN-P6PG9M9AICK" -OperationMasterRole 0,1,2,3,4 -Force
+
+Cach 2: Dung cong cu kinh dien ntdsutil (Go tung dong trong CMD):
+ntdsutil
+roles
+connections
+connect to server WIN-P6PG9M9AICK
+quit
+transfer rid master
+transfer pdc
+transfer infrastructure master
+transfer naming master
+transfer schema master
+quit
+quit
+
+================================================================================
