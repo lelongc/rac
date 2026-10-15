@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>de.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*
+
+Arduino® Light Theme - Stefania Mellai <s.mellai@arduino.cc>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #FFFFFF;
+}
+
+.hljs,
+.hljs-subst {
+  color: #434f54;
+}
+
+.hljs-keyword,
+.hljs-attribute,
+.hljs-selector-tag,
+.hljs-doctag,
+.hljs-name {
+  color: #00979D;
+}
+
+.hljs-built_in,
+.hljs-literal,
+.hljs-bullet,
+.hljs-code,
+.hljs-addition {
+  color: #D35400;
+}
+
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr,
+.hljs-selector-pseudo {
+  color: #00979D;
+}
+
+.hljs-type,
+.hljs-string,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-quote,
+.hljs-template-tag,
+.hljs-deletion {
+  color: #005C5F;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #880000;
+  font-weight: bold;
+}
+
+.hljs-comment {
+  color: rgba(149,165,166,.8);
+}
+
+.hljs-meta-keyword {
+  color: #728E00;
+}
+
+.hljs-meta {
+  color: #434f54;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-function {
+  color: #728E00;
+}
+
+.hljs-number {
+  color: #8A7B52;  
+}
+
+</style>
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family:   "HelveticaNeue-Light", sans-serif, "宋体","Segoe WPC", "Segoe UI", "SFUIText-Light","Droid Sans Fallback";
+	font-size: 18px;
+	padding: 0 12px;
+	line-height: 1.6;
+	word-wrap: break-word;
+	color: #333333;
+}
+
+.content-wrapper{
+	max-width: 860px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom: 1px solid #eee;
+}
+
+
+h2{
+	padding-bottom: .3em;
+    font-size: 2em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+h3{
+	font-size: 1.75em;
+    line-height: 1.225;
+}
+
+h1, h2, h3 {
+	font-weight: bold;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Obsidian syntax defaults for legacy export (PDF / HTML / DOCX) */
+
+.callout {
+	--callout-accent: #0969da;
+	margin: 12px 0;
+	border-radius: 6px;
+	border-left: 4px solid var(--callout-accent);
+	background: rgba(9, 105, 218, 0.08);
+	color: #333333;
+	overflow: hidden;
+}
+
+.callout[data-callout="note"],
+.callout[data-callout="abstract"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"],
+.callout[data-subtype="note"],
+.callout[data-subtype="abstract"],
+.callout[data-subtype="info"],
+.callout[data-subtype="todo"],
+.callout[data-callout="note" i],
+.callout[data-callout="abstract" i],
+.callout[data-callout="info" i],
+.callout[data-callout="todo" i],
+.callout[data-subtype="note" i],
+.callout[data-subtype="abstract" i],
+.callout[data-subtype="info" i],
+.callout[data-subtype="todo" i] {
+	--callout-accent: #0969da;
+	border-left-color: #0969da;
+	background: rgba(9, 105, 218, 0.08);
+}
+
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-subtype="tip"],
+.callout[data-subtype="hint"],
+.callout[data-callout="tip" i],
+.callout[data-callout="hint" i],
+.callout[data-subtype="tip" i],
+.callout[data-subtype="hint" i] {
+	--callout-accent: #116329;
+	border-left-color: #116329;
+	background: rgba(17, 99, 41, 0.08);
+}
+
+.callout[data-callout="important"],
+.callout[data-subtype="important"],
+.callout[data-callout="important" i],
+.callout[data-subtype="important" i] {
+	--callout-accent: #8250df;
+	border-left-color: #8250df;
+	background: rgba(130, 80, 223, 0.08);
+}
+
+.callout[data-callout="warning"],
+.callout[data-subtype="warning"],
+.callout[data-callout="warning" i],
+.callout[data-subtype="warning" i] {
+	--callout-accent: #bc4c00;
+	border-left-color: #bc4c00;
+	background: rgba(188, 76, 0, 0.08);
+}
+
+.callout[data-callout="caution"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"],
+.callout[data-callout="fail"],
+.callout[data-subtype="caution"],
+.callout[data-subtype="danger"],
+.callout[data-subtype="error"],
+.callout[data-subtype="bug"],
+.callout[data-subtype="fail"],
+.callout[data-callout="caution" i],
+.callout[data-callout="danger" i],
+.callout[data-callout="error" i],
+.callout[data-callout="bug" i],
+.callout[data-callout="fail" i],
+.callout[data-subtype="caution" i],
+.callout[data-subtype="danger" i],
+.callout[data-subtype="error" i],
+.callout[data-subtype="bug" i],
+.callout[data-subtype="fail" i] {
+	--callout-accent: #cf222e;
+	border-left-color: #cf222e;
+	background: rgba(207, 34, 46, 0.08);
+}
+
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"],
+.callout[data-subtype="question"],
+.callout[data-subtype="help"],
+.callout[data-subtype="faq"],
+.callout[data-callout="question" i],
+.callout[data-callout="help" i],
+.callout[data-callout="faq" i],
+.callout[data-subtype="question" i],
+.callout[data-subtype="help" i],
+.callout[data-subtype="faq" i] {
+	--callout-accent: #9a6700;
+	border-left-color: #9a6700;
+	background: rgba(154, 103, 0, 0.08);
+}
+
+.callout .callout-title,
+.callout .callout-info {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 14px 0;
+	margin-bottom: 10px;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon,
+.callout .callout-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	flex-shrink: 0;
+	color: var(--callout-accent);
+}
+
+.callout .callout-title-icon svg {
+	width: 16px;
+	height: 16px;
+}
+
+.callout .callout-title-inner,
+.callout .callout-info > .callout-title {
+	font-weight: 700;
+	font-size: 0.95em;
+	line-height: 1.35;
+	color: var(--callout-accent);
+}
+
+.callout .callout-content {
+	padding: 6px 14px 12px;
+	color: #333333;
+}
+
+.callout .callout-content > :first-child {
+	margin-top: 0;
+}
+
+.callout .callout-content > :last-child {
+	margin-bottom: 0;
+}
+
+.obsidian-wikilink {
+	color: #7c3aed;
+	text-decoration: underline;
+}
+
+.obsidian-wikilink-embed {
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px dashed #d0d7de;
+	border-radius: 4px;
+	color: #7c3aed;
+}
+
+.obsidian-tag {
+	color: #7c3aed;
+	background: rgba(124, 58, 237, 0.12);
+	border-radius: 4px;
+	padding: 0 4px;
+}
+
+mark {
+	background: rgba(154, 103, 0, 0.35);
+	color: inherit;
+	padding: 0 2px;
+	border-radius: 2px;
+}
+
+[data-type="yaml-front-matter"] {
+	margin: 0 0 16px;
+}
+
+.vditor-properties {
+	border: 1px solid #d0d7de;
+	border-radius: 8px;
+	background: #f6f8fa;
+	overflow: hidden;
+}
+
+.vditor-properties__heading {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 12px;
+	border-bottom: 1px solid #d0d7de;
+	background: #f3f4f6;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #6b7280;
+}
+
+.vditor-properties__heading-icon::before {
+	content: "☰";
+	opacity: 0.75;
+}
+
+.vditor-properties__table {
+	display: flex;
+	flex-direction: column;
+}
+
+.vditor-properties__row {
+	display: grid;
+	grid-template-columns: minmax(120px, 34%) 1fr;
+	gap: 8px 12px;
+	align-items: start;
+	padding: 8px 12px;
+	border-top: 1px solid rgba(208, 215, 222, 0.45);
+}
+
+.vditor-properties__row:first-child {
+	border-top: none;
+}
+
+.vditor-properties__key {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	color: #6b7280;
+	font-size: 0.85rem;
+}
+
+.vditor-properties__key-icon {
+	flex-shrink: 0;
+	width: 14px;
+	height: 14px;
+	opacity: 0.72;
+	text-align: center;
+}
+
+.vditor-properties__key-icon[data-icon="tag"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="alias"]::before { content: "⛓"; }
+.vditor-properties__key-icon[data-icon="date"]::before { content: "📅"; }
+.vditor-properties__key-icon[data-icon="toggle"]::before { content: "◉"; }
+.vditor-properties__key-icon[data-icon="number"]::before { content: "#"; }
+.vditor-properties__key-icon[data-icon="list"]::before { content: "≡"; }
+.vditor-properties__key-icon[data-icon="text"]::before { content: "T"; }
+
+.vditor-properties__key-label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.vditor-properties__value {
+	min-width: 0;
+	font-size: 0.92rem;
+	color: #333333;
+	word-break: break-word;
+}
+
+.vditor-properties__value--tags,
+.vditor-properties__value--aliases {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.vditor-properties__value--aliases {
+	gap: 6px;
+}
+
+.vditor-properties__list {
+	margin: 0;
+	padding-left: 1.1rem;
+}
+
+.vditor-properties__checkbox {
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 6px;
+	border: 1px solid #d0d7de;
+	border-radius: 3px;
+	vertical-align: -2px;
+	background: #ffffff;
+}
+
+.vditor-properties__checkbox[is-checked="true"] {
+	background: #7c3aed;
+	border-color: #7c3aed;
+	box-shadow: inset 0 0 0 2px #ffffff;
+}
+
+.vditor-properties__empty {
+	opacity: 0.45;
+}
+
+</style>
+
+<style>
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+.table-of-contents li{
+	list-style-type: initial;
+}
+
+</style>
+
+<style>
+@font-face{font-display:block;font-family:KaTeX_AMS;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_AMS-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Caligraphic;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Caligraphic-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Fraktur;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Fraktur-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Main;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Main-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-BoldItalic.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Math;font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Math-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:700;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Bold.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:italic;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Italic.ttf") format("truetype")}@font-face{font-display:block;font-family:"KaTeX_SansSerif";font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_SansSerif-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Script;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Script-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size1;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size1-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size2;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size2-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size3;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size3-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Size4;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Size4-Regular.ttf") format("truetype")}@font-face{font-display:block;font-family:KaTeX_Typewriter;font-style:normal;font-weight:400;src:url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff2") format("woff2"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.woff") format("woff"),url("https://cdn.jsdelivr.net/npm/katex@0.16.2/dist/fonts/KaTeX_Typewriter-Regular.ttf") format("truetype")}.katex{font:normal 1.21em KaTeX_Main,Times New Roman,serif;line-height:1.2;position:relative;text-indent:0;text-rendering:auto}.katex *{-ms-high-contrast-adjust:none!important;border-color:currentColor}.katex .katex-version:after{content:"0.16.47"}.katex .katex-mathml{border:0;-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;overflow:hidden;padding:0;position:absolute;width:1px}.katex .katex-html>.newline{display:block}.katex .base{position:relative;white-space:nowrap;width:-webkit-min-content;width:-moz-min-content;width:min-content}.katex .base,.katex .strut{display:inline-block}.katex .textbf{font-weight:700}.katex .textit{font-style:italic}.katex .textrm{font-family:KaTeX_Main}.katex .textsf{font-family:KaTeX_SansSerif}.katex .texttt{font-family:KaTeX_Typewriter}.katex .mathnormal{font-family:KaTeX_Math;font-style:italic}.katex .mathit{font-family:KaTeX_Main;font-style:italic}.katex .mathrm{font-style:normal}.katex .mathbf{font-family:KaTeX_Main;font-weight:700}.katex .boldsymbol{font-family:KaTeX_Math;font-style:italic;font-weight:700}.katex .amsrm,.katex .mathbb,.katex .textbb{font-family:KaTeX_AMS}.katex .mathcal{font-family:KaTeX_Caligraphic}.katex .mathfrak,.katex .textfrak{font-family:KaTeX_Fraktur}.katex .mathboldfrak,.katex .textboldfrak{font-family:KaTeX_Fraktur;font-weight:700}.katex .mathtt{font-family:KaTeX_Typewriter}.katex .mathscr,.katex .textscr{font-family:KaTeX_Script}.katex .mathsf,.katex .textsf{font-family:KaTeX_SansSerif}.katex .mathboldsf,.katex .textboldsf{font-family:KaTeX_SansSerif;font-weight:700}.katex .mathitsf,.katex .mathsfit,.katex .textitsf{font-family:KaTeX_SansSerif;font-style:italic}.katex .mainrm{font-family:KaTeX_Main;font-style:normal}.katex .vlist-t{border-collapse:collapse;display:inline-table;table-layout:fixed}.katex .vlist-r{display:table-row}.katex .vlist{display:table-cell;position:relative;vertical-align:bottom}.katex .vlist>span{display:block;height:0;position:relative}.katex .vlist>span>span{display:inline-block}.katex .vlist>span>.pstrut{overflow:hidden;width:0}.katex .vlist-t2{margin-right:-2px}.katex .vlist-s{display:table-cell;font-size:1px;min-width:2px;vertical-align:bottom;width:2px}.katex .vbox{align-items:baseline;display:inline-flex;flex-direction:column}.katex .hbox{width:100%}.katex .hbox,.katex .thinbox{display:inline-flex;flex-direction:row}.katex .thinbox{max-width:0;width:0}.katex .msupsub{text-align:left}.katex .mfrac>span>span{text-align:center}.katex .mfrac .frac-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline,.katex .hline,.katex .mfrac .frac-line,.katex .overline .overline-line,.katex .rule,.katex .underline .underline-line{min-height:1px}.katex .mspace{display:inline-block}.katex .smash{display:inline;line-height:0}.katex .clap,.katex .llap,.katex .rlap{position:relative;width:0}.katex .clap>.inner,.katex .llap>.inner,.katex .rlap>.inner{position:absolute}.katex .clap>.fix,.katex .llap>.fix,.katex .rlap>.fix{display:inline-block}.katex .llap>.inner{right:0}.katex .clap>.inner,.katex .rlap>.inner{left:0}.katex .clap>.inner>span{margin-left:-50%;margin-right:50%}.katex .rule{border:0 solid;display:inline-block;position:relative}.katex .hline,.katex .overline .overline-line,.katex .underline .underline-line{border-bottom-style:solid;display:inline-block;width:100%}.katex .hdashline{border-bottom-style:dashed;display:inline-block;width:100%}.katex .sqrt>.root{margin-left:.2777777778em;margin-right:-.5555555556em}.katex .fontsize-ensurer.reset-size1.size1,.katex .sizing.reset-size1.size1{font-size:1em}.katex .fontsize-ensurer.reset-size1.size2,.katex .sizing.reset-size1.size2{font-size:1.2em}.katex .fontsize-ensurer.reset-size1.size3,.katex .sizing.reset-size1.size3{font-size:1.4em}.katex .fontsize-ensurer.reset-size1.size4,.katex .sizing.reset-size1.size4{font-size:1.6em}.katex .fontsize-ensurer.reset-size1.size5,.katex .sizing.reset-size1.size5{font-size:1.8em}.katex .fontsize-ensurer.reset-size1.size6,.katex .sizing.reset-size1.size6{font-size:2em}.katex .fontsize-ensurer.reset-size1.size7,.katex .sizing.reset-size1.size7{font-size:2.4em}.katex .fontsize-ensurer.reset-size1.size8,.katex .sizing.reset-size1.size8{font-size:2.88em}.katex .fontsize-ensurer.reset-size1.size9,.katex .sizing.reset-size1.size9{font-size:3.456em}.katex .fontsize-ensurer.reset-size1.size10,.katex .sizing.reset-size1.size10{font-size:4.148em}.katex .fontsize-ensurer.reset-size1.size11,.katex .sizing.reset-size1.size11{font-size:4.976em}.katex .fontsize-ensurer.reset-size2.size1,.katex .sizing.reset-size2.size1{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size2.size2,.katex .sizing.reset-size2.size2{font-size:1em}.katex .fontsize-ensurer.reset-size2.size3,.katex .sizing.reset-size2.size3{font-size:1.1666666667em}.katex .fontsize-ensurer.reset-size2.size4,.katex .sizing.reset-size2.size4{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size2.size5,.katex .sizing.reset-size2.size5{font-size:1.5em}.katex .fontsize-ensurer.reset-size2.size6,.katex .sizing.reset-size2.size6{font-size:1.6666666667em}.katex .fontsize-ensurer.reset-size2.size7,.katex .sizing.reset-size2.size7{font-size:2em}.katex .fontsize-ensurer.reset-size2.size8,.katex .sizing.reset-size2.size8{font-size:2.4em}.katex .fontsize-ensurer.reset-size2.size9,.katex .sizing.reset-size2.size9{font-size:2.88em}.katex .fontsize-ensurer.reset-size2.size10,.katex .sizing.reset-size2.size10{font-size:3.4566666667em}.katex .fontsize-ensurer.reset-size2.size11,.katex .sizing.reset-size2.size11{font-size:4.1466666667em}.katex .fontsize-ensurer.reset-size3.size1,.katex .sizing.reset-size3.size1{font-size:.7142857143em}.katex .fontsize-ensurer.reset-size3.size2,.katex .sizing.reset-size3.size2{font-size:.8571428571em}.katex .fontsize-ensurer.reset-size3.size3,.katex .sizing.reset-size3.size3{font-size:1em}.katex .fontsize-ensurer.reset-size3.size4,.katex .sizing.reset-size3.size4{font-size:1.1428571429em}.katex .fontsize-ensurer.reset-size3.size5,.katex .sizing.reset-size3.size5{font-size:1.2857142857em}.katex .fontsize-ensurer.reset-size3.size6,.katex .sizing.reset-size3.size6{font-size:1.4285714286em}.katex .fontsize-ensurer.reset-size3.size7,.katex .sizing.reset-size3.size7{font-size:1.7142857143em}.katex .fontsize-ensurer.reset-size3.size8,.katex .sizing.reset-size3.size8{font-size:2.0571428571em}.katex .fontsize-ensurer.reset-size3.size9,.katex .sizing.reset-size3.size9{font-size:2.4685714286em}.katex .fontsize-ensurer.reset-size3.size10,.katex .sizing.reset-size3.size10{font-size:2.9628571429em}.katex .fontsize-ensurer.reset-size3.size11,.katex .sizing.reset-size3.size11{font-size:3.5542857143em}.katex .fontsize-ensurer.reset-size4.size1,.katex .sizing.reset-size4.size1{font-size:.625em}.katex .fontsize-ensurer.reset-size4.size2,.katex .sizing.reset-size4.size2{font-size:.75em}.katex .fontsize-ensurer.reset-size4.size3,.katex .sizing.reset-size4.size3{font-size:.875em}.katex .fontsize-ensurer.reset-size4.size4,.katex .sizing.reset-size4.size4{font-size:1em}.katex .fontsize-ensurer.reset-size4.size5,.katex .sizing.reset-size4.size5{font-size:1.125em}.katex .fontsize-ensurer.reset-size4.size6,.katex .sizing.reset-size4.size6{font-size:1.25em}.katex .fontsize-ensurer.reset-size4.size7,.katex .sizing.reset-size4.size7{font-size:1.5em}.katex .fontsize-ensurer.reset-size4.size8,.katex .sizing.reset-size4.size8{font-size:1.8em}.katex .fontsize-ensurer.reset-size4.size9,.katex .sizing.reset-size4.size9{font-size:2.16em}.katex .fontsize-ensurer.reset-size4.size10,.katex .sizing.reset-size4.size10{font-size:2.5925em}.katex .fontsize-ensurer.reset-size4.size11,.katex .sizing.reset-size4.size11{font-size:3.11em}.katex .fontsize-ensurer.reset-size5.size1,.katex .sizing.reset-size5.size1{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size5.size2,.katex .sizing.reset-size5.size2{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size5.size3,.katex .sizing.reset-size5.size3{font-size:.7777777778em}.katex .fontsize-ensurer.reset-size5.size4,.katex .sizing.reset-size5.size4{font-size:.8888888889em}.katex .fontsize-ensurer.reset-size5.size5,.katex .sizing.reset-size5.size5{font-size:1em}.katex .fontsize-ensurer.reset-size5.size6,.katex .sizing.reset-size5.size6{font-size:1.1111111111em}.katex .fontsize-ensurer.reset-size5.size7,.katex .sizing.reset-size5.size7{font-size:1.3333333333em}.katex .fontsize-ensurer.reset-size5.size8,.katex .sizing.reset-size5.size8{font-size:1.6em}.katex .fontsize-ensurer.reset-size5.size9,.katex .sizing.reset-size5.size9{font-size:1.92em}.katex .fontsize-ensurer.reset-size5.size10,.katex .sizing.reset-size5.size10{font-size:2.3044444444em}.katex .fontsize-ensurer.reset-size5.size11,.katex .sizing.reset-size5.size11{font-size:2.7644444444em}.katex .fontsize-ensurer.reset-size6.size1,.katex .sizing.reset-size6.size1{font-size:.5em}.katex .fontsize-ensurer.reset-size6.size2,.katex .sizing.reset-size6.size2{font-size:.6em}.katex .fontsize-ensurer.reset-size6.size3,.katex .sizing.reset-size6.size3{font-size:.7em}.katex .fontsize-ensurer.reset-size6.size4,.katex .sizing.reset-size6.size4{font-size:.8em}.katex .fontsize-ensurer.reset-size6.size5,.katex .sizing.reset-size6.size5{font-size:.9em}.katex .fontsize-ensurer.reset-size6.size6,.katex .sizing.reset-size6.size6{font-size:1em}.katex .fontsize-ensurer.reset-size6.size7,.katex .sizing.reset-size6.size7{font-size:1.2em}.katex .fontsize-ensurer.reset-size6.size8,.katex .sizing.reset-size6.size8{font-size:1.44em}.katex .fontsize-ensurer.reset-size6.size9,.katex .sizing.reset-size6.size9{font-size:1.728em}.katex .fontsize-ensurer.reset-size6.size10,.katex .sizing.reset-size6.size10{font-size:2.074em}.katex .fontsize-ensurer.reset-size6.size11,.katex .sizing.reset-size6.size11{font-size:2.488em}.katex .fontsize-ensurer.reset-size7.size1,.katex .sizing.reset-size7.size1{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size7.size2,.katex .sizing.reset-size7.size2{font-size:.5em}.katex .fontsize-ensurer.reset-size7.size3,.katex .sizing.reset-size7.size3{font-size:.5833333333em}.katex .fontsize-ensurer.reset-size7.size4,.katex .sizing.reset-size7.size4{font-size:.6666666667em}.katex .fontsize-ensurer.reset-size7.size5,.katex .sizing.reset-size7.size5{font-size:.75em}.katex .fontsize-ensurer.reset-size7.size6,.katex .sizing.reset-size7.size6{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size7.size7,.katex .sizing.reset-size7.size7{font-size:1em}.katex .fontsize-ensurer.reset-size7.size8,.katex .sizing.reset-size7.size8{font-size:1.2em}.katex .fontsize-ensurer.reset-size7.size9,.katex .sizing.reset-size7.size9{font-size:1.44em}.katex .fontsize-ensurer.reset-size7.size10,.katex .sizing.reset-size7.size10{font-size:1.7283333333em}.katex .fontsize-ensurer.reset-size7.size11,.katex .sizing.reset-size7.size11{font-size:2.0733333333em}.katex .fontsize-ensurer.reset-size8.size1,.katex .sizing.reset-size8.size1{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size8.size2,.katex .sizing.reset-size8.size2{font-size:.4166666667em}.katex .fontsize-ensurer.reset-size8.size3,.katex .sizing.reset-size8.size3{font-size:.4861111111em}.katex .fontsize-ensurer.reset-size8.size4,.katex .sizing.reset-size8.size4{font-size:.5555555556em}.katex .fontsize-ensurer.reset-size8.size5,.katex .sizing.reset-size8.size5{font-size:.625em}.katex .fontsize-ensurer.reset-size8.size6,.katex .sizing.reset-size8.size6{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size8.size7,.katex .sizing.reset-size8.size7{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size8.size8,.katex .sizing.reset-size8.size8{font-size:1em}.katex .fontsize-ensurer.reset-size8.size9,.katex .sizing.reset-size8.size9{font-size:1.2em}.katex .fontsize-ensurer.reset-size8.size10,.katex .sizing.reset-size8.size10{font-size:1.4402777778em}.katex .fontsize-ensurer.reset-size8.size11,.katex .sizing.reset-size8.size11{font-size:1.7277777778em}.katex .fontsize-ensurer.reset-size9.size1,.katex .sizing.reset-size9.size1{font-size:.2893518519em}.katex .fontsize-ensurer.reset-size9.size2,.katex .sizing.reset-size9.size2{font-size:.3472222222em}.katex .fontsize-ensurer.reset-size9.size3,.katex .sizing.reset-size9.size3{font-size:.4050925926em}.katex .fontsize-ensurer.reset-size9.size4,.katex .sizing.reset-size9.size4{font-size:.462962963em}.katex .fontsize-ensurer.reset-size9.size5,.katex .sizing.reset-size9.size5{font-size:.5208333333em}.katex .fontsize-ensurer.reset-size9.size6,.katex .sizing.reset-size9.size6{font-size:.5787037037em}.katex .fontsize-ensurer.reset-size9.size7,.katex .sizing.reset-size9.size7{font-size:.6944444444em}.katex .fontsize-ensurer.reset-size9.size8,.katex .sizing.reset-size9.size8{font-size:.8333333333em}.katex .fontsize-ensurer.reset-size9.size9,.katex .sizing.reset-size9.size9{font-size:1em}.katex .fontsize-ensurer.reset-size9.size10,.katex .sizing.reset-size9.size10{font-size:1.2002314815em}.katex .fontsize-ensurer.reset-size9.size11,.katex .sizing.reset-size9.size11{font-size:1.4398148148em}.katex .fontsize-ensurer.reset-size10.size1,.katex .sizing.reset-size10.size1{font-size:.2410800386em}.katex .fontsize-ensurer.reset-size10.size2,.katex .sizing.reset-size10.size2{font-size:.2892960463em}.katex .fontsize-ensurer.reset-size10.size3,.katex .sizing.reset-size10.size3{font-size:.337512054em}.katex .fontsize-ensurer.reset-size10.size4,.katex .sizing.reset-size10.size4{font-size:.3857280617em}.katex .fontsize-ensurer.reset-size10.size5,.katex .sizing.reset-size10.size5{font-size:.4339440694em}.katex .fontsize-ensurer.reset-size10.size6,.katex .sizing.reset-size10.size6{font-size:.4821600771em}.katex .fontsize-ensurer.reset-size10.size7,.katex .sizing.reset-size10.size7{font-size:.5785920926em}.katex .fontsize-ensurer.reset-size10.size8,.katex .sizing.reset-size10.size8{font-size:.6943105111em}.katex .fontsize-ensurer.reset-size10.size9,.katex .sizing.reset-size10.size9{font-size:.8331726133em}.katex .fontsize-ensurer.reset-size10.size10,.katex .sizing.reset-size10.size10{font-size:1em}.katex .fontsize-ensurer.reset-size10.size11,.katex .sizing.reset-size10.size11{font-size:1.1996142719em}.katex .fontsize-ensurer.reset-size11.size1,.katex .sizing.reset-size11.size1{font-size:.2009646302em}.katex .fontsize-ensurer.reset-size11.size2,.katex .sizing.reset-size11.size2{font-size:.2411575563em}.katex .fontsize-ensurer.reset-size11.size3,.katex .sizing.reset-size11.size3{font-size:.2813504823em}.katex .fontsize-ensurer.reset-size11.size4,.katex .sizing.reset-size11.size4{font-size:.3215434084em}.katex .fontsize-ensurer.reset-size11.size5,.katex .sizing.reset-size11.size5{font-size:.3617363344em}.katex .fontsize-ensurer.reset-size11.size6,.katex .sizing.reset-size11.size6{font-size:.4019292605em}.katex .fontsize-ensurer.reset-size11.size7,.katex .sizing.reset-size11.size7{font-size:.4823151125em}.katex .fontsize-ensurer.reset-size11.size8,.katex .sizing.reset-size11.size8{font-size:.578778135em}.katex .fontsize-ensurer.reset-size11.size9,.katex .sizing.reset-size11.size9{font-size:.6945337621em}.katex .fontsize-ensurer.reset-size11.size10,.katex .sizing.reset-size11.size10{font-size:.8336012862em}.katex .fontsize-ensurer.reset-size11.size11,.katex .sizing.reset-size11.size11{font-size:1em}.katex .delimsizing.size1{font-family:KaTeX_Size1}.katex .delimsizing.size2{font-family:KaTeX_Size2}.katex .delimsizing.size3{font-family:KaTeX_Size3}.katex .delimsizing.size4{font-family:KaTeX_Size4}.katex .delimsizing.mult .delim-size1>span{font-family:KaTeX_Size1}.katex .delimsizing.mult .delim-size4>span{font-family:KaTeX_Size4}.katex .nulldelimiter{display:inline-block;width:.12em}.katex .delimcenter,.katex .op-symbol{position:relative}.katex .op-symbol.small-op{font-family:KaTeX_Size1}.katex .op-symbol.large-op{font-family:KaTeX_Size2}.katex .accent>.vlist-t,.katex .op-limits>.vlist-t{text-align:center}.katex .accent .accent-body{position:relative}.katex .accent .accent-body:not(.accent-full){width:0}.katex .overlay{display:block}.katex .mtable .vertical-separator{display:inline-block;min-width:1px}.katex .mtable .arraycolsep{display:inline-block}.katex .mtable .col-align-c>.vlist-t{text-align:center}.katex .mtable .col-align-l>.vlist-t{text-align:left}.katex .mtable .col-align-r>.vlist-t{text-align:right}.katex .svg-align{text-align:left}.katex svg{fill:currentColor;stroke:currentColor;display:block;height:inherit;position:absolute;width:100%}.katex svg path{stroke:none}.katex svg{fill-rule:nonzero;fill-opacity:1;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1}.katex img{border-style:none;max-height:none;max-width:none;min-height:0;min-width:0}.katex .stretchy{display:block;overflow:hidden;position:relative;width:100%}.katex .stretchy:after,.katex .stretchy:before{content:""}.katex .hide-tail{overflow:hidden;position:relative;width:100%}.katex .halfarrow-left{left:0;overflow:hidden;position:absolute;width:50.2%}.katex .halfarrow-right{overflow:hidden;position:absolute;right:0;width:50.2%}.katex .brace-left{left:0;overflow:hidden;position:absolute;width:25.1%}.katex .brace-center{left:25%;overflow:hidden;position:absolute;width:50%}.katex .brace-right{overflow:hidden;position:absolute;right:0;width:25.1%}.katex .x-arrow-pad{padding:0 .5em}.katex .cd-arrow-pad{padding:0 .55556em 0 .27778em}.katex .mover,.katex .munder,.katex .x-arrow{text-align:center}.katex .boxpad{padding:0 .3em}.katex .fbox,.katex .fcolorbox{border:.04em solid;box-sizing:border-box}.katex .cancel-pad{padding:0 .2em}.katex .cancel-lap{margin-left:-.2em;margin-right:-.2em}.katex .sout{border-bottom-style:solid;border-bottom-width:.08em}.katex .angl{border-right:.049em solid;border-top:.049em solid;box-sizing:border-box;margin-right:.03889em}.katex .anglpad{padding:0 .03889em}.katex .eqn-num:before{content:"(" counter(katexEqnNo) ")";counter-increment:katexEqnNo}.katex .mml-eqn-num:before{content:"(" counter(mmlEqnNo) ")";counter-increment:mmlEqnNo}.katex .mtr-glue{width:50%}.katex .cd-vert-arrow{display:inline-block;position:relative}.katex .cd-label-left{display:inline-block;position:absolute;right:calc(50% + .3em);text-align:left}.katex .cd-label-right{display:inline-block;left:calc(50% + .3em);position:absolute;text-align:right}.katex-display{display:block;margin:1em 0;text-align:center}.katex-display>.katex{display:block;text-align:center;white-space:nowrap}.katex-display>.katex>.katex-html{display:block;position:relative}.katex-display>.katex>.katex-html>.tag{position:absolute;right:0}.katex-display.leqno>.katex>.katex-html>.tag{left:0;right:auto}.katex-display.fleqn>.katex{padding-left:2em;text-align:left}body{counter-reset:katexEqnNo mmlEqnNo}
+
+</style>
+<style>
+body {
+    padding-top: 25px;
+}
+</style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1 id="%C4%91%E1%BB%81-thi-gi%E1%BB%AFa-k%E1%BB%B3-%26-l%E1%BB%9Di-gi%E1%BA%A3i-chi-ti%E1%BA%BFt-(l%C3%BD-thuy%E1%BA%BFt-%2B-th%E1%BB%B1c-h%C3%A0nh)" tabindex="-1">ĐỀ THI GIỮA KỲ &amp; LỜI GIẢI CHI TIẾT (LÝ THUYẾT + THỰC HÀNH)</h1>
+<h2 id="m%C3%B4n%3A-qu%E1%BA%A3n-tr%E1%BB%8B-d%E1%BB%8Bch-v%E1%BB%A5-m%E1%BA%A1ng---khoa-cntt---%C4%91h-c%C3%B4ng-nghi%E1%BB%87p-tp.hcm-(iuh)" tabindex="-1">MÔN: QUẢN TRỊ DỊCH VỤ MẠNG - KHOA CNTT - ĐH CÔNG NGHIỆP TP.HCM (IUH)</h2>
+<hr>
+<h1 id="ph%E1%BA%A7n-1%3A-n%E1%BB%99i-dung-nguy%C3%AAn-v%C4%83n-%C4%91%E1%BB%81-thi" tabindex="-1">PHẦN 1: NỘI DUNG NGUYÊN VĂN ĐỀ THI</h1>
+<pre class='hljs'><code><div>TRƯỜNG ĐẠI HỌC CÔNG NGHIỆP THÀNH PHỐ HỒ CHÍ MINH
+KHOA: CNTT
+Mẫu 3a: Đề tự luận giữa kỳ
+ĐỀ THI GIỮA KỲ
+Môn thi: Quản trị dịch vụ mạng
+Lớp/Lớp học phần: DHCNTT19A
+Thời gian làm bài: 60 phút (Không kể thời gian phát đề)
+(Đề thi được sử dụng tài liệu giấy)
+</div></code></pre>
+<h3 id="c%C3%A2u-1%3A-(3-%C4%91i%E1%BB%83m%2C-clo-2)-cho-m%C3%B4-h%C3%ACnh-m%E1%BA%A1ng-nh%C6%B0-sau%3A" tabindex="-1"><strong>Câu 1: (3 điểm, CLO 2)</strong> Cho mô hình mạng như sau:</h3>
+<pre class='hljs'><code><div>       [Host A Windows] (192.168.5.1)
+              |
+=== Mạng 192.168.5.0/24 (LAN 1) =========================
+         |                                  |
+     (eth0: 192.168.5.2)                (eth1: 192.168.5.3)
+      [ Linux A ]                        [ Linux B ]
+     (eth1: 192.168.6.3)                (eth0: 192.168.6.2)
+         |                                  |
+=== Mạng 192.168.6.0/24 (LAN 2) =========================
+              |
+       [Host B Windows] (192.168.6.1)
+</div></code></pre>
+<p><strong>Xây dựng hệ thống mạng với yêu cầu sau:</strong></p>
+<ul>
+<li><strong>a.</strong> Máy chủ tên Ubuntu server, địa chỉ IP là <code>192.168.6.3/24</code> (ping thông các máy).</li>
+<li><strong>b.</strong> Ubuntu server là máy điều khiển miền <code>abc.edu.vn</code> đồng thời làm máy chủ phân giải tên miền.</li>
+</ul>
+<hr>
+<h3 id="c%C3%A2u-2%3A-(7-%C4%91i%E1%BB%83m)" tabindex="-1"><strong>Câu 2: (7 điểm)</strong></h3>
+<p>Công ty abc có 100 người làm việc trong 3 phòng ban gồm: Phòng kế toán, phòng nhân sự, phòng đào tạo, trang thiết bị mạng của công ty gồm có: 2 server, 100 máy tính để bàn, 15 máy tính xách tay, 10 máy in, 2 máy photo, scan, cùng một số thiết bị Switch, Router... và công ty đã thực hiện kết nối mạng nội bộ (mạng LAN). Sử dụng địa chỉ mạng là <code>192.168.6.0/24</code> (trong đề ghi <code>192.168.6.3/24</code>) và dãy địa chỉ dành riêng cho các Server và giám đốc từ <code>192.168.6.3</code> đến <code>192.168.6.40</code>.</p>
+<p>Hệ thống mạng LAN của công ty được mở rộng thêm network thứ 2 (LAN 2) với địa chỉ mạng là <code>10.10.10.0/24</code> và được kết nối với hệ thống LAN ban đầu (LAN 1) thông qua một Router mềm. DHCP Server trên LAN 1 không cấp được IP cho các máy trong LAN 2.</p>
+<p><strong>Yêu cầu:</strong></p>
+<ul>
+<li><strong>a. (2 điểm, CLO 1)</strong> Hãy đưa ra giải pháp phù hợp để cấp địa chỉ IP động cho hệ thống mạng LAN.</li>
+<li><strong>b. (2 điểm, CLO 1)</strong> Giải thích đầy đủ nguyên lý hoạt động của dịch vụ DHCP được sử dụng trong giải pháp bạn chọn.</li>
+<li><strong>c. (3 điểm, CLO 2)</strong> Cài đặt và triển khai DHCP relay agent mà đã đưa ra giải pháp (<em>câu c làm trên máy tính</em>).</li>
+</ul>
+<hr>
+<hr>
+<h1 id="ph%E1%BA%A7n-2%3A-b%C3%A0i-l%C3%A0m-l%C3%BD-thuy%E1%BA%BFt-(ch%C3%A9p-v%C3%A0o-gi%E1%BA%A5y-thi---g%E1%BB%8Dn-%26-%C4%91%E1%BB%A7-%C3%BD-%C4%83n-tr%E1%BB%8Dn-%C4%91i%E1%BB%83m)" tabindex="-1">PHẦN 2: BÀI LÀM LÝ THUYẾT (CHÉP VÀO GIẤY THI - GỌN &amp; ĐỦ Ý ĂN TRỌN ĐIỂM)</h1>
+<h2 id="c%C3%A2u-2a%3A-gi%E1%BA%A3i-ph%C3%A1p-c%E1%BA%A5p-ph%C3%A1t-ip-%C4%91%E1%BB%99ng-cho-h%E1%BB%87-th%E1%BB%91ng-m%E1%BA%A1ng-(2-%C4%91i%E1%BB%83m)" tabindex="-1">CÂU 2a: GIẢI PHÁP CẤP PHÁT IP ĐỘNG CHO HỆ THỐNG MẠNG (2 ĐIỂM)</h2>
+<h3 id="1.-nguy%C3%AAn-nh%C3%A2n-l%E1%BB%97i%3A" tabindex="-1">1. Nguyên nhân lỗi:</h3>
+<ul>
+<li>Gói tin xin IP ban đầu (<code>DHCP Discover</code>) của máy trạm là gói <strong>Broadcast</strong> (<code>255.255.255.255</code>).</li>
+<li>Router mềm có vai trò phân tách Broadcast Domain để chống bão mạng nên <strong>mặc định sẽ chặn (drop) toàn bộ gói Broadcast</strong>, khiến DHCP Server ở LAN 1 không nhận được yêu cầu từ LAN 2.</li>
+</ul>
+<h3 id="2.-gi%E1%BA%A3i-ph%C3%A1p-l%E1%BB%B1a-ch%E1%BB%8Dn%3A" tabindex="-1">2. Giải pháp lựa chọn:</h3>
+<ul>
+<li><strong>Chọn giải pháp:</strong> Cài đặt dịch vụ <strong>DHCP Relay Agent</strong> trên Router mềm nối giữa LAN 1 và LAN 2.</li>
+<li><strong>Lý do lựa chọn:</strong>
+<ul>
+<li><strong>Tiết kiệm chi phí:</strong> Tận dụng ngay Router mềm sẵn có, không cần đầu tư thêm máy chủ DHCP vật lý cho LAN 2.</li>
+<li><strong>Quản trị tập trung:</strong> Toàn bộ dải IP của các chi nhánh đều cấu hình và kiểm soát tập trung tại một DHCP Server duy nhất ở LAN 1.</li>
+</ul>
+</li>
+</ul>
+<h3 id="3.-ph%C3%A2n-chia-d%E1%BA%A3i-ip-theo-y%C3%AAu-c%E1%BA%A7u-%C4%91%E1%BB%81-b%C3%A0i%3A" tabindex="-1">3. Phân chia dải IP theo yêu cầu đề bài:</h3>
+<ul>
+<li><strong>Mạng LAN 1 (<code>192.168.6.0/24</code>):</strong>
+<ul>
+<li>Gateway / DNS Server: <code>192.168.6.3</code></li>
+<li>Dải IP tĩnh (dành riêng Server &amp; Giám đốc): <code>192.168.6.3</code> đến <code>192.168.6.40</code></li>
+<li>Dải IP cấp phát động DHCP: <code>192.168.6.41</code> đến <code>192.168.6.254</code></li>
+</ul>
+</li>
+<li><strong>Mạng mở rộng LAN 2 (<code>10.10.10.0/24</code>):</strong>
+<ul>
+<li>Gateway: <code>10.10.10.1</code> (IP interface của Router mềm ở LAN 2)</li>
+<li>DNS Server: <code>192.168.6.3</code></li>
+<li>Dải IP cấp phát động DHCP qua Relay: <code>10.10.10.10</code> đến <code>10.10.10.250</code></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="c%C3%A2u-2b%3A-nguy%C3%AAn-l%C3%BD-ho%E1%BA%A1t-%C4%91%E1%BB%99ng-c%E1%BB%A7a-dhcp-v%C3%A0-dhcp-relay-agent-(2-%C4%91i%E1%BB%83m)" tabindex="-1">CÂU 2b: NGUYÊN LÝ HOẠT ĐỘNG CỦA DHCP VÀ DHCP RELAY AGENT (2 ĐIỂM)</h2>
+<h3 id="1.-c%E1%BB%95ng-giao-th%E1%BB%A9c%3A" tabindex="-1">1. Cổng giao thức:</h3>
+<ul>
+<li>Sử dụng giao thức <strong>UDP</strong>: Cổng <strong>UDP 67</strong> (DHCP Server &amp; Relay Agent), cổng <strong>UDP 68</strong> (DHCP Client).</li>
+</ul>
+<h3 id="2.-s%C6%A1-%C4%91%E1%BB%93-chuy%E1%BB%83n-%C4%91%E1%BB%95i-broadcast--%3E-unicast-qua-relay-agent%3A" tabindex="-1">2. Sơ đồ chuyển đổi Broadcast -&gt; Unicast qua Relay Agent:</h3>
+<pre class='hljs'><code><div>[ Client (LAN 2) ]          [ DHCP Relay Agent (Router) ]          [ DHCP Server (LAN 1) ]
+       |                                  |                                  |
+       |--- 1. DHCP Discover (Broadcast)-&gt;|                                  |
+       |    (UDP 68 -&gt; UDP 67)            |--- 1b. Gắn giaddr &amp; Unicast ----&gt;|
+       |                                  |    (UDP 67 -&gt; UDP 67)            |
+       |                                  |                                  |
+       |                                  |&lt;-- 2. DHCP Offer (Unicast) ------|
+       |&lt;-- 2b. Chuyển tiếp Offer --------|                                  |
+       |                                  |                                  |
+       |--- 3. DHCP Request (Broadcast) -&gt;|                                  |
+       |                                  |--- 3b. Gắn giaddr &amp; Unicast ----&gt;|
+       |                                  |                                  |
+       |                                  |&lt;-- 4. DHCP ACK (Unicast) --------|
+       |&lt;-- 4b. Chuyển tiếp ACK ----------|                                  |
+       | (Nhận IP, GW, DNS hoàn tất)      |                                  |
+</div></code></pre>
+<h3 id="3.-nguy%C3%AAn-l%C3%BD-ho%E1%BA%A1t-%C4%91%E1%BB%99ng-4-b%C6%B0%E1%BB%9Bc-(d-o-r-a)%3A" tabindex="-1">3. Nguyên lý hoạt động 4 bước (D-O-R-A):</h3>
+<ol>
+<li>**Bước 1 - Khám phá (DHCP Discover):**Client gửi gói tin <strong>Broadcast</strong> tìm Server. Relay Agent trên Router chặn gói tin, ghi địa chỉ IP interface của mình (<code>10.10.10.1</code>) vào trường <strong><code>giaddr</code> (Gateway IP Address)</strong>, rồi đóng gói thành <strong>Unicast</strong> gửi thẳng tới DHCP Server (<code>192.168.6.3</code>).</li>
+<li>**Bước 2 - Đề nghị (DHCP Offer):**DHCP Server nhận gói tin, đọc trường <code>giaddr = 10.10.10.1</code> nên biết Client thuộc dải <code>10.10.10.0/24</code>. Server chọn một IP trống trong dải này và gửi <strong>Unicast</strong> trả về cho Relay Agent -&gt; Relay Agent chuyển tiếp xuống Client.</li>
+<li>**Bước 3 - Yêu cầu (DHCP Request):**Client gửi gói Request chấp nhận IP. Relay Agent tiếp tục bắt gói, chèn <code>giaddr</code> và gửi <strong>Unicast</strong> lên DHCP Server.</li>
+<li><strong>Bước 4 - Xác nhận (DHCP ACK):</strong>
+DHCP Server lưu thông tin cấp phát và gửi gói DHCP ACK (<strong>Unicast</strong>) về cho Relay Agent -&gt; Relay Agent chuyển tiếp xuống Client để Client chính thức sử dụng IP.</li>
+</ol>
+<hr>
+<h1 id="ph%E1%BA%A7n-3%3A-h%C6%B0%E1%BB%9Bng-d%E1%BA%ABn-c%E1%BA%A5u-h%C3%ACnh-th%E1%BB%B1c-h%C3%A0nh-t%E1%BB%ABng-b%C6%B0%E1%BB%9Bc-(c%C3%A2u-1-%26-c%C3%A2u-2c)" tabindex="-1">PHẦN 3: HƯỚNG DẪN CẤU HÌNH THỰC HÀNH TỪNG BƯỚC (CÂU 1 &amp; CÂU 2c)</h1>
+<h2 id="b%C6%B0%E1%BB%9Bc-1%3A-c%E1%BA%A5u-h%C3%ACnh-ip-v%C3%A0-b%E1%BA%ADt-%C4%91%E1%BB%8Bnh-tuy%E1%BA%BFn-router-(c%C3%A2u-1a)" tabindex="-1">BƯỚC 1: CẤU HÌNH IP VÀ BẬT ĐỊNH TUYẾN ROUTER (CÂU 1a)</h2>
+<h3 id="1.-tr%C3%AAn-m%C3%A1y-ubuntu-server-(ubuntu-1---192.168.6.3-%2F-192.168.5.2)" tabindex="-1">1. Trên máy Ubuntu Server (Ubuntu 1 - <code>192.168.6.3</code> / <code>192.168.5.2</code>)</h3>
+<ul>
+<li><strong>Kiểm tra card mạng:</strong>
+<ul>
+<li><code>ens37</code> (LAN 1): IP <code>192.168.5.2/24</code></li>
+<li><code>ens41</code> (LAN 2): IP <code>192.168.6.3/24</code></li>
+</ul>
+</li>
+<li><strong>Bật tính năng Router (IP Forwarding):</strong><pre class='hljs'><code><div><span class="hljs-built_in">sudo</span> sysctl -w net.ipv4.ip_forward=1
+<span class="hljs-comment"># Lưu vĩnh viễn vào /etc/sysctl.conf</span>
+<span class="hljs-built_in">sudo</span> sed -i <span class="hljs-string">&#x27;s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/&#x27;</span> /etc/sysctl.conf
+</div></code></pre>
+</li>
+</ul>
+<hr>
+<h2 id="b%C6%B0%E1%BB%9Bc-2%3A-c%E1%BA%A5u-h%C3%ACnh-dns-server-bind9-cho-mi%E1%BB%81n-abc.edu.vn-(c%C3%A2u-1b)" tabindex="-1">BƯỚC 2: CẤU HÌNH DNS SERVER BIND9 CHO MIỀN <code>abc.edu.vn</code> (CÂU 1b)</h2>
+<h3 id="1.-khai-b%C3%A1o-zone-trong-%2Fetc%2Fbind%2Fnamed.conf.local%3A" tabindex="-1">1. Khai báo Zone trong <code>/etc/bind/named.conf.local</code>:</h3>
+<pre class='hljs'><code><div><span class="hljs-built_in">sudo</span> nano /etc/bind/named.conf.local
+</div></code></pre>
+<p>Nội dung:</p>
+<pre class='hljs'><code><div>// Forward Zone: abc.edu.vn
+zone &quot;abc.edu.vn&quot; {
+    type master;
+    file &quot;/etc/bind/db.abc.edu.vn&quot;;
+};
+
+// Reverse Zone: 192.168.6.x
+zone &quot;6.168.192.in-addr.arpa&quot; {
+    type master;
+    file &quot;/etc/bind/db.192.168.6&quot;;
+};
+</div></code></pre>
+<h3 id="2.-t%E1%BA%A1o-file-c%C6%A1-s%E1%BB%9F-d%E1%BB%AF-li%E1%BB%87u-forward-%2Fetc%2Fbind%2Fdb.abc.edu.vn%3A" tabindex="-1">2. Tạo File cơ sở dữ liệu Forward <code>/etc/bind/db.abc.edu.vn</code>:</h3>
+<pre class='hljs'><code><div>$TTL    604800
+@       IN      SOA     ns.abc.edu.vn. admin.abc.edu.vn. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      ns.abc.edu.vn.
+ns      IN      A       192.168.6.3
+server  IN      A       192.168.6.3
+@       IN      A       192.168.6.3
+www     IN      CNAME   abc.edu.vn.
+mail    IN      A       192.168.6.3
+router  IN      A       192.168.6.3
+</div></code></pre>
+<h3 id="3.-t%E1%BA%A1o-file-c%C6%A1-s%E1%BB%9F-d%E1%BB%AF-li%E1%BB%87u-reverse-%2Fetc%2Fbind%2Fdb.192.168.6%3A" tabindex="-1">3. Tạo File cơ sở dữ liệu Reverse <code>/etc/bind/db.192.168.6</code>:</h3>
+<pre class='hljs'><code><div>$TTL    604800
+@       IN      SOA     ns.abc.edu.vn. admin.abc.edu.vn. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      ns.abc.edu.vn.
+3       IN      PTR     ns.abc.edu.vn.
+3       IN      PTR     server.abc.edu.vn.
+3       IN      PTR     abc.edu.vn.
+</div></code></pre>
+<h3 id="4.-ki%E1%BB%83m-tra-c%C3%BA-ph%C3%A1p-v%C3%A0-kh%E1%BB%9Fi-%C4%91%E1%BB%99ng-l%E1%BA%A1i-dns-server%3A" tabindex="-1">4. Kiểm tra cú pháp và khởi động lại DNS Server:</h3>
+<pre class='hljs'><code><div><span class="hljs-built_in">sudo</span> named-checkconf
+<span class="hljs-built_in">sudo</span> named-checkzone abc.edu.vn /etc/bind/db.abc.edu.vn
+<span class="hljs-built_in">sudo</span> named-checkzone 6.168.192.in-addr.arpa /etc/bind/db.192.168.6
+<span class="hljs-built_in">sudo</span> systemctl restart bind9
+</div></code></pre>
+<h3 id="5.-ki%E1%BB%83m-th%E1%BB%AD-ph%C3%A2n-gi%E1%BA%A3i-t%C3%AAn-mi%E1%BB%81n%3A" tabindex="-1">5. Kiểm thử phân giải tên miền:</h3>
+<pre class='hljs'><code><div>nslookup abc.edu.vn 127.0.0.1
+nslookup www.abc.edu.vn 127.0.0.1
+nslookup 192.168.6.3 127.0.0.1
+</div></code></pre>
+<hr>
+<h2 id="b%C6%B0%E1%BB%9Bc-3%3A-c%E1%BA%A5u-h%C3%ACnh-dhcp-server-%26-dhcp-relay-agent-(c%C3%A2u-2c)" tabindex="-1">BƯỚC 3: CẤU HÌNH DHCP SERVER &amp; DHCP RELAY AGENT (CÂU 2c)</h2>
+<h3 id="1.-c%E1%BA%A5u-h%C3%ACnh-dhcp-server-(tr%C3%AAn-m%C3%A1y-ubuntu-1---192.168.6.3)" tabindex="-1">1. Cấu hình DHCP Server (Trên máy Ubuntu 1 - <code>192.168.6.3</code>)</h3>
+<p>Mở file <code>/etc/dhcp/dhcpd.conf</code>:</p>
+<pre class='hljs'><code><div><span class="hljs-built_in">sudo</span> nano /etc/dhcp/dhcpd.conf
+</div></code></pre>
+<p>Nội dung cấu hình chuẩn:</p>
+<pre class='hljs'><code><div>default-lease-time 600;
+max-lease-time 7200;
+authoritative;
+
+# ==========================================
+# 1. SUBNET LAN 1 (192.168.6.0/24)
+# ==========================================
+subnet 192.168.6.0 netmask 255.255.255.0 {
+    # Dãy cấp phát động (tránh dải tĩnh 192.168.6.3 -&gt; 192.168.6.40)
+    range 192.168.6.41 192.168.6.254;
+    option subnet-mask 255.255.255.0;
+    option routers 192.168.6.3;
+    option domain-name-servers 192.168.6.3, 8.8.8.8;
+    option domain-name &quot;abc.edu.vn&quot;;
+}
+
+# ==========================================
+# 2. SUBNET LAN 2 (10.10.10.0/24) QUA RELAY
+# ==========================================
+subnet 10.10.10.0 netmask 255.255.255.0 {
+    range 10.10.10.10 10.10.10.250;
+    option subnet-mask 255.255.255.0;
+    option routers 10.10.10.1;
+    option domain-name-servers 192.168.6.3, 8.8.8.8;
+    option domain-name &quot;abc.edu.vn&quot;;
+}
+
+# Subnet phụ mạng NAT nếu có (để dhcpd không báo lỗi thiếu subnet ens33)
+subnet 192.168.1.0 netmask 255.255.255.0 {
+}
+
+# Subnet phụ LAN 5 nếu có card ens37
+subnet 192.168.5.0 netmask 255.255.255.0 {
+    range 192.168.5.10 192.168.5.50;
+    option routers 192.168.5.2;
+}
+</div></code></pre>
+<p>Khai báo card mạng lắng nghe trong <code>/etc/default/isc-dhcp-server</code>:</p>
+<pre class='hljs'><code><div><span class="hljs-built_in">sudo</span> sed -i <span class="hljs-string">&#x27;s/INTERFACESv4=.*/INTERFACESv4=&quot;ens37 ens41&quot;/&#x27;</span> /etc/default/isc-dhcp-server
+<span class="hljs-built_in">sudo</span> systemctl restart isc-dhcp-server
+</div></code></pre>
+<hr>
+<h3 id="2.-c%E1%BA%A5u-h%C3%ACnh-dhcp-relay-agent-(tr%C3%AAn-router-m%E1%BB%81m-%2F-ubuntu-2)" tabindex="-1">2. Cấu hình DHCP Relay Agent (Trên Router Mềm / Ubuntu 2)</h3>
+<p>Cài đặt gói:</p>
+<pre class='hljs'><code><div><span class="hljs-built_in">sudo</span> apt update &amp;&amp; <span class="hljs-built_in">sudo</span> apt install -y isc-dhcp-relay
+</div></code></pre>
+<p>Cấu hình file <code>/etc/default/isc-dhcp-relay</code>:</p>
+<pre class='hljs'><code><div><span class="hljs-comment"># Địa chỉ IP của máy chủ DHCP Server chính</span>
+SERVERS=<span class="hljs-string">&quot;192.168.6.3&quot;</span>
+
+<span class="hljs-comment"># Các card mạng tham gia Relay (card nối tới DHCP Server và card nối tới Client)</span>
+INTERFACES=<span class="hljs-string">&quot;ens37 ens41&quot;</span>
+
+OPTIONS=<span class="hljs-string">&quot;&quot;</span>
+</div></code></pre>
+<p>Khởi động lại dịch vụ:</p>
+<pre class='hljs'><code><div><span class="hljs-built_in">sudo</span> systemctl restart isc-dhcp-relay
+<span class="hljs-built_in">sudo</span> systemctl <span class="hljs-built_in">enable</span> isc-dhcp-relay
+</div></code></pre>
+<p>Bật IP Forwarding trên Router:</p>
+<pre class='hljs'><code><div><span class="hljs-built_in">sudo</span> sysctl -w net.ipv4.ip_forward=1
+</div></code></pre>
+<hr>
+<h3 id="3.-ki%E1%BB%83m-th%E1%BB%AD-tr%C3%AAn-m%C3%A1y-client-(windows-7-ho%E1%BA%B7c-ubuntu-client)" tabindex="-1">3. Kiểm thử trên máy Client (Windows 7 hoặc Ubuntu Client)</h3>
+<ul>
+<li><strong>Trên Windows 7:</strong><pre class='hljs'><code><div><span class="hljs-built_in">ipconfig</span> /release
+<span class="hljs-built_in">ipconfig</span> /renew
+<span class="hljs-built_in">ipconfig</span> /all
+nslookup abc.edu.vn <span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">6</span>.<span class="hljs-number">3</span>
+<span class="hljs-built_in">ping</span> abc.edu.vn
+</div></code></pre>
+</li>
+<li><strong>Trên Ubuntu Client:</strong><pre class='hljs'><code><div><span class="hljs-built_in">sudo</span> dhclient -r
+<span class="hljs-built_in">sudo</span> dhclient -v
+ip a
+dig @192.168.6.3 abc.edu.vn
+</div></code></pre>
+</li>
+</ul>
+<hr>
+<hr>
+
+    </div>
+</body>
+</html>
