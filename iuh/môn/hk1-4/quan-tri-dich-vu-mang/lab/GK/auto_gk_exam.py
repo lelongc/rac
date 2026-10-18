@@ -70,6 +70,7 @@ def run_ssh_cmd(host, user, pwd, cmd, desc=""):
         ssh.connect(host, username=user, password=pwd, timeout=10)
         full_cmd = f"echo {pwd} | sudo -S sh -c '{cmd}'"
         stdin, stdout, stderr = ssh.exec_command(full_cmd)
+        stdin.close()
         out = stdout.read().decode('utf-8', errors='ignore')
         err = stderr.read().decode('utf-8', errors='ignore')
         ssh.close()
@@ -88,12 +89,14 @@ def write_remote_file(host, path, content, desc=""):
         b64_str = base64.b64encode(content.encode('utf-8')).decode('ascii')
         cmd = f"echo {SSH_PASS} | sudo -S sh -c \"echo '{b64_str}' | base64 -d > {path}\""
         stdin, stdout, stderr = ssh.exec_command(cmd)
+        stdin.close()
         stdout.read()
         ssh.close()
         return True
     except Exception as e:
         print(f"❌ Lỗi ghi file {path} trên {host}: {e}")
         return False
+
 
 def setup_ubuntu1_server():
     print("\n" + "="*70)
