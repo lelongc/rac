@@ -1,0 +1,8 @@
+1/ Viết ứng dụng theo kỹ thuật TCP và Socket để tìm thông tin của người dùng hệ thống. Máy khách gửi một chuỗi là email của người dùng. 
+  Máy chủ trả về cho máy khách đúng email nhận được và số điện thoại, tên của của người, dữ liệu của người dùng được lưu trên máy chủ dưới dạng file văn bản hoặc mảng. 
+  Ví dụ: Máy khách gửi "abcd1234@gmail.com", máy chủ trả về chuỗi "abcd1234@gmail.com" và "Henry Ford 0932 622 268".
+2/
+Sử dụng kỹ thuật lập trình RMI, viết chương trình Java theo mô hình Client/Server thực hiện tính toán như sau:
+Tìm ước số chung lớn nhất của A và B.
+Tìm xem có số nào trong hai số là số nguyên tố không?
+Hết
