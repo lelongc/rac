@@ -35,7 +35,6 @@ public class InteractionService {
     UserMapper userMapper;
     BookmarkRepository bookmarkRepository;
     NotificationService notificationService;
-    // 🔥 BỔ SUNG: Tiêm BlogMapper vào để map dữ liệu Bookmark
     BlogMapper blogMapper;
 
     // ================= LIKE =================
