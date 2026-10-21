@@ -1,0 +1,60 @@
+﻿================================================================================
+     KỊCH BẢN DEMO LAB 10 CHUẨN ĐỀ: TRIỂN KHAI ACTIVE DIRECTORY & DỊCH VỤ DNS
+================================================================================
+
+Theo đúng đề cương thực hành bài Lab 10, sinh viên cần trình diễn 2 nội dung chính:
+NỘI DUNG 1: Dịch vụ Active Directory Domain Services (Nâng cấp DC & Máy trạm Join Domain)
+NỘI DUNG 2: Dịch vụ DNS Server Primary (Cấu hình IP trỏ DNS & Phân giải tên miền)
+
+
+--------------------------------------------------------------------------------
+PHẦN 1: SHOW TRÊN MÁY SERVER (DOMAIN CONTROLLER & DNS PRIMARY)
+--------------------------------------------------------------------------------
+
+1. Show dịch vụ Active Directory & Máy trạm đã Join Domain:
+   - Nhấn Windows + R, gõ: dsa.msc  (Active Directory Users and Computers)
+   - 👉 Bấm vào mục "Domain Controllers":
+     * Chỉ cho thầy xem máy chủ: WIN-P6PG9M9AICK (vai trò Global Catalog).
+   - 👉 Bấm vào mục "Computers":
+     * Chỉ cho thầy xem 2 máy trạm đã Join Domain thành công: WIN7-PC1 và WIN7-PC2.
+   - 👉 Bấm vào mục "Users":
+     * Danh sách tài khoản người dùng được quản trị tập trung (Administrator, U1, U2, U11, U12...).
+
+2. Show dịch vụ DNS Server Primary:
+   - Nhấn Windows + R, gõ: dnsmgmt.msc  (DNS Manager)
+   - 👉 Mở rộng "Forward Lookup Zones" -> Chọn "newstar.vn":
+     * Chỉ cho thầy xem các bản ghi Host (A), Name Server (NS) và các bản ghi dịch vụ SRV (_msdcs, _tcp).
+   - 👉 Mở rộng "Reverse Lookup Zones":
+     * Đã có sẵn vùng phân giải ngược (11.168.192.in-addr.arpa và 11.100.100.in-addr.arpa) với các bản ghi PTR.
+
+
+--------------------------------------------------------------------------------
+PHẦN 2: SHOW TRÊN MÁY TRẠM CLIENT (WIN7-PC1 HOẶC WIN7-PC2) - BẮT BUỘC ĐỂ LẤY ĐIỂM
+--------------------------------------------------------------------------------
+
+1. Show chứng minh máy đã Join Domain thành công:
+   - Bấm chuột phải vào biểu tượng "Computer" ngoài Desktop -> Chọn "Properties" (hoặc nhấn Windows + R gõ sysdm.cpl).
+   - 👉 Chỉ tay vào các dòng thông số:
+     * Computer name: WIN7-PC1
+     * Full computer name: WIN7-PC1.newstar.vn
+     * Domain: newstar.vn
+   - 🗣️ Nói với thầy: "Dạ thưa thầy, máy trạm đã gia nhập thành công vào miền newstar.vn ạ!"
+
+2. Show phân giải tên miền DNS Primary:
+   - Nhấn Windows + R, gõ: cmd  ➔ Enter.
+   - Gõ lệnh 1 (Xem thông số card mạng & DNS Server):
+     ipconfig /all
+     👉 Chỉ vào dòng "DNS Servers": 192.168.11.1 (Trỏ đúng về IP của Domain Controller).
+
+   - Gõ lệnh 2 (Phân giải tên miền DNS Primary - Yêu cầu bài Lab 2 DNS):
+     nslookup newstar.vn
+     👉 Kết quả in ra ngay lập tức:
+        Server:  win-p6pg9m9aick.newstar.vn
+        Address: 192.168.11.1
+     🗣️ Nói với thầy: "Dạ máy trạm phân giải tức thì tên miền newstar.vn về đúng địa chỉ IP máy chủ DC ạ!"
+
+   - Gõ lệnh 3 (Kiểm tra thông mạng):
+     ping newstar.vn
+     👉 Nhận được phản hồi Reply from 192.168.11.1 thời gian <1ms thông suốt 100%!
+
+================================================================================
