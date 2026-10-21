@@ -10,24 +10,18 @@ public class SlugUtils {
             return "";
         }
 
-        // 1. Chuyển tất cả thành chữ thường và cắt khoảng trắng 2 đầu
         String slug = title.trim().toLowerCase();
 
-        // 2. Loại bỏ dấu tiếng Việt (Chuẩn hóa Unicode NFD)
         slug = Normalizer.normalize(slug, Normalizer.Form.NFD);
         Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
         slug = pattern.matcher(slug).replaceAll("");
 
-        // 3. Xử lý riêng chữ 'đ' (vì Normalizer không tự động chuyển đ thành d)
         slug = slug.replace("đ", "d");
 
-        // 4. Thay thế tất cả các ký tự không phải là chữ cái hoặc số thành dấu gạch ngang (-)
         slug = slug.replaceAll("[^a-z0-9]+", "-");
 
-        // 5. Loại bỏ các dấu gạch ngang liên tiếp (ví dụ: "---" biến thành "-")
         slug = slug.replaceAll("-+", "-");
 
-        // 6. Xóa dấu gạch ngang bị thừa ở đầu hoặc cuối chuỗi (nếu có)
         slug = slug.replaceAll("^-|-$", "");
 
         return slug;

@@ -1,8 +1,3 @@
-/**
- * nav.js
- * Page navigation, auth state toggle, Avatar Sync & Advanced Notification Logic
- */
-
 function navigate(page) {
     S.page = page;
 
@@ -18,8 +13,6 @@ function navigate(page) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-/* ─────────────── AUTHENTICATION UI TOGGLE & AVATAR SYNC ─────────────── */
-/* ─────────────── AUTHENTICATION UI TOGGLE & AVATAR SYNC ─────────────── */
 function updateNavAuth() {
     const isAuth = S.isAuth;
     const uname = S.uname;
@@ -30,17 +23,14 @@ function updateNavAuth() {
         $('.nav-user').attr('style', 'display: flex !important');
         $('#nav-username, #mob-nav-username').text(uname);
 
-        // --- MỔ TOKEN ĐỂ CHECK QUYỀN ADMIN ---
         let isAdmin = false;
         try {
             const base64Url = token.split('.')[1];
             const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            // Fix lỗi font tiếng Việt khi giải mã token
             const payload = JSON.parse(decodeURIComponent(window.atob(base64).split('').map(function(c) {
                 return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
             }).join('')));
 
-            // Lấy quyền từ thuộc tính scope (Spring Boot trả về ở đây)
             const roles = payload.scope || payload.roles || "";
             if (roles.includes("ADMIN")) {
                 isAdmin = true;
@@ -49,20 +39,18 @@ function updateNavAuth() {
             console.error("Lỗi giải mã token:", e);
         }
 
-        // --- CẬP NHẬT GIAO DIỆN THEO QUYỀN ---
         if (isAdmin) {
             $('#btn-desk-admin').show();
             $('#btn-mob-admin').attr('style', 'display: flex !important; color: #ac8aff; font-weight: 600;');
-            $('.d-role').text('Admin'); // Đổi chữ Author thành Admin
-            $('.d-role').css('color', '#ac8aff'); // Đổi màu chữ cho ngầu
+            $('.d-role').text('Admin');
+            $('.d-role').css('color', '#ac8aff');
         } else {
             $('#btn-desk-admin').hide();
             $('#btn-mob-admin').attr('style', 'display: none !important;');
-            $('.d-role').text('Author'); // Trả về mặc định
+            $('.d-role').text('Author');
             $('.d-role').css('color', 'var(--t2)');
         }
 
-        // Lấy Avatar
         const savedAvatar = localStorage.getItem('avatarUrl');
         if (savedAvatar) {
             $('#nav-avatar, #mob-nav-avatar').html(`<img src="${savedAvatar}" alt="avatar" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`);
@@ -80,7 +68,6 @@ function updateNavAuth() {
 
         checkUnreadNotifications();
     } else {
-        // NẾU CHƯA ĐĂNG NHẬP
         $('.nav-guest').attr('style', 'display: flex !important');
         $('.nav-user').attr('style', 'display: none !important');
         $('#btn-desk-admin').hide();
@@ -88,15 +75,12 @@ function updateNavAuth() {
     }
 }
 
-/* ─────────────── LOGIC ĐẾM VÀ TẮT THÔNG BÁO THÔNG MINH ─────────────── */
 function checkUnreadNotifications() {
-    // Lấy thời điểm người dùng click vào chuông lần cuối cùng
     const clearedTime = localStorage.getItem('notif_cleared_time') || 0;
 
     callApi('/api/notifications', 'GET').done(function(res) {
         const notifs = res.result || [];
 
-        // Đếm những thông báo: Chưa đọc VÀ Mới hơn lần cuối cùng click chuông
         const unreadCount = notifs.filter(n => !n.read && new Date(n.createdAt).getTime() > clearedTime).length;
 
         if (unreadCount > 0) {
@@ -107,15 +91,11 @@ function checkUnreadNotifications() {
     });
 }
 
-// BẮT SỰ KIỆN: Khi người dùng CLICK VÀO QUẢ CHUÔNG ở Navbar / Mobile
 $(document).on('click', 'a[href="notifications.html"]', function() {
-    // Đánh dấu thời điểm hiện tại là "Đã xem tất cả"
     localStorage.setItem('notif_cleared_time', Date.now());
-    // Ẩn chấm đỏ ngay lập tức cho mượt
     $('#nav-notif-badge, #mob-notif-badge').hide().addClass('hidden');
 });
 
-/* ─────────────── EVENT LISTENERS CƠ BẢN ─────────────── */
 $(document).ready(function() {
     if (typeof updateNavAuth === 'function') updateNavAuth();
 });
@@ -133,7 +113,6 @@ $(document).on('click', '#nav-brand', function(e){
 $(document).on('click', '#btn-logout, #btn-mob-logout', function(e) {
     e.preventDefault();
 
-    // Xóa toàn bộ thông tin đăng nhập và cache
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     localStorage.removeItem('avatarUrl');
@@ -156,9 +135,6 @@ $(document).on('click', '#btn-logout, #btn-mob-logout', function(e) {
     }, 300);
 });
 
-/* ==========================================
-   LOGIC TÌM KIẾM
-   ========================================== */
 let searchTimeout = null;
 function getSearchHistory() { return JSON.parse(localStorage.getItem('inkwell_history') || '[]'); }
 function saveSearchHistory(keyword) {

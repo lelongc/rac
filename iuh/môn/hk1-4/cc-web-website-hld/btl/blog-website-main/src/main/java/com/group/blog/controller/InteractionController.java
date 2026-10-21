@@ -13,14 +13,13 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/blogs") // Hoặc bạn có thể tách ra thành /comments riêng
+@RequestMapping("/blogs")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class InteractionController {
 
     InteractionService interactionService;
 
-    // --- LIKE ---
     @PostMapping("/{blogId}/like")
     public ApiResponse<String> toggleLike(@PathVariable UUID blogId) {
         interactionService.toggleLike(blogId);
@@ -29,7 +28,6 @@ public class InteractionController {
                 .build();
     }
 
-    // --- COMMENT ---
     @GetMapping("/{blogId}/comments")
     public ApiResponse<List<CommentResponse>> getComments(@PathVariable UUID blogId) {
         return ApiResponse.<List<CommentResponse>>builder()
@@ -57,7 +55,7 @@ public class InteractionController {
         return ApiResponse.<String>builder().result("Toggled bookmark successfully").build();
     }
 
-    @GetMapping("/bookmarks") // API lấy danh sách bài đã lưu
+    @GetMapping("/bookmarks")
     public ApiResponse<List<BlogResponse>> getMyBookmarks() {
         return ApiResponse.<List<BlogResponse>>builder().result(interactionService.getMyBookmarks()).build();
     }

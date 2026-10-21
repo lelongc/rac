@@ -4,7 +4,6 @@ public class AppException extends RuntimeException{
     private ErrorCode errorCode;
 
     public AppException(ErrorCode errorCode) {
-        // kế thừa constructor của RuntimeException
         super(errorCode.getMessage());
         this.errorCode = errorCode;
     }

@@ -56,12 +56,10 @@
 <script src="../assets/js/nav.js"></script>
 
 <script>
-    $(document).ready(function() {
+$(document).ready(function() {
         $('#navbar-container').load('../fragments/navbar.html', function() {
             if (typeof updateNavAuth === 'function') { updateNavAuth(); }
         });
-
-        // Đã xóa hàm gọi load dashboard-sidebar ở đây
 
         if (!S.isAuth) { window.location.href = 'login.html'; }
         else { loadNotifications(); }
@@ -89,7 +87,6 @@
             notifs.forEach((n, index) => {
                 let icon = ''; let colorClass = ''; let bgClass = '';
 
-                // Phân loại Icon và Màu sắc
                 if(n.type === 'LIKE') {
                     icon = 'favorite'; colorClass = 'text-[#ac8aff]'; bgClass = 'bg-[#ac8aff]/10 border border-[#ac8aff]/20';
                 } else if(n.type === 'COMMENT' || n.type === 'REPLY') {
@@ -98,10 +95,8 @@
                     icon = 'person_add'; colorClass = 'text-[#c9f791]'; bgClass = 'bg-[#c9f791]/10 border border-[#c9f791]/20';
                 }
 
-                // Format lại nội dung: In đậm @username
                 let formattedMessage = n.message.replace(/@(\w+)/g, '<span class="font-bold text-white tracking-wide">@$1</span>');
 
-                // Style dựa trên trạng thái (Đã đọc / Chưa đọc)
                 const unreadBar = !n.read ? `<div class="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-10 bg-[#ac8aff] rounded-r-full shadow-[0_0_10px_rgba(172,138,255,0.8)]"></div>` : '';
                 const cardBaseStyle = !n.read
                     ? 'bg-gradient-to-r from-[#151a22] to-[#151a22] hover:to-[#1b202a] border-[#ac8aff]/30 shadow-[0_4px_20px_rgba(0,0,0,0.2)]'
@@ -109,7 +104,6 @@
 
                 const dateStr = fmtDate(n.createdAt);
 
-                // Độ trễ animation cho từng item để tạo hiệu ứng rớt xuống lần lượt
                 const animDelay = index * 0.05;
 
                 $list.append(`
@@ -146,14 +140,13 @@
     }
 
     function openNotif(id, url) {
-        // Đánh dấu đã đọc ngầm dưới nền, gọi xong thì chuyển hướng URL
         callApi('/api/notifications/' + id + '/read', 'PUT').always(function() {
             window.location.href = url;
         });
     }
 
     function deleteNotif(id, event) {
-        event.stopPropagation(); // Ngăn chặn click lan ra thẻ cha
+        event.stopPropagation();
         callApi('/api/notifications/' + id, 'DELETE').done(function() {
             $(`#notif-${id}`).slideUp(300, function() { $(this).remove(); });
             toast("Đã xóa thông báo.");

@@ -107,8 +107,7 @@
 <script src="/assets/js/init.js" onerror="this.onerror=null;this.src='../assets/js/init.js'"></script>
 
 <script>
-    $(document).ready(function() {
-        // Tự động nạp Hero và Footer với cơ chế thử đường dẫn gốc và fallback tương đối
+$(document).ready(function() {
         $('#hero-container').load('/fragments/hero.html', function(res, status) {
             if (status === 'error') {
                 $('#hero-container').load('../fragments/hero.html');
@@ -120,7 +119,6 @@
             }
         });
 
-        // Tự động nạp Navbar và kích hoạt logic Auth
         $('#navbar-container').load('/fragments/navbar.html', function(response, status, xhr) {
             if (status === "error") {
                 $('#navbar-container').load('../fragments/navbar.html', function() {

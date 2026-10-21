@@ -18,7 +18,7 @@ public class BlogUpdateRequest {
     String description;
     String content;
 
-    Boolean draft; // Dùng Boolean (object) thay vì boolean (primitive) để có thể check null
+    Boolean draft;
 
     UUID categoryId;
     Set<String> tags;

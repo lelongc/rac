@@ -32,7 +32,6 @@ public class UserService {
  UserMapper userMapper;
  PasswordEncoder passwordEncoder;
 
-    // Service phụ trợ lấy thông tin theo dõi tác giả
     FollowService followService;
 
  public UserResponse createUser(UserCreatetionRequest request){
@@ -42,23 +41,20 @@ public class UserService {
   u.setPassword(passwordEncoder.encode(request.getPassword()));
   u.getRoles().add(Role.USER.name());
   User savedUser=userRepository.save(u);
-  return userMapper.toUserResponse(savedUser); // User mới tạo mặc định chưa có follow, không cần enrich
+  return userMapper.toUserResponse(savedUser);
  }
 
  public UserResponse updateUser(UUID id, UserUpdateRequest request){
   User u = userRepository.findById(id)
           .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXITED));
 
-  // 1. Vẫn cho Mapper tự cập nhật email, bio...
   userMapper.updateUser(u, request);
 
-        // Cập nhật danh sách quyền hạn
         if (request.getRoles() != null && !request.getRoles().isEmpty()) {
             u.getRoles().clear();
             u.getRoles().addAll(request.getRoles());
         }
 
-        // Lưu vào Database
         return followService.enrichUserResponse(userRepository.save(u));
     }
 
@@ -76,31 +72,25 @@ public class UserService {
     }
 
     public void changePassword(PasswordChangeRequest request) {
-        // 1. Lấy ra username của người ĐANG ĐĂNG NHẬP từ cái Token
         var context = SecurityContextHolder.getContext();
         String currentUsername = context.getAuthentication().getName();
 
-        // 2. Lấy User từ Database lên
         User user = userRepository.findByUsername(currentUsername)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXITED));
 
-        // 3. So sánh: Mật khẩu cũ (nhập vào) có khớp với mật khẩu đang lưu trong DB không?
         boolean isMatch = passwordEncoder.matches(request.getOldPassword(), user.getPassword());
         if (!isMatch) {
             throw new AppException(ErrorCode.PASSWORD_INCORRECT);
         }
 
-        // 4. Kiểm tra: Mật khẩu mới và Nhập lại mật khẩu có giống nhau không?
         if (!request.getNewPassword().equals(request.getConfirmPassword())) {
             throw new AppException(ErrorCode.PASSWORD_NOT_MATCH);
         }
 
-        // 5. Băm (hash) mật khẩu mới và lưu đè lên mật khẩu cũ
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
         userRepository.save(user);
     }
 
-    // Lấy thông tin cá nhân kèm chỉ số Follower, Following
     public UserResponse getMyProfile() {
         var context = SecurityContextHolder.getContext();
         String currentUsername = context.getAuthentication().getName();
@@ -111,7 +101,6 @@ public class UserService {
         return followService.enrichUserResponse(user);
     }
 
-    // Cập nhật thông tin cá nhân
     @Transactional
     public UserResponse updateMyProfile(UserUpdateRequest request) {
         var context = SecurityContextHolder.getContext();
@@ -127,7 +116,6 @@ public class UserService {
         return followService.enrichUserResponse(userRepository.save(user));
     }
 
-    // Lấy Profile public bằng username
     public UserResponse getUserByUsername(String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXITED));

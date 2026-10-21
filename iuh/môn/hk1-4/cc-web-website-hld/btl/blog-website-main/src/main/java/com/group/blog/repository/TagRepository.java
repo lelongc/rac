@@ -1,6 +1,5 @@
 package com.group.blog.repository;
 
-
 import com.group.blog.entity.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,7 +15,6 @@ import java.util.UUID;
 
         boolean existsByName(String name);
 
-        // Đếm xem có bao nhiêu Blog đang chứa Tag này
         @Query("""
          SELECT t,COUNT(b.id)
          FROM Tag t

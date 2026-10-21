@@ -23,7 +23,6 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID id;
 
-    // Người NHẬN thông báo
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     User user;
@@ -31,15 +30,15 @@ public class Notification {
     @Column(nullable = false)
     String message;
 
-    String targetUrl; // Link bấm vào để xem chi tiết (VD: "/blog/java-la-gi")
+    String targetUrl;
 
     @Builder.Default
-    boolean isRead = false; // Trạng thái đã đọc hay chưa
+    boolean isRead = false;
 
     LocalDateTime createdAt;
 
     @Column(nullable = false)
-    String type; // Chứa các giá trị: "LIKE", "COMMENT", "REPLY", "FOLLOW"
+    String type;
 
     @PrePersist
     void prePersist(){

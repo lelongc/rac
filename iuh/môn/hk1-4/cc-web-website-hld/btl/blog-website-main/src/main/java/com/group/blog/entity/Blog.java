@@ -35,11 +35,9 @@ public class Blog {
 
     boolean draft;
 
-    // Cột chứa nội dung đang sửa dở (nháp)
     @Column(columnDefinition = "LONGTEXT")
     String draftContent;
 
-    // Cột chứa ảnh bìa đang sửa dở
     @Column(columnDefinition = "LONGTEXT")
     String draftBanner;
 

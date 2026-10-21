@@ -87,7 +87,6 @@ public class UserController {
         return apiResponse;
     }
 
-    // Lấy thông tin public của một user
     @GetMapping("/profile/{username}")
     public ApiResponse<UserResponse> getUserByUsername(@PathVariable String username) {
         return ApiResponse.<UserResponse>builder()

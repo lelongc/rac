@@ -20,9 +20,7 @@ import java.util.UUID;
 public class NotificationService {
     NotificationRepository notificationRepository;
 
-    // Hàm gọi nội bộ để tạo thông báo mới
     public void createNotification(User recipient, String message, String targetUrl, String type) {
-        // Không tự gửi thông báo cho chính mình (VD: Tự like bài của mình)
         String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
         if (recipient.getUsername().equals(currentUsername)) return;
 

@@ -12,6 +12,5 @@ public interface BlogLikeRepository extends JpaRepository<BlogLike, UUID> {
 
     boolean existsByBlogIdAndUserUsername(UUID blogId, String username);
 
-    // Tìm like để xóa nếu user click lần 2 (Unlike)
     Optional<BlogLike> findByBlogIdAndUserUsername(UUID blogId, String username);
 }

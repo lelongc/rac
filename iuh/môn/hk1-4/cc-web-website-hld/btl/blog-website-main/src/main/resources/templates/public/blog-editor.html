@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 
     <script id="tailwind-config">
-        tailwind.config = {
+tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
@@ -27,7 +27,7 @@
                 },
             },
         }
-    </script>
+</script>
 
     <style>
         body { background-color: #0D1117; color: #E6EDF3; font-family: 'Inter', sans-serif; }
@@ -445,10 +445,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="../assets/js/app.js"></script>
 <script>
-    // ═══════════════════════════════════════════
-    //  CUSTOM MODAL LOGIC
-    // ═══════════════════════════════════════════
-    function showModal(title, message, primaryBtn, secondaryBtn, onPrimary, onSecondary) {
+function showModal(title, message, primaryBtn, secondaryBtn, onPrimary, onSecondary) {
         $('#modal-title').text(title);
         $('#modal-message').html(message.replace(/\n/g, '<br>'));
 
@@ -485,9 +482,6 @@
         }, 200);
     }
 
-    // ═══════════════════════════════════════════
-    //  SPA VIEW SWITCHER
-    // ═══════════════════════════════════════════
     function showPreview() {
         const bannerImg = document.getElementById('banner-img');
         const pvBannerImg  = document.getElementById('pv-banner-img');
@@ -512,9 +506,6 @@
         window.scrollTo(0, 0);
     }
 
-    // ═══════════════════════════════════════════
-    //  PREVIEW: Tags
-    // ═══════════════════════════════════════════
     const PV_MAX_TAGS = 10;
     let pvTags = [];
 
@@ -525,7 +516,6 @@
             const chip = document.createElement('span');
             chip.className = 'pv-tag-chip';
 
-            // Đảm bảo chỉ có 1 dấu # (Loại bỏ mọi dấu # ở đầu trước khi thêm)
             const cleanTag = tag.replace(/^#+/, '');
             chip.innerHTML = `#${cleanTag}<button type="button" onclick="pvRemoveTag(${i})"><span class="material-symbols-outlined">close</span></button>`;
 
@@ -537,11 +527,9 @@
     }
 
     function pvAddTag(raw) {
-        // Tự động dọn dẹp các dấu # nếu người dùng lỡ nhập vào
         const val = raw.trim().replace(/^#+/, '');
         if (!val || pvTags.length >= PV_MAX_TAGS) return;
 
-        // Kiểm tra xem tag đã tồn tại chưa (cũng dọn dẹp để so sánh cho chuẩn)
         if (pvTags.map(t => t.replace(/^#+/, '').toLowerCase()).includes(val.toLowerCase())) return;
 
         pvTags.push(val);
@@ -564,9 +552,6 @@
         if (e.target.value.trim()) pvAddTag(e.target.value);
     });
 
-    // ═══════════════════════════════════════════
-    //  PREVIEW: Description counter
-    // ═══════════════════════════════════════════
     function pvUpdateDesc(el) {
         const left = 200 - el.value.length;
         const counter = document.getElementById('pv-desc-counter');
@@ -576,9 +561,6 @@
             'Your content is looking great. Review the details on the right to finalize your publication settings.';
     }
 
-    // ═══════════════════════════════════════════
-    //  EDITOR STATE
-    // ═══════════════════════════════════════════
     const area          = document.getElementById('editor-area');
     const slashMenu     = document.getElementById('slash-menu');
     const menuItems     = [...slashMenu.querySelectorAll('.menu-item')];
@@ -795,7 +777,6 @@
         blockImgInput.click();
     }
 
-    // ── Keyboard ──
     const LIST_TYPES = ['bullet', 'numbered', 'todo'];
 
     function handleKey(e, b, el) {
@@ -839,7 +820,6 @@
 
     function getTextContent(el) { return (el.textContent || el.innerText || '').trim(); }
 
-    // ── Slash menu ──
     function showMenuNearBtn(btn) {
         const rect = btn.getBoundingClientRect();
         slashMenu.style.display = 'block'; menuActiveIdx = 0; setMenuActive(0);
@@ -908,7 +888,6 @@
 
     document.addEventListener('click', e => { if (!slashMenu.contains(e.target)) hideMenu(); });
 
-    // ── Banner ──
     let selectedBannerFile = null;
 
     document.getElementById('banner-input').addEventListener('change', e => {
@@ -923,7 +902,6 @@
         document.getElementById('banner-filled').classList.remove('hidden');
     });
 
-    // ── Title sync ──
     const titleInput = document.getElementById('title-input');
     titleInput.addEventListener('input', () => {
         document.getElementById('header-title').textContent = titleInput.value || 'Untitled';
@@ -931,13 +909,11 @@
         titleInput.style.height = titleInput.scrollHeight + 'px';
     });
 
-    // ── Init ──
     blocks.push(makeBlock('text'));
     renderAll();
     focusBlock(blocks[0].id);
     pvRenderTags();
 
-    // ── Mobile toolbar ──
     const mobToolbar = document.getElementById('mob-block-toolbar');
     const isTouch = () => window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 
@@ -991,9 +967,6 @@
         if (isTouch()) document.getElementById('banner-input').click();
     });
 
-    // ═══════════════════════════════════════════
-    //  PREVIEW: Category Validation
-    // ═══════════════════════════════════════════
     function pvUpdateCategory(sel) {
         const catDisplay = document.getElementById('pv-selected-cat');
         const errorMsg = document.getElementById('pv-cat-error');
@@ -1008,7 +981,6 @@
         }
     }
 
-    // 🔥 HÀM PUBLISH
     async function validateAndPublish() {
         const sel = document.getElementById('pv-form-category');
         const errorMsg = document.getElementById('pv-cat-error');
@@ -1103,9 +1075,6 @@
         }
     }
 
-    // ═══════════════════════════════════════════
-    //  CALL API: ĐỔ DỮ LIỆU DANH MỤC VÀ TAG TỪ DB
-    // ═══════════════════════════════════════════
     document.addEventListener('DOMContentLoaded', function() {
         callApi('/categories', 'GET').done(function(res) {
             const categories = res.result || res;
@@ -1145,9 +1114,6 @@
         });
     });
 
-    // ==========================================
-    // LOGIC EDIT: NẠP DỮ LIỆU BẢN NHÁP / BÀI VIẾT CŨ
-    // ==========================================
     const urlParams = new URLSearchParams(window.location.search);
     const editSlug = urlParams.get('id');
     let editingBlogId = null;
@@ -1222,9 +1188,6 @@
         });
     }
 
-    // ==========================================
-    // LOGIC CẢNH BÁO KHI CHUYỂN TRANG
-    // ==========================================
     function handleEditorNavigation() {
         const title = document.getElementById('title-input').value.trim();
         const firstBlockText = (typeof blocks !== 'undefined' && blocks[0] && blocks[0].content) ? blocks[0].content.trim() : '';
@@ -1255,7 +1218,6 @@
         }
     }
 
-    // 🔥 HÀM LƯU NHÁP CŨNG ĐƯỢC CẬP NHẬT TÍNH NĂNG ĐẨY BANNER 🔥
     async function saveAsDraftAndLeave() {
         try {
             const btn = document.querySelector('header button.bg-\\[\\#2D333B\\]');
@@ -1313,7 +1275,6 @@
             );
         }
     }
-
 </script>
 </body>
 </html>

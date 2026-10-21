@@ -12,6 +12,6 @@ import java.util.Date;
 @FieldDefaults(level= AccessLevel.PRIVATE)
 public class AuthenticationResponse {
     String token;
-    boolean authenticated;// xác định user có đăng nhập thành công hay không
+    boolean authenticated;
     Date expiryTime;
 }

@@ -177,8 +177,8 @@
 <script src="../assets/js/nav.js"></script>
 
 <script>
-    let targetUsername = null;
-    let currentUserFollowList = []; // Lưu trữ danh sách tải về để Live Search
+let targetUsername = null;
+    let currentUserFollowList = [];
 
     $(document).ready(function() {
         $('#navbar-container').load('../fragments/navbar.html', function(response, status, xhr) {
@@ -188,7 +188,6 @@
             initProfile();
         });
 
-        // Bắt sự kiện gõ phím tìm kiếm trong Modal
         $('#follow-search-input').on('input', function() {
             const keyword = $(this).val().toLowerCase().trim();
             renderFollowList(keyword);
@@ -223,7 +222,6 @@
             loadUserInfo(targetUsername);
             loadUserBlogs(targetUsername);
         } else {
-            // Nếu không có param ?user=... trên URL, tự động lấy Profile của chính mình
             callApi('/users/my-profile', 'GET')
                 .done(function(res) {
                     targetUsername = res.result.username;
@@ -243,9 +241,6 @@
         }
     }
 
-    // ==========================================
-    // 1. TẢI THÔNG TIN NGƯỜI DÙNG & NÚT ACTION
-    // ==========================================
     function loadUserInfo(username) {
         callApi('/users/profile/' + username, 'GET').done(function(res) {
             const user = res.result;
@@ -254,7 +249,6 @@
             $('#profile-handle').text('@' + user.username);
             $('#profile-bio').text(user.bio || 'This user prefers to keep an air of mystery about them.');
 
-            // Cập nhật 2 chỉ số Follow
             $('#stat-followers').text(user.totalFollowers || 0);
             $('#stat-following').text(user.totalFollowing || 0);
 
@@ -268,19 +262,16 @@
                 $('#profile-joined').text('Joined on ' + fmtDate(user.createdAt));
             }
 
-            // RENDER NÚT HÀNH ĐỘNG
             const actionContainer = $('#profile-actions');
             const currentUser = localStorage.getItem('username');
 
             if (currentUser && currentUser === user.username) {
-                // Nếu đang xem chính mình -> Nút Edit
                 actionContainer.html(`
                     <a href="edit-profile.html" class="btn-action btn-edit">
                         <span class="material-symbols-outlined" style="font-size: 1.1rem;">edit</span> Edit Profile
                     </a>
                 `);
             } else {
-                // Nếu đang xem người khác -> Render nút Follow/Unfollow dựa vào trạng thái
                 renderFollowButtonMain(user.username, user.followedByCurrentUser);
             }
 
@@ -291,7 +282,6 @@
         });
     }
 
-    // Render nút Follow chính ở trang Profile
     function renderFollowButtonMain(username, isFollowed) {
         const actionContainer = $('#profile-actions');
         if (isFollowed) {
@@ -311,20 +301,16 @@
         }
     }
 
-    // Xử lý khi bấm nút Follow ở trang chính
     function toggleFollowMain(username, isCurrentlyFollowed) {
         if (!S.isAuth) { alert("Vui lòng đăng nhập để theo dõi!"); return; }
 
-        // Đổi UI ngay lập tức cho mượt
         renderFollowButtonMain(username, !isCurrentlyFollowed);
 
-        // Tăng giảm số lượng tạm thời
         let currentFollowers = parseInt($('#stat-followers').text());
         $('#stat-followers').text(isCurrentlyFollowed ? currentFollowers - 1 : currentFollowers + 1);
 
         callApi(`/users/${username}/follow`, 'POST').fail(function() {
             toast("Lỗi! Không thể cập nhật trạng thái theo dõi.");
-            // Rollback UI nếu lỗi
             renderFollowButtonMain(username, isCurrentlyFollowed);
             $('#stat-followers').text(currentFollowers);
         });
@@ -355,47 +341,39 @@
                 return;
             }
 
-            // 🔥 DÙNG CHUNG UI VỚI HOME
             $list.empty();
 
             blogs.forEach(p => {
-                $list.append(buildCard(p)); // 👉 dùng buildCard từ posts.js
+                $list.append(buildCard(p));
             });
 
         }).fail(function() {
             $('#blog-list-container').html('<div class="text-danger mt-4">Không thể tải danh sách bài viết.</div>');
         });
     }
-    // ==========================================
-    // 3. LOGIC MODAL & DANH SÁCH FOLLOW
-    // ==========================================
     function openFollowModal(type) {
         if (!targetUsername) return;
 
         const title = type === 'followers' ? 'Followers' : 'Following';
         $('#followModalTitle').text(title);
-        $('#follow-search-input').val(''); // Xóa text tìm kiếm cũ
+        $('#follow-search-input').val('');
         $('#follow-list-container').html('<div class="text-center py-4 text-muted">Đang tải...</div>');
 
-        // Mở modal Bootstrap
         const myModal = new bootstrap.Modal(document.getElementById('followModal'));
         myModal.show();
 
-        // Gọi API tương ứng
         callApi(`/users/${targetUsername}/${type}`, 'GET').done(function(res) {
-            currentUserFollowList = res.result || []; // Lưu vào bộ nhớ tạm để search
+            currentUserFollowList = res.result || [];
             renderFollowList('');
         }).fail(function() {
             $('#follow-list-container').html('<div class="text-center py-4 text-danger">Lỗi kết nối máy chủ!</div>');
         });
     }
 
-    // Render danh sách trong Modal (có hỗ trợ lọc theo keyword)
     function renderFollowList(keyword) {
         const $container = $('#follow-list-container');
         $container.empty();
 
-        // Lọc danh sách nếu có gõ phím tìm kiếm
         const filteredList = currentUserFollowList.filter(u =>
             u.username.toLowerCase().includes(keyword) ||
             (u.fullName && u.fullName.toLowerCase().includes(keyword))
@@ -412,7 +390,6 @@
             const avatarUrl = u.avatarUrl || `https://ui-avatars.com/api/?name=${u.username}&background=151a22&color=ac8aff`;
             const nameToDisplay = u.fullName || u.username;
 
-            // Xây dựng giao diện cho 1 người dùng
             let html = `
                 <div class="user-list-item">
                     <div class="d-flex align-items-center gap-3 cursor-pointer" onclick="window.location.href='user-profile.html?user=${u.username}'">
@@ -424,7 +401,6 @@
                     </div>
             `;
 
-            // Chỉ hiện nút theo dõi nếu người đó KHÔNG PHẢI LÀ CHÍNH MÌNH
             if (currentUser !== u.username) {
                 if (u.followedByCurrentUser) {
                     html += `<button class="btn-sm-follow is-following" onclick="toggleFollowInModal(this, '${u.username}')"><span>Following</span></button>`;
@@ -438,25 +414,21 @@
         });
     }
 
-    // Xử lý khi bấm nút Follow BÊN TRONG MODAL
     function toggleFollowInModal(btnElement, targetUser) {
         if (!S.isAuth) { alert("Vui lòng đăng nhập để theo dõi!"); return; }
 
         const $btn = $(btnElement);
         const isFollowing = $btn.hasClass('is-following');
 
-        // Đổi trạng thái UI ngay lập tức
         if (isFollowing) {
             $btn.removeClass('is-following').addClass('not-following').html('Follow');
         } else {
             $btn.removeClass('not-following').addClass('is-following').html('<span>Following</span>');
         }
 
-        // Cập nhật ngầm trong mảng tạm (để khi search không bị mất trạng thái)
         const userObj = currentUserFollowList.find(u => u.username === targetUser);
         if(userObj) userObj.followedByCurrentUser = !isFollowing;
 
-        // Nếu người trong modal chính là chủ profile đang xem -> Cập nhật luôn UI bên ngoài
         if (targetUser === targetUsername) {
             renderFollowButtonMain(targetUser, !isFollowing);
         }
@@ -466,9 +438,6 @@
         });
     }
 
-    // ==========================================
-    // CÁC HÀM HELPER (Đã viết gọn)
-    // ==========================================
     function fmtDate(iso) {
         if (!iso) return '';
         var d = new Date(iso);

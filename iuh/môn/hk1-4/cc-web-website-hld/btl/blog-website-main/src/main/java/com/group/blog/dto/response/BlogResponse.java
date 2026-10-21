@@ -41,8 +41,6 @@ public class BlogResponse {
 
     Set<TagResponse> tags;
 
-    //user hiện tại đã like bài này chưa
     boolean isLikedByCurrentUser;
-    //user hiện tại đã lưu bài này chưa
     boolean isBookmarkedByCurrentUser;
 }

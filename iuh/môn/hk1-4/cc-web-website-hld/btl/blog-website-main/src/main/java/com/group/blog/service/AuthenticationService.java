@@ -79,7 +79,6 @@ public class AuthenticationService {
        return stringJoiner.toString();
    }
 
-
    public IntrospectResponse introspect(IntrospectRequest request) {
        var token=request.getToken();
        boolean isValid=false;
@@ -90,14 +89,11 @@ public class AuthenticationService {
            var verified = signedJWT.verify(verifier);
            isValid=verified && expiryTime != null && expiryTime.after(new Date());
        }catch (ParseException|JOSEException|IllegalArgumentException e){
-           // Nếu token sai định dạng (bị thiếu dấu chấm, chữ ký bị chỉnh sửa...)
-           // Không văng lỗi 500, chỉ log lại và mặc định isValid vẫn là false
            log.warn("Token invalid: {}",e.getMessage());
        }
        return IntrospectResponse.builder()
                .valid(isValid)
                .build();
-
 
    }
 }

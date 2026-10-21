@@ -14,7 +14,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name="blog_views")
-//mỗi khi ai đó vào đọc bài, sẽ insert 1 dòng vào đây
 public class BlogView {
 
     @Id
@@ -30,7 +29,6 @@ public class BlogView {
     @JoinColumn(name = "user_id")
     User user;
 
-    // cho phép Khách (Guest) không có tài khoản vẫn tăng View được
     String ipAddress;
 
     LocalDateTime viewedAt;

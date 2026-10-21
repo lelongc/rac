@@ -29,7 +29,6 @@ public class TagService {
             return TagResponse.builder()
                     .id(tag.getId())
                     .name(tag.getName())
-                    // Không lưu DB, tự tạo Slug on-the-fly (chuẩn 3NF)
                     .slug(SlugUtils.generateSlug(tag.getName()) + "-" + tag.getId())
                     .postCount(postCount)
                     .build();

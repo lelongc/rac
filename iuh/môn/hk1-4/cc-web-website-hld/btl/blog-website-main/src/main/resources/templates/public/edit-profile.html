@@ -97,8 +97,8 @@
 <script src="../assets/js/nav.js"></script>
 
 <script>
-    let currentAvatarUrl = null; // Lưu URL (cũ hoặc mới từ Cloudinary)
-    let selectedImageFile = null; // Lưu trữ File ảnh vật lý để đẩy lên
+let currentAvatarUrl = null;
+    let selectedImageFile = null;
 
     $(document).ready(function() {
         $('#navbar-container').load('../fragments/navbar.html', function() {
@@ -110,7 +110,6 @@
         else { window.location.href = 'login.html'; }
     });
 
-    // 1. TẢI THÔNG TIN PROFILE
     function loadProfileData() {
         callApi('/users/my-profile', 'GET').done(function(res) {
             const user = res.result;
@@ -120,31 +119,28 @@
 
             if (user.avatarUrl) {
                 $('#avatar-img').attr('src', user.avatarUrl);
-                currentAvatarUrl = user.avatarUrl; // Giữ lại URL cũ nếu không đổi
+                currentAvatarUrl = user.avatarUrl;
             }
         }).fail(function() {
             toast('Không thể tải thông tin cá nhân!');
         });
     }
 
-    // 2. KHI CHỌN ẢNH -> TẠO LINK ẢO ĐỂ XEM TRƯỚC & LƯU FILE
     $('#avatar-upload').on('change', function(e) {
         const file = e.target.files[0];
         if (!file) return;
 
-        if (file.size > 2 * 1024 * 1024) { // Cứ thả ga lên 2MB đi, Cloudinary lo
+        if (file.size > 2 * 1024 * 1024) {
             alert('Vui lòng chọn ảnh kích thước dưới 2MB!');
             this.value = ''; return;
         }
 
-        selectedImageFile = file; // Giữ lại File để lát đẩy lên Cloudinary
+        selectedImageFile = file;
 
-        // Tạo link ảo (Blob URL) hiển thị ngay lập tức không cần mã hóa Base64
         const objectUrl = URL.createObjectURL(file);
         $('#avatar-img').attr('src', objectUrl);
     });
 
-    // 3. BẤM UPDATE -> ĐẨY ẢNH LÊN CLOUD TRƯỚC -> RỒI MỚI CẬP NHẬT PROFILE
     $('#form-edit-profile').on('submit', async function(e) {
         e.preventDefault();
 
@@ -154,14 +150,12 @@
         btn.prop('disabled', true).css('opacity', '0.7');
 
         try {
-            // NẾU CÓ CHỌN ẢNH MỚI -> Gọi API Upload
             if (selectedImageFile) {
                 btn.html('<span class="material-symbols-outlined" style="animation: spin 1s linear infinite;">cloud_upload</span> Uploading Image...');
 
                 const formData = new FormData();
                 formData.append('file', selectedImageFile);
 
-                // Dùng Ajax trần vì hàm callApi mặc định đang gửi JSON
                 const uploadResponse = await $.ajax({
                     url: '/upload/image',
                     type: 'POST',
@@ -173,13 +167,11 @@
                     }
                 });
 
-                // Lấy URL xịn từ Cloudinary
                 currentAvatarUrl = uploadResponse.result;
             }
 
             btn.html('<span class="material-symbols-outlined" style="animation: spin 1s linear infinite;">sync</span> Saving Profile...');
 
-            // Gửi dữ liệu profile (với URL Cloudinary cực nhẹ)
             const requestBody = {
                 email: $('#input-email').val().trim(),
                 bio: $('#input-bio').val().trim(),
@@ -188,7 +180,6 @@
 
             await callApi('/users/my-profile', 'PUT', requestBody);
 
-            // Xóa cache localStorage để Navbar ép load lại ảnh mới
             localStorage.removeItem('avatarUrl');
             updateNavAuth();
             toast('Cập nhật Profile thành công!');
@@ -202,7 +193,7 @@
         } finally {
             btn.html(originalText);
             btn.prop('disabled', false).css('opacity', '1');
-            selectedImageFile = null; // Xóa file bộ nhớ
+            selectedImageFile = null;
         }
     });
 </script>

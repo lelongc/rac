@@ -9,5 +9,5 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level= AccessLevel.PRIVATE)
 public class IntrospectResponse {
-    boolean valid;// để xác định token còn valide/ còn hiệu lực hay không
+    boolean valid;
 }

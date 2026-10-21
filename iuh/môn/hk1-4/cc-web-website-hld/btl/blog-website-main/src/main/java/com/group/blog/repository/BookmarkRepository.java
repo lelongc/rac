@@ -14,6 +14,5 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, UUID> {
 
     Optional<Bookmark> findByBlogIdAndUserUsername(UUID blogId, String username);
 
-    // Lấy danh sách các bài viết đã lưu của một User, sắp xếp mới nhất lên đầu
     List<Bookmark> findByUserUsernameOrderByCreatedAtDesc(String username);
 }

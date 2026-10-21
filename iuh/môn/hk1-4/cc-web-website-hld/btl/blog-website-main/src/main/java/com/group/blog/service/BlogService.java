@@ -39,7 +39,6 @@ public class BlogService {
     CommentRepository commentRepository;
 
     BookmarkRepository bookmarkRepository;
-    // 1. Tạo bài viết mới
     @Transactional
     public BlogResponse createBlog(BlogCreationRequest request) {
         var context = SecurityContextHolder.getContext();
@@ -55,7 +54,7 @@ public class BlogService {
 
         Blog blog = blogMapper.toBlog(request);
         blog.setAuthor(author);
-        blog.setCategory(category); // Nếu lưu nháp chưa chọn, category sẽ là null (hợp lệ)
+        blog.setCategory(category);
 
         if (request.getTags() != null && !request.getTags().isEmpty()) {
             Set<Tag> finalTags = new HashSet<>();
@@ -73,7 +72,6 @@ public class BlogService {
         return enrichBlogResponse(blogRepository.save(blog));
     }
 
-    // 2. Cập nhật bài viết (Xử lý tách biệt Luồng Nháp và Luồng Xuất bản)
     @Transactional
     public BlogResponse updateBlog(UUID id, BlogUpdateRequest request) {
         Blog blog = blogRepository.findById(id)
@@ -85,49 +83,34 @@ public class BlogService {
             throw new AppException(ErrorCode.UNAUTHORIZED);
         }
 
-        // Cập nhật Danh mục chung
         if (request.getCategoryId() != null && (blog.getCategory() == null || !request.getCategoryId().equals(blog.getCategory().getId()))) {
             Category newCategory = categoryRepository.findById(request.getCategoryId())
                     .orElseThrow(() -> new AppException(ErrorCode.CATEGORY_NOT_FOUND));
             blog.setCategory(newCategory);
         }
 
-        // Cập nhật Tiêu đề và Mô tả chung
         if(request.getTitle() != null) blog.setTitle(request.getTitle());
         if(request.getDescription() != null) blog.setDescription(request.getDescription());
 
-        // Kiểm tra hành động Lưu Nháp hay Xuất Bản
         boolean isRequestingSaveDraft = Boolean.TRUE.equals(request.getDraft());
 
         if (isRequestingSaveDraft) {
-            /* * HÀNH ĐỘNG 1: LƯU NHÁP (User bấm Save Draft)
-             */
             if (blog.isDraft()) {
-                // Trường hợp 1A: Bài viết này TỪ TRƯỚC ĐẾN NAY chưa bao giờ xuất bản.
-                // Lưu thẳng vào cột chính (content) và giữ nguyên trạng thái draft = true.
                 if(request.getContent() != null) blog.setContent(request.getContent());
                 if(request.getBanner() != null) blog.setBanner(request.getBanner());
 
             } else {
-                // Trường hợp 1B: Bài viết ĐÃ XUẤT BẢN, giờ user đang sửa lại.
-                // LƯU Ý QUAN TRỌNG: Không được chạm vào cột `content` để bảo vệ bản đang public.
-                // Lưu nội dung mới vào `draftContent`. Trạng thái blog VẪN LÀ `draft = false` (đang public).
                 if(request.getContent() != null) blog.setDraftContent(request.getContent());
                 if(request.getBanner() != null) blog.setDraftBanner(request.getBanner());
             }
 
         } else {
-            /* * HÀNH ĐỘNG 2: XUẤT BẢN (User bấm Publish)
-             */
-            // Đổ toàn bộ nội dung mới (từ frontend truyền lên) vào thẳng cột `content` chính thức.
             if(request.getContent() != null) blog.setContent(request.getContent());
             if(request.getBanner() != null) blog.setBanner(request.getBanner());
 
-            // Xóa rỗng cột Nháp vì bản Nháp và bản Public đã đồng bộ
             blog.setDraftContent(null);
             blog.setDraftBanner(null);
 
-            // Chuyển cờ thành bài viết đã public
             blog.setDraft(false);
 
             if (blog.getPublishedAt() == null) {
@@ -135,7 +118,6 @@ public class BlogService {
             }
         }
 
-        // Xử lý Tags chung
         if (request.getTags() != null) {
             Set<Tag> finalTags = new HashSet<>();
             for (String tagName : request.getTags()) {
@@ -153,7 +135,6 @@ public class BlogService {
         return enrichBlogResponse(blogRepository.save(blog));
     }
 
-    // 3. Lấy chi tiết 1 bài viết
     @Transactional
     public BlogResponse getBlogById(UUID id) {
         Blog blog = blogRepository.findById(id)
@@ -166,7 +147,6 @@ public class BlogService {
         return enrichBlogResponse(blog);
     }
 
-    // 4. Lấy danh sách toàn bộ bài viết
     public List<BlogResponse> getAllBlogs() {
         List<Object[]> results = blogRepository.findAllBlogsWithCounts();
 
@@ -189,7 +169,6 @@ public class BlogService {
         }).toList();
     }
 
-    // 5. Xóa bài viết
     @Transactional
     public void deleteBlog(UUID id) {
         Blog blog = blogRepository.findById(id)
@@ -209,27 +188,20 @@ public class BlogService {
         blogRepository.deleteById(id);
     }
 
-    // Lấy danh sách bài viết của TÔI (người đang đăng nhập)
     public List<BlogResponse> getMyBlogs() {
-        // 1. Lấy username từ Token
         var context = SecurityContextHolder.getContext();
         String currentUsername = context.getAuthentication().getName();
 
-        // 2. Gọi hàm tối ưu ở Repository
         List<Object[]> results = blogRepository.findByAuthorUsernameWithCounts(currentUsername);
 
-        // 3. Map sang BlogResponse bằng helper có sẵn
         return results.stream().map(this::mapRowToBlogResponse).toList();
     }
 
-
-    // Trả về list Blog khi biết Category ID
     public List<BlogResponse> getBlogsByCategory(UUID categoryId) {
         List<Object[]> results = blogRepository.findBlogsByCategoryIdWithCounts(categoryId);
         return results.stream().map(this::mapRowToBlogResponse).toList();
     }
 
-    // Trả về list Blog khi biết Tag ID
     public List<BlogResponse> getBlogsByTag(UUID tagId) {
         List<Object[]> results = blogRepository.findBlogsByTagIdWithCounts(tagId);
         return results.stream().map(this::mapRowToBlogResponse).toList();
@@ -237,17 +209,14 @@ public class BlogService {
 
     public List<BlogResponse> searchBlogs(String keyword) {
         List<Object[]> results = blogRepository.searchBlogsByKeywordWithCounts(keyword);
-        // mapRowToBlogResponse chính là cái hàm Helper bạn đã tạo ở bài trước
         return results.stream().map(this::mapRowToBlogResponse).toList();
     }
-
 
     public List<BlogSuggestionResponse> getSearchSuggestions(String keyword) {
         return blogRepository.findTop5ByTitleContainingIgnoreCaseAndDraftIsFalse(keyword)
                 .stream().map(blog -> BlogSuggestionResponse.builder()
                         .id(blog.getId())
                         .title(blog.getTitle())
-                        // Vẫn giữ logic Slug ghép UUID chuẩn 3NF
                         .slug(SlugUtils.generateSlug(blog.getTitle()) + "-" + blog.getId())
                         .authorName(blog.getAuthor() != null ? blog.getAuthor().getUsername() : "Anonymous")
                         .categoryName(blog.getCategory() != null ? blog.getCategory().getName() : "Khác")
@@ -256,9 +225,6 @@ public class BlogService {
                 .toList();
     }
 
-
-
-    // Hàm xử lý lọc đa luồng
     public List<BlogResponse> filterBlogs(String keyword, UUID categoryId) {
         List<Object[]> results;
 
@@ -278,7 +244,6 @@ public class BlogService {
         return results.stream().map(this::mapRowToBlogResponse).toList();
     }
 
-    // Tạo hàm Helper này để dùng chung cho gọn code, đỡ phải lặp lại đoạn Map dài ngoằng
     private BlogResponse mapRowToBlogResponse(Object[] row) {
         Blog blog = (Blog) row[0];
         long viewCount = (long) row[1];
@@ -293,21 +258,16 @@ public class BlogService {
         return response;
     }
 
-
-    // ================= HELPER METHOD =================
     private BlogResponse enrichBlogResponse(Blog blog) {
         BlogResponse response = blogMapper.toBlogResponse(blog);
 
-        // TẠO SLUG THEO FORMAT: "title-slug" + "-" + "UUID"
         String generatedSlug = SlugUtils.generateSlug(blog.getTitle()) + "-" + blog.getId().toString();
         response.setSlug(generatedSlug);
 
-        // Đếm từ DB (3NF)
         response.setTotalReads((int) blogViewRepository.countByBlogId(blog.getId()));
         response.setTotalLikes((int) blogLikeRepository.countByBlogId(blog.getId()));
         response.setTotalComments((int) commentRepository.countByBlogId(blog.getId()));
 
-        // Kiểm tra trạng thái Like và Bookmark của User hiện tại
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated() && !authentication.getName().equals("anonymousUser")) {
             String currentUsername = authentication.getName();
@@ -322,7 +282,6 @@ public class BlogService {
         return response;
     }
 
-    // Lấy danh sách bài viết đã xuất bản của một User bất kỳ
     public List<BlogResponse> getPublishedBlogsByUsername(String username) {
         List<Object[]> results = blogRepository.findPublishedByAuthorUsernameWithCounts(username);
         return results.stream().map(this::mapRowToBlogResponse).toList();

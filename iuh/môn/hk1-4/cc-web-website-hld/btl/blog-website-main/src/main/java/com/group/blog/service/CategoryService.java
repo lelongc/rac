@@ -37,7 +37,6 @@ public class CategoryService {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Category does not exist"));
 
-        // Kiểm tra xem tên mới có bị trùng với category khác không
         if (!category.getName().equals(request.getName()) && categoryRepository.existsByName(request.getName())) {
             throw new RuntimeException("This Category already exists");
         }
@@ -49,7 +48,7 @@ public class CategoryService {
                 .id(category.getId())
                 .name(category.getName())
                 .slug(SlugUtils.generateSlug(category.getName()) + "-" + category.getId().toString())
-                .postCount(0L) // Chỗ này thực tế cần query đếm số lượng, tạm để 0
+                .postCount(0L)
                 .build();
     }
 
@@ -60,10 +59,8 @@ public class CategoryService {
     }
 
     public List<CategoryResponse> getAllCategories() {
-        // 1. Gọi hàm tối ưu lấy 1 lần duy nhất từ DB
         List<Object[]> results = categoryRepository.findAllCategoriesWithPostCount();
 
-        // 2. Map dữ liệu Object[] -> DTO
         return results.stream()
                 .map(row -> {
                     Category category = (Category) row[0];

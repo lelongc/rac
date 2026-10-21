@@ -12,17 +12,15 @@ import java.util.UUID;
 @Repository
 public interface UserFollowRepository extends JpaRepository<UserFollow, UUID> {
 
-    long countByFollowing(User following); // Đếm số người follow user A
+    long countByFollowing(User following);
 
-    long countByFollower(User follower);   // Đếm số người user A đang follow
+    long countByFollower(User follower);
 
-    // Tìm record để xóa khi Unfollow
     Optional<UserFollow> findByFollowerAndFollowing(User follower, User following);
 
-    // Kiểm tra trạng thái Follow(A đã follow B chưa?)
     boolean existsByFollowerUsernameAndFollowing(String followerUsername, User following);
 
-    List<UserFollow> findByFollowingOrderByCreatedAtDesc(User following); // Lấy danh sách người follow user A
+    List<UserFollow> findByFollowingOrderByCreatedAtDesc(User following);
 
-    List<UserFollow> findByFollowerOrderByCreatedAtDesc(User follower);   // Lấy danh sách người user A follow
+    List<UserFollow> findByFollowerOrderByCreatedAtDesc(User follower);
 }

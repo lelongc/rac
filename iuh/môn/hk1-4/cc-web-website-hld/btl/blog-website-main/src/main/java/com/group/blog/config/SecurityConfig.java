@@ -24,19 +24,16 @@ import javax.crypto.spec.SecretKeySpec;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    // Các API dùng phương thức POST được phép truy cập tự do (Đăng ký, Đăng nhập, Xác thực Token)
     private final String[] PUBLIC_POST_ENDPOINTS = {
             "/users",
             "/auth/login",
             "/auth/introspect"
     };
 
-    // Các API và View dùng phương thức GET được phép truy cập tự do
     private final String[] PUBLIC_GET_ENDPOINTS = {
-            "/assets/**", "/css/**", "/js/**",         // Tài nguyên tĩnh (frontend)
-            "/fragments/**",                           // Các file html tĩnh (sidebar, navbar...)
+            "/assets/**", "/css/**", "/js/**",
+            "/fragments/**",
 
-            // --- CÁC ROUTE GIAO DIỆN (VIEW) CÔNG KHAI ---
             "/", "/home", "/home-page.html",
             "/login", "/login.html",
             "/register", "/register.html",
@@ -52,24 +49,22 @@ public class SecurityConfig {
             "/admin", "/admin/**",
             "/pages/**",
 
-            // --- CÁC API DỮ LIỆU CÔNG KHAI ---
-            "/categories", "/tags",                    // Danh mục, Thẻ
-            "/blogs",                                  // Lấy danh sách blog
-            "/blogs/{id:[0-9a-fA-F\\-]{36}}",          // Xem chi tiết blog
-            "/blogs/category/**",                      // Lọc theo danh mục
-            "/blogs/tag/**",                           // Lọc theo tag
-            "/blogs/search/**",                        // Tìm kiếm & gợi ý
-            "/blogs/filter",                           // Lọc đa luồng
-            "/blogs/user/**",                          // Xem bài viết của 1 tác giả
-            "/users/profile/**",                       // Xem thông tin profile của 1 tác giả
-            "/blogs/*/comments",                       // Đọc danh sách comment của bài viết
-            "/users/*/followers",                      // Xem Followers
-            "/users/*/following"                       // Xem Following
+            "/categories", "/tags",
+            "/blogs",
+            "/blogs/{id:[0-9a-fA-F\\-]{36}}",
+            "/blogs/category/**",
+            "/blogs/tag/**",
+            "/blogs/search/**",
+            "/blogs/filter",
+            "/blogs/user/**",
+            "/users/profile/**",
+            "/blogs/*/comments",
+            "/users/*/followers",
+            "/users/*/following"
     };
 
-    // Định nghĩa riêng các Endpoint dành cho khu vực ADMIN
     private final String[] ADMIN_ENDPOINTS = {
-            "/api/admin/**" // Các REST API phục vụ cho trang Dashboard
+            "/api/admin/**"
     };
 
     @Value("${jwt.signerKey}")
@@ -81,33 +76,26 @@ public class SecurityConfig {
                 .cors(org.springframework.security.config.Customizer.withDefaults())
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()))
                 .authorizeHttpRequests(request -> request
-                        // 1. CÁC API VÀ VIEW PUBLIC (AI CŨNG VÀO ĐƯỢC)
                         .requestMatchers(HttpMethod.POST, PUBLIC_POST_ENDPOINTS).permitAll()
                         .requestMatchers(HttpMethod.GET, PUBLIC_GET_ENDPOINTS).permitAll()
 
-                        // 2. CÁC API ĐẶC THÙ YÊU CẦU QUYỀN ADMIN
                         .requestMatchers(ADMIN_ENDPOINTS).hasRole(Role.ADMIN.name())
                         .requestMatchers(HttpMethod.GET, "/users").hasRole(Role.ADMIN.name())
 
-                        // Chặn quyền Thêm/Sửa/Xóa Categories & Tags chỉ dành cho Admin
                         .requestMatchers(HttpMethod.POST, "/categories", "/tags").hasRole(Role.ADMIN.name())
                         .requestMatchers(HttpMethod.PUT, "/categories/**", "/tags/**").hasRole(Role.ADMIN.name())
                         .requestMatchers(HttpMethod.DELETE, "/categories/**", "/tags/**").hasRole(Role.ADMIN.name())
 
-                        // 3. TẤT CẢ CÁC API CÒN LẠI ĐỀU BẮT BUỘC PHẢI ĐĂNG NHẬP
                         .anyRequest().authenticated()
                 );
 
-        // Cấu hình giải mã JWT Token
         httpSecurity.oauth2ResourceServer(oauth2 ->
                 oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())
                         .jwtAuthenticationConverter(jwtAuthenticationConverter()))
         );
 
-        // Tắt CSRF (Vì dùng Token JWT)
         httpSecurity.csrf(AbstractHttpConfigurer::disable);
 
-        // Chế độ Stateless
         httpSecurity.sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         );

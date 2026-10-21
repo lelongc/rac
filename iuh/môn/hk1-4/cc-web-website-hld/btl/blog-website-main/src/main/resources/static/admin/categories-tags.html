@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;700&display=swap" rel="stylesheet"/>
 
     <script id="tailwind-config">
-        tailwind.config = {
+tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
@@ -22,7 +22,7 @@
                 },
             },
         }
-    </script>
+</script>
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #F5F5F3; margin: 0; }
         .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400; vertical-align: middle; }
@@ -147,10 +147,9 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
-    const API_BASE = "http://localhost:8080";
+const API_BASE = "http://localhost:8080";
     const token = localStorage.getItem('token');
 
-    // Cấu hình Header an toàn hơn, chỉ đính kèm Bearer nếu có token
     const authHeaders = { 'Content-Type': 'application/json' };
     if (token) {
         authHeaders['Authorization'] = 'Bearer ' + token;
@@ -177,14 +176,12 @@
         setTimeout(() => { x.className = x.className.replace("show", ""); }, 3000);
     }
 
-    // Hàm chuyên trị bắt lỗi và hiển thị cho bạn biết
     function handleError(err, action) {
         console.error(`Lỗi khi ${action}:`, err);
         const errorMsg = err.responseJSON?.message || err.statusText || "Lỗi không xác định từ Server (Kiểm tra lại Terminal Spring Boot)";
         alert(`Không thể ${action}!\nChi tiết lỗi: ${errorMsg}`);
     }
 
-    /* --- CATEGORIES LOGIC --- */
     function fetchCategories() {
         $.ajax({
             url: `${API_BASE}/categories`, type: 'GET',
@@ -248,7 +245,6 @@
         }
     }
 
-    /* --- TAGS LOGIC --- */
     function fetchTags() {
         $.ajax({
             url: `${API_BASE}/tags`, type: 'GET',
@@ -336,20 +332,16 @@
         });
     }
 
-    /* --- RANDOM POST LOGIC --- */
     function fetchRandomPost() {
         $.ajax({
             url: `${API_BASE}/blogs`,
             type: 'GET',
-            cache: false, // 🔥 Bắt buộc trình duyệt không được lưu Cache cũ
+            cache: false,
             success: function(res) {
-                // 🔥 Hỗ trợ lấy đúng mảng bài viết (đề phòng API của bạn dùng Phân trang - Pagination)
                 let blogs = res.result?.data || res.result?.content || res.result || [];
 
-                // In ra Console để bạn kiểm tra xem API thực sự trả về bao nhiêu bài
                 console.log("Tổng số bài viết lấy được từ API: ", blogs.length);
 
-                // Loại bỏ các bài viết đang lưu nháp (nếu có)
                 blogs = blogs.filter(b => b.draft === false || typeof b.draft === 'undefined');
 
                 console.log("Số bài viết hợp lệ để Random: ", blogs.length);
@@ -359,7 +351,6 @@
                     return;
                 }
 
-                // Random index thực sự
                 const randomIndex = Math.floor(Math.random() * blogs.length);
                 const b = blogs[randomIndex];
 

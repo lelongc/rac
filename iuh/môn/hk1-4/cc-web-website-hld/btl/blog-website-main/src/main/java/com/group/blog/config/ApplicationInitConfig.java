@@ -37,7 +37,6 @@ public class ApplicationInitConfig {
     ) {
         return args -> {
             if (userRepository.findByUsername("admin").isEmpty()) {
-                // 1. Tạo tài khoản Admin
                 Set<String> adminRoles = new HashSet<>();
                 adminRoles.add(Role.ADMIN.name());
                 adminRoles.add(Role.USER.name());
@@ -52,7 +51,6 @@ public class ApplicationInitConfig {
                         .build();
                 userRepository.save(admin);
 
-                // 2. Tạo tài khoản các thành viên nhóm
                 Set<String> userRoles = new HashSet<>();
                 userRoles.add(Role.USER.name());
 
@@ -86,20 +84,17 @@ public class ApplicationInitConfig {
                         .build();
                 userRepository.save(longMember);
 
-                // 3. Tạo Danh mục (Categories)
                 Category catTech = categoryRepository.save(Category.builder().name("Technology").build());
                 Category catDev = categoryRepository.save(Category.builder().name("Programming").build());
                 Category catDesign = categoryRepository.save(Category.builder().name("Web Design").build());
                 Category catLife = categoryRepository.save(Category.builder().name("Life & Tips").build());
 
-                // 4. Tạo Thẻ (Tags)
                 Tag tagJava = tagRepository.save(Tag.builder().name("Java").build());
                 Tag tagSpring = tagRepository.save(Tag.builder().name("SpringBoot").build());
                 Tag tagBootstrap = tagRepository.save(Tag.builder().name("Bootstrap").build());
                 Tag tagThymeleaf = tagRepository.save(Tag.builder().name("Thymeleaf").build());
                 Tag tagAI = tagRepository.save(Tag.builder().name("AI").build());
 
-                // 5. Tạo các bài viết mẫu (Sample Blogs)
                 Set<Tag> tags1 = new HashSet<>();
                 tags1.add(tagSpring);
                 tags1.add(tagJava);

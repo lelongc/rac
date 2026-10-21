@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;700&display=swap" rel="stylesheet"/>
 
     <script id="tailwind-config">
-        tailwind.config = {
+tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
@@ -22,7 +22,7 @@
                 },
             },
         }
-    </script>
+</script>
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #F5F5F3; margin: 0; }
         .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400; vertical-align: middle; }
@@ -152,7 +152,7 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
-    const API_BASE = "http://localhost:8080";
+const API_BASE = "http://localhost:8080";
     let allUsers = [];
 
     $(document).ready(function() {
@@ -162,7 +162,6 @@
 
         loadUsers();
 
-        // Real-time Search
         $('#search-input').on('input', function() {
             const keyword = $(this).val().toLowerCase();
             const filtered = allUsers.filter(u =>
@@ -216,7 +215,6 @@
                 ? user.email
                 : '<span class="italic text-slate-300">Not provided</span>';
 
-            // Xử lý hiển thị Avatar thực tế hoặc chữ cái đầu
             let avatarHtml = '';
             if (user.avatarUrl) {
                 avatarHtml = `<img src="${user.avatarUrl}" alt="avatar" class="w-9 h-9 rounded-full object-cover border border-slate-200">`;
@@ -243,7 +241,6 @@
         });
     }
 
-    /* Modal Logic */
     function toggleModal(show) {
         const modal = document.getElementById('userModal');
         const content = document.getElementById('modalContent');
@@ -273,9 +270,9 @@
 
         $('#modal-title').text('Edit User Role & Info');
         $('#modal-user-id').val(user.id);
-        $('#modal-username').val(user.username).prop('readonly', true); // Không cho sửa username
+        $('#modal-username').val(user.username).prop('readonly', true);
         $('#modal-password').val('').prop('required', false);
-        $('#password-group').hide(); // Ẩn trường password khi edit
+        $('#password-group').hide();
         $('#modal-email').val(user.email || '');
 
         const currentRole = (user.roles && user.roles.includes('ADMIN')) ? 'ADMIN' : 'USER';
@@ -293,7 +290,6 @@
         const password = $('#modal-password').val();
         const role = $('#modal-role').val();
 
-        // Validate Format Email (Chỉ chạy nếu người dùng có nhập)
         if (email !== "") {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
@@ -307,7 +303,6 @@
         let url = `${API_BASE}/users`;
         let method = 'POST';
 
-        // Payload chuẩn gửi kèm Array roles
         let payload = {
             username: username,
             email: email,
@@ -332,7 +327,7 @@
             success: function() {
                 showToast("User saved successfully!");
                 toggleModal(false);
-                loadUsers(); // Reload Data
+                loadUsers();
             },
             error: function(err) {
                 alert("Action failed: " + (err.responseJSON?.message || "Server Error. Check terminal."));

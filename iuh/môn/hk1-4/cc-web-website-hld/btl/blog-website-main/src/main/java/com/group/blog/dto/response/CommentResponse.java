@@ -16,9 +16,7 @@ public class CommentResponse {
     String content;
     LocalDateTime createdAt;
 
-    // Trả về thông tin người bình luận (avatar, username)
     UserResponse user;
 
-    // Danh sách các câu trả lời (Reply) thuộc về comment này
     List<CommentResponse> replies;
 }

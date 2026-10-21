@@ -13,11 +13,11 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**") // Cho phép tất cả các đường dẫn API
+                registry.addMapping("/**")
                         .allowedOriginPatterns("*")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Các phương thức được phép
-                        .allowedHeaders("*") // Cho phép tất cả các Header (Authorization, Content-Type...)
-                        .allowCredentials(true); // Cho phép gửi kèm Cookie hoặc thông tin xác thực nếu cần
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
             }
         };
     }

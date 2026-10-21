@@ -22,12 +22,10 @@ public class UserFollow {
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID id;
 
-    // Người đi theo dõi
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "follower_id", nullable = false)
     User follower;
 
-    // Người được theo dõi
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "following_id", nullable = false)
     User following;

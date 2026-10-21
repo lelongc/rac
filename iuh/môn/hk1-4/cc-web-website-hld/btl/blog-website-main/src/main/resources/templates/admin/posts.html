@@ -12,7 +12,7 @@
           rel="stylesheet"/>
 
     <script id="tailwind-config">
-        tailwind.config = {
+tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
@@ -24,7 +24,7 @@
                 },
             },
         }
-    </script>
+</script>
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #F5F5F3; margin: 0; }
         .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400; vertical-align: middle; }
@@ -126,10 +126,9 @@
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
-    const API_BASE = "http://localhost:8080";
+const API_BASE = "http://localhost:8080";
     let allPosts = [];
 
-    // Biến cho phân trang
     let currentPage = 1;
     const postsPerPage = 5;
 
@@ -140,7 +139,6 @@
 
         loadPosts();
 
-        // Reset về trang 1 mỗi khi lọc hoặc tìm kiếm
         $('#sort-date, #search-input').on('change input', function() {
             currentPage = 1;
             renderPosts();
@@ -162,7 +160,6 @@
             type: 'GET',
             headers: { 'Authorization': 'Bearer ' + token },
             success: function(res) {
-                // Đảm bảo chỉ lấy các post đã xuất bản (không nháp) từ phía FE nếu API gửi cả đống
                 allPosts = (res.result || []).filter(p => !p.draft);
                 renderPosts();
             },
@@ -176,18 +173,15 @@
         const sort = $('#sort-date').val();
         const search = $('#search-input').val().toLowerCase();
 
-        // 1. Lọc dữ liệu
         let filtered = [...allPosts];
         if (search) filtered = filtered.filter(p => p.title.toLowerCase().includes(search));
 
-        // 2. Sắp xếp
         filtered.sort((a, b) => {
             const dateA = new Date(a.createdAt);
             const dateB = new Date(b.createdAt);
             return sort === 'newest' ? dateB - dateA : dateA - dateB;
         });
 
-        // 3. Phân trang
         const totalItems = filtered.length;
         const totalPages = Math.ceil(totalItems / postsPerPage) || 1;
 
@@ -197,12 +191,10 @@
         const endIndex = Math.min(startIndex + postsPerPage, totalItems);
         const paginatedPosts = filtered.slice(startIndex, endIndex);
 
-        // Cập nhật text hiển thị số lượng
         $('#total-count').text(totalItems);
         $('#start-idx').text(totalItems === 0 ? 0 : startIndex + 1);
         $('#end-idx').text(endIndex);
 
-        // Vẽ danh sách bài viết
         const $tbody = $('#posts-tbody').empty();
         paginatedPosts.forEach(post => {
             const author = post.author?.username || 'unknown';
@@ -249,7 +241,6 @@
             success: function() {
                 allPosts = allPosts.filter(p => p.id !== id);
 
-                // Nếu xóa phần tử cuối cùng của trang, lùi lại 1 trang
                 if (allPosts.length % postsPerPage === 0 && currentPage > 1) {
                     currentPage--;
                 }

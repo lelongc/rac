@@ -15,9 +15,7 @@ public class CloudinaryService {
     private final Cloudinary cloudinary;
 
     public String uploadImage(MultipartFile file) throws IOException {
-        // Upload file lên Cloudinary
         Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
-        // Trả về cái đường link URL ngắn gọn
         return uploadResult.get("url").toString();
     }
 }

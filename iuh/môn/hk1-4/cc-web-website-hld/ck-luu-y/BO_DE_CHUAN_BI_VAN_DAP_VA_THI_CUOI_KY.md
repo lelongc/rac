@@ -37,13 +37,19 @@
   - [Chuyên đề 9: So Sánh Server-Side Rendering (SSR) vs Client-Side Rendering (CSR)](#chuyên-đề-9-so-sánh-server-side-rendering-ssr-vs-client-side-rendering-csr)
   - [Chuyên đề 10: 10 Công Cụ Cốt Lõi Trong Môn Học Của Thầy Phúc](#chuyên-đề-10-10-công-cụ-cốt-lõi-trong-môn-học-của-thầy-phúc)
 - [PHẦN V: PHÂN TÍCH TỪNG DÒNG CODE &amp; MỌI CHỨC NĂNG TRONG DỰ ÁN BTL](#phần-v-phân-tích-từng-dòng-code--mọi-chức-năng-trong-dự-án-btl)
+  - [Mục 0: Lớp Khởi Chạy Ứng Dụng (BlogWebsiteApplication.java)](#mục-0-lớp-khởi-chạy-ứng-dụng-blogwebsiteapplicationjava)
   - [Mục 1: Tầng Cấu Hình (Configuration Package)](#mục-1-tầng-cấu-hình-configuration-package)
   - [Mục 2: Tầng Thực Thể (Entity Package - 10 Entities)](#mục-2-tầng-thực-thể-entity-package---10-entities)
   - [Mục 3: Tầng Truy Xuất Dữ Liệu (Repository Package &amp; Phân Tích JPQL)](#mục-3-tầng-truy-xuất-dữ-liệu-repository-package--phân-tích-jpql)
-  - [Mục 4: Tầng Nghiệp Vụ (Service Package - Phân Tích Từng Phương Thức)](#mục-4-tầng-nghiệp-vụ-service-package---phân-tích-từng-phương-thức)
-  - [Mục 5: Tầng Điều Khiển (Controller Package - Phân Tích Từng Endpoint)](#mục-5-tầng-điều-khiển-controller-package---phân-tích-từng-endpoint)
-  - [Mục 6: Xử Lý Ngoại Lệ &amp; Tiện Ích (Exception &amp; SlugUtils)](#mục-6-xử-lý-ngoại-lệ--tiện-ích-exception--slugutils)
+  - [Mục 4: Tầng Nghiệp Vụ (Service Package - Toàn Bộ 10 Services)](#mục-4-tầng-nghiệp-vụ-service-package---toàn-bộ-10-services)
+  - [Mục 5: Tầng Điều Khiển (Controller Package - Toàn Bộ 8 Controllers)](#mục-5-tầng-điều-khiển-controller-package---toàn-bộ-8-controllers)
+  - [Mục 6: Tầng Xử Lý Ngoại Lệ, Chuyển Đổi DTO &amp; Tiện Ích (Exception, Mapper &amp; Util)](#mục-6-tầng-xử-lý-ngoại-lệ-chuyển-đổi-dto--tiện-ích-exception-mapper--util)
   - [Mục 7: Tầng Giao Diện &amp; Frontend JavaScript Giao Tiếp API](#mục-7-tầng-giao-diện--frontend-javascript-giao-tiếp-api)
+    - [7.1. Kiến Trúc Frontend: Phân Biệt MPA vs SPA &amp; Bản Chất Dự Án](#71-kiến-trúc-frontend-phân-biệt-mpa-vs-spa--bản-chất-dự-án)
+    - [7.2. Bóc Tách Chi Tiết Toàn Bộ 21 File Giao Diện HTML (templates/)](#72-bóc-tách-chi-tiết-toàn-bộ-21-file-giao-diện-html-templates)
+    - [7.3. Bóc Tách Chi Tiết Toàn Bộ 8 File JavaScript Cốt Lõi (static/assets/js/)](#73-bóc-tách-chi-tiết-toàn-bộ-8-file-javascript-cốt-lõi-staticassetsjs)
+    - [7.4. Các Thư Viện Frontend Bổ Trợ &amp; Kỹ Thuật CSS Nâng Cao](#74-các-thư-viện-frontend-bổ-trợ--kỹ-thuật-css-nâng-cao)
+    - [7.5. Bộ 5 Câu Hỏi Vấn Đáp Chuyên Sâu Về Frontend &amp; Kịch Bản Ghi Điểm 10](#75-bộ-5-câu-hỏi-vấn-đáp-chuyên-sâu-về-frontend--kịch-bản-ghi-điểm-10)
 - [PHẦN VI: BỘ 25 CÂU HỎI VẤN ĐÁP &#34;XOÁY TẬN TỪNG DÒNG CODE&#34; &amp; KỊCH BẢN ĐẠT ĐIỂM 10](#phần-vi-bộ-25-câu-hỏi-vấn-đáp-xoáy-tận-từng-dòng-code--kịch-bản-đạt-điểm-10)
 - [PHẦN VII: CẨM NĂNG CỨU MẠNG VẤN ĐÁP CẤP TỐC (SPEED-READ FOR DEFENSE TOMORROW)](#phần-vii-cẩm-năng-cứu-mạng-vấn-đáp-cấp-tốc-speed-read-for-defense-tomorrow)
 
@@ -601,44 +607,148 @@ Khi một Client gửi một Request (ví dụ `POST /blogs` với header `Autho
 
 *(Phần này đi qua từng file mã nguồn, phân tích mục đích, vị trí và công năng từng hàm để bạn trả lời mọi câu hỏi của Thầy)*
 
+## Mục 0: Lớp Khởi Chạy Ứng Dụng (`BlogWebsiteApplication.java`)
+
+- **Vị trí**: `src/main/java/com/group/blog/BlogWebsiteApplication.java`
+- **Mã nguồn**:
+  ```java
+  package com.group.blog;
+
+  import org.springframework.boot.SpringApplication;
+  import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+  @SpringBootApplication
+  public class BlogWebsiteApplication {
+      public static void main(String[] args) {
+          SpringApplication.run(BlogWebsiteApplication.class, args);
+      }
+  }
+  ```
+- **Phân tích từng dòng & Lý thuyết cốt lõi**:
+  - Dòng 6: `@SpringBootApplication` — Đây là **Meta-Annotation (Annotation tổ hợp)** cực kỳ quan trọng, tương đương với việc gộp 3 Annotation lớn sau:
+    1. `@SpringBootConfiguration`: Đánh dấu class này là nguồn cấu hình chính (Configuration Bean) cho ứng dụng.
+    2. `@EnableAutoConfiguration`: Bật cơ chế cấu hình tự động của Spring Boot. Dựa vào các file `.jar` trong `pom.xml`, Spring Boot tự động cấu hình Tomcat, Hibernate, MySQL DataSource, Thymeleaf, Spring Security... mà bạn không cần phải cấu hình file XML phức tạp như thời Spring MVC cũ.
+    3. `@ComponentScan`: Tự động quét từ package hiện tại (`com.group.blog`) đi xuống tất cả các sub-package con (`config`, `controller`, `service`, `repository`, `entity`, `mapper`) để tìm các class có gắn `@Component`, `@Service`, `@Repository`, `@RestController`, `@Controller` và tự động khởi tạo thành các **Spring Bean** đưa vào **Spring IoC Container**.
+  - Dòng 8: `public static void main(String[] args)`: Hàm `main` chuẩn của Java, là điểm khởi động (Entry Point) của toàn bộ chương trình khi chạy.
+  - Dòng 9: `SpringApplication.run(BlogWebsiteApplication.class, args)`: Kích hoạt toàn bộ vòng đời khởi động của Spring Boot:
+    - Tạo đối tượng `ApplicationContext` (vũ trụ chứa Bean).
+    - Quét môi trường cấu hình (đọc `application.yaml`, `application-secret.yml`).
+    - Khởi động máy chủ web nhúng **Embedded Tomcat** mặc định chạy tại cổng `8080`.
+    - Kết nối cơ sở dữ liệu MySQL và kích hoạt Hibernate tự sinh/cập nhật bảng.
+- **Câu hỏi vấn đáp Thầy hay hỏi**:
+  - *Thầy hỏi: "Annotation `@SpringBootApplication` gồm những gì? Nếu thầy để một Controller ở package `com.other.controller` thì Spring có nhận không?"*
+  - *Trả lời*: *"Dạ thưa Thầy, `@SpringBootApplication` gồm 3 annotation: `@SpringBootConfiguration`, `@EnableAutoConfiguration` và `@ComponentScan`. Mặc định `@ComponentScan` chỉ quét từ package chứa file Application trở xuống (`com.group.blog.*`). Nếu để ở package `com.other`, Spring Boot sẽ không tìm thấy Bean Controller đó và khi gọi API sẽ bị lỗi HTTP 404 Not Found ạ!"*
+
+---
+
 ## Mục 1: Tầng Cấu Hình (Configuration Package)
 
-### 1.1. `SecurityConfig.java` — Trái tim bảo mật hệ thống
+### 1.1. `SecurityConfig.java` — Trái tim bảo mật hệ thống (Spring Security 6 & JWT)
 
 - **Vị trí**: `src/main/java/com/group/blog/config/SecurityConfig.java`
-- **Công dụng**: Cấu hình Spring Security 6 theo kiến trúc Stateless JWT.
-- **Phân tích từng thành phần**:
-  - `PUBLIC_POST_ENDPOINTS`: Các đường dẫn `POST` không cần đăng nhập (`/users` để đăng ký, `/auth/login` để lấy token, `/auth/introspect` kiểm tra token).
-  - `PUBLIC_GET_ENDPOINTS`: Toàn bộ các trang HTML giao diện, các file tĩnh CSS/JS, và API xem bài viết công khai (`/categories`, `/tags`, `/blogs/**`).
-  - `ADMIN_ENDPOINTS = {"/api/admin/**"}`: Các API dữ liệu thống kê quản trị chỉ cho phép tài khoản có quyền `ROLE_ADMIN` gọi.
-  - `filterChain(HttpSecurity httpSecurity)`:
-    - `.cors()`: Bật hỗ trợ truy cập đa nguồn từ trình duyệt.
-    - `.headers(headers -> headers.frameOptions(frame -> frame.disable()))`: Cho phép nhúng iframe nếu cần.
-    - `.authorizeHttpRequests(...)`: Định tuyến phân quyền chi tiết cho từng phương thức HTTP.
-    - `.oauth2ResourceServer(...)`: Tự động giải mã Bearer Token trong Header HTTP thông qua `jwtDecoder()`.
-    - `.csrf(AbstractHttpConfigurer::disable)`: **Tắt CSRF vì hệ thống dùng Token JWT, không dùng Cookie nên miễn nhiễm với CSRF**.
-    - `.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))`: **Yêu cầu Spring không lưu Session trên RAM**.
-  - `jwtAuthenticationConverter()`: Trích xuất trường `scope` trong Token (ví dụ `"ADMIN"`) và tự động thêm tiền tố `"ROLE_"` thành `"ROLE_ADMIN"` để phương thức `.hasRole("ADMIN")` của Spring nhận diện được.
-  - `jwtDecoder()`: Sử dụng thuật toán băm cực mạnh `HmacSHA512` kết hợp `SIGNER_KEY` để giải mã và kiểm tra chữ ký số của token.
-  - `passwordEncoder()`: Khởi tạo Bean `BCryptPasswordEncoder(10)` phục vụ băm mật khẩu một chiều với 10 vòng lặp muối (salt rounds).
+- **Công dụng**: Cấu hình bảo mật phân quyền theo kiến trúc **Stateless RESTful API** dùng **JWT (JSON Web Token)** kết hợp thư viện Spring Security 6 mới nhất.
+- **Phân tích chi tiết từng khối mã nguồn**:
+  1. `@Configuration` & `@EnableWebSecurity`:
+     - `@Configuration`: Báo cho Spring biết class này định nghĩa các `@Bean` cấu hình.
+     - `@EnableWebSecurity`: Kích hoạt bộ lọc bảo mật web của Spring Security, ghi đè toàn bộ cấu hình mặc định.
+  2. Mảng đường dẫn `PUBLIC_POST_ENDPOINTS` & `PUBLIC_GET_ENDPOINTS`:
+     - `PUBLIC_POST_ENDPOINTS`: Gồm `/users` (đăng ký), `/auth/login` (đăng nhập lấy token), `/auth/introspect` (kiểm tra token). Bất kỳ ai cũng gửi request POST được mà không cần Token.
+     - `PUBLIC_GET_ENDPOINTS`: Mở toàn bộ file tĩnh (`/assets/**`, `/fragments/**`), các trang HTML Thymeleaf (`/`, `/home`, `/post`, `/login`...) và các API đọc dữ liệu công khai (`/categories`, `/tags`, `/blogs/**`).
+     - `ADMIN_ENDPOINTS = {"/api/admin/**"}`: Chỉ duy nhất tài khoản có quyền `ROLE_ADMIN` mới được phép gọi.
+  3. Phương thức `filterChain(HttpSecurity httpSecurity)`:
+     - `httpSecurity.cors(...)`: Cho phép trình duyệt gửi request đa nguồn (Cross-Origin).
+     - `httpSecurity.authorizeHttpRequests(...)`: Thiết lập quy tắc phân quyền:
+       - `.requestMatchers(HttpMethod.POST, PUBLIC_POST_ENDPOINTS).permitAll()`: Cho phép truy cập không cần token.
+       - `.requestMatchers(HttpMethod.GET, PUBLIC_GET_ENDPOINTS).permitAll()`: Cho phép truy cập không cần token.
+       - `.requestMatchers(ADMIN_ENDPOINTS).hasRole("ADMIN")`: Bắt buộc phải có quyền Admin.
+       - `.anyRequest().authenticated()`: Tất cả các API còn lại (viết bài, like, comment, bookmark, upload...) bắt buộc phải có Token JWT hợp lệ.
+     - `httpSecurity.oauth2ResourceServer(...)`: Cấu hình máy chủ OAuth2 Resource Server. Khi client gửi request kèm Header `Authorization: Bearer <token>`, Spring Security tự động trích xuất token và chuyển cho `jwtDecoder()` giải mã.
+     - `httpSecurity.csrf(AbstractHttpConfigurer::disable)`: **Tắt CSRF**. Vì hệ thống lưu Token ở `localStorage` và gửi qua Header HTTP, trình duyệt không tự động gửi Cookie, loại bỏ 100% nguy cơ tấn công CSRF.
+     - `httpSecurity.sessionManagement(...STATELESS)`: Yêu cầu Spring Security **không bao giờ tạo Session trên RAM máy chủ**. Mỗi request gửi lên là một đơn vị độc lập (Stateless).
+  4. Phương thức `jwtAuthenticationConverter()`:
+     - Trích xuất claim `scope` từ payload của JWT (ví dụ chuỗi `"ADMIN"` hoặc `"USER"`).
+     - Dùng `setAuthorityPrefix("ROLE_")` để tự động biến `"ADMIN"` thành `"ROLE_ADMIN"`. Nhờ vậy phương thức `.hasRole("ADMIN")` mới so khớp thành công.
+  5. Phương thức `jwtDecoder()`:
+     - Tạo đối tượng `SecretKeySpec` với thuật toán mã hóa `HmacSHA512` và chuỗi bí mật `signerKey` lấy từ `application.yaml`.
+     - Sử dụng `NimbusJwtDecoder` để giải mã và kiểm tra tính toàn vẹn chữ ký số. Nếu token bị hacker sửa đổi dù chỉ 1 ký tự, chữ ký sẽ không khớp và request bị từ chối ngay lập tức.
+  6. Phương thức `passwordEncoder()`:
+     - Khởi tạo `@Bean` trả về `new BCryptPasswordEncoder(10)`.
+     - Thuật toán băm một chiều BCrypt kết hợp 10 vòng muối ngẫu nhiên (salt), bảo đảm mật khẩu lưu trong MySQL không thể bị dịch ngược ra ban đầu.
 
-### 1.2. `ApplicationInitConfig.java` — Tự động khởi tạo dữ liệu mẫu khi khởi động
+### 1.2. `CorsConfig.java` — Cho phép truy cập đa nguồn (Cross-Origin Resource Sharing)
+
+- **Vị trí**: `src/main/java/com/group/blog/config/CorsConfig.java`
+- **Mã nguồn**:
+  ```java
+  @Configuration
+  public class CorsConfig {
+      @Bean
+      public WebMvcConfigurer corsConfigurer() {
+          return new WebMvcConfigurer() {
+              @Override
+              public void addCorsMappings(CorsRegistry registry) {
+                  registry.addMapping("/**")
+                          .allowedOriginPatterns("*")
+                          .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                          .allowedHeaders("*")
+                          .allowCredentials(true);
+              }
+          };
+      }
+  }
+  ```
+- **Phân tích từng dòng & Lý thuyết**:
+  - **CORS là gì?** Cơ chế bảo mật của trình duyệt ngăn chặn mã JavaScript chạy từ một tên miền (Origin) này gửi request đến một tên miền khác.
+  - `registry.addMapping("/**")`: Áp dụng chính sách CORS cho toàn bộ các endpoint URL trong hệ thống.
+  - `.allowedOriginPatterns("*")`: Cho phép mọi tên miền gọi vào (ví dụ Frontend chạy ở `localhost:3000` hoặc `127.0.0.1:5500` đều kết nối được tới Backend `localhost:8080`).
+  - `.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")`: Cho phép đầy đủ 5 phương thức chuẩn RESTful. Trong đó phương thức `OPTIONS` cực kỳ quan trọng để trình duyệt gửi yêu cầu tiền kiểm tra (**Preflight Request**).
+  - `.allowedHeaders("*")`: Chấp nhận mọi Header từ Client gửi lên (đặc biệt là Header `Authorization` và `Content-Type: application/json`).
+  - `.allowCredentials(true)`: Cho phép client gửi kèm thông tin xác thực nếu cần.
+
+### 1.3. `ApplicationInitConfig.java` — Tự động gieo dữ liệu khởi tạo (Data Seeding)
 
 - **Vị trí**: `src/main/java/com/group/blog/config/ApplicationInitConfig.java`
-- **Công dụng**: Sử dụng `ApplicationRunner` để kiểm tra xem tài khoản `admin` đã có trong MySQL chưa. Nếu chưa có (chạy lần đầu):
-  - Tự động tạo 1 tài khoản quản trị `admin` (`password: 123456`, quyền `ADMIN` và `USER`).
-  - Tự động tạo 3 tài khoản cho 3 thành viên nhóm: `duonghd` (24743991), `dungnt` (24000905), `longlt` (23630851).
-  - Tự động tạo 4 Danh mục mẫu (`Technology`, `Programming`, `Web Design`, `Life & Tips`).
-  - Tự động tạo 5 Thẻ Tag mẫu (`Java`, `SpringBoot`, `Bootstrap`, `Thymeleaf`, `AI`).
-  - Tự động tạo 3 Bài viết Blog mẫu kèm hình ảnh banner, tác giả, danh mục và thẻ tag.
+- **Công dụng**: Sử dụng functional interface `@Bean ApplicationRunner` của Spring Boot để tự động chạy mã lệnh ngay sau khi ứng dụng khởi động thành công.
+- **Phân tích chi tiết luồng xử lý**:
+  1. Kiểm tra: `if (userRepository.findByUsername("admin").isEmpty())`. Nếu đã có tài khoản `admin` thì bỏ qua (chống tạo trùng lặp dữ liệu khi restart app).
+  2. Tạo tài khoản Admin mặc định:
+     - `username: admin`, `password: passwordEncoder.encode("123456")`.
+     - `roles: Set.of("ADMIN", "USER")`.
+  3. Tạo 3 tài khoản cho 3 thành viên thực hiện đồ án:
+     - `duonghd` (Hoàng Đại Dương - 24743991)
+     - `dungnt` (Nguyễn Trung Dũng - 24000905)
+     - `longlt` (Lê Thành Long - 23630851)
+  4. Tạo sẵn 4 Danh mục chủ đề: `Technology`, `Programming`, `Web Design`, `Life & Tips`.
+  5. Tạo sẵn 5 Thẻ Tag: `Java`, `SpringBoot`, `Bootstrap`, `Thymeleaf`, `AI`.
+  6. Tạo sẵn 3 Bài viết Blog mẫu kèm nội dung HTML, ảnh banner Cloudinary, tác giả và gắn thẻ để khi mở web lên là có sẵn bài viết hiển thị ngay mà không bị trống trang.
 
-### 1.3. `CloudinaryConfig.java` & `CloudinaryService.java` — Quản lý tải ảnh đám mây
+### 1.4. `CloudinaryConfig.java` — Cấu hình tích hợp lưu trữ đám mây
 
-- **Vị trí**: `src/main/java/com/group/blog/config/CloudinaryConfig.java` và `src/main/java/com/group/blog/service/CloudinaryService.java`
-- **Công dụng**:
-  - Dùng Annotation `@Value("${cloudinary.cloud-name}")` để nạp thông số kết nối từ file `application-secret.yml`.
-  - Khởi tạo Bean `Cloudinary` đưa vào Spring Context.
-  - Phương thức `uploadImage(MultipartFile file)` nhận mảng byte nhị phân của file ảnh tải lên từ form, gửi lên dịch vụ Cloudinary và trả về đường link URL công khai (`https://res.cloudinary.com/...`).
+- **Vị trí**: `src/main/java/com/group/blog/config/CloudinaryConfig.java`
+- **Mã nguồn**:
+  ```java
+  @Configuration
+  public class CloudinaryConfig {
+      @Value("${cloudinary.cloud-name}")
+      private String cloudName;
+      @Value("${cloudinary.api-key}")
+      private String apiKey;
+      @Value("${cloudinary.api-secret}")
+      private String apiSecret;
+
+      @Bean
+      public Cloudinary cloudinary() {
+          Map<String, String> config = new HashMap<>();
+          config.put("cloud_name", cloudName);
+          config.put("api_key", apiKey);
+          config.put("api_secret", apiSecret);
+          return new Cloudinary(config);
+      }
+  }
+  ```
+- **Phân tích từng dòng & Lý thuyết**:
+  - `@Value("${cloudinary.cloud-name}")`: Đọc giá trị tương ứng từ file cấu hình `application-secret.yml`. Giúp bảo mật thông tin tài khoản Cloudinary, không bị lộ khóa bí mật (API Secret) lên Git.
+  - `@Bean public Cloudinary cloudinary()`: Khởi tạo đối tượng `Cloudinary` từ thông số kết nối và đăng ký vào Spring IoC Container. Nhờ vậy class `CloudinaryService` có thể tự động inject Bean này vào để gọi hàm upload ảnh.
 
 ---
 
@@ -713,164 +823,708 @@ List<Object[]> findAllBlogsWithCounts();
 
 ---
 
-## Mục 4: Tầng Nghiệp Vụ (Service Package - Phân Tích Từng Phương Thức)
+## Mục 4: Tầng Nghiệp Vụ (Service Package - Toàn Bộ 10 Services)
 
-### 4.1. `AuthenticationService.java`
-
-1. `authenticate(AuthenticationRequest request)`:
-   - Tìm user theo `username`, nếu không thấy ném ngoại lệ `USER_NOT_EXITED`.
-   - Dùng `passwordEncoder.matches(request.getPassword(), user.getPassword())` để so khớp mật khẩu nhập vào với chuỗi băm BCrypt trong CSDL.
-   - Nếu khớp, thiết lập hạn sử dụng token là 1 giờ (`Instant.now().plus(1, ChronoUnit.HOURS)`), gọi `generateToken()` sinh chuỗi JWT và trả về `AuthenticationResponse`.
-2. `generateToken(User user, Date expiryTime)`:
-   - Tạo Header định nghĩa thuật toán `HS512`.
-   - Tạo Payload chứa các Claim: `sub` (username), `iss` ("group.com"), `iat` (ngày cấp), `exp` (ngày hết hạn), `scope` (chuỗi quyền, ví dụ `"ADMIN USER"`).
-   - Dùng `MACSigner(SIGNER_KEY.getBytes())` ký điện tử và xuất ra chuỗi JWT định dạng `header.payload.signature`.
-3. `introspect(IntrospectRequest request)`:
-   - Nhận token từ client, kiểm tra tính hợp lệ của chữ ký và thời gian hết hạn (`expirationTime`). Trả về boolean `true`/`false`.
-
-### 4.2. `UserService.java`
-
-1. `createUser(UserCreatetionRequest request)`:
-   - Kiểm tra `existsByUsername()`, nếu trùng ném `USER_EXITED`.
-   - Dùng `userMapper.toUser(request)` ánh xạ sang Entity.
-   - Băm mật khẩu bằng `passwordEncoder.encode()`.
-   - Gán quyền mặc định `ROLE_USER` và lưu xuống CSDL MySQL.
-2. `getMyProfile()`:
-   - Trích xuất username trực tiếp từ `SecurityContextHolder.getContext().getAuthentication().getName()`.
-   - Tìm user trong DB và làm giàu dữ liệu qua `followService.enrichUserResponse()` (tính tổng số follower, following).
-3. `changePassword(PasswordChangeRequest request)`:
-   - Lấy user đang đăng nhập từ SecurityContext.
-   - So sánh mật khẩu cũ bằng `passwordEncoder.matches()`.
-   - Kiểm tra mật khẩu mới và xác nhận mật khẩu có khớp nhau không.
-   - Băm mật khẩu mới và lưu đè vào CSDL.
-4. `updateUser(UUID id, UserUpdateRequest request)`:
-   - Hàm dành cho Quản trị viên cập nhật thông tin và phân quyền cho người dùng.
-   - Dùng `u.getRoles().clear()` xóa toàn bộ quyền cũ và `u.getRoles().addAll(request.getRoles())` nạp danh sách quyền mới (ví dụ thăng cấp User thành Admin).
-
-### 4.3. `BlogService.java`
-
-1. `createBlog(BlogCreationRequest request)`:
-   - Lấy tác giả từ SecurityContext.
-   - Tìm kiếm Danh mục (Category) nếu người dùng có chọn.
-   - Xử lý Tag thông minh: Quét từng tên tag trong danh sách, nếu tag đã có trong DB thì lấy lại, nếu chưa có thì tự động tạo mới vào bảng `tags` (`tagRepository.save(newTag)`).
-   - Lưu bài viết và gọi `enrichBlogResponse()` để sinh slug SEO và nạp số lượng view/like/comment.
-2. `updateBlog(UUID id, BlogUpdateRequest request)`:
-   - Kiểm tra quyền tác giả: Chỉ người tạo bài viết mới được sửa (`blog.getAuthor().getUsername().equals(currentUsername)`), nếu không ném lỗi `UNAUTHORIZED`.
-   - **Xử lý luồng Lưu Nháp vs Xuất Bản**:
-     - *Nếu user bấm Save Draft (`request.getDraft() == true`)*: Nếu bài đã từng publish trước đó, không được sửa cột `content` công khai mà lưu vào `draftContent` để người đọc bên ngoài không bị ảnh hưởng.
-     - *Nếu user bấm Publish (`request.getDraft() == false`)*: Đổ toàn bộ nội dung mới vào cột `content`, xóa rỗng cột `draftContent = null`, set `draft = false`, cập nhật `publishedAt`.
-3. `getBlogById(UUID id)`:
-   - Lấy bài viết từ DB.
-   - Tự động tạo một bản ghi `BlogView` lưu xuống bảng `blog_views` để tăng lượt đọc.
-   - Trả về DTO kèm thông tin kiểm tra xem tài khoản đang đăng nhập đã like hoặc bookmark bài này chưa (`likedByCurrentUser`, `bookmarkedByCurrentUser`).
-4. `deleteBlog(UUID id)`:
-   - Kiểm tra: Người thực hiện phải là **Tác giả bài viết** HOẶC **Quản trị viên (`ROLE_ADMIN`)** mới có quyền xóa. Nếu không ném lỗi `UNAUTHORIZED`.
-5. `filterBlogs(String keyword, UUID categoryId)`:
-   - Lọc đa điều kiện: Vừa theo từ khóa tìm kiếm (tiêu đề), vừa theo danh mục được chọn.
-6. `getSearchSuggestions(String keyword)`:
-   - Tìm kiếm nhanh 5 bài viết khớp với từ khóa người dùng đang gõ trên thanh tìm kiếm để hiển thị menu gợi ý tức thì (Live search suggestion) kèm tên tác giả và danh mục.
-
-### 4.4. `InteractionService.java`
-
-1. `toggleLike(UUID blogId)`:
-   - Kiểm tra trong bảng `blog_likes`: Nếu đã like rồi thì xóa bản ghi (Unlike); nếu chưa like thì tạo bản ghi mới (Like) và gửi thông báo `LIKE` cho tác giả bài viết qua `notificationService`.
-2. `addComment(UUID blogId, CommentRequest request)`:
-   - Tạo comment mới. Nếu có `parentId`, tìm comment cha và gán vào quan hệ phân cấp.
-   - Gửi thông báo: Nếu là bình luận trực tiếp thì báo cho Tác giả bài viết (`COMMENT`); nếu là reply thì báo cho Chủ comment cha (`REPLY`).
-3. `deleteComment(UUID commentId)`:
-   - **Bảo mật phân quyền**: Chỉ có **Tác giả của bình luận đó** HOẶC **Chủ sở hữu của bài viết đó** mới có quyền xóa comment.
-
-### 4.5. `FollowService.java`
-
-1. `toggleFollow(String targetUsername)`:
-   - Chặn không cho tự follow chính mình: `if (currentUsername.equals(targetUsername)) throw ...`.
-   - Nếu đã follow thì xóa bản ghi (Unfollow); nếu chưa thì tạo bản ghi `UserFollow` và gửi thông báo `FOLLOW` đến người được theo dõi.
+Tầng Service là "trái tim xử lý logic" (Business Logic Layer) của hệ thống. Tất cả các class Service trong dự án đều sử dụng các Annotation chuẩn mực của Spring Boot & Lombok:
+- `@Service`: Đánh dấu class là một Spring Bean thuộc tầng nghiệp vụ, được Spring IoC Container quản lý vòng đời.
+- `@RequiredArgsConstructor`: Annotation của Lombok tự động sinh Constructor chứa tất cả các thuộc tính khai báo `final`. Đây là chuẩn mực **Constructor Dependency Injection ngầm định (Implicit DI)** của Spring, giúp loại bỏ hoàn toàn việc phải gõ `@Autowired` thủ công.
+- `@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)`: Thiết lập mặc định cho tất cả các biến trường trong class thành `private final`, bảo đảm tính đóng gói và tính bất biến (Immutability).
+- `@Transactional`: Quản lý giao dịch CSDL tự động theo nguyên tắc ACID. Nếu có ngoại lệ `RuntimeException`, toàn bộ thao tác SQL trong hàm sẽ tự động được Rollback.
 
 ---
 
-## Mục 5: Tầng Điều Khiển (Controller Package - Phân Tích Từng Endpoint)
+### 4.1. `AuthenticationService.java` — Xác thực tài khoản & Ký phát sinh Token JWT
 
-| Controller Class                       | Endpoint URL                                           | HTTP Method | Chức năng nghiệp vụ & Quyền hạn                                                                                       |
-| :------------------------------------- | :----------------------------------------------------- | :---------- | :-------------------------------------------------------------------------------------------------------------------------- |
-| **`AuthenticationController`** | `/auth/login`                                        | `POST`    | Tiếp nhận username/password, xác thực và trả về JWT Token. (Public)                                                  |
-|                                        | `/auth/introspect`                                   | `POST`    | Kiểm tra token có hợp lệ không. (Public)                                                                               |
-| **`UserController`**           | `/users`                                             | `POST`    | Đăng ký tài khoản người dùng mới. (Public)                                                                         |
-|                                        | `/users`                                             | `GET`     | Lấy danh sách toàn bộ người dùng trong hệ thống. (Yêu cầu `ROLE_ADMIN`)                                        |
-|                                        | `/users/my-profile`                                  | `GET`     | Lấy thông tin cá nhân của người đang đăng nhập. (Đã đăng nhập)                                              |
-|                                        | `/users/my-profile`                                  | `PUT`     | Cập nhật email, bio, avatar của tôi. (Đã đăng nhập)                                                                |
-|                                        | `/users/my-profile/change-password`                  | `PUT`     | Đổi mật khẩu cá nhân. (Đã đăng nhập)                                                                             |
-|                                        | `/users/profile/{username}`                          | `GET`     | Xem trang hồ sơ công khai của một tác giả bất kỳ. (Public)                                                         |
-| **`BlogController`**           | `/blogs`                                             | `POST`    | Tạo bài viết mới. (Đã đăng nhập)                                                                                   |
-|                                        | `/blogs`                                             | `GET`     | Lấy danh sách bài viết trang chủ kèm lượt xem/thích/bình luận. (Public)                                          |
-|                                        | `/blogs/{id}`                                        | `GET`     | Xem chi tiết bài viết và tự động tăng view. (Public)                                                                |
-|                                        | `/blogs/{id}`                                        | `PUT`     | Cập nhật bài viết (Tác giả). (Đã đăng nhập)                                                                      |
-|                                        | `/blogs/{id}`                                        | `DELETE`  | Xóa bài viết (Tác giả hoặc Admin). (Đã đăng nhập)                                                                |
-|                                        | `/blogs/category/{categoryId}`                       | `GET`     | Lọc danh sách bài viết theo Danh mục. (Public)                                                                         |
-|                                        | `/blogs/tag/{tagId}`                                 | `GET`     | Lọc danh sách bài viết theo Thẻ Tag. (Public)                                                                          |
-|                                        | `/blogs/search`                                      | `GET`     | Tìm kiếm bài viết theo từ khóa tiêu đề. (Public)                                                                   |
-|                                        | `/blogs/search/suggestions`                          | `GET`     | Gợi ý top 5 bài viết nhanh khi đang gõ phím. (Public)                                                                |
-|                                        | `/blogs/filter`                                      | `GET`     | Lọc kết hợp từ khóa và danh mục. (Public)                                                                            |
-|                                        | `/blogs/my-blogs`                                    | `GET`     | Lấy danh sách bài viết của tôi (kể cả bản nháp). (Đã đăng nhập)                                              |
-| **`InteractionController`**    | `/blogs/{blogId}/like`                               | `POST`    | Thả tim / Bỏ thả tim bài viết. (Đã đăng nhập)                                                                     |
-|                                        | `/blogs/{blogId}/comments`                           | `GET`     | Lấy danh sách bình luận phân cấp của bài viết. (Public)                                                            |
-|                                        | `/blogs/{blogId}/comments`                           | `POST`    | Thêm bình luận hoặc phản hồi (reply). (Đã đăng nhập)                                                             |
-|                                        | `/blogs/comments/{commentId}`                        | `DELETE`  | Xóa bình luận (Tác giả comment hoặc Chủ bài viết). (Đã đăng nhập)                                             |
-|                                        | `/blogs/{blogId}/bookmark`                           | `POST`    | Lưu / Bỏ lưu bài viết vào danh sách đọc sau. (Đã đăng nhập)                                                   |
-|                                        | `/blogs/bookmarks`                                   | `GET`     | Lấy danh sách các bài viết tôi đã lưu. (Đã đăng nhập)                                                         |
-| **`FollowController`**         | `/users/{username}/follow`                           | `POST`    | Theo dõi / Bỏ theo dõi tác giả. (Đã đăng nhập)                                                                    |
-|                                        | `/users/{username}/followers`                        | `GET`     | Lấy danh sách người theo dõi của tác giả. (Public)                                                                  |
-|                                        | `/users/{username}/following`                        | `GET`     | Lấy danh sách tác giả mà người này đang theo dõi. (Public)                                                        |
-| **`NotificationController`**   | `/api/notifications`                                 | `GET`     | Lấy danh sách thông báo của tôi. (Đã đăng nhập)                                                                  |
-|                                        | `/api/notifications/{id}/read`                       | `PUT`     | Đánh dấu thông báo đã đọc. (Đã đăng nhập)                                                                     |
-|                                        | `/api/notifications/{id}`                            | `DELETE`  | Xóa một thông báo. (Đã đăng nhập)                                                                                  |
-| **`AdminController`**          | `/api/admin/stats`                                   | `GET`     | Lấy số liệu thống kê (Tổng user, tổng post, 5 bài mới nhất) cho trang Dashboard Admin. (Yêu cầu `ROLE_ADMIN`) |
-| **`UploadController`**         | `/upload/image`                                      | `POST`    | Tải file ảnh lên Cloudinary và nhận đường link URL. (Đã đăng nhập)                                             |
-| **`ViewController`**           | `/`, `/home`, `/login`, `/post`, `/admin/**` | `GET`     | Điều hướng hiển thị các file template HTML Thymeleaf. (Public)                                                       |
+- **Vị trí**: `src/main/java/com/group/blog/service/AuthenticationService.java`
+- **Các phương thức chi tiết**:
+  1. `authenticate(AuthenticationRequest request)`:
+     - Dòng 35: `var user = userRepository.findByUsername(request.getUsername()).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXITED));`: Tìm tài khoản theo username trong bảng `users`. Nếu không có, ném lỗi nghiệp vụ `USER_NOT_EXITED` (mã lỗi 1005).
+     - Dòng 38: `boolean authenticated = passwordEncoder.matches(request.getPassword(), user.getPassword());`: Dùng thuật toán BCrypt so khớp mật khẩu người dùng gõ vào form với chuỗi mật khẩu đã được băm mã hóa lưu trong MySQL. Tuyệt đối không so sánh bằng `==` hay `.equals()`.
+     - Dòng 39-41: Nếu `!authenticated`, ném lỗi `UNAUTHENTICATED` (mã lỗi 1006).
+     - Dòng 43-44: Thiết lập thời gian sống của Token là 1 giờ (`Instant.now().plus(1, ChronoUnit.HOURS)`), gọi hàm `generateToken(user, expiryTime)` và đóng gói vào `AuthenticationResponse`.
+  2. `generateToken(User user, Date expiryTime)`:
+     - Tạo Header: Khai báo thuật toán mã hóa `JWSAlgorithm.HS512`.
+     - Tạo Payload: Chứa các Claim theo chuẩn RFC 7519:
+       - `sub` (Subject): Định danh người dùng bằng `user.getUsername()`.
+       - `iss` (Issuer): Đơn vị cấp phát `"group.com"`.
+       - `iat` (Issued At): Thời điểm cấp phát `new Date()`.
+       - `exp` (Expiration Time): Thời điểm hết hạn `expiryTime`.
+       - `scope`: Chuỗi lưu quyền hạn người dùng (nối các quyền trong bảng `user_roles` bằng dấu cách, ví dụ `"ADMIN USER"`).
+     - Ký số: Sử dụng khóa bí mật `SIGNER_KEY` với đối tượng `new MACSigner(SIGNER_KEY.getBytes())` để tính toán phần Chữ ký điện tử (Signature).
+     - Ghép 3 phần tạo thành chuỗi JWT chuẩn: `Header.Payload.Signature`.
+  3. `introspect(IntrospectRequest request)`:
+     - Nhận vào chuỗi token từ client gửi lên.
+     - Dùng `JWSVerifier` kiểm tra tính hợp lệ của chữ ký và thời gian hết hạn (`expirationTime`).
+     - Trả về đối tượng `IntrospectResponse.builder().valid(verified && !isExpired).build()`.
 
 ---
 
-## Mục 6: Xử Lý Ngoại Lệ & Tiện Ích (Exception & SlugUtils)
+### 4.2. `UserService.java` — Quản trị thông tin người dùng & Phân quyền
 
-### 6.1. Xử lý ngoại lệ tập trung với `GlobalExceptionHandler.java`
+- **Vị trí**: `src/main/java/com/group/blog/service/UserService.java`
+- **Các phương thức chi tiết**:
+  1. `createUser(UserCreatetionRequest request)`:
+     - Kiểm tra trùng username: `if (userRepository.existsByUsername(request.getUsername())) throw new AppException(ErrorCode.USER_EXITED);`.
+     - Dùng `userMapper.toUser(request)` chuyển DTO sang Entity User.
+     - Mã hóa mật khẩu: `user.setPassword(passwordEncoder.encode(request.getPassword()));`.
+     - Gán quyền mặc định: Khởi tạo HashSet và gán quyền `ROLE_USER` cho tài khoản mới.
+     - Lưu xuống MySQL và trả về `UserResponse`.
+  2. `getMyProfile()`:
+     - Lấy username từ ngữ cảnh bảo mật hiện tại: `SecurityContextHolder.getContext().getAuthentication().getName()`.
+     - Lấy User từ DB, chuyển sang DTO và gọi `followService.enrichUserResponse()` để bổ sung thông tin số lượng người theo dõi (Followers) và đang theo dõi (Following).
+  3. `changePassword(PasswordChangeRequest request)`:
+     - Lấy username người đăng nhập.
+     - So khớp mật khẩu cũ: `if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) throw new AppException(ErrorCode.PASSWORD_INCORRECT);`.
+     - Kiểm tra xác nhận mật khẩu mới: `if (!request.getNewPassword().equals(request.getConfirmPassword())) throw new AppException(ErrorCode.PASSWORD_NOT_MATCH);`.
+     - Mã hóa mật khẩu mới bằng `passwordEncoder.encode()` và lưu đè vào CSDL.
+  4. `updateUser(UUID id, UserUpdateRequest request)`:
+     - Phương thức dành riêng cho Admin cập nhật thông tin và phân quyền cho thành viên.
+     - Dùng `u.getRoles().clear()` xóa các quyền cũ và `u.getRoles().addAll(request.getRoles())` nạp danh sách quyền mới (ví dụ thăng cấp từ `USER` lên `ADMIN`).
 
-- `@ControllerAdvice`: Bắt chặn mọi Exception xảy ra ở bất kỳ Controller nào trong toàn bộ ứng dụng.
-- Phương thức `@ExceptionHandler(value = AppException.class)`:
-  - Bắt các lỗi nghiệp vụ do lập trình viên chủ động ném ra (`throw new AppException(ErrorCode.USER_NOT_EXITED)`).
-  - Trích xuất mã lỗi `code` và thông điệp `message` từ Enum `ErrorCode` đóng gói vào `ApiResponse` chuẩn trả về cho Client với HTTP Status 400 Bad Request.
-- Phương thức `@ExceptionHandler(value = MethodArgumentNotValidException.class)`:
-  - Bắt các lỗi vi phạm ràng buộc dữ liệu đầu vào khi dùng `@Valid` trên Request Body (ví dụ mật khẩu dưới 8 ký tự).
-- Phương thức `@ExceptionHandler(value = Exception.class)`:
-  - Tấm lưới an toàn cuối cùng bắt mọi lỗi không lường trước được (lỗi hệ thống, null pointer), trả về mã `9999` với thông điệp "Uncategorized error", bảo đảm không bao giờ để lộ vết lỗi hệ thống (Stacktrace) ra ngoài Client.
+---
 
-### 6.2. Tiện ích tạo đường dẫn thân thiện SEO `SlugUtils.java`
+### 4.3. `BlogService.java` — Xử lý nghiệp vụ bài viết, bản nháp & tìm kiếm gợi ý
 
-- **Mục đích**: Chuyển đổi tiêu đề bài viết tiếng Việt có dấu thành chuỗi URL không dấu ngăn cách bằng gạch nối:
-  - Chuỗi gốc: `"Học Spring Boot 3 & JPA: Xây dựng Blog từ A-Z!"`
-  - Chuỗi sau xử lý: `"hoc-spring-boot-3-jpa-xay-dung-blog-tu-a-z"`
-- **Các bước kỹ thuật trong hàm `generateSlug()`**:
-  1. Chuyển chữ thường `.toLowerCase()` và cắt khoảng trắng 2 đầu `.trim()`.
-  2. Tách dấu tiếng Việt bằng chuẩn hóa Unicode NFD: `Normalizer.normalize(slug, Normalizer.Form.NFD)`.
-  3. Xóa các ký tự dấu tổ hợp bằng biểu thức chính quy Regex: `\\p{InCombiningDiacriticalMarks}+`.
-  4. Thay thế ký tự đặc biệt tiếng Việt: Chuyển `"đ"` thành `"d"`.
-  5. Thay thế toàn bộ ký tự không phải chữ và số thành dấu gạch ngang: `[^a-z0-9]+` $\rightarrow$ `"-"`.
-  6. Gộp nhiều dấu gạch ngang liên tiếp thành 1 dấu: `"-+"` $\rightarrow$ `"-"`.
+- **Vị trí**: `src/main/java/com/group/blog/service/BlogService.java`
+- **Các phương thức chi tiết**:
+  1. `createBlog(BlogCreationRequest request)`:
+     - Lấy tác giả từ SecurityContext.
+     - Tìm kiếm Category nếu có truyền `categoryId`.
+     - **Cơ chế lưu Tag thông minh**: Quét từng tên tag trong mảng `request.getTags()`. Nếu tag đã có trong DB thì lấy lại; nếu chưa có thì tự động tạo mới `new Tag(name)` và lưu vào bảng `tags` (`tagRepository.save()`). Cách này giúp người dùng gõ tag tùy thích mà không bị lỗi ràng buộc dữ liệu.
+     - Dùng `blogMapper.toBlog(request)` tạo Entity, gán tác giả, danh mục và tập hợp thẻ tags.
+     - Đặt trạng thái ban đầu: Nếu `request.getDraft() == false` thì gán `publishedAt = LocalDateTime.now()`.
+     - Lưu xuống bảng `blogs`.
+  2. `updateBlog(UUID id, BlogUpdateRequest request)`:
+     - Kiểm tra quyền: `if (!blog.getAuthor().getUsername().equals(currentUsername)) throw new AppException(ErrorCode.UNAUTHORIZED);` $\rightarrow$ Chỉ chính tác giả mới được sửa bài của mình.
+     - **Thuật toán xử lý Lưu Nháp vs Xuất Bản**:
+       - *Trường hợp 1 (Bấm Save Draft)*: Nếu bài viết đã từng xuất bản trước đó (`blog.isDraft() == false`), hệ thống **giữ nguyên nội dung cũ ở cột `content`** để độc giả đọc bình thường, và chỉ ghi nội dung đang chỉnh sửa dở vào cột **`draftContent`**.
+       - *Trường hợp 2 (Bấm Publish)*: Đổ toàn bộ nội dung mới vào cột `content`, xóa rỗng `draftContent = null`, chuyển cờ `draft = false`, cập nhật `publishedAt = LocalDateTime.now()`.
+  3. `getBlogById(UUID id)`:
+     - Tìm bài viết theo `id`.
+     - **Ghi log lượt xem**: Tạo một bản ghi `BlogView` mới (lưu `blog_id`, `user_id` và `viewedAt = LocalDateTime.now()`) lưu xuống bảng `blog_views`.
+     - Kiểm tra trạng thái tương tác: Kiểm tra xem user đang đăng nhập đã Like bài này chưa (`likedByCurrentUser`) và đã Bookmark bài này chưa (`bookmarkedByCurrentUser`).
+  4. `deleteBlog(UUID id)`:
+     - Phân quyền xóa: Cho phép **Tác giả bài viết** HOẶC **Người dùng có quyền `ROLE_ADMIN`** thực hiện xóa. Nếu không thỏa mãn ném `UNAUTHORIZED`.
+  5. `getSearchSuggestions(String keyword)`:
+     - Tìm kiếm nhanh 5 bài viết khớp từ khóa trong tiêu đề qua `blogRepository.findTop5ByTitleContainingIgnoreCaseAndDraftFalse()`.
+     - Chuyển thành `BlogSuggestionResponse` (chỉ gồm `id`, `title`, `authorName`, `categoryName`) để phục vụ tính năng tìm kiếm gợi ý tức thì khi người dùng đang gõ phím ở thanh Search.
+
+---
+
+### 4.4. `AdminService.java` — Thống kê số liệu bảng điều khiển Dashboard
+
+- **Vị trí**: `src/main/java/com/group/blog/service/AdminService.java`
+- **Phương thức `getDashboardStats()`**:
+  - `long totalUsers = userRepository.count();`: Đếm tổng số lượng tài khoản trong bảng `users`.
+  - `long totalPosts = blogRepository.countByDraftFalse();`: Đếm tổng số bài viết đã xuất bản công khai (bỏ qua các bài nháp).
+  - Lấy 5 bài viết mới nhất: Gọi `blogRepository.findTop5ByDraftFalseOrderByCreatedAtDesc()`, dùng Stream API ánh xạ sang `BlogResponse`.
+  - Đóng gói toàn bộ vào đối tượng `AdminStatsResponse` gửi về cho giao diện `dashboard.html`.
+
+---
+
+### 4.5. `CategoryService.java` — Quản trị chuyên mục bài viết
+
+- **Vị trí**: `src/main/java/com/group/blog/service/CategoryService.java`
+- **Các phương thức chi tiết**:
+  1. `create(CategoryRequest request)`: Kiểm tra `existsByName()`, nếu trùng ném `CATEGORY_EXITED`, ngược lại lưu vào CSDL.
+  2. `update(UUID id, CategoryRequest request)`: Cập nhật tên chuyên mục, kiểm tra chống trùng lặp tên với các danh mục khác.
+  3. `delete(UUID id)`: Xóa chuyên mục theo `id`.
+  4. `getAllCategories()`:
+     - Gọi câu truy vấn JPQL `findAllCategoriesWithPostCount()` để lấy danh sách danh mục kèm số lượng bài viết của từng danh mục.
+     - Dùng `SlugUtils.generateSlug()` tạo chuỗi slug kèm ID (ví dụ: `cong-nghe-UUID`) hỗ trợ chia sẻ link và SEO.
+
+---
+
+### 4.6. `TagService.java` — Quản lý thẻ từ khóa bài viết
+
+- **Vị trí**: `src/main/java/com/group/blog/service/TagService.java`
+- **Các phương thức chi tiết**:
+  1. `getAllTags()`: Gọi câu truy vấn `findAllTagsWithPostCount()` trong `TagRepository` để lấy danh sách tất cả các thẻ tag kèm theo số lượng bài viết đang gắn thẻ đó.
+  2. `create(CategoryRequest request)`: Thêm mới thẻ tag thủ công từ trang quản trị Admin.
+  3. `update(UUID id, CategoryRequest request)`: Cập nhật tên thẻ tag.
+
+---
+
+### 4.7. `InteractionService.java` — Quản lý tương tác: Thả tim, Bình luận & Bookmark
+
+- **Vị trí**: `src/main/java/com/group/blog/service/InteractionService.java`
+- **Các phương thức chi tiết**:
+  1. `@Transactional toggleLike(UUID blogId)`:
+     - Tìm kiếm `blogLikeRepository.findByBlogIdAndUserUsername(blogId, username)`.
+     - Nếu đã tồn tại $\rightarrow$ Gọi `delete()` (Bỏ thích - Unlike).
+     - Nếu chưa tồn tại $\rightarrow$ Gọi `save()` tạo mới bản ghi `BlogLike`, đồng thời gọi `notificationService.createNotification()` để bắn chuông thông báo cho tác giả bài viết (`type = "LIKE"`).
+  2. `@Transactional addComment(UUID blogId, CommentRequest request)`:
+     - Tạo bản ghi `Comment`. Nếu `request.getParentId() != null`, tìm comment cha trong DB và gán `comment.setParent(parentComment)` để tạo nhánh trả lời (reply).
+     - Bắn thông báo thông minh:
+       - Nếu là bình luận bài viết: Bắn thông báo cho Tác giả bài viết (`type = "COMMENT"`).
+       - Nếu là reply bình luận: Bắn thông báo trực tiếp cho Chủ của bình luận cha (`type = "REPLY"`).
+  3. `@Transactional deleteComment(UUID commentId)`:
+     - Kiểm tra quyền: Chỉ cho phép **Chính tác giả của bình luận đó** HOẶC **Chủ sở hữu của bài viết chứa bình luận đó** mới có quyền xóa.
+  4. `@Transactional toggleBookmark(UUID blogId)`:
+     - Bật/tắt lưu bài viết đọc sau. Nếu đã có thì xóa khỏi `bookmarks`, nếu chưa thì thêm mới.
+  5. `getMyBookmarks()`:
+     - Lấy danh sách các bài viết mà user hiện tại đã lưu, sắp xếp theo thời gian lưu mới nhất (`findByUserUsernameOrderByCreatedAtDesc`).
+
+---
+
+### 4.8. `FollowService.java` — Quản lý quan hệ theo dõi giữa các tác giả
+
+- **Vị trí**: `src/main/java/com/group/blog/service/FollowService.java`
+- **Các phương thức chi tiết**:
+  1. `@Transactional toggleFollow(String targetUsername)`:
+     - Kiểm tra: `if (currentUsername.equals(targetUsername)) throw new RuntimeException("Bạn không thể tự theo dõi chính mình");`.
+     - Kiểm tra `userFollowRepository.findByFollowerUsernameAndFollowingUsername()`.
+     - Nếu đã follow $\rightarrow$ Xóa bản ghi (Unfollow).
+     - Nếu chưa follow $\rightarrow$ Tạo mới bản ghi `UserFollow`, đồng thời gửi thông báo `type = "FOLLOW"` cho tác giả được theo dõi.
+  2. `enrichUserResponse(UserResponse response, String targetUsername, String currentUsername)`:
+     - Đếm tổng số người đang theo dõi tác giả: `countByFollowingUsername()`.
+     - Đếm tổng số người mà tác giả đang theo dõi: `countByFollowerUsername()`.
+     - Kiểm tra xem người đang duyệt web đã bấm theo dõi tác giả này chưa: `existsByFollowerUsernameAndFollowingUsername()`.
+
+---
+
+### 4.9. `NotificationService.java` — Quản lý chuông thông báo cá nhân
+
+- **Vị trí**: `src/main/java/com/group/blog/service/NotificationService.java`
+- **Các phương thức chi tiết**:
+  1. `createNotification(User recipient, String message, String targetUrl, String type)`:
+     - Chặn thông báo tự kỷ: `if (recipient.getUsername().equals(currentUsername)) return;` $\rightarrow$ Nếu tự like/comment bài của chính mình thì không gửi thông báo.
+     - Tạo Entity `Notification`, gán `isRead = false`, lưu vào bảng `notifications`.
+  2. `getMyNotifications()`:
+     - Lấy danh sách thông báo của tài khoản đang đăng nhập qua `findByUserUsernameOrderByCreatedAtDesc(username)`.
+  3. `@Transactional markAsRead(UUID id)`: Đánh dấu thông báo đã đọc (`n.setRead(true)`).
+  4. `deleteNotification(UUID id)`: Xóa thông báo khỏi danh sách.
+
+---
+
+### 4.10. `CloudinaryService.java` — Tải và quản lý tệp hình ảnh đám mây
+
+- **Vị trí**: `src/main/java/com/group/blog/service/CloudinaryService.java`
+- **Phương thức `uploadImage(MultipartFile file)`**:
+  - Nhận đối tượng file nhị phân `MultipartFile` từ form tải lên.
+  - Sử dụng phương thức `cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap("resource_type", "auto"))`.
+  - Cloudinary tiếp nhận mảng byte, tự động nén ảnh và chuyển đổi định dạng tối ưu.
+  - Trích xuất trường `secure_url` (đường link ảnh bảo mật HTTPS) trả về cho Controller.
+
+---
+
+## Mục 5: Tầng Điều Khiển (Controller Package - Toàn Bộ 8 Controllers)
+
+Tầng Controller tiếp nhận HTTP Request từ Client, gọi Service tương ứng xử lý nghiệp vụ, và trả về dữ liệu chuẩn JSON được bọc trong đối tượng `ApiResponse<T>`.
+
+### 5.1. Khái niệm lý thuyết cốt lõi cần nhớ khi vấn đáp:
+- `@RestController`: Bằng `@Controller` + `@ResponseBody`. Báo hiệu mọi phương thức trong class này đều tuần tự hóa kết quả trả về trực tiếp thành chuỗi **JSON** (qua bộ chuyển đổi Jackson), không chuyển hướng sang trang HTML.
+- `@Controller`: Dành riêng cho `ViewController.java` để Spring MVC hiểu là trả về tên file giao diện HTML (Thymeleaf View).
+- `@RequestMapping("/path")`: Khai báo tiền tố đường dẫn dùng chung cho tất cả các endpoint trong Controller.
+- `@PathVariable`: Trích xuất giá trị nằm trực tiếp trên đường dẫn URL (ví dụ: `/blogs/{id}`).
+- `@RequestParam`: Trích xuất tham số Query Parameter sau dấu `?` (ví dụ: `/blogs/search?keyword=java`).
+- `@RequestBody`: Yêu cầu Spring trích xuất nội dung phần thân JSON của HTTP Request và parse tự động sang đối tượng DTO Java.
+- `@Valid`: Kích hoạt cơ chế kiểm tra tính hợp lệ của dữ liệu đầu vào (Hibernate Validator) trước khi đưa dữ liệu vào Service.
+
+---
+
+### 5.2. `AuthenticationController.java` — Quản lý đăng nhập & kiểm tra Token
+- `@RequestMapping("/auth")`:
+  - `@PostMapping("/login")`: Nhận `AuthenticationRequest` (`username`, `password`), gọi `authenticationService.authenticate()`, trả về chuỗi Token JWT.
+  - `@PostMapping("/introspect")`: Nhận `IntrospectRequest` (`token`), gọi `authenticationService.introspect()`, trả về kết quả token còn sống hay đã chết.
+
+### 5.3. `UserController.java` — Quản trị người dùng & Hồ sơ cá nhân
+- `@RequestMapping("/users")`:
+  - `@PostMapping`: Tiếp nhận đăng ký thành viên mới (`UserCreatetionRequest`), có gắn `@Valid` kiểm tra độ dài username/password.
+  - `@GetMapping`: Lấy danh sách toàn bộ người dùng (Yêu cầu quyền Admin).
+  - `@GetMapping("/my-profile")`: Lấy thông tin cá nhân của chính mình.
+  - `@PutMapping("/my-profile")`: Cập nhật Bio, Email, Avatar của tôi.
+  - `@PutMapping("/my-profile/change-password")`: Nhận DTO đổi mật khẩu.
+  - `@GetMapping("/profile/{username}")`: Lấy hồ sơ công khai của một tác giả bất kỳ để hiển thị trang tác giả.
+
+### 5.4. `BlogController.java` — Điều phối toàn bộ hoạt động bài viết
+- `@RequestMapping("/blogs")`:
+  - `@PostMapping`: Tạo bài viết mới (`@Valid BlogCreationRequest`).
+  - `@GetMapping`: Lấy danh sách bài viết trang chủ kèm thống kê tương tác.
+  - `@GetMapping("/{id}")`: Xem chi tiết bài viết theo UUID.
+  - `@PutMapping("/{id}")`: Chỉnh sửa bài viết.
+  - `@DeleteMapping("/{id}")`: Xóa bài viết.
+  - `@GetMapping("/category/{categoryId}")`: Lọc bài viết theo danh mục.
+  - `@GetMapping("/tag/{tagId}")`: Lọc bài viết theo thẻ tag.
+  - `@GetMapping("/search")`: Tìm kiếm bài viết theo từ khóa `?keyword=...`.
+  - `@GetMapping("/search/suggestions")`: Trả về danh sách gợi ý nhanh khi gõ phím.
+  - `@GetMapping("/filter")`: Lọc kết hợp đa tiêu chí (vừa có từ khóa vừa có categoryId).
+  - `@GetMapping("/my-blogs")`: Lấy tất cả bài viết do tài khoản hiện tại tạo ra (kể cả bản nháp).
+
+### 5.5. `InteractionController.java` — Điều phối Thả tim, Bình luận & Bookmark
+- `@RequestMapping("/interactions")`:
+  - `@PostMapping("/likes/{blogId}")`: Thả tim / Bỏ like.
+  - `@GetMapping("/comments/{blogId}")`: Lấy danh sách cây bình luận của bài viết.
+  - `@PostMapping("/comments/{blogId}")`: Thêm bình luận mới hoặc gửi phản hồi reply.
+  - `@DeleteMapping("/comments/{commentId}")`: Xóa bình luận.
+  - `@PostMapping("/bookmarks/{blogId}")`: Thêm / Xóa bài viết khỏi mục Bookmark.
+  - `@GetMapping("/bookmarks/my-bookmarks")`: Lấy danh sách các bài viết đã lưu.
+
+### 5.6. `FollowController.java` — Điều phối theo dõi tác giả
+- `@RequestMapping("/follows")`:
+  - `@PostMapping("/{targetUsername}")`: Theo dõi / Bỏ theo dõi tác giả.
+  - `@GetMapping("/followers/{targetUsername}")`: Lấy danh sách người đang theo dõi tác giả này.
+  - `@GetMapping("/following/{targetUsername}")`: Lấy danh sách tác giả mà người này đang theo dõi.
+
+### 5.7. `NotificationController.java` — Điều phối chuông thông báo
+- `@RequestMapping({"/api/notifications", "/notifications/api"})`:
+  - `@GetMapping`: Lấy toàn bộ thông báo của tôi.
+  - `@PutMapping("/{id}/read")`: Đánh dấu thông báo đã đọc.
+  - `@DeleteMapping("/{id}")`: Xóa thông báo khỏi danh sách.
+
+### 5.8. `AdminController.java` — Điều phối số liệu thống kê quản trị
+- `@RequestMapping("/api/admin")`:
+  - `@GetMapping("/stats")`: Gọi `adminService.getDashboardStats()` để lấy tổng số thành viên, tổng số bài viết và danh sách 5 bài viết mới nhất cho Dashboard Admin. Endpoint này được Spring Security bảo vệ bằng luật `.hasRole("ADMIN")`.
+
+### 5.9. `UploadController.java` — Điều phối tải tệp ảnh lên đám mây
+- `@RequestMapping("/upload")`:
+  - `@PostMapping("/image")`: Nhận tham số `@RequestParam("file") MultipartFile file`, chuyển qua `cloudinaryService.uploadImage(file)` để tải lên đám mây và trả về đường dẫn ảnh công khai HTTPS.
+
+### 5.10. `ViewController.java` — Điều hướng hiển thị các trang giao diện HTML Thymeleaf
+- Gắn `@Controller`:
+  - Chứa 16 phương thức `@GetMapping` điều hướng các đường dẫn URL (`/`, `/login`, `/register`, `/post`, `/admin/dashboard`...) về các file HTML tương ứng trong thư mục `templates/`.
+
+---
+
+## Mục 6: Tầng Xử Lý Ngoại Lệ, Chuyển Đổi DTO & Tiện Ích (Exception, Mapper & Util)
+
+### 6.1. Tầng Xử Lý Ngoại Lệ Tập Trung (Exception Package)
+
+Hệ thống thiết kế cơ chế xử lý lỗi tập trung theo chuẩn Enterprise, không bao giờ để lộ vết lỗi hệ thống (Stacktrace) hay mã lỗi 500 xấu xí ra màn hình người dùng.
+
+1. **`ErrorCode.java` (Enum định nghĩa danh mục lỗi)**:
+   - Là một `enum` chứa danh sách mã lỗi nghiệp vụ chuẩn hóa:
+     - `UNCATEGORIZED_EXCEPTION(9999, "Uncategorized error")`: Lỗi hệ thống chưa phân loại.
+     - `USER_EXITED(1002, "User Exited")`: Tài khoản đã tồn tại.
+     - `USERNAME_INVALID(1003, "Username must be at least 3 charactes")`: Tên đăng nhập không hợp lệ.
+     - `INVALID_PASSWORD(1004, "Password must be at least 8 characters")`: Mật khẩu không hợp lệ.
+     - `USER_NOT_EXITED(1005, "User Not Exited")`: Không tìm thấy người dùng.
+     - `UNAUTHENTICATED(1006, "Unauthenticated")`: Sai thông tin đăng nhập hoặc token hết hạn.
+     - `PASSWORD_INCORRECT(1007, "Mật khẩu cũ không chính xác")`.
+     - `PASSWORD_NOT_MATCH(1008, "Mật khẩu xác nhận không khớp")`.
+     - `CATEGORY_NOT_FOUND(1009, "Danh mục không tồn tại")`.
+     - `BLOG_NOT_FOUND(1010, "Bài viết không tồn tại")`.
+     - `UNAUTHORIZED(1011, "Bạn không có quyền thực hiện hành động này")`.
+     - `CATEGORY_EXITED(1012, "Danh mục đã tồn tại")`.
+   - *Lý thuyết vấn đáp*: Dùng `enum` giúp quản lý mã lỗi tập trung, không bị hardcode chuỗi thông báo rải rác trong code và dễ dàng quốc tế hóa ngôn ngữ (i18n).
+
+2. **`AppException.java` (Ngoại lệ nghiệp vụ tùy chỉnh)**:
+   - Kế thừa class `RuntimeException` (Ngoại lệ không bắt buộc khai báo - **Unchecked Exception**).
+   - Chứa thuộc tính `private ErrorCode errorCode`.
+   - Khi Service phát hiện vi phạm nghiệp vụ, chỉ cần ném ra: `throw new AppException(ErrorCode.USER_NOT_EXITED);`.
+
+3. **`GlobalExceptionHandler.java` (Bộ đón bắt ngoại lệ toàn cục)**:
+   - Gắn Annotation `@ControllerAdvice`: Lắng nghe và chặn bắt tất cả các Exception văng ra từ bất kỳ Controller nào trong toàn bộ ứng dụng.
+   - `@ExceptionHandler(value = AppException.class)`:
+     - Bắt các lỗi do lập trình viên chủ động ném ra (`AppException`).
+     - Đóng gói mã lỗi và thông điệp vào đối tượng `ApiResponse`:
+       ```java
+       ErrorCode errorCode = exception.getErrorCode();
+       ApiResponse apiResponse = new ApiResponse();
+       apiResponse.setCode(errorCode.getCode());
+       apiResponse.setMessage(errorCode.getMessage());
+       return ResponseEntity.badRequest().body(apiResponse);
+       ```
+   - `@ExceptionHandler(value = MethodArgumentNotValidException.class)`:
+     - Bắt các lỗi khi dữ liệu trong `@RequestBody` vi phạm các Annotation validation (như `@Size`, `@NotNull`).
+   - `@ExceptionHandler(value = Exception.class)`:
+     - Tấm lưới an toàn cuối cùng bắt mọi lỗi bất ngờ (NullPointerException, lỗi kết nối DB...). Trả về mã lỗi 9999 để bảo mật hệ thống.
+
+---
+
+### 6.2. Tầng Chuyển Đổi DTO & Entity (Mapper Package - Thư viện MapStruct)
+
+Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ liệu (Bean Mapper) hàng đầu thế giới hiện nay cho Java.
+
+1. **Lý thuyết cốt lõi về MapStruct**:
+   - Khác với `ModelMapper` dùng cơ chế Java Reflection lúc chạy (Runtime) rất chậm và dễ gây lỗi `NullPointerException`, **MapStruct là một bộ tiền xử lý mã nguồn (Annotation Processor)**.
+   - Tại thời điểm biên dịch (`javac`), MapStruct tự động đọc các interface Mapper và **tự sinh mã nguồn Java thuần 100%** trong thư mục `target/generated-sources/annotations/com/group/blog/mapper/` với các lệnh gán `getter/setter` trực tiếp. Tốc độ thực thi nhanh ngang bằng code tay và hoàn toàn Type-safe.
+2. **`UserMapper.java`**:
+   - `@Mapper(componentModel = "spring")`: Yêu cầu MapStruct tạo Bean Spring để có thể inject vào Service.
+   - `User toUser(UserCreatetionRequest request);`: Tự động map các trường trùng tên (`username`, `email`...) từ DTO sang Entity User.
+   - `UserResponse toUserResponse(User user);`: Chuyển Entity User thành DTO trả về cho client.
+   - `void updateUser(@MappingTarget User user, UserUpdateRequest request);`: Dùng `@MappingTarget` để cập nhật trực tiếp dữ liệu từ DTO vào đối tượng User đã có sẵn mà không cần khởi tạo lại đối tượng.
+3. **`BlogMapper.java`**:
+   - `@Mapping(target = "category", ignore = true)`: Báo cho MapStruct bỏ qua việc map tự động trường `category` để Service tự tìm kiếm và gán đối tượng Category chính xác.
+   - `@Mapping(target = "tags", ignore = true)`: Bỏ qua trường `tags` để Service tự xử lý logic gán và lưu thẻ tag.
+   - `@Mapping(target = "author", ignore = true)`: Bỏ qua trường `author` để Service lấy trực tiếp từ `SecurityContextHolder`.
+4. **`CategoryMapper.java`**:
+   - `@Mapping(target = "blogs", ignore = true)`: Bỏ qua danh sách bài viết con để tránh lỗi đệ quy lặp vô hạn.
+
+---
+
+### 6.3. Tầng Tiện Ích Chuẩn Hóa Chuỗi SEO (`SlugUtils.java`)
+
+- **Vị trí**: `src/main/java/com/group/blog/util/SlugUtils.java`
+- **Mã nguồn**:
+  ```java
+  package com.group.blog.util;
+
+  import java.text.Normalizer;
+  import java.util.regex.Pattern;
+
+  public class SlugUtils {
+      public static String generateSlug(String input) {
+          if (input == null || input.isEmpty()) return "";
+          String normalized = Normalizer.normalize(input.trim().toLowerCase(), Normalizer.Form.NFD);
+          Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+          String slug = pattern.matcher(normalized).replaceAll("");
+          slug = slug.replace("đ", "d");
+          slug = slug.replaceAll("[^a-z0-9\\s-]", "");
+          slug = slug.replaceAll("[\\s-]+", "-");
+          return slug;
+      }
+  }
+  ```
+- **Phân tích từng dòng kỹ thuật**:
+  - Dòng 9: `input.trim().toLowerCase()`: Cắt khoảng trắng 2 đầu và chuyển toàn bộ sang chữ thường.
+  - Dòng 9: `Normalizer.normalize(..., Normalizer.Form.NFD)`: Chuẩn hóa tách dấu tiếng Việt thành ký tự gốc và ký tự dấu tổ hợp (ví dụ chữ `"ệ"` được tách thành chữ `"e"` + dấu mũ + dấu nặng).
+  - Dòng 10-11: `Pattern.compile("\\p{InCombiningDiacriticalMarks}+").matcher(normalized).replaceAll("")`: Dùng biểu thức chính quy (Regex) quét và xóa sạch tất cả các ký tự dấu tổ hợp vừa được tách ra, biến `"Lập trình"` thành `"Lap trinh"`.
+  - Dòng 12: `slug.replace("đ", "d")`: Ký tự `"đ"` trong tiếng Việt không phải là dấu tổ hợp nên phải thay thế thủ công thành `"d"`.
+  - Dòng 13: `slug.replaceAll("[^a-z0-9\\s-]", "")`: Loại bỏ toàn bộ các ký tự đặc biệt, dấu chấm, dấu phẩy, chỉ giữ lại chữ cái `a-z`, số `0-9`, khoảng trắng và dấu gạch nối.
+  - Dòng 14: `slug.replaceAll("[\\s-]+", "-")`: Gộp nhiều khoảng trắng hoặc nhiều dấu gạch ngang liên tiếp thành duy nhất 1 dấu gạch ngang `-`.
+  - **Kết quả**: `"Học Lập Trình Java & Spring Boot!"` $\rightarrow$ `"hoc-lap-trinh-java-spring-boot"`. Giúp đường dẫn bài viết thân thiện với công cụ tìm kiếm Google (Chuẩn SEO) và không bị lỗi hiển thị ký tự lạ trên thanh địa chỉ trình duyệt.
+
+---
+
+### 6.4. Bộ Câu Hỏi Vấn Đáp Lý Thuyết Thầy Hay Hỏi Về Service, Controller, Exception & Mapper
+
+#### Q1: "Annotation `@Transactional` đặt ở tầng Service hoạt động như thế nào? Nếu phương thức `addComment()` lưu bình luận thành công nhưng lúc gửi `createNotification()` bị lỗi thì CSDL sẽ ra sao?"
+- **Trả lời**: *"Dạ thưa Thầy, nhờ có `@Transactional`, Spring AOP sẽ bọc phương thức bằng một Transaction Proxy. Toàn bộ các câu lệnh SQL trong phương thức đều thực thi trên cùng một Connection CSDL với cờ `AutoCommit = false`. Nếu có bất kỳ ngoại lệ `RuntimeException` nào xảy ra khi gửi thông báo, Spring Proxy sẽ bắt được và gọi lệnh `Connection.rollback()`. Toàn bộ bình luận vừa thêm trước đó sẽ bị xóa bỏ, khôi phục CSDL về trạng thái nguyên vẹn, bảo đảm trọn vẹn tính chất **Atomicity (Tính nguyên tử)** của giao dịch ACID ạ!"*
+
+#### Q2: "Tại sao nhóm em dùng `@RestController` ở các API mà lại dùng `@Controller` ở file `ViewController.java`?"
+- **Trả lời**: *"Dạ thưa Thầy:
+  - `@RestController` là annotation chuyên dụng cho RESTful API, tự động gắn kèm `@ResponseBody`. Mọi giá trị trả về từ phương thức (như `ApiResponse`, `BlogResponse`) đều được chuyển đổi thành chuỗi dữ liệu **JSON** để gửi về cho client.
+  - Còn `@Controller` ở `ViewController.java` là Spring MVC Controller truyền thống. Chuỗi trả về là **tên của View Template** (ví dụ `"public/home-page"`). Cỗ máy Thymeleaf ViewResolver sẽ đón chuỗi này để nạp file HTML tương ứng từ thư mục `templates/` nạp lên màn hình trình duyệt ạ!"*
+
+#### Q3: "Tại sao nhóm lại dùng MapStruct mà không dùng thư viện ModelMapper hoặc tự viết các hàm getter/setter thủ công?"
+- **Trả lời**: *"Dạ thưa Thầy:
+  - Nếu viết getter/setter thủ công cho hàng chục class DTO và Entity thì code sẽ rất dài dòng, dễ nhầm lẫn và tốn thời gian bảo trì.
+  - Nếu dùng thư viện `ModelMapper`, ModelMapper sử dụng Java Reflection trong thời gian chạy (Runtime) để quét các thuộc tính, tốc độ xử lý rất chậm và nếu có sai lệch tên trường thì chỉ phát hiện được khi ứng dụng đang chạy thật.
+  - Nhóm em chọn **MapStruct** vì MapStruct sinh code Java thuần tại **thời điểm biên dịch (Compile-time)**. Tốc độ chạy nhanh ngang bằng code tay, hoàn toàn Type-safe và nếu có lỗi ánh xạ sai kiểu dữ liệu thì trình biên dịch `javac` sẽ báo lỗi ngay lập tức, không để lọt lỗi ra môi trường Production ạ!"*
+
+#### Q4: "Cơ chế bắt lỗi tập trung `@ControllerAdvice` và `@ExceptionHandler` giải quyết được vấn đề gì so với việc dùng khối `try-catch` ở từng Controller?"
+- **Trả lời**: *"Dạ thưa Thầy:
+  - Nếu dùng `try-catch` ở từng phương thức Controller, mã nguồn sẽ bị trùng lặp rất nhiều và các Controller bị bẩn code bởi logic xử lý lỗi.
+  - Nhờ có `@ControllerAdvice`, toàn bộ ngoại lệ trong hệ thống đều được dồn về một đầu mối duy nhất là `GlobalExceptionHandler`.
+  - Giúp chuẩn hóa cấu trúc phản hồi lỗi: Mọi lỗi trả về cho Frontend đều có định dạng JSON đồng nhất (`code`, `message`).
+  - Đóng vai trò là bức tường lửa bảo mật: Bắt chặn các lỗi không mong muốn để không bao giờ lộ vết lỗi Stacktrace hay cấu trúc thư mục máy chủ ra ngoài Client ạ!"*
+
+---
 
 ---
 
 ## Mục 7: Tầng Giao Diện & Frontend JavaScript Giao Tiếp API
 
-### 7.1. File `register.html` — Đăng ký & Tự động đăng nhập
+### 7.1. Kiến Trúc Frontend: Phân Biệt MPA vs SPA & Bản Chất Dự Án
 
-- Bắt sự kiện `submit` form, gọi `event.preventDefault()` chặn reload trang.
-- Kiểm tra tính hợp lệ ở client (độ dài username $\ge 3$, password $\ge 6$, mật khẩu xác nhận trùng khớp).
-- Gửi `fetch('/users', { method: 'POST', body: JSON })`.
-- Nếu thành công, tự động kích hoạt hàm `autoLogin()` gửi tiếp request tới `/auth/login` để lấy Token JWT và lưu vào `localStorage.setItem('token', token)` rồi chuyển hướng về trang chủ `/`.
+- **Bản chất kiến trúc cấu trúc (Structural Architecture)**: 
+  - Dự án này là **MPA (Multi-Page Application - Ứng dụng Đa Trang)** xây dựng trên nền tảng **HTML5, CSS3 (Bootstrap 5.3.3) và JavaScript ES6+ (kết hợp jQuery 3.7.1)**.
+  - Minh chứng: Dự án có hơn 20 file HTML riêng biệt trong thư mục `templates/`, được điều hướng đường dẫn URL độc lập thông qua `ViewController.java` của Spring Boot (ví dụ: `/home` $\rightarrow$ `home-page.html`, `/post` $\rightarrow$ `post.html`, `/login` $\rightarrow$ `login.html`, `/admin/dashboard` $\rightarrow$ `dashboard.html`).
+- **Bản chất cơ chế tương tác (Interaction & Rendering)**:
+  - Dự án mang **"Trải nghiệm phong cách SPA" (SPA-like Experience)** thông qua **Client-Side Rendering (CSR)** và **Dynamic Component Loading**:
+    1. **Không reload (F5) toàn bộ trang**: Mọi thao tác người dùng (Thả tim Like, Bookmark, Gửi bình luận, Tìm kiếm từ khóa, Lọc chuyên mục/thẻ tag, Đăng nhập, Đổi mật khẩu) đều được gửi ngầm qua **AJAX / Fetch API** lên các Endpoint REST API (`/api/...`). JavaScript nhận dữ liệu JSON phản hồi về và trực tiếp cập nhật lên DOM mà không làm chớp hay tải lại trang web.
+    2. **Cơ chế Virtual Section Navigation trong `home-page.html`**: Trong trang chủ tích hợp sẵn 3 khối giao diện: `#p-home` (Trang chủ), `#p-categories` (Toàn bộ danh mục) và `#p-tags` (Toàn bộ thẻ tag). Hàm `navigate(page)` trong `nav.js` chỉ ẩn khối này và hiện khối kia (`.hide()` / `.show()`) kết hợp đồng bộ URL bằng `window.history.pushState()`. Người dùng cảm thấy mượt mà y hệt như đang dùng ứng dụng Single Page App của React hay Vue.
+    3. **Tách nhỏ thành các Mảnh ghép (Fragments/Components)**: Thay vì lặp lại code của Header, Navbar, Footer ở từng trang, hệ thống dùng kỹ thuật nạp ngầm HTML Component bằng AJAX: `$('#navbar-container').load('/fragments/navbar.html')`.
 
-### 7.2. File `nav.js` — Phân quyền hiển thị Menu Admin
+---
 
-- Trích xuất `token` từ `localStorage`.
-- Giải mã phần Payload Base64 của JWT bằng `window.atob(token.split('.')[1])`.
-- Đọc trường `scope`: Nếu chuỗi quyền có chứa chữ `"ADMIN"`, dùng jQuery `$('#btn-desk-admin').show()` để hiển thị nút vào trang quản trị Admin Controller. Nếu là User thường thì ẩn nút này đi.
+### 7.2. Bóc Tách Chi Tiết Toàn Bộ 21 File Giao Diện HTML (`templates/`)
+
+#### 7.2.1. Nhóm Trang Người Dùng Công Khai (`templates/public/` - 11 Files)
+
+1. **`home-page.html` (Trang chủ chính)**:
+   - *Cấu trúc*: Chứa các container rỗng chờ nạp `#navbar-container`, `#hero-container`, `#footer-container`. Phần thân gồm 2 cột: Cột trái (Toolbar sắp xếp Newest/Oldest, danh sách bài viết `#post-list`) và Cột phải (Sidebar chủ đề và Trending).
+   - *Tính năng SPA*: Chứa sẵn 2 khối ẩn `#p-categories` và `#p-tags`. Khi người dùng bấm chuyển xem danh mục/thẻ, JS kích hoạt hiển thị mà không rời khỏi trang.
+2. **`post.html` (Trang đọc chi tiết bài viết)**:
+   - Đọc tham số `?id=...` hoặc `slug` trên URL.
+   - Gửi request `GET /blogs/{id}` để lấy chi tiết bài viết.
+   - Render nội dung bài viết từ JSON của Editor.js ra HTML hiển thị.
+   - Render danh sách bình luận lồng nhau đa cấp (Nested Comments) với nút "Reply", "Like", "Bookmark".
+   - Tích hợp form gửi bình luận mới (gọi `POST /interactions/comments`).
+3. **`blog-editor.html` (Trang soạn thảo bài viết của Tác giả)**:
+   - Tích hợp bộ công cụ soạn thảo hiện đại **Editor.js** (Header, Paragraph, List, Checklist, Code, Quote, Image).
+   - Tích hợp ô upload ảnh bìa (Banner/Thumbnail) trực tiếp lên Cloudinary.
+   - Hỗ trợ 2 chế độ lưu:
+     - Nút **"Save Draft"**: Ghi nháp bài viết (`draft = true`), không hiển thị ra ngoài trang chủ.
+     - Nút **"Publish"**: Xuất bản bài viết gửi lên Admin duyệt hoặc hiển thị ngay (`draft = false`).
+4. **`login.html` (Trang đăng nhập)**:
+   - Form nhập Username và Password.
+   - JS chặn submit mặc định, gọi API `POST /auth/token`.
+   - Nhận chuỗi JWT token, lưu vào `localStorage.setItem('token', token)` và `localStorage.setItem('username', username)`.
+   - Tự động chuyển hướng về trang trước đó hoặc trang chủ `/`.
+5. **`register.html` (Trang đăng ký tài khoản)**:
+   - Form nhập thông tin: Username, Email, Password, Confirm Password.
+   - Validate phía Client: Username $\ge 3$ ký tự, Password $\ge 6$ ký tự, 2 ô mật khẩu phải trùng nhau.
+   - Gọi API `POST /users`. Sau khi đăng ký thành công, hàm `autoLogin()` tự động đăng nhập ngầm để lấy Token và đưa người dùng vào hệ thống ngay lập tức mà không bắt đăng nhập lại.
+6. **`forgot-password.html` (Trang khôi phục mật khẩu)**:
+   - Giao diện nhập Email xác minh để nhận hướng dẫn cấp lại mật khẩu.
+7. **`user-profile.html` (Trang hồ sơ công khai của Tác giả)**:
+   - Hiển thị Avatar, Tên tác giả, Tiểu sử (Bio), Ngày tham gia.
+   - Thống kê: Tổng số người theo dõi (Followers), Tổng số người đang theo dõi (Following), Tổng số bài viết đã xuất bản.
+   - Nút **"Follow / Unfollow"**: Gọi API `POST /follows/{targetUserId}` để theo dõi hoặc hủy theo dõi tác giả.
+   - Danh sách bài viết do tác giả đó sáng tác.
+8. **`edit-profile.html` (Trang chỉnh sửa thông tin cá nhân)**:
+   - Cho phép người dùng cập nhật Bio, Email và upload Avatar đại diện mới lên đám mây Cloudinary.
+9. **`change-password.html` (Trang đổi mật khẩu)**:
+   - Form nhập: Mật khẩu cũ, Mật khẩu mới, Xác nhận mật khẩu mới.
+   - Gọi API `PUT /users/change-password` có đính kèm Token xác thực.
+10. **`Manage-Blogs.html` (Trang quản lý bài viết cá nhân)**:
+    - Bảng danh sách các bài viết do chính tài khoản hiện tại tạo ra.
+    - Hiển thị trạng thái bài viết: *Bản nháp (Draft)*, *Đang chờ duyệt (Pending)*, *Đã xuất bản (Published)*, *Bị từ chối (Rejected)*.
+    - Nút chức năng: Xem bài, Chỉnh sửa (mở lại Editor), Xóa bài (gọi `DELETE /blogs/{id}`).
+11. **`saved-blogs.html` (Trang bài viết đã lưu - Bookmarks)**:
+    - Gọi API `GET /interactions/bookmarks/my-bookmarks` để lấy danh sách bài viết người dùng đã lưu lại để đọc sau.
+12. **`notifications.html` (Trang thông báo cá nhân)**:
+    - Hiển thị danh sách thông báo lịch sử: Có người thả tim bài viết, có người bình luận, có người bắt đầu theo dõi bạn.
+    - Nút đánh dấu đã đọc hoặc xóa thông báo.
+
+---
+
+#### 7.2.2. Nhóm Trang Quản Trị Hệ Thống (`templates/admin/` - 4 Files)
+
+1. **`dashboard.html` (Bảng điều khiển tổng quan Admin)**:
+   - Khi tải trang, JS gửi `GET /api/admin/stats` (kèm Header `Authorization: Bearer <token>`).
+   - Hiển thị các khối Widget thống kê: Tổng số thành viên (`totalUsers`), Tổng số bài viết (`totalBlogs`), Tổng lượt xem (`totalViews`), Tổng lượt tương tác (`totalLikes`, `totalComments`).
+2. **`posts.html` (Quản lý kiểm duyệt bài viết)**:
+   - Bảng hiển thị toàn bộ bài viết trên toàn hệ thống kèm tên tác giả và ngày gửi.
+   - Nút hành động: **Phê duyệt bài viết (Approve)**, **Từ chối xuất bản (Reject)** hoặc **Xóa bài vi phạm (Delete)**.
+3. **`users.html` (Quản lý tài khoản người dùng)**:
+   - Bảng danh sách toàn bộ người dùng trong hệ thống.
+   - Quản lý phân quyền: Thăng cấp thành viên thành `ROLE_ADMIN` hoặc hạ cấp về `ROLE_USER`.
+   - Khóa/mở khóa tài khoản người dùng vi phạm tiêu chuẩn cộng đồng.
+4. **`categories-tags.html` (Quản trị Danh mục & Thẻ từ khóa)**:
+   - Form thêm mới Danh mục (Tên danh mục, mô tả).
+   - Form thêm mới Thẻ Tag.
+   - Chức năng sửa/xóa các danh mục và thẻ tag cũ.
+
+---
+
+#### 7.2.3. Nhóm Mảnh Ghép Giao Diện Tái Sử Dụng (`templates/fragments/` - 6 Files)
+
+1. **`navbar.html` (Thanh điều hướng đầu trang)**:
+   - Logo thương hiệu `Bleb`.
+   - Ô tìm kiếm bài viết nhanh bằng từ khóa.
+   - Các nút điều hướng: *Home*, *Categories*, *Tags*, *Write (Viết bài)*.
+   - Chuông thông báo hiển thị số lượng thông báo mới chưa đọc.
+   - Logic chuyển đổi trạng thái (Auth State):
+     - Nếu chưa đăng nhập: Hiện nút **Sign In** và **Sign Up**.
+     - Nếu đã đăng nhập: Ẩn nút đăng nhập, hiển thị Avatar đại diện và menu Dropdown (Trang cá nhân, Quản lý bài viết, Đổi mật khẩu, Đăng xuất).
+     - Nếu tài khoản có quyền `ADMIN`: Tự động hiện thêm nút **"Admin Dashboard"**.
+2. **`hero.html` (Banner mở đầu trang chủ)**:
+   - Khối chào đón độc giả với khẩu hiệu truyền cảm hứng, giới thiệu nền tảng viết blog.
+3. **`footer.html` (Chân trang)**:
+   - Thông tin bản quyền, các liên kết điều hướng nhanh và liên kết mạng xã hội.
+4. **`sidebar.html` (Cột thông tin bên phải trang chủ)**:
+   - Widget **"Stories from all interests"**: Danh sách các chủ đề danh mục dạng viên thuốc (Pill badges).
+   - Widget **"Trending Now"**: Top các bài viết có lượt xem và lượt like cao nhất.
+5. **`admin_sidebar.html`**: Menu điều hướng bên trái dành riêng cho trang quản trị Admin.
+6. **`dashboard-sidebar.html`**: Menu điều hướng thanh bên cho trang quản lý cá nhân của User.
+
+---
+
+### 7.3. Bóc Tách Chi Tiết Toàn Bộ 8 File JavaScript Cốt Lõi (`static/assets/js/`)
+
+#### 7.3.1. `app.js` — Quản Lý State Toàn Cục & Xử Lý Dữ Liệu Editor.js
+
+- **Đối tượng State toàn cục `var S`**:
+  ```javascript
+  var S = {
+      page: 'home',          // Trang/tab hiện tại (home, categories, tags)
+      cat: null,             // ID danh mục đang chọn để lọc
+      tag: null,             // ID thẻ tag đang chọn để lọc
+      keyword: null,         // Từ khóa tìm kiếm đang nhập
+      sort: 'createdAt,desc',// Quy tắc sắp xếp bài viết
+      get isAuth() { return localStorage.getItem('token') !== null; },
+      get uname()  { return localStorage.getItem('username') || 'Guest'; }
+  };
+  ```
+  - Quản lý trạng thái chia sẻ giữa tất cả các file JS. Bất kỳ thao tác chọn danh mục ở Sidebar hay gõ từ khóa ở Navbar đều cập nhật vào biến `S` này.
+- **Hàm `excerpt(s, n)`**:
+  - Bài viết được lưu trong MySQL dưới dạng chuỗi JSON khối của Editor.js (ví dụ: `{"blocks":[{"type":"paragraph","data":{"text":"Xin chào..."}}]}`).
+  - Hàm này dùng `JSON.parse(s)` bóc tách các block paragraph, loại bỏ thẻ HTML bằng Regex `replace(/<[^>]*>/g, '')` và cắt lấy $n$ ký tự đầu tiên để làm mô tả ngắn hiển thị ở trang chủ.
+- **Hàm `callApi(url, method, data)`**:
+  - Là hàm bọc (wrapper) phương thức `$.ajax()` của jQuery.
+  - Tự động kiểm tra nếu có `token` trong `localStorage`, nó sẽ tự động chèn Header bảo mật:
+    `headers: { 'Authorization': 'Bearer ' + token }`.
+  - Nhờ vậy, tất cả các file JS khác khi gọi API không cần phải viết lại logic đính kèm Token JWT.
+- **Hàm `toast(msg)`**: Tạo popup thông báo nhỏ màu tối ở góc màn hình báo thành công hoặc lỗi cho người dùng.
+
+---
+
+#### 7.3.2. `auth.js` — Xác Thực Đăng Nhập, Đăng Ký, Đăng Xuất & LocalStorage
+
+- **Hàm `renderAuth()`**:
+  - Kiểm tra `localStorage.getItem('token')`.
+  - Nếu có token: Xóa nút "Sign In/Sign Up", chèn Avatar đại diện (dùng hàm `initials()` lấy chữ cái đầu của tên), gắn sự kiện click mở Dropdown menu người dùng.
+  - Gắn sự kiện cho nút **"Log Out"**: Gọi hàm `handleLogout()`.
+- **Hàm `handleLogout()`**:
+  - Xóa token khỏi bộ nhớ trình duyệt: `localStorage.removeItem('token')` và `localStorage.removeItem('username')`.
+  - Chuyển hướng người dùng về trang chủ hoặc reload lại giao diện về trạng thái Khách vãng lai (`Guest`).
+
+---
+
+#### 7.3.3. `posts.js` — Gọi API Blogs & Render Card Bài Viết Bằng DOM Manipulation
+
+- **Hàm `renderPosts()`**:
+  - Xây dựng URL truy vấn dựa trên State `S`:
+    `let url = '/blogs?sort=' + S.sort;`
+    Nếu có lọc chuyên mục: thêm `&category=` + `S.cat`.
+    Nếu có từ khóa tìm kiếm: thêm `&keyword=` + `S.keyword`.
+  - Gửi request `callApi(url, 'GET')`.
+  - Làm trống danh sách `#post-list` (`$('#post-list').empty()`).
+  - Lặp qua mảng bài viết nhận được (`res.result`), gọi hàm `buildCard(p)` để tạo thành phần HTML tương ứng rồi chèn vào trang (`$container.append(card)`).
+- **Hàm `buildCard(p)`**:
+  - Tạo cấu trúc HTML thẻ bài viết gồm: Ảnh đại diện tác giả, Tên tác giả, Ngày đăng, Tiêu đề bài viết, Đoạn trích mô tả (`excerpt`), Thời gian đọc ước tính (tính theo công thức số từ $/ 200$), Danh sách thẻ Tag, và Ảnh bìa Banner.
+  - Tạo các nút tương tác:
+    - **Nút Thả tim (Like)**: Hiển thị icon trái tim và số lượng like.
+    - **Nút Lưu (Bookmark)**: Hiển thị icon bookmark.
+  - Bắt sự kiện click vào nút Like $\rightarrow$ Gọi hàm `toggleLike(p.id)`.
+  - Bắt sự kiện click vào nút Bookmark $\rightarrow$ Gọi hàm `toggleBookmark(p.id)`.
+- **Hàm `toggleLike(blogId)`**:
+  - Gửi request `POST /interactions/likes/{blogId}`.
+  - Không hề tải lại trang: Trực tiếp đổi màu icon trái tim (đỏ/xám) và cộng/trừ số lượng like trên màn hình ngay lập tức (Optimistic UI Update).
+
+---
+
+#### 7.3.4. `filters.js` — Bộ Lọc Đa Tầng, Lọc Kép & Đồng Bộ Query URL
+
+- **Hàm `fetchAndRenderFilters()`**:
+  - Gọi đồng thời `GET /categories` và `GET /tags`.
+  - Tính tổng số bài viết của toàn hệ thống bằng cách cộng dồn `postCount` của từng danh mục.
+  - Gọi hàm `renderCatTabs()` để vẽ thanh menu chọn danh mục nằm ngang dưới dạng các Tab.
+- **Hàm `updateUrlWithFilters()`**:
+  - Sử dụng đối tượng `URLSearchParams` để tạo chuỗi truy vấn chuẩn SEO: `?cat=UUID&q=tu-khoa`.
+  - Dùng `window.history.pushState({}, '', newUrl)` để thay đổi URL hiển thị trên thanh địa chỉ trình duyệt mà **hoàn toàn không làm reload trang web**.
+  - Nhờ tính năng này, người dùng có thể copy đường link chia sẻ cho bạn bè, khi bạn bè mở link ra thì trang web vẫn tự lọc đúng bài viết theo danh mục đó!
+
+---
+
+#### 7.3.5. `nav.js` — SPA Navigation, Mổ Payload Token JWT Check Role Admin & Chuông Thông Báo
+
+- **Hàm `navigate(page)` (Linh hồn SPA của trang chủ)**:
+  ```javascript
+  function navigate(page) {
+      S.page = page;
+      $('#p-home, #p-categories, #p-tags').hide(); // Ẩn tất cả các view
+      $('#p-' + page).show();                      // Chỉ hiện view được chọn
+      $('[data-page]').removeClass('is-active');
+      $('[data-page="' + page + '"]').addClass('is-active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  ```
+  - Thay vì chuyển trang vật lý, hàm này hoán đổi hiển thị giữa Trang chủ, Danh mục và Thẻ tag trong chớp mắt.
+- **Hàm `updateNavAuth()` — Mổ Token JWT để Phân quyền Admin**:
+  ```javascript
+  const token = localStorage.getItem('token');
+  if (token) {
+      // Tách lấy phần Payload ở vị trí index 1: header.payload.signature
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const payload = JSON.parse(decodeURIComponent(window.atob(base64)...));
+      
+      // Kiểm tra chuỗi scope (Spring Security cấp quyền)
+      const roles = payload.scope || payload.roles || "";
+      if (roles.includes("ADMIN")) {
+          $('#btn-desk-admin').show(); // Hiện nút vào Admin Dashboard
+      } else {
+          $('#btn-desk-admin').hide(); // Người dùng thường thì giấu đi
+      }
+  }
+  ```
+  - Giải thích cho Thầy: Phía Frontend chủ động giải mã Payload của JWT để quyết định hiển thị các nút chức năng quản trị, giúp trải nghiệm giao diện thông minh và nhanh chóng. Tuy nhiên, tính bảo mật thực sự vẫn được chốt chặn nghiêm ngặt ở tầng Spring Security của Backend.
+- **Xử lý Chuông thông báo (Notifications)**:
+  - Gọi `GET /notifications` định kỳ để đếm số thông báo mới.
+  - Hiển thị chấm đỏ thông báo và danh sách các thông báo tương tác (Like, Comment, Follow).
+
+---
+
+#### 7.3.6. `pages.js` — Render Danh Mục & Thẻ Tag Với Mảng Màu Xoay Vòng
+
+- **Mảng màu `CAT_COLORS_ARRAY`**:
+  - Chứa bảng màu hiện đại gồm các cặp màu sắc thẩm mỹ: Purple, Teal, Gold, Amber, Rose.
+- **Hàm `buildCatPage()`**:
+  - Lặp qua danh sách Category từ Backend: `var col = CAT_COLORS_ARRAY[index % CAT_COLORS_ARRAY.length];`
+  - Gán màu xoay vòng cho từng thẻ Card danh mục (background, viền border, màu chữ) để giao diện luôn đa dạng, sinh động mà không bị đơn điệu.
+  - Bấm vào một danh mục $\rightarrow$ Lưu `S.cat = c.id`, tự động gọi `navigate('home')` và kích hoạt `renderPosts()` để lọc ra các bài viết thuộc chủ đề đó.
+
+---
+
+#### 7.3.7. `sidebar.js` — Widget Trending & Category Pill
+
+- **Hàm `renderSbCategories()`**:
+  - Vẽ danh sách các chủ đề ở cột bên phải.
+  - Bấm vào Category Pill ở Sidebar sẽ toggle lọc bài viết (bấm lần 1: lọc, bấm lần 2: hủy lọc).
+- **Hàm `renderSbTrending()`**:
+  - Gọi API lấy danh sách các bài viết có lượt xem cao nhất.
+  - Hiển thị số thứ tự nổi bật `01`, `02`, `03`... kèm tiêu đề bài viết và tên tác giả.
+
+---
+
+#### 7.3.8. `init.js` — Điểm Khởi Đầu Khởi Chạy Trang Web
+
+- Đóng vai trò là file "nhạc trưởng" (Entry Point) của Frontend:
+  - Được bọc trong sự kiện `$(document).ready(function() { ... })`.
+  - Bước 1: Quét URL hiện tại xem người dùng có truyền tham số `?cat=...` hoặc `?q=...` từ link chia sẻ hay không. Nếu có, nạp ngay vào `S.cat` và `S.keyword`.
+  - Bước 2: Kích hoạt `fetchAndRenderFilters()` để nạp bộ lọc.
+  - Bước 3: Kích hoạt `renderPosts()` để tải bài viết.
+  - Bước 4: Kích hoạt `renderSbCategories()` và `renderSbTrending()` để tải dữ liệu thanh bên phải.
+
+---
+
+### 7.4. Các Thư Viện Frontend Bổ Trợ & Kỹ Thuật CSS Nâng Cao
+
+1. **Bộ soạn thảo khối Editor.js (Block-style Editor)**:
+   - Khác với các bộ soạn thảo lỗi thời sinh mã HTML thô dễ dính lỗi bảo mật XSS (như CKEditor/TinyMCE), Editor.js quản lý nội dung dưới dạng **khối dữ liệu JSON sạch** (Clean Data JSON).
+   - Mỗi thành phần (Tiêu đề H1, Đoạn văn, Khối code, Ảnh) là một JSON object độc lập, giúp hệ thống dễ dàng phân tích, trích xuất text tóm tắt và hiển thị an toàn trên cả Web lẫn Mobile App.
+2. **Tích hợp Lưu trữ Đám mây Cloudinary API**:
+   - Khi người dùng chọn ảnh bìa bài viết hoặc đổi Avatar cá nhân, mã JavaScript gọi trực tiếp API Upload của **Cloudinary**.
+   - Cloudinary trả về đường link ảnh an toàn định dạng HTTPS đã tối ưu hóa nén ảnh. Backend chỉ việc lưu đường dẫn chuỗi String này vào CSDL, không tốn dung lượng ổ cứng của server Spring Boot.
+3. **Thiết kế Hệ màu CSS Custom Properties (`main.css`)**:
+   - Định nghĩa bảng biến màu chuẩn: `--bg: #0b0f17`, `--card: #151a22`, `--purple: #7c6ff7`, `--teal: #3ecfb8`, `--gold: #e9a84c`.
+   - Kết hợp Typography từ Google Fonts: **Playfair Display** (dành cho tiêu đề bài viết sang trọng), **Inter** (nội dung dễ đọc) và **JetBrains Mono** (cho các đoạn mã code).
+
+---
+
+### 7.5. Bộ 5 Câu Hỏi Vấn Đáp Chuyên Sâu Về Frontend & Kịch Bản Ghi Điểm 10
+
+#### Q1: "Tại sao nhóm em có dùng Thymeleaf nhưng lại không dùng các cú pháp Server-Side Rendering như `th:text`, `th:each` mà lại dùng JavaScript gọi REST API?"
+
+- **🎯 Trả lời chuẩn**:
+  *"Dạ thưa Thầy:
+  1. Thymeleaf trong dự án của nhóm em đóng vai trò là **Template Resolver** để trả về các khung vỏ HTML tĩnh và hỗ trợ phân trang routing qua `ViewController`.
+  2. Nhóm em chủ động lựa chọn kiến trúc **Client-Side Rendering (CSR)** qua REST API thay vì SSR truyền thống để **tách biệt hoàn toàn tầng Giao diện (Frontend) và tầng Dữ liệu (Backend)**.
+  3. Lợi ích lớn nhất: Trải nghiệm người dùng cực kỳ mượt mà. Khi người dùng bấm Thả tim, Đổi bộ lọc, hoặc Viết bình luận, dữ liệu được cập nhật tức thì qua AJAX mà **không phải tải lại toàn bộ trang web (No Page Reload)**, giúp tiết kiệm băng thông máy chủ và sẵn sàng mở rộng sang ứng dụng di động Mobile App sau này ạ!"*
+
+#### Q2: "Dự án có nhiều file HTML như `home-page.html`, `post.html`, `login.html` thì tại sao lại có người gọi là SPA?"
+
+- **🎯 Trả lời chuẩn**:
+  *"Dạ thưa Thầy, nếu xét thuần túy về cấu trúc tệp tin thì đây là **MPA (Multi-Page Application)**. Tuy nhiên, hệ thống của nhóm em mang **'Trải nghiệm phong cách SPA' (SPA-like Experience)** bởi 2 lý do kỹ thuật:
+  - Thứ nhất, trong chính trang `home-page.html`, nhóm em tích hợp sẵn 3 View ảo (`#p-home`, `#p-categories`, `#p-tags`) và dùng hàm `navigate()` trong `nav.js` để ẩn hiện các Section kết hợp `window.history.pushState()` mà không hề tải lại trang.
+  - Thứ hai, toàn bộ tương tác lấy dữ liệu, phân trang và đăng nhập đều dùng REST API và lưu trữ Token trong `localStorage`, người dùng không hề bị chớp màn hình khi thao tác ạ!"*
+
+#### Q3: "Lưu Token JWT ở `localStorage` có nguy cơ bảo mật gì so với `HttpOnly Cookie`?"
+
+- **🎯 Trả lời chuẩn**:
+  *"Dạ thưa Thầy:
+  - **Nguy cơ**: `localStorage` có thể bị truy cập bởi mã JavaScript chạy trên trình duyệt, do đó nếu trang web bị lỗ hổng **XSS (Cross-Site Scripting)**, hacker có thể chèn mã độc để đánh cắp Token.
+  - **Biện pháp phòng ngừa của nhóm**: Nhóm em sử dụng bộ soạn thảo **Editor.js** lưu dữ liệu dạng JSON thuần và mã hóa thực thể HTML khi hiển thị, loại bỏ hoàn toàn nguy cơ chèn script độc hại XSS.
+  - **So sánh**: Dùng `localStorage` giúp việc lập trình Client-Side REST API và gửi Header `Authorization: Bearer` cực kỳ linh hoạt, không bị dính lỗi xung đột tên miền chéo CORS và miễn nhiễm hoàn toàn với tấn công **CSRF (Cross-Site Request Forgery)** ạ!"*
+
+#### Q4: "Làm sao trang web biết được ai đang đăng nhập để hiển thị Tên và Avatar lên thanh Menu?"
+
+- **🎯 Trả lời chuẩn**:
+  *"Dạ thưa Thầy, quy trình diễn ra như sau:
+  1. Khi người dùng đăng nhập thành công ở `login.html`, Backend trả về Token JWT và thông tin tài khoản. JavaScript lưu vào `localStorage.setItem('username', data.username)`.
+  2. Khi trang web tải xong, hàm `updateNavAuth()` trong `nav.js` đọc `localStorage`. Nếu thấy tồn tại Token, nó sẽ ẩn vùng khách vãng lai (`.nav-guest`), hiện vùng thành viên (`.nav-user`), lấy username chèn vào thẻ `#nav-username` và dùng hàm `initials()` lấy chữ cái đầu của tên hiển thị lên khung Avatar tròn ạ."*
+
+#### Q5: "Nếu người dùng tự ý vào Console trình duyệt sửa chữ trong Token JWT để giả mạo thành Admin thì có hack được hệ thống không?"
+
+- **🎯 Trả lời chuẩn**:
+  *"Dạ thưa Thầy, **tuyệt đối không thể hack được** ạ!
+  - Ở Frontend: Người dùng có thể sửa chuỗi Base64 ở client để nút 'Admin Dashboard' hiện ra trên giao diện.
+  - Nhưng khi người dùng bấm vào và JavaScript gửi request lên API Backend `/api/admin/stats`, Spring Security ở máy chủ sẽ dùng chữ ký bí mật `SIGNER_KEY` để giải mã và kiểm tra Chữ ký điện tử (Signature) của Token.
+  - Do người dùng không biết mã bí mật của Server, chữ ký sẽ không khớp (Invalid Signature). Spring Security sẽ lập tức chặn đứng request và trả về lỗi **HTTP 401 Unauthorized / 403 Forbidden**. Vì vậy hệ thống an toàn 100% ạ!"*
 
 ---
 

@@ -1,8 +1,3 @@
-/**
- * posts.js
- */
-
-// ─────────────── HÀM XỬ LÝ TEXT THÔNG MINH ───────────────
 function extractText(content, len) {
     if (!content) return '';
     let plainText = "";
@@ -28,14 +23,13 @@ function extractText(content, len) {
     return text.length > len ? text.substring(0, len) + '...' : text;
 }
 
-// ─────────────── 1. HÀM XÂY DỰNG GIAO DIỆN THẺ BÀI VIẾT ───────────────
 function buildCard(p) {
     if (!p) return $('<div>');
 
     var catName = p.category ? (p.category.name || 'Chưa phân loại') : 'Chưa phân loại';
     var authorName = p.author ? (p.author.username || 'Anonymous') : 'Anonymous';
     var authorAvatar = (p.author && p.author.avatarUrl) ? p.author.avatarUrl : `https://ui-avatars.com/api/?name=${encodeURIComponent(authorName)}&background=151a22&color=ac8aff`;
-    
+
     var dateStr = "Gần đây";
     try {
         if (typeof fmtDate === 'function') dateStr = fmtDate(p.createdAt);
@@ -44,19 +38,15 @@ function buildCard(p) {
         dateStr = "N/A";
     }
 
-    // Trích xuất mô tả
     var postExcerpt = p.description ? p.description : extractText(p.content, 180);
     if (!postExcerpt) postExcerpt = "Xem chi tiết bài viết để đọc nội dung...";
 
-    // Ảnh thumbnail
     var bannerUrl = p.banner ? p.banner : 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600';
 
-    // Tính thời gian đọc
     let plainTextContent = extractText(p.content, 99999);
     let readingTime = Math.ceil(((plainTextContent || '').split(/\s+/).length || 1) / 200);
     if (readingTime <= 0) readingTime = 1;
 
-    // 🔥 XỬ LÝ DANH SÁCH TAG AN TOÀN TUYỆT ĐỐI 🔥
     let tagsHtml = '';
     if (p.tags && Array.isArray(p.tags) && p.tags.length > 0) {
         tagsHtml = '<div class="d-flex align-items-center flex-wrap gap-2">';
@@ -75,7 +65,6 @@ function buildCard(p) {
         tagsHtml += '</div>';
     }
 
-    // Khởi tạo Card
     var targetId = p.slug || p.id || '';
     var $card = $('<article class="d-flex flex-column flex-sm-row gap-3 gap-sm-4 py-4 border-bottom" style="border-color: rgba(66,72,85,0.4) !important; border-bottom-width: 1px !important; cursor: pointer; transition: background 0.2s;">')
         .hover(
@@ -88,7 +77,7 @@ function buildCard(p) {
 
     var cardHtml = `
         <div class="flex-grow-1 order-2 order-sm-1 d-flex flex-column">
-            
+
             <div class="d-flex align-items-center gap-2 mb-3" style="font-size: 0.85rem; color: #a5abba;">
                 <img src="${authorAvatar}" alt="Avatar" style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover;">
                 <span class="text-white fw-bold">${authorName}</span>
@@ -108,9 +97,9 @@ function buildCard(p) {
                 <span style="background: rgba(224, 229, 245, 0.15); padding: 0.3rem 0.8rem; border-radius: 9999px; color: #ffffff; font-weight: 500;">
                     ${catName}
                 </span>
-                
+
                 ${tagsHtml}
-              
+
                 <div class="ms-auto d-flex align-items-center">
                     <span class="like-btn d-flex align-items-center gap-1" style="padding: 0.2rem 0.5rem; color:#a5abba;">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -131,7 +120,6 @@ function buildCard(p) {
     return $card;
 }
 
-// ─────────────── 2. HIỆU ỨNG LOADING (SKELETON) ───────────────
 function skeletons(n) {
     var h = '';
     for (var i = 0; i < n; i++) {
@@ -150,7 +138,6 @@ function skeletons(n) {
     return h;
 }
 
-// ─────────────── 3. HÀM CẬP NHẬT BANNER BỘ LỌC ───────────────
 function updateFilterBanner() {
     var $banner = $('#active-filter-banner');
     if (!$banner.length) return;
@@ -223,7 +210,6 @@ $(document).on('click', '.btn-clear-filter', function() {
     renderPosts();
 });
 
-// ─────────────── 4. HÀM CHÍNH ĐỂ RENDER DANH SÁCH BÀI VIẾT ───────────────
 function renderPosts() {
     var $list = $('#post-list'), $cnt = $('#pcount');
     if (!$list.length) return;
@@ -289,7 +275,6 @@ function renderPosts() {
         });
 }
 
-// ─────────────── 5. XỬ LÝ SỰ KIỆN SẮP XẾP (SORT) ───────────────
 $(document).ready(function() {
     if (!S.sort) {
         S.sort = 'createdAt,desc';

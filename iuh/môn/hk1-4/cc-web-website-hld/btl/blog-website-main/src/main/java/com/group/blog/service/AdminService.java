@@ -20,19 +20,16 @@ public class AdminService {
 
     UserRepository userRepository;
     BlogRepository blogRepository;
-    BlogMapper blogMapper; // Dùng mapper bạn đang có để chuyển Entity sang DTO
+    BlogMapper blogMapper;
 
     public AdminStatsResponse getDashboardStats() {
-        // Đếm tổng user
         long totalUsers = userRepository.count();
 
-        // Đếm tổng bài viết đã xuất bản (không tính bản nháp)
         long totalPosts = blogRepository.countByDraftFalse();
 
-        // Lấy 5 bài viết mới nhất
         List<BlogResponse> recentPosts = blogRepository.findTop5ByDraftFalseOrderByCreatedAtDesc()
                 .stream()
-                .map(blogMapper::toBlogResponse) // Sử dụng Mapper có sẵn của bạn
+                .map(blogMapper::toBlogResponse)
                 .collect(Collectors.toList());
 
         return AdminStatsResponse.builder()

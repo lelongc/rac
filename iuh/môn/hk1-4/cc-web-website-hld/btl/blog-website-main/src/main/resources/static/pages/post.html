@@ -152,9 +152,9 @@
 <script src="../assets/js/nav.js"></script>
 
 <script>
-  let blogId = null;
+let blogId = null;
   let globalBlogAuthor = '';
-  let commentIdToDelete = null; // Biến tạm lưu ID bình luận cần xóa
+  let commentIdToDelete = null;
 
   $(document).ready(function() {
     $('#navbar-container').load('../fragments/navbar.html', function() {
@@ -178,7 +178,7 @@
       if (urlParams.get('openComments') === 'true') {
         setTimeout(() => {
           openCommentSidebar();
-        }, 500); // Trì hoãn xíu để DOM render xong bài viết
+        }, 500);
       }
     }).fail(function() {
       $('#article-wrapper').html(`
@@ -191,7 +191,6 @@
       `);
     });
 
-    // Bắt sự kiện bấm nút "Xóa" trong Modal
     $('#btn-confirm-delete').on('click', function() {
       if (!commentIdToDelete) return;
 
@@ -307,9 +306,6 @@
     return d.getDate() + ' ' + m[d.getMonth()] + ' ' + d.getFullYear();
   }
 
-  // ==========================================
-  // THAO TÁC LIKE / BOOKMARK
-  // ==========================================
   function toggleLike() {
     if (!S.isAuth) { toast("Vui lòng đăng nhập để thả tim bài viết!"); return; }
 
@@ -356,9 +352,6 @@
     });
   }
 
-  // ==========================================
-  // LOGIC SIDEBAR BÌNH LUẬN & MODAL XÓA
-  // ==========================================
   function openCommentSidebar() {
     $('#comment-overlay').removeClass('hidden').addClass('opacity-100');
     $('#comment-sidebar').removeClass('translate-x-full').addClass('translate-x-0');
@@ -481,7 +474,6 @@
     });
   }
 
-  // --- LOGIC ĐÓNG MỞ MODAL XÁC NHẬN XÓA BÌNH LUẬN ---
   function openConfirmModal(commentId) {
     commentIdToDelete = commentId;
     const $modal = $('#confirm-delete-modal');

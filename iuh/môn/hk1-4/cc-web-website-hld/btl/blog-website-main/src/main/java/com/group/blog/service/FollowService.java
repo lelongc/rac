@@ -27,14 +27,12 @@ public class FollowService {
     UserFollowRepository userFollowRepository;
     UserMapper userMapper;
 
-    // 1. Theo dõi / Hủy theo dõi
     @Transactional
     public void toggleFollow(String targetUsername) {
         String currentUsername = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        // Không cho phép tự follow chính mình
         if (currentUsername.equals(targetUsername)) {
-            throw new RuntimeException("Bạn không thể tự theo dõi chính mình!"); // Có thể thay bằng AppException
+            throw new RuntimeException("Bạn không thể tự theo dõi chính mình!");
         }
 
         User follower = userRepository.findByUsername(currentUsername)
@@ -45,51 +43,46 @@ public class FollowService {
         Optional<UserFollow> existingFollow = userFollowRepository.findByFollowerAndFollowing(follower, following);
 
         if (existingFollow.isPresent()) {
-            userFollowRepository.delete(existingFollow.get()); // Đã follow -> Unfollow
+            userFollowRepository.delete(existingFollow.get());
         } else {
             UserFollow newFollow = UserFollow.builder().follower(follower).following(following).build();
             userFollowRepository.save(newFollow);
             notificationService.createNotification(
-                    following, // Người nhận
-                    "@" + currentUsername + " started following you.", // Lời nhắn
-                    "user-profile.html?user=" + currentUsername, // Click vào sẽ mở profile của người follow
-                    "FOLLOW" // Type
+                    following,
+                    "@" + currentUsername + " started following you.",
+                    "user-profile.html?user=" + currentUsername,
+                    "FOLLOW"
             );
         }
 
     }
 
-    // 2. Lấy danh sách những người theo dõi User này (Followers)
     public List<UserResponse> getFollowers(String username) {
         User targetUser = userRepository.findByUsername(username)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXITED));
 
         return userFollowRepository.findByFollowingOrderByCreatedAtDesc(targetUser)
                 .stream()
-                .map(uf -> enrichUserResponse(uf.getFollower())) // Map entity người đi follow thành DTO
+                .map(uf -> enrichUserResponse(uf.getFollower()))
                 .toList();
     }
 
-    // 3. Lấy danh sách những người User này đang theo dõi (Following)
     public List<UserResponse> getFollowing(String username) {
         User targetUser = userRepository.findByUsername(username)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXITED));
 
         return userFollowRepository.findByFollowerOrderByCreatedAtDesc(targetUser)
                 .stream()
-                .map(uf -> enrichUserResponse(uf.getFollowing())) // Map entity người được follow thành DTO
+                .map(uf -> enrichUserResponse(uf.getFollowing()))
                 .toList();
     }
 
-    // --- HÀM HELPER: Thêm thống kê và check Follow cho DTO ---
     public UserResponse enrichUserResponse(User user) {
         UserResponse response = userMapper.toUserResponse(user);
 
-        // Gắn số lượng
         response.setTotalFollowers(userFollowRepository.countByFollowing(user));
         response.setTotalFollowing(userFollowRepository.countByFollower(user));
 
-        // Kiểm tra User đăng nhập hiện tại có follow người này không?
         var auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.isAuthenticated() && !auth.getName().equals("anonymousUser")) {
             boolean isFollowed = userFollowRepository.existsByFollowerUsernameAndFollowing(auth.getName(), user);

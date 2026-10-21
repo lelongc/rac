@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {
-    // 1. Map từ Request sang Entity (Bỏ qua các quan hệ, Service sẽ tự xử lý)
     @Mapping(target = "blogs", ignore = true)
     Category toCategory(CategoryRequest request);
 

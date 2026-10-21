@@ -42,7 +42,7 @@
 </aside>
 
 <script>
-    $(document).ready(function() {
+$(document).ready(function() {
         var path = window.location.pathname;
         var page = path.split("/").pop().toLowerCase();
 
@@ -69,8 +69,8 @@
             } else {
                 localStorage.removeItem('token');
                 localStorage.removeItem('username');
-                localStorage.removeItem('avatarUrl'); // Xóa cache avatar
-                localStorage.removeItem('notif_cleared_time'); // Xóa cache chuông
+                localStorage.removeItem('avatarUrl');
+                localStorage.removeItem('notif_cleared_time');
                 window.location.href = 'home-page.html';
             }
         });

@@ -16,14 +16,13 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/blogs") // Định tuyến gốc cho tất cả API trong này
-@RequiredArgsConstructor  // Dùng Required thay vì AllArgs cho chuẩn
+@RequestMapping("/blogs")
+@RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BlogController {
 
     BlogService blogService;
 
-    // 1. Tạo bài viết mới
     @PostMapping
     public ApiResponse<BlogResponse> createBlog(@RequestBody @Valid BlogCreationRequest request) {
         return ApiResponse.<BlogResponse>builder()
@@ -31,7 +30,6 @@ public class BlogController {
                 .build();
     }
 
-    // 2. Lấy danh sách toàn bộ bài viết
     @GetMapping
     public ApiResponse<List<BlogResponse>> getAllBlogs() {
         return ApiResponse.<List<BlogResponse>>builder()
@@ -39,7 +37,6 @@ public class BlogController {
                 .build();
     }
 
-    // 3. Lấy chi tiết 1 bài viết theo ID
     @GetMapping("/{id}")
     public ApiResponse<BlogResponse> getBlogById(@PathVariable UUID id) {
         return ApiResponse.<BlogResponse>builder()
@@ -47,7 +44,6 @@ public class BlogController {
                 .build();
     }
 
-    // 4. Cập nhật bài viết
     @PutMapping("/{id}")
     public ApiResponse<BlogResponse> updateBlog(
             @PathVariable UUID id,
@@ -57,7 +53,6 @@ public class BlogController {
                 .build();
     }
 
-    // 5. Xóa bài viết
     @DeleteMapping("/{id}")
     public ApiResponse<String> deleteBlog(@PathVariable UUID id) {
         blogService.deleteBlog(id);
@@ -94,7 +89,6 @@ public class BlogController {
                 .build();
     }
 
-
     @GetMapping("/filter")
     public ApiResponse<List<BlogResponse>> filterBlogs(
             @RequestParam(required = false) String keyword,
@@ -104,7 +98,6 @@ public class BlogController {
                 .build();
     }
 
-    // 6. Lấy danh sách bài viết của TÔI (người đang đăng nhập)
     @GetMapping("/my-blogs")
     public ApiResponse<List<BlogResponse>> getMyBlogs() {
         return ApiResponse.<List<BlogResponse>>builder()
@@ -112,7 +105,6 @@ public class BlogController {
                 .build();
     }
 
-    // 7. Lấy bài viết công khai của một tác giả
     @GetMapping("/user/{username}")
     public ApiResponse<List<BlogResponse>> getBlogsByUsername(@PathVariable String username) {
         return ApiResponse.<List<BlogResponse>>builder()

@@ -1,6 +1,5 @@
 package com.group.blog.repository;
 
-
 import com.group.blog.entity.BlogLike;
 import com.group.blog.entity.BlogView;
 import org.springframework.data.jpa.repository.JpaRepository;

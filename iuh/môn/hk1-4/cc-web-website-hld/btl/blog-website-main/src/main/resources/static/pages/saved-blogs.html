@@ -66,7 +66,7 @@
 <script src="../assets/js/nav.js"></script>
 
 <script>
-  let blogIdToRemove = null; // Biến tạm lưu ID bài viết cần xóa
+let blogIdToRemove = null;
 
   $(document).ready(function() {
     window.HIDE_GLOBAL_SEARCH = true;
@@ -74,7 +74,6 @@
       if (typeof updateNavAuth === 'function') updateNavAuth();
     });
 
-    // LOAD SIDEBAR
     $('#dashboard-sidebar-container').load('../fragments/dashboard-sidebar.html');
 
     if (!S.isAuth) {
@@ -83,7 +82,6 @@
       loadSavedBlogs();
     }
 
-    // Gắn sự kiện cho nút Xác nhận xóa trong Modal
     $('#btn-confirm-delete').on('click', function() {
       if (!blogIdToRemove) return;
 
@@ -92,7 +90,7 @@
       btn.html('<span class="material-symbols-outlined text-[1rem]" style="animation: spin 1s linear infinite;">sync</span> Đang xóa...').prop('disabled', true);
 
       callApi('/blogs/' + blogIdToRemove + '/bookmark', 'POST').done(function() {
-        toast("Đã bỏ lưu bài viết"); // Toast thông báo thành công xanh/đẹp ở góc dưới
+        toast("Đã bỏ lưu bài viết");
         $(`#bookmark-${blogIdToRemove}`).fadeOut(300, function() { $(this).remove(); });
 
         if ($('.bg-\\[\\#151a22\\]').length <= 1) { setTimeout(loadSavedBlogs, 300); }
@@ -100,7 +98,7 @@
       }).fail(function() {
         toast("Lỗi! Không thể bỏ lưu.");
       }).always(function() {
-        btn.html(originalText).prop('disabled', false); // Trả lại trạng thái nút
+        btn.html(originalText).prop('disabled', false);
       });
     });
   });
@@ -152,13 +150,11 @@
     });
   }
 
-  // --- LOGIC ĐÓNG MỞ MODAL XÁC NHẬN ---
   function openConfirmModal(blogId) {
-    blogIdToRemove = blogId; // Lưu lại ID
+    blogIdToRemove = blogId;
     const $modal = $('#confirm-modal');
     $modal.removeClass('hidden').addClass('flex');
 
-    // Tạo độ trễ xíu để CSS Transition chạy mượt
     setTimeout(() => {
       $modal.removeClass('opacity-0').addClass('opacity-100');
       $modal.find('div').first().removeClass('scale-95').addClass('scale-100');
@@ -172,7 +168,7 @@
 
     setTimeout(() => {
       $modal.removeClass('flex').addClass('hidden');
-      blogIdToRemove = null; // Xóa ID tạm
+      blogIdToRemove = null;
     }, 300);
   }
 </script>
