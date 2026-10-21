@@ -72,7 +72,6 @@ public class CategoryService {
                     return CategoryResponse.builder()
                             .id(category.getId())
                             .name(category.getName())
-                            // 🔥 TẠO SLUG "ON-THE-FLY" KÈM ID (Vì 3NF không lưu slug)
                             .slug(SlugUtils.generateSlug(category.getName()) + "-" + category.getId().toString())
                             .postCount(count)
                             .build();

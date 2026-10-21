@@ -32,18 +32,4 @@ public class SlugUtils {
 
         return slug;
     }
-
-    /*
-    // Hàm main để bạn test thử trực tiếp ngay trong class này
-    public static void main(String[] args) {
-        String title1 = "Học Spring Boot 3 & JPA: Xây dựng Blog từ A-Z!";
-        String title2 = "   Cách Xử Lý Lỗi NullPointerException (NPE) Trong Java   ";
-
-        System.out.println(generateSlug(title1));
-        // Kết quả: hoc-spring-boot-3-jpa-xay-dung-blog-tu-a-z
-
-        System.out.println(generateSlug(title2));
-        // Kết quả: cach-xu-ly-loi-nullpointerexception-npe-trong-java
-    }
-    */
 }

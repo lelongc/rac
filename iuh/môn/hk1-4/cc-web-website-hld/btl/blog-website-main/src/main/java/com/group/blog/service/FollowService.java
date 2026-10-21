@@ -48,8 +48,7 @@ public class FollowService {
             userFollowRepository.delete(existingFollow.get()); // Đã follow -> Unfollow
         } else {
             UserFollow newFollow = UserFollow.builder().follower(follower).following(following).build();
-            userFollowRepository.save(newFollow); // Chưa follow -> Follow
-            // 🔥 GỬI THÔNG BÁO:
+            userFollowRepository.save(newFollow);
             notificationService.createNotification(
                     following, // Người nhận
                     "@" + currentUsername + " started following you.", // Lời nhắn

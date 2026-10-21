@@ -40,7 +40,6 @@ public class BlogService {
 
     BookmarkRepository bookmarkRepository;
     // 1. Tạo bài viết mới
-    // 1. Tạo bài viết mới
     @Transactional
     public BlogResponse createBlog(BlogCreationRequest request) {
         var context = SecurityContextHolder.getContext();
@@ -48,7 +47,6 @@ public class BlogService {
         User author = userRepository.findByUsername(currentUsername)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXITED));
 
-        // 🔥 ĐÃ SỬA: Kiểm tra nếu categoryId != null thì mới tìm trong DB
         Category category = null;
         if (request.getCategoryId() != null) {
             category = categoryRepository.findById(request.getCategoryId())
@@ -98,7 +96,7 @@ public class BlogService {
         if(request.getTitle() != null) blog.setTitle(request.getTitle());
         if(request.getDescription() != null) blog.setDescription(request.getDescription());
 
-        // 🔥 CORE LOGIC: KIỂM TRA HÀNH ĐỘNG
+        // Kiểm tra hành động Lưu Nháp hay Xuất Bản
         boolean isRequestingSaveDraft = Boolean.TRUE.equals(request.getDraft());
 
         if (isRequestingSaveDraft) {
@@ -180,7 +178,6 @@ public class BlogService {
 
             BlogResponse response = blogMapper.toBlogResponse(blog);
 
-            // 🔥 TẠO SLUG THEO FORMAT: "title-slug" + "-" + "UUID"
             String generatedSlug = SlugUtils.generateSlug(blog.getTitle()) + "-" + blog.getId().toString();
             response.setSlug(generatedSlug);
 
@@ -252,8 +249,6 @@ public class BlogService {
                         .title(blog.getTitle())
                         // Vẫn giữ logic Slug ghép UUID chuẩn 3NF
                         .slug(SlugUtils.generateSlug(blog.getTitle()) + "-" + blog.getId())
-
-                        // 🔥 THÊM LOGIC LẤY TÊN TÁC GIẢ VÀ DANH MỤC Ở ĐÂY
                         .authorName(blog.getAuthor() != null ? blog.getAuthor().getUsername() : "Anonymous")
                         .categoryName(blog.getCategory() != null ? blog.getCategory().getName() : "Khác")
 
@@ -312,31 +307,17 @@ public class BlogService {
         response.setTotalLikes((int) blogLikeRepository.countByBlogId(blog.getId()));
         response.setTotalComments((int) commentRepository.countByBlogId(blog.getId()));
 
-        // 🔥 LOGIC KIỂM TRA TRẠNG THÁI LIKE CỦA USER HIỆN TẠI
+        // Kiểm tra trạng thái Like và Bookmark của User hiện tại
         var authentication = SecurityContextHolder.getContext().getAuthentication();
-        // Kiểm tra xem request này có phải từ User đã đăng nhập không (bỏ qua Khách vãng lai 'anonymousUser')
         if (authentication != null && authentication.isAuthenticated() && !authentication.getName().equals("anonymousUser")) {
             String currentUsername = authentication.getName();
-            // Gọi xuống DB check xem có record nào khớp blogId và username không
             boolean isLiked = blogLikeRepository.existsByBlogIdAndUserUsername(blog.getId(), currentUsername);
-            response.setLikedByCurrentUser(isLiked);
-        } else {
-            // Khách chưa đăng nhập thì mặc định là chưa like
-            response.setLikedByCurrentUser(false);
-        }
-
-        if (authentication != null && authentication.isAuthenticated() && !authentication.getName().equals("anonymousUser")) {
-            String currentUsername = authentication.getName();
-
-            boolean isLiked = blogLikeRepository.existsByBlogIdAndUserUsername(blog.getId(), currentUsername);
-            response.setLikedByCurrentUser(isLiked);
-
-            // 🔥 THÊM ĐOẠN CHECK BOOKMARK NÀY
             boolean isBookmarked = bookmarkRepository.existsByBlogIdAndUserUsername(blog.getId(), currentUsername);
+            response.setLikedByCurrentUser(isLiked);
             response.setBookmarkedByCurrentUser(isBookmarked);
         } else {
             response.setLikedByCurrentUser(false);
-            response.setBookmarkedByCurrentUser(false); // Khách thì chưa bookmark
+            response.setBookmarkedByCurrentUser(false);
         }
         return response;
     }

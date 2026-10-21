@@ -484,13 +484,36 @@ Khi một Client gửi một Request (ví dụ `POST /blogs` với header `Autho
 
 ---
 
-## Chuyên đề 4: Cơ Chế Dynamic Proxy Trong Spring Boot & JPA
+## Chuyên đề 4: Cơ Chế Dynamic Proxy & Ngôn Ngữ JPQL Trong Spring Boot & JPA
 
-- **Tại sao `BlogRepository` chỉ là interface mà vẫn chạy được SQL?**
-  - Nhờ vào **JDK Dynamic Proxy**: Khi ứng dụng khởi động, Spring Boot tự động sinh ra một Class ẩn trong bộ nhớ RAM hiện thực hóa interface đó (`SimpleJpaRepository`).
-  - Class này bắt chặn các lời gọi hàm, dịch tên phương thức (`findByTitle`) thành câu lệnh SQL tương ứng và chuyển xuống `EntityManager` của Hibernate thực thi vào MySQL.
-- **Dynamic Proxy trong `@Transactional`**:
-  - Spring AOP bọc hàm bằng một Proxy: Mở kết nối $\rightarrow$ Tắt autocommit $\rightarrow$ Chạy lệnh $\rightarrow$ Nếu thành công gọi `commit()`, nếu có lỗi RuntimeException gọi `rollback()`.
+### 4.1. Câu hỏi cốt lõi: "Repository là truy vấn SQL thường hay là JPA?"
+- **CÂU TRẢ LỜI CHÍNH XÁC 100%**: **ĐÂY LÀ 100% JPA (CỤ THỂ LÀ JPQL - JAVA PERSISTENCE QUERY LANGUAGE), TUYỆT ĐỐI KHÔNG PHẢI LÀ SQL THƯỜNG (NATIVE SQL)!**
+- **Tại sao dễ bị nhầm là SQL thường?**
+  - Vì trong các câu lệnh `@Query` của `BlogRepository.java` có các từ khóa giống SQL như `SELECT`, `FROM`, `WHERE`, `LEFT JOIN`, `ORDER BY`.
+- **Nhưng hãy nhìn vào bản chất khác biệt hoàn toàn:**
+
+| Tiêu chí so sánh | SQL Thường (Native SQL) | JPQL (Java Persistence Query Language của JPA) |
+| :--- | :--- | :--- |
+| **Đối tượng thao tác** | Thao tác trực tiếp trên **TÊN BẢNG** và **TÊN CỘT** vật lý trong cơ sở dữ liệu MySQL. | Thao tác trên **TÊN CLASS JAVA (Entity)** và **TÊN THUỘC TÍNH (Field)** trong mã nguồn Java! |
+| **Cú pháp trong dự án** | `SELECT * FROM blogs b WHERE b.is_draft = 0` (tên bảng `blogs` viết thường số nhiều, cột `is_draft`). Phải có cờ `nativeQuery = true` mới chạy được. | `SELECT b FROM Blog b WHERE b.draft = false` (`Blog` là tên class Java viết hoa chữ B, `draft` là thuộc tính `boolean draft;` trong class Java!). Không hề có cờ `nativeQuery = true`. |
+| **Thao tác JOIN quan hệ** | `LEFT JOIN blog_likes l ON l.blog_id = b.id` (JOIN dựa trên cột khóa ngoại `blog_id` và `id`). | `LEFT JOIN BlogLike l ON l.blog = b` (`BlogLike` là Entity Java, `l.blog` là thuộc tính đối tượng Java bên trong class đó). |
+| **Tính độc lập CSDL** | **Phụ thuộc chặt chẽ vào MySQL**: Dùng hàm riêng của MySQL, nếu mai sau chuyển sang Oracle, PostgreSQL hay SQL Server thì toàn bộ câu lệnh sẽ bị lỗi cú pháp! | **Độc lập 100% với hệ quản trị CSDL (Database Independent)**: Bạn viết JPQL một lần, Hibernate sẽ tự động dịch câu JPQL đó thành đúng phương ngữ (Dialect) SQL của MySQL, PostgreSQL hay Oracle mà không cần sửa 1 dòng code! |
+
+### 4.2. Hai hình thức truy vấn của Spring Data JPA trong Repository:
+1. **Derived Query Methods (Tự động sinh câu lệnh qua tên hàm - Không cần viết lệnh nào)**:
+   - Trong `UserRepository.java`: `Optional<User> findByUsername(String username);`
+   - Trong `CategoryRepository.java`: `boolean existsByName(String name);`
+   - Trong `BlogRepository.java`: `List<Blog> findTop5ByDraftFalseOrderByCreatedAtDesc();`
+   $\rightarrow$ Lập trình viên không hề viết bất kỳ chữ SQL hay JPQL nào! Spring Data JPA tự động phân tích tên hàm (`findBy...`, `existsBy...`, `countBy...`) để tự sinh ra câu lệnh truy vấn ngầm định!
+2. **Custom Query bằng JPQL (Khi cần JOIN phức tạp, gom nhóm GROUP BY, tính toán)**:
+   - Dùng annotation `@Query("SELECT b, COUNT(DISTINCT v.id)... FROM Blog b...")`. Hibernate sẽ phân tích cây cú pháp trừu tượng (AST) của JPQL rồi chuyển thành SQL tối ưu cho MySQL.
+
+### 4.3. Tại sao `BlogRepository` chỉ là interface mà vẫn chạy được SQL?
+- Nhờ vào **JDK Dynamic Proxy**: Khi ứng dụng khởi động, Spring Boot tự động sinh ra một Class ẩn trong bộ nhớ RAM hiện thực hóa interface đó (`SimpleJpaRepository`).
+- Class này bắt chặn các lời gọi hàm, dịch tên phương thức (`findByTitle`) thành câu lệnh SQL tương ứng và chuyển xuống `EntityManager` của Hibernate thực thi vào MySQL.
+
+### 4.4. Dynamic Proxy trong `@Transactional`:
+- Spring AOP bọc hàm bằng một Proxy: Mở kết nối $\rightarrow$ Tắt autocommit $\rightarrow$ Chạy lệnh $\rightarrow$ Nếu thành công gọi `commit()`, nếu có lỗi RuntimeException gọi `rollback()`.
 
 ---
 

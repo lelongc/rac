@@ -182,16 +182,13 @@ public class InteractionService {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         List<Bookmark> bookmarks = bookmarkRepository.findByUserUsernameOrderByCreatedAtDesc(username);
 
-        // 🔥 SỬA LẠI: Gọi hàm helper mapToBlogResponse ở dưới
         return bookmarks.stream()
                 .map(b -> mapToBlogResponse(b.getBlog()))
                 .toList();
     }
 
-    // 🔥 BỔ SUNG: Hàm Helper chuyển Blog thành BlogResponse kèm theo Slug
     private BlogResponse mapToBlogResponse(Blog blog) {
         BlogResponse response = blogMapper.toBlogResponse(blog);
-        // Tạo slug chuẩn để Frontend có thể click vào xem chi tiết bài viết
         String generatedSlug = SlugUtils.generateSlug(blog.getTitle()) + "-" + blog.getId().toString();
         response.setSlug(generatedSlug);
         return response;

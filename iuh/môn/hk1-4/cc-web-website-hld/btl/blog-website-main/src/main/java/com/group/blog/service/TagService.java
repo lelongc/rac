@@ -36,10 +36,10 @@ public class TagService {
         }).toList();
     }
 
-    @org.springframework.transaction.annotation.Transactional
-    public TagResponse create(com.group.blog.dto.request.CategoryRequest request) { // Dùng tạm CategoryRequest vì nó cũng chỉ có mỗi field 'name'
+    @Transactional
+    public TagResponse create(com.group.blog.dto.request.CategoryRequest request) {
         if(tagRepository.existsByName(request.getName())) {
-            throw new RuntimeException("Tag is existed!"); // Hoặc dùng AppException của bạn
+            throw new RuntimeException("Tag already exists");
         }
         Tag tag = new Tag();
         tag.setName(request.getName());
