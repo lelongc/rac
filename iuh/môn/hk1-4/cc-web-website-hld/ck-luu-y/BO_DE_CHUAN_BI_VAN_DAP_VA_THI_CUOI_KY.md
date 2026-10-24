@@ -37,19 +37,19 @@
   - [Chuyên đề 9: So Sánh Server-Side Rendering (SSR) vs Client-Side Rendering (CSR)](#chuyên-đề-9-so-sánh-server-side-rendering-ssr-vs-client-side-rendering-csr)
   - [Chuyên đề 10: 10 Công Cụ Cốt Lõi Trong Môn Học Của Thầy Phúc](#chuyên-đề-10-10-công-cụ-cốt-lõi-trong-môn-học-của-thầy-phúc)
 - [PHẦN V: PHÂN TÍCH TỪNG DÒNG CODE &amp; MỌI CHỨC NĂNG TRONG DỰ ÁN BTL](#phần-v-phân-tích-từng-dòng-code--mọi-chức-năng-trong-dự-án-btl)
-  - [Mục 0: Lớp Khởi Chạy Ứng Dụng (BlogWebsiteApplication.java)](#mục-0-lớp-khởi-chạy-ứng-dụng-blogwebsiteapplicationjava)
-  - [Mục 1: Tầng Cấu Hình (Configuration Package)](#mục-1-tầng-cấu-hình-configuration-package)
-  - [Mục 2: Tầng Thực Thể (Entity Package - 10 Entities)](#mục-2-tầng-thực-thể-entity-package---10-entities)
-  - [Mục 3: Tầng Truy Xuất Dữ Liệu (Repository Package &amp; Phân Tích JPQL)](#mục-3-tầng-truy-xuất-dữ-liệu-repository-package--phân-tích-jpql)
-  - [Mục 4: Tầng Nghiệp Vụ (Service Package - Toàn Bộ 10 Services)](#mục-4-tầng-nghiệp-vụ-service-package---toàn-bộ-10-services)
-  - [Mục 5: Tầng Điều Khiển (Controller Package - Toàn Bộ 8 Controllers)](#mục-5-tầng-điều-khiển-controller-package---toàn-bộ-8-controllers)
-  - [Mục 6: Tầng Xử Lý Ngoại Lệ, Chuyển Đổi DTO &amp; Tiện Ích (Exception, Mapper &amp; Util)](#mục-6-tầng-xử-lý-ngoại-lệ-chuyển-đổi-dto--tiện-ích-exception-mapper--util)
-  - [Mục 7: Tầng Giao Diện &amp; Frontend JavaScript Giao Tiếp API](#mục-7-tầng-giao-diện--frontend-javascript-giao-tiếp-api)
-    - [7.1. Kiến Trúc Frontend: Phân Biệt MPA vs SPA &amp; Bản Chất Dự Án](#71-kiến-trúc-frontend-phân-biệt-mpa-vs-spa--bản-chất-dự-án)
-    - [7.2. Bóc Tách Chi Tiết Toàn Bộ 21 File Giao Diện HTML (templates/)](#72-bóc-tách-chi-tiết-toàn-bộ-21-file-giao-diện-html-templates)
-    - [7.3. Bóc Tách Chi Tiết Toàn Bộ 8 File JavaScript Cốt Lõi (static/assets/js/)](#73-bóc-tách-chi-tiết-toàn-bộ-8-file-javascript-cốt-lõi-staticassetsjs)
-    - [7.4. Các Thư Viện Frontend Bổ Trợ &amp; Kỹ Thuật CSS Nâng Cao](#74-các-thư-viện-frontend-bổ-trợ--kỹ-thuật-css-nâng-cao)
-    - [7.5. Bộ 5 Câu Hỏi Vấn Đáp Chuyên Sâu Về Frontend &amp; Kịch Bản Ghi Điểm 10](#75-bộ-5-câu-hỏi-vấn-đáp-chuyên-sâu-về-frontend--kịch-bản-ghi-điểm-10)
+  - [Mục 0: Giải Phẫu Toàn Diện Từng Dòng File Quản Lý Dự Án (pom.xml)](#mục-0-giải-phẫu-toàn-diện-từng-dòng-file-quản-lý-dự-án-pomxml)
+  - [Mục 1: Lớp Khởi Chạy Ứng Dụng (BlogWebsiteApplication.java)](#mục-1-lớp-khởi-chạy-ứng-dụng-blogwebsiteapplicationjava)
+  - [Mục 2: Tầng Cấu Hình (Configuration Package)](#mục-2-tầng-cấu-hình-configuration-package)
+  - [📌 CHUYÊN ĐỀ ĐẶC BIỆT: TẦNG THỰC THỂ (ENTITY), TẦNG TRUY XUẤT (REPOSITORY) &amp; DTO](#-chuyên-đề-đặc-biệt-tầng-thực-thể-entity-tầng-truy-xuất-repository--dto)
+  - [Mục 3: Tầng Nghiệp Vụ (Service Package - Toàn Bộ 10 Services)](#mục-3-tầng-nghiệp-vụ-service-package---toàn-bộ-10-services)
+  - [Mục 4: Tầng Điều Khiển (Controller Package - Toàn Bộ 8 Controllers)](#mục-4-tầng-điều-khiển-controller-package---toàn-bộ-8-controllers)
+  - [Mục 5: Tầng Xử Lý Ngoại Lệ, Chuyển Đổi DTO &amp; Tiện Ích (Exception, Mapper &amp; Util)](#mục-5-tầng-xử-lý-ngoại-lệ-chuyển-đổi-dto--tiện-ích-exception-mapper--util)
+  - [Mục 6: Tầng Giao Diện &amp; Frontend JavaScript Giao Tiếp API](#mục-6-tầng-giao-diện--frontend-javascript-giao-tiếp-api)
+    - [6.1. Kiến Trúc Frontend: Phân Biệt MPA vs SPA &amp; Bản Chất Dự Án](#61-kiến-trúc-frontend-phân-biệt-mpa-vs-spa--bản-chất-dự-án)
+    - [6.2. Bóc Tách Chi Tiết Toàn Bộ 21 File Giao Diện HTML (templates/)](#62-bóc-tách-chi-tiết-toàn-bộ-21-file-giao-diện-html-templates)
+    - [6.3. Bóc Tách Chi Tiết Toàn Bộ 8 File JavaScript Cốt Lõi (static/assets/js/)](#63-bóc-tách-chi-tiết-toàn-bộ-8-file-javascript-cốt-lõi-staticassetsjs)
+    - [6.4. Các Thư Viện Frontend Bổ Trợ &amp; Kỹ Thuật CSS Nâng Cao](#64-các-thư-viện-frontend-bổ-trợ--kỹ-thuật-css-nâng-cao)
+    - [6.5. Bộ 5 Câu Hỏi Vấn Đáp Chuyên Sâu Về Frontend &amp; Kịch Bản Ghi Điểm 10](#65-bộ-5-câu-hỏi-vấn-đáp-chuyên-sâu-về-frontend--kịch-bản-ghi-điểm-10)
 - [PHẦN VI: BỘ 25 CÂU HỎI VẤN ĐÁP &#34;XOÁY TẬN TỪNG DÒNG CODE&#34; &amp; KỊCH BẢN ĐẠT ĐIỂM 10](#phần-vi-bộ-25-câu-hỏi-vấn-đáp-xoáy-tận-từng-dòng-code--kịch-bản-đạt-điểm-10)
 - [PHẦN VII: CẨM NĂNG CỨU MẠNG VẤN ĐÁP CẤP TỐC (SPEED-READ FOR DEFENSE TOMORROW)](#phần-vii-cẩm-năng-cứu-mạng-vấn-đáp-cấp-tốc-speed-read-for-defense-tomorrow)
 
@@ -607,7 +607,319 @@ Khi một Client gửi một Request (ví dụ `POST /blogs` với header `Autho
 
 *(Phần này đi qua từng file mã nguồn, phân tích mục đích, vị trí và công năng từng hàm để bạn trả lời mọi câu hỏi của Thầy)*
 
-## Mục 0: Lớp Khởi Chạy Ứng Dụng (`BlogWebsiteApplication.java`)
+## Mục 0: Giải Phẫu Toàn Diện Từng Dòng File Quản Lý Dự Án (`pom.xml`)
+
+- **Vị trí file**: `d:\folder\rac\iuh\môn\hk1-4\cc-web-website-hld\btl\blog-website-main\pom.xml`
+- **Mục đích**: `pom.xml` (Project Object Model) là tệp cấu hình cốt lõi của công cụ tự động hóa bản dựng **Apache Maven**. Nó quản lý toàn bộ vòng đời ứng dụng: phiên bản máy ảo Java, thư viện phụ thuộc (Dependencies), cấu hình trình biên dịch (Compiler Plugins) và quy trình đóng gói file thực thi (Executable Fat JAR).
+
+---
+
+### 0.1. Khối Cấu Trúc Khai Báo XML & Thông Tin Gốc (Lines 1 - 28)
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.5.11</version>
+		<relativePath/> 
+	</parent>
+	<groupId>com.group</groupId>
+	<artifactId>blog-website</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>blog-website</name>
+	<description>Group blog website project using Spring Boot</description>
+```
+
+- **Phân tích từng dòng & Lý thuyết**:
+  - Dòng 1: `<?xml version="1.0" encoding="UTF-8"?>`: Khai báo chuẩn cú pháp XML và bộ mã hóa ký tự UTF-8 (hỗ trợ hiển thị tiếng Việt có dấu).
+  - Dòng 2-3: `xmlns` & `xsi:schemaLocation`: Định nghĩa không gian tên (XML Namespace) và sơ đồ Schema POM 4.0.0, giúp IDE (Eclipse/IntelliJ/VS Code) tự động kiểm tra tính hợp lệ và tự động gợi ý thẻ XML.
+  - Dòng 4: `<modelVersion>4.0.0</modelVersion>`: Chỉ định phiên bản cấu trúc mô hình đối tượng dự án của Maven (bắt buộc luôn là 4.0.0).
+  - Dòng 5-10: Khối `<parent>` (Parent POM / BOM - Bill of Materials):
+    - Kế thừa từ `spring-boot-starter-parent` phiên bản `3.5.11`.
+    - **Vai trò tối quan trọng**: Parent POM quản lý tập trung phiên bản (Dependency Management) cho hơn 200 thư viện phổ biến trong hệ sinh thái Spring (Spring MVC, Hibernate, Tomcat, Jackson, Thymeleaf...). Nhờ có thẻ `<parent>` này mà hầu hết các thẻ `<dependency>` bên dưới của dự án **không cần phải khai báo thẻ `<version>`**, loại bỏ 100% nguy cơ xung đột phiên bản (Jar Hell / Dependency Hell).
+    - Đồng thời cấu hình sẵn: Bộ mã hóa UTF-8 mặc định, cấu hình biên dịch Java, cấu hình plugin đóng gói và quản lý tài nguyên (Resource filtering).
+    - `<relativePath/>`: Báo cho Maven không tìm file parent ở thư mục cha cục bộ trên máy tính, mà tải trực tiếp từ kho lưu trữ trung tâm Maven Central Repository (lưu đệm tại `~/.m2/repository`).
+  - Dòng 11-15: Tọa độ nhận diện dự án theo chuẩn **GAV (GroupId - ArtifactId - Version)**:
+    - `<groupId>com.group</groupId>`: Định danh tên miền ngược của tổ chức/nhóm phát triển.
+    - `<artifactId>blog-website</artifactId>`: Tên định danh duy nhất của gói sản phẩm phần mềm (project).
+    - `<version>0.0.1-SNAPSHOT</version>`: Phiên bản hiện tại của dự án. Hậu tố **`SNAPSHOT`** biểu thị đây là bản đang trong quá trình phát triển (chưa phải bản phát hành chính thức RELEASE), Maven sẽ tự động kiểm tra và tải các bản cập nhật mới nhất mỗi khi build.
+    - `<name>` & `<description>`: Tên hiển thị và mô tả tóm tắt mục tiêu của dự án.
+
+---
+
+### 0.2. Khối Cấu Hình Thuộc Tính Biến Môi Trường `<properties>` (Lines 29 - 36)
+
+```xml
+	<properties>
+		<java.version>21</java.version>
+		<maven.compiler.source>21</maven.compiler.source>
+		<maven.compiler.target>21</maven.compiler.target>
+		<mapstruct.version>1.5.5.Final</mapstruct.version>
+		<m2e.apt.activation>jdt_apt</m2e.apt.activation>
+		<maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
+	</properties>
+```
+
+- **Phân tích từng dòng & Lý thuyết**:
+  - Dòng 30: `<java.version>21</java.version>`: Khai báo phiên bản máy ảo Java mục tiêu của dự án là **Java 21 (Phiên bản hỗ trợ dài hạn LTS mới nhất)**, hỗ trợ các tính năng hiện đại như Record Patterns, Pattern Matching for switch, Virtual Threads.
+  - Dòng 31-32: `<maven.compiler.source>21</maven.compiler.source>` & `<maven.compiler.target>21</maven.compiler.target>`: Chỉ định cho trình biên dịch `javac` đọc mã nguồn Java 21 và sinh ra bytecode tương thích với Java Virtual Machine (JVM) 21.
+  - Dòng 33: `<mapstruct.version>1.5.5.Final</mapstruct.version>`: Khai báo biến phiên bản thư viện MapStruct dùng chung cho cả phần nạp dependency lẫn plugin biên dịch, tránh việc phải gõ lại số phiên bản ở nhiều nơi.
+  - Dòng 34: `<m2e.apt.activation>jdt_apt</m2e.apt.activation>`: Kích hoạt bộ xử lý Annotation Processor tự động (APT - Annotation Processing Tool) cho môi trường Eclipse IDE thông qua plugin M2E (Maven to Eclipse), giúp Eclipse tự động sinh mã Mapper lúc save code mà không cần chạy lệnh maven thủ công.
+  - Dòng 35: `<maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>`: Ghim phiên bản plugin đóng gói file JAR.
+
+---
+
+### 0.3. Khối Quản Lý Toàn Bộ 16 Thư Viện Phụ Thuộc `<dependencies>` (Lines 37 - 129)
+
+Mỗi thẻ `<dependency>` đại diện cho một module chức năng được tích hợp vào ứng dụng:
+
+```xml
+	<dependencies>
+		<!-- 1. Lưu trữ đám mây Cloudinary SDK -->
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-http44</artifactId>
+			<version>1.36.0</version>
+		</dependency>
+
+		<!-- 2. Máy chủ tài nguyên xác thực OAuth2 & JWT -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+		</dependency>
+
+		<!-- 3. Tương tác CSDL Hibernate ORM & Spring Data JPA -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<!-- 4. Khung bảo mật phân quyền Spring Security 6 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<!-- 5. Cỗ máy hiển thị giao diện HTML Thymeleaf -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
+		<!-- 6. Xây dựng ứng dụng Web MVC & Nhúng máy chủ Tomcat -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!-- 7. Xác thực dữ liệu đầu vào Jakarta Bean Validation -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
+		<!-- 8. Tích hợp Thymeleaf với Spring Security -->
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
+		</dependency>
+
+		<!-- 9. Mã hóa mật khẩu an toàn BCrypt -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-crypto</artifactId>
+		</dependency>
+
+		<!-- 10. Xử lý tạo và giải mã chữ ký số JSON Web Token -->
+		<dependency>
+			<groupId>com.nimbusds</groupId>
+			<artifactId>nimbus-jose-jwt</artifactId>
+			<version>9.30.1</version>
+		</dependency>
+
+		<!-- 11. Công cụ hỗ trợ phát triển Hot-Reload / Tự restart server -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- 12. Driver kết nối Cơ sở dữ liệu MySQL -->
+		<dependency>
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- 13. Tự động sinh mã thừa Lombok (Getter, Setter, Builder) -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- 14. Bộ chuyển đổi DTO sang Entity MapStruct -->
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>${mapstruct.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-processor</artifactId>
+			<version>${mapstruct.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- 15. Cầu nối đồng bộ thứ tự biên dịch giữa Lombok và MapStruct -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok-mapstruct-binding</artifactId>
+			<version>0.2.0</version>
+		</dependency>
+
+		<!-- 16. Bộ công cụ kiểm thử tự động JUnit 5 & Mockito -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+```
+
+- **Phân tích chuyên sâu từng thư viện & Câu hỏi vấn đáp liên quan**:
+  1. `cloudinary-http44`: Bộ SDK Java chính thức của Cloudinary sử dụng thư viện HTTP client `httpclient 4.4` của Apache, gửi dữ liệu nhị phân file ảnh lên Cloudinary qua HTTPS và nhận về đường dẫn ảnh CDN tốc độ cao.
+  2. `spring-boot-starter-oauth2-resource-server`: Đóng vai trò cấu hình hệ thống thành một **OAuth2 Resource Server**. Cung cấp bộ lọc tự động trích xuất token từ Header `Authorization: Bearer <token>`, giải mã chữ ký qua `NimbusJwtDecoder` và gán thông tin người dùng vào `SecurityContext`.
+  3. `spring-boot-starter-data-jpa`: Gói thư viện toàn diện gồm:
+     - **Hibernate ORM**: Cỗ máy ánh xạ quan hệ đối tượng giữa Java Class và bảng MySQL.
+     - **Spring Data JPA**: Cung cấp các interface `JpaRepository` với các phương thức CRUD tự động.
+     - **HikariCP**: Bộ quản lý kết nối CSDL (JDBC Connection Pool) nhanh nhất thế giới hiện nay, tự động tối ưu việc tái sử dụng connection mà không phải mở mới liên tục.
+  4. `spring-boot-starter-security`: Cung cấp kiến trúc bảo mật lọc yêu cầu (Filter Chain), mã hóa, bảo vệ phiên, và xác thực phân quyền dựa trên quyền hạn (Roles/Authorities).
+  5. `spring-boot-starter-thymeleaf`: Tích hợp bộ giải quyết giao diện `ThymeleafViewResolver` giúp render file HTML trên server rồi trả về cho trình duyệt.
+  6. `spring-boot-starter-web`: Tích hợp máy chủ **Embedded Apache Tomcat** (chạy ngầm bên trong file JAR, không cần cài đặt Tomcat bên ngoài), cung cấp `DispatcherServlet` và thư viện Jackson (chuyển đổi Java Object $\leftrightarrow$ JSON).
+  7. `spring-boot-starter-validation`: Triển khai chuẩn Jakarta Bean Validation (JSR-380) qua Hibernate Validator. Cung cấp các Annotation như `@NotBlank`, `@Size`, `@Min`, `@Max`, `@Email` kết hợp với `@Valid` tại Controller để ngăn chặn dữ liệu rác trước khi đưa vào Service.
+  8. `thymeleaf-extras-springsecurity6`: Mở rộng cú pháp Thymeleaf với namespace `sec:authorize="isAuthenticated()"` hoặc `sec:authorize="hasRole('ADMIN')"` để ẩn/hiện menu trên giao diện web theo quyền hạn đăng nhập.
+  9. `spring-security-crypto`: Cung cấp class `BCryptPasswordEncoder` sử dụng thuật toán băm mật khẩu một chiều kết hợp muối ngẫu nhiên (salt 10 rounds).
+  10. `nimbus-jose-jwt`: Thư viện chuyên dụng tạo, ký điện tử theo thuật toán `HMAC-SHA512` và thẩm định tính hợp lệ của chuỗi JSON Web Token theo chuẩn RFC 7519.
+  11. `spring-boot-devtools`: Hỗ trợ lập trình viên: Tự động khởi động lại ứng dụng (LiveReload / Hot Restart) khi phát hiện thay đổi trong mã nguồn. Thẻ `<scope>runtime</scope>` và `<optional>true</optional>` bảo đảm thư viện này **không bao giờ bị đóng gói lên môi trường Production**, tránh gây hao phí tài nguyên máy chủ thật.
+  12. `mysql-connector-j`: Thư viện JDBC Driver chính thức của MySQL cho phép Spring Data kết nối và thực thi các lệnh SQL xuống CSDL MySQL (chạy tại cổng 3306). Có `<scope>runtime</scope>` vì mã nguồn Java chỉ cần giao tiếp qua giao diện chuẩn `java.sql.*`, chỉ khi chạy ứng dụng thật mới cần đến file `.jar` cụ thể của MySQL.
+  13. `lombok`: Tiền xử lý mã nguồn (Annotation Processor) tự động sinh mã Getter, Setter, Builder, Constructor trong bộ nhớ lúc biên dịch, giúp mã nguồn Java ngắn gọn, sạch sẽ.
+  14. `mapstruct` & `mapstruct-processor`: Bộ chuyển đổi DTO $\leftrightarrow$ Entity cực nhanh, sinh mã Java thuần lúc compile time. Cấu hình `<scope>provided</scope>` cho processor vì nó chỉ chạy lúc biên dịch rồi tự hủy, không cần đưa vào file JAR thành phẩm.
+  15. `lombok-mapstruct-binding` (0.2.0): **Thư viện cầu nối sinh tử**: Nếu dùng đồng thời cả Lombok và MapStruct mà thiếu thư viện này, MapStruct sẽ chạy trước khi Lombok kịp sinh mã `getter/setter`, dẫn tới lỗi biên dịch *"Cannot find symbol getXxx()"*. `lombok-mapstruct-binding` ép Maven Compiler kích hoạt Lombok sinh getter/setter trước, rồi mới đưa sang cho MapStruct nạp dữ liệu.
+  16. `spring-boot-starter-test` & `spring-security-test`: Bộ công cụ kiểm thử tự động gồm: **JUnit 5 (Jupiter)** (viết ca kiểm thử), **Mockito** (giả lập hành vi của Service/Repository), **AssertJ** (khẳng định kết quả kiểm thử), **MockMvc** (giả lập gửi request HTTP đến Controller mà không cần bật máy chủ web). Cấu hình `<scope>test</scope>` để chỉ dùng khi chạy lệnh `mvn test`.
+
+---
+
+### 0.4. Khối Cấu Hình Bản Dựng `<build>` & Các Plugin Biên Dịch (Lines 131 - 171)
+
+```xml
+	<build>
+		<plugins>
+			<!-- Plugin 1: Trình biên dịch mã nguồn Apache Maven Compiler Plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>21</source>
+					<target>21</target>
+					<annotationProcessorPaths>
+						<!-- Bước 1: Lombok chạy trước để sinh Getter, Setter, Builder -->
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</path>
+						<!-- Bước 2: MapStruct chạy sau để đọc Getter, Setter sinh mã Mapper -->
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>${mapstruct.version}</version>
+						</path>
+						<!-- Bước 3: Cầu nối điều phối giữa Lombok và MapStruct -->
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok-mapstruct-binding</artifactId>
+							<version>0.2.0</version>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+
+			<!-- Plugin 2: Plugin đóng gói Fat JAR thực thi của Spring Boot -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<!-- Loại bỏ Lombok ra khỏi file JAR đóng gói để file nhẹ hơn -->
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+```
+
+- **Phân tích từng Plugin & Lý thuyết**:
+  1. `maven-compiler-plugin`:
+     - Thiết lập `<source>21</source>` và `<target>21</target>` đảm bảo việc biên dịch Java 21 diễn ra chuẩn xác.
+     - Khối `<annotationProcessorPaths>` thiết lập thứ tự ưu tiên của các bộ tiền xử lý chú thích: Bắt buộc Lombok phải chạy trước để sinh đầy đủ getter/setter, sau đó MapStruct mới quét được các getter/setter này để sinh mã class Mapper hoàn chỉnh.
+  2. `spring-boot-maven-plugin`:
+     - Plugin độc quyền của Spring Boot có nhiệm vụ tạo ra gói **Fat JAR (còn gọi là Executable JAR / Uber JAR)**.
+     - Khác với file JAR truyền thống chỉ chứa file `.class` của lập trình viên, Fat JAR của Spring Boot chứa toàn bộ mã nguồn dự án, toàn bộ 16 file `.jar` phụ thuộc, và **nhúng trọn vẹn cả máy chủ web Apache Tomcat bên trong**. Nhờ vậy, người dùng chỉ cần một lệnh duy nhất: `java -jar blog-website-0.0.1-SNAPSHOT.jar` là website tự động chạy trên bất kỳ máy chủ nào mà không cần cài Tomcat, cấu hình biến môi trường phức tạp!
+     - Thẻ `<excludes>`: Loại bỏ thư viện `lombok` ra khỏi file JAR thành phẩm vì Lombok chỉ cần thiết lúc viết code và biên dịch, không cần thiết lúc chạy thực tế.
+
+---
+
+### 0.5. Bộ Câu Hỏi Vấn Đáp Lý Thuyết Thầy Phúc Hay Hỏi Nhất Về Maven & `pom.xml`
+
+#### Q1: "Maven là gì? Vòng đời của Maven (Maven Build Lifecycle) gồm những giai đoạn (phases) nào?"
+- **Trả lời**: *"Dạ thưa Thầy, Maven là công cụ tự động hóa việc quản lý phụ thuộc (Dependency Management) và xây dựng phần mềm (Build Automation) cho Java. Vòng đời mặc định của Maven gồm 8 giai đoạn chính theo thứ tự:
+  1. `validate`: Kiểm tra tính hợp lệ của cấu trúc thư mục dự án và file `pom.xml`.
+  2. `compile`: Dùng `javac` biên dịch toàn bộ mã nguồn Java trong `src/main/java` thành file bytecode `.class` lưu trong thư mục `target/classes`.
+  3. `test-compile`: Biên dịch mã nguồn kiểm thử trong `src/test/java`.
+  4. `test`: Thực thi toàn bộ các ca kiểm thử tự động (Unit Test / Integration Test) bằng JUnit/Mockito.
+  5. `package`: Đóng gói mã nguồn đã biên dịch thành file nén `.jar` hoặc `.war`.
+  6. `verify`: Chạy các kiểm tra chất lượng mã nguồn xem file đóng gói có đạt tiêu chuẩn không.
+  7. `install`: Cài đặt file `.jar` vừa đóng gói vào kho lưu trữ cục bộ của máy tính cá nhân (`~/.m2/repository`).
+  8. `deploy`: Đẩy file `.jar` lên kho máy chủ trung tâm (Remote Repository / Nexus / Artifactory) để các dự án khác sử dụng ạ!"*
+
+#### Q2: "Thẻ `<scope>` trong Maven có ý nghĩa gì? Kể tên các Scope phổ biến mà dự án của nhóm em đang sử dụng?"
+- **Trả lời**: *"Dạ thưa Thầy, thẻ `<scope>` kiểm soát phạm vi và thời điểm một thư viện `.jar` có mặt trong Classpath của ứng dụng. Dự án của nhóm em sử dụng 4 scope phổ biến:
+  1. `compile` (Mặc định khi không khai báo): Có mặt trong mọi giai đoạn (biên dịch, kiểm thử, đóng gói và chạy thực tế). Ví dụ: `spring-boot-starter-web`, `spring-boot-starter-security`.
+  2. `provided`: Thư viện chỉ cần lúc biên dịch mã nguồn, khi chạy thực tế môi trường (hoặc máy ảo) sẽ cung cấp sẵn, không bị đóng gói vào file JAR. Ví dụ: `mapstruct-processor`.
+  3. `runtime`: Không cần thiết lúc biên dịch mã nguồn nhưng bắt buộc phải có lúc chạy ứng dụng thực tế. Ví dụ: `mysql-connector-j` (mã Java chỉ giao tiếp qua interface chuẩn JDBC của Oracle, lúc chạy mới cần file jar kết nối MySQL) và `spring-boot-devtools`.
+  4. `test`: Chỉ có mặt trong giai đoạn biên dịch và chạy các ca kiểm thử tự động, tuyệt đối không bị đóng gói vào bản sản phẩm cuối cùng. Ví dụ: `spring-boot-starter-test` và `spring-security-test` ạ!"*
+
+#### Q3: "Tại sao hầu hết các dependency của Spring Boot trong `pom.xml` không cần ghi thẻ `<version>` mà Maven vẫn tải đúng phiên bản?"
+- **Trả lời**: *"Dạ thưa Thầy, đó là nhờ cơ chế kế thừa **Parent POM (BOM - Bill of Materials)** từ thẻ `<parent>`: `spring-boot-starter-parent` phiên bản `3.5.11`. Trong Parent POM đã định nghĩa sẵn khối `<dependencyManagement>` chứa danh mục phiên bản đã được đội ngũ kỹ sư Spring kiểm thử kỹ lưỡng về tính tương thích. Khi ta khai báo `spring-boot-starter-data-jpa` hay `spring-boot-starter-web` mà không ghi `<version>`, Maven sẽ tự động kế thừa số phiên bản chuẩn xác từ Parent POM, giúp hệ thống không bao giờ bị xung đột thư viện ạ!"*
+
+#### Q4: "Fat JAR (Executable JAR) là gì? Khác gì với file JAR truyền thống của Java cũ?"
+- **Trả lời**: *"Dạ thưa Thầy:
+  - File JAR truyền thống (Thin JAR) chỉ chứa các file `.class` do lập trình viên viết ra. Muốn chạy được, lập trình viên phải tự cài đặt máy chủ bên ngoài (như Tomcat riêng), copy các file jar phụ thuộc vào thư mục `lib`, cấu hình rất phức tạp.
+  - Còn **Fat JAR** (do plugin `spring-boot-maven-plugin` tạo ra) là một gói nén hoàn chỉnh chứa tất cả mọi thứ: Mã nguồn ứng dụng + Toàn bộ 16 thư viện `.jar` phụ thuộc giải nén trong `BOOT-INF/lib` + **Nhúng sẵn máy chủ Apache Tomcat bên trong**. Chỉ cần chạy lệnh `java -jar app.jar` là web server tự bung ra và chạy ngay lập tức, cực kỳ tiện lợi cho việc triển khai Docker và Microservices ạ!"*
+
+#### Q5: "Nếu dự án gặp xung đột thư viện (Dependency Conflict), ví dụ 2 thư viện phụ thuộc kéo theo 2 phiên bản khác nhau của cùng một file jar thì Maven sẽ xử lý như thế nào?"
+- **Trả lời**: *"Dạ thưa Thầy, Maven xử lý xung đột theo nguyên tắc **'Nearest-Wins' (Gần nhất thì thắng)** dựa trên độ sâu của cây phụ thuộc (Dependency Tree):
+  - Phiên bản nào có độ sâu trên cây phụ thuộc gần với file `pom.xml` của dự án hơn thì phiên bản đó sẽ được chọn.
+  - Nếu hai phiên bản có cùng độ sâu, Maven sẽ áp dụng nguyên tắc **'First-Declared' (Khai báo trước thì thắng)**, tức là dependency nào được khai báo trước trong file `pom.xml` thì thư viện con của nó sẽ được ưu tiên giữ lại ạ!"*
+
+---
+
+## Mục 1: Lớp Khởi Chạy Ứng Dụng (`BlogWebsiteApplication.java`)
 
 - **Vị trí**: `src/main/java/com/group/blog/BlogWebsiteApplication.java`
 - **Mã nguồn**:
@@ -641,7 +953,7 @@ Khi một Client gửi một Request (ví dụ `POST /blogs` với header `Autho
 
 ---
 
-## Mục 1: Tầng Cấu Hình (Configuration Package)
+## Mục 2: Tầng Cấu Hình (Configuration Package)
 
 ### 1.1. `SecurityConfig.java` — Trái tim bảo mật hệ thống (Spring Security 6 & JWT)
 
@@ -752,78 +1064,16 @@ Khi một Client gửi một Request (ví dụ `POST /blogs` với header `Autho
 
 ---
 
-## Mục 2: Tầng Thực Thể (Entity Package - 10 Entities)
+## 📌 CHUYÊN ĐỀ ĐẶC BIỆT: TẦNG THỰC THỂ (ENTITY), TẦNG REPOSITORY & DTO
 
-### 2.1. `User.java` (Bảng `users`)
-
-- Khóa chính `@Id @GeneratedValue(strategy = GenerationType.UUID) UUID id`: Khóa chính định dạng UUID ngẫu nhiên 128-bit chống dò quét ID.
-- `@Column(nullable = false, unique = true, length = 100) String username`: Tên đăng nhập không được trùng, không được rỗng.
-- `@Column(nullable = false, length = 255) String password`: Lưu chuỗi băm BCrypt dài 60 ký tự.
-- `@ElementCollection(fetch = FetchType.EAGER) @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id")) Set<String> roles`: Tạo bảng phụ `user_roles` lưu danh sách vai trò (`ROLE_USER`, `ROLE_ADMIN`). Tải EAGER để kiểm tra quyền hạn ngay lập tức khi đăng nhập.
-- `@OneToMany(mappedBy = "author", cascade = CascadeType.ALL) List<Blog> blogs`: Một user có thể viết nhiều bài.
-- `@PrePersist void prePersist()`: Tự động điền ngày tạo `createdAt = LocalDateTime.now()` trước khi lưu xuống DB.
-
-### 2.2. `Blog.java` (Bảng `blogs`)
-
-- `String title`, `String banner`, `String description`: Tiêu đề, ảnh bìa và mô tả ngắn bài viết.
-- `@Column(columnDefinition = "LONGTEXT") String content`: Nội dung bài viết chính thức đã xuất bản, lưu trữ bằng kiểu `LONGTEXT` trong MySQL (chứa được đến 4GB dữ liệu văn bản/HTML).
-- `boolean draft`: Cờ đánh dấu trạng thái (true: bản nháp, false: bài đã xuất bản công khai).
-- `@Column(columnDefinition = "LONGTEXT") String draftContent` & `draftBanner`: **Cơ chế lưu nháp bài viết đang sửa**. Cho phép tác giả sửa bài đã public mà người đọc bên ngoài vẫn đọc bản cũ; khi nào bấm Publish thì nội dung từ `draftContent` mới đổ sang `content`.
-- `@ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "author_id") User author`: Khóa ngoại trỏ về tác giả bài viết.
-- `@ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "category_id") Category category`: Khóa ngoại trỏ về danh mục bài viết.
-- `@ManyToMany @JoinTable(name = "blog_tags", joinColumns = @JoinColumn(name = "blog_id"), inverseJoinColumns = @JoinColumn(name = "tag_id")) Set<Tag> tags`: Quan hệ N-N tạo bảng trung gian `blog_tags`.
-- `@PreUpdate void preUpdate()`: Tự động cập nhật `updatedAt = LocalDateTime.now()` mỗi khi có chỉnh sửa.
-
-### 2.3. `Comment.java` (Bảng `comments`)
-
-- `@Table(name="comments", indexes = {@Index(name="idx_comment_blog", columnList="blog_id"), @Index(name="idx_comment_parent", columnList="parent_id")})`: Đánh chỉ mục Index trên cột `blog_id` và `parent_id` để tăng tốc độ truy vấn bình luận của bài viết.
-- `@ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "parent_id") Comment parent`: **Quan hệ tự tham chiếu (Self-referencing)**. Trỏ về bình luận cha nếu đây là một phản hồi (reply).
-- `@OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true) @OrderBy("createdAt ASC") List<Comment> replies`: Danh sách các reply con của bình luận này, tự động sắp xếp theo thứ tự thời gian tăng dần.
-
-### 2.4. `BlogLike.java` & `Bookmark.java`
-
-- Khóa phức hợp duy nhất `@Table(name="blog_likes", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id","blog_id"})})`: Ngăn chặn tuyệt đối việc một người dùng bấm like hoặc bookmark một bài viết 2 lần ở tầng CSDL.
-- `@OnDelete(action = OnDeleteAction.CASCADE)`: Khi bài viết gốc bị xóa, toàn bộ lượt like và bookmark liên quan sẽ tự động bị xóa theo (xóa tầng CSDL, không gây lỗi khóa ngoại).
-
-### 2.5. `UserFollow.java` (Bảng `user_follows`)
-
-- `@ManyToOne User follower`: Người đi theo dõi.
-- `@ManyToOne User following`: Tác giả được theo dõi.
-- Ràng buộc `@UniqueConstraint(columnNames = {"follower_id", "following_id"})`: Chặn theo dõi trùng lặp.
-
-### 2.6. `Notification.java` (Bảng `notifications`)
-
-- Lưu các thông báo người dùng (`LIKE`, `COMMENT`, `REPLY`, `FOLLOW`).
-- `String targetUrl`: Đường dẫn trang web kèm tham số (ví dụ: `post.html?id=java-slug&openComments=true`) để khi người dùng click vào thông báo sẽ tự động nhảy đến đúng bài viết và tự mở khung bình luận.
+> [!IMPORTANT]
+> Toàn bộ nội dung bóc tách chi tiết từng dòng code, từng trường, phân tích Annotation JPA/Hibernate (UUID, LongText, UniqueConstraints, Indexes, Self-referencing Comment, Cascade vs OnDelete), các câu truy vấn JPQL phức tạp (Cartesian Product, LEFT JOIN, COUNT DISTINCT) và cấu trúc 20 DTOs (Request + Response) đã được tách riêng thành một chuyên đề độc lập tại:  
+> 🔗 **[CHUYEN_DE_DTO_ENTITY_REPOSITORY.md](file:///d:/folder/rac/iuh/m%C3%B4n/hk1-4/cc-web-website-hld/ck-luu-y/CHUYEN_DE_DTO_ENTITY_REPOSITORY.md)**  
+> Sinh viên mở file trên để ôn tập chuyên sâu về 10 Entities, 10 Repositories, 20 DTOs cùng 4 câu hỏi vấn đáp CSDL đỉnh cao (N+1 query problem, UUID vs Auto-increment, CascadeType vs @OnDelete, LazyInitializationException).
 
 ---
 
-## Mục 3: Tầng Truy Xuất Dữ Liệu (Repository Package & Phân Tích JPQL)
-
-### 3.1. Phân tích truy vấn JPQL phức tạp trong `BlogRepository.java`
-
-```java
-@Query("""
-   SELECT b, COUNT(DISTINCT v.id), COUNT(DISTINCT l.id), COUNT(DISTINCT c.id)
-   FROM Blog b
-   LEFT JOIN BlogLike l ON l.blog = b
-   LEFT JOIN BlogView v ON v.blog = b
-   LEFT JOIN Comment c ON c.blog = b
-   WHERE b.draft = false
-   GROUP BY b
-   ORDER BY b.publishedAt DESC
-""")
-List<Object[]> findAllBlogsWithCounts();
-```
-
-- **Ý nghĩa câu hỏi vấn đáp**: *"Tại sao phải dùng `LEFT JOIN` và `COUNT(DISTINCT ...)` mà không dùng `COUNT(...)` thông thường?"*
-  - **Trả lời**:
-    1. Dùng `LEFT JOIN` vì nếu bài viết chưa có lượt like, view hoặc comment nào thì bài viết đó vẫn được lấy ra (nếu dùng `INNER JOIN` thì bài viết mới tạo chưa có like/comment sẽ bị biến mất khỏi trang chủ!).
-    2. Phải dùng `COUNT(DISTINCT v.id)` vì khi JOIN 3 bảng quan hệ 1-N cùng lúc, SQL sẽ tạo ra **Tích Đề-các (Cartesian Product)** làm nhân chéo các dòng dữ liệu. Nếu bài viết có 2 views, 3 likes và 4 comments thì số dòng sinh ra sẽ là $2 \times 3 \times 4 = 24$ dòng! Nếu dùng `COUNT(v.id)` thì view sẽ thành 24 (sai thực tế). Dùng `COUNT(DISTINCT v.id)` bảo đảm chỉ đếm các ID view duy nhất, trả về con số chính xác 100%.
-
----
-
-## Mục 4: Tầng Nghiệp Vụ (Service Package - Toàn Bộ 10 Services)
+## Mục 3: Tầng Nghiệp Vụ (Service Package - Toàn Bộ 10 Services)
 
 Tầng Service là "trái tim xử lý logic" (Business Logic Layer) của hệ thống. Tất cả các class Service trong dự án đều sử dụng các Annotation chuẩn mực của Spring Boot & Lombok:
 - `@Service`: Đánh dấu class là một Spring Bean thuộc tầng nghiệp vụ, được Spring IoC Container quản lý vòng đời.
@@ -1008,11 +1258,11 @@ Tầng Service là "trái tim xử lý logic" (Business Logic Layer) của hệ 
 
 ---
 
-## Mục 5: Tầng Điều Khiển (Controller Package - Toàn Bộ 8 Controllers)
+## Mục 4: Tầng Điều Khiển (Controller Package - Toàn Bộ 8 Controllers)
 
 Tầng Controller tiếp nhận HTTP Request từ Client, gọi Service tương ứng xử lý nghiệp vụ, và trả về dữ liệu chuẩn JSON được bọc trong đối tượng `ApiResponse<T>`.
 
-### 5.1. Khái niệm lý thuyết cốt lõi cần nhớ khi vấn đáp:
+### 4.1. Khái niệm lý thuyết cốt lõi cần nhớ khi vấn đáp:
 - `@RestController`: Bằng `@Controller` + `@ResponseBody`. Báo hiệu mọi phương thức trong class này đều tuần tự hóa kết quả trả về trực tiếp thành chuỗi **JSON** (qua bộ chuyển đổi Jackson), không chuyển hướng sang trang HTML.
 - `@Controller`: Dành riêng cho `ViewController.java` để Spring MVC hiểu là trả về tên file giao diện HTML (Thymeleaf View).
 - `@RequestMapping("/path")`: Khai báo tiền tố đường dẫn dùng chung cho tất cả các endpoint trong Controller.
@@ -1023,12 +1273,12 @@ Tầng Controller tiếp nhận HTTP Request từ Client, gọi Service tương 
 
 ---
 
-### 5.2. `AuthenticationController.java` — Quản lý đăng nhập & kiểm tra Token
+### 4.2. `AuthenticationController.java` — Quản lý đăng nhập & kiểm tra Token
 - `@RequestMapping("/auth")`:
   - `@PostMapping("/login")`: Nhận `AuthenticationRequest` (`username`, `password`), gọi `authenticationService.authenticate()`, trả về chuỗi Token JWT.
   - `@PostMapping("/introspect")`: Nhận `IntrospectRequest` (`token`), gọi `authenticationService.introspect()`, trả về kết quả token còn sống hay đã chết.
 
-### 5.3. `UserController.java` — Quản trị người dùng & Hồ sơ cá nhân
+### 4.3. `UserController.java` — Quản trị người dùng & Hồ sơ cá nhân
 - `@RequestMapping("/users")`:
   - `@PostMapping`: Tiếp nhận đăng ký thành viên mới (`UserCreatetionRequest`), có gắn `@Valid` kiểm tra độ dài username/password.
   - `@GetMapping`: Lấy danh sách toàn bộ người dùng (Yêu cầu quyền Admin).
@@ -1037,7 +1287,7 @@ Tầng Controller tiếp nhận HTTP Request từ Client, gọi Service tương 
   - `@PutMapping("/my-profile/change-password")`: Nhận DTO đổi mật khẩu.
   - `@GetMapping("/profile/{username}")`: Lấy hồ sơ công khai của một tác giả bất kỳ để hiển thị trang tác giả.
 
-### 5.4. `BlogController.java` — Điều phối toàn bộ hoạt động bài viết
+### 4.4. `BlogController.java` — Điều phối toàn bộ hoạt động bài viết
 - `@RequestMapping("/blogs")`:
   - `@PostMapping`: Tạo bài viết mới (`@Valid BlogCreationRequest`).
   - `@GetMapping`: Lấy danh sách bài viết trang chủ kèm thống kê tương tác.
@@ -1051,7 +1301,7 @@ Tầng Controller tiếp nhận HTTP Request từ Client, gọi Service tương 
   - `@GetMapping("/filter")`: Lọc kết hợp đa tiêu chí (vừa có từ khóa vừa có categoryId).
   - `@GetMapping("/my-blogs")`: Lấy tất cả bài viết do tài khoản hiện tại tạo ra (kể cả bản nháp).
 
-### 5.5. `InteractionController.java` — Điều phối Thả tim, Bình luận & Bookmark
+### 4.5. `InteractionController.java` — Điều phối Thả tim, Bình luận & Bookmark
 - `@RequestMapping("/interactions")`:
   - `@PostMapping("/likes/{blogId}")`: Thả tim / Bỏ like.
   - `@GetMapping("/comments/{blogId}")`: Lấy danh sách cây bình luận của bài viết.
@@ -1060,35 +1310,35 @@ Tầng Controller tiếp nhận HTTP Request từ Client, gọi Service tương 
   - `@PostMapping("/bookmarks/{blogId}")`: Thêm / Xóa bài viết khỏi mục Bookmark.
   - `@GetMapping("/bookmarks/my-bookmarks")`: Lấy danh sách các bài viết đã lưu.
 
-### 5.6. `FollowController.java` — Điều phối theo dõi tác giả
+### 4.6. `FollowController.java` — Điều phối theo dõi tác giả
 - `@RequestMapping("/follows")`:
   - `@PostMapping("/{targetUsername}")`: Theo dõi / Bỏ theo dõi tác giả.
   - `@GetMapping("/followers/{targetUsername}")`: Lấy danh sách người đang theo dõi tác giả này.
   - `@GetMapping("/following/{targetUsername}")`: Lấy danh sách tác giả mà người này đang theo dõi.
 
-### 5.7. `NotificationController.java` — Điều phối chuông thông báo
+### 4.7. `NotificationController.java` — Điều phối chuông thông báo
 - `@RequestMapping({"/api/notifications", "/notifications/api"})`:
   - `@GetMapping`: Lấy toàn bộ thông báo của tôi.
   - `@PutMapping("/{id}/read")`: Đánh dấu thông báo đã đọc.
   - `@DeleteMapping("/{id}")`: Xóa thông báo khỏi danh sách.
 
-### 5.8. `AdminController.java` — Điều phối số liệu thống kê quản trị
+### 4.8. `AdminController.java` — Điều phối số liệu thống kê quản trị
 - `@RequestMapping("/api/admin")`:
   - `@GetMapping("/stats")`: Gọi `adminService.getDashboardStats()` để lấy tổng số thành viên, tổng số bài viết và danh sách 5 bài viết mới nhất cho Dashboard Admin. Endpoint này được Spring Security bảo vệ bằng luật `.hasRole("ADMIN")`.
 
-### 5.9. `UploadController.java` — Điều phối tải tệp ảnh lên đám mây
+### 4.9. `UploadController.java` — Điều phối tải tệp ảnh lên đám mây
 - `@RequestMapping("/upload")`:
   - `@PostMapping("/image")`: Nhận tham số `@RequestParam("file") MultipartFile file`, chuyển qua `cloudinaryService.uploadImage(file)` để tải lên đám mây và trả về đường dẫn ảnh công khai HTTPS.
 
-### 5.10. `ViewController.java` — Điều hướng hiển thị các trang giao diện HTML Thymeleaf
+### 4.10. `ViewController.java` — Điều hướng hiển thị các trang giao diện HTML Thymeleaf
 - Gắn `@Controller`:
   - Chứa 16 phương thức `@GetMapping` điều hướng các đường dẫn URL (`/`, `/login`, `/register`, `/post`, `/admin/dashboard`...) về các file HTML tương ứng trong thư mục `templates/`.
 
 ---
 
-## Mục 6: Tầng Xử Lý Ngoại Lệ, Chuyển Đổi DTO & Tiện Ích (Exception, Mapper & Util)
+## Mục 5: Tầng Xử Lý Ngoại Lệ, Chuyển Đổi DTO & Tiện Ích (Exception, Mapper & Util)
 
-### 6.1. Tầng Xử Lý Ngoại Lệ Tập Trung (Exception Package)
+### 5.1. Tầng Xử Lý Ngoại Lệ Tập Trung (Exception Package)
 
 Hệ thống thiết kế cơ chế xử lý lỗi tập trung theo chuẩn Enterprise, không bao giờ để lộ vết lỗi hệ thống (Stacktrace) hay mã lỗi 500 xấu xí ra màn hình người dùng.
 
@@ -1132,7 +1382,7 @@ Hệ thống thiết kế cơ chế xử lý lỗi tập trung theo chuẩn Ente
 
 ---
 
-### 6.2. Tầng Chuyển Đổi DTO & Entity (Mapper Package - Thư viện MapStruct)
+### 5.2. Tầng Chuyển Đổi DTO & Entity (Mapper Package - Thư viện MapStruct)
 
 Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ liệu (Bean Mapper) hàng đầu thế giới hiện nay cho Java.
 
@@ -1153,7 +1403,7 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
 
 ---
 
-### 6.3. Tầng Tiện Ích Chuẩn Hóa Chuỗi SEO (`SlugUtils.java`)
+### 5.3. Tầng Tiện Ích Chuẩn Hóa Chuỗi SEO (`SlugUtils.java`)
 
 - **Vị trí**: `src/main/java/com/group/blog/util/SlugUtils.java`
 - **Mã nguồn**:
@@ -1187,7 +1437,7 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
 
 ---
 
-### 6.4. Bộ Câu Hỏi Vấn Đáp Lý Thuyết Thầy Hay Hỏi Về Service, Controller, Exception & Mapper
+### 5.4. Bộ Câu Hỏi Vấn Đáp Lý Thuyết Thầy Hay Hỏi Về Service, Controller, Exception & Mapper
 
 #### Q1: "Annotation `@Transactional` đặt ở tầng Service hoạt động như thế nào? Nếu phương thức `addComment()` lưu bình luận thành công nhưng lúc gửi `createNotification()` bị lỗi thì CSDL sẽ ra sao?"
 - **Trả lời**: *"Dạ thưa Thầy, nhờ có `@Transactional`, Spring AOP sẽ bọc phương thức bằng một Transaction Proxy. Toàn bộ các câu lệnh SQL trong phương thức đều thực thi trên cùng một Connection CSDL với cờ `AutoCommit = false`. Nếu có bất kỳ ngoại lệ `RuntimeException` nào xảy ra khi gửi thông báo, Spring Proxy sẽ bắt được và gọi lệnh `Connection.rollback()`. Toàn bộ bình luận vừa thêm trước đó sẽ bị xóa bỏ, khôi phục CSDL về trạng thái nguyên vẹn, bảo đảm trọn vẹn tính chất **Atomicity (Tính nguyên tử)** của giao dịch ACID ạ!"*
@@ -1214,9 +1464,9 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
 
 ---
 
-## Mục 7: Tầng Giao Diện & Frontend JavaScript Giao Tiếp API
+## Mục 6: Tầng Giao Diện & Frontend JavaScript Giao Tiếp API
 
-### 7.1. Kiến Trúc Frontend: Phân Biệt MPA vs SPA & Bản Chất Dự Án
+### 6.1. Kiến Trúc Frontend: Phân Biệt MPA vs SPA & Bản Chất Dự Án
 
 - **Bản chất kiến trúc cấu trúc (Structural Architecture)**: 
   - Dự án này là **MPA (Multi-Page Application - Ứng dụng Đa Trang)** xây dựng trên nền tảng **HTML5, CSS3 (Bootstrap 5.3.3) và JavaScript ES6+ (kết hợp jQuery 3.7.1)**.
@@ -1229,9 +1479,9 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
 
 ---
 
-### 7.2. Bóc Tách Chi Tiết Toàn Bộ 21 File Giao Diện HTML (`templates/`)
+### 6.2. Bóc Tách Chi Tiết Toàn Bộ 21 File Giao Diện HTML (`templates/`)
 
-#### 7.2.1. Nhóm Trang Người Dùng Công Khai (`templates/public/` - 11 Files)
+#### 6.2.1. Nhóm Trang Người Dùng Công Khai (`templates/public/` - 11 Files)
 
 1. **`home-page.html` (Trang chủ chính)**:
    - *Cấu trúc*: Chứa các container rỗng chờ nạp `#navbar-container`, `#hero-container`, `#footer-container`. Phần thân gồm 2 cột: Cột trái (Toolbar sắp xếp Newest/Oldest, danh sách bài viết `#post-list`) và Cột phải (Sidebar chủ đề và Trending).
@@ -1281,7 +1531,7 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
 
 ---
 
-#### 7.2.2. Nhóm Trang Quản Trị Hệ Thống (`templates/admin/` - 4 Files)
+#### 6.2.2. Nhóm Trang Quản Trị Hệ Thống (`templates/admin/` - 4 Files)
 
 1. **`dashboard.html` (Bảng điều khiển tổng quan Admin)**:
    - Khi tải trang, JS gửi `GET /api/admin/stats` (kèm Header `Authorization: Bearer <token>`).
@@ -1300,7 +1550,7 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
 
 ---
 
-#### 7.2.3. Nhóm Mảnh Ghép Giao Diện Tái Sử Dụng (`templates/fragments/` - 6 Files)
+#### 6.2.3. Nhóm Mảnh Ghép Giao Diện Tái Sử Dụng (`templates/fragments/` - 6 Files)
 
 1. **`navbar.html` (Thanh điều hướng đầu trang)**:
    - Logo thương hiệu `Bleb`.
@@ -1323,9 +1573,9 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
 
 ---
 
-### 7.3. Bóc Tách Chi Tiết Toàn Bộ 8 File JavaScript Cốt Lõi (`static/assets/js/`)
+### 6.3. Bóc Tách Chi Tiết Toàn Bộ 8 File JavaScript Cốt Lõi (`static/assets/js/`)
 
-#### 7.3.1. `app.js` — Quản Lý State Toàn Cục & Xử Lý Dữ Liệu Editor.js
+#### 6.3.1. `app.js` — Quản Lý State Toàn Cục & Xử Lý Dữ Liệu Editor.js
 
 - **Đối tượng State toàn cục `var S`**:
   ```javascript
@@ -1352,7 +1602,7 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
 
 ---
 
-#### 7.3.2. `auth.js` — Xác Thực Đăng Nhập, Đăng Ký, Đăng Xuất & LocalStorage
+#### 6.3.2. `auth.js` — Xác Thực Đăng Nhập, Đăng Ký, Đăng Xuất & LocalStorage
 
 - **Hàm `renderAuth()`**:
   - Kiểm tra `localStorage.getItem('token')`.
@@ -1364,7 +1614,7 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
 
 ---
 
-#### 7.3.3. `posts.js` — Gọi API Blogs & Render Card Bài Viết Bằng DOM Manipulation
+#### 6.3.3. `posts.js` — Gọi API Blogs & Render Card Bài Viết Bằng DOM Manipulation
 
 - **Hàm `renderPosts()`**:
   - Xây dựng URL truy vấn dựa trên State `S`:
@@ -1387,7 +1637,7 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
 
 ---
 
-#### 7.3.4. `filters.js` — Bộ Lọc Đa Tầng, Lọc Kép & Đồng Bộ Query URL
+#### 6.3.4. `filters.js` — Bộ Lọc Đa Tầng, Lọc Kép & Đồng Bộ Query URL
 
 - **Hàm `fetchAndRenderFilters()`**:
   - Gọi đồng thời `GET /categories` và `GET /tags`.
@@ -1400,7 +1650,7 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
 
 ---
 
-#### 7.3.5. `nav.js` — SPA Navigation, Mổ Payload Token JWT Check Role Admin & Chuông Thông Báo
+#### 6.3.5. `nav.js` — SPA Navigation, Mổ Payload Token JWT Check Role Admin & Chuông Thông Báo
 
 - **Hàm `navigate(page)` (Linh hồn SPA của trang chủ)**:
   ```javascript
@@ -1439,7 +1689,7 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
 
 ---
 
-#### 7.3.6. `pages.js` — Render Danh Mục & Thẻ Tag Với Mảng Màu Xoay Vòng
+#### 6.3.6. `pages.js` — Render Danh Mục & Thẻ Tag Với Mảng Màu Xoay Vòng
 
 - **Mảng màu `CAT_COLORS_ARRAY`**:
   - Chứa bảng màu hiện đại gồm các cặp màu sắc thẩm mỹ: Purple, Teal, Gold, Amber, Rose.
@@ -1450,7 +1700,7 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
 
 ---
 
-#### 7.3.7. `sidebar.js` — Widget Trending & Category Pill
+#### 6.3.7. `sidebar.js` — Widget Trending & Category Pill
 
 - **Hàm `renderSbCategories()`**:
   - Vẽ danh sách các chủ đề ở cột bên phải.
@@ -1461,7 +1711,7 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
 
 ---
 
-#### 7.3.8. `init.js` — Điểm Khởi Đầu Khởi Chạy Trang Web
+#### 6.3.8. `init.js` — Điểm Khởi Đầu Khởi Chạy Trang Web
 
 - Đóng vai trò là file "nhạc trưởng" (Entry Point) của Frontend:
   - Được bọc trong sự kiện `$(document).ready(function() { ... })`.
@@ -1472,7 +1722,7 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
 
 ---
 
-### 7.4. Các Thư Viện Frontend Bổ Trợ & Kỹ Thuật CSS Nâng Cao
+### 6.4. Các Thư Viện Frontend Bổ Trợ & Kỹ Thuật CSS Nâng Cao
 
 1. **Bộ soạn thảo khối Editor.js (Block-style Editor)**:
    - Khác với các bộ soạn thảo lỗi thời sinh mã HTML thô dễ dính lỗi bảo mật XSS (như CKEditor/TinyMCE), Editor.js quản lý nội dung dưới dạng **khối dữ liệu JSON sạch** (Clean Data JSON).
@@ -1486,7 +1736,7 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
 
 ---
 
-### 7.5. Bộ 5 Câu Hỏi Vấn Đáp Chuyên Sâu Về Frontend & Kịch Bản Ghi Điểm 10
+### 6.5. Bộ 5 Câu Hỏi Vấn Đáp Chuyên Sâu Về Frontend & Kịch Bản Ghi Điểm 10
 
 #### Q1: "Tại sao nhóm em có dùng Thymeleaf nhưng lại không dùng các cú pháp Server-Side Rendering như `th:text`, `th:each` mà lại dùng JavaScript gọi REST API?"
 
