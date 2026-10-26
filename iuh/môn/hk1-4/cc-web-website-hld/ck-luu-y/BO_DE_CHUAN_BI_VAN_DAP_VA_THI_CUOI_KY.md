@@ -493,32 +493,36 @@ Khi một Client gửi một Request (ví dụ `POST /blogs` với header `Autho
 ## Chuyên đề 4: Cơ Chế Dynamic Proxy & Ngôn Ngữ JPQL Trong Spring Boot & JPA
 
 ### 4.1. Câu hỏi cốt lõi: "Repository là truy vấn SQL thường hay là JPA?"
+
 - **CÂU TRẢ LỜI CHÍNH XÁC 100%**: **ĐÂY LÀ 100% JPA (CỤ THỂ LÀ JPQL - JAVA PERSISTENCE QUERY LANGUAGE), TUYỆT ĐỐI KHÔNG PHẢI LÀ SQL THƯỜNG (NATIVE SQL)!**
 - **Tại sao dễ bị nhầm là SQL thường?**
   - Vì trong các câu lệnh `@Query` của `BlogRepository.java` có các từ khóa giống SQL như `SELECT`, `FROM`, `WHERE`, `LEFT JOIN`, `ORDER BY`.
 - **Nhưng hãy nhìn vào bản chất khác biệt hoàn toàn:**
 
-| Tiêu chí so sánh | SQL Thường (Native SQL) | JPQL (Java Persistence Query Language của JPA) |
-| :--- | :--- | :--- |
-| **Đối tượng thao tác** | Thao tác trực tiếp trên **TÊN BẢNG** và **TÊN CỘT** vật lý trong cơ sở dữ liệu MySQL. | Thao tác trên **TÊN CLASS JAVA (Entity)** và **TÊN THUỘC TÍNH (Field)** trong mã nguồn Java! |
-| **Cú pháp trong dự án** | `SELECT * FROM blogs b WHERE b.is_draft = 0` (tên bảng `blogs` viết thường số nhiều, cột `is_draft`). Phải có cờ `nativeQuery = true` mới chạy được. | `SELECT b FROM Blog b WHERE b.draft = false` (`Blog` là tên class Java viết hoa chữ B, `draft` là thuộc tính `boolean draft;` trong class Java!). Không hề có cờ `nativeQuery = true`. |
-| **Thao tác JOIN quan hệ** | `LEFT JOIN blog_likes l ON l.blog_id = b.id` (JOIN dựa trên cột khóa ngoại `blog_id` và `id`). | `LEFT JOIN BlogLike l ON l.blog = b` (`BlogLike` là Entity Java, `l.blog` là thuộc tính đối tượng Java bên trong class đó). |
-| **Tính độc lập CSDL** | **Phụ thuộc chặt chẽ vào MySQL**: Dùng hàm riêng của MySQL, nếu mai sau chuyển sang Oracle, PostgreSQL hay SQL Server thì toàn bộ câu lệnh sẽ bị lỗi cú pháp! | **Độc lập 100% với hệ quản trị CSDL (Database Independent)**: Bạn viết JPQL một lần, Hibernate sẽ tự động dịch câu JPQL đó thành đúng phương ngữ (Dialect) SQL của MySQL, PostgreSQL hay Oracle mà không cần sửa 1 dòng code! |
+| Tiêu chí so sánh               | SQL Thường (Native SQL)                                                                                                                                                                | JPQL (Java Persistence Query Language của JPA)                                                                                                                                                                                                                    |
+| :-------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Đối tượng thao tác** | Thao tác trực tiếp trên **TÊN BẢNG** và **TÊN CỘT** vật lý trong cơ sở dữ liệu MySQL.                                                                         | Thao tác trên **TÊN CLASS JAVA (Entity)** và **TÊN THUỘC TÍNH (Field)** trong mã nguồn Java!                                                                                                                                                  |
+| **Cú pháp trong dự án** | `SELECT * FROM blogs b WHERE b.is_draft = 0` (tên bảng `blogs` viết thường số nhiều, cột `is_draft`). Phải có cờ `nativeQuery = true` mới chạy được.             | `SELECT b FROM Blog b WHERE b.draft = false` (`Blog` là tên class Java viết hoa chữ B, `draft` là thuộc tính `boolean draft;` trong class Java!). Không hề có cờ `nativeQuery = true`.                                                        |
+| **Thao tác JOIN quan hệ** | `LEFT JOIN blog_likes l ON l.blog_id = b.id` (JOIN dựa trên cột khóa ngoại `blog_id` và `id`).                                                                               | `LEFT JOIN BlogLike l ON l.blog = b` (`BlogLike` là Entity Java, `l.blog` là thuộc tính đối tượng Java bên trong class đó).                                                                                                                       |
+| **Tính độc lập CSDL**   | **Phụ thuộc chặt chẽ vào MySQL**: Dùng hàm riêng của MySQL, nếu mai sau chuyển sang Oracle, PostgreSQL hay SQL Server thì toàn bộ câu lệnh sẽ bị lỗi cú pháp! | **Độc lập 100% với hệ quản trị CSDL (Database Independent)**: Bạn viết JPQL một lần, Hibernate sẽ tự động dịch câu JPQL đó thành đúng phương ngữ (Dialect) SQL của MySQL, PostgreSQL hay Oracle mà không cần sửa 1 dòng code! |
 
 ### 4.2. Hai hình thức truy vấn của Spring Data JPA trong Repository:
+
 1. **Derived Query Methods (Tự động sinh câu lệnh qua tên hàm - Không cần viết lệnh nào)**:
    - Trong `UserRepository.java`: `Optional<User> findByUsername(String username);`
    - Trong `CategoryRepository.java`: `boolean existsByName(String name);`
    - Trong `BlogRepository.java`: `List<Blog> findTop5ByDraftFalseOrderByCreatedAtDesc();`
-   $\rightarrow$ Lập trình viên không hề viết bất kỳ chữ SQL hay JPQL nào! Spring Data JPA tự động phân tích tên hàm (`findBy...`, `existsBy...`, `countBy...`) để tự sinh ra câu lệnh truy vấn ngầm định!
+     $\rightarrow$ Lập trình viên không hề viết bất kỳ chữ SQL hay JPQL nào! Spring Data JPA tự động phân tích tên hàm (`findBy...`, `existsBy...`, `countBy...`) để tự sinh ra câu lệnh truy vấn ngầm định!
 2. **Custom Query bằng JPQL (Khi cần JOIN phức tạp, gom nhóm GROUP BY, tính toán)**:
    - Dùng annotation `@Query("SELECT b, COUNT(DISTINCT v.id)... FROM Blog b...")`. Hibernate sẽ phân tích cây cú pháp trừu tượng (AST) của JPQL rồi chuyển thành SQL tối ưu cho MySQL.
 
 ### 4.3. Tại sao `BlogRepository` chỉ là interface mà vẫn chạy được SQL?
+
 - Nhờ vào **JDK Dynamic Proxy**: Khi ứng dụng khởi động, Spring Boot tự động sinh ra một Class ẩn trong bộ nhớ RAM hiện thực hóa interface đó (`SimpleJpaRepository`).
 - Class này bắt chặn các lời gọi hàm, dịch tên phương thức (`findByTitle`) thành câu lệnh SQL tương ứng và chuyển xuống `EntityManager` của Hibernate thực thi vào MySQL.
 
 ### 4.4. Dynamic Proxy trong `@Transactional`:
+
 - Spring AOP bọc hàm bằng một Proxy: Mở kết nối $\rightarrow$ Tắt autocommit $\rightarrow$ Chạy lệnh $\rightarrow$ Nếu thành công gọi `commit()`, nếu có lỗi RuntimeException gọi `rollback()`.
 
 ---
@@ -887,6 +891,7 @@ Mỗi thẻ `<dependency>` đại diện cho một module chức năng được 
 ### 0.5. Bộ Câu Hỏi Vấn Đáp Lý Thuyết Thầy Phúc Hay Hỏi Nhất Về Maven & `pom.xml`
 
 #### Q1: "Maven là gì? Vòng đời của Maven (Maven Build Lifecycle) gồm những giai đoạn (phases) nào?"
+
 - **Trả lời**: *"Dạ thưa Thầy, Maven là công cụ tự động hóa việc quản lý phụ thuộc (Dependency Management) và xây dựng phần mềm (Build Automation) cho Java. Vòng đời mặc định của Maven gồm 8 giai đoạn chính theo thứ tự:
   1. `validate`: Kiểm tra tính hợp lệ của cấu trúc thư mục dự án và file `pom.xml`.
   2. `compile`: Dùng `javac` biên dịch toàn bộ mã nguồn Java trong `src/main/java` thành file bytecode `.class` lưu trong thư mục `target/classes`.
@@ -898,6 +903,7 @@ Mỗi thẻ `<dependency>` đại diện cho một module chức năng được 
   8. `deploy`: Đẩy file `.jar` lên kho máy chủ trung tâm (Remote Repository / Nexus / Artifactory) để các dự án khác sử dụng ạ!"*
 
 #### Q2: "Thẻ `<scope>` trong Maven có ý nghĩa gì? Kể tên các Scope phổ biến mà dự án của nhóm em đang sử dụng?"
+
 - **Trả lời**: *"Dạ thưa Thầy, thẻ `<scope>` kiểm soát phạm vi và thời điểm một thư viện `.jar` có mặt trong Classpath của ứng dụng. Dự án của nhóm em sử dụng 4 scope phổ biến:
   1. `compile` (Mặc định khi không khai báo): Có mặt trong mọi giai đoạn (biên dịch, kiểm thử, đóng gói và chạy thực tế). Ví dụ: `spring-boot-starter-web`, `spring-boot-starter-security`.
   2. `provided`: Thư viện chỉ cần lúc biên dịch mã nguồn, khi chạy thực tế môi trường (hoặc máy ảo) sẽ cung cấp sẵn, không bị đóng gói vào file JAR. Ví dụ: `mapstruct-processor`.
@@ -905,14 +911,17 @@ Mỗi thẻ `<dependency>` đại diện cho một module chức năng được 
   4. `test`: Chỉ có mặt trong giai đoạn biên dịch và chạy các ca kiểm thử tự động, tuyệt đối không bị đóng gói vào bản sản phẩm cuối cùng. Ví dụ: `spring-boot-starter-test` và `spring-security-test` ạ!"*
 
 #### Q3: "Tại sao hầu hết các dependency của Spring Boot trong `pom.xml` không cần ghi thẻ `<version>` mà Maven vẫn tải đúng phiên bản?"
+
 - **Trả lời**: *"Dạ thưa Thầy, đó là nhờ cơ chế kế thừa **Parent POM (BOM - Bill of Materials)** từ thẻ `<parent>`: `spring-boot-starter-parent` phiên bản `3.5.11`. Trong Parent POM đã định nghĩa sẵn khối `<dependencyManagement>` chứa danh mục phiên bản đã được đội ngũ kỹ sư Spring kiểm thử kỹ lưỡng về tính tương thích. Khi ta khai báo `spring-boot-starter-data-jpa` hay `spring-boot-starter-web` mà không ghi `<version>`, Maven sẽ tự động kế thừa số phiên bản chuẩn xác từ Parent POM, giúp hệ thống không bao giờ bị xung đột thư viện ạ!"*
 
 #### Q4: "Fat JAR (Executable JAR) là gì? Khác gì với file JAR truyền thống của Java cũ?"
+
 - **Trả lời**: *"Dạ thưa Thầy:
   - File JAR truyền thống (Thin JAR) chỉ chứa các file `.class` do lập trình viên viết ra. Muốn chạy được, lập trình viên phải tự cài đặt máy chủ bên ngoài (như Tomcat riêng), copy các file jar phụ thuộc vào thư mục `lib`, cấu hình rất phức tạp.
   - Còn **Fat JAR** (do plugin `spring-boot-maven-plugin` tạo ra) là một gói nén hoàn chỉnh chứa tất cả mọi thứ: Mã nguồn ứng dụng + Toàn bộ 16 thư viện `.jar` phụ thuộc giải nén trong `BOOT-INF/lib` + **Nhúng sẵn máy chủ Apache Tomcat bên trong**. Chỉ cần chạy lệnh `java -jar app.jar` là web server tự bung ra và chạy ngay lập tức, cực kỳ tiện lợi cho việc triển khai Docker và Microservices ạ!"*
 
 #### Q5: "Nếu dự án gặp xung đột thư viện (Dependency Conflict), ví dụ 2 thư viện phụ thuộc kéo theo 2 phiên bản khác nhau của cùng một file jar thì Maven sẽ xử lý như thế nào?"
+
 - **Trả lời**: *"Dạ thưa Thầy, Maven xử lý xung đột theo nguyên tắc **'Nearest-Wins' (Gần nhất thì thắng)** dựa trên độ sâu của cây phụ thuộc (Dependency Tree):
   - Phiên bản nào có độ sâu trên cây phụ thuộc gần với file `pom.xml` của dự án hơn thì phiên bản đó sẽ được chọn.
   - Nếu hai phiên bản có cùng độ sâu, Maven sẽ áp dụng nguyên tắc **'First-Declared' (Khai báo trước thì thắng)**, tức là dependency nào được khai báo trước trong file `pom.xml` thì thư viện con của nó sẽ được ưu tiên giữ lại ạ!"*
@@ -1067,8 +1076,8 @@ Mỗi thẻ `<dependency>` đại diện cho một module chức năng được 
 ## 📌 CHUYÊN ĐỀ ĐẶC BIỆT: TẦNG THỰC THỂ (ENTITY), TẦNG REPOSITORY & DTO
 
 > [!IMPORTANT]
-> Toàn bộ nội dung bóc tách chi tiết từng dòng code, từng trường, phân tích Annotation JPA/Hibernate (UUID, LongText, UniqueConstraints, Indexes, Self-referencing Comment, Cascade vs OnDelete), các câu truy vấn JPQL phức tạp (Cartesian Product, LEFT JOIN, COUNT DISTINCT) và cấu trúc 20 DTOs (Request + Response) đã được tách riêng thành một chuyên đề độc lập tại:  
-> 🔗 **[CHUYEN_DE_DTO_ENTITY_REPOSITORY.md](file:///d:/folder/rac/iuh/m%C3%B4n/hk1-4/cc-web-website-hld/ck-luu-y/CHUYEN_DE_DTO_ENTITY_REPOSITORY.md)**  
+> Toàn bộ nội dung bóc tách chi tiết từng dòng code, từng trường, phân tích Annotation JPA/Hibernate (UUID, LongText, UniqueConstraints, Indexes, Self-referencing Comment, Cascade vs OnDelete), các câu truy vấn JPQL phức tạp (Cartesian Product, LEFT JOIN, COUNT DISTINCT) và cấu trúc 20 DTOs (Request + Response) đã được tách riêng thành một chuyên đề độc lập tại:
+> 🔗 **[CHUYEN_DE_DTO_ENTITY_REPOSITORY.md](file:///d:/folder/rac/iuh/m%C3%B4n/hk1-4/cc-web-website-hld/ck-luu-y/CHUYEN_DE_DTO_ENTITY_REPOSITORY.md)**
 > Sinh viên mở file trên để ôn tập chuyên sâu về 10 Entities, 10 Repositories, 20 DTOs cùng 4 câu hỏi vấn đáp CSDL đỉnh cao (N+1 query problem, UUID vs Auto-increment, CascadeType vs @OnDelete, LazyInitializationException).
 
 ---
@@ -1076,6 +1085,7 @@ Mỗi thẻ `<dependency>` đại diện cho một module chức năng được 
 ## Mục 3: Tầng Nghiệp Vụ (Service Package - Toàn Bộ 10 Services)
 
 Tầng Service là "trái tim xử lý logic" (Business Logic Layer) của hệ thống. Tất cả các class Service trong dự án đều sử dụng các Annotation chuẩn mực của Spring Boot & Lombok:
+
 - `@Service`: Đánh dấu class là một Spring Bean thuộc tầng nghiệp vụ, được Spring IoC Container quản lý vòng đời.
 - `@RequiredArgsConstructor`: Annotation của Lombok tự động sinh Constructor chứa tất cả các thuộc tính khai báo `final`. Đây là chuẩn mực **Constructor Dependency Injection ngầm định (Implicit DI)** của Spring, giúp loại bỏ hoàn toàn việc phải gõ `@Autowired` thủ công.
 - `@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)`: Thiết lập mặc định cho tất cả các biến trường trong class thành `private final`, bảo đảm tính đóng gói và tính bất biến (Immutability).
@@ -1263,6 +1273,7 @@ Tầng Service là "trái tim xử lý logic" (Business Logic Layer) của hệ 
 Tầng Controller tiếp nhận HTTP Request từ Client, gọi Service tương ứng xử lý nghiệp vụ, và trả về dữ liệu chuẩn JSON được bọc trong đối tượng `ApiResponse<T>`.
 
 ### 4.1. Khái niệm lý thuyết cốt lõi cần nhớ khi vấn đáp:
+
 - `@RestController`: Bằng `@Controller` + `@ResponseBody`. Báo hiệu mọi phương thức trong class này đều tuần tự hóa kết quả trả về trực tiếp thành chuỗi **JSON** (qua bộ chuyển đổi Jackson), không chuyển hướng sang trang HTML.
 - `@Controller`: Dành riêng cho `ViewController.java` để Spring MVC hiểu là trả về tên file giao diện HTML (Thymeleaf View).
 - `@RequestMapping("/path")`: Khai báo tiền tố đường dẫn dùng chung cho tất cả các endpoint trong Controller.
@@ -1274,11 +1285,13 @@ Tầng Controller tiếp nhận HTTP Request từ Client, gọi Service tương 
 ---
 
 ### 4.2. `AuthenticationController.java` — Quản lý đăng nhập & kiểm tra Token
+
 - `@RequestMapping("/auth")`:
   - `@PostMapping("/login")`: Nhận `AuthenticationRequest` (`username`, `password`), gọi `authenticationService.authenticate()`, trả về chuỗi Token JWT.
   - `@PostMapping("/introspect")`: Nhận `IntrospectRequest` (`token`), gọi `authenticationService.introspect()`, trả về kết quả token còn sống hay đã chết.
 
 ### 4.3. `UserController.java` — Quản trị người dùng & Hồ sơ cá nhân
+
 - `@RequestMapping("/users")`:
   - `@PostMapping`: Tiếp nhận đăng ký thành viên mới (`UserCreatetionRequest`), có gắn `@Valid` kiểm tra độ dài username/password.
   - `@GetMapping`: Lấy danh sách toàn bộ người dùng (Yêu cầu quyền Admin).
@@ -1288,6 +1301,7 @@ Tầng Controller tiếp nhận HTTP Request từ Client, gọi Service tương 
   - `@GetMapping("/profile/{username}")`: Lấy hồ sơ công khai của một tác giả bất kỳ để hiển thị trang tác giả.
 
 ### 4.4. `BlogController.java` — Điều phối toàn bộ hoạt động bài viết
+
 - `@RequestMapping("/blogs")`:
   - `@PostMapping`: Tạo bài viết mới (`@Valid BlogCreationRequest`).
   - `@GetMapping`: Lấy danh sách bài viết trang chủ kèm thống kê tương tác.
@@ -1302,6 +1316,7 @@ Tầng Controller tiếp nhận HTTP Request từ Client, gọi Service tương 
   - `@GetMapping("/my-blogs")`: Lấy tất cả bài viết do tài khoản hiện tại tạo ra (kể cả bản nháp).
 
 ### 4.5. `InteractionController.java` — Điều phối Thả tim, Bình luận & Bookmark
+
 - `@RequestMapping("/interactions")`:
   - `@PostMapping("/likes/{blogId}")`: Thả tim / Bỏ like.
   - `@GetMapping("/comments/{blogId}")`: Lấy danh sách cây bình luận của bài viết.
@@ -1311,26 +1326,31 @@ Tầng Controller tiếp nhận HTTP Request từ Client, gọi Service tương 
   - `@GetMapping("/bookmarks/my-bookmarks")`: Lấy danh sách các bài viết đã lưu.
 
 ### 4.6. `FollowController.java` — Điều phối theo dõi tác giả
+
 - `@RequestMapping("/follows")`:
   - `@PostMapping("/{targetUsername}")`: Theo dõi / Bỏ theo dõi tác giả.
   - `@GetMapping("/followers/{targetUsername}")`: Lấy danh sách người đang theo dõi tác giả này.
   - `@GetMapping("/following/{targetUsername}")`: Lấy danh sách tác giả mà người này đang theo dõi.
 
 ### 4.7. `NotificationController.java` — Điều phối chuông thông báo
+
 - `@RequestMapping({"/api/notifications", "/notifications/api"})`:
   - `@GetMapping`: Lấy toàn bộ thông báo của tôi.
   - `@PutMapping("/{id}/read")`: Đánh dấu thông báo đã đọc.
   - `@DeleteMapping("/{id}")`: Xóa thông báo khỏi danh sách.
 
 ### 4.8. `AdminController.java` — Điều phối số liệu thống kê quản trị
+
 - `@RequestMapping("/api/admin")`:
   - `@GetMapping("/stats")`: Gọi `adminService.getDashboardStats()` để lấy tổng số thành viên, tổng số bài viết và danh sách 5 bài viết mới nhất cho Dashboard Admin. Endpoint này được Spring Security bảo vệ bằng luật `.hasRole("ADMIN")`.
 
 ### 4.9. `UploadController.java` — Điều phối tải tệp ảnh lên đám mây
+
 - `@RequestMapping("/upload")`:
   - `@PostMapping("/image")`: Nhận tham số `@RequestParam("file") MultipartFile file`, chuyển qua `cloudinaryService.uploadImage(file)` để tải lên đám mây và trả về đường dẫn ảnh công khai HTTPS.
 
 ### 4.10. `ViewController.java` — Điều hướng hiển thị các trang giao diện HTML Thymeleaf
+
 - Gắn `@Controller`:
   - Chứa 16 phương thức `@GetMapping` điều hướng các đường dẫn URL (`/`, `/login`, `/register`, `/post`, `/admin/dashboard`...) về các file HTML tương ứng trong thư mục `templates/`.
 
@@ -1343,6 +1363,7 @@ Tầng Controller tiếp nhận HTTP Request từ Client, gọi Service tương 
 Hệ thống thiết kế cơ chế xử lý lỗi tập trung theo chuẩn Enterprise, không bao giờ để lộ vết lỗi hệ thống (Stacktrace) hay mã lỗi 500 xấu xí ra màn hình người dùng.
 
 1. **`ErrorCode.java` (Enum định nghĩa danh mục lỗi)**:
+
    - Là một `enum` chứa danh sách mã lỗi nghiệp vụ chuẩn hóa:
      - `UNCATEGORIZED_EXCEPTION(9999, "Uncategorized error")`: Lỗi hệ thống chưa phân loại.
      - `USER_EXITED(1002, "User Exited")`: Tài khoản đã tồn tại.
@@ -1357,13 +1378,13 @@ Hệ thống thiết kế cơ chế xử lý lỗi tập trung theo chuẩn Ente
      - `UNAUTHORIZED(1011, "Bạn không có quyền thực hiện hành động này")`.
      - `CATEGORY_EXITED(1012, "Danh mục đã tồn tại")`.
    - *Lý thuyết vấn đáp*: Dùng `enum` giúp quản lý mã lỗi tập trung, không bị hardcode chuỗi thông báo rải rác trong code và dễ dàng quốc tế hóa ngôn ngữ (i18n).
-
 2. **`AppException.java` (Ngoại lệ nghiệp vụ tùy chỉnh)**:
+
    - Kế thừa class `RuntimeException` (Ngoại lệ không bắt buộc khai báo - **Unchecked Exception**).
    - Chứa thuộc tính `private ErrorCode errorCode`.
    - Khi Service phát hiện vi phạm nghiệp vụ, chỉ cần ném ra: `throw new AppException(ErrorCode.USER_NOT_EXITED);`.
-
 3. **`GlobalExceptionHandler.java` (Bộ đón bắt ngoại lệ toàn cục)**:
+
    - Gắn Annotation `@ControllerAdvice`: Lắng nghe và chặn bắt tất cả các Exception văng ra từ bất kỳ Controller nào trong toàn bộ ứng dụng.
    - `@ExceptionHandler(value = AppException.class)`:
      - Bắt các lỗi do lập trình viên chủ động ném ra (`AppException`).
@@ -1440,20 +1461,24 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
 ### 5.4. Bộ Câu Hỏi Vấn Đáp Lý Thuyết Thầy Hay Hỏi Về Service, Controller, Exception & Mapper
 
 #### Q1: "Annotation `@Transactional` đặt ở tầng Service hoạt động như thế nào? Nếu phương thức `addComment()` lưu bình luận thành công nhưng lúc gửi `createNotification()` bị lỗi thì CSDL sẽ ra sao?"
+
 - **Trả lời**: *"Dạ thưa Thầy, nhờ có `@Transactional`, Spring AOP sẽ bọc phương thức bằng một Transaction Proxy. Toàn bộ các câu lệnh SQL trong phương thức đều thực thi trên cùng một Connection CSDL với cờ `AutoCommit = false`. Nếu có bất kỳ ngoại lệ `RuntimeException` nào xảy ra khi gửi thông báo, Spring Proxy sẽ bắt được và gọi lệnh `Connection.rollback()`. Toàn bộ bình luận vừa thêm trước đó sẽ bị xóa bỏ, khôi phục CSDL về trạng thái nguyên vẹn, bảo đảm trọn vẹn tính chất **Atomicity (Tính nguyên tử)** của giao dịch ACID ạ!"*
 
 #### Q2: "Tại sao nhóm em dùng `@RestController` ở các API mà lại dùng `@Controller` ở file `ViewController.java`?"
+
 - **Trả lời**: *"Dạ thưa Thầy:
   - `@RestController` là annotation chuyên dụng cho RESTful API, tự động gắn kèm `@ResponseBody`. Mọi giá trị trả về từ phương thức (như `ApiResponse`, `BlogResponse`) đều được chuyển đổi thành chuỗi dữ liệu **JSON** để gửi về cho client.
   - Còn `@Controller` ở `ViewController.java` là Spring MVC Controller truyền thống. Chuỗi trả về là **tên của View Template** (ví dụ `"public/home-page"`). Cỗ máy Thymeleaf ViewResolver sẽ đón chuỗi này để nạp file HTML tương ứng từ thư mục `templates/` nạp lên màn hình trình duyệt ạ!"*
 
 #### Q3: "Tại sao nhóm lại dùng MapStruct mà không dùng thư viện ModelMapper hoặc tự viết các hàm getter/setter thủ công?"
+
 - **Trả lời**: *"Dạ thưa Thầy:
   - Nếu viết getter/setter thủ công cho hàng chục class DTO và Entity thì code sẽ rất dài dòng, dễ nhầm lẫn và tốn thời gian bảo trì.
   - Nếu dùng thư viện `ModelMapper`, ModelMapper sử dụng Java Reflection trong thời gian chạy (Runtime) để quét các thuộc tính, tốc độ xử lý rất chậm và nếu có sai lệch tên trường thì chỉ phát hiện được khi ứng dụng đang chạy thật.
   - Nhóm em chọn **MapStruct** vì MapStruct sinh code Java thuần tại **thời điểm biên dịch (Compile-time)**. Tốc độ chạy nhanh ngang bằng code tay, hoàn toàn Type-safe và nếu có lỗi ánh xạ sai kiểu dữ liệu thì trình biên dịch `javac` sẽ báo lỗi ngay lập tức, không để lọt lỗi ra môi trường Production ạ!"*
 
 #### Q4: "Cơ chế bắt lỗi tập trung `@ControllerAdvice` và `@ExceptionHandler` giải quyết được vấn đề gì so với việc dùng khối `try-catch` ở từng Controller?"
+
 - **Trả lời**: *"Dạ thưa Thầy:
   - Nếu dùng `try-catch` ở từng phương thức Controller, mã nguồn sẽ bị trùng lặp rất nhiều và các Controller bị bẩn code bởi logic xử lý lỗi.
   - Nhờ có `@ControllerAdvice`, toàn bộ ngoại lệ trong hệ thống đều được dồn về một đầu mối duy nhất là `GlobalExceptionHandler`.
@@ -1468,7 +1493,7 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
 
 ### 6.1. Kiến Trúc Frontend: Phân Biệt MPA vs SPA & Bản Chất Dự Án
 
-- **Bản chất kiến trúc cấu trúc (Structural Architecture)**: 
+- **Bản chất kiến trúc cấu trúc (Structural Architecture)**:
   - Dự án này là **MPA (Multi-Page Application - Ứng dụng Đa Trang)** xây dựng trên nền tảng **HTML5, CSS3 (Bootstrap 5.3.3) và JavaScript ES6+ (kết hợp jQuery 3.7.1)**.
   - Minh chứng: Dự án có hơn 20 file HTML riêng biệt trong thư mục `templates/`, được điều hướng đường dẫn URL độc lập thông qua `ViewController.java` của Spring Boot (ví dụ: `/home` $\rightarrow$ `home-page.html`, `/post` $\rightarrow$ `post.html`, `/login` $\rightarrow$ `login.html`, `/admin/dashboard` $\rightarrow$ `dashboard.html`).
 - **Bản chất cơ chế tương tác (Interaction & Rendering)**:
@@ -1589,6 +1614,7 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
       get uname()  { return localStorage.getItem('username') || 'Guest'; }
   };
   ```
+
   - Quản lý trạng thái chia sẻ giữa tất cả các file JS. Bất kỳ thao tác chọn danh mục ở Sidebar hay gõ từ khóa ở Navbar đều cập nhật vào biến `S` này.
 - **Hàm `excerpt(s, n)`**:
   - Bài viết được lưu trong MySQL dưới dạng chuỗi JSON khối của Editor.js (ví dụ: `{"blocks":[{"type":"paragraph","data":{"text":"Xin chào..."}}]}`).
@@ -1663,6 +1689,7 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
       window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   ```
+
   - Thay vì chuyển trang vật lý, hàm này hoán đổi hiển thị giữa Trang chủ, Danh mục và Thẻ tag trong chớp mắt.
 - **Hàm `updateNavAuth()` — Mổ Token JWT để Phân quyền Admin**:
   ```javascript
@@ -1672,7 +1699,7 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
       const base64Url = token.split('.')[1];
       const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
       const payload = JSON.parse(decodeURIComponent(window.atob(base64)...));
-      
+
       // Kiểm tra chuỗi scope (Spring Security cấp quyền)
       const roles = payload.scope || payload.roles || "";
       if (roles.includes("ADMIN")) {
@@ -1682,6 +1709,7 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
       }
   }
   ```
+
   - Giải thích cho Thầy: Phía Frontend chủ động giải mã Payload của JWT để quyết định hiển thị các nút chức năng quản trị, giúp trải nghiệm giao diện thông minh và nhanh chóng. Tuy nhiên, tính bảo mật thực sự vẫn được chốt chặn nghiêm ngặt ở tầng Spring Security của Backend.
 - **Xử lý Chuông thông báo (Notifications)**:
   - Gọi `GET /notifications` định kỳ để đếm số thông báo mới.
