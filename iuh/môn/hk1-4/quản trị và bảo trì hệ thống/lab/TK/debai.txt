@@ -1,0 +1,24 @@
+câu 1
+client 1 192.168.1.1
+server 192.168.1.2 20.20.1.2
+client 2 20.20.1.1 
+
+câu 2
+
+server 1 tạo group nhanvien có 2 user nv1 nv2 , ketoan có 2 user là kt1 kt2 
+nhansu có 2 user là ns1 và ns2 
+tạo thư mục DATACONGTY trong đó có các thư mục DATANHANVIEN , DATAKETOAN , DATANHANSU
+phân quyền để 
+group nhanvien toàn quyền tren DATANHANVIEN , cấm truy cập DATAKETOAN và DATANHANSU 
+group ketoan toàn quyền trên DATAKETOAN , được thay đổi nhưng cấm xóa trên DATANHANVIEN , chỉ đọc DATANHANSU
+group nhansu toàn quyền trên DATANHANSU ,DATANHANVIEN , chỉ đọc DATAKETOAN
+
+câu 3 
+trên server 1, cấu hình group policies để 
+yêu cầu mật khẩu phức tạp . độ dài tối thiểu 8 kí tự
+cho cho phép đăng nhập sai tối đa 5 lần , quá 5 lần phải chờ 5 phút mới cho login lại 
+cho phép user nv1 , kt1 , ns1 , được login locally , còn user nv2 , kt2 , ns2 cấm login locally 
+
+
+
+Abc@12345
