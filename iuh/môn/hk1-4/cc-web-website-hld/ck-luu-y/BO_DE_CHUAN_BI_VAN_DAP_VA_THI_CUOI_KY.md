@@ -1603,6 +1603,7 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
 #### 6.3.1. `app.js` — Quản Lý State Toàn Cục & Xử Lý Dữ Liệu Editor.js
 
 - **Đối tượng State toàn cục `var S`**:
+
   ```javascript
   var S = {
       page: 'home',          // Trang/tab hiện tại (home, categories, tags)
@@ -1617,9 +1618,11 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
 
   - Quản lý trạng thái chia sẻ giữa tất cả các file JS. Bất kỳ thao tác chọn danh mục ở Sidebar hay gõ từ khóa ở Navbar đều cập nhật vào biến `S` này.
 - **Hàm `excerpt(s, n)`**:
+
   - Bài viết được lưu trong MySQL dưới dạng chuỗi JSON khối của Editor.js (ví dụ: `{"blocks":[{"type":"paragraph","data":{"text":"Xin chào..."}}]}`).
   - Hàm này dùng `JSON.parse(s)` bóc tách các block paragraph, loại bỏ thẻ HTML bằng Regex `replace(/<[^>]*>/g, '')` và cắt lấy $n$ ký tự đầu tiên để làm mô tả ngắn hiển thị ở trang chủ.
 - **Hàm `callApi(url, method, data)`**:
+
   - Là hàm bọc (wrapper) phương thức `$.ajax()` của jQuery.
   - Tự động kiểm tra nếu có `token` trong `localStorage`, nó sẽ tự động chèn Header bảo mật:
     `headers: { 'Authorization': 'Bearer ' + token }`.
@@ -1679,6 +1682,7 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
 #### 6.3.5. `nav.js` — SPA Navigation, Mổ Payload Token JWT Check Role Admin & Chuông Thông Báo
 
 - **Hàm `navigate(page)` (Linh hồn SPA của trang chủ)**:
+
   ```javascript
   function navigate(page) {
       S.page = page;
@@ -1692,6 +1696,7 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
 
   - Thay vì chuyển trang vật lý, hàm này hoán đổi hiển thị giữa Trang chủ, Danh mục và Thẻ tag trong chớp mắt.
 - **Hàm `updateNavAuth()` — Mổ Token JWT để Phân quyền Admin**:
+
   ```javascript
   const token = localStorage.getItem('token');
   if (token) {
@@ -1712,6 +1717,7 @@ Dự án sử dụng thư viện **MapStruct** — công cụ ánh xạ dữ li�
 
   - Giải thích cho Thầy: Phía Frontend chủ động giải mã Payload của JWT để quyết định hiển thị các nút chức năng quản trị, giúp trải nghiệm giao diện thông minh và nhanh chóng. Tuy nhiên, tính bảo mật thực sự vẫn được chốt chặn nghiêm ngặt ở tầng Spring Security của Backend.
 - **Xử lý Chuông thông báo (Notifications)**:
+
   - Gọi `GET /notifications` định kỳ để đếm số thông báo mới.
   - Hiển thị chấm đỏ thông báo và danh sách các thông báo tương tác (Like, Comment, Follow).
 
