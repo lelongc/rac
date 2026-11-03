@@ -9,7 +9,9 @@ public class RMIClient {
     public static final String SERVICE_NAME = "RemoteService";
 
     public static void main(String[] args) {
-        String rmiUrl = "rmi://" + HOST + ":" + PORT + "/" + SERVICE_NAME;
+        String host = (args.length > 0 && !args[0].trim().isEmpty()) ? args[0].trim() : HOST;
+        int port = (args.length > 1 && !args[1].trim().isEmpty()) ? Integer.parseInt(args[1].trim()) : PORT;
+        String rmiUrl = "rmi://" + host + ":" + port + "/" + SERVICE_NAME;
 
         try {
             System.out.println("Dang ket noi toi Server tai: " + rmiUrl);
@@ -251,6 +253,14 @@ public class RMIClient {
             // SinhVien sv = service.timSinhVienTheoMa(maSV);
             // if (sv != null) System.out.println("Tim thay: " + sv);
             // else System.out.println("Khong tim thay sinh vien!");
+
+            // ========== BAI 38: [THỰC HÀNH TUẦN 7 BÀI 2] UCLN va Kiem tra so nguyen to 2 so a va b - Input: a, b - [KHONG CAN SinhVien.java] ==========
+            // System.out.println("=== BÀI 38: UCLN VÀ SỐ NGUYÊN TỐ 2 SỐ ===");
+            // System.out.print("Nhap so a: ");
+            // int a = scanner.nextInt();
+            // System.out.print("Nhap so b: ");
+            // int b = scanner.nextInt();
+            // System.out.println("Ket qua:\n" + service.uclnVaNguyenTo2So(a, b));
 
             scanner.close();
         } catch (Exception e) {

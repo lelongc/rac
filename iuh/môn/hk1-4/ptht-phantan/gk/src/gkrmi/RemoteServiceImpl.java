@@ -436,4 +436,18 @@ public class RemoteServiceImpl extends UnicastRemoteObject implements IRemoteSer
     //     while (b != 0) { long t = a % b; a = b; b = t; }
     //     return Math.abs(a);
     // }
+
+    // ========== BAI 38: [THỰC HÀNH TUẦN 7 BÀI 2] UCLN va Kiem tra so nguyen to 2 so a va b - Input: a, b - [KHONG CAN SinhVien.java] ==========
+    // @Override
+    // public String uclnVaNguyenTo2So(int a, int b) throws RemoteException {
+    //     int n1 = Math.abs(a), n2 = Math.abs(b);
+    //     int x = n1, y = n2;
+    //     while (y != 0) { int t = x % y; x = y; y = t; }
+    //     boolean p1 = (n1 >= 2);
+    //     for (int i = 2; i * i <= n1; i++) if (n1 % i == 0) { p1 = false; break; }
+    //     boolean p2 = (n2 >= 2);
+    //     for (int i = 2; i * i <= n2; i++) if (n2 % i == 0) { p2 = false; break; }
+    //     String snt = n1 + (p1 ? " la so nguyen to. " : " khong phai so nguyen to. ") + n2 + (p2 ? " la so nguyen to." : " khong phai so nguyen to.");
+    //     return "UCLN(" + n1 + ", " + n2 + ") = " + x + " | " + snt;
+    // }
 }

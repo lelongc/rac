@@ -129,4 +129,7 @@ public interface IRemoteService extends Remote {
 
     // ========== BAI 37: [THỰC HÀNH TUẦN 1 & 3 - ⚠️ CẦN SinhVien.java] Tim sinh vien theo ma - Input: "SV01" ==========
     // SinhVien timSinhVienTheoMa(String maSV) throws RemoteException;
+
+    // ========== BAI 38: [THỰC HÀNH TUẦN 7 BÀI 2] UCLN va Kiem tra so nguyen to 2 so a va b - Input: a, b - [KHONG CAN SinhVien.java] ========== 
+    // String uclnVaNguyenTo2So(int a, int b) throws RemoteException;
 }
