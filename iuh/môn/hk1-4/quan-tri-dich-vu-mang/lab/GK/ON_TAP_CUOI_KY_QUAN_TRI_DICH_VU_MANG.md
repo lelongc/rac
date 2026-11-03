@@ -1,23 +1,13 @@
-# TÀI LIỆU ÔN TẬP THI CUỐI KỲ - QUẢN TRỊ DỊCH VỤ MẠNG (IUH)
-## (BẢN TỐI ƯU CÔ ĐỌNG - CHÉP THI NHANH - ĐẦY ĐỦ Ý ĂN TRỌN ĐIỂM 10)
-
-> **Khoa Công Nghệ Thông Tin - Đại Học Công Nghiệp TP. Hồ Chí Minh**  
-> **Lưu ý quan trọng khi đi thi:**
-> - Toàn bộ các phần **đáp án/gợi ý gốc trong file PDF** được **giữ nguyên vẹn 100%** từ ngữ của thầy cô.
-> - Các câu hỏi lý thuyết và thực hành còn lại đã được **cô đọng dạng gạch đầu dòng & từ khóa (keywords)** giúp bạn chép bài cực nhanh, không mỏi tay mà vẫn tuyệt đối chuẩn xác!
-
----
-
-## MỤC LỤC TỔNG HỢP
-
 1. [CÂU 1: NGUYÊN LÝ HOẠT ĐỘNG CÁC DỊCH VỤ CƠ BẢN (DHCP, DNS, SAMBA, NFS, FTP, WEB)](#câu-1-nguyên-lý-hoạt-động-các-dịch-vụ-cơ-bản)
 2. [CÂU 2: GIẢI PHÁP WEB SERVER VÀ HỆ THỐNG THƯ ĐIỆN TỬ (EMAIL)](#câu-2-giải-pháp-web-server-và-hệ-thống-thư-điện-tử-email)
 3. [CÂU 3: BÀI TOÁN CÔNG TY ABC (DHCP VÀ DHCP RELAY AGENT)](#câu-3-bài-toán-công-ty-abc-dhcp-và-dhcp-relay-agent)
-   - *3a. Sơ đồ mô hình mạng & Phân bổ IP*
-   - *3b. Giải pháp & Nguyên lý (Giữ nguyên văn 100% đáp án PDF)*
-   - *3c. Mô tả quá trình cài đặt & triển khai (Giữ nguyên văn PDF + Các bước hoàn thiện)*
+
+- *3a. Sơ đồ mô hình mạng & Phân bổ IP*
+- *3b. Giải pháp & Nguyên lý
+- *3c. Mô tả quá trình cài đặt & triển khai* 
+
 4. [CÂU 4: DỊCH VỤ VOIP (VOICE OVER IP)](#câu-4-dịch-vụ-voip-voice-over-ip)
-5. [CÂU 5: DỊCH VỤ HTTPS & CERTIFICATE SERVER (CA)](#câu-5-dịch-vụ-https--certificate-server-ca)
+5. [CÂU 5: DỊCH VỤ HTTPS &amp; CERTIFICATE SERVER (CA)](#câu-5-dịch-vụ-https--certificate-server-ca)
 6. [BẢNG TRA CỨU NHANH CỔNG (PORT CHEAT-SHEET)](#bảng-tra-cứu-nhanh-cổng-port-cheat-sheet)
 
 ---
@@ -25,6 +15,7 @@
 # CÂU 1: NGUYÊN LÝ HOẠT ĐỘNG CÁC DỊCH VỤ CƠ BẢN
 
 ### 1. Dịch vụ DHCP (Dynamic Host Configuration Protocol)
+
 * **Vai trò:** Tự động cấp phát địa chỉ IP, Subnet Mask, Gateway, DNS cho máy trạm, chống trùng IP, quản lý tập trung.
 * **Cổng giao thức:** **UDP 67** (Server/Relay lắng nghe), **UDP 68** (Client nhận).
 * **Nguyên lý hoạt động (Chu trình DORA 4 bước):**
@@ -38,6 +29,7 @@
   * Hết **100% thời gian:** Nhả IP (`DHCP Release`) và xin lại từ đầu.
 
 ### 2. Dịch vụ DNS (Domain Name System)
+
 * **Vai trò:** Phân giải tên miền (FQDN) thành địa chỉ IP (phân giải thuận) và ngược lại (phân giải nghịch).
 * **Cổng giao thức:** **UDP 53** (truy vấn nhanh bình thường), **TCP 53** (chuyển vùng Zone Transfer hoặc gói tin > 512 bytes).
 * **Nguyên lý hoạt động:**
@@ -48,6 +40,7 @@
   * `A` (Hostname sang IPv4), `AAAA` (IPv6), `CNAME` (Bí danh Alias), `MX` (Máy chủ Mail), `PTR` (Phân giải nghịch từ IP ra tên miền), `NS` (Máy chủ Name Server), `SOA` (Bản ghi quản trị vùng).
 
 ### 3. Dịch vụ SAMBA (SMB/CIFS)
+
 * **Vai trò:** Chia sẻ file và máy in tương thích đa nền tảng giữa Linux và Windows.
 * **Cổng giao thức:** **TCP 445** (SMB trực tiếp), **TCP 139** & **UDP 137, 138** (NetBIOS cũ).
 * **Tiến trình:** `smbd` (xử lý chia sẻ file, xác thực, phân quyền), `nmbd` (phân giải tên NetBIOS và duyệt mạng).
@@ -55,6 +48,7 @@
 * **Share ẩn:** Thêm dấu `$` vào sau tên thư mục chia sẻ (ví dụ `teacher$`) $\rightarrow$ Windows Explorer sẽ ẩn đi, bắt buộc gõ đúng đường dẫn UNC `\\IP\teacher$` mới vào được.
 
 ### 4. Dịch vụ NFS (Network File System)
+
 * **Vai trò:** Gắn kết (mount) thư mục chia sẻ từ máy chủ Linux/Unix từ xa về máy cục bộ với tốc độ cao.
 * **Cổng giao thức:** **TCP/UDP 2049** (NFS Server), **TCP/UDP 111** (dịch vụ `rpcbind` điều hướng RPC).
 * **Tùy chọn cấu hình xuất khẩu (`/etc/exports`):**
@@ -62,6 +56,7 @@
   * `root_squash` (Hạ quyền root từ xa thành user `nobody` để bảo vệ server), `no_root_squash` (Giữ quyền root).
 
 ### 5. Dịch vụ FTP (File Transfer Protocol)
+
 * **Vai trò:** Truyền tải tệp tin dung lượng lớn giữa client và server.
 * **Cổng & 2 kênh tách biệt:**
   * **Kênh Điều khiển (Control):** Cổng **TCP 21** (luôn mở để gửi lệnh và phản hồi trạng thái).
@@ -72,6 +67,7 @@
 * **Bảo mật:** Bật `chroot_local_user=YES` để "giam" người dùng trong thư mục cá nhân, cấm `anonymous_enable=NO`.
 
 ### 6. Dịch vụ Web (HTTP / HTTPS)
+
 * **Vai trò:** Phân phối nội dung trang web/ứng dụng cho người dùng qua trình duyệt.
 * **Cổng giao thức:** **TCP 80** (HTTP plain-text không mã hóa), **TCP 443** (HTTPS mã hóa TLS/SSL).
 * **Cơ chế Virtual Host:** Chạy nhiều website trên 1 Server qua: Name-based (dựa vào domain request header), IP-based (mỗi web 1 IP), Port-based (mỗi web 1 port).
@@ -81,6 +77,7 @@
 # CÂU 2: GIẢI PHÁP WEB SERVER VÀ HỆ THỐNG THƯ ĐIỆN TỬ (EMAIL)
 
 ### 2a. Lựa chọn giải pháp Web Server cho Công ty ABC
+
 * **4 giải pháp xem xét:**
   1. *On-Premises (Đặt server tại văn phòng):* Tốn kém phần cứng, cần đường mạng IP tĩnh đắt, rủi ro mất điện/mạng.
   2. *Dedicated Server (Thuê server riêng ở Data Center):* Hiệu năng cao nhưng giá đắt (vài triệu/tháng), lãng phí công suất cho web công ty.
@@ -99,6 +96,7 @@
 ---
 
 ### 2b. Các bước triển khai Web Server thực tế
+
 1. **Thuê VPS:** Mua gói Cloud VPS (OS Ubuntu 22.04 LTS), nhận địa chỉ IP Public (VD: `203.162.10.50`).
 2. **Cấu hình DNS `abc.com.vn`:**
    * Bản ghi `A`: host `@` $\rightarrow$ trỏ về IP `203.162.10.50`.
@@ -147,14 +145,14 @@
 
 ### 2d. So sánh giao thức POP (POP3) và IMAP
 
-| Tiêu chí | Giao thức POP (POP3) | Giao thức IMAP |
-| :--- | :--- | :--- |
-| **Cơ chế hoạt động** | **Tải về cục bộ (Download & Store):** Tải thư về máy rồi mặc định xóa trên Server. | **Đồng bộ hai chiều (Two-way Sync):** Thư lưu trữ tập trung trên Server, client đồng bộ hiển thị. |
-| **Cổng kết nối** | Cổng thường: **TCP 110** \| Cổng mã hóa SSL: **TCP 995** | Cổng thường: **TCP 143** \| Cổng mã hóa SSL: **TCP 993** |
-| **Hỗ trợ đa thiết bị** | **Kém:** Tải về máy này thì máy khác không thấy thư nữa. | **Rất tốt:** Đọc/xóa trên điện thoại thì máy tính tự cập nhật theo. |
-| **Quản lý thư mục** | Chỉ tải hộp thư đến (**Inbox**), không tạo/đồng bộ được thư mục con. | Đồng bộ toàn bộ cây thư mục (Sent, Draft, Trash, thư mục tự tạo). |
-| **Dung lượng Server** | Tốn rất ít dung lượng Server. | Đòi hỏi Server phải có dung lượng lưu trữ lớn. |
-| **Khi nào sử dụng?** | Dùng duy nhất 1 máy tính cố định, dung lượng hòm thư ít. | Người dùng hiện đại dùng đồng thời cả Laptop và Điện thoại. |
+| Tiêu chí                        | Giao thức POP (POP3)                                                                                  | Giao thức IMAP                                                                                                       |
+| :-------------------------------- | :----------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- |
+| **Cơ chế hoạt động**   | **Tải về cục bộ (Download & Store):** Tải thư về máy rồi mặc định xóa trên Server. | **Đồng bộ hai chiều (Two-way Sync):** Thư lưu trữ tập trung trên Server, client đồng bộ hiển thị. |
+| **Cổng kết nối**         | Cổng thường: **TCP 110** \| Cổng mã hóa SSL: **TCP 995**                             | Cổng thường: **TCP 143** \| Cổng mã hóa SSL: **TCP 993**                                            |
+| **Hỗ trợ đa thiết bị** | **Kém:** Tải về máy này thì máy khác không thấy thư nữa.                             | **Rất tốt:** Đọc/xóa trên điện thoại thì máy tính tự cập nhật theo.                              |
+| **Quản lý thư mục**     | Chỉ tải hộp thư đến (**Inbox**), không tạo/đồng bộ được thư mục con.             | Đồng bộ toàn bộ cây thư mục (Sent, Draft, Trash, thư mục tự tạo).                                         |
+| **Dung lượng Server**     | Tốn rất ít dung lượng Server.                                                                     | Đòi hỏi Server phải có dung lượng lưu trữ lớn.                                                              |
+| **Khi nào sử dụng?**     | Dùng duy nhất 1 máy tính cố định, dung lượng hòm thư ít.                                   | Người dùng hiện đại dùng đồng thời cả Laptop và Điện thoại.                                            |
 
 ---
 
@@ -162,12 +160,8 @@
 
 ### 3a. Sơ đồ mô hình mạng & Phân bổ IP
 
-#### 1. Sơ đồ gốc từ tài liệu PDF ôn tập:
-![Sơ đồ mạng từ PDF](images/so_do_mang_lan1_lan2_pdf.png)  
-*(Mô hình thiết bị:)*  
-![Mô hình thiết bị](images/mo_hinh_server_client.png)
+2. Sơ đồ mạng chi tiết:
 
-#### 2. Sơ đồ mạng chi tiết:
 ```text
 === MẠNG LAN 1 (172.16.10.0/24) ========================================================
    [ Server 1: DHCP Server & DNS ] (172.16.10.1/24)
@@ -188,6 +182,7 @@
 ```
 
 #### 3. Bảng phân bổ IP chép bài:
+
 * **LAN 1 (`172.16.10.0/24`):**
   * Gateway / Server 1 IP: `172.16.10.1` (Mask: `255.255.255.0`).
   * Dải IP Tĩnh (Server & Giám đốc, Máy in): `172.16.10.2` đến `172.16.10.30`.
@@ -201,66 +196,67 @@
 ---
 
 ### 3b. Giải pháp & Nguyên lý hoạt động
-*(Toàn bộ các mục in nghiêng có gạch đầu dòng bên dưới là **nguyên văn 100% từ file PDF gợi ý của trường**)*:
 
 * **Nguyên nhân lỗi:** Gói tin `DHCP Discover` là gói Broadcast (`255.255.255.255`). Router mềm ngăn cách 2 mạng có tính năng phân tách Broadcast Domain nên **mặc định chặn (drop) toàn bộ gói Broadcast**, khiến DHCP Server ở LAN 1 không nhận được yêu cầu từ LAN 2.
 * **Giải pháp:** Cài đặt dịch vụ **DHCP Relay Agent** trên Router mềm (Server 2).
 
-> #### 📜 NGUYÊN VĂN 12 BƯỚC GIẢI PHÁP TRONG FILE PDF GỐC (TRANG 3):
-> *- Đưa ra giải pháp phù hợp để cấp địa chỉ IP động cho hệ thống mạng LAN*  
-> *1. Gán địa chỉ cho server 1 như sau : x là số máy sinh viên ngồi*  
-> &nbsp;&nbsp;&nbsp;&nbsp;*NIC 172 : 172.16.x.1/24*  
-> &nbsp;&nbsp;&nbsp;&nbsp;*NIC 192 : 192.168.x.1/24*  
-> *2. Gán địa chỉ cho server 2*  
-> &nbsp;&nbsp;&nbsp;&nbsp;*NIC 10 : 10.10.x.1/24*  
-> &nbsp;&nbsp;&nbsp;&nbsp;*NIC 192 : 192.168.x.2/24*  
-> *3. Cấu hình cho server 1 và server 2 làm Router*  
-> *4. Cài DHCP trên server 1*  
-> *5. Tạo 2 dãy địa chỉ trên DHCP server*  
-> *6. Scope 1 : 172.16.10.1 – 172.16.10.100*  
-> *7. Scope 2 : 10.10.10.1 – 10.10.10.100*  
-> *8. Cấu hình DHCP option 003 Router cho từng scope*  
-> *9. Kích hoạt các scope đã tạo*  
-> *10 Cấu hình cho server 2 làm DHCP Relay Agent*  
-> *11 Chỉnh card mạng của client về chế độ lấy địa chỉ động*  
-> *12 Kiểm tra kết nối giữa các mạng sau khi client lấy được địa chỉ từ DHCP server : client 1 ping địa chỉ của client 2*  
+> *- Đưa ra giải pháp phù hợp để cấp địa chỉ IP động cho hệ thống mạng LAN*
+> *1. Gán địa chỉ cho server 1 như sau : x là số máy sinh viên ngồi*
+> &nbsp;&nbsp;&nbsp;&nbsp;*NIC 172 : 172.16.x.1/24*
+> &nbsp;&nbsp;&nbsp;&nbsp;*NIC 192 : 192.168.x.1/24*
+> *2. Gán địa chỉ cho server 2*
+> &nbsp;&nbsp;&nbsp;&nbsp;*NIC 10 : 10.10.x.1/24*
+> &nbsp;&nbsp;&nbsp;&nbsp;*NIC 192 : 192.168.x.2/24*
+> *3. Cấu hình cho server 1 và server 2 làm Router*
+> *4. Cài DHCP trên server 1*
+> *5. Tạo 2 dãy địa chỉ trên DHCP server*
+> *6. Scope 1 : 172.16.10.1 – 172.16.10.100*
+> *7. Scope 2 : 10.10.10.1 – 10.10.10.100*
+> *8. Cấu hình DHCP option 003 Router cho từng scope*
+> *9. Kích hoạt các scope đã tạo*
+> *10 Cấu hình cho server 2 làm DHCP Relay Agent*
+> *11 Chỉnh card mạng của client về chế độ lấy địa chỉ động*
+> *12 Kiểm tra kết nối giữa các mạng sau khi client lấy được địa chỉ từ DHCP server : client 1 ping địa chỉ của client 2*
 
 ---
 
-> #### 📜 NGUYÊN VĂN NGUYÊN LÝ HOẠT ĐỘNG TRONG FILE PDF GỐC (TRANG 4):
-> 
-> **Quy trình cấp phát động (DHCP) cho LAN 1:**  
-> • *Khi máy client khởi động, máy sẽ gửi broadcast gói tin DHCPDISCOVER, yêu cầu một server phục vụ mình. Gói tin này cũng chứa địa chỉ MAC của máy client.*  
-> • *Các máy Server trên mạng khi nhận được gói tin yêu cầu đó, nếu còn khả năng cung cấp địa chỉ IP, đều gửi lại cho máy Client gói tin DHCPOFFER, đề nghị cho thuê một địa chỉ IP trong một khoảng thời gian nhất định, kèm theo là một subnet mask và địa chỉ của Server. Server sẽ không cấp phát địa chỉ IP vừa đề nghị cho những Client khác trong suốt quá trình thương thuyết.*  
-> • *Máy Client sẽ lựa chọn một trong những lời đề nghị (DHCPOFFER) và gửi broadcast lại gói tin DHCPREQUEST chấp nhận lời đề nghị đó. Điều này cho phép các lời đề nghị không được chấp nhận sẽ được các Server rút lại và dùng đề cấp phát cho Client khác.*  
-> *Máy Server được Client chấp nhận sẽ gửi ngược lại một gói tin DHCPACK như là một lời xác nhận, cho biết là địa chỉ IP đó, subnet mask đó và thời hạn cho sử dụng đó sẽ chính thức được áp dụng. Ngoài ra Server còn gửi kèm theo những thông tin cấu hình bổ sung như địa chỉ của gateway mặc định, địa chỉ DNS Server,…*  
-> 
-> **Quy trình cấp phát động (DHCP Relay Agent) cho LAN 2:**  
-> • *DHCP Relay Agent là bộ trung chuyển DHCP Discover (hoặc DHCP Request) đến DHCP Server. DHCP Relay Agent cho phép forward các truy vấn của DHCP Client đến DHCP server và trả lại IP cho Clients (làm nhiệm vụ như Proxy)*  
-> • *Trong trường hợp DHCP Client và DHCP Server không nằm cùng subnet và được kết nối qua bộ định tuyến (router) thì cần phải có giải pháp cho phép truy vấn từ DHCP Client vượt qua router để đến DHCP Server. DHCP Relay Agent (tác nhân chuyển tiếp DHCP) được dùng cho mục đích này. DHCP Relay Agent là một thực thể trung gian cho phép chuyển tiếp (relay) các DHCP Discover (hoặc DHCP Request), mà thường bị chặn ở ngay router, từ DHCP Client đến DHCP Server.*  
-> • *DHCP Client phát gói tin DHCP Discover sẽ được DHCP Relay Agent đóng vai trò như 1 DHCP Client phát lại gói tin DHCP Discover đến DHCP Server .*  
+> #### (TRANG 4):
+>
+> **Quy trình cấp phát động (DHCP) cho LAN 1:**
+> • *Khi máy client khởi động, máy sẽ gửi broadcast gói tin DHCPDISCOVER, yêu cầu một server phục vụ mình. Gói tin này cũng chứa địa chỉ MAC của máy client.*
+> • *Các máy Server trên mạng khi nhận được gói tin yêu cầu đó, nếu còn khả năng cung cấp địa chỉ IP, đều gửi lại cho máy Client gói tin DHCPOFFER, đề nghị cho thuê một địa chỉ IP trong một khoảng thời gian nhất định, kèm theo là một subnet mask và địa chỉ của Server. Server sẽ không cấp phát địa chỉ IP vừa đề nghị cho những Client khác trong suốt quá trình thương thuyết.*
+> • *Máy Client sẽ lựa chọn một trong những lời đề nghị (DHCPOFFER) và gửi broadcast lại gói tin DHCPREQUEST chấp nhận lời đề nghị đó. Điều này cho phép các lời đề nghị không được chấp nhận sẽ được các Server rút lại và dùng đề cấp phát cho Client khác.*
+> *Máy Server được Client chấp nhận sẽ gửi ngược lại một gói tin DHCPACK như là một lời xác nhận, cho biết là địa chỉ IP đó, subnet mask đó và thời hạn cho sử dụng đó sẽ chính thức được áp dụng. Ngoài ra Server còn gửi kèm theo những thông tin cấu hình bổ sung như địa chỉ của gateway mặc định, địa chỉ DNS Server,…*
+>
+> **Quy trình cấp phát động (DHCP Relay Agent) cho LAN 2:**
+> • *DHCP Relay Agent là bộ trung chuyển DHCP Discover (hoặc DHCP Request) đến DHCP Server. DHCP Relay Agent cho phép forward các truy vấn của DHCP Client đến DHCP server và trả lại IP cho Clients (làm nhiệm vụ như Proxy)*
+> • *Trong trường hợp DHCP Client và DHCP Server không nằm cùng subnet và được kết nối qua bộ định tuyến (router) thì cần phải có giải pháp cho phép truy vấn từ DHCP Client vượt qua router để đến DHCP Server. DHCP Relay Agent (tác nhân chuyển tiếp DHCP) được dùng cho mục đích này. DHCP Relay Agent là một thực thể trung gian cho phép chuyển tiếp (relay) các DHCP Discover (hoặc DHCP Request), mà thường bị chặn ở ngay router, từ DHCP Client đến DHCP Server.*
+> • *DHCP Client phát gói tin DHCP Discover sẽ được DHCP Relay Agent đóng vai trò như 1 DHCP Client phát lại gói tin DHCP Discover đến DHCP Server .*
 
 ---
 
 ### 3c. Mô tả quá trình cài đặt và triển khai DHCP mà đã đưa ra giải pháp
 
-> #### 📜 NGUYÊN VĂN ĐOẠN ĐẦU TRONG FILE PDF GỐC (TRANG 5):
-> *Mô tả quá trình cài đặt*  
-> *Quá trình cài đặt DHCP server.*  
-> *Vào server manager- Role chọn Add role chọn DHCP server. Disable DHCPv6 stateless mode, next Sau đó một vài giây, DHCP Server sẽ được cài đặt.*  
-> *Sau khi cài đặt xong ta vào start …..*  
-> *- Thực hiện triển khai DHCP đã đưa ra giải pháp*  
-> *LAN 1: Nhận được IP động của 172.16.x.1/24*  
-> *LAN 2: Nhận được IP động của 10.10.x.1/24*  
+> #### (TRANG 5):
+>
+> *Mô tả quá trình cài đặt*
+> *Quá trình cài đặt DHCP server.*
+> *Vào server manager- Role chọn Add role chọn DHCP server. Disable DHCPv6 stateless mode, next Sau đó một vài giây, DHCP Server sẽ được cài đặt.*
+> *Sau khi cài đặt xong ta vào start …..*
+> *- Thực hiện triển khai DHCP đã đưa ra giải pháp*
+> *LAN 1: Nhận được IP động của 172.16.x.1/24*
+> *LAN 2: Nhận được IP động của 10.10.x.1/24*
 
 #### ✍️ BỔ SUNG CÁC BƯỚC CHI TIẾT TIẾP THEO (ĐỂ HOÀN THIỆN ĐẦY ĐỦ BÀI LÀM):
 
 ##### 1. Cấu hình tiếp trên Server 1 (Windows Server):
+
 * Vào **Start** $\rightarrow$ **Administrative Tools** $\rightarrow$ Mở **DHCP**.
 * Tạo **Scope 1 (LAN 1):** Click chuột phải `IPv4` $\rightarrow$ `New Scope` $\rightarrow$ Name: `LAN1` $\rightarrow$ Dải IP: `172.16.10.31` đến `172.16.10.250`, Subnet Mask: `255.255.255.0` $\rightarrow$ **Option 003 Router:** `172.16.10.1` $\rightarrow$ **Option 006 DNS:** `172.16.10.1` $\rightarrow$ Activate Scope.
 * Tạo **Scope 2 (LAN 2):** Click chuột phải `IPv4` $\rightarrow$ `New Scope` $\rightarrow$ Name: `LAN2` $\rightarrow$ Dải IP: `10.10.10.10` đến `10.10.10.250`, Subnet Mask: `255.255.255.0` $\rightarrow$ **Option 003 Router:** **`10.10.10.1`** (Gateway của LAN 2) $\rightarrow$ **Option 006 DNS:** `172.16.10.1` $\rightarrow$ Activate Scope.
 
 ##### 2. Cấu hình trên Server 2 (Router mềm & DHCP Relay Agent):
+
 * **Bật Router:** Vào Server Manager $\rightarrow$ Add Roles: **Remote Access / Routing** $\rightarrow$ Mở **Routing and Remote Access (RRAS)** $\rightarrow$ Chuột phải Server chọn **Configure and Enable** $\rightarrow$ Chọn **Custom configuration** $\rightarrow$ Tích chọn **LAN routing** $\rightarrow$ Finish & Start service.
 * **Cấu hình DHCP Relay Agent:**
   * Trong RRAS $\rightarrow$ bung `IPv4` $\rightarrow$ chuột phải **General** $\rightarrow$ **New Routing Protocol...** $\rightarrow$ Chọn **DHCP Relay Agent**.
@@ -268,6 +264,7 @@
   * Chuột phải vào **DHCP Relay Agent** $\rightarrow$ **New Interface...** $\rightarrow$ Chọn Card mạng nối với **LAN 2** $\rightarrow$ Đảm bảo chọn **Relay DHCP packets** $\rightarrow$ OK.
 
 ##### 3. Kiểm tra trên Client:
+
 * Tại Client 1 (LAN 1): Chạy `ipconfig /renew` $\rightarrow$ Nhận IP `172.16.10.x`, Gateway `172.16.10.1`.
 * Tại Client 2 (LAN 2): Chạy `ipconfig /renew` $\rightarrow$ Nhận IP `10.10.10.x` qua Relay, Gateway `10.10.10.1`.
 * Chạy lệnh `ping` thông giữa Client 1 và Client 2 để xác nhận thông tuyến 100%.
@@ -277,6 +274,7 @@
 # CÂU 4: DỊCH VỤ VOIP (VOICE OVER IP)
 
 ### 1. Cơ chế hoạt động của VoIP
+
 * **Bản chất:** Chuyển đổi giọng nói analog thành gói tin số IP để truyền qua mạng LAN/Internet thời gian thực.
 * **Kiến trúc phân tách 2 kênh:**
   1. **Kênh Báo hiệu (Signaling):** Dùng giao thức **SIP (Session Initiation Protocol)** cổng **UDP/TCP 5060** kết hợp **SDP** để thiết lập, định tuyến và ngắt cuộc gọi.
@@ -286,6 +284,7 @@
 * **Codecs âm thanh:** **G.711** (64 Kbps, không nén, chất lượng chuẩn thoại, dùng cho LAN), **G.729** (8 Kbps, nén cao, tiết kiệm băng thông khi gọi qua Internet).
 
 ### 2. Triển khai VoIP (Tổng đài Asterisk & Softphone)
+
 1. **Cài đặt:** Trên Linux chạy `sudo apt install asterisk -y`.
 2. **Khai báo máy nhánh trong `/etc/asterisk/pjsip.conf`:** Tạo các extension (máy nhánh) như `101`, `102` với mật khẩu xác thực và loại codec (`ulaw,alaw`).
 3. **Cấu hình định tuyến cuộc gọi trong `/etc/asterisk/extensions.conf` (Dialplan):**
@@ -294,6 +293,7 @@
 4. **Softphone Client:** Dùng ứng dụng **MicroSIP** (trên Windows) hoặc **Zoiper** (trên điện thoại) điền IP Tổng đài, Extension `101`, Password để đăng nhập và gọi thử.
 
 ### 3. Quản trị hệ thống VoIP
+
 * **Bảo mật:** Đổi cổng SIP mặc định (khác 5060), đặt mật khẩu máy nhánh phức tạp, cài **Fail2ban** chống dò quét mật khẩu (SIP brute force).
 * **Xử lý NAT Traversal:** Cấu hình `localnet`, `external_media_address` hoặc dùng STUN Server để khắc phục lỗi cuộc gọi bị mất tiếng một chiều (One-way Audio).
 * **Tính năng doanh nghiệp:**
@@ -306,6 +306,7 @@
 # CÂU 5: DỊCH VỤ HTTPS & CERTIFICATE SERVER (CA)
 
 ### 1. Cơ chế hoạt động của HTTPS
+
 * **Bản chất:** Giao thức HTTP chạy trên nền tầng mã hóa bảo mật **TLS/SSL**, cổng mặc định **TCP 443**.
 * **Đảm bảo 3 mục tiêu an ninh (CIA):**
   1. *Bảo mật (Confidentiality):* Mã hóa toàn bộ dữ liệu, chống nghe lén.
@@ -321,12 +322,14 @@
   4. `Finished`: Xác nhận bắt tay thành công $\rightarrow$ Bắt đầu truyền dữ liệu HTTP mã hóa bằng Session Key.
 
 ### 2. Triển khai Certificate Server (CA)
+
 * **Khái niệm:** CA (Certificate Authority) là tổ chức/máy chủ tin cậy đứng ra ký số chứng nhận danh tính cho các máy chủ khác.
 * **Trên Windows Server:** Cài đặt Role **Active Directory Certificate Services (AD CS)** qua Server Manager $\rightarrow$ Chọn loại **Root CA**, thuật toán SHA256, RSA 2048-bit $\rightarrow$ Cấp phát qua trang Web Enrollment `http://Server_IP/certsrv`.
 * **Trên Linux (OpenSSL):** Tạo Root CA nội bộ bằng lệnh:
   `openssl req -x509 -new -nodes -key ca.key -sha256 -days 3650 -out ca.crt`.
 
 ### 3. Triển khai HTTPS trên Web Server
+
 1. **Tạo Private Key & CSR:** Chạy `openssl req -new -newkey rsa:2048 -nodes -keyout abc.key -out abc.csr`.
 2. **Gửi CSR lên CA:** CA ký xác nhận và xuất file chứng chỉ `abc.crt`.
 3. **Cấu hình Web Server:**
@@ -334,32 +337,10 @@
    * *IIS:* Vào Server Certificates hoàn tất Certificate Request $\rightarrow$ Vào Site Bindings thêm cổng `443` HTTPS và chọn Certificate.
 
 ### 4. Quản trị HTTPS
+
 * **Bắt buộc chuyển hướng (Force 301 Redirect):** Cấu hình tự động chuyển toàn bộ truy cập từ cổng 80 sang cổng 443 (`return 301 https://$host$request_uri;`).
 * **Bật HSTS (HTTP Strict Transport Security):** Thêm Header HSTS ép trình duyệt chỉ kết nối HTTPS để chống tấn công hạ cấp SSL Stripping.
 * **Tối ưu hóa bảo mật:** Tắt hoàn toàn SSLv2, SSLv3, TLS 1.0, TLS 1.1; chỉ bật **TLS 1.2 và TLS 1.3**.
 * **Gia hạn tự động:** Cài đặt gia hạn chứng chỉ tự động định kỳ với Certbot (`certbot renew`).
 
 ---
-
-# BẢNG TRA CỨU NHANH CỔNG (PORT CHEAT-SHEET)
-
-| Dịch vụ mạng | Giao thức | Số hiệu Cổng (Port) | Chức năng chính |
-| :--- | :---: | :---: | :--- |
-| **DHCP Server** | UDP | **67** | Lắng nghe gói tin từ Client / Relay |
-| **DHCP Client** | UDP | **68** | Nhận phản hồi IP từ Server |
-| **DNS Server** | UDP / TCP | **53** | Phân giải tên miền (UDP: truy vấn, TCP: zone transfer) |
-| **Samba (SMB)** | TCP | **445** | Chia sẻ file Linux - Windows trực tiếp |
-| **Samba NetBIOS** | UDP / TCP | **137, 138, 139** | Duyệt mạng và phân giải tên NetBIOS |
-| **NFS Server** | TCP / UDP | **2049** | Chia sẻ thư mục máy chủ Linux |
-| **RPC (Portmap)** | TCP / UDP | **111** | Điều hướng cuộc gọi thủ tục từ xa cho NFS |
-| **FTP Control** | TCP | **21** | Kênh điều khiển gửi lệnh FTP |
-| **FTP Data (Active)**| TCP | **20** | Kênh truyền dữ liệu chế độ Active |
-| **Web HTTP** | TCP | **80** | Duyệt web văn bản thuần không mã hóa |
-| **Web HTTPS** | TCP | **443** | Duyệt web bảo mật mã hóa SSL/TLS |
-| **Mail SMTP** | TCP | **25** (Server-Server), **587** (Client gửi STARTTLS) | Gửi và vận chuyển thư điện tử |
-| **Mail POP3** | TCP | **110** (Thường), **995** (Mã hóa SSL) | Tải thư về máy cục bộ |
-| **Mail IMAP** | TCP | **143** (Thường), **993** (Mã hóa SSL) | Đồng bộ hộp thư hai chiều thời gian thực |
-| **VoIP (SIP)** | UDP / TCP | **5060** (5061 TLS) | Kênh báo hiệu thiết lập cuộc gọi thoại |
-| **VoIP (RTP)** | UDP | **10000 - 20000** | Kênh truyền dữ liệu thoại thời gian thực |
-| **SSH** | TCP | **22** | Điều khiển từ xa Linux an toàn |
-| **Telnet** | TCP | **23** | Điều khiển từ xa dòng lệnh (Không an toàn) |

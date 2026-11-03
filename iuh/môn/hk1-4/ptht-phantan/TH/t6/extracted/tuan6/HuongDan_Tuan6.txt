@@ -1,0 +1,157 @@
+================================================================================
+HƯỚNG DẪN CHẠY CÁC BÀI JAVA RMI TUẦN 6
+(HƯỚNG DẪN BẰNG CLICK TRONG ECLIPSE & BẰNG DÒNG LỆNH CMD NHƯ ĐỀ BÀI)
+================================================================================
+
+A. CẤU TRÚC GÓI MÃ NGUỒN:
+-------------------------
+src/
+└── tuan6/
+    ├── baimau/   : Bài mẫu cơ bản trong PDF (tính 2 + 2 = 4)
+    ├── bai1/     : Bài tập 1 (Dùng LocateRegistry.createRegistry(PORT))
+    ├── bai2/     : Bài tập 2 (Client nhận IP và Port từ tham số args)
+    └── bai3/     : Bài tập 3 (Dịch vụ mở rộng: Cộng, Trừ, Nhân, Chia)
+
+
+================================================================================
+PHẦN 1: HƯỚNG DẪN CHẠY BẰNG CLICK CHUỘT TRÊN ECLIPSE (NHANH & TIỆN NHẤT)
+================================================================================
+
+* BƯỚC CHUẨN BỊ:
+  1. Giải nén file 'tuan6.zip' trực tiếp vào thư mục 'src' của dự án Eclipse.
+  2. Trên Eclipse, nhấp chuột phải vào thư mục 'src' -> chọn Refresh (hoặc bấm phím F5).
+  3. Eclipse sẽ tự động biên dịch toàn bộ các file .java mà không cần gõ lệnh javac.
+
+--------------------------------------------------------------------------------
+1. CHẠY BÀI TẬP 1 (tuan6.bai1 - Tự tạo Registry trong code):
+--------------------------------------------------------------------------------
+- Bước 1 (Chạy Server):
+  + Trong Package Explorer, mở package 'tuan6.bai1'.
+  + Nhấp chuột phải vào file 'RMIServer.java' -> chọn Run As -> Java Application.
+  + Quan sát cửa sổ Console bên dưới báo:
+      RMI Registry created on port 1099
+      Server has started
+      Adder bound
+
+- Bước 2 (Chạy Client):
+  + Nhấp chuột phải vào file 'RMIClient.java' -> chọn Run As -> Java Application.
+  + Quan sát Console báo kết quả gọi hàm từ xa:
+      5+7=12
+
+--------------------------------------------------------------------------------
+2. CHẠY BÀI TẬP 2 (tuan6.bai2 - Client nhận IP & Port qua args):
+--------------------------------------------------------------------------------
+- Bước 1 (Chạy Server):
+  + Mở package 'tuan6.bai2'.
+  + Nhấp chuột phải vào 'RMIServer.java' -> chọn Run As -> Java Application.
+  + Console báo: "RMIServer is ready for remote connections on port 1099".
+
+- Bước 2 (Chạy Client với tham số IP và Port):
+  + Nhấp chuột phải vào 'RMIClient.java' -> chọn Run As -> Run Configurations...
+  + Cửa sổ hiện lên, chọn tab 'Arguments'.
+  + Tại ô 'Program arguments', nhập địa chỉ IP và Port của máy chủ:
+      * Test trên cùng máy:    127.0.0.1 1099
+      * Test qua mạng LAN:     192.168.1.15 1099 (thay bằng IP thật của máy Server)
+  + Bấm nút 'Run'.
+  + Console báo kết quả:
+      Đang kết nối tới RMIServer tại: rmi://127.0.0.1:1099/AdderService
+      >>> Kết quả tính toán từ Server (127.0.0.1): 15 + 25 = 40
+
+--------------------------------------------------------------------------------
+3. CHẠY BÀI TẬP 3 (tuan6.bai3 - Dịch vụ Cộng, Trừ, Nhân, Chia):
+--------------------------------------------------------------------------------
+- Bước 1 (Chạy Server):
+  + Mở package 'tuan6.bai3'.
+  + Nhấp chuột phải vào 'RMIServer.java' -> chọn Run As -> Java Application.
+  + Console báo:
+      RMI Registry created on port 1099
+      === Calculator RMIServer đã sẵn sàng phục vụ ===
+      Các dịch vụ cung cấp: Cộng (+), Trừ (-), Nhân (*), Chia (/)
+
+- Bước 2 (Chạy Client):
+  + Nhấp chuột phải vào 'RMIClient.java' -> chọn Run As -> Java Application.
+  + Nhìn xuống cửa sổ Console bên dưới:
+      * Thấy hiện: "Nhập số nguyên thứ nhất (a): " -> click vào Console, gõ 20 rồi Enter.
+      * Thấy hiện: "Nhập số nguyên thứ hai (b): " -> gõ 5 rồi Enter.
+  + Kết quả trả về từ Server hiển thị ngay lập tức:
+      === KẾT QUẢ GỌI DỊCH VỤ RMI TỪ SERVER ===
+      20 + 5 = 25
+      20 - 5 = 15
+      20 * 5 = 100
+      20 / 5 = 4.0
+
+--------------------------------------------------------------------------------
+4. CHẠY BÀI MẪU (tuan6.baimau - Theo chuẩn gốc):
+--------------------------------------------------------------------------------
+- Vì bài mẫu gốc không dùng hàm LocateRegistry.createRegistry(), nên trước khi bấm
+  Run RMIServer, bạn cần bật dịch vụ Registry trước:
+  + Mở Command Prompt (cmd), gõ lệnh: start rmiregistry 1099
+    (sẽ có 1 cửa sổ nhỏ rmiregistry.exe hiện lên).
+  + Quay lại Eclipse: Chuột phải 'RMIServer.java' -> Run As -> Java Application.
+  + Chuột phải 'RMIClient.java' -> Run As -> Java Application -> Kết quả: 2+2=4.
+
+* MẸO QUAN TRỌNG TRÊN ECLIPSE:
+- Nếu chạy bài mới bị lỗi "Port already in use" (cổng 1099 đã bị chiếm):
+  Nhìn vào góc trên bên phải của tab Console, bấm nút hình vuông màu đỏ (Terminate)
+  để tắt Server cũ đi trước khi bật Server mới.
+
+
+================================================================================
+PHẦN 2: HƯỚNG DẪN CHẠY BẰNG DÒNG LỆNH COMMAND PROMPT (CMD) NHƯ TRONG ĐỀ BÀI
+================================================================================
+
+Trong tài liệu PDF, thầy cô hướng dẫn chạy qua cửa sổ CMD. Cách thực hiện:
+
+BƯỚC 1: Mở Command Prompt (CMD) và chuyển vào thư mục 'bin' của dự án Eclipse:
+- Giả sử dự án của bạn lưu tại: D:\Workspace\JavaProject
+- Mở CMD và gõ lệnh:
+    cd /d D:\Workspace\JavaProject\bin
+(Thư mục 'bin' là nơi Eclipse đã tự động dịch toàn bộ các file .class ra sẵn).
+
+--------------------------------------------------------------------------------
+1. LỆNH CHẠY BÀI MẪU (Theo đúng từng dòng lệnh trong PDF):
+--------------------------------------------------------------------------------
+- Bước 1.1: Khởi động rmiregistry trên cổng 1099:
+    start rmiregistry 1099
+  (Một cửa sổ rỗng tên rmiregistry.exe xuất hiện, giữ nguyên cửa sổ này).
+
+- Bước 1.2: Mở một cửa sổ CMD khác để khởi chạy Server:
+    cd /d D:\Workspace\JavaProject\bin
+    java tuan6.baimau.RMIServer
+  -> Kết quả hiển thị:
+     Server has started
+     Adder bound
+
+- Bước 1.3: Mở tiếp một cửa sổ CMD thứ ba để chạy Client:
+    cd /d D:\Workspace\JavaProject\bin
+    java tuan6.baimau.RMIClient
+  -> Kết quả hiển thị:
+     2+2=4
+
+--------------------------------------------------------------------------------
+2. LỆNH CHẠY BÀI TẬP 1 (Không cần gõ lệnh start rmiregistry):
+--------------------------------------------------------------------------------
+- Chạy Server (Server tự tạo Registry 1099 trong code):
+    java tuan6.bai1.RMIServer
+- Mở thêm 1 tab CMD chạy Client:
+    java tuan6.bai1.RMIClient
+  -> Kết quả: 5+7=12
+
+--------------------------------------------------------------------------------
+3. LỆNH CHẠY BÀI TẬP 2 (Truyền IP và Port qua dòng lệnh args):
+--------------------------------------------------------------------------------
+- Trên máy Server:
+    java tuan6.bai2.RMIServer
+- Trên máy Client (truyền địa chỉ IP máy server và cổng):
+    java tuan6.bai2.RMIClient 127.0.0.1 1099
+  (Nếu chạy 2 máy khác nhau trong mạng LAN, thay 127.0.0.1 bằng IP thật của máy Server, ví dụ 192.168.1.15).
+
+--------------------------------------------------------------------------------
+4. LỆNH CHẠY BÀI TẬP 3 (Máy tính 4 phép tính):
+--------------------------------------------------------------------------------
+- Chạy Server:
+    java tuan6.bai3.RMIServer
+- Mở thêm 1 tab CMD chạy Client:
+    java tuan6.bai3.RMIClient
+  -> Nhập 2 số nguyên từ bàn phím và xem kết quả tính toán RMI.
+================================================================================

@@ -275,14 +275,24 @@ public class ThreadProcess extends Thread {
 //             if (!valid) return "Chuỗi chứa ký tự không phải số!";
 //             return numStr + ": " + sbNum.toString().trim();
 
-            // ========== BAI 33: ĐỀ THI GIỮA KỲ CÂU 2 - Tìm thông tin theo Email - Input: "abcd1234@gmail.com" ==========
+            // ========== BAI 33: TUAN 7 BAI 1 / DE THI GK - Tim thong tin theo Email - Input: "abcd1234@gmail.com" ==========
+//             // Cach 1: Luu trong Map / Mang tren Server (Mac dinh):
 //             Map<String, String> userDb = new HashMap<>();
-//             userDb.put("abcd1234@gmail.com", "HenryFord 825 893 5382");
-//             userDb.put("nguyenvana@gmail.com", "Nguyen Van A 0912345678");
-//             userDb.put("tranthib@gmail.com", "Tran Thi B 0987654321");
+//             userDb.put("abcd1234@gmail.com", "Henry Ford 0932 622 268");
+//             userDb.put("sinhvien@iuh.edu.vn", "Long Le 0909 123 456");
 //             String queryEmail = data.trim().toLowerCase();
-//             if (userDb.containsKey(queryEmail)) return data.trim() + " và " + userDb.get(queryEmail);
-//             return data.trim() + " -> Không tìm thấy người dùng";
+//             if (userDb.containsKey(queryEmail)) return data.trim() + " va " + userDb.get(queryEmail);
+//             return data.trim() + " -> Khong tim thay nguoi dung";
+//             // Cach 2: Luu trong file users.txt tren Server (neu de yeu cau):
+//             try (BufferedReader br = new BufferedReader(new FileReader("users.txt"))) {
+//                 String l;
+//                 while ((l = br.readLine()) != null) {
+//                     String[] p = l.split("[=,]");
+//                     if (p.length >= 2 && p[0].trim().equalsIgnoreCase(data.trim()))
+//                         return data.trim() + " va " + p[1].trim();
+//                 }
+//             } catch (Exception ignored) {}
+//             return data.trim() + " -> Khong tim thay nguoi dung trong file";
 
             // ========== BAI 34: THỰC HÀNH LAB 5 - Sắp xếp dãy số - Input: "11 22 4 25 28 3" ==========
 //             List<Double> numList = new ArrayList<>();
@@ -300,6 +310,17 @@ public class ThreadProcess extends Thread {
 //             String rank = (score >= 8.5) ? "Xuat sac" : (score >= 7.0) ? "Kha/Gioi" : (score >= 5.0) ? "Trung binh" : "Yeu";
 //             return "Thong tin: " + data.trim() + " | Xep loai: " + rank;
 
+            // ========== BAI 36: TUAN 7 BAI 2 - UCLN va Kiem tra so nguyen to 2 so a va b - Input: "12 18" hoac "7 14" ==========
+//             if (a.length != 2) return "Nhap: a b";
+//             int n1 = Math.abs(Integer.parseInt(a[0])), n2 = Math.abs(Integer.parseInt(a[1]));
+//             int x = n1, y = n2;
+//             while (y != 0) { int t = x % y; x = y; y = t; }
+//             boolean p1 = (n1 >= 2);
+//             for (int i = 2; i * i <= n1; i++) if (n1 % i == 0) { p1 = false; break; }
+//             boolean p2 = (n2 >= 2);
+//             for (int i = 2; i * i <= n2; i++) if (n2 % i == 0) { p2 = false; break; }
+//             String snt = n1 + (p1 ? " la so nguyen to. " : " khong phai so nguyen to. ") + n2 + (p2 ? " la so nguyen to." : " khong phai so nguyen to.");
+//             return "UCLN(" + n1 + ", " + n2 + ") = " + x + " | " + snt;
         } catch (Exception e) {
             return "Loi: " + e.getMessage();
         }
