@@ -1,16 +1,4 @@
-# TÀI LIỆU ÔN TẬP VÀ ĐÁP ÁN THI CUỐI KỲ - QUẢN TRỊ VÀ BẢO TRÌ HỆ THỐNG
-
-> **Mục đích tài liệu:** Bản chuẩn hóa đúc kết **cực kỳ ngắn gọn, súc tích, chuẩn thuật ngữ chuyên ngành**, lược bỏ toàn bộ từ ngữ dài dòng/văn nói trong tài liệu gốc của giáo viên, giúp sinh viên **học nhanh, nhớ sâu và chép tay vào bài thi trong 60 - 90 phút mà vẫn đạt điểm tuyệt đối (10/10)**.
-
----
-
 # CÂU 1: VẬN DỤNG KIẾN THỨC VỀ QUẢN TRỊ HỆ THỐNG ĐỂ XÁC ĐỊNH CÁC GIẢI PHÁP LIÊN QUAN ĐẾN:
-
-## HIỆN THỰC
-
-Vận dụng kiến thức quản trị hệ thống để đưa ra giải pháp phù hợp với yêu cầu thực tế; cài đặt và triển khai hoàn chỉnh giải pháp.
-
----
 
 ## PHẦN 1. QUẢN TRỊ DOMAIN
 
@@ -238,8 +226,6 @@ Quy tắc đặt tên: Viết tắt họ tên đệm + tên chính, không dấu
 
 ### 💡 PHẦN PHÂN TÍCH ĐỀ BÀI: CÔNG THỨC 3 BƯỚC ĐỂ VẼ BẤT KỲ BẢNG PHÂN QUYỀN NÀO
 
-Để không phải học vẹt từng ô mà vẫn vẽ được ngay 5 bảng phân quyền chính xác 100% trong vòng 1 phút, ta áp dụng công thức tư duy sau:
-
 ```text
 +---------------------------------------------------------------------------------------+
 |                                    CÔNG THỨC 3 BƯỚC                                   |
@@ -259,10 +245,10 @@ Quy tắc đặt tên: Viết tắt họ tên đệm + tên chính, không dấu
 |          1. Ban Quản trị (QUANTRI): Điền "F" VÀO TẤT CẢ CÁC Ô (Admin toàn quyền).     |
 |          2. Ban Giám đốc (GIAMDOC): Điền "R" VÀO TẤT CẢ CÁC Ô (Giám đốc chỉ đọc).     |
 |             (Nhắc lại: Thư mục QUANTRI cấm Giám đốc nên không có hàng GIAMDOC).       |
-|          3. Nhóm phòng ban: Điền "R" VÀO DUY NHẤT CỘT THƯ MỤC CHA (để thấy thư mục con)|
+|          3. Nhóm phòng ban: Điền "R" VÀO DUY NHẤT CỘT THƯ MỤC CHA (để thấy thư mục con|
 |          4. Nhân viên:                                                                |
 |             - Thư mục chính mình: Điền "F" (toàn quyền cá nhân).                      |
-|             - Trưởng phòng nhìn sang thư mục nhân viên cấp dưới: Điền "R" (chỉ đọc).   |
+|             - Trưởng phòng nhìn sang thư mục nhân viên cấp dưới: Điền "R" (chỉ đọc).  |
 |             - Các ô còn lại: ĐỂ TRỐNG (nghĩa là cấm truy cập).                        |
 +---------------------------------------------------------------------------------------+
 ```
@@ -270,8 +256,6 @@ Quy tắc đặt tên: Viết tắt họ tên đệm + tên chính, không dấu
 ---
 
 ##### 3. Bản mô tả phân quyền NTFS trên các thư mục con (ĐÃ SỬA CHUẨN XÁC TRỰC TIẾP 100%)
-
-*(Tất cả bảng dưới đây đã được sửa trực tiếp quyền `F` cho Ban Quản trị và chuẩn hóa logic kỹ thuật hoàn hảo, bạn chỉ việc **chép thẳng vào bài thi**):*
 
 ###### BẢNG 1: THƯ MỤC CONGTY
 
@@ -453,6 +437,7 @@ Công ty abc có 200 người làm việc trong 3 phòng ban: Kế toán, Nhân 
 - **Bước 1 (Gán cổng vSwitch):** Trên VMware ESXi, gắn card mạng của cả 3 máy ảo vào chung nhóm cổng `VM Network` thuộc `vSwitch0`.
 - **Bước 2 (Đặt IP tĩnh):** Trong từng máy ảo, vào `ncpa.cpl` $\rightarrow$ đặt IP tĩnh, Subnet Mask, Gateway và DNS theo bảng trên.
 - **Bước 3 (Bật Ping):** Mở CMD trên cả 3 máy ảo gõ lệnh cho phép gói tin ICMP:
+
   ```cmd
   netsh advfirewall firewall add rule name="Allow ICMPv4" protocol=icmpv4:8,any dir=in action=allow
   ```
@@ -467,4 +452,5 @@ Mở CMD trên máy ảo KETOAN (`192.168.1.6`) chạy các lệnh kiểm tra:
 2. `ping 192.168.1.8` $\rightarrow$ Nhận phản hồi `Reply from 192.168.1.8: bytes=32 time<1ms TTL=128` (Thông mạng tới VM Nhân sự).
 3. `ping 192.168.1.1` $\rightarrow$ Nhận phản hồi `Reply from 192.168.1.1: bytes=32 time<1ms TTL=64` (Thông mạng tới Router Gateway).
 4. `ping 192.168.1.5` $\rightarrow$ Nhận phản hồi từ máy chủ vật lý ESXi.
-   $\rightarrow$ **Kết luận:** Hệ thống mạng ảo hóa kết nối thông suốt 100%, sẵn sàng triển khai các dịch vụ chuyên trách cho doanh nghiệp.
+   $\rightarrow$ **Kết luận:** Hệ thống mạng ảo hóa kết nối thông suốt 100%, sẵn sàng triển khai các dịch vụ chuyên trách cho doanh nghiệp.\
+5.
