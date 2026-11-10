@@ -271,7 +271,7 @@ Quy tắc đặt tên: Viết tắt họ tên đệm + tên chính, không dấu
 | **GIAMDOC**                     | **R** | **R** | **R** | **R** |
 | **QUANTRI**                     | **F** | **F** | **F** | **F** |
 | **KINHDOANH**                   | **R** |            |            |            |
-| **latan** *(Trưởng phòng)* | **R** | **F** |            | **R** |
+| **latan** *(Trưởng phòng)* | **R** | **F** | **R** | **R** |
 | **ntduong**                     |            |            | **F** |            |
 | **ntduc**                       |            |            |            | **F** |
 
