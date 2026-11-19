@@ -148,7 +148,9 @@ public class Student {
 }
 ```
 
-### 2. Entity Cha mẫu: `Faculty.java` (1-N bên 1)
+### 2. Entity Cha mẫu: `Faculty.java` (1-N bê
+
+n 1)
 
 ```java
 @Entity
