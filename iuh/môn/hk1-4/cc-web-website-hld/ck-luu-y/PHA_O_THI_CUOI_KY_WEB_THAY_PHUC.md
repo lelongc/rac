@@ -1,8 +1,3 @@
-# 🎓 PHAO THI CUỐI KỲ MÔN CÔNG CỤ PHÁT TRIỂN PHẦN MỀM HƯỚNG DỮ LIỆU / WEB (IUH)
-
-> **Giảng viên:** Thầy Trương Bá Phúc — Hình thức thi: **Tự luận trên giấy**
-> **Nguyên tắc làm bài thi giấy của Thầy:** Trả lời đúng trọng tâm, ngắn gọn, gãy gọn, đúng thuật ngữ chuyên môn. Không chép lan man.
-
 ---
 
 ## 📌 PHẦN 1: LÝ THUYẾT TRỌNG TÂM (CỰC GỌN & VỪA ĐỦ)
