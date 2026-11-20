@@ -1,5 +1,6 @@
 # 🎓 PHAO THI CUỐI KỲ MÔN CÔNG CỤ PHÁT TRIỂN PHẦN MỀM HƯỚNG DỮ LIỆU / WEB (IUH)
-> **Giảng viên:** Thầy Trương Bá Phúc — Hình thức thi: **Tự luận trên giấy**  
+
+> **Giảng viên:** Thầy Trương Bá Phúc — Hình thức thi: **Tự luận trên giấy**
 > **Nguyên tắc làm bài thi giấy của Thầy:** Trả lời đúng trọng tâm, ngắn gọn, gãy gọn, đúng thuật ngữ chuyên môn. Không chép lan man.
 
 ---
@@ -7,6 +8,7 @@
 ## 📌 PHẦN 1: LÝ THUYẾT TRỌNG TÂM (CỰC GỌN & VỪA ĐỦ)
 
 ### 1. 10 Công cụ phần mềm của môn học (Thuộc lòng để ăn trọn điểm)
+
 1. **Eclipse IDE** (hoặc STS): Môi trường phát triển Java.
 2. **MySQL Server**: Hệ quản trị cơ sở dữ liệu quan hệ (RDBMS).
 3. **MySQL Workbench**: Thiết kế ERD, quản trị CSDL trực quan (GUI).
@@ -17,11 +19,14 @@
 8. **Git & GitHub**: Quản lý phiên bản mã nguồn (VCS) và lưu trữ từ xa.
 9. **Thymeleaf**: Template Engine render giao diện HTML phía Server (SSR).
 10. **Docker** (hoặc **Clever Cloud**): Ảo hóa container / nền tảng đám mây deploy MySQL.
+11. curl -Công cụ gửi HTTP request kiểm thử REST API.
+
 > ⚠️ **BẪY CỦA THẦY:** **Bootstrap** là thư viện CSS/UI, **KHÔNG PHẢI** công cụ phần mềm!
 
 ---
 
 ### 2. JPA, Hibernate & Kỹ thuật ORM là gì?
+
 * **JPA (Java Persistence API / Jakarta Persistence):** Là **đặc tả kỹ thuật (Specification / Standard)** của Java quy định cách quản lý và ánh xạ dữ liệu đối tượng Java với CSDL quan hệ.
 * **Hibernate:** Là thư viện **hiện thực hóa (Implementation)** cụ thể của chuẩn JPA. JPA đưa ra "luật", Hibernate thực thi luật đó.
 * **ORM (Object-Relational Mapping):** Kỹ thuật ánh xạ:
@@ -33,14 +38,15 @@
 ---
 
 ### 3. So sánh JDBC truyền thống vs JPA / Hibernate
+
 * **JDBC (Cũ):** Mức thấp, phải tự mở kết nối (`Connection`), tự viết câu lệnh SQL bằng tay (`SELECT * FROM...`), tự duyệt con trỏ `ResultSet`, code dài dòng (boilerplate) và dễ dính lỗi SQL Injection.
 * **JPA / Hibernate (Mới):** Mức cao, chỉ cần gắn các **dấu `@` (Annotation)**, Hibernate sẽ **tự động sinh toàn bộ câu lệnh SQL và bảng CSDL**, giúp lập trình viên thao tác với DB hoàn toàn bằng Object Java.
 
 ---
 
 ### 4. RESTful API, JSON & Các thành phần cốt lõi của REST API
-* **RESTful API là gì?**  
-  Là chuẩn kiến trúc thiết kế dịch vụ web (Web Service) phi trạng thái (Stateless), sử dụng đường dẫn URI để định danh tài nguyên (Resource) và dùng các phương thức HTTP chuẩn (`GET`, `POST`, `PUT`, `DELETE`) để thao tác CRUD. Dữ liệu trao đổi chuẩn là JSON.
+
+* **RESTful API là gì?**Là chuẩn kiến trúc thiết kế dịch vụ web (Web Service) phi trạng thái (Stateless), sử dụng đường dẫn URI để định danh tài nguyên (Resource) và dùng các phương thức HTTP chuẩn (`GET`, `POST`, `PUT`, `DELETE`) để thao tác CRUD. Dữ liệu trao đổi chuẩn là JSON.
 * **Tại sao dùng JSON (JavaScript Object Notation)?**
   * Định dạng văn bản cực kỳ nhẹ (lightweight), dễ đọc, dễ viết, độc lập với mọi ngôn ngữ lập trình.
   * Là chuẩn quốc tế trao đổi dữ liệu giữa Front-End (JavaScript) và Back-End (Java REST API) hoặc Mobile.
@@ -48,15 +54,14 @@
 * **6 Thành phần cốt lõi của một REST API (Request & Response):**
   1. **Endpoint / URI:** Địa chỉ định danh tài nguyên trên Server (Ví dụ: `/api/students`, `/api/students/1`).
   2. **HTTP Method (Động từ thao tác):** `GET` (đọc), `POST` (tạo mới), `PUT` (cập nhật toàn bộ), `DELETE` (xóa).
-  3. **HTTP Headers (Siêu dữ liệu - Metadata):** Khai báo định dạng dữ liệu và thông tin bổ trợ.  
-     *(Ví dụ: `Content-Type: application/json` báo cho server biết dữ liệu gửi lên là JSON, `Accept: application/json`)*.
+  3. **HTTP Headers (Siêu dữ liệu - Metadata):** Khai báo định dạng dữ liệu và thông tin bổ trợ.*(Ví dụ: `Content-Type: application/json` báo cho server biết dữ liệu gửi lên là JSON, `Accept: application/json`)*.
   4. **Request Body / Payload:** Dữ liệu client gửi kèm lên server dưới dạng chuỗi JSON (thường dùng cho `POST`, `PUT`).
   5. **HTTP Status Code (Mã trạng thái phản hồi):** Mã 3 chữ số thông báo kết quả xử lý từ server:
      * `2xx` (Thành công): `200 OK`, `201 Created` (tạo mới thành công), `204 No Content` (xóa thành công).
      * `4xx` (Lỗi Client): `400 Bad Request` (sai định dạng dữ liệu), `401 Unauthorized` (chưa xác thực/đăng nhập), `404 Not Found` (không tìm thấy tài nguyên).
      * `5xx` (Lỗi Server): `500 Internal Server Error` (server bị lỗi sập code).
   6. **Response Body:** Dữ liệu kết quả server phản hồi về cho client dưới dạng chuỗi JSON hoặc thông báo lỗi.
-* **Virtual / Fake REST API là gì?**  
+* **Virtual / Fake REST API là gì?**
   Là API giả lập trên đám mây (như MockAPI.io, JSONPlaceholder) cung cấp sẵn các endpoint REST và dữ liệu mẫu (kèm text, hình ảnh), giúp lập trình viên Front-End kiểm thử giao diện và gọi Fetch API độc lập mà không cần chờ viết Back-End.
 
 ---
@@ -64,6 +69,7 @@
 ## 🌐 PHẦN 2: THÀNH PHẦN URL, HTTP METHODS (CRUD) & LỆNH cURL
 
 ### 1. Cấu trúc các thành phần trong 1 URL
+
 ```text
   http:// localhost :8080 /api/students /1 ?status=active #top
   ──┬──   ────┬────  ─┬──  ──────┬────── ─┬ ───────┬──────  ─┬─
@@ -77,15 +83,17 @@
 ```
 
 ### 2. Bảng ánh xạ CRUD sang HTTP Methods & Status Code chuẩn
-| Thao tác CRUD | HTTP Method | Endpoint URL mẫu | Request Body (JSON)? | HTTP Status trả về |
-| :--- | :--- | :--- | :---: | :--- |
-| **C** (Create - Thêm) | **POST** | `/api/students` | **CÓ** | `201 Created` |
-| **R** (Read All - Lấy hết) | **GET** | `/api/students` | **KHÔNG** | `200 OK` |
-| **R** (Read One - Lấy theo ID)| **GET** | `/api/students/{id}` | **KHÔNG** | `200 OK` (hoặc `404 Not Found`) |
-| **U** (Update - Sửa) | **PUT** / PATCH | `/api/students/{id}` | **CÓ** | `200 OK` |
-| **D** (Delete - Xóa) | **DELETE** | `/api/students/{id}` | **KHÔNG** | `204 No Content` / `200 OK` |
+
+| Thao tác CRUD                        | HTTP Method           | Endpoint URL mẫu      | Request Body (JSON)? | HTTP Status trả về                 |
+| :------------------------------------ | :-------------------- | :--------------------- | :------------------: | :----------------------------------- |
+| **C** (Create - Thêm)          | **POST**        | `/api/students`      |    **CÓ**    | `201 Created`                      |
+| **R** (Read All - Lấy hết)    | **GET**         | `/api/students`      |   **KHÔNG**   | `200 OK`                           |
+| **R** (Read One - Lấy theo ID) | **GET**         | `/api/students/{id}` |   **KHÔNG**   | `200 OK` (hoặc `404 Not Found`) |
+| **U** (Update - Sửa)           | **PUT** / PATCH | `/api/students/{id}` |    **CÓ**    | `200 OK`                           |
+| **D** (Delete - Xóa)           | **DELETE**      | `/api/students/{id}` |   **KHÔNG**   | `204 No Content` / `200 OK`      |
 
 ### 3. Cú pháp cURL chuẩn thi (Chép ăn trọn điểm)
+
 ```bash
 # 1. GET ALL (Lấy tất cả)
 curl -X GET http://localhost:8080/api/students
@@ -113,9 +121,11 @@ curl -X POST http://localhost:8080/api/subjects/1/students/2
 ---
 
 ## 💻 PHẦN 3: BỘ KHUNG CODE CRUD ĐA NĂNG (TEMPLATE CÂN MỌI ĐỀ THI)
+
 *(Dùng Lombok `@Getter @Setter @NoArgsConstructor @AllArgsConstructor @RequiredArgsConstructor` để code siêu ngắn gọn khi viết bài thi giấy).*
 
 ### 1. Entity mẫu: `Student.java` (Quan hệ 1-N và N-N)
+
 ```java
 @Entity
 @Table(name = "students")
@@ -151,6 +161,7 @@ public class Student {
 ```
 
 ### 2. Entity Cha mẫu: `Faculty.java` (1-N bên 1)
+
 ```java
 @Entity
 @Table(name = "faculties")
@@ -169,6 +180,7 @@ public class Faculty {
 ```
 
 ### 3. Repository mẫu: `StudentRepository.java`
+
 ```java
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
@@ -177,6 +189,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 ```
 
 ### 4. Service mẫu: `StudentService.java` (Đầy đủ CRUD)
+
 ```java
 @Service
 @RequiredArgsConstructor // Tự sinh constructor inject các biến final (Dependency Injection ngầm định)
@@ -209,6 +222,7 @@ public class StudentService {
 ```
 
 ### 5. Controller mẫu: `StudentController.java` (Đầy đủ 5 Endpoint REST)
+
 ```java
 @RestController
 @RequestMapping("/api/students")
@@ -293,7 +307,8 @@ async function deleteStudent(id) {
 ---
 
 ## 📝 BÍ KÍP ĐỔI TÊN KHI GẶP CÁC ĐỀ THI KHÁC NHAU:
+
 1. **Đề Quản lý Bán hàng:** `Faculty` $\rightarrow$ `Category` (Danh mục), `Student` $\rightarrow$ `Product` (Sản phẩm), `Subject` $\rightarrow$ `Tag` (Thẻ phân loại).
 2. **Đề Quản lý Thư viện:** `Faculty` $\rightarrow$ `Publisher` (Nhà xuất bản), `Student` $\rightarrow$ `Book` (Sách), `Subject` $\rightarrow$ `Author` (Tác giả).
 3. **Đề Quản lý Nhân sự:** `Faculty` $\rightarrow$ `Department` (Phòng ban), `Student` $\rightarrow$ `Employee` (Nhân viên), `Subject` $\rightarrow$ `Project` (Dự án).
-*(Chỉ cần giữ nguyên cấu trúc `@ManyToOne`, `@OneToMany`, `@ManyToMany` và thay các tên biến tương ứng là xong!)*
+   *(Chỉ cần giữ nguyên cấu trúc `@ManyToOne`, `@OneToMany`, `@ManyToMany` và thay các tên biến tương ứng là xong!)*
