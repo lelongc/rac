@@ -2,21 +2,25 @@
 
 ## 📌 PHẦN 1: LÝ THUYẾT TRỌNG TÂM (CỰC GỌN & VỪA ĐỦ)
 
-### 1. 10 Công cụ phần mềm của môn học (Thuộc lòng để ăn trọn điểm)
+### 1. Danh sách các Công cụ phần mềm môn học (Thầy yêu cầu kể ít nhất 10, học 15 cái cho chắc ăn)
 
-1. **Eclipse IDE** (hoặc STS): Môi trường phát triển Java.
-2. **MySQL Server**: Hệ quản trị cơ sở dữ liệu quan hệ (RDBMS).
-3. **MySQL Workbench**: Thiết kế ERD, quản trị CSDL trực quan (GUI).
-4. **Spring Boot**: Framework backend Java xây dựng RESTful API.
-5. **Spring Initializr**: Công cụ web khởi tạo nhanh khung dự án Spring Boot.
-6. **Maven** (`pom.xml`, `mvnw`): Quản lý dependencies và build dự án tự động.
-7. **Postman**: Công cụ gửi HTTP request kiểm thử REST API.
-8. **Git & GitHub**: Quản lý phiên bản mã nguồn (VCS) và lưu trữ từ xa.
-9. **Thymeleaf**: Template Engine render giao diện HTML phía Server (SSR).
-10. **Docker** (hoặc **Clever Cloud**): Ảo hóa container / nền tảng đám mây deploy MySQL.
-11. curl -Công cụ gửi HTTP request kiểm thử REST API.
+1. **Eclipse IDE** (hoặc Spring Tool Suite - STS): Môi trường phát triển tích hợp (IDE) lập trình Java / Spring Boot.
+2. **MySQL Server**: Hệ quản trị cơ sở dữ liệu quan hệ (RDBMS) lưu trữ dữ liệu bền vững.
+3. **MySQL Workbench**: Công cụ giao diện đồ họa (GUI) thiết kế ERD, quản trị CSDL trực quan.
+4. **Spring Boot**: Framework backend Java phát triển ứng dụng Web & RESTful API.
+5. **Spring Initializr** (start.spring.io): Công cụ web khởi tạo nhanh khung dự án Spring Boot.
+6. **Maven** (`pom.xml`, `mvnw`): Công cụ tự động hóa build và quản lý thư viện phụ thuộc (Dependencies).
+7. **Postman**: Công cụ GUI gửi HTTP request kiểm thử RESTful API (GET, POST, PUT, DELETE).
+8. **cURL**: Công cụ dòng lệnh (CLI) gửi HTTP request kiểm thử REST API trực tiếp từ terminal.
+9. **Git**: Công cụ phần mềm quản lý phiên bản mã nguồn phân tán (Distributed VCS).
+10. **GitHub**: Nền tảng dịch vụ web lưu trữ kho mã nguồn Git và cộng tác dự án.
+11. **Thymeleaf**: Template Engine render giao diện HTML phía Server (Server-Side Rendering - SSR).
+12. **Docker**: Công cụ ảo hóa cấp hệ điều hành (Containerization) đóng gói và chạy CSDL/ứng dụng.
+13. **Clever Cloud**: Nền tảng đám mây (PaaS) lưu trữ và triển khai CSDL MySQL trực tuyến.
+14. **Chrome DevTools** (hoặc Firefox DevTools): Công cụ tích hợp sẵn trên trình duyệt để debug giao diện, kiểm tra Network request, Console log và cấu trúc DOM.
+15. **MockAPI** (hoặc JSONPlaceholder): Công cụ trực tuyến tạo Virtual/Mock RESTful API phục vụ phát triển Front-End độc lập.
 
-> ⚠️ **BẪY CỦA THẦY:** **Bootstrap** là thư viện CSS/UI, **KHÔNG PHẢI** công cụ phần mềm!
+> ⚠️ **BẪY CỰC LỚN CỦA THẦY:** **Bootstrap, jQuery, Lombok, Axios** là **thư viện / framework mã nguồn (Libraries)**, **KHÔNG PHẢI công cụ phần mềm (Tools/Software)**! Nhớ kỹ kẻo bị trừ sạch điểm!
 
 ---
 
