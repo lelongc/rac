@@ -1,0 +1,210 @@
+--- Page 1 ---
+1 
+ 
+ 
+Xét ngôn ngữ L trên bảng chữ cái 𝛴 = {𝑎, 𝑏} và L được mô tả bởi automata sau.  
+ 
+ 
+1. (LO3, I, 252)  
+Xét các chuỗi: s1="b", s2="a" , và s3="aa". 
+Chuỗi nào hợp lệ với L ? 
+A. s1 
+B. s2 
+C. s3 
+D. Tất cả các chuỗi được nêu. 
+ 
+2. (LO3, I, 252)  
+Xét các chuỗi: s1="aa", s2="a" , và s3="ab". 
+Chuỗi nào hợp lệ với L ? 
+A. s1 
+B. s2 
+C. s3 
+D. Các chọn lựa khác đều ĐÚNG. 
+ 
+3. (LO3, I, 252)  
+Xét các chuỗi: s1="bb", s2="bbb", s3="bbab", và s4="bba". 
+Chuỗi nào hợp lệ với L ? 
+A. s1, s2, và s3 
+B. s2, s3 và s4 
+C. s3 và s4 
+D. s4 
+ 
+4. (LO3, I, 252)  
+Xét các chuỗi: s1="abab", s2="abba", s3="bab" và s4="aab". 
+
+--- Page 2 ---
+2 
+ 
+Chuỗi nào hợp lệ với L ? 
+A. s1 và s2 
+B. s2 và s4 
+C. s1 và s3 
+D. s1 và s4 
+ 
+5. (LO3, I, 252)  
+Xét các chuỗi: s1="ba",  s2="babab", s3="aaaa",  và s4="bbbab". 
+Chuỗi nào hợp lệ với L ? 
+A. s1 và s2 
+B. s2 và s4 
+C. s2 và s3 
+D. s1 và s4 
+ 
+6. (LO3, I, 252)  
+Xét các chuỗi: s1="ababab", s2="bbbb", s3="abbab", và s4="aaab". 
+Chuỗi nào không hợp lệ với L ? 
+A. s1 
+B. s2 
+C. s3 
+D. s4 
+ 
+7. (LO3, I, 252)  
+Xét các chuỗi: s1= "b", s2 = "a", s3= "ab", và s4="aa". 
+Chuỗi nào không hợp lệ với L? 
+A. s2 
+B. s1 
+C. s3 
+D. Tất cả các chuỗi đều không hợp lệ. 
+ 
+8. (LO3, I, 252)  
+Xét các chuỗi: s1="bb", s2="bbb", s3="bbab", và s4="bba".   
+Chuỗi nào không hợp lệ với L ? 
+A. s1 và s2 
+B. s2 và s3 
+C. s3 và s4 
+D. s4 
+ 
+9. (LO3, I, 252)  
+Xét các chuỗi: s1="bb", s2="bbb", s3="bbab", và s4="bba".   
+Chuỗi nào không hợp lệ với L ? 
+A. s1 
+B. s2 
+--- Page 3 ---
+3 
+ 
+C. s3 
+D. Các chọn lựa khác đều SAI. 
+ 
+10. (LO3, I, 252)  
+Xét các chuỗi: s1="abab", s2="abba", s3="bab", và s4="aab". 
+Chuỗi nào không hợp lệ với L ? 
+A. s1 và s4 
+B. s2 và s3 
+C. s3 và s4 
+D. Các chọn lựa khác đều SAI. 
+ 
+11. (LO3, I, 252)  
+Xét các chuỗi: s1="ba", s2="babab", s3="aaaa", và s4="bbbab". 
+Chuỗi nào không hợp lệ với L? 
+A. s1, s2 và s3 
+B. s1 và s3 
+C. s4 
+D. s3 và s4 
+ 
+12. (LO3, I, 252)  
+Xét các chuỗi: s1="ababab", s2="bbbb", s3="abbab", và s4="aaab". 
+Chuỗi nào không hợp lệ với L ? 
+A. s1 
+B. s2 
+C. s3 
+D. s4 
+ 
+13. (LO3, I, 252)  
+Xét biểu thức chính quy: E_1=(a+b)^* b. 
+Chuỗi nào không thuộc L nhưng thuộc ngôn ngữ được mô tả bởi E_1 ? 
+A. "bbb" 
+B. "ab" 
+C. "bab" 
+D. "bbab" 
+ 
+14. (LO3, I, 252)  
+Xét biểu thức: E_1=(a+b)^*b. 
+Chuỗi nào thuộc L nhưng không thuộc ngôn ngữ được mô tả bởi E_1 ? 
+A. Không có chuỗi nào 
+B. "ab" 
+C. "abb" 
+D. "bbab" 
+ 
+--- Page 4 ---
+4 
+ 
+15. (LO3, I, 252)  
+Xét biểu thức: E_2=b^* (ab)^*. 
+Chuỗi nào không thuộc L nhưng thuộc ngôn ngữ được mô tả bởi E_2 ? 
+A. "bb" 
+B. "bbb" 
+C. "abab" 
+D. Các chọn lựa khác đều SAI. 
+ 
+16. (LO3, I, 252)  
+Xét biểu thức: E_2=b^* (ab)^*. 
+Chuỗi nào thuộc L nhưng không thuộc ngôn ngữ được mô tả bởi E_2 ? 
+A. "bb" 
+B. "bababbb" 
+C. "bbabab" 
+D. Các chọn lựa khác đều SAI. 
+ 
+17. (LO3, I, 252)  
+Xét biểu thức: E_2=b^*(ab)^*. 
+Chuỗi nào thuộc L nhưng không thuộc ngôn ngữ được mô tả bởi E_2 ? 
+A. "abab" 
+B. "bab" 
+C. "bb" 
+D. Các chọn lựa khác đều SAI. 
+ 
+18. (LO3, I, 252)  
+Xét biểu thức E_3=(ab+b)^*. 
+Chuỗi nào không thuộc L nhưng thuộc ngôn ngữ được mô tả bởi E_3 ? 
+A. "bbb" 
+B. "abb" 
+C. "bab" 
+D. "bb" 
+ 
+19. (LO3, I, 252)  
+Xét biểu thức: E_3=(ab+b)^*. 
+Chuỗi nào thuộc L nhưng không thuộc ngôn ngữ được mô tả bởi E_3 ? 
+A. "bbab" 
+B. "ab" 
+C. "b" 
+D. Các chọn lựa khác đều SAI. 
+ 
+20. (LO3, I, 252)  
+Xét biểu thức: E_3=(ab+b)^*. 
+Chuỗi nào đồng thời không thuộc L và không thuộc ngôn ngữ được mô tả bởi E_3 ? 
+--- Page 5 ---
+5 
+ 
+A. "bbab" 
+B. "asb" 
+C. "b" 
+D. Các chọn lựa khác đều SAI. 
+ 
+21. (LO3, I, 252)  
+Xét biểu thức: E_4=(a+b)^*(ab). 
+Chuỗi nào không thuộc L nhưng thuộc ngôn ngữ được mô tả bởi E_4 ? 
+A. "abb" 
+B. "bbab" 
+C. "abbaab" 
+D. "abab" 
+ 
+22. (LO3, I, 252)  
+Xét biểu thức: E_4=(a+b)^*(ab). 
+Chuỗi nào thuộc L nhưng không thuộc ngôn ngữ được mô tả bởi E_4 ? 
+A. "ab" 
+B. "abab" 
+C. "b" 
+D. "bbab" 
+ 
+23. (LO3, II, 252)  
+Nếu áp dụng đơn định hóa automata đang quan tâm thì DFA thu được có bao nhiêu trạng thái? 
+A. 3 
+B. 4 
+C. 5 
+D. 6 
+ 
+24. (LO3, II, 252)  
+DFA tối giản tương đương có bao nhiêu trạng thái? 
+A. 3 
+B. 4 
+C. 5 
+D. 6 
+ 

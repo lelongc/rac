@@ -12,7 +12,9 @@ webservice , viết chương trình
 
 cuối kì webservice
 
-giống bài tk2 
+Nội dung thi Cuối kỳ là lý thuyết hệ thống phân tán (Bài 1) và Web Service (chương cuối).
+
+giống bài tk2
 
 
 b8
