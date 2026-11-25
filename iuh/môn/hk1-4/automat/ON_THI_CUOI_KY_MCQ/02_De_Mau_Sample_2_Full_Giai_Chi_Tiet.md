@@ -15,16 +15,16 @@
 >   + $\delta(q_2, a) = \{q_1\}$
 
 ```text
-               b
-             ┌───┐
-             │   ▼
-            ( q0 ) ─── a, ε ───► ( q1 )
-              ▲                   │
-              │ b                 │ b
-              │                   ▼
-            ((( q2 ))) ◄──────────┘
-                 │
-                 └─── a ───────► ( q1 )
+                  b
+                ┌───┐
+                │   ▼
+  Bắt đầu ───► ( q0 ) ───── a, ε ─────► ( q1 )
+                 ▲                      ▲    │
+                 │ b                    │    │ b
+                 │                 a    │    ▼
+               ((( q2 ))) ──────────────┘    │
+                    ▲                        │
+                    └────────────────────────┘
 ```
 
 ---
@@ -44,9 +44,14 @@ Nhìn vào đồ thị ô-tô-mát trên, ta rút ra được **2 quy tắc vàn
 - Nhưng tại $q_1$, **hoàn toàn KHÔNG CÓ đường đi cho chữ $a$**!
 👉 **KẾT LUẬN:** *Hễ chuỗi nào xuất hiện 2 chữ $a$ đứng liền nhau (**`aa`**) thì máy rơi vào ngõ cụt (trạng thái bẫy chết $\emptyset$) $\implies$ KHÔNG HỢP LỆ!*
 
-### 3. VẬY NHỮNG CHUỖI NÀO LÀ HỢP LỆ?
-- Mọi chuỗi chỉ gồm các chữ $b$ (như `b`, `bb`, `bbb`, `bbbb`,...).
-- Chuỗi kết thúc bằng $b$ và giữa các chữ $b$ chỉ có các chữ $a$ đứng đơn lẻ (như `ab`, `bab`, `abab`, `bbab`, `babab`,...).
+### 3. QUY TẮC 3 (CÁI BẪY ĐUÔI `abb`): SAU `ab` KHÔNG ĐƯỢC KẾT THÚC BẰNG ĐÚNG 1 CHỮ `b`
+- Khi đọc xong `ab`, máy chỉ đứng ở duy nhất trạng thái $q_2$ (không còn ở $q_0$).
+- Nếu đọc thêm **1 chữ $b$** nữa (thành đuôi `abb`), máy từ $q_2 \xrightarrow{b} q_0 \xrightarrow{\varepsilon} \{q_0, q_1\}$ — **không có $q_2$**, nên **bị loại**! (Phải đọc thêm chữ $b$ thứ ba thành `abbb` hoặc `ab` nữa thành `abbab` thì mới về lại được $q_2$).
+👉 **KẾT LUẬN:** *Chuỗi kết thúc bằng **`abb`** (như `abb`, `babb`) đều KHÔNG HỢP LỆ!*
+
+### 4. VẬY NHỮNG CHUỖI NÀO LÀ HỢP LỆ?
+- Mọi chuỗi chỉ toàn chữ $b$ (như `b`, `bb`, `bbb`, `bbbb`,...).
+- Chuỗi kết thúc bằng `ab` hoặc `abbb...` và không chứa cụm `aa` (như `ab`, `bab`, `abab`, `bbab`, `abbab`, `babab`,...).
 
 ---
 
@@ -132,7 +137,9 @@ Nhìn vào đồ thị ô-tô-mát trên, ta rút ra được **2 quy tắc vàn
 - D. Tất cả các chuỗi đều không hợp lệ.
 
 👉 **ĐÁP ÁN ĐÚNG: A**
-- **Giải thích:** Trong 4 chuỗi thì $s_1, s_3$ hợp lệ, còn $s_2 = \text{"a"}$ kết thúc bằng $a$ nên không hợp lệ.
+- **Giải thích:**
+  - $s_1 = \text{"b"}$ và $s_3 = \text{"ab"}$ đều **hợp lệ** $\implies$ Loại B, C và D ("Tất cả các chuỗi đều không hợp lệ").
+  - Cả $s_2 = \text{"a"}$ và $s_4 = \text{"aa"}$ đều **không hợp lệ** (kết thúc bằng `a` / chứa `aa`). Tuy nhiên trong 4 phương án đề gốc của thầy chỉ liệt kê $s_2$ ở đáp án A (thiếu $s_4$), nên **A** là đáp án đúng duy nhất có thể chọn.
 
 ---
 
@@ -425,12 +432,15 @@ Nhìn vào đồ thị ô-tô-mát trên, ta rút ra được **2 quy tắc vàn
 - **Giải thích:** Tập các trạng thái của DFA là tập lũy thừa $\mathcal{P}(Q)$, có tối đa $2^n$ trạng thái.
 
 #### Câu B9: Ngôn ngữ được đoán nhận bởi ô-tô-mát trong bài tương đương với biểu thức chính quy nào dưới đây?
-- A. $(b + ab)^* b$
+- A. $(b + ab(ab)^* b)^* (\varepsilon + a) b (ab)^*$
 - B. $b^* (ab)^*$
 - C. $(a+b)^* b$
-- D. $a^* b^*$
+- D. $(b + ab)^* b$
 👉 **Đáp án: A**
-- **Giải thích:** Mọi chuỗi là sự kết hợp của các khối $b$ và $ab$, kết thúc bằng $b$.
+- **Giải thích:** Theo định lý Arden trên đồ thị:
+  + Nhánh quay về $q_0$ gồm: tự lặp $b$, hoặc đi $ab(ab)^* b$ (tức cụm `abb` ở giữa vẫn hợp lệ nếu phía sau còn đường về đích, như `abbb`, `abbab`).
+  + Nhánh đi tới đích $q_2$ ở cuối là $(\varepsilon + a) b (ab)^*$ (chặn được chuỗi `abb` ở cuối vì sau `ab` không thể kết thúc bằng đúng 1 chữ `b`).
+  + Lưu ý: **D (`(b + ab)* b`) là bẫy** vì nó sinh được chuỗi `abb`, trong khi `abb` không thuộc $L$!
 
 #### Câu B10: Cho NFA không có $\varepsilon$-chuyển với $Q=\{A, B\}$, $\Sigma=\{0, 1\}$. Nếu $\delta(A, 0) = \{A, B\}$, đây là đặc điểm của:
 - A. DFA

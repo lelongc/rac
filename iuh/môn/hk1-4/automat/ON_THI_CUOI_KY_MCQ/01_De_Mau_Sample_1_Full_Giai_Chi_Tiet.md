@@ -411,12 +411,19 @@ $$
 
 #### Câu B4: Với văn phạm ở Câu B3, chuỗi nào sau đây thuộc $L$?
 
-- A. `aacbb`
+- A. `aacbbb`
 - B. `aaacbbbb`
 - C. `acbb`
 - D. `aacb`
-  👉 **Đáp án: B**
-- **Giải thích:** Ứng với $n=2$: số $a = n+1 = 3$, số $b = 2n = 4$, ở giữa có ít nhất 1 chữ $c \implies$ `aaacbbbb`.
+👉 **Đáp án: B**
+- **Giải thích:**
+  - Chuỗi tổng quát là $a^{n+1} c^m b^{2n}$ với điều kiện $b = 2(a - 1)$.
+  - Với $n=1, m=1$: sinh ra chuỗi `aacbb` (2 chữ $a$, 2 chữ $b$, 1 chữ $c$).
+  - Với $n=2, m=1$: số $a = 2 + 1 = 3$, số $b = 2(2) = 4$, ở giữa có ít nhất 1 chữ $c \implies$ chuỗi `aaacbbbb` $\implies$ **Chọn B**.
+  - Các phương án còn lại đều sai điều kiện:
+    + A. `aacbbb`: có 2 chữ $a$, 3 chữ $b \implies 3 \ne 2(2 - 1) = 2$ (Sai).
+    + C. `acbb`: có 1 chữ $a$, 2 chữ $b \implies 2 \ne 2(1 - 1) = 0$ (Sai).
+    + D. `aacb`: có 2 chữ $a$, 1 chữ $b \implies 1 \ne 2(2 - 1) = 2$ (Sai).
 
 #### Câu B5: Cho văn phạm $G$ có $P = \{ S \to aSb \mid A,\ A \to cA \mid \varepsilon \}$. Chuỗi ngắn nhất thuộc $L(G)$ là:
 
