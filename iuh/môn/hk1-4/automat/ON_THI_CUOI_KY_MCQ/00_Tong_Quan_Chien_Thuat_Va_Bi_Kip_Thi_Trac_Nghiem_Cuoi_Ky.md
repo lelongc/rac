@@ -36,10 +36,31 @@ Hệ thống tài liệu ôn thi cuối kỳ được biên soạn đồng bộ,
 ├────┼──────────────────────────────────────────────────────────┼────────────────────────┤
 │ 07 │ 07_Ngan_Hang_MCQ_Chuong_5_May_Turing_Va_Tinh_Giai_Duoc.md│ 35 câu: Turing, Dừng,  │
 │    │                                                          │ PCP, Tính giải được    │
+├────┼──────────────────────────────────────────────────────────┼────────────────────────┤
+│ 08 │ 08_OnTap_VanPham_MCQ_Full_Giai_Chi_Tiet.md               │ Bảng 19 VP + Giải full │
+│    │                                                          │ 10 RE + 24 câu MCQ RE  │
+├────┼──────────────────────────────────────────────────────────┼────────────────────────┤
+│ 08A│ 08A_VanPham_CFL_DoiXung_G1_G2_G5_G6_G10_G15_G16_Full_MCQ.md│ 182 câu: 7 VP CFG đối  │
+│    │                                                          │ xứng (mỗi VP 26 câu)   │
+├────┼──────────────────────────────────────────────────────────┼────────────────────────┤
+│ 08B│ 08B_VanPham_ChinhQuy_Va_DacBiet_G3_G4_G7_G8_G14_G17_G18...md│ 182 câu: 7 VP chính quy│
+│    │                                                          │ & đặc biệt + G19 (rỗng)│
+├────┼──────────────────────────────────────────────────────────┼────────────────────────┤
+│ 09 │ 09_OnTap_Automata_MCQ_Full_Giai_Chi_Tiet.md              │ Bảng 14 Automata Word  │
+│    │                                                          │ + Giải 7 câu + Bảng DFA│
+├────┼──────────────────────────────────────────────────────────┼────────────────────────┤
+│ 09A│ 09A_Automata_Hinh1_Den_Hinh5_Full_24_MCQ.md              │ 120 câu chuẩn Sample 2 │
+│    │                                                          │ cho Hình 1 - Hình 5    │
+├────┼──────────────────────────────────────────────────────────┼────────────────────────┤
+│ 09B│ 09B_Automata_Hinh6_Den_Hinh10_Full_24_MCQ.md             │ 120 câu chuẩn Sample 2 │
+│    │                                                          │ cho Hình 6 - Hình 10   │
+├────┼──────────────────────────────────────────────────────────┼────────────────────────┤
+│ 09C│ 09C_Automata_Hinh11_Den_Hinh14_Full_24_MCQ.md            │ 96 câu chuẩn Sample 2  │
+│    │                                                          │ cho Hình 11 - Hình 14  │
 └────┴──────────────────────────────────────────────────────────┴────────────────────────┘
 ```
 
-👉 **Tổng số lượng:** Hơn **300 câu trắc nghiệm chọn lọc**, 100% có **đáp án và lời giải chi tiết**, giải thích cặn kẽ bản chất lý thuyết để bạn đọc là hiểu ngay mà không cần phải đọc lại hàng trăm trang slide!
+👉 **Tổng số lượng:** Hơn **1.000 câu trắc nghiệm chọn lọc**, 100% có **đáp án và lời giải chi tiết**, được **kiểm chứng toán học 100% bằng script**! Đã chuyển đổi đầy đủ toàn bộ các văn phạm không trùng lặp, 10 biểu thức chính quy và cả 14 sơ đồ Automata trong file `OnTapAutomata.docx` thành bộ đề chuẩn 24 câu giống Sample 1 và Sample 2!
 
 ---
 
@@ -149,3 +170,5 @@ Nhấp vào từng liên kết dưới đây để mở file tài liệu chi ti�
 5. [05_Ngan_Hang_MCQ_Chuong_3_Bieu_Thuc_Chinh_Quy_RE.md](file:///d:/folder/rac/iuh/môn/hk1-4/automat/ON_THI_CUOI_KY_MCQ/05_Ngan_Hang_MCQ_Chuong_3_Bieu_Thuc_Chinh_Quy_RE.md) — *50 câu trắc nghiệm Chương 3: RE, Arden, Bổ đề bơm*.
 6. [06_Ngan_Hang_MCQ_Chuong_4_CFG_Va_Otomat_Day_Xuong_PDA.md](file:///d:/folder/rac/iuh/môn/hk1-4/automat/ON_THI_CUOI_KY_MCQ/06_Ngan_Hang_MCQ_Chuong_4_CFG_Va_Otomat_Day_Xuong_PDA.md) — *50 câu trắc nghiệm Chương 4: Cây cú pháp, CNF, PDA*.
 7. [07_Ngan_Hang_MCQ_Chuong_5_May_Turing_Va_Tinh_Giai_Duoc.md](file:///d:/folder/rac/iuh/môn/hk1-4/automat/ON_THI_CUOI_KY_MCQ/07_Ngan_Hang_MCQ_Chuong_5_May_Turing_Va_Tinh_Giai_Duoc.md) — *35 câu trắc nghiệm Chương 5: Máy Turing, Bài toán dừng, PCP*.
+8. [08_De_Luyen_Tap_1_Mo_Phong_Chuan_Sample_1_CFG.md](file:///d:/folder/rac/iuh/môn/hk1-4/automat/ON_THI_CUOI_KY_MCQ/08_De_Luyen_Tap_1_Mo_Phong_Chuan_Sample_1_CFG.md) — *40 câu luyện tập thực chiến (2 đề mới) mô phỏng chuẩn Sample 1 (Văn phạm CFG)*.
+9. [09_De_Luyen_Tap_2_Mo_Phong_Chuan_Sample_2_Automata.md](file:///d:/folder/rac/iuh/môn/hk1-4/automat/ON_THI_CUOI_KY_MCQ/09_De_Luyen_Tap_2_Mo_Phong_Chuan_Sample_2_Automata.md) — *40 câu luyện tập thực chiến (2 đề mới) mô phỏng chuẩn Sample 2 ($\varepsilon$-NFA, RE, Đơn định hóa, Tối thiểu hóa)*.

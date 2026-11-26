@@ -1,0 +1,62 @@
+Ôn tập cuối kì
+Automata và Ngôn ngữ hình thức
+Phần 1. Văn phạm và ngôn ngữ
+Cho các văn phạm
+G1 = <{0, 1}, {S}, S, {S→0S1, S→ε}>, 
+G2 = <{a, b}, {S, A}, S, {S→Ab, A→aAb, A→ε}>, 
+G3 = <{a, b, c}, {S, A, B, C}, S, {S→ABC, A→aA, B→bB, C→cC, A→a, B→b, C→c}> 
+G4 = <{a, b, c}, {S, A, B, C}, S, P>, trong đó: 
+ 		P = {S→aSAC, S→abC, CA→BA, BA→BC, BC→AC, bA→bb, C→c}. 
+G5 = <{a, b}, {S, A}, S, P>, trong đó: 
+ 		P = {S→Sa, S→Aa, A→aAb, A→ab}.
+G6 = <{0, 1}, {S}, S, {S→SS, S→0S1, S→1S0, S→ε}>.
+G7 = <{1}, {S, A, B}, S, P7 >, với P7 = {S→ε, S→1A, A→1B, B→1A, A→1}.
+G8 = <{0, 1}, {S, A}, S, P8 >, P8 = {S→0A, A→0A, A→1A, A→0}>.
+G9 = <{a, b}, {S}, S, {S→aSb, S→ab}>
+G10 = <{a,b,c}, {S, A, B}, S, {S→ASB, S→c, A→a, B→bb}>
+G11 = <{a,b,c}, {S, C, D}, S, {S→CSD, S→c, C→aa, D→b}>
+G12 = <{a, b}, {S}, S, {S→aSb, S→ab}>
+G13 = <{c}, {S}, S, {S→cS, S→c}>
+G14 = <{0, 1}, {S, A, B, C}, S, P>,  với 
+ 		P = {S→0, S→0A, A→1, A→1B, B→1, B→1C, C→1}.
+Cho G15 = <{0,1}, {S,A}, S, P>  với P = {S  0S1 | 0A1, A  1A | 1}
+Cho G16 = <{0,1}, {S,A,B}, S, P>  với 
+ 		P = {S  0S1 | 0A | 1B | 0 | 1, A  0A | 0, B  1B | 1 }
+Cho G17 = <{0,1}, {S,A}, S, P>  với P = {S  0A | 1S | 0 | 1, A  1A | 1S | 1}
+Cho G18 = <{0,1}, {S,A}, S, P>  với P = {S  0A | 1S | 0 | 1, A  1A0 | 1S |1}
+Cho G19 = <{0,1}, {S,A,B}, S, P>  với 
+ 		P = {S  0AB, A0  S0B, A1  SB1, B  SA | 01}
+Hãy liệt kê 5 từ được sinh ra từ văn phạm đã cho.
+Hãy liệt kê 5 từ không được sinh ra từ văn phạm đã cho.
+Hãy mô tả ngôn ngữ được sinh ra từ văn phạm đã cho.
+Có văn phạm nào tương đương với nhau không?
+Ngôn ngữ được sinh ra từ văn phạm đã cho thuộc loại mấy theo phân loại của Chomsky.
+Nếu là ngôn ngữ chính quy thì biểu diễn ngôn ngữ bằng biểu thức chính quy.
+Nếu là ngôn ngữ chính quy thì hay xây dựng automata hữu hạn (đơn định hoặc không đơn định) đoán nhận được ngôn ngữ đó.
+Nếu là ngôn ngữ phi ngữ cảnh thì hãy xây dựng automata đẩy xuống đoán nhận được ngôn ngữ đó.
+Phần 2. Biểu thức chính quy
+Xét ngôn ngữ L trên bảng chữ cái , 
+(ab)c
+(c* (a* + b*) c*)* ((ab)+c+)*  c* (a* + b*) c*)*)*
+ abc*
+(a + b)* c*
+(a + b)* (c (a + b)* c)* (a + b)*
+ (a + b + c)*
+cc*
+a* c*
+ (a + b)* (cc)* (a + b)*
+ (a + b + c)*
+Biểu thức thức nào ở trên là biểu thức chính quy?
+Liệt kê 5 từ được sinh ra bởi biểu thức đã cho.
+Liệt kê 5 từ không được sinh ra bởi biểu thức đã cho.
+Mô tả ngôn ngữ được sinh ra bởi biểu thức đã cho.
+Xây dựng văn phạm sinh ra ngôn ngữ được sinh ra bởi biểu thức đã cho.
+Nếu là biểu thức chính quy hãy xây dựng automata hữu hạn (đơn định hoặc không đơn định) đoán nhận ngôn ngữ được sinh ra bởi biểu thức chính quy.
+Phần ba. Automata
+Liệt kê 5 từ được đoán nhận bởi automata đã cho.
+Liệt kê 5 từ không được đoán nhận bởi automata đã cho.
+Automata đã cho có hữu hạn hay không?
+Automata đã cho có đơn định hay không?
+Mô tả ngôn ngữ được đoán nhận bởi automata đã cho.
+Xây dựng văn phạm sinh ra ngôn ngữ được đoán nhận bởi automata đã cho. 
+Automata đã cho đã tối giản chưa? Nếu chưa, hãy xây dựng automata tối giản tương đương.
